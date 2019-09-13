@@ -3,23 +3,19 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # ブログのタイトル
-title: 
+title: test
 
 # サブタイトル
-subtitle: 
-description: 
+subtitle: test
+description: test
 keywords:
   - test
-  - 
-  - 
+
 author: 
 
 root_tag_generator:
   root_tag_names:
     - test
-    - 
-    - 
-    - 
   sub_tag_limit: 20
   sub_tag_sort: 'name' # 未実装
   
