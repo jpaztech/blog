@@ -3,19 +3,29 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # ブログのタイトル
-title: test
+title: Japan Azure IaaS Support Blog
 
 # サブタイトル
-subtitle: test
-description: test
+subtitle: 日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！
+description: 日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！
 keywords:
-  - test
+  - IaaS
+  - VM
+  - Storage
+  - Network
+  - OSS
 
-author: 
+author: Japan Azure IaaS Support Team
 
 root_tag_generator:
   root_tag_names:
-    - test
+    - Information
+    - VM
+    - Storage
+    - Network
+    - OSS
+    - Other
+    - Archive
   sub_tag_limit: 20
   sub_tag_sort: 'name' # 未実装
   
