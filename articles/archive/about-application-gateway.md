@@ -1,5 +1,5 @@
 ---
-title: Application Gateway で利用できる WAF について
+title: Application Gateway の構成について
 date: 2017-07-02 15:07:52
 tags:
   - Archive
