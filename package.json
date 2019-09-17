@@ -5,7 +5,13 @@
   "hexo": {
     "version": "3.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.15",
+    "lodash.merge": "^4.6.2",
+    "mixin-deep": "^2.0.1",
+    "set-value": "^3.0.1"
+  },
   "devDependencies": {
     "del": "^4.1.1",
     "gulp": "^4.0.2",
