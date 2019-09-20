@@ -3,49 +3,45 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # ブログのタイトル
-title: Japan Azure IaaS Support Blog
+title: Japan Azure Identity Support Blog 
 
 # サブタイトル
-subtitle: 日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！
-description: 日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！
+subtitle: 日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。
+description: 日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。
 keywords:
-  - IaaS
-  - VM
-  - Storage
-  - Network
-  - OSS
+  - Azure
+  - Azure AD
+  - Identity
+  - AD FS
 
-author: Japan Azure IaaS Support Team
+author: Azure Identity Support Japan
 
 root_tag_generator:
   root_tag_names:
-    - Information
-    - VM
-    - Storage
-    - Network
-    - OSS
-    - Other
-    - Archive
+    - Azure AD
+    - AAD Connect
+    - AD FS
+    - 情報採取
   sub_tag_limit: 20
   sub_tag_sort: 'name' # 未実装
   
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://jpaztech.github.io
+url: https://jpazureid.github.io
 github:
-  url: https://jpaztech.github.io/blog/
+  url: https://github.com/jpazureid/blog/
   posts_dir: articles
 
 skip_render:
   - '_data/*.png'
   - 'BingSiteAuth.xml'
-  - 'googlec4da4c631e14b86c.html'
+  - 'google4a4cd09c454aa91c.html'
 
 # Deployment
 ## Docs: https://hexo.io/doc  s/deployment.html
 deploy:
   type: git
-  repo: git@github.com:jpaztech/blog.git
+  repo: git@github.com:jpazureid/blog.git
   branch: gh-pages
   message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }} [skip ci]"
 
@@ -109,9 +105,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: jpaztech
-auto: true
-server: true
+theme: jpazure
 
 feed:
   type: atom
