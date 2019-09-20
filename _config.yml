@@ -110,6 +110,8 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: jpaztech
+auto: true
+server: true
 
 feed:
   type: atom
