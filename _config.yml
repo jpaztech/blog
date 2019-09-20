@@ -105,7 +105,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: jpazure
+theme: jekyll-theme-cayman
 
 feed:
   type: atom
