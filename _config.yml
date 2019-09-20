@@ -109,13 +109,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-<<<<<<< HEAD
-theme: jpaztech
+remote_theme: https://github.com/jpaztech/hexo-theme-jpaztech/
 auto: true
 server: true
-=======
-theme: jekyll-theme-cayman
->>>>>>> fa32b1e310af2b81d451b844098fe4ff112e9eb8
+
+
 
 feed:
   type: atom
