@@ -109,7 +109,8 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-remote_theme: https://github.com/jpaztech/hexo-theme-jpaztech/
+theme: minima
+remote_theme: benbalter/retlab
 auto: true
 server: true
 
