@@ -1,3 +1,3 @@
-[submodule "themes/jpazure"]
-	path = themes/jpazure
-	url = git@github.com:jpazureid/hexo-theme-jpazure.git
+[submodule "themes/jpaztech"]
+	path = themes/jpazutech
+	url = git@github.com:jpaztech/hexo-theme-jpaztech.git
