@@ -110,7 +110,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: jpaztech
-remote_theme: 
+remote_theme: benbalter/retlab
 
 auto: true
 server: true
