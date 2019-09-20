@@ -2139,9 +2139,9 @@ hexo-generator-index@^0.2.1:
     hexo-pagination "0.0.2"
     object-assign "^4.0.1"
 
-"hexo-generator-root-tag@github:jpaztech/hexo-generator-root-tag":
+"hexo-generator-root-tag@github:jpazureid/hexo-generator-root-tag":
   version "0.1.0"
-  resolved "https://codeload.github.com/jpaztech/hexo-generator-root-tag/tar.gz/7f200221c62be176f1db70382bb0239b37681571"
+  resolved "https://codeload.github.com/jpazureid/hexo-generator-root-tag/tar.gz/7f200221c62be176f1db70382bb0239b37681571"
   dependencies:
     hexo-pagination "0.1.0"
 
@@ -2164,7 +2164,7 @@ hexo-generator-tag@^0.2.0:
 
 "hexo-hepler-github-issues@github:jpaztech/hexo-helper-github-issues":
   version "1.0.0"
-  resolved "https://codeload.github.com/jpaztechhexo-helper-github-issues/tar.gz/0502f60173dc6ea369c873ece342240d499bd773"
+  resolved "https://codeload.github.com/jpaztech/hexo-helper-github-issues/tar.gz/0502f60173dc6ea369c873ece342240d499bd773"
   dependencies:
     uuid "^3.3.2"
 
