@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+  
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "node",
+        "program": "${workspaceRoot}/test/index.js",
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/mocha",
+        "runtimeArgs": ["${workspaceRoot}/test/index.js"],
+        "cwd": "${workspaceRoot}",
+        "protocol": "inspector",
+      }
+    ]
+  }
+  

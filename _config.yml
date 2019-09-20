@@ -112,7 +112,6 @@ pagination_dir: page
 theme: jpaztech
 auto: true
 server: true
-timezone: Asia/Tokyo
 
 feed:
   type: atom
