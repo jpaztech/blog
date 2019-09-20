@@ -109,8 +109,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: minima
-remote_theme: benbalter/retlab
+theme: jpaztech
 auto: true
 server: true
 
@@ -120,5 +119,3 @@ feed:
   type: atom
   path: atom.xml
   limit: 20
-
-theme: jekyll-theme-slate
