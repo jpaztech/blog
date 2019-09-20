@@ -35,8 +35,8 @@
     "hexo-server": "^0.3.3",
     "textlint": "^11.2.5",
     "textlint-filter-rule-comments": "^1.2.2",
-    "textlint-filter-rule-whitelist": "^2.0.0",
-    "textlint-rule-ms-japanese-style-guide-modoki": "0.0.10"
+    "textlint-filter-rule-whitelist": "^2.0.0"
+    //"textlint-rule-ms-japanese-style-guide-modoki": "0.0.10"
   },
   "scripts": {
     "start": "npx gulp",
