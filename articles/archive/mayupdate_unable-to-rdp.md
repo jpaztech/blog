@@ -20,7 +20,7 @@ Azure サポートチームの石井です。
 
 2018 年 5 月の更新プログラム適用によるリモート デスクトップ接続への影響
 [https://blogs.technet.microsoft.com/askcorejp/2018/05/02/2018-05-rollup-credssp-rdp/](https://blogs.technet.microsoft.com/askcorejp/2018/05/02/2018-05-rollup-credssp-rdp/)
-<span style="color:gray:">※ Ask CORE Blog は 2019 年 3 月をもちまして、弊社システム刷新の都合により終了いたしました。
+<span style="color:gray;">※ Ask CORE Blog は 2019 年 3 月をもちまして、弊社システム刷新の都合により終了いたしました。
 ※ 2019 年 8 月現在、過去の記事を閲覧することは可能でございますが、予告なく削除される可能性がございます</span>
 
 端的にいうと、以下の対策となります。

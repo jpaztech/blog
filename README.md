@@ -35,5 +35,5 @@
 - [5 月のセキュリティ更新を適用後、Windows 仮想マシンに RDP 接続時にエラーが発生する事象の回避策](./archive/mayupdate_unable-to-rdp.md)
 - [’azurebox32.ico’ が必要です](./archive/need-azurebox32-ico.md)
 - [(PowerShell編) Azure仮想マシン (管理ディスク) の交換を活用して元のネットワークにリストアする](./archive/restore-vm-by-swap-manageddisk.md)
-
+- [ARMのWindowsでディスクやVMレベルでのIOスロットリングを監視・通知する方法](./archive/monitor-io-throttoling-on-win-vm-arm.md)
 
