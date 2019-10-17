@@ -86,9 +86,10 @@ AzCopy の利用方法については、以下の記事もご参照ください�
 - [AzCopy コマンド ライン ユーティリティを使用してデータを転送する](https://azure.microsoft.com/ja-jp/documentation/articles/storage-use-azcopy/)
 - [azcopy – BLOB へファイルをやったり取ったり](http://blogs.technet.com/b/ksasaki/archive/2012/11/09/azcopy-blob.aspx)
 
-### 5. コピーした VHD ファイルをもとに、Azure PowerShell を使用して、仮想マシンを作成します。
+### 5. 仮想マシンを作成します。
+コピーした VHD ファイルをもとに、Azure PowerShell を使用して、仮想マシンを作成します。
 
 
-特殊化 VHD ファイルから仮想マシンを ARM 環境にデプロイする為の Azure PowerShell は以下ブログにて、公開しております。<br>
+特殊化 VHD ファイルから仮想マシンを ARM 環境にデプロイする為の Azure PowerShell は以下ブログにて、公開しております。
 [特殊化 VHD ファイルから ARM 環境へ仮想マシンをデプロイする Azure PowerShell](https://blogs.technet.microsoft.com/jpaztech/2017/05/24/deployfromspecializedvhd-powershell/)
 
