@@ -36,4 +36,5 @@
 - [’azurebox32.ico’ が必要です](./archive/need-azurebox32-ico.md)
 - [(PowerShell編) Azure仮想マシン (管理ディスク) の交換を活用して元のネットワークにリストアする](./archive/restore-vm-by-swap-manageddisk.md)
 - [ARMのWindowsでディスクやVMレベルでのIOスロットリングを監視・通知する方法](./archive/monitor-io-throttoling-on-win-vm-arm.md)
+- [ARM 環境から ARM 環境への仮想マシンの移行方法](./archive/migration_arm_to_arm.md)
 
