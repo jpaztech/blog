@@ -8,13 +8,11 @@ tags:
 ---
 
 こんにちは。Azureサポートチームの小久保です。
-
 本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方法をご紹介します。
-
 今回、ご紹介する環境は、Azure リソース マネージャー (以下、ARM) 環境から ARM 環境への移行となっております。
 
 ## ご参考
-Azure サービス マネージャー (以下、ASM) 環境から ASM 環境への移行の場合は以下をご確認ください。<br>
+Azure サービス マネージャー (以下、ASM) 環境から ASM 環境への移行の場合は以下をご確認ください。
 [クラシック環境からクラシック環境への仮想マシンの移行方法](http://blogs.technet.microsoft.com/jpaztech/2016/07/11/migration_classic_to_classic/)
 
 ## 利用する場面
@@ -36,7 +34,7 @@ Azure サービス マネージャー (以下、ASM) 環境から ASM 環境へ�
 ![](./migration_arm_to_arm/Constitution3.png)
 
 ## 事前準備
-AzCopy ツールを利用するため、 Microsoft Azure Storage Tools を以下よりダウンロードし、お手元のコンピューターにインストールをお願いします。<br>
+AzCopy ツールを利用するため、 Microsoft Azure Storage Tools を以下よりダウンロードし、お手元のコンピューターにインストールをお願いします。
 [Microsoft Azure Storage Tools](https://aka.ms/downloadazcopy)
 
 ## 作業手順
@@ -48,8 +46,8 @@ AzCopy ツールを利用するため、 Microsoft Azure Storage Tools を以下
 
 ![](./migration_arm_to_arm/addstorage.png)
 
-新規作成するストレージアカウントの情報を入力し、「作成」ボタンをクリックします。<br>
-<span style="color:red;">※ アカウントの種類は汎用を選択します。</span><br>
+新規作成するストレージアカウントの情報を入力し、「作成」ボタンをクリックします。
+<span style="color:red;">※ アカウントの種類は汎用を選択します。</span>
 ※ サブスクリプションは移行先のサブスクリプションを選択します。
 
 ![](./migration_arm_to_arm/addstorageproperty2.png)
@@ -59,13 +57,13 @@ AzCopy ツールを利用するため、 Microsoft Azure Storage Tools を以下
 
 ![](./migration_arm_to_arm/addvnet.png)
 
-新規作成する仮想ネットワークの情報を入力し、「作成」ボタンをクリックします。<br>
+新規作成する仮想ネットワークの情報を入力し、「作成」ボタンをクリックします。
 <span style="color:red;">※サブスクリプションは移行先のサブスクリプションを選択します。</span>
 
 ![](./migration_arm_to_arm/addvnetproperty2.png)
 
 ### 4. AzCopy を利用し、移行先のストレージアカウントへ VHD ファイルをコピーします。
-管理者権限にてコマンドプロンプトを起動し、AzCopy のディレクトリに移動し、AzCopy コマンドを実行します。<br>
+管理者権限にてコマンドプロンプトを起動し、AzCopy のディレクトリに移動し、AzCopy コマンドを実行します。
 <span style="color:red;">※ 同じデータセンター内での VHD ファイルの移動は無償ですが、データセンターを跨いだ VHD ファイルの移動は有償となります為、ご注意ください。</span>
 
 コマンド例：
