@@ -78,7 +78,7 @@ Azure には、多岐に渡るテクノロジーが存在します。
 マイクロソフト製品のライセンス (Windows Server や SQL Server 等) については、ライセンス リセラーとなるパートナー各社にお問い合わせください。
 
 パートナー ネットワークに加入されている弊社パートナー様の場合、弊社パートナー コールセンターにご相談ください。
-- [お問い合わせ](https://partner.microsoft.com/ja-jp/support/call-center)
+- [パートナー コールセンター](https://partner.microsoft.com/ja-jp/support/call-center)
 
 **Q. IaaS 仮想マシンの利用にて、パフォーマンスが出ない**
 構築後、正常にパフォーマンスが出ていた状態から、一時的に極端に悪化している場合には障害対応の範囲となり、Azure サポートでの対応が可能です。
