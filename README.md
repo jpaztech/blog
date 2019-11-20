@@ -18,7 +18,7 @@
 - [comming soon](./oss/)
 
 ## Other
-- [comming soon](./other/)
+- [Azure IaaS における有償 Azure テクニカル サポートの対応範囲](./other/azure_technical_support_explained.md)
 
 ## TechNet Archives
 - [Application Gateway の構成について](./archive/about-application-gateway.md)
