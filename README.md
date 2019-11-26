@@ -12,7 +12,7 @@
 - [comming soon](./strage/)
 
 ## Network
-- [comming soon](./network/)
+- [Microsoft ピアリングを経由するかどうかの確認方法](./network/judge-via-ms-peering.md)
 
 ## OSS
 - [comming soon](./oss/)
