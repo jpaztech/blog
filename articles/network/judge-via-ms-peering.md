@@ -83,7 +83,7 @@ BgpCommunities : [
 
 ## 宛先が FQDN の場合
 
-通信対象が IP の場合、上記の手順で IP をご確認いただくことで対象のサービスコミュニティが確認可能で、ルートフィルターの設定状況により Microsoft ピアリングを経由するかどうかを確認することが可能です。また、各サービス毎に以下ようなドキュメントでも ExpressRoute の対応状況について記載がされています。
+通信対象が IP の場合、上記の手順で IP をご確認いただくことで対象のサービスコミュニティが確認可能で、ルートフィルターの設定状況により Microsoft ピアリングを経由するかどうかを確認することが可能です。また、各サービス毎に以下のようなドキュメントでも ExpressRoute の対応状況について記載がされています。
 
   [Office 365 の URL と IP アドレスの範囲]
   [https://docs.microsoft.com/ja-jp/office365/enterprise/urls-and-ip-address-ranges](https://docs.microsoft.com/ja-jp/office365/enterprise/urls-and-ip-address-ranges)
