@@ -1,5 +1,5 @@
 # blog
-日本マイクロソフト Azure IaaS サポート チームのブログです。
+日本マイクロソフト Azure IaaS Core サポート チームのブログです。
 [https://jpaztech.github.io/blog/](https://jpaztech.github.io/blog/)
 
 ## Information
@@ -19,6 +19,7 @@
 
 ## Other
 - [Azure IaaS における有償 Azure テクニカル サポートの対応範囲](./other/azure_technical_support_explained.md)
+- [なぜ今サポートエンジニアが熱いか](./other/technical_support_engineer_explained.md)
 
 ## TechNet Archives
 - [Application Gateway の構成について](./archive/about-application-gateway.md)

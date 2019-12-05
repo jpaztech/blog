@@ -1,6 +1,6 @@
 ---
 title: Azure IaaS における有償 Azure テクニカル サポートの対応範囲
-date: 2019-011-20 17:30:00
+date: 2019-11-20 17:30:00
 tags:
   - Other
   - Support Explained

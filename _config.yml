@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # ブログのタイトル
-title: Japan Azure IaaS Support Blog
+title: Japan Azure IaaS Core Support Blog
 
 # サブタイトル
 subtitle: 日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！
@@ -15,7 +15,7 @@ keywords:
   - Network
   - OSS
 
-author: Japan Azure IaaS Support Team
+author: Japan Azure IaaS Core Support Team
 
 root_tag_generator:
   root_tag_names:
