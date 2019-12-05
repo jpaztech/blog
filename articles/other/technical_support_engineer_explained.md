@@ -129,4 +129,4 @@ Support Escalation Engineer - Azure Networking (複数枠有り！)
 
 私のチームに限らず、マイクロソフトのサポートとして、少しでもチャンスに繋げられるようご協力させていただきます。
 
-<video src="https://youtu.be/yThRRLBnxJ4"></video> 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yThRRLBnxJ4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
