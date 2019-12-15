@@ -2,12 +2,14 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
-# ブログのタイトル
+# Title (display)
 title: Japan Azure IaaS Core Support Blog
-
-# サブタイトル
+# Sub Title (display)
 subtitle: 日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！
+# Description
 description: 日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！
+
+# Keywords
 keywords:
   - IaaS
   - VM
@@ -17,6 +19,7 @@ keywords:
 
 author: Japan Azure IaaS Core Support Team
 
+# Tag (hexo helper)
 root_tag_generator:
   root_tag_names:
     - Information
@@ -27,7 +30,6 @@ root_tag_generator:
     - Other
     - Archive
   sub_tag_limit: 20
-  sub_tag_sort: 'name' # 未実装
   
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -38,7 +40,9 @@ github:
 
 skip_render:
   - '_data/*.png'
+  # Bing Webmaster
   - 'BingSiteAuth.xml'
+  # Search Console
   - 'googlec4da4c631e14b86c.html'
 
 # Deployment
@@ -113,8 +117,6 @@ theme: jpaztech
 remote-theme: themes/jpaztech;
 auto: true
 server: true
-
-
 
 feed:
   type: atom
