@@ -6,7 +6,7 @@
 - [comming soon](./information/)
 
 ## VM
-- [comming soon](./vm/)
+- [リソース正常性（Resource Health）アラートの構成方法](./vm/resource-health-alert.md)
 
 ## Storage
 - [comming soon](./strage/)
