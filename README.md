@@ -7,6 +7,7 @@
 
 ## VM
 - [リソース正常性（Resource Health）アラートの構成方法](./vm/resource-health-alert.md)
+- [Azure リソースの意図しない削除について](./vm/resource-delete.md)
 
 ## Storage
 - [comming soon](./strage/)
