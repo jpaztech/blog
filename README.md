@@ -14,6 +14,7 @@
 
 ## Network
 - [Microsoft ピアリングを経由するかどうかの確認方法](./network/judge-via-ms-peering.md)
+- [Application Gateway でサブネットを変更する方法](./network/appgw_change_subnet.md)
 
 ## OSS
 - [comming soon](./oss/)
