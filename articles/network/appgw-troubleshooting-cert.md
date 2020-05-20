@@ -52,8 +52,10 @@ how to fix it, please visit the web page mentioned above.
 *  自己証明書を使用しており、ルート証明書とのチェーンの検証で失敗している
 *  リスナーに登録した証明書に中間証明書が含まれていない
 
-4 点目の中間証明書についてですが、現状の動作として Application Gateway V2 ではリスナーに登録した証明書に中間証明書が含まれていない場合、証明書の検証に失敗し、エラーになることがあることを確認しております。(クライアントやブラウザによって動作が異なりますが、特に Linux 系のクライアントにて失敗することを確認済)
+4 点目の中間証明書についてですが、リスナーに登録した証明書に中間証明書が含まれていない場合、証明書の検証に失敗し、エラーになる場合があることを確認しております。(クライアントやブラウザによって動作が異なりますが、特に Linux 系のクライアントにて失敗することを確認済)
 そのため、Application Gateway のリスナーに登録する PFX 形式の証明書は中間証明書を含む形で構成いただく必要がございます。
+
+
 
 Edge や Chrome ブラウザの場合、クライアント側で中間証明書を補完するため、中間証明書に起因する問題が発生しているかがわからないことがあります。その場合、下記に記載の openssl コマンドにて証明書の状態を確認することが可能ですので、念のためご確認いただくことをお勧めいたします。
 
@@ -92,9 +94,9 @@ The Common Name (CN) of the backend certificate does not match the host header o
 ## <a href="#openssl-command" style="color:#f60;">openssl コマンドによる確認方法</a>
 
 openssl はオープンソースのソフトウェアで Linux 系の OS で利用することができます。
-Winodwos OS (Windows 10) の場合でも Windows Subsystem for Linux (WSL) を導入することで利用可能となります。
+Windows OS (Windows 10) の場合でも Windows Subsystem for Linux (WSL) を導入することで利用可能となります。
 
-以下のコマンドを実行し、実行結果を CN が正しいか、エラーが表示されていないかを等を確認します。
+以下のコマンドを実行し、実行結果の CN が正しいか、エラーが表示されていないかを等を確認します。
 ```
 [Application Gateway への接続確認]
 openssl s_client -connect <Application Gateway の IP アドレス>:443 -servername <FQDN> -showcerts
