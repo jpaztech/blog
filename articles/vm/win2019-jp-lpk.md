@@ -11,13 +11,13 @@ tags:
 今回は Azure 環境における Windows Server 2019 の日本語の言語パック適用手順についてご紹介させていただきます。
 Azure Marketplace における Windows Server イメージは、基本的に英語版をベースとしたものが公開されておりますが、言語パックをインストールいただくことで、表示言語を日本語に変更してご利用いただくことが可能でございます。
 Windows Server 2016 以前の手順については、以下の Blog 記事をご参照いただけますと幸いです。
->Azure 環境における Windows Server の日本語環境化について
+>Azure 環境における Windows Server の日本語環境化について  
 >[https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/japanese_langpack_etc](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/japanese_langpack_etc)
 
 ## 注意事項
 言語パックのインストールは、更新プログラムやアプリをインストールする前に実施いただく必要があります。詳細は以下の弊社公開情報をご確認くださいますと幸いです。
-> Windows イメージへの言語の追加 - 考慮事項
-> [https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/add-language-packs-to-windows#considerations](https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/add-language-packs-to-windows#considerations)
+> Windows イメージへの言語の追加 - 考慮事項  
+> [https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/add-language-packs-to-windows#considerations](https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/add-language-packs-to-windows#considerations)  
 >> 言語をインストールしてから、更新プログラムとアプリをインストールします。 アプリまたは更新プログラム (サービス スタック更新プログラム (SSU) または累積更新プログラム (CU) など) を既に含むイメージに言語を追加する場合は、アプリと更新プログラムを再インストールします。
 
 ## 適用手順
@@ -26,7 +26,7 @@ Windows Server 2016 以前の手順については、以下の Blog 記事をご
 1. 下記より言語パックの iso ファイルをダウンロードします。  
 ※ 方法 2: LPKSetupを使用 の手順 1 の [ここ] をクリックすることでダウンロードが可能です。  
 ![](./win2019-jp-lpk/1-lpdl.png)  
->Windows Server 2019 デスクトップ エクスペリエンスの言語パックを構成できない
+>Windows Server 2019 デスクトップ エクスペリエンスの言語パックを構成できない  
 >[https://support.microsoft.com/ja-jp/help/4466511/cannot-configure-language-pack-for-windows-server-2019](https://support.microsoft.com/ja-jp/help/4466511/cannot-configure-language-pack-for-windows-server-2019)
 
 2. ダウンロードした言語パックをマウントします。下記画像では、E ドライブにマウントしています。  
@@ -70,7 +70,7 @@ Windows Server 2016 以前の手順については、以下の Blog 記事をご
 
 表示言語の切り替え後、更新プログラムやアプリのインストールをご実施ください。  
 タイムゾーンの変更等の手順は、再掲となりますが、以下の Blog 記事をご参照いただきますようお願い申し上げます。
->Azure 環境における Windows Server の日本語環境化について
+>Azure 環境における Windows Server の日本語環境化について  
 >[https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/japanese_langpack_etc](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/japanese_langpack_etc)
 
 こちらの情報が、少しでも皆様のご参考となれば幸いでございます。
