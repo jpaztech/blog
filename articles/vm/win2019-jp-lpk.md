@@ -28,11 +28,11 @@ Azure Marketplace における Windows Server イメージは、基本的に英�
 以下の操作は Windows Server 2019 の Azure VM 上で行います。
 
 1. 下記より言語パックの iso ファイルをダウンロードします。  
+>Windows Server 2019 デスクトップ エクスペリエンスの言語パックを構成できない  
+>[https://support.microsoft.com/ja-jp/help/4466511/cannot-configure-language-pack-for-windows-server-2019](https://support.microsoft.com/ja-jp/help/4466511/cannot-configure-language-pack-for-windows-server-2019)  
 ※ 方法 2: LPKSetupを使用 の手順 1 の [ここ] をクリックすることでダウンロードが可能です。  
 ※ ダウンロード先の URL が変更される可能性もございますので、本記事では公開情報へのリンクを紹介しております。  
 ![](./win2019-jp-lpk/2-lpk-dl.png)
->Windows Server 2019 デスクトップ エクスペリエンスの言語パックを構成できない  
->[https://support.microsoft.com/ja-jp/help/4466511/cannot-configure-language-pack-for-windows-server-2019](https://support.microsoft.com/ja-jp/help/4466511/cannot-configure-language-pack-for-windows-server-2019)  
 
 2. ダウンロードした言語パックをマウントします。下記画像では、E ドライブにマウントしています。  
 ![](./win2019-jp-lpk/3-mount.png)
