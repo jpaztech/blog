@@ -18,8 +18,12 @@ Application Gateway をご利用時に証明書が関連する設定としては
 - [Application Gateway の構成について](https://jpaztech1.z11.web.core.windows.net/ApplicationGateway%E3%81%AE%E6%A7%8B%E6%88%90%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6.html)
 
 Application Gateway にて End to End の TLS (クライアントからバックエンドまですべて HTTPS による通信) を構成する場合、リスナーとバックエンドの Web サーバーにて証明書を構成する必要があります (HTTP 設定も構成により証明書の設定が必要)。
+
+![TLS-Offload](./appgw-troubleshooting-cert/TLS-Offload.png)
  
 End to End の TLS にはせずに、クライアントと Application Gateway の間だけを TLS 化する場合は、バックエンドのサーバーや HTTP 設定に対する証明書の設定は必要ありません。Application Gateway に証明書を設定したり、証明書の更新などを行う場合、どちらの証明書が必要か、どの証明書の更新が必要かなどを区別して考える必要があります。
+
+![TLS-End2End](./appgw-troubleshooting-cert/TLS-End2End.png)
 
 <span id="application-gateway-error"></span>
 ## <a href="#application-gateway-error" style="color:#f60;">Application Gateway へアクセスした際の証明書エラー</a>
