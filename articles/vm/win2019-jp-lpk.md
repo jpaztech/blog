@@ -5,13 +5,9 @@ tags:
   - VM
   - Windows
 ---
-<style>
-img{
-  border: 1px royalblue solid !important;
-}
-</style>
 
 こんにちは、Azure サポートチームの山下です。
+<link href="https://jpaztech.github.io/blog/vm/win2019-jp-lpk/styles.css" rel="stylesheet"></link>
 
 Azure Marketplace における Windows Server イメージは、基本的に英語版をベースとしたものが公開されておりますが、言語パックをインストールいただくことで、表示言語を日本語に変更してご利用いただくことが可能でございます。しかしながら、現在の Windows Server 2019 においては、Windows Server 2016 とは手順が異なることから、下記画像の赤枠のように日本語を追加したにも関わらず、表示言語に日本語を設定できないというお問い合わせをよくいただきます。  
 ![](./win2019-jp-lpk/1-issue.png)  
