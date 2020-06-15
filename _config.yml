@@ -33,7 +33,8 @@ root_tag_generator:
   
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://jpaztech.github.io
+url: https://jpaztech.github.io/blog
+root: /blog/
 github:
   url: https://github.com/jpaztech/blog/
   posts_dir: articles
