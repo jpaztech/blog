@@ -15,6 +15,7 @@
 ## Network
 - [Microsoft ピアリングを経由するかどうかの確認方法](./network/judge-via-ms-peering.md)
 - [Application Gateway でサブネットを変更する方法](./network/appgw_change_subnet.md)
+- [Azure VM の外部接続 (SNAT) オプション まとめ](./network/snat-options-for-auzre-vm.md)
 
 ## OSS
 - [comming soon](./oss/)
