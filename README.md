@@ -6,6 +6,7 @@
 - [comming soon](./information/)
 
 ## VM
+- [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./vm/win2019-jp-lpk.md)
 - [リソース正常性（Resource Health）アラートの構成方法](./vm/resource-health-alert.md)
 - [Azure リソースの意図しない削除について](./vm/resource-delete.md)
 
@@ -13,6 +14,8 @@
 - [comming soon](./strage/)
 
 ## Network
+- [Azure VM の外部接続 (SNAT) オプション まとめ](./network/snat-options-for-azure-vm.md)
+- [Microsoft Peering 導入時の注意事項](./network/considerations-of-microsoft-peering.md)
 - [Microsoft ピアリングを経由するかどうかの確認方法](./network/judge-via-ms-peering.md)
 - [Application Gateway でサブネットを変更する方法](./network/appgw_change_subnet.md)
 - [Azure VM の外部接続 (SNAT) オプション まとめ](./network/snat-options-for-auzre-vm.md)
