@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "private": true,
   "hexo": {
-    "version": "3.8.0"
+    "version": "4.2.0"
   },
   "dependencies": {
     "babel-eslint": "^10.0.3",
