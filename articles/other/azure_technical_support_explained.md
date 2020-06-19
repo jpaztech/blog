@@ -31,7 +31,7 @@ Azure の有償テクニカル サポート、つまり Developer / Standard / P
 つまり、Azure ではないマイクロソフト製品、例えば Windows や SQL Server 製品などの設定方法、構築手順、仕様確認といった内容については Premier サポート契約が必要です。
 一方、Professional Direct では、Azure 基盤側の設定方法などについては、公開情報をベースに調査し、回答させていただくことが可能です。
  
-Professional Direct と Premier においては、アドバイザリの提供範囲も異なります。Azure サポートに関する FAQから抜粋しますと、以下の通りです。
+Professional Direct と Premier においては、アドバイザリの提供範囲も異なります。Azure サポートに関する FAQ から抜粋しますと、以下の通りです。
 
 > Q. Premier Advisory サポートと比較して、Professional Direct Limited Advisory サポートではどのようなサポートを提供していますか？
 
@@ -110,7 +110,7 @@ Azure テクニカル サポートに対して、予期しない再起動が Azu
 
 ご参考: [Azure 仮想マシンにおける可用性の考え方](https://blogs.msdn.microsoft.com/ainaba-csa/2017/05/31/availability-of-azure-virtual-machines/)
 
-**Q. Azure 上の OSS（オープン ソース ソフトウェア) において、障害対応を行ってほしい**
+**Q. Azure 上の OS S（オープン ソース ソフトウェア) において、障害対応を行ってほしい**
 
 マイクロソフトでは、以下技術情報に沿ったオープン ソース テクノロジーのサポートを行っております。
 

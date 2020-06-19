@@ -51,7 +51,7 @@ tags:
 
 証明書の変更は、以下の手順で実行可能です。
 
-1. $AppGw 変数に、既存の Application Gateway の設定をGet します。
+1. $AppGw 変数に、既存の Application Gateway の設定を Get します。
    >$AppGw = Get-AzureRmApplicationGateway -Name "AppGw の名前" -ResourceGroupName "AppGw が作成されているリソース グループ名"
 
 2. $AppGw 変数に含まれる、証明書を更新します。

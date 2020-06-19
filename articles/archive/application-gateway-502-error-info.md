@@ -18,7 +18,7 @@ Application Gateway を使っている過程で、HTTP ステータスコード 
 一番簡単に出す方法は、Application Gateway を作成して、バックエンドに何も入れずに、作ったサーバーにアクセスすれば、502 エラーが返ります。
 まずは、502 エラーはどういうものなのかを見ていきます。
 
-HTTPステータスコード
+HTTP ステータスコード
 [https://ja.wikipedia.org/wiki/HTTPステータスコード](https://ja.wikipedia.org/wiki/HTTPステータスコード)
 
 Wikipedia ですと、以下のような記述があります。

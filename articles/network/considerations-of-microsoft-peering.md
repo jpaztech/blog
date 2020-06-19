@@ -57,7 +57,7 @@ BGP でピア (ネイバー) を張るには、PE と MSEE のそれぞれのイ
 
 ### 経路広報
 
-オンプレミス側から広報する経路情報は、基本的に、PE ルーターで NAT 用に確保しているアドレス プレフィクスです。後述の通り、この経路情報は `Advertised public prefixes` のパラメータで指定します。
+オンプレミス側から広報する経路情報は、基本的に、PE ルーターで NAT 用に確保しているアドレス プレフィクスです。後述の通り、この経路情報は `Advertised public prefixes` のパラメーターで指定します。
 
 例えば 203.0.113.0/28 をオンプレミス/プロバイダー側から広報すれば、Microsoft のパブリック サービスから 203.0.113.0/28 に宛てたパケットは、この ExprsesRoute 回線を経由してフォワーディングされる動作となります。このため、オンプレミス側から Azure への通信を 203.0.113.0/28 を SNAT することで、戻り通信が対称的に返ってくるようになります。
 
@@ -115,11 +115,11 @@ Azure Portal 上での操作方法等は公式ドキュメントに記載され�
 
 ### 注意点: Microsoft Peering 構成時のパラメータ
 
-次に、手順 3. で Microsoft Peering 構成時に入力する項目 (パラメータ) についてです。
+次に、手順 3. で Microsoft Peering 構成時に入力する項目 (パラメーター) についてです。
 
 * [Azure ExpressRoute: ピアリングの構成 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-howto-routing-portal-resource-manager#to-create-microsoft-peering)
 
-基本的な説明は上記ドキュメント内に記載されていますが、特にご質問をいただくことが多いパラメータについて以下で簡単に説明させていただきます。
+基本的な説明は上記ドキュメント内に記載されていますが、特にご質問をいただくことが多いパラメーターについて以下で簡単に説明させていただきます。
 
 **アドバタイズされたパブリック プレフィクス (Advertised public prefixes)**:
 
@@ -128,7 +128,7 @@ Microsoft Peering は、グローバル IP アドレス (いわゆるインタ�
 
 **顧客 ASN (Customer ASN)**:
 
-前述の `Advertised public prefixes` として設定されるパブリック IP アドレスが、Peer AS と異なる AS に所属している場合に設定が必要となる場合があります。例えば、PE ルーターではプロバイダーの AS 番号 (これは `Peer AS` と呼ばれるパラメータです) を利用し、`Advertised public prefixes` はお客様所有の AS (これが `Customer AS` です) のパブリック IP アドレスを利用する場合などが該当します。
+前述の `Advertised public prefixes` として設定されるパブリック IP アドレスが、Peer AS と異なる AS に所属している場合に設定が必要となる場合があります。例えば、PE ルーターではプロバイダーの AS 番号 (これは `Peer AS` と呼ばれるパラメーターです) を利用し、`Advertised public prefixes` はお客様所有の AS (これが `Customer AS` です) のパブリック IP アドレスを利用する場合などが該当します。
 
 **ルーティング レジストリ名 (Routing registry name)**:
 

@@ -47,11 +47,11 @@ OWASP ModSecurity Core Rule Set Project
    もし Web サイトを Azure 仮想マシン等でホストしている場合には、サードパーティ製の WAF によって、直接 Web サーバー (IIS や Apache など) に適用できる WAF コンポーネントもあります。
    直接インストールをすることになるため、細かなカスタマイズも可能になる場合も多いので、もし必要がある場合はそちらもご検討ください。
 
-3. AppGW 側の構成にて、適用できるルールは、カスタマイズができますが、OWASP Content Security Policy（CSP）の定義によって無効化などができず強制的に有効になるルールもあります。各種ルールの詳細につきましては、OWASP の各種定義をご参照ください。
+3. AppGW 側の構成にて、適用できるルールは、カスタマイズができますが、OWASP Content Security Policy （ CSP ）の定義によって無効化などができず強制的に有効になるルールもあります。各種ルールの詳細につきましては、OWASP の各種定義をご参照ください。
 
 4. AppGW で WAF を利用する場合には、AppGW 上のインスタンス サイズが M 以上のサイズが必要になります。
    また、WAF に特化した料金になりますので、ご留意ください。
-   また、WAF が有効な場合に限りませんが、AppGW で SLA 適用の際には、2つ以上のインスタンスでの運用が必要になります。
+   また、WAF が有効な場合に限りませんが、AppGW で SLA 適用の際には、2 つ以上のインスタンスでの運用が必要になります。
    - Application Gateway の価格
    - [https://azure.microsoft.com/ja-jp/pricing/details/application-gateway/](https://azure.microsoft.com/ja-jp/pricing/details/application-gateway/)
 

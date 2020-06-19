@@ -8,8 +8,8 @@ tags:
   - Performance
 ---
 
-こんにちは、Azureサポートチームの三國です。
-今回は、ARMのWindowsでディスクやVMレベルでのIOスロットリングを監視・通知する方法についてご案内いたします。
+こんにちは、Azure サポートチームの三國です。
+今回は、ARM の Windows でディスクや VM レベルでの IO スロットリングを監視・通知する方法についてご案内いたします。
 
 本記事は下記英文ブログの抄訳です。
 [How to monitor and alert potential Disk and VM Level IO Throttling on Windows VMs using ARM](https://blogs.msdn.microsoft.com/mast/2017/09/12/how-to-monitor-and-alert-potential-disk-and-vm-level-io-throttling-on-windows-vms-using-arm/)
@@ -17,17 +17,17 @@ tags:
 
 ## はじめに
 
-本ブログはAzure上にあるWindows VMのディスクパフォーマンス監視手順について紹介します。
-ディスクやVMレベルでのIOスロットリングについて検出することが目的です。
-本ガイドラインはAzure Resource ManagerにてデプロイされているAzure上のすべてのバージョンのWindowsに適用できます。
-手順の紹介に入る前に、3つの前提となる概念について説明します。
+本ブログは Azure 上にある Windows VM のディスクパフォーマンス監視手順について紹介します。
+ディスクや VM レベルでの IO スロットリングについて検出することが目的です。
+本ガイドラインは Azure Resource Manager にてデプロイされている Azure 上のすべてのバージョンの Windows に適用できます。
+手順の紹介に入る前に、3 つの前提となる概念について説明します。
 
 ### スロットリングとは？
 
 Azure Premium Storage では、選択された VM サイズとディスク サイズに応じて、指定された数の IOPS とスループットがプロビジョニングされます。
 アプリケーションが、VM またはディスクが対応できるこれらの上限を超えて IOPS やスループットを試みると、これを抑制するように調整されます。 これは、アプリケーションのパフォーマンスの低下という形で現れます。
 これにより、待機時間が長くなり、スループットや IOPS が低下する可能性があります。
-スロットリングにはディスクレベルと VM レベルの2種類があります。
+スロットリングにはディスクレベルと VM レベルの 2 種類があります。
 
 詳細については以下のドキュメントをご確認下さい。
 [Azure Premium Storage: 高パフォーマンス用に設計する - Throttling](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/premium-storage-performance#throttling)
@@ -35,7 +35,7 @@ Azure Premium Storage では、選択された VM サイズとディスク サ�
 
 ### ディスク レベルのスロットリングとは？
 
-基本的に、ディスクの制限値を超えたIOについてはすべて滞留しより大きな遅延が発生します。
+基本的に、ディスクの制限値を超えた IO についてはすべて滞留しより大きな遅延が発生します。
 管理ディスク・非管理対象ディスクの制限値については以下のドキュメントをご参照ください。
 [汎用仮想マシンのサイズ - DSv2 シリーズ](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/sizes-general#dsv2-series)
 
@@ -46,25 +46,25 @@ Azure Premium Storage では、選択された VM サイズとディスク サ�
 こちらは Premium ディスクをお使いの場合のみ該当します。
 Standard ディスクをお使いの場合には VM レベルの IO スロットリングという概念はありません。
 
-IOスロットリングの詳細については、以下のドキュメントをご参照ください。
+IO スロットリングの詳細については、以下のドキュメントをご参照ください。
 [Azure VM Storage Performance and Throttling Demystified](https://blogs.technet.microsoft.com/xiangwu/2017/05/14/azure-vm-storage-performance-and-throttling-demystify/)
 
 
 ## 準備
 
-本ブログの説明に用いるVMの構成例を以下に記載します。
+本ブログの説明に用いる VM の構成例を以下に記載します。
 
 **VM 名**: "MonitorVM"
 **VM サイズ** : DS2_v2
 **Disk 構成**:
-以下の4データディスクをVMにアタッチします:
+以下の 4 データディスクを VM にアタッチします:
 - 2x P10 (128 GB - Disk limits: 500 IOPS or 100 MB/s - Disk Cache Setting: None)
 - 1x P20 (512 GB - Disk limits: 2300 IOPS or 150 MB/s - Disk Cache Setting: None)
 - 1x P30 (1024 GB - Disk limits: 5000 IOPS or 200 MB/s - Disk Cache Setting: None)
 
 本シナリオでは、上記のようにアタッチされたディスクすべてについてキャッシュが無効になっています。
-そのためVMの非キャッシュディスクスループット制限(IOPS/MBps)について確認します。
-下記のURLの"キャッシュが無効な場合の最大ディスク スループット: IOPS/MBps"より確認できます。
+そのため VM の非キャッシュディスクスループット制限 (IOPS/MBps) について確認します。
+下記の URL の"キャッシュが無効な場合の最大ディスク スループット: IOPS/MBps"より確認できます。
 [汎用仮想マシンのサイズ - DSv2 シリーズ](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/sizes-general#dsv2-series)
 
 ![](./monitor-io-throttoling-on-win-vm-arm/01_dsv2_sizes.png)
@@ -85,7 +85,7 @@ F ドライブに、P10 ディスクを 2 つ用いて[復元力を備えた記�
 
 ![](./monitor-io-throttoling-on-win-vm-arm/04_explorer.png)
 
-**"MonitorVM"VM内のパフォーマンスモニター:**
+**"MonitorVM"VM 内のパフォーマンスモニター:**
 
 ![](./monitor-io-throttoling-on-win-vm-arm/05_perfmon.png)
 
@@ -103,7 +103,7 @@ VM 内のパフォーマンスモニターで VM の物理ディスクのパフ�
 
 ## Azureポータルでパフォーマンスカウンターを監視するには？
 
-パフォーマンスカウンターはAzureポータルの診断設定にて追加できます。
+パフォーマンスカウンターは Azure ポータルの診断設定にて追加できます。
 ![](./monitor-io-throttoling-on-win-vm-arm/06_perfcounterportal.png)
 
 追加手順を以下に記載します。
@@ -124,11 +124,11 @@ VM 内のパフォーマンスモニターで VM の物理ディスクのパフ�
 
 ## 収集した情報を確認するには？
 
-下図のようにAzureポータルの"Metrics"より確認ができます。
+下図のように Azure ポータルの"Metrics"より確認ができます。
 
 ![](./monitor-io-throttoling-on-win-vm-arm/07_metricportal.png)
 
-VMブレードの "metrics" へ移動すると、追加したパフォーマンス カウンターを選択し折れ線グラフで値を見ることができます。
+VM ブレードの "metrics" へ移動すると、追加したパフォーマンス カウンターを選択し折れ線グラフで値を見ることができます。
 右上にある"time range" を変更することで最近のデータについて見ることができます。
  
 次に、"Add metric alert"より負荷が制限に達した際に通知を受ける方法をご案内します。
@@ -156,7 +156,7 @@ VMブレードの "metrics" へ移動すると、追加したパフォーマン�
 ## "metrics alert Rues"をテストするには？
 
 今回、作成したルールをテストするのに [diskspd](https://github.com/Microsoft/diskspd) というベンチマークツールを用います。
-以下のパラメータを用いて F ドライブに負荷をかけます (P10 disk を 2 つ用いた記憶域スペース)
+以下のパラメーターを用いて F ドライブに負荷をかけます (P10 disk を 2 つ用いた記憶域スペース)
  
 >diskspd.exe -c1024M -d300 -W30 -w100 -t1 -o25 -b8k -r -h -L F:\_diskSpd_test\testfile.dat
  
@@ -175,7 +175,7 @@ VMブレードの "metrics" へ移動すると、追加したパフォーマン�
 理論上、2 つのディスクの負荷上限は 7300 IOPS (P20 が 2300, P30 が 5000) ですが、VM の非キャッシュ スループットの上限は DS2_v2 の場合 6400 IOPS であることがわかります。
  
 先述の "metric alert rule" で指定した閾値を超えた場合、メールにて通知されます。
-下図は、VMレベルの制限値に達した際の通知メールです。
+下図は、VM レベルの制限値に達した際の通知メールです。
 
 ![](./monitor-io-throttoling-on-win-vm-arm/12_notificationalertvmlimit.png)
 
@@ -183,7 +183,7 @@ VMブレードの "metrics" へ移動すると、追加したパフォーマン�
 
 ![](./monitor-io-throttoling-on-win-vm-arm/13_notificationbelowlimit.png)
 
-[IO 要求の特性](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-premium-storage-performance#nature-of-io-requests)により、たとえば 1 つ 1 つの IO サイズが大きい場合などに、IOP S制限値に到達していなくともスループットの制限値に到達することが起こりえます。
+[IO 要求の特性](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-premium-storage-performance#nature-of-io-requests)により、たとえば 1 つ 1 つの IO サイズが大きい場合などに、IOP S 制限値に到達していなくともスループットの制限値に到達することが起こりえます。
 そのため以下の MBps についての監視も検討できます。
  
 Throughput/MBps:
@@ -196,9 +196,9 @@ Throughput/MBps:
 "\PhysicalDisk(6 F:)\Disk Bytes/sec" (ディスクレベルのスロットリング - Storage Spaces Drive 2x P10 - 200 MBps)
  
 今回の例においてスループットの制限値については、VM レベルよりディスク レベルのスロットリングの制限値が高いため、VM レベルについてのみ通知を設定すれば十分です。
-ディスク レベルよりも高いスロットリングの制限値をもつ VM サイズ (DS4_v2 - 384 MBpsなど) を選択した場合は、ディスク/VM 両方のレベルで設定します。
+ディスク レベルよりも高いスロットリングの制限値をもつ VM サイズ (DS4_v2 - 384 MBps など) を選択した場合は、ディスク/VM 両方のレベルで設定します。
  
-下図はVMレベルでのMBpsの制限値超えを通知するルールです。
+下図は VM レベルでの MBps の制限値超えを通知するルールです。
 
 ![](./monitor-io-throttoling-on-win-vm-arm/14_rulembps.png)
 

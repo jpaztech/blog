@@ -27,14 +27,14 @@ End to End の TLS にはせずに、クライアントと Application Gateway �
 
 <span id="application-gateway-error"></span>
 ## <a href="#application-gateway-error" style="color:#f60;">Application Gateway へアクセスした際の証明書エラー</a>
-FQDN を使用して Application Gateway のフロントエンド IP アドレスにアクセスした際に証明書のエラーが出る場合、リスナーの証明書に問題がある可能性があります。ブラウザ/ OS により動作が変わる場合があるので、念のため、複数のブラウザ/ OS にてご確認いただくことをお勧めいたします。
+FQDN を使用して Application Gateway のフロントエンド IP アドレスにアクセスした際に証明書のエラーが出る場合、リスナーの証明書に問題がある可能性があります。ブラウザー/ OS により動作が変わる場合があるので、念のため、複数のブラウザー/ OS にてご確認いただくことをお勧めいたします。
 
 #### 出力例
 
-Windows の Firefox ブラウザ
+Windows の Firefox ブラウザー
 ![Windows-Firefox](./appgw-troubleshooting-cert/Windows-FireFox.jpg)
 
-Windows の Chrome ブラウザ
+Windows の Chrome ブラウザー
 ![Windows-Chrome](./appgw-troubleshooting-cert/Windows-Chrome.png)
 
 Linux の curl コマンド
@@ -56,12 +56,12 @@ how to fix it, please visit the web page mentioned above.
 *  自己証明書を使用しており、ルート証明書とのチェーンの検証で失敗している
 *  リスナーに登録した証明書に中間証明書が含まれていない
 
-4 点目の中間証明書についてですが、リスナーに登録した証明書に中間証明書が含まれていない場合、証明書の検証に失敗し、エラーになる場合があることを確認しております。(クライアントやブラウザによって動作が異なりますが、特に Linux 系のクライアントにて失敗することを確認済)
+4 点目の中間証明書についてですが、リスナーに登録した証明書に中間証明書が含まれていない場合、証明書の検証に失敗し、エラーになる場合があることを確認しております。(クライアントやブラウザーによって動作が異なりますが、特に Linux 系のクライアントにて失敗することを確認済)
 そのため、Application Gateway のリスナーに登録する PFX 形式の証明書は中間証明書を含む形で構成いただく必要がございます。
 
 
 
-Edge や Chrome ブラウザの場合、クライアント側で中間証明書を補完するため、中間証明書に起因する問題が発生しているかがわからないことがあります。その場合、下記に記載の openssl コマンドにて証明書の状態を確認することが可能ですので、念のためご確認いただくことをお勧めいたします。
+Edge や Chrome ブラウザーの場合、クライアント側で中間証明書を補完するため、中間証明書に起因する問題が発生しているかがわからないことがあります。その場合、下記に記載の openssl コマンドにて証明書の状態を確認することが可能ですので、念のためご確認いただくことをお勧めいたします。
 
 <span id="probe-error"></span>
 ## <a href="#probe-error" style="color:#f60;">正常性プローブのエラー</a>
@@ -180,7 +180,7 @@ AppService 証明書を Azure Portal, Azure CLI でエクスポートした場�
 
 以下のコマンドを実施することで証明書の構成を確認することができます。
 
-【Windows】
+【 Windows 】
 
 コマンドプロンプトで以下を実施します。
 
@@ -188,7 +188,7 @@ AppService 証明書を Azure Portal, Azure CLI でエクスポートした場�
 certutil -dump "ファイルのパス/xxxxx.pfx"
 ```
 
-【Linux】
+【 Linux 】
 ```
 openssl pkcs12 -info -in <ファイルのパス/xxxxx.pfx>
 ```

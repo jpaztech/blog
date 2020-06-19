@@ -26,12 +26,12 @@ tags:
 
 ## Storage Account の復旧について
 
-Storage Account （の特定の SKU）に限り、Azure 基盤側から復旧を行うことが可能な場合があります。具体的には GRS と RA-GRS （セカンダリリージョンへの地理冗長が組まれている SKU） が前提となります。
+Storage Account （の特定の SKU ）に限り、Azure 基盤側から復旧を行うことが可能な場合があります。具体的には GRS と RA-GRS （セカンダリリージョンへの地理冗長が組まれている SKU ） が前提となります。
 これは Storage Account のセカンダリリージョンのデータが削除されるまでに時差があるため、セカンダリリージョンからデータを持ってくることとなります。
 なお、復旧対象は Storage Account か コンテナ を丸ごと消してしまった場合のみが対象となり、単一のデータを誤削除しても復旧することは叶いませんので、予めご了承ください。
 
-万が一、誤ってストレージアカウント・コンテナを削除してしまった場合は、削除してしまった Storage Account 名・サブスクリプション ID (英数字32桁)・削除されたおおまかな時刻を記載のうえ弊サポート部門までお問い合わせください。基本的には時間との勝負なので、判明次第すぐにお問い合わせください。
-また、復旧を行う際に整合性の問題が発生することを避けるため、同名の Stoage Account・コンテナは<span style="font-size: 150%; color: red;">作成しないように</span>お願いいたします。
+万が一、誤ってストレージアカウント・コンテナを削除してしまった場合は、削除してしまった Storage Account 名・サブスクリプション ID (英数字 32 桁) ・削除されたおおまかな時刻を記載のうえ弊サポート部門までお問い合わせください。基本的には時間との勝負なので、判明次第すぐにお問い合わせください。
+また、復旧を行う際に整合性の問題が発生することを避けるため、同名の Stoage Account ・コンテナは<span style="font-size: 150%; color: red;">作成しないように</span>お願いいたします。
 
 なお、復旧が可能となる期間についてはリージョンやデータセンター内部の動作等、様々な要因にて前後するためお伝えすることはできません。過去の事例から削除後すぐにお問い合わせをしたものの、復旧できなかったという事例もございますし、お問い合わせの起票が削除から数日後であったものの復元できたというケースもございます。弊サポート部門でもできる限り復旧できるようにご支援いたしますが、ベストエフォートでの対応となり、復旧が叶わない可能性も十分ございますので、予めご了承ください。
 
@@ -69,7 +69,7 @@ Storage Account （の特定の SKU）に限り、Azure 基盤側から復旧を
 
 そのため、IAM の項目から対象のリソースやリソースグループに対して、下記のように特定のユーザーに対して "所有者" か "ユーザー アクセス管理者" の権限を割り当てください。
 
-Azure Portal > Virtual Machines > 対象の仮想マシン > アクセス制御(IAM) > ロール割り当て > 追加 > 役割とユーザーを選択し、追加
+Azure Portal > Virtual Machines > 対象の仮想マシン > アクセス制御 (IAM) > ロール割り当て > 追加 > 役割とユーザーを選択し、追加
 
 
 画像例: 仮想マシンに特定のユーザーに "ユーザー アクセス管理者" を付与
@@ -78,7 +78,7 @@ Azure Portal > Virtual Machines > 対象の仮想マシン > アクセス制御(
 
 ## BLOB ファイルの誤削除を未然に防ぐ方法について（Soft Delete 機能のご紹介）
 
-リソースロック機能は Azure のリソースが対象ですが、"Soft Delete (論理的な削除)機能" を事前に登録いただく事で、Storage Account 内の BLOB ファイルを操作ミス等で削除してしまっても設定した期間内であれば復旧することが可能となります。
+リソースロック機能は Azure のリソースが対象ですが、"Soft Delete (論理的な削除) 機能" を事前に登録いただく事で、Storage Account 内の BLOB ファイルを操作ミス等で削除してしまっても設定した期間内であれば復旧することが可能となります。
 
 ポータルからさくっと設定・復元することができるため、重要なデータを保護している場合には、有効化いただくことを推奨いたします。設定手順や詳細については下記公開ドキュメントをご確認ください。
 
@@ -86,7 +86,7 @@ Azure Portal > Virtual Machines > 対象の仮想マシン > アクセス制御(
 >[https://docs.microsoft.com/ja-jp/azure/storage/blobs/storage-blob-soft-delete?tabs=azure-portal](https://docs.microsoft.com/ja-jp/azure/storage/blobs/storage-blob-soft-delete?tabs=azure-portal)
 
 
-\# 現段階では Azure Data Lake Storage Gen2 の Storage Account についてはSoft Deleteの機能はサポートされておりませんので、予めご了承ください。
+\# 現段階では Azure Data Lake Storage Gen2 の Storage Account については Soft De leteの機能はサポートされておりませんので、予めご了承ください。
 
 >参考URL: Azure Data Lake Storage Gen2 に関する既知の問題
 >[https://docs.microsoft.com/ja-jp/azure/storage/blobs/data-lake-storage-known-issues#support-for-other-blob-storage-features](https://docs.microsoft.com/ja-jp/azure/storage/blobs/data-lake-storage-known-issues#support-for-other-blob-storage-features)

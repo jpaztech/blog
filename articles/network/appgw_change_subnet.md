@@ -22,7 +22,7 @@ tags:
 
 ---
 1. あらかじめ同一 VNET 内に変更先の新しいサブネットを作成しておきます。
-2. Azure PowerShell または ポータルより Cloud Shell を起動し、以下のコマンドレットを入力します。（<>の部分は環境に合わせて変更が必要となります）
+2. Azure PowerShell または ポータルより Cloud Shell を起動し、以下のコマンドレットを入力します。（ <> の部分は環境に合わせて変更が必要となります）
 
 3. 構成を変更する対象のサブスクリプションを指定します。
 ```powershell
@@ -54,7 +54,7 @@ $gw2=Set-AzApplicationGatewayIPConfiguration -ApplicationGateway $gw -Name "appG
 Stop-AzApplicationGateway -ApplicationGateway $gw
 ```
 
-7. Application Gatewayを設定、開始します。※ 開始に 10 分以上かかります
+7. Application Gateway を設定、開始します。※ 開始に 10 分以上かかります
 ```powershell
 Set-AzApplicationGateway -ApplicationGateway $gw2
 ```

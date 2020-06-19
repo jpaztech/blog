@@ -65,7 +65,7 @@ Application Gateway には主に以下の 7 つの設定項目があります。
 6. **リスナー**
    Application Gateway がクライアントからリクエストを受け付けるためのフロントエンド IP の指定とフロントエンドのポート、プロトコル (http/https) を設定します。
    https の場合、証明書の設定も行います。
-   マルチサイト リスナーを構成することでリクエストのホストヘッダに応じて負荷分散を行うことが可能です。
+   マルチサイト リスナーを構成することでリクエストのホストヘッダーに応じて負荷分散を行うことが可能です。
 
 7. **ルール**
    上記の "リスナー"、"バックエンドプール"、"HTTP 設定" の紐づけを行います。
@@ -74,7 +74,7 @@ Application Gateway には主に以下の 7 つの設定項目があります。
 
 8. **正常性プローブ**
    既定のプローブ以外のカスタム プローブを使用する場合に設定を行います。
-   カスタム プローブを構成することで、正常性プローブのホストヘッダやパスを指定することができます。
+   カスタム プローブを構成することで、正常性プローブのホストヘッダーやパスを指定することができます。
 
 
 <span id="2"><span>
@@ -91,7 +91,7 @@ Azure Portal から作成した際の初期設定は Basic 構成となります
 
 <span id="3"><span>
 ## ■ マルチサイト
-マルチサイト リスナーを構成することで、クライアントがアクセスする URL のホスト名 (HTTP のホストヘッダ) に応じて振り分け先を変えることができます。
+マルチサイト リスナーを構成することで、クライアントがアクセスする URL のホスト名 (HTTP のホストヘッダー) に応じて振り分け先を変えることができます。
 以下の例の動作をご説明します。
 
 クライアントが "https://www.contoso.com" にアクセスした場合、http (80) で Site1 にアクセスします。
@@ -149,7 +149,7 @@ Application Gateway は受け取ったリクエストを他のリスナーや外
 
 <span id="7"><span>
 ## ■ FAQ
-<span style="color:red;">以下の FAQ は V2 SKU ではない SKU (Standard, WAF) のApplication Gateway を対象に記載しておりますのでご留意ください。</span>
+<span style="color:red;">以下の FAQ は V2 SKU ではない SKU (Standard, WAF) の Application Gateway を対象に記載しておりますのでご留意ください。</span>
 
 - **Application Gateway のフロントエンド IP アドレス (パブリック) を固定 IP にできますか。**
   フロントエンドのパブリック IP アドレスは動的な IP アドレスのみがサポートされております。
@@ -164,7 +164,7 @@ Application Gateway は受け取ったリクエストを他のリスナーや外
   NSG は FQDN での制限や地理的リージョンでの IP アドレス制限には対応しておりませんので、ご留意ください。
 
   NSG のルールは以下を参照ください。
-  ネットワーク セキュリティ グループはアプリケーション ゲートウェイ サブネットでサポートされますか?
+  ネットワーク セキュリティ グループはアプリケーション ゲートウェイ サブネットでサポートされますか ?
   [https://docs.microsoft.com/ja-jp/azure/application-gateway/application-gateway-faq#are-network-security-groups-supported-on-the-application-gateway-subnet](https://docs.microsoft.com/ja-jp/azure/application-gateway/application-gateway-faq#are-network-security-groups-supported-on-the-application-gateway-subnet)
 
   Application Gateway へ接続すると 502 エラーが表示されます。
@@ -179,8 +179,8 @@ Application Gateway は受け取ったリクエストを他のリスナーや外
 
 - **Sorry ページを構成することは可能でしょうか。**
   以下のエラーページについてはカスタムのエラーページを構成することができます。
-  - HTTP 502（Bad Gateway)
-  - HTTP 403（Forbidden）
+  - HTTP 502 （ Bad Gateway)
+  - HTTP 403 （ Forbidden ）
 
   Application Gateway のカスタム エラー ページを作成する
   [https://docs.microsoft.com/ja-jp/azure/application-gateway/custom-error](https://docs.microsoft.com/ja-jp/azure/application-gateway/custom-error)
