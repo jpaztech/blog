@@ -7,7 +7,7 @@ tags:
 disableDisclaimer: true
 ---
 
-こんにちは、Azure サポートチームの山崎です。
+こんにちは、Azure テクニカル サポート チームの山崎です。
 今回は対象の通信が Microsoft ピアリングを経由するかどうかの確認方法についてご紹介します。
 
 ## Microsoft ピアリングで広報される経路について

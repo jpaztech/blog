@@ -8,7 +8,7 @@ tags:
 disableDisclaimer: true
 ---
 
-こんにちは、Azure サポートチームの飯塚です。
+こんにちは、Azure テクニカル サポート チームの飯塚です。
 
 最近、おかげさまで Application Gateway をご利用いただいているお客様が増えております。以前は、ポータルからは Application Gateway の作成ができなかったため、手が出しにくいサービスの 1 つでしたが、現在はポータルから作成可能になり、より手軽に Application Gateway をご利用いただけるようになりました。
 

@@ -8,7 +8,7 @@ tags:
   - SSL
 disableDisclaimer: true
 ---
-こんにちは、Azure サポートチーム檜山です。
+こんにちは、Azure テクニカル サポート チーム檜山です。
 
 今回は Application Gateway の証明書まわりについてよくお問い合わせをいただくものをご紹介させていただきます。
 

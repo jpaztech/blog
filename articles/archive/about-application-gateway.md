@@ -17,7 +17,7 @@ Application Gateway で EV 証明書がサポートされるようになりま�
 </span>
 
 
-こんにちは、Azure サポートチームの檜山です。
+こんにちは、Azure テクニカル サポート チームの檜山です。
 今回は Application Gateway の構成についてご紹介させていただきます。
 
 また、下部に Application Gateway の FAQ もまとめてますので、ご参照ください。

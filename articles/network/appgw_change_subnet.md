@@ -7,7 +7,7 @@ tags:
 disableDisclaimer: true
 ---
 
-こんにちは、Azure サポートチームの薄井です。
+こんにちは、Azure テクニカル サポート チームの薄井です。
 今回は Application Gateway V1 および V2 でサブネットを変更する方法についてご紹介します。
 
 残念ながら現在の Azure ポータルからは、すでにデプロイした Application Gateway のサブネットを後から変更することはできません。
