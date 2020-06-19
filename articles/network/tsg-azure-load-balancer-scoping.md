@@ -52,7 +52,7 @@ Azure Load Balancer は TCP ペイロードに関与しないため、例えば 
 
 切り分けのフローチャートを作成したので、まずは下図を基に全体像を把握していただければ幸いです。
 
-![tsg-flowchart](./tsg-azure-load-balancer-scoping/scoping-flowchart.png)
+![tsg-flowchart](./tsg-azure-load-balancer-scoping/-azure-load-balancer-scoping/scoping-flowchart.png)
 
 
 ### 準備
