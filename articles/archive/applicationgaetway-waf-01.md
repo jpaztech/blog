@@ -5,6 +5,7 @@ tags:
   - Archive
   - Application Gateway
   - WAF
+disableDisclaimer: true
 ---
 
 皆さんこんにちは、Azure テクニカルサポートの平原です。

@@ -5,6 +5,7 @@ tags:
   - Network
   - Azure Load Balancer
   - TSG
+disableDisclaimer: true
 ---
 
 Azure Networking テクニカル サポートの山口です。
@@ -146,4 +147,3 @@ PS C:\server> netsh trace stop
 
 ---
 
-※本情報の内容（リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。

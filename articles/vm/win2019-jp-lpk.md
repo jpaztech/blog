@@ -4,6 +4,7 @@ date: 2020-06-10 17:30:00
 tags:
   - VM
   - Windows
+disableDisclaimer: true
 ---
 
 こんにちは、Azure サポートチームの山下です。

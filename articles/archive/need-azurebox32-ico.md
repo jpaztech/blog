@@ -4,6 +4,7 @@ date: 2016-03-30 20:58:32
 tags:
   - Archive
   - Client Package
+disableDisclaimer: true
 ---
 
 こんにちは。Azure サポートチームの比留間です。

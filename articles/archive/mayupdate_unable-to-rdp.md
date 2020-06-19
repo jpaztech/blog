@@ -5,6 +5,7 @@ tags:
   - Archive
   - RDP
   - Update / Upgrade
+disableDisclaimer: true
 ---
 
 Azure サポートチームの石井です。

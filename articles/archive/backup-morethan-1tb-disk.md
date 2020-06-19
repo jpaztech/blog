@@ -4,6 +4,7 @@ date: 2017-06-30 21:03:44
 tags:
   - Archive
   - Azure Backup
+disableDisclaimer: true
 ---
 
 こんにちは、Azure サポート チームの世古です。

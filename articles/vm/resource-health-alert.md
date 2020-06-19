@@ -4,6 +4,7 @@ date: 2020-1-24 17:30:00
 tags:
   - VM
   - Resource Health
+disableDisclaimer: true
 ---
 
 こんにちは、Azure サポートチームの安田です。
