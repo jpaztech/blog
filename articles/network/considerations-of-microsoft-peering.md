@@ -5,6 +5,7 @@ tags:
   - Network
   - ExpressRoute
   - Microsoft Peering
+disableDisclaimer: true
 ---
 
 Azure Networking テクニカル サポートの山口です。
@@ -202,5 +203,3 @@ BGP コミュニティでは、サービス カットで IP アドレスを集�
 PE ルーター、あるいはお客様拠点のルーターで経路のフィルタリングをご実施ください。
 
 ---
-
-※本情報の内容（リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。

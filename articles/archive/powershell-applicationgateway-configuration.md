@@ -5,6 +5,7 @@ tags:
   - Archive
   - Application Gateway
   - PowerShell
+disableDisclaimer: true
 ---
 
 こんにちは、Azure サポートチームの飯塚です。

@@ -4,6 +4,7 @@ date: 2017-05-02 15:07:49
 tags:
   - Archive
   - PowerShell
+disableDisclaimer: true
 ---
 
 ><span style="color:red;">2017 年 9 月 5 日 追記</span>

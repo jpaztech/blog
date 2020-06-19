@@ -4,6 +4,7 @@ date: 2019-11-20 17:30:00
 tags:
   - Other
   - Support Explained
+disableDisclaimer: true
 ---
 
 こんにちは、Azure サポートチームです。

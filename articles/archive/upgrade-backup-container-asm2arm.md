@@ -4,6 +4,7 @@ date: 2017-08-03 16:31:01
 tags:
   - Archive
   - Update / Upgrade
+disableDisclaimer: true
 ---
 
 こんにちは、Azure IaaS Support チームです。
