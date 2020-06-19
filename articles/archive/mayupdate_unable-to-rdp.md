@@ -8,7 +8,7 @@ tags:
 disableDisclaimer: true
 ---
 
-Azure サポートチームの石井です。
+Azure テクニカル サポート チームの石井です。
 2018 年 5 月第 2 週目頃から、突然 Windows 仮想マシンに RDP すると以下のエラーが出て接続が出来なくなったというケースが報告されています。
 
 ![](./mayupdate_unable-to-rdp/mayupdate_unable-to-rdp.png)
