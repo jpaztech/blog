@@ -3,41 +3,41 @@
 [https://jpaztech.github.io/blog/](https://jpaztech.github.io/blog/)
 
 ## Information
-- [comming soon](./information/)
+- [comming soon](./articles/information/)
 
 ## VM
-- [リソース正常性（Resource Health）アラートの構成方法](./vm/resource-health-alert.md)
-- [Azure リソースの意図しない削除について](./vm/resource-delete.md)
+- [リソース正常性（Resource Health）アラートの構成方法](./articles/vm/resource-health-alert.md)
+- [Azure リソースの意図しない削除について](./articles/vm/resource-delete.md)
 
 ## Storage
-- [comming soon](./strage/)
+- [comming soon](./articles/strage/)
 
 ## Network
-- [Microsoft ピアリングを経由するかどうかの確認方法](./network/judge-via-ms-peering.md)
-- [Application Gateway でサブネットを変更する方法](./network/appgw_change_subnet.md)
+- [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
+- [Application Gateway でサブネットを変更する方法](./articles/network/appgw_change_subnet.md)
 
 ## OSS
-- [comming soon](./oss/)
+- [comming soon](./articles/oss/)
 
 ## Other
-- [Azure IaaS における有償 Azure テクニカル サポートの対応範囲](./other/azure_technical_support_explained.md)
-- [なぜ今サポートエンジニアが熱いか](./other/technical_support_engineer_explained.md)
+- [Azure IaaS における有償 Azure テクニカル サポートの対応範囲](./articles/other/azure_technical_support_explained.md)
+- [なぜ今サポートエンジニアが熱いか](./articles/other/technical_support_engineer_explained.md)
 
 ## TechNet Archives
-- [Application Gateway の構成について](./archive/about-application-gateway.md)
-- [Application Gateway における 502 Error について](./archive/application-gateway-502-error-info.md)
-- [Application Gateway (WAF) での脆弱性検知について](./archive/application-gateway-waf-vulnerability-detection.md)
-- [Application Gateway で利用できる WAF について](./archive/applicationgaetway-waf-01.md)
-- [Application Gateway を PowerShell で設定変更するコツ](./archive/powershell-applicationgateway-configuration.md)
-- [Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり](./archive/azure-powershell-3-8-0-install.md)
-- [1 TB 以上のディスクを持つ VM の Azure Backup (Private Preview)](./archive/backup-morethan-1tb-disk.md)
-- [2016 年 9 月 15 日に発生した DNS の問題について](./archive/dns-2016-09-16.md)
-- [2017/10/31 に AzureBackup コンテナー (ASM) が、RecoveryServices コンテナー (ARM) にアップグレードされるお知らせ ](./archive/upgrade-backup-container-asm2arm.md)
-- [2017/12/9 以降 Azure VM の起動に時間がかかる事象についての対処方法](./archive/take-time-to-boot-after20171209.md)
-- [2018 年 1 月 4 日以降で Disk 11 のエラーが発生し MARS Agent バックアップが失敗する (0x8007045D)](./archive/disk11-after20180104.md)
-- [5 月のセキュリティ更新を適用後、Windows 仮想マシンに RDP 接続時にエラーが発生する事象の回避策](./archive/mayupdate_unable-to-rdp.md)
-- [’azurebox32.ico’ が必要です](./archive/need-azurebox32-ico.md)
-- [(PowerShell編) Azure仮想マシン (管理ディスク) の交換を活用して元のネットワークにリストアする](./archive/restore-vm-by-swap-manageddisk.md)
-- [ARMのWindowsでディスクやVMレベルでのIOスロットリングを監視・通知する方法](./archive/monitor-io-throttoling-on-win-vm-arm.md)
-- [ARM 環境から ARM 環境への仮想マシンの移行方法](./archive/migration_arm_to_arm.md)
+- [Application Gateway の構成について](./articles/archive/about-application-gateway.md)
+- [Application Gateway における 502 Error について](./articles/archive/application-gateway-502-error-info.md)
+- [Application Gateway (WAF) での脆弱性検知について](./articles/archive/application-gateway-waf-vulnerability-detection.md)
+- [Application Gateway で利用できる WAF について](./articles/archive/applicationgaetway-waf-01.md)
+- [Application Gateway を PowerShell で設定変更するコツ](./articles/archive/powershell-applicationgateway-configuration.md)
+- [Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり](./articles/archive/azure-powershell-3-8-0-install.md)
+- [1 TB 以上のディスクを持つ VM の Azure Backup (Private Preview)](./articles/archive/backup-morethan-1tb-disk.md)
+- [2016 年 9 月 15 日に発生した DNS の問題について](./articles/archive/dns-2016-09-16.md)
+- [2017/10/31 に AzureBackup コンテナー (ASM) が、RecoveryServices コンテナー (ARM) にアップグレードされるお知らせ ](./articles/archive/upgrade-backup-container-asm2arm.md)
+- [2017/12/9 以降 Azure VM の起動に時間がかかる事象についての対処方法](./articles/archive/take-time-to-boot-after20171209.md)
+- [2018 年 1 月 4 日以降で Disk 11 のエラーが発生し MARS Agent バックアップが失敗する (0x8007045D)](./articles/archive/disk11-after20180104.md)
+- [5 月のセキュリティ更新を適用後、Windows 仮想マシンに RDP 接続時にエラーが発生する事象の回避策](./articles/archive/mayupdate_unable-to-rdp.md)
+- [’azurebox32.ico’ が必要です](./articles/archive/need-azurebox32-ico.md)
+- [(PowerShell編) Azure仮想マシン (管理ディスク) の交換を活用して元のネットワークにリストアする](./articles/archive/restore-vm-by-swap-manageddisk.md)
+- [ARMのWindowsでディスクやVMレベルでのIOスロットリングを監視・通知する方法](./articles/archive/monitor-io-throttoling-on-win-vm-arm.md)
+- [ARM 環境から ARM 環境への仮想マシンの移行方法](./articles/archive/migration_arm_to_arm.md)
 
