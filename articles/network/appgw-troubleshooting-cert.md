@@ -27,7 +27,7 @@ End to End の TLS にはせずに、クライアントと Application Gateway �
 ![TLS-Offload](./appgw-troubleshooting-cert/TLS-Offload.png)
 
 <span id="application-gateway-error"></span>
-## <a href="#application-gateway-error" style="color:#f60;">Application Gateway へアクセスした際の証明書エラー</a>
+## <a href="#application-gateway-error">Application Gateway へアクセスした際の証明書エラー</a>
 FQDN を使用して Application Gateway のフロントエンド IP アドレスにアクセスした際に証明書のエラーが出る場合、リスナーの証明書に問題がある可能性があります。ブラウザ/ OS により動作が変わる場合があるので、念のため、複数のブラウザ/ OS にてご確認いただくことをお勧めいたします。
 
 #### 出力例
@@ -65,7 +65,7 @@ how to fix it, please visit the web page mentioned above.
 Edge や Chrome ブラウザの場合、クライアント側で中間証明書を補完するため、中間証明書に起因する問題が発生しているかがわからないことがあります。その場合、下記に記載の openssl コマンドにて証明書の状態を確認することが可能ですので、念のためご確認いただくことをお勧めいたします。
 
 <span id="probe-error"></span>
-## <a href="#probe-error" style="color:#f60;">正常性プローブのエラー</a>
+## <a href="#probe-error">正常性プローブのエラー</a>
 Application Gateway V2 のバックエンドプールにて証明書が正しく構成されていない場合、バックエンド正常性の画面に以下のエラーが出ることがあります。
 
 ![RootCert](./appgw-troubleshooting-cert/RootCert.png)
@@ -96,7 +96,7 @@ The Common Name (CN) of the backend certificate does not match the host header o
 
 
 <span id="openssl-command"></span>
-## <a href="#openssl-command" style="color:#f60;">openssl コマンドによる確認方法</a>
+## <a href="#openssl-command">openssl コマンドによる確認方法</a>
 
 openssl はオープンソースのソフトウェアで Linux 系の OS で利用することができます。
 Windows OS (Windows 10) の場合でも Windows Subsystem for Linux (WSL) を導入することで利用可能となります。
@@ -139,7 +139,7 @@ Timeout   : 7200 (sec)
 <span style="color: red">Verify return code: 21 (unable to verify the first certificate)</span>
 
 <span id="intermediate-cert"></span>
-## <a href="#intermediate-cert" style="color:#f60;">中間証明書の構成方法</a>
+## <a href="#intermediate-cert">中間証明書の構成方法</a>
 
 AppService 証明書を Powershell で Export した場合は中間証明書が含まれていない構成となり、別途、中間証明書を含む形で構成する必要があります。
 
@@ -171,7 +171,7 @@ AppService 証明書を Azure Portal, Azure CLI でエクスポートした場�
 14. “完了” をクリックします。
 
 <span id="faq"></span>
-## <a href="#faq" style="color:#f60;">FAQ</a>
+## <a href="#faq">FAQ</a>
 	
 #### - リスナーに設定した証明書の更新時に切断は発生しますか？
 
@@ -262,7 +262,7 @@ Set-AzApplicationGateway -ApplicationGateway $appgw
 az network application-gateway root-cert delete -g <リソースグループ名> --gateway-name <Application Gateway 名> -n <証明書名>
 ```
 <span id="reference"></span>
-## <a href="#reference" style="color:#f60;">参考情報</a>
+## <a href="#reference">参考情報</a>
 
 Application Gateway のトラブルシューティングについては以下にも情報がございますので、ご参照ください。
 

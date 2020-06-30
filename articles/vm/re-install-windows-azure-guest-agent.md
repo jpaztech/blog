@@ -1,6 +1,6 @@
 ---
 title: Windows ゲスト エージェント (WinGA) の再インストール方法
-date: 2020-6-19 17:30:00
+date: 2020-6-26 17:30:00
 tags:
   - VM
   - Windows
@@ -15,7 +15,7 @@ WinGAが正常に動作しなくなった場合に再インストールを行う
 
 今回は下記画像の3つのサービスを一旦削除し、インストールを行うシナリオとなります。
 
-![](./re-install-windows-azure-guest-agent/app-and-features.png) 
+![](./re-install-windows-azure-guest-agent/service.png) 
 
 ## 再インストール方法
 
@@ -23,7 +23,7 @@ WinGAが正常に動作しなくなった場合に再インストールを行う
     スタートを右クリックして、「Apps and Features」を選択します。  
     下記のように「Windows Azure VM Agent」がインストールされている場合は「Uninstall」を選択してください。
 
-    ![](./re-install-windows-azure-guest-agent/service.png) 
+    ![](./re-install-windows-azure-guest-agent/app-and-features.png) 
 
     WinGAが最初からインストールされているイメージを使用した際は、「Windows Azure VM Agent」の表示はありませんのでこの操作は不要です。
 
