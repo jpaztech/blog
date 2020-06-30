@@ -6,10 +6,12 @@
 - [comming soon](./articles/information/)
 
 ## VM
-- [Azure Linux VM の OS ディスク拡張方法](./articles/vm/linux-expand-os-disk.md)
-- [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./articles/vm/win2019-jp-lpk.md)
-- [リソース正常性（Resource Health）アラートの構成方法](./articles/vm/resource-health-alert.md)
-- [Azure リソースの意図しない削除について](./articles/vm/resource-delete.md)
+- [Azure Linux VM の OS ディスク拡張方法](./articles/vm/re-install-windows-azure-guest-agent.md)
+- [Azure Linux VM の OS ディスク拡張方法](./vm/linux-expand-os-disk.md)
+- [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./vm/win2019-jp-lpk.md)
+- [リソース正常性（Resource Health）アラートの構成方法](./vm/resource-health-alert.md)
+- [Azure リソースの意図しない削除について](./vm/resource-delete.md)
+
 
 ## Storage
 - [comming soon](./articles/strage/)
