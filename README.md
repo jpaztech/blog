@@ -18,6 +18,8 @@
 - [comming soon](./articles/strage/)
 
 ## Network
+- [Azure CDN の各 SKU の特徴、トラブルシューティングの紹介](./articles/network/cdn-specific-sku.md)
+- [Azure CDN の特徴やよくあるお問い合わせ、トラブル シューティングの紹介](./articles/network/cdn-common.md)
 - [Azure VM の外部接続 (SNAT) オプション まとめ](./articles/network/snat-options-for-azure-vm.md)
 - [Microsoft Peering 導入時の注意事項](./articles/network/considerations-of-microsoft-peering.md)
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
