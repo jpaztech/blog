@@ -18,6 +18,7 @@
 - [comming soon](./articles/strage/)
 
 ## Network
+- [証明書の失効に関するアドバイザリ PVKM-5T8 の補足情報](./articles/network/20200716-net.md)
 - [Azure CDN の各 SKU の特徴、トラブルシューティングの紹介](./articles/network/cdn-specific-sku.md)
 - [Azure CDN の特徴やよくあるお問い合わせ、トラブル シューティングの紹介](./articles/network/cdn-common.md)
 - [Azure VM の外部接続 (SNAT) オプション まとめ](./articles/network/snat-options-for-azure-vm.md)
