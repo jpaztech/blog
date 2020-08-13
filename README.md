@@ -18,6 +18,7 @@
 - [comming soon](./articles/strage/)
 
 ## Network
+- [Bastion のサブネットに 適用する NSG の設定例](./articles/network/bastion-nsg.md/)
 - [証明書の失効に関するアドバイザリ PVKM-5T8 の補足情報](./articles/network/20200716-net.md)
 - [Azure CDN の各 SKU の特徴、トラブルシューティングの紹介](./articles/network/cdn-specific-sku.md)
 - [Azure CDN の特徴やよくあるお問い合わせ、トラブル シューティングの紹介](./articles/network/cdn-common.md)
