@@ -18,7 +18,7 @@
     "hexo-deployer-git": "^2.1.0",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
-    "hexo-generator-feed": "^2.2",
+    "hexo-generator-feed": "^2.2.0",
     "hexo-generator-index": "^1.0.0",
     "hexo-generator-root-tag": "github:jpaztech/hexo-generator-root-tag",
     "hexo-generator-sitemap": "^2.0.0",
