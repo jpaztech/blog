@@ -5,7 +5,6 @@ tags:
   - Archive
   - Migration
   - ARM
-disableDisclaimer: true
 ---
 
 こんにちは。Azureサポートチームの小久保です。

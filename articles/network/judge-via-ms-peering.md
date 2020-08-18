@@ -4,7 +4,6 @@ date: 2019-11-26 17:30:00
 tags:
   - Network
   - ExpressRoute
-disableDisclaimer: true
 ---
 
 こんにちは、Azure テクニカル サポート チームの山崎です。

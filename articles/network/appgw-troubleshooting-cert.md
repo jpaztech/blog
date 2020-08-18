@@ -6,7 +6,6 @@ tags:
   - ApplicationGateway
   - Certficate
   - SSL
-disableDisclaimer: true
 ---
 こんにちは、Azure テクニカル サポート チーム檜山です。
 

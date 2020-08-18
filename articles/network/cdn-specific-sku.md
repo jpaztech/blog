@@ -4,8 +4,7 @@ date: 2020-07-15 09:00:00
 tags: 
   - Network 
   - AzureCDN 
-  - Troubleshooting 
-disableDisclaimer: true
+  - Troubleshooting
 ---
 
 こんにちは、Azure テクニカル サポート チーム箕輪です。
