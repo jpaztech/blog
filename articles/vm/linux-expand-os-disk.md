@@ -6,7 +6,6 @@ tags:
   - Linux
   - Disk
   - HowTo
-disableDisclaimer: true
 ---
 
 こんにちは、Azure テクニカル サポート チームの青山です。

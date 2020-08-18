@@ -6,7 +6,6 @@ tags:
   - Managed Disk
   - Backup / Restore
   - PowerShell
-disableDisclaimer: true
 ---
 
 こんにちは。Azure テクニカル サポート チームの三國です。

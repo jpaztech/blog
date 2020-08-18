@@ -4,7 +4,6 @@ date: 2017-12-18 10:17:24
 tags:
   - Archive
   - Boot
-disableDisclaimer: true
 ---
 
 <span style="color:red;">12/16 より問題解消のための修正を開始し、現在 (12/25) では修正を提供しております。

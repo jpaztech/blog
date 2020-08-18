@@ -4,7 +4,6 @@ date: 2020-04-21 14:30:00
 tags:
   - Network
   - ApplicationGateway
-disableDisclaimer: true
 ---
 
 こんにちは、Azure テクニカル サポート チームの薄井です。

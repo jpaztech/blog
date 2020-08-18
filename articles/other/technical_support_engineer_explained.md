@@ -4,7 +4,6 @@ date: 2019-12-05 13:00:00
 tags:
   - Other
   - Support Explained
-disableDisclaimer: true
 ---
 
 こんにちは、マイクロソフトの石井 哲平です。

@@ -5,7 +5,6 @@ tags:
   - VM
   - Windows
   - Drive Letter
-disableDisclaimer: true
 ---
 
 こんにちは。Azure テクニカル サポート チームの重田です。

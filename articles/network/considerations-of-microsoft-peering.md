@@ -5,7 +5,6 @@ tags:
   - Network
   - ExpressRoute
   - Microsoft Peering
-disableDisclaimer: true
 ---
 
 Azure Networking テクニカル サポートの山口です。

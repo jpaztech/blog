@@ -5,7 +5,6 @@ tags:
   - Network
   - Bastion
   - NSG
-disableDisclaimer: true
 ---
 
 こんにちは、Azure テクニカル サポート チームの薄井です。

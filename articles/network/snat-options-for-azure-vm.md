@@ -7,7 +7,6 @@ tags:
   - Azure Load Balancer
   - Public IP Address
   - SNAT
-disableDisclaimer: true
 ---
 
 Azure Networking テクニカル サポートの山口です。
