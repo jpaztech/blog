@@ -6,7 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
-- [Windows ゲスト エージェント (WinGA) の再インストール方法](./vm/re-install-windows-azure-guest-agent.md)
+- [Windows ゲスト エージェント (WinGA) の再インストール方法](./articles/vm/re-install-windows-azure-guest-agent.md)
 - [データ ディスクのドライブ文字が変わる](./vm/drive-letter-changed-1)
 - [Azure Linux VM の OS ディスク拡張方法](./vm/linux-expand-os-disk.md)
 - [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./vm/win2019-jp-lpk.md)
