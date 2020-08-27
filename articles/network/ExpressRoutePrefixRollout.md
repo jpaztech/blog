@@ -19,7 +19,7 @@ ExpressRoute 回線に紐づく Azure サブスクリプションでは、Servic
 ### 通知メールの例
 (本文中の TRACKING ID や日時、経路数はその都度異なります)
 
-![ExpressRoutePrefixRollout1](./ExpressRoutePrefixRollout/ExpressRoutePrefixRollout1.png)
+![通知メールのサンプル](./ExpressRoutePrefixRollout/ExpressRoutePrefixRollout1.png)
 
 ## 本通知の内容について
 Public / Microsoft Peering をご利用の場合、弊社側からプロバイダー様やお客様のルーターに対し、BGP で Azure (および Office 365 等) で使用される Public IP の経路情報を広報しています。(下図参照)
@@ -28,7 +28,7 @@ Azure や Office 365 で利用される Public IP は、Azure リージョンの
 
 Service Health での通知は、そうした経路情報の変更が発生することを念のためお知らせするものとご認識いただければと思います。
 
-![ExpressRoutePrefixRollout1](./ExpressRoutePrefixRollout/ExpressRoutePrefixRollout2.png)
+![Microsoft 側から広報される経路情報](./ExpressRoutePrefixRollout/ExpressRoutePrefixRollout2.png)
 
 ## 影響有無について
 弊社側から広報する経路に変更が生じても、基本的にはお客様側で特別の作業は必要なく、ExpressRoute 経由の通信に影響は生じません。
