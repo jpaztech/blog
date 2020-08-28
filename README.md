@@ -6,6 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [一時ディスクのドライブ文字が変わる](./vm/drive-letter-changed-2)
 - [Windows ゲスト エージェント (WinGA) の再インストール方法](./vm/re-install-windows-azure-guest-agent.md)
 - [データ ディスクのドライブ文字が変わる](./vm/drive-letter-changed-1)
 - [Azure Linux VM の OS ディスク拡張方法](./vm/linux-expand-os-disk.md)

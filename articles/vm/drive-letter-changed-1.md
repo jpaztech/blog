@@ -20,10 +20,8 @@ tags:
 
 
 <hr>
-<span id="how-it-works"></span>
 
-
-## <a href="#how-it-works">■ ドライブ文字を割り当ての仕組み</a>
+## ■ ドライブ文字を割り当ての仕組み
 ※ ダイナミック ディスク構成による複数ディスクにまたがるボリュームにつきましては、レガシーな機能であり、Windows では非推奨となっておりますため、本稿ではベーシック ディスクについて説明しています。
 
 はじめに、Windows によるドライブ文字の割り当ては、すべてレジストリキー **HKLM¥SYSTEM¥MountedDevices** に格納されます。
@@ -37,13 +35,10 @@ tags:
 このデータベースに新しいボリュームのエントリがない場合、マウント マネージャーは最初の未割り当てドライブ文字を採用して新規割り当てを定義し、それをデータベースに格納します。利用できるドライブ文字がない場合、ドライブ文字の割り当ては行われません。
 
 <hr>
-<span id="verify"></span>
 
-## <a href="#verify">■ いつドライブ文字が変わるのか</a>
+## ■ いつドライブ文字が変わるのか
 
-<span id="verify1"></span>
-
-### <a href="#verify1">□ 検証 1: Azure Windows VM を sysprep し、複製 VM を作成した場合</a>
+### □ 検証 1: Azure Windows VM を sysprep し、複製 VM を作成した場合
 
 **<検証概要>**
 
@@ -80,9 +75,8 @@ tags:
 **<まとめ>**
 そのため、Azure Windows VM のイメージから VM を作成する際には、必要に応じてドライブ文字の再設定をご実施ください。
 
-<span id="verify2"></span>
 
-### <a href="#verify2">□ 検証 2: オンプレミス環境の Hyper-V Guest から Azure 環境への移行した場合</a>
+### □ 検証 2: オンプレミス環境の Hyper-V Guest から Azure 環境への移行した場合
 
 **<検証概要>**
 
@@ -109,9 +103,8 @@ Azure の一時ディスクについては、C 以降で使用済みのアルフ
 ![](./drive-letter-changed-1/registry-1aft.png)
 
 <hr>
-<span id="summary"></span>
 
-## <a href="#summary">■ まとめ</a>
+## ■ まとめ
 
 上記検証と Windows の動作より、ボリュームに割り当てられたドライブ文字が変更されてしまうには、下記の 2 つのパターンが存在すると言えます。
 
