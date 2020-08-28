@@ -19,6 +19,7 @@
 - [comming soon](./articles/strage/)
 
 ## Network
+- [ExpressRoute の Monthly Prefix Updates に関して](./article/network/ExpressRoutePrefixRollout.md)
 - [Bastion のサブネットに 適用する NSG の設定例](./articles/network/bastion-nsg.md/)
 - [証明書の失効に関するアドバイザリ PVKM-5T8 の補足情報](./articles/network/20200716-net.md)
 - [Azure CDN の各 SKU の特徴、トラブルシューティングの紹介](./articles/network/cdn-specific-sku.md)
