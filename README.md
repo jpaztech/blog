@@ -6,13 +6,13 @@
 - [comming soon](./articles/information/)
 
 ## VM
-- [一時ディスクのドライブ文字が変わる](./vm/drive-letter-changed-2)
-- [Windows ゲスト エージェント (WinGA) の再インストール方法](./vm/re-install-windows-azure-guest-agent.md)
-- [データ ディスクのドライブ文字が変わる](./vm/drive-letter-changed-1)
-- [Azure Linux VM の OS ディスク拡張方法](./vm/linux-expand-os-disk.md)
+- [一時ディスクのドライブ文字が変わる](./article/vm/drive-letter-changed-2)
+- [Windows ゲスト エージェント (WinGA) の再インストール方法](./article/vm/re-install-windows-azure-guest-agent.md)
+- [データ ディスクのドライブ文字が変わる](./article/vm/drive-letter-changed-1)
+- [Azure Linux VM の OS ディスク拡張方法](./article/vm/linux-expand-os-disk.md)
 - [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./vm/win2019-jp-lpk.md)
-- [リソース正常性（Resource Health）アラートの構成方法](./vm/resource-health-alert.md)
-- [Azure リソースの意図しない削除について](./vm/resource-delete.md)
+- [リソース正常性（Resource Health）アラートの構成方法](./article/vm/resource-health-alert.md)
+- [Azure リソースの意図しない削除について](./article/vm/resource-delete.md)
 
 
 ## Storage
