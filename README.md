@@ -54,4 +54,7 @@
 - [(PowerShell編) Azure仮想マシン (管理ディスク) の交換を活用して元のネットワークにリストアする](./articles/archive/restore-vm-by-swap-manageddisk.md)
 - [ARMのWindowsでディスクやVMレベルでのIOスロットリングを監視・通知する方法](./articles/archive/monitor-io-throttoling-on-win-vm-arm.md)
 - [ARM 環境から ARM 環境への仮想マシンの移行方法](./articles/archive/migration_arm_to_arm.md)
-
+- [ASR レプリケーション有効化後ターゲット リソース グループ名が小文字で表示される。](./articles/archive/asrreplication_resourcedisplaynameissue.md)
+- [Azure Automation： PowerShell Runbook で Azure VM の起動 / 停止（割り当て解除）](./articles/archive/automation-vm-start-deallocate.md)
+- [Azure Automation： Runbook Webhook を使って仮想マシンの自動垂直スケール（スケールアップ / ダウン）](./articles/archive/automation-runbook-webhook.md)
+- [Azure Automation で VM を自動停止する](./articles/archive/automation-vm-auto-deallocate.md)
