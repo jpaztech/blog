@@ -1,5 +1,5 @@
 ---
-title: "Azure サポートを効率的にご使用いただくために( VPNGW )"
+title: "VPNGW サービスにおける Azure テクニカル サポートの対応範囲"
 date: 2020-09-23 22:00:00
 tags:
   - Network
