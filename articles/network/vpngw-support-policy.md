@@ -3,7 +3,7 @@ title: "VPN Gateway サービスにおける Azure テクニカル サポート�
 date: 2020-09-23 22:00:00
 tags:
   - Network
-  - VPNGW
+  - VPN Gateway
 ---
 
 
