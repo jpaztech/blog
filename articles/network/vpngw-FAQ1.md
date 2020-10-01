@@ -1,13 +1,13 @@
 ---
 title: "VPN Gateway よくあるお問合せ - FAQ"
-date: 2020-09-23 22:00:00
+date: 2020-10-01 22:00:00
 tags:
   - Network
   - VPNGW
   - FAQ
 ---
 
-Azure VPN Gateway に関して、たびたびお問合せ頂く内容をご紹介させていただきます。
+Azure VPN Gateway に関して、たびたびお問合せ頂く内容をご紹介させていただきます。  
 
 # VPN Gateway 全般的な FAQ
 ### メンテナンスの事前通知
