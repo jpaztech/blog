@@ -1,5 +1,5 @@
 ---
-title: "Azure VPNGW FAQ"
+title: "Azure VPNGW よくあるお問合せ - FAQ"
 date: 2020-09-23 22:00:00
 tags:
   - Network
