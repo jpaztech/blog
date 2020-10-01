@@ -38,7 +38,7 @@ VPN Gateway では Site-to-Site VPN 経由で接続された複数のサイト�
 同一 VNET 内に ExpressRoute と VPN Gateway を配置することが可能です。  
 しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続されたた拠点 B 間は、Azure 経由で通信を行うことはできません (__共存環境でのトランジット通信はできません__)  
   
-<img width="480" alt="co-exist-er-vpn" src="./VPN Gateway-img/vpngw-er-coexist.png">
+<img width="480" alt="co-exist-er-vpn" src="./vpngw-img/vpngw-er-coexist.png">
 
 # Point-to-Site に関する FAQ
 ### Azure VPN Client のインストール方法
