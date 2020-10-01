@@ -19,7 +19,8 @@
 - [comming soon](./articles/strage/)
 
 ## Network
-- [VPNGW サービスにおける Azure テクニカル サポートの対応範囲](./article/network/vpngw-support-policy.md)
+- [VPN Gateway よくあるお問合せ - FAQ](./article/network/vpngw-FAQ1.md)
+- [VPN Gateway サービスにおける Azure テクニカル サポートの対応範囲](./article/network/vpngw-support-policy.md)
 - [ExpressRoute の Monthly Prefix Updates に関して](./article/network/ExpressRoutePrefixRollout.md)
 - [Bastion のサブネットに 適用する NSG の設定例](./articles/network/bastion-nsg.md/)
 - [証明書の失効に関するアドバイザリ PVKM-5T8 の補足情報](./articles/network/20200716-net.md)
