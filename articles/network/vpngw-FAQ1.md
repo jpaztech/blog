@@ -3,7 +3,7 @@ title: "VPN Gateway よくあるお問合せ - FAQ"
 date: 2020-10-01 22:00:00
 tags:
   - Network
-  - VPNGW
+  - VPN Gateway
   - FAQ
 ---
 
