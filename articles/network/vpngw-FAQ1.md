@@ -32,13 +32,13 @@ VPN Gateway では Site-to-Site VPN 経由で接続された複数のサイト�
 この場合、 サイト と Azure 間の接続には必ず __BGP__ が必要になります。  
 スタティック構成( BGP を使用しない構成 )での VPN Gateway トランジット構成はサポートされませんのでご注意下さい。  
   
-<img width="640" alt="vpn-transit" src="./vpngw-img/vpngw-transit.png">
+![vpn-transit](./vpngw-FAQ1/vpngw-transit.png)
 
 ### VPN Gateway, ExpressRoute 共存環境のデザイン
 同一 VNET 内に ExpressRoute と VPN Gateway を配置することが可能です。  
 しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続されたた拠点 B 間は、Azure 経由で通信を行うことはできません (__共存環境でのトランジット通信はできません__)  
   
-<img width="480" alt="co-exist-er-vpn" src="./vpngw-img/vpngw-er-coexist.png">
+![co-exist-er-vpn](./vpngw-FAQ1/vpngw-er-coexist.png)
 
 # Point-to-Site に関する FAQ
 ### Azure VPN Client のインストール方法
