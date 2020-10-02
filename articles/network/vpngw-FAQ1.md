@@ -23,7 +23,7 @@ VPN Gateway ではサービスを健全に運用するため定期的(月に 1, 
 # Site-to-Site に関する FAQ
 ### VPN Gateway で静的パブリック IP アドレスを使う方法
 かねてより VPN Gateway に静的パブリック IP アドレスを割り当てたいというご要望を頂いておりましたが対応しておりませんでした。  
-2020年9月現在でも、VpnGwX 等の通常の VPN Gateway SKU では静的 IP アドレスを使用することはできませんが、__ゾーン冗長 SKU VpnGwXAZ__ を選択いただくことで実5現が可能です。  
+2020年9月現在でも、VpnGwX 等の通常の VPN Gateway SKU では静的 IP アドレスを使用することはできませんが、__ゾーン冗長 SKU VpnGwXAZ__ を選択いただくことで実現が可能です。  
   
 非ゾーン冗長 SKU （VpnGwX ）から ゾーン冗長 VpnGwX SKU への変更には、VPN Gateway の再作成が必要となるため、VPN Gateway のアドレス変更が発生いたします。  
 
