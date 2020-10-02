@@ -23,7 +23,7 @@ VPN Gateway ではサービスを健全に運用するため定期的(月に 1, 
 # Site-to-Site に関する FAQ
 ### VPN Gateway で静的パブリック IP アドレスを使う方法
 かねてより VPN Gateway に静的パブリック IP アドレスを割り当てたいというご要望を頂いておりましたが対応しておりませんでした。  
-2020年9月現在でも、VpnGwX 等の通常の VPN Gateway SKU では静的 IP アドレスを使用することはできませんが、__ゾーン冗長 SKU VpnGwXAZ__ を選択いただくことで実現が可能です。  
+2020年9月現在でも、VpnGwX 等の通常の VPN Gateway SKU では静的 IP アドレスを使用することはできませんが、__ゾーン冗長 SKU VpnGwXAZ__ を選択いただくことで実5現が可能です。  
   
 非ゾーン冗長 SKU （VpnGwX ）から ゾーン冗長 VpnGwX SKU への変更には、VPN Gateway の再作成が必要となるため、VPN Gateway のアドレス変更が発生いたします。  
 
@@ -32,13 +32,13 @@ VPN Gateway では Site-to-Site VPN 経由で接続された複数のサイト�
 この場合、 サイト と Azure 間の接続には必ず __BGP__ が必要になります。  
 スタティック構成( BGP を使用しない構成 )での VPN Gateway トランジット構成はサポートされませんのでご注意下さい。  
   
-![vpn-transit](./vpngw-FAQ1/vpngw-transit.png)
+![](./vpngw-FAQ1/vpngw-transit.png)
 
 ### VPN Gateway, ExpressRoute 共存環境のデザイン
 同一 VNET 内に ExpressRoute と VPN Gateway を配置することが可能です。  
-しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続されたた拠点 B 間は、Azure 経由で通信を行うことはできません (__共存環境でのトランジット通信はできません__)  
+しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続された拠点 B 間は、Azure 経由で通信を行うことはできません (__共存環境では GW 間のトランジット通信はできません__)  
   
-![co-exist-er-vpn](./vpngw-FAQ1/vpngw-er-coexist.png)
+![](./vpngw-FAQ1/vpngw-er-coexist.png)
 
 # Point-to-Site に関する FAQ
 ### Azure VPN Client のインストール方法
