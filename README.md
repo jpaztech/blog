@@ -19,6 +19,7 @@
 - [comming soon](./articles/strage/)
 
 ## Network
+- [TLS 証明書の更新に関するアナウンスの補足説明](./article/network/tls-certificate-update-2020.md)
 - [VPN Gateway よくあるお問合せ - FAQ](./article/network/vpngw-FAQ1.md)
 - [VPN Gateway サービスにおける Azure テクニカル サポートの対応範囲](./article/network/vpngw-support-policy.md)
 - [ExpressRoute の Monthly Prefix Updates に関して](./article/network/ExpressRoutePrefixRollout.md)
