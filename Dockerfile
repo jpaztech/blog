@@ -1,4 +1,4 @@
-FROM node:14.14-stretch
+FROM node:14.14-slim
 
 RUN apt update \
   && apt install -y git ssh tar gzip ca-certificates
