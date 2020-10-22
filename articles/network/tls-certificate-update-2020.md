@@ -1,10 +1,12 @@
 ---
 title: "TLS 証明書の更新に関するアナウンスの補足説明"
-date: 2020-10-12 17:30:00 
+date: 2020-10-22 12:00:00 
 tags:
   - Network
   - Certificate
 ---
+※ 2020 年 10 月 22 日更新: Windows のルート証明書に関する FAQ を追記しました。
+
 こんにちは、Azure テクニカル サポート チームの飯塚です。
 
 現在、Microsoft Azure では以下の公開資料のとおり、TLS 証明書の更新についてのアナウンスメントを行っております。
@@ -108,7 +110,17 @@ Microsoft Azure ではさまざまなサービスにおいて、クライアン�
 
 
 ##  FAQ
-Q. Application Gateway や Azure Front Door、Azure CDN、仮想マシンなどに対して、自分で証明機関から取得したサーバー証明書を適用している場合などは影響を受けるか？
+**Q. Application Gateway や Azure Front Door、Azure CDN、仮想マシンなどに対して、自分で証明機関から取得したサーバー証明書を適用している場合などは影響を受けるか？**
 
 A. 特に影響は生じません。今回影響が発生するのは、Azure 側で発行・管理されているサーバー証明書のみです。
 
+**Q. Windows における証明書ストアの「信頼されたルート証明機関」に、更新後のルート証明書の一部が含まれていないように見えます。このままだと、証明書の検証に失敗してアクセスができない状況になりますか？**
+
+A. 「D-TRUST Root Class 3 CA 2 2009」「Microsoft RSA Root Certificate Authority 2017」「Microsoft EV ECC Root Certificate Authority 2017」などについて、一部の Windows において「信頼されたルート証明機関」に含まれていない、ということからお問い合わせをいただくことがあります。Windows においては、これらのルート証明書は、ルート証明書更新プログラムにより自動的にインストールされます。このため、現時点でルート証明書がインストールされていなくても問題ありません。
+
+Windows では、TLS 通信の中でサーバーから提示された証明書の検証を行う過程で、その証明書のルート証明書がインストールされていない場合は、「ルート証明書更新プログラム」によって自動的にルート証明書が取得・インストールされる動作があります。ルート証明書更新プログラムによってインストールされるのは、あらかじめ信頼対象と定められた証明書のみですが、上記の証明書は、いずれも信頼対象になっています。
+
+たとえば、Windows 8 / Windows Server 2012 以降の場合、以下で公開されている、信頼されたルート証明書のリストにアクセスして、証明書をインストールする処理がバックグラウンドで行われます。
+- [http://ctldl.windowsupdate.com/msdownload/update/v3/static/trustedr/en/authrootstl.cab](http://ctldl.windowsupdate.com/msdownload/update/v3/static/trustedr/en/authrootstl.cab)
+
+このため、今の時点でルート証明書がインストールされていなくても、必要になったタイミングで自動的に取得・インストールされ、TLS の通信が成立することが想定されます。
