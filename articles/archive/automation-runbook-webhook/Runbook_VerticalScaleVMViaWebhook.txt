@@ -1,0 +1,189 @@
+<#
+.SYNOPSIS
+    Azure に接続し、仮想マシンインスタンス サイズの垂直スケール（スケールアップ / ダウン）を実行する Runbook
+
+.DESCRIPTION
+    この Runbook は、Webhook  通して実行されることを想定しています。
+    Azure にログインした後、Webhook を作成した仮想マシンのインスタンス サイズをスケールアップ（またはスケールダウン）します。
+
+.PARAMETER WebhookData
+    VM のアラート ルールが発火した際に送られてくる webhook のデータ
+
+.PARAMETER UpOrDown
+    スケールアップとダウンのどちらの処理を実行するのかを指定する。
+    "Up" を指定するとスケールアップ、"Down" を指定するとスケールダウンする。
+    このパラメータは、Webhook 作成時に指定してください。
+
+.NOTES
+    AUTHOR: Azure サポートチーム
+    LASTEDIT: 2017/09/06
+#>
+
+param (
+    [Parameter(Mandatory=$false)]
+    [object] $WebhookData,
+
+    [Parameter(Mandatory=$true)]
+    [String] $UpOrDown
+)
+
+Function Get-UpOrDownScaledVmSize {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string] $VmSize,
+        [Parameter(Mandatory = $true)]
+        [string] $UpOrDown,
+        [Parameter(Mandatory = $false)]
+        [object] $VerticalScale
+    )
+
+    # デフォルトのスケール セット
+    $Default_VerticalScaleTable = @(
+        ("Basic_A0", "Basic_A1", "Basic_A2", "Basic_A3", "Basic_A4"),
+        ("Standard_A0", "Standard_A1", "Standard_A2", "Standard_A3"),
+        ("Standard_A4", "Standard_A5", "Standard_A6", "Standard_A7"),
+        ("Standard_A8", "Standard_A9", "Standard_A10", "Standard_A11"),
+        ("Standard_A1_v2", "Standard_A2m_v2", "Standard_A2_v2", "Standard_A4m_v2", "Standard_A4_v2", "Standard_A8m_v2", "Standard_A8_v2"),
+        ("Standard_D1", "Standard_D2", "Standard_D3", "Standard_D4"),
+        ("Standard_D11", "Standard_D12", "Standard_D13", "Standard_D14"),
+        ("Standard_D1_v2", "Standard_D2_v2", "Standard_D3_v2", "Standard_D4_v2", "Standard_D5_v2"),
+        ("Standard_D11_v2", "Standard_D12_v2", "Standard_D13_v2", "Standard_D14_v2", "Standard_D15_v2"),
+        ("Standard_D2_v2_Promo", "Standard_D3_v2_Promo", "Standard_D4_v2_Promo", "Standard_D5_v2_Promo"),
+        ("Standard_D11_v2_Promo", "Standard_D12_v2_Promo", "Standard_D13_v2_Promo", "Standard_D14_v2_Promo"),
+        ("Standard_DS1", "Standard_DS2", "Standard_DS3", "Standard_DS4"),
+        ("Standard_DS11", "Standard_DS12", "Standard_DS13", "Standard_DS14"),
+        ("Standard_DS1_v2", "Standard_DS2_v2", "Standard_DS3_v2", "Standard_DS4_v2", "Standard_DS5_v2"),
+        ("Standard_DS11_v2", "Standard_DS12_v2", "Standard_DS13_v2", "Standard_DS14_v2", "Standard_DS15_v2"),
+        ("Standard_DS2_v2_Promo", "Standard_DS3_v2_Promo", "Standard_DS4_v2_Promo", "Standard_DS5_v2_Promo"),
+        ("Standard_DS11_v2_Promo", "Standard_DS12_v2_Promo", "Standard_DS13_v2_Promo", "Standard_DS14_v2_Promo"),
+        ("Standard_F1", "Standard_F2", "Standard_F4", "Standard_F8", "Standard_F16"),
+        ("Standard_F1s", "Standard_F2s", "Standard_F4s", "Standard_F8s", "Standard_F16s"),
+        ("Standard_H8", "Standard_H16", "Standard_H8m", "Standard_H16m", "Standard_H16r", "Standard_H16mr"),
+        ("Standard_NV6", "Standard_NV12", "Standard_NV24"),
+        ("Standard_G1", "Standard_G2", "Standard_G3", "Standard_G4", "Standard_G5"),
+        ("Standard_GS1", "Standard_GS2", "Standard_GS3", "Standard_GS4", "Standard_GS5"),
+        ("Standard_L4s", "Standard_L8s", "Standard_L16s", "Standard_L32s")
+    )
+
+    # -VerticalScaleSets パラメタでスケール セットが渡されていたら、そちらを使用
+    if ($VerticalScale) {
+        $VerticalScaleTable = @(, $VerticalScale)
+    } else {
+        $VerticalScaleTable = $Default_VerticalScaleTable
+    }
+
+    # 現在の VM サイズが格納されているスケール セットを取得
+    $TargetVerticalScale = $null
+    foreach ($VS in $VerticalScaleTable) {
+        if ($VS -contains $VmSize) {
+            $TargetVerticalScale = $VS
+            break
+        }
+    }
+    if (!$TargetVerticalScale) {
+        throw "No available vertical scale found that contains the given VmSize."
+    }
+
+    # スケール アップ
+    if ($UpOrDown -like "*Up*") {
+        # スケール アップ後の VmSize のインデックスの検索
+        for ($i = 0; $i -lt $TargetVerticalScale.Count; $i++) {
+            if ($TargetVerticalScale[$i] -eq $VmSize) {
+                $TargetIdx = $i + 1
+                break
+            }
+        }
+        if ($TargetIdx -ge $TargetVerticalScale.Count) {
+            throw "There exists no available VmSize which instance size is larger than current one."
+        }
+    }
+    # スケール ダウン
+    elseif ($UpOrDown -like "*Down*") {
+        # スケール ダウン後の VmSize のインデックスの検索
+        for ($i = 0; $i -lt $TargetVerticalScale.Count; $i++) {
+            if ($TargetVerticalScale[$i] -eq $VmSize) {
+                $TargetIdx = $i - 1
+                break
+            }
+        }
+        if ($TargetIdx -lt 0) {
+            throw "There exists no available VmSize which instance size is smaller than current one."
+        }
+    }
+    else {
+        throw "Unknown -UpOrDown parmeter passed."
+    }
+
+    Write-Output $TargetVerticalScale[$TargetIdx]
+}
+
+if ($WebhookData -ne $null) {
+    # WebhookData の中身
+    $WebhookBody = (ConvertFrom-Json -InputObject $WebhookData.RequestBody)
+
+    if ($WebhookBody.status -eq "Activated") {
+        # context から、webhook を投げた VM の情報を取得する
+        $AlertContext = [object]$WebhookBody.context
+        $ResourceGroupName = $AlertContext.resourceGroupName
+        $VMName = $AlertContext.resourceName
+
+        # Automation 実行アカウントを利用してログイン
+        try {
+            $AutomationConnectionName = "AzureRunAsConnection"
+            $Connection = Get-AutomationConnection -Name $AutomationConnectionName
+            $null = Add-AzureRmAccount `
+                -ServicePrincipal `
+                -TenantId $Connection.TenantId `
+                -ApplicationId $Connection.ApplicationId `
+                -CertificateThumbprint $Connection.CertificateThumbprint `
+                -ErrorAction Stop
+        } catch {
+            Write-Error "Cannot login to Azure by using the connection asset which name is [$AutomationConnectionName]."
+            exit
+        }
+
+        # 現在の VM のインスタンス サイズを取得する
+        try {
+            $VM = Get-AzureRmVm -ResourceGroupName $ResourceGroupName -VMName $VMName -ErrorAction Stop
+        } catch {
+            Write-Error "Virtual Machine not found"
+            exit
+        }
+        $CurrentVmSize = $VM.HardwareProfile.VmSize
+        Write-Output "Found the specified Virtual Machine: $VMName"
+        Write-Output "- Current VmSize is: `"$CurrentVmSize`""
+
+        # スケール後のインスタンス サイズの取得
+        if ($VerticalScale) {
+            Write-Output "Getting a new VmSize (Up/Down: $UpOrDown) with vertical scale set [$VerticalScale]..."
+            $NewVmSize = Get-UpOrDownScaledVmSize -VmSize $CurrentVmSize -UpOrDown $UpOrDown -VerticalScale $VerticalScale
+        } else {
+            Write-Output "Getting a new VmSize (Up/Down: $UpOrDown)..."
+            $NewVmSize = Get-UpOrDownScaledVmSize -VmSize $CurrentVmSize -UpOrDown $UpOrDown
+        }
+
+        # インスタンス サイズの取得に失敗したか判別
+        if (!$NewVmSize) {
+            Write-Output "Sorry the current Virtual Machine size $currentVMSize can't be scaled $scaleAction."
+            Write-Output "You'll need to recreate the specified Virtual Machine with your requested size."
+            exit
+        }
+
+        # 新しいインスタンス サイズで VM を更新
+        Write-Output "Done. New VmSize will be: `"$NewVmSize`""
+        $VM.HardwareProfile.VmSize = $NewVmSize
+        Update-AzureRmVm -VM $VM -ResourceGroupName $ResourceGroupName
+
+        # 更新できたか確認
+        $UpdatedVM = Get-AzureRmVm -ResourceGroupName $ResourceGroupName -VMName $VMName
+        $UpdatedVmSize = $UpdatedVM.HardwareProfile.VmSize
+        Write-Output "VmSize updated to: `"$UpdatedVmSize`""
+
+    } else {
+        Write-Output "Alert not activated"
+        exit
+    }
+}
+else {
+    Write-Error "This runbook is meant to only be started from a webhook."
+}
