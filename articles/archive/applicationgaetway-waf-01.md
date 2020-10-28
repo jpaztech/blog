@@ -7,7 +7,7 @@ tags:
   - WAF
 ---
 
-皆さんこんにちは、Azure テクニカルサポートの平原です。
+皆さんこんにちは、Azure テクニカル サポートの平原です。
 本日は、Application Gateway (以下 AppGW) で利用ができるようになった Web Application Firewall (以下 WAF) についてよくお問い合わせいただく内容についてご案内をいたします。
 
 
