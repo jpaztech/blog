@@ -7,23 +7,23 @@
 
 ## VM
 - [VM の再作成により可用性ゾーンを変更する (PowerShell 編)](./articles/vm/change-availability-zone-using-powershell.md)
-- [一時ディスクのドライブ文字が変わる](./article/vm/drive-letter-changed-2)
-- [Windows ゲスト エージェント (WinGA) の再インストール方法](./article/vm/re-install-windows-azure-guest-agent.md)
-- [データ ディスクのドライブ文字が変わる](./article/vm/drive-letter-changed-1)
-- [Azure Linux VM の OS ディスク拡張方法](./article/vm/linux-expand-os-disk.md)
-- [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./vm/win2019-jp-lpk.md)
-- [リソース正常性（Resource Health）アラートの構成方法](./article/vm/resource-health-alert.md)
-- [Azure リソースの意図しない削除について](./article/vm/resource-delete.md)
+- [一時ディスクのドライブ文字が変わる](./articles/vm/drive-letter-changed-2.md)
+- [Windows ゲスト エージェント (WinGA) の再インストール方法](./articles/vm/re-install-windows-azure-guest-agent.md)
+- [データ ディスクのドライブ文字が変わる](./articles/vm/drive-letter-changed-1.md)
+- [Azure Linux VM の OS ディスク拡張方法](./articles/vm/linux-expand-os-disk.md)
+- [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./articles/vm/win2019-jp-lpk.md)
+- [リソース正常性（Resource Health）アラートの構成方法](./articles/vm/resource-health-alert.md)
+- [Azure リソースの意図しない削除について](./articles/vm/resource-delete.md)
 
 
 ## Storage
 - [comming soon](./articles/strage/)
 
 ## Network
-- [TLS 証明書の更新に関するアナウンスの補足説明](./article/network/tls-certificate-update-2020.md)
-- [VPN Gateway よくあるお問合せ - FAQ](./article/network/vpngw-FAQ1.md)
-- [VPN Gateway サービスにおける Azure テクニカル サポートの対応範囲](./article/network/vpngw-support-policy.md)
-- [ExpressRoute の Monthly Prefix Updates に関して](./article/network/ExpressRoutePrefixRollout.md)
+- [TLS 証明書の更新に関するアナウンスの補足説明](./articles/network/tls-certificate-update-2020.md)
+- [VPN Gateway よくあるお問合せ - FAQ](./articles/network/vpngw-FAQ1.md)
+- [VPN Gateway サービスにおける Azure テクニカル サポートの対応範囲](./articles/network/vpngw-support-policy.md)
+- [ExpressRoute の Monthly Prefix Updates に関して](./articles/network/ExpressRoutePrefixRollout.md)
 - [Bastion のサブネットに 適用する NSG の設定例](./articles/network/bastion-nsg.md/)
 - [証明書の失効に関するアドバイザリ PVKM-5T8 の補足情報](./articles/network/20200716-net.md)
 - [Azure CDN の各 SKU の特徴、トラブルシューティングの紹介](./articles/network/cdn-specific-sku.md)
