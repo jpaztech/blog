@@ -6,6 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [VM の再作成により可用性ゾーンを変更する (PowerShell 編)](./articles\vm\change-availability-zone-using-powershell.md)
 - [一時ディスクのドライブ文字が変わる](./article/vm/drive-letter-changed-2)
 - [Windows ゲスト エージェント (WinGA) の再インストール方法](./article/vm/re-install-windows-azure-guest-agent.md)
 - [データ ディスクのドライブ文字が変わる](./article/vm/drive-letter-changed-1)
