@@ -6,57 +6,33 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:11.9.0-stretch
+      - image: ghcr.io/jpaztech/blog-build-tools:latest
     working_directory: ~/repo
     steps:
       - checkout
       - run: git submodule update -i
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: cp -r /blog/* ~/repo/
       - run: npm run build
       - run: npm run test
 
   uploadPreview:
     docker:
-      - image: circleci/node:11.9.0-stretch
+      - image: ghcr.io/jpaztech/blog-build-tools:latest
     working_directory: ~/repo
     steps:
       - checkout
       - run: git submodule update -i
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: cp -r /blog/* ~/repo/
       - run: npm run uploadPreview
 
   deploy:
     docker:
-      - image: circleci/node:11.9.0-stretch
+      - image: ghcr.io/jpaztech/blog-build-tools:latest
     working_directory: ~/repo
     steps:
       - checkout
       - run: git submodule update -i
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: cp -r /blog/* ~/repo/
       - run:
           name: npm run deploy
           command: |
@@ -64,23 +40,21 @@ jobs:
             git config --global user.name "jpazidbot"
             npm run deploy
       - run: npm run deleteMergedPreview
-          
-
 
 workflows:
-    version: 2
-    deploy:
-      jobs:
-        - test
-        - uploadPreview:
-            requires:
-              - test
-            filters:
-              branches:
-                ignore: master
-        - deploy:
-            requires:
-                - test
-            filters:
-              branches:
-                only: master
+  version: 2
+  deploy:
+    jobs:
+      - test
+      - uploadPreview:
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: master
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
