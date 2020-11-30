@@ -34,6 +34,9 @@
 - [Application Gateway でサブネットを変更する方法](./articles/network/appgw_change_subnet.md)
 - [Azure VM の外部接続 (SNAT) オプション まとめ](./articles/network/snat-options-for-auzre-vm.md)
 
+## Containers
+- [AKS の送信トラフィック - Load Balancer SKU と SNAT オプション](./articles/containers/aks-load-balancer-sku-and-snat-options.md)
+
 ## OSS
 - [comming soon](./articles/oss/)
 
