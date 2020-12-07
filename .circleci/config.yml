@@ -1,0 +1,60 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  test:
+    docker:
+      - image: ghcr.io/jpaztech/blog-build-tools:latest
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: git submodule update -i
+      - run: cp -r /blog/* ~/repo/
+      - run: npm run build
+      - run: npm run test
+
+  uploadPreview:
+    docker:
+      - image: ghcr.io/jpaztech/blog-build-tools:latest
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: git submodule update -i
+      - run: cp -r /blog/* ~/repo/
+      - run: npm run uploadPreview
+
+  deploy:
+    docker:
+      - image: ghcr.io/jpaztech/blog-build-tools:latest
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: git submodule update -i
+      - run: cp -r /blog/* ~/repo/
+      - run:
+          name: npm run deploy
+          command: |
+            git config --global user.email "jpazidbot@microsoft.com"
+            git config --global user.name "jpazidbot"
+            npm run deploy
+      - run: npm run deleteMergedPreview
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - test
+      - uploadPreview:
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: master
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
