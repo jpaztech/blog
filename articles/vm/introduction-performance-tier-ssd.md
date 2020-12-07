@@ -1,6 +1,6 @@
 ---
 title: Premiums SSD のパフォーマンス レベルについて
-date: 2020-06-10 17:30:00
+date: 2020-12-07 12:00:00
 tags:
   - VM
   - Disk
@@ -55,7 +55,7 @@ iometer を使用して P4 のデータディスクのスループットを計�
 1. 下部にある [パフォーマンス レベル] のプルダウンより、変更されたいパフォーマンス レベルを選択します。ここでは P40 を選択し、[サイズ変更] をクリックします。
 ![](./introduction-performance-tier-ssd/performancelevel.png)
 1. 更新が完了したメッセージが表示されるのを待ちます。
-![](./changed.png)
+![](./introduction-performance-tier-ssd/changed.png)
 1. 更新完了後、VM を開始します。
 
 ### パフォーマンス レベル変更後の性能を確認
