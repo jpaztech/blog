@@ -16,6 +16,7 @@ keywords:
   - Storage
   - Network
   - OSS
+  - Containers
 
 author: Japan Azure IaaS Core Support Team
 
@@ -29,6 +30,7 @@ root_tag_generator:
     - OSS
     - Other
     - Archive
+    - Containers
   sub_tag_limit: 20
   
 # URL
