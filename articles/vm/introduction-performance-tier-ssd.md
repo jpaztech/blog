@@ -1,5 +1,5 @@
 ---
-title: Premiums SSD のパフォーマンス レベルについて
+title: Premium SSD のパフォーマンス レベルについて
 date: 2020-12-07 12:00:00
 tags:
   - VM
