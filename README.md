@@ -33,6 +33,7 @@
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
 - [Application Gateway でサブネットを変更する方法](./articles/network/appgw_change_subnet.md)
 - [Azure VM の外部接続 (SNAT) オプション まとめ](./articles/network/snat-options-for-auzre-vm.md)
+- [NSG と Azure Firewall の違い](./articles/network/difference-nsg-fw.md)
 
 ## Containers
 - [AKS の送信トラフィック - Load Balancer SKU と SNAT オプション](./articles/containers/aks-load-balancer-sku-and-snat-options.md)
