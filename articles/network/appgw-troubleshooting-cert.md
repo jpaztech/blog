@@ -260,6 +260,41 @@ Set-AzApplicationGateway -ApplicationGateway $appgw
 【Azure CLI】
 az network application-gateway root-cert delete -g <リソースグループ名> --gateway-name <Application Gateway 名> -n <証明書名>
 ```
+
+#### - 証明書の内部的な順番を変更できますか？
+Edge, Chrome 等の一般的なブラウザである場合は、証明書の順番が異なっていても利用可能です。
+もし何らかの要件で証明書の順番を入れ替える必要がある場合は、以下の手順にて証明書の順番を入れ替えることができます。（Linux 等の openssl を実行できる環境が必要となります）
+ 
+1 . PFX から PEM に変換します。
+
+```
+openssl pkcs12 -in <ファイル名>.pfx -nodes -out <ファイル名>.pem
+```
+
+2. pem ファイルをテキストで開き、以下の順になるように入れ替えます。(Bag Attributes 等の文字列は削除します)
+
+```
+-----BEGIN PRIVATE KEY-----
+秘密鍵の記述内容
+-----END PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+サーバー証明書の記述内容
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+中間証明書の記述内容
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+ルート証明書の記述内容
+-----END CERTIFICATE-----
+```
+
+3. PEM から PFX に変換します。変換時にパスワードも設定します。
+
+```
+openssl pkcs12 -export -in <ファイル名>.pem -out <ファイル名>.pfx
+
+```
+
 <span id="reference"></span>
 ## <a href="#reference">参考情報</a>
 
