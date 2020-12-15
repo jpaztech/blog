@@ -46,7 +46,7 @@ tags:
 1. Azure ポータルにアクセスし、右上の ? マークから、 "ヘルプとサポート" を選択します。
 <br><br>
 
-![](StorageAccount-Restore\storage3.png)
+![](storageAccount-Restore/storage3.png)
 
 <br>
 2.
@@ -58,19 +58,19 @@ tags:
 
 <br>記載が完了したら "次へ" を選択し、ソリューションの画面に推移します。<br><br>
 
-![](StorageAccount-Restore\storage4.png)
+![](storageAccount-Restore/storage4.png)
 <br><br>
 3. "推奨される解決策" 内の "お客様が管理するストレージ アカウントの復旧" を選択します。<br><br>
 
 
-![](StorageAccount-Restore\storage9.png)
+![](storageAccount-Restore/storage9.png)
 
 <br><br>4. 復旧対象のストレージ アカウントを選択し、"回復" を押下します。<br><br>
 
-![](StorageAccount-Restore\storage7.png)
+![](storageAccount-Restore/storage7.png)
 
 暫くすると復元が完了の通知が発生します。<br>
-<br>![](StorageAccount-Restore\storage10.png)
+<br>![](storageAccount-Restore/storage10.png)
 
 <br>本手順で復旧が完了しない場合、または復旧についてご不明な点がある場合は、お気兼ねなく弊サポート部門へお問い合わせください
 <br><br>
