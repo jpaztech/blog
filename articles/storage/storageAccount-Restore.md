@@ -87,7 +87,9 @@ tags:
 残念ながら上記方法では復元をお約束することは叶いません。こういった不慮の事故を未然に防ぐため、Azure のリソースには "リソースロック機能"、BLOB ファイルには "Soft Delete 機能" という誤削除防止の機能が用意されています。以前の記事で紹介しているため、詳細については "リソースの誤削除を未然に防ぐ方法について（リソースロック機能のご紹介）" と "BLOB ファイルの誤削除を未然に防ぐ方法について（Soft Delete 機能のご紹介）" の項目をご確認ください。
 
 
+
 >Azure リソースの意図しない削除について
+
 >[https://jpaztech.github.io/blog/vm/resource-delete/](https://jpaztech.github.io/blog/vm/resource-delete/)
 
 
