@@ -5,6 +5,7 @@ tags:
   - Storage
 ---
 
+この記事は [Microsoft Azure Tech Advent Calendar 2020](https://qiita.com/advent-calendar/2020/microsoft-azure-tech) の 20 日目の記事になります。
 
 
 こんにちは、Azure サポートチームの安田です。
