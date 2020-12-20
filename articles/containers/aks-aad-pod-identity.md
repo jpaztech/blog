@@ -355,7 +355,7 @@ NAME                        TYPE             DATA   AGE
 azure-vote-secret           Opaque           1      7s
 ```
 
-`kubectl get` コマンドで Pod と Service が作成されたか確認してみましょう。Service の `EXTERNAL-IP` に表示された IP アドレスにブラウザからアクセスして、投票アプリのページが表示されれば成功です!
+`kubectl get` コマンドで Pod と Service が作成されたか確認してみましょう。Service の `EXTERNAL-IP` に表示された IP アドレスにブラウザーからアクセスして、投票アプリのページが表示されれば成功です!
 
 ```shell
 % kubectl get pod,svc -l app=azure-vote
