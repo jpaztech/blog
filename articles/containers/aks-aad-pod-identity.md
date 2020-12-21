@@ -34,7 +34,7 @@ Pod に資格情報を渡す方法として、Pod 用のサービス プリン�
 
 ### AAD Pod Identity
 
-マネージド ID は [VM や App Service など](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities)) の Azure リソースに割り当て、アプリケーションが他の Azure サービスへアクセスするための資格情報として利用できます。同様にマネージド ID を AKS で稼働する Pod に対して割り当てることが可能です。
+マネージド ID は [VM や App Service など](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities) の Azure リソースに割り当て、アプリケーションが他の Azure サービスへアクセスするための資格情報として利用できます。同様にマネージド ID を AKS で稼働する Pod に対して割り当てることが可能です。
 
   > ※ ご参考情報: Azure Kubernetes Service (AKS) の認証と認可のベスト プラクティス - ポッド ID を使用する
   > https://docs.microsoft.com/ja-jp/azure/aks/operator-best-practices-identity#use-pod-identities
