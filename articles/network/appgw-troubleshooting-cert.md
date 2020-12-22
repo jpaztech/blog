@@ -4,7 +4,7 @@ date: 2020-05-11 12:30:00
 tags:
   - Network
   - ApplicationGateway
-  - Certficate
+  - Certificate
   - SSL
 ---
 こんにちは、Azure テクニカル サポート チーム檜山です。
