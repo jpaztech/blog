@@ -19,8 +19,9 @@ tags:
 以下に掲載しております画像の例では、優先度 120 番にて Bastion にアクセスするクライアントのグローバル IP アドレスのみを許可している例となります。優先度 4096 番に全てを拒否するルールを入れて既定のルールを拒否しています。
 受信セキュリティ規則では以下のルールが必須となります。
 - GatewayManager から任意の宛先への HTTPS（TCP ポート 443）の許可
-- AzureLoadBalancer から任意の宛先への TCP の許可
-- Bastion に接続するクライアントの IP アドレスから任意の宛先への HTTPS（TCP ポート 443）の許可。
+- AzureLoadBalancer から任意の宛先への HTTPS（TCP ポート 443）の許可
+- Bastion に接続するクライアントの IP アドレスから任意の宛先への HTTPS（TCP ポート 443）の許可
+- VirtualNetwork から VirtualNetwork への任意のプロトコルのポート 8080,5701 の許可
 
 ![受信セキュリティ規則の設定例](./bastion-nsg/bastion_nsg_in.png)
 
@@ -30,6 +31,7 @@ tags:
 - 任意の送信元から VirtualNetwork への SSH と RDP (TCP ポート 22 と TCP ポート 3389) の許可。どちらか一方のプロトコルしか使わないような場合でも両方必要となります。
 - 任意の送信元から AzureCloud への HTTPS（TCP ポート 443）の許可
 - 任意の送信元から Internet への HTTP (TCP ポート 80) の許可。Bastion のセッション情報の管理に使用されます。
+- VirtualNetwork から VirtualNetwork への任意のプロトコルのポート 8080,5701 の許可
 
 ![送信セキュリティ規則の設定例](./bastion-nsg/bastion_nsg_out.png)
 
