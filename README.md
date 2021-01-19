@@ -66,3 +66,4 @@
 - [Azure Automation： PowerShell Runbook で Azure VM の起動 / 停止（割り当て解除）](./articles/archive/automation-vm-start-deallocate.md)
 - [Azure Automation： Runbook Webhook を使って仮想マシンの自動垂直スケール（スケールアップ / ダウン）](./articles/archive/automation-runbook-webhook.md)
 - [Azure Automation で VM を自動停止する](./articles/archive/automation-vm-auto-deallocate.md)
+- [Azure Load Balancer で IP フラグメンテーションは未サポート](./articles/archive/azure-load-balancer-ip-fragmentation.md)
