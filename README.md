@@ -33,6 +33,7 @@
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
 - [Application Gateway でサブネットを変更する方法](./articles/network/appgw_change_subnet.md)
 - [Azure VM の外部接続 (SNAT) オプション まとめ](./articles/network/snat-options-for-auzre-vm.md)
+- [NSG と Azure Firewall の違い](./articles/network/difference-nsg-fw.md)
 
 ## Containers
 - [AKS の送信トラフィック - Load Balancer SKU と SNAT オプション](./articles/containers/aks-load-balancer-sku-and-snat-options.md)
@@ -65,3 +66,4 @@
 - [Azure Automation： PowerShell Runbook で Azure VM の起動 / 停止（割り当て解除）](./articles/archive/automation-vm-start-deallocate.md)
 - [Azure Automation： Runbook Webhook を使って仮想マシンの自動垂直スケール（スケールアップ / ダウン）](./articles/archive/automation-runbook-webhook.md)
 - [Azure Automation で VM を自動停止する](./articles/archive/automation-vm-auto-deallocate.md)
+- [Azure Load Balancer で IP フラグメンテーションは未サポート](./articles/archive/azure-load-balancer-ip-fragmentation.md)
