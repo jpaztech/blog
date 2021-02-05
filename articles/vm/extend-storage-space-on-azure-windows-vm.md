@@ -1,6 +1,6 @@
 ---
 title: Azure Windows VM で記憶域スペースを拡張する
-date: 2021-2-05 16:30:00
+date: 2021-02-05 16:30:00
 tags:
   - VM
   - Windows
