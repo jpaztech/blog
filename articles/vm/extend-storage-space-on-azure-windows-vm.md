@@ -167,7 +167,7 @@ Azure Portal の場合 :
 4. 保存をクリックします。
 
 Azure PowerShell の場合 :
-公開情報: [データ ディスクのサイズを変更する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/expand-os-disk#resizing-data-disks) 
+公開情報: [データ ディスクのサイズを変更する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/expend-os-disk#resizing-data-disks) 
 
 **5. VM を起動し、RDP 接続を行います**
 

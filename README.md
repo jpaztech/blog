@@ -6,7 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
-- [Azure Windows VM で記憶域スペースを拡張する](./articles/vm/extand-storage-space-on-azure-windows-vm.md)
+- [Azure Windows VM で記憶域スペースを拡張する](./articles/vm/extend-storage-space-on-azure-windows-vm.md)
 - [VM の再作成により可用性ゾーンを変更する (PowerShell 編)](./articles/vm/change-availability-zone-using-powershell.md)
 - [一時ディスクのドライブ文字が変わる](./articles/vm/drive-letter-changed-2.md)
 - [Windows ゲスト エージェント (WinGA) の再インストール方法](./articles/vm/re-install-windows-azure-guest-agent.md)
