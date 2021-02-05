@@ -1,6 +1,6 @@
 ---
 title: Azure Windows VM で記憶域スペースを拡張する
-date: 2021-1-20 17:30:00
+date: 2021-2-05 16:30:00
 tags:
   - VM
   - Windows
@@ -37,6 +37,9 @@ Windows Server 2019、Windows Server 2016、Windows Server 2012 R2、Windows Ser
 **注意**
 記憶域プールは複数のディスクを 1 つの記憶域としてまとめて、まとめられた記憶域から仮想ディスクの領域を切り出します。
 記憶域プール自体に新たに領域を足すことは想定されておりますが、すでに仮想ディスクとして切り出された土台となる領域 (記憶域プールを構成しているディスク) を拡張することは想定されておりません。
+
+例えば、1TB × 3 本のディスクで記憶域プールを構成している場合、この既に構成している 1 TB を 2 TB にすることで拡張することは想定しておりません。
+![](./extand-storage-space-on-azure-windows-vm/19.png)
 
 なお、Azure ディスク リソースは縮小いただくことがご実施いただけません。
 公開情報:  [Azure IaaS VM ディスクと Premium マネージド ディスクおよびアンマネージド ディスクについてよく寄せられる質問](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/find-unattached-disks)
@@ -180,24 +183,6 @@ Azure PowerShell の場合 :
 公開情報をご参照の上、ボリュームを作成します。
 公開情報: [スタンドアロン サーバーに記憶域スペースを展開する - 手順 3: ボリュームを作成する](https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/deploy-standalone-storage-spaces#step-3-create-a-volume)
 
-<div style="background-color:#d2f9d2 !important; padding: 1px 14px !important; border-radius: 10px !important;">
-
-**ご参考: 弊社環境での再作成手順例 (Windows Server 2012R2)**
-1. 仮想ディスクにあるデータを別領域に退避します
-2. 仮想ディスクを削除します
-3. 記憶域プールを削除します
-4. VM を停止し、対象ディスクを拡張します (Azure Portal または Azure PowerShell)
-   データ ディスク 1: 1 TB を 2 TB に拡張
-   データ ディスク 2: 1 TB を 2 TB に拡張
-5. VM を起動し、RDP 接続します
-6. 記憶域プールを 1 本のディスクで作成します
-7. 仮想ディスク (シンプル) を作成します
-8. ボリュームを作成します
-9. 記憶域プールにディスクを追加します
-10. 仮想ディスクを拡張します
-11. 仮想ディスク上のボリュームを拡張します
-
-</div>
 
 ## ■ (余談) SQL VM に関して
 SQL ギャラリー イメージ にて VM を作成いただき構成された記憶域プールについては、Azure ポータルにて一部のストレージ設定を変更することが可能です。詳細は下記の公開情報をご参照ください。
