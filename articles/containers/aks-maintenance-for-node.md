@@ -1,6 +1,6 @@
 ---
 title: 特定の AKS ノードを再起動または削除したい
-date: 2021-02-08 10:00:00
+date: 2021-02-10 12:00
 tags:
   - Containers
   - Azure Kubernetes Service (AKS)
