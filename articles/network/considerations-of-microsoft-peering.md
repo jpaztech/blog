@@ -15,7 +15,7 @@ Azure のネットワークとオンプレミス拠点ネットワークを直�
 
 ## Microsoft Peering とは何か
 
-ExpressRoute は、オンプレミスと Azure のネットワークをインターネットを介さずに直接接続するためのサービスです。ExpressRoute 回線と呼ばれる Azure リソースを作成し、その中にピアリング情報を構成することで利用できます。
+ExpressRoute は、オンプレミスと Azure のネットワークをインターネットを介さずに直接接続するためのサービスです。ExpressRoute 回線 (ExpressRoute Circuit) と呼ばれる Azure リソースを作成し、その中にピアリング情報を構成することで利用できます。
 
 接続先に応じて下記 2 種類のピアリング種類が用意されており、ひとつの ExpressRoute 回線上に両ピアリングを同時に構成することもできます。
 
@@ -26,24 +26,22 @@ ExpressRoute は、オンプレミスと Azure のネットワークをインタ
 
 * [ExpressRouteのPublicPeeringとMicrosoftPeeringに関するアナウンス](https://jpaztech1.z11.web.core.windows.net/ExpressRoute%E3%81%AEPublicPeering%E3%81%A8MicrosoftPeering%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%A2%E3%83%8A%E3%82%A6%E3%83%B3%E3%82%B9.html)
 
-今回の記事では、**Microsoft Peering** と呼ばれるピアリング種別についてお話します。ExpressRoute 回線で Microsoft Peering を構成すると、オンプレミス拠点から Azure 上のパブリックなサービスに回線経由で接続できます。
-
-例えば、BLOB ストレージへのバックアップ通信を ExpressRoute 回線経由とすることが出来ます。
+今回の記事では、**Microsoft Peering** と呼ばれるピアリング種別についてお話します。ExpressRoute 回線で Microsoft Peering を構成すると、オンプレミス拠点から Azure 上のパブリックなサービスに回線経由で接続できます。例えば、BLOB ストレージへのバックアップ通信を ExpressRoute 回線経由とすることが出来ます。
 
 
-## 物理的レイヤー
+## 物理レイヤー
 
-高レベルな概念としては、オンプレミス拠点と Azure のネットワークを接続するイメージで間違いないのですが、具体的にルーターのレベルで何をやっているか落とし込むと下図のようになります。
+実際、ExpressRoute は IP レイヤー (L3) の接続性を提供するサービスなので、高レベルな概念としては、オンプレミス拠点と Azure のネットワークを土管で接続するようなイメージで間違いありません。ただ、もっと物理的な機器、つまりエッジールーターのレベルで何をやっているか落とし込むと下図のようになります。
 
 ![microsoft-peering-overview](./considerations-of-microsoft-peering/microsoft-peering-overview.png)
 
-まず用語を整理すると、次の通りです。
+用語を整理すると、次の通りです。
 
 * Microsoft Enterprise Edge (MSEE): Azure 側のエッジ ルーター
 * Privider Edge (PE): プロバイダー側のエッジ ルーター
 * Customer Edge (CE): お客様拠点のエッジ ルーター
 
-Azure リソース上で 1 つの ExpressRoute 回線を作成すると、物理的には Azure 側のルーター (MSEE) が 2 つ確保される動作となっています。MSEE は Active/Active で動作するため、万が一片系に障害が発生しても引き続き通信が可能となります。
+Azure リソース上で 1 つの ExpressRoute 回線を作成すると、物理的には Azure 側のルーター (MSEE) が 2 つ確保される動作となっています。MSEE は Active/Active で動作するため、万が一片系に障害が発生しても引き続き通信が可能となります。稀に MSEE を方系しか使われていないお客様もいらっしゃいますが、冗長構成でない限り SLA 対象外の構成となってしまいますのでご留意ください。
 
 なお、ExpressRoute 回線の契約時に選択いただく帯域幅は、各 MSEE で同じだけ確保されます。例えば、200 Mbps を選択頂いた場合、プライマリ側の MSEE でもセカンダリ側の MSEE でも、それぞれ 200 Mbps が確保されます。
 
@@ -51,9 +49,9 @@ Azure リソース上で 1 つの ExpressRoute 回線を作成すると、物理
 
 PE と MSEE の間では、インターネットで一般的に用いられている動的な経路交換プロトコルの **BGPv4** (RFC4271) を利用して、お互いのネットワークの経路情報を交換、学習します。
 
-BGP でピア (ネイバー) を張るには、PE と MSEE のそれぞれのインターフェイスに IP アドレスを割り当てる必要があり、Microsoft Peering ではこのアドレスをお客様側で準備いただく必要があります。PE と MSEE に払い出す IP アドレスが、セカンダリ/プライマリのそれぞれで必要な為、/30 のグローバル IP アドレスのプレフィクスが 2 つ必要です。
+BGP でピア (ネイバー) を張るには、PE と MSEE のそれぞれのインターフェイスに IP アドレスを割り当てる必要があり、Microsoft Peering ではこのアドレスをお客様側で準備いただく必要があります。PE と MSEE に払い出す IP アドレスが、セカンダリ/プライマリのそれぞれで必要な為、/30 のグローバル IP アドレスのプレフィクスが 2 つ必要です (サブネットの最初と最後のアドレスは予約済みです)。
 
-例えば、203.0.113.0/30 と 203.0.113.4/30 をサブネットに利用する場合は、先の図の通りに IP アドレスが払い出されます。つまり、予約済みでない利用可能 IP アドレスのうち、若番が PE 側に、老番が MSEE 側に払い出されます。`traceroute` を実行したときに MSEE が応答する IP アドレスの参考としていただければ幸いです。
+例えば、203.0.113.0/30 と 203.0.113.4/30 を BGP 用のサブネットに利用する場合は、先の図の通りに IP アドレスが払い出されます。つまり、サブネット内の予約済みでない (利用可能な) IP アドレスのうち、若番が PE 側に、老番が MSEE 側に払い出されます。`traceroute` を実行したときに MSEE が応答する IP アドレスの参考としていただければ幸いです。
 
 ### 経路広報
 
@@ -67,13 +65,43 @@ BGP でピア (ネイバー) を張るには、PE と MSEE のそれぞれのイ
 
 ### BGP コミュニティ
 
-ルート フィルターでは、**BGP コミュニティ (BGP Community)** と呼ばれるアドレス プレフィクスの集合を単位として、目的のサービスに適したアドレス帯を Azure 側から広報することが出来ます。
-
-選択できる BGP コミュニティの一覧は、以下の公式ドキュメントにまとまっています。
+ルート フィルターでは、**BGP コミュニティ (BGP Community)** と呼ばれるアドレス プレフィクスの集合を単位として、目的のサービスに適したアドレス帯を Azure 側から広報することが出来ます。選択できる BGP コミュニティの一覧は、以下の公式ドキュメントにまとまっています。
 
 * [Azure ExpressRoute: ルーティングの要件 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-routing#support-for-bgp-communities)
 
 簡単に例を挙げると、東日本リージョンのリージョン BGP コミュニティ (12076:51012) をルートフィルターで選択すれば、東日本リージョンで利用しているすべてのパブリック IP アドレスとの通信が ExpressRoute 回線を経由するようになります。
+
+実際の広報経路は、`Get-AzBgpServiceCommunity` コマンドで調べることができます。
+
+```powershell
+PS> Get-AzBgpServiceCommunity | where { $_.Name -eq 'AzureJapanEast' }
+
+Name           : AzureJapanEast
+Id             : /subscriptions//resourceGroups//providers/Microsoft.Network/bgpServiceCommunities/AzureJapanEast
+Type           : Microsoft.Network/bgpServiceCommunities
+BgpCommunities : [
+                   {
+                     "ServiceSupportedRegion": "Global",
+                     "CommunityName": "Azure Japan East",
+                     "CommunityValue": "12076:51012",
+                     "CommunityPrefixes": [
+                       "13.71.128.0/19",
+                       "13.73.0.0/19",
+                       "13.78.0.0/18",
+                       "13.78.64.0/19",
+                       "13.78.96.0/21",
+                       "13.78.104.0/23",
+                       "13.78.106.0/24",
+                       "13.78.108.0/25",
+                       "13.78.108.128/26",
+                       "13.78.108.224/27",
+                       ...
+```
+
+下記のブログ記事でもご紹介しているので、併せてご参考にしてみてください。
+
+* [Microsoft ピアリングを経由するかどうかの確認方法 | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/network/judge-via-ms-peering/)
+
 
 ### その他の参考情報
 
@@ -90,7 +118,7 @@ Microsoft Peering は、大まかに以下の手順で構成いただけます�
 
 1. ExpressRoute 回線リソースを作成
 2. プロバイダー側でプロビジョニング作業を実施
-3. Microsoft Peeirng の構成を実施
+3. Microsoft Peering の構成を実施
 4. NAT アドレス利用の承認を待機
 5. ルートフィルターを構成
 
@@ -100,6 +128,9 @@ Azure Portal 上での操作方法等は公式ドキュメントに記載され�
 
 続くセクションでは、導入に際してご留意いただく必要がある点を幾つかご紹介します。
 
+- 注意点: プロビジョニング作業の要不要
+- 注意点: Microsoft Peering 構成時のパラメータ
+- 注意点: Microsoft 365 (旧 Oiffce 365) 利用時の承認について
 
 ### 注意点: プロビジョニング作業の要不要
 
@@ -150,9 +181,14 @@ BGP ハイジャッキングを防止する目的で、`Advertised public prefix
 * `Peer ASN` (MSEE と BGP ピアを張る AS 番号。`Customer ASN` ではありません)
 * `Advertised public prefixes` を `Peer ASN` で利用出来ることを示す証跡。例えば、他社様から借り受けたグローバル IP アドレスであれば、借り受けたことを示すメールの文面や pdf の文書等が該当します
 
-### 注意点: O365 利用時の承認について
+### 注意点: Microsoft 365 (旧 Oiffce 365) 利用時の承認について
 
-BGP コミュニティのうち、"その他の Office 365 Online サービス" (12076:5100) を選択するには、事前に Microsoft から承認を受ける必要があります。
+BGP コミュニティのうち、(2021/03/12 現在) 以下の BGP コミュニティを選択するには、事前に Microsoft から承認を受ける必要があります。
+
+- Exchange Online (12076:5010)
+- SharePoint Online (12076:5020)
+- Skype For Business Online (12076:5030)
+- その他の Office 365 Online サービス (12076:5100)
 
 * [Azure ExpressRoute: ルーティングの要件 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-routing#service-to-bgp-community-value)
 
@@ -180,6 +216,7 @@ BGP コミュニティのうち、"その他の Office 365 Online サービス" 
 
 以下でも解決できないご不明点等がありましたら、ご利用の ExpressRoute 回線を対象製品として選択いただき、弊社技術サポートまでお問い合わせいただければ幸いです。
 
+
 ### Q. 選択すべき BGP コミュニティはどれですか?
 
 BGP コミュニティでは、サービス カットで IP アドレスを集約していません。そのため、ある 1 つのサービス (製品) を利用する為に、複数 BGP コミュニティの広報が必要となる場合があります。
@@ -200,5 +237,11 @@ BGP コミュニティでは、サービス カットで IP アドレスを集�
 
 恐れ入りますが、現時点 (2020/06/13) では Azure から広報する経路を ExpressRoute 回線でフィルタリングする機能は提供がございません。別の言い方をすれば、BGP コミュニティよりも小さい単位で経路を広報することが出来ません。
 PE ルーター、あるいはお客様拠点のルーターで経路のフィルタリングをご実施ください。
+
+### Q. Prefix Update の通知を受け取りました。なにか対応は必要ですか?
+
+基本的にご対応いただく必要はありません。別の記事で詳しくご説明しておりますので、詳細は下記のブログ記事をご覧ください。
+
+* [ExpressRoute の Monthly Prefix Updates に関して | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/network/ExpressRoutePrefixRollout/)
 
 ---
