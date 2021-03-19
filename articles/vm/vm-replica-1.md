@@ -22,10 +22,10 @@ VM 複製方法については多数の方法がありますが、こちらの�
 
 に絞って説明させていただきます。  
 
-また、こちらの記事ではマネージド ディスクの使用を前提とさせていただきますので、アンマネージド ディスクをご利用いただいている場合は、下記手順より VM をマネージドディスクに変換をお願いいたします。
+本記事ではマネージド ディスクの使用を前提とさせていただきますので、アンマネージド ディスクをご利用いただいている場合は、下記手順より VM をマネージドディスクに変換をお願いいたします。
 
 - Azure VM を Azure Managed Disks に移行する  
-https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks
+[https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks)
 
 詳細な手順は、part2 / part3 に記載いたしますので、まずは注意喚起および、それぞれの簡単な概要について紹介します。
 
@@ -37,14 +37,14 @@ https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-manag
 Windows VM の場合「OS ディスクのスナップショットから VM を複製」はバックアップ用途等でご利用いただけるものとなります。  
 
 - 参考: Windows インストールのディスク複製のための Microsoft ポリシー  
-https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/backup-and-storage/windows-installations-disk-duplication
+[https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/backup-and-storage/windows-installations-disk-duplication](https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/backup-and-storage/windows-installations-disk-duplication)
  
 >＝＝＝＝＝抜粋＝＝＝＝＝  
 >複製またはイメージ化された Windows インストールを展開する場合は、イメージをキャプチャする前にシステム準備 (Sysprep) ツールを使用する必要があります。  
 >＝＝＝＝＝＝＝＝＝＝＝＝  
  
 - 参考: Azure Portal を使用して VHD から VM を作成する  
-https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/create-vm-specialized-portal
+[https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/create-vm-specialized-portal](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/create-vm-specialized-portal)
  
 >＝＝＝＝＝抜粋＝＝＝＝＝  
 >複数の VM を作成する場合は、特殊化されたディスクを使用しないでください。  
