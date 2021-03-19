@@ -11,10 +11,10 @@ tags:
 こんにちは、Azure テクニカル サポート チームの富田です。
 今回はご案内することの多い、VM 複製方法についてとなります。
 
-本記事は3部作の1記事目です。
- 1. <a href="../vm-replica-1">VM 複製方法について 2 つの方法の紹介</a>
- 2. <a href="../vm-replica-2">一般化したイメージから VM を複製する手順</a>
- 3. <a href="../vm-replica-3">OS ディスクのスナップショットから VM を複製する手順</a>
+本記事は 3 部作の 1 記事目です。
+ 1. [VM 複製方法について 2 つの方法の紹介](https://jpaztech.github.io/blog/vm/vm-replica-1)
+ 2. [一般化したイメージから VM を複製する手順](https://jpaztech.github.io/blog/vm/vm-replica-2)
+ 3. [OS ディスクのスナップショットから VM を複製する手順](https://jpaztech.github.io/blog/vm/vm-replica-3)
 
 VM 複製方法については多数の方法がありますが、こちらの記事では、よく使われる
  - 一般化を行いイメージを作成して、そのイメージから VM を複製する方法
