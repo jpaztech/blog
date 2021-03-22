@@ -6,6 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [Azure Windows VM で記憶域スペースを拡張する](./articles/vm/extend-storage-space-on-azure-windows-vm.md)
 - [VM の再作成により可用性ゾーンを変更する (PowerShell 編)](./articles/vm/change-availability-zone-using-powershell.md)
 - [一時ディスクのドライブ文字が変わる](./articles/vm/drive-letter-changed-2.md)
 - [Windows ゲスト エージェント (WinGA) の再インストール方法](./articles/vm/re-install-windows-azure-guest-agent.md)
@@ -17,7 +18,7 @@
 
 
 ## Storage
-- [comming soon](./articles/strage/)
+- [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/strage/storageFirewall-403Error.md)
 
 ## Network
 - [TLS 証明書の更新に関するアナウンスの補足説明](./articles/network/tls-certificate-update-2020.md)
@@ -37,6 +38,8 @@
 
 ## Containers
 - [AKS の送信トラフィック - Load Balancer SKU と SNAT オプション](./articles/containers/aks-load-balancer-sku-and-snat-options.md)
+- [AAD Pod Identity の使用例 - AKS の Pod にマネージド ID で Azure リソースへのアクセス権を割り当てる](./articles/containers/aks-aad-pod-identity.md)
+- [特定の AKS ノードを再起動または削除したい](./articles/containers/aks-maintenance-for-node.md)
 
 ## OSS
 - [comming soon](./articles/oss/)
