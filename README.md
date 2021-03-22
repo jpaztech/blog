@@ -15,10 +15,11 @@
 - [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./articles/vm/win2019-jp-lpk.md)
 - [リソース正常性（Resource Health）アラートの構成方法](./articles/vm/resource-health-alert.md)
 - [Azure リソースの意図しない削除について](./articles/vm/resource-delete.md)
-
+- [リソース グループ名の大文字・小文字について](resourcegroup-uppercase-lowercase.md)
 
 ## Storage
-- [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/strage/storageFirewall-403Error.md)
+- [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/storage/storageFirewall-403Error.md)
+- [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 
 ## Network
 - [TLS 証明書の更新に関するアナウンスの補足説明](./articles/network/tls-certificate-update-2020.md)
