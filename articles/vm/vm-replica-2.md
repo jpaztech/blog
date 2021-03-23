@@ -1,6 +1,6 @@
 ---
 title: VM 複製方法について part.2/3 一般化したイメージから VM を複製する手順
-date: 2021-3-01 17:30:00
+date: 2021-3-23 17:00:02
 tags:
   - VM
   - Windows
@@ -51,7 +51,7 @@ tags:
 - 参考: クイック スタート:Azure Portal で Windows 仮想マシンを作成する  
 [https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/quick-create-portal](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/quick-create-portal)
 
-- 参考: クイック スタート:Azure portal で Linux 仮想マシンを作成する
+- 参考: クイック スタート:Azure portal で Linux 仮想マシンを作成する  
 [https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/quick-create-portal](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/quick-create-portal)
 
 ---
