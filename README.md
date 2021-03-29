@@ -6,6 +6,8 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [Tracking ID PLWV-BT0 と可用性について](./articles/vm/plwv-bt0.md)
+- [リソース グループ名の大文字・小文字について](./articles/vm/resourcegroup-uppercase-lowercase.md)
 - [Azure Windows VM で記憶域スペースを拡張する](./articles/vm/extend-storage-space-on-azure-windows-vm.md)
 - [VM の再作成により可用性ゾーンを変更する (PowerShell 編)](./articles/vm/change-availability-zone-using-powershell.md)
 - [一時ディスクのドライブ文字が変わる](./articles/vm/drive-letter-changed-2.md)
@@ -21,6 +23,7 @@
 - [VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順](./articles/vm/vm-replica-3)
 
 ## Storage
+- [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 - [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/storage/storageFirewall-403Error.md)
 - [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 
@@ -41,9 +44,9 @@
 - [NSG と Azure Firewall の違い](./articles/network/difference-nsg-fw.md)
 
 ## Containers
-- [AKS の送信トラフィック - Load Balancer SKU と SNAT オプション](./articles/containers/aks-load-balancer-sku-and-snat-options.md)
-- [AAD Pod Identity の使用例 - AKS の Pod にマネージド ID で Azure リソースへのアクセス権を割り当てる](./articles/containers/aks-aad-pod-identity.md)
 - [特定の AKS ノードを再起動または削除したい](./articles/containers/aks-maintenance-for-node.md)
+- [AAD Pod Identity の使用例 - AKS の Pod にマネージド ID で Azure リソースへのアクセス権を割り当てる](./articles/containers/aks-aad-pod-identity.md)
+- [AKS の送信トラフィック - Load Balancer SKU と SNAT オプション](./articles/containers/aks-load-balancer-sku-and-snat-options.md)
 
 ## OSS
 - [comming soon](./articles/oss/)
