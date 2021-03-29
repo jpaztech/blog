@@ -6,6 +6,9 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [VM 複製方法について part.1/3 2 つの方法の紹介](./articles/vm/vm-replica-1)
+- [VM 複製方法について part.2/3 一般化したイメージから VM を複製する手順](./articles/vm/vm-replica-2)
+- [VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順](./articles/vm/vm-replica-3)
 - [Tracking ID PLWV-BT0 と可用性について](./articles/vm/plwv-bt0.md)
 - [リソース グループ名の大文字・小文字について](./articles/vm/resourcegroup-uppercase-lowercase.md)
 - [Azure Windows VM で記憶域スペースを拡張する](./articles/vm/extend-storage-space-on-azure-windows-vm.md)
@@ -17,15 +20,10 @@
 - [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./articles/vm/win2019-jp-lpk.md)
 - [リソース正常性（Resource Health）アラートの構成方法](./articles/vm/resource-health-alert.md)
 - [Azure リソースの意図しない削除について](./articles/vm/resource-delete.md)
-- [リソース グループ名の大文字・小文字について](./articles/vm/resourcegroup-uppercase-lowercase.md)
-- [VM 複製方法について part.1/3 2 つの方法の紹介](./articles/vm/vm-replica-1)
-- [VM 複製方法について part.2/3 一般化したイメージから VM を複製する手順](./articles/vm/vm-replica-2)
-- [VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順](./articles/vm/vm-replica-3)
 
 ## Storage
 - [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 - [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/storage/storageFirewall-403Error.md)
-- [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 
 ## Network
 - [TLS 証明書の更新に関するアナウンスの補足説明](./articles/network/tls-certificate-update-2020.md)
