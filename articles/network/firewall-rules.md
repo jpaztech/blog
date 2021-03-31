@@ -11,7 +11,8 @@ tags:
 
 ---
 
-## <a href="#appruleblocked">Azure Firewall のアプリケーションルールで許可されているように見える動作について</a>
+<span id="apprule-block"></span>
+## <a href="#apprule-block">Azure Firewall のアプリケーションルールで許可されているように見える動作について</a>
 HTTP (80), HTTPS (443) の通信において、ネットワークルール、アプリケーションルールで明示的に拒否していない場合、ルールの処理順序に従って、Azure Firewall の既定の動作として、アプリケーションルールで拒否されることが想定される動作となります。
 
 この動作について Windows の Test-Netconnection や Linux の curl, nc コマンド等 (以下に記載) で TCP の 3way handshake による接続確認を実施した場合はアプリケーションルールで許可していないにもかかわらず、3way handshake が確立され、許可されたように見える動作となります。この動作の詳細を以下に記載します。
@@ -93,7 +94,8 @@ NSG にて接続が拒否されている Web サーバーにアクセスした�
 > <span style="color: red">curl: (35) Encountered end of file</span>
 
 
-## <a href="#difference">ネットワークルールと、アプリケーションルールの動作の違いについて</a>
+<span id="difference-net-app"></span>
+## <a href="#difference-net-app">ネットワークルールと、アプリケーションルールの動作の違いについて</a>
 
 ### ネットワークルールの動作について
 ネットワークルールは L4 で動作します。TCP の通信で宛先アドレス、宛先ポートが拒否されている場合、Azure Firewall は SYN/ACK を返しませんので、3way handshake に失敗し、通信が拒否される動作となります。
@@ -126,6 +128,7 @@ Azure Firewall のルールの処理順序がわかりにくいというお問�
 
 ![フローチャート](./firewall-rules/FWdefault-flow.png)
 
+<span id="faq"></span>
 ## <a href="#faq">FAQ</a>
 	
 #### - 設定変更時に既存接続への影響はありますか。
