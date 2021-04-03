@@ -48,7 +48,7 @@ aks-nodepool1-40771167-vmss000002   Ready    agent   24h   v1.18.10
 # 対象ノードからワークロードを退避し、スケジュールから除外 (drain)
 $ kubectl drain <ノード名> --ignore-daemonsets --delete-local-data --force
 
-# 対象ノードが "ShedulingDisabled" になっていることを確認
+# 対象ノードが "SchedulingDisabled" になっていることを確認
 $ kubectl get nodes
 NAME                                STATUS                     ROLES   AGE     VERSION
 aks-nodepool1-40771167-vmss000000   Ready,SchedulingDisabled   agent   4d17h   v1.18.10
