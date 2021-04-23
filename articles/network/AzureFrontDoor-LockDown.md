@@ -78,7 +78,7 @@ Azure Front Door のバックエンドに App Service を配置している構�
 * X-Azure-FDIDにおいて、Azure Front Door の固有のリソース ID を指定する
 <br>
 
-![参考 : App Service での設定例](https://github.com/taminta/blog/blob/084f884cda60e0d9763f57cb419d7092d8b37b73/articles/network/AzureFronrtDoor-Lockdown/AzureFrontDoor-AppService-LockDown.png) 
+![参考 : App Service での設定例](AzureFrontDoor-LockDown/AzureFrontDoor-AppService-LockDown.png) 
 
 <br>
 
