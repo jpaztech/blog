@@ -6,9 +6,10 @@
 - [comming soon](./articles/information/)
 
 ## VM
-- [VM 複製方法について part.1/3 2 つの方法の紹介](./articles/vm/vm-replica-1)
-- [VM 複製方法について part.2/3 一般化したイメージから VM を複製する手順](./articles/vm/vm-replica-2)
-- [VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順](./articles/vm/vm-replica-3)
+- [Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法](./articles/vm/create-vm-using-vhd.md)
+- [VM 複製方法について part.1/3 2 つの方法の紹介](./articles/vm/vm-replica-1.md)
+- [VM 複製方法について part.2/3 一般化したイメージから VM を複製する手順](./articles/vm/vm-replica-2.md)
+- [VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順](./articles/vm/vm-replica-3.md)
 - [Tracking ID PLWV-BT0 と可用性について](./articles/vm/plwv-bt0.md)
 - [リソース グループ名の大文字・小文字について](./articles/vm/resourcegroup-uppercase-lowercase.md)
 - [Azure Windows VM で記憶域スペースを拡張する](./articles/vm/extend-storage-space-on-azure-windows-vm.md)
