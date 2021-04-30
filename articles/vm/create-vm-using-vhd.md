@@ -9,7 +9,7 @@ tags:
 こんにちは。Azure テクニカル サポート チームの韓です。
 
 Azure VM では、VM で利用している OS ディスクやデータ ディスクの VHD ファイルをエクスポートすることができます。
-検証環境を作成するために別のサブスクリプション配下に複製 VM を作成したいときや既存の VM のリージョンを変更したいときには、エクスポートした VHD ファイルをストレージ アカウントにコピーし、新たに完全複製の VM を作成することで実現できます。
+検証環境を作成するために別のサブスクリプション配下に複製 VM を作成したいときや既存の VM のリージョンを変更したいときには、エクスポートした VHD ファイルをストレージ アカウントにコピーし、新たに複製 VM を作成することで実現できます。
 
 <!-- more -->
 
@@ -26,21 +26,22 @@ ASM 環境 (クラシック VM) や非管理ディスクをご利用の場合は
 
 1. Azure Portal より [Storage Account] を開き、[+ Create] をクリックします。
   必須項目を適宜設定し、[Review ＋ create] – [Create] をクリックしてストレージ アカウントを作成します。
-  ※ 複製 VM を作成したいリージョンをご選択ください。
+  - "Region" は、複製 VM を作成したいリージョンをご選択ください。
+  - ストレージ アカウントのパフォーマンスは Standard (general-purpose v2 account) または Premium を選択する場合は、"Premium account type" は [Page blobs] を選択します。
 
 ![](create-vm-using-vhd/1-1.jpg)
 
-2. Storage Account作成後、[Storage Account] - [<当該ストレージ アカウント名>] を選択し、左メニュー "Blob service" から [Containers] を選択します。
-
+2. Storage Account 作成後、[Storage Account] - [<当該ストレージ アカウント名>] を選択し、左メニュー "Blob service" から [Containers] を選択します。
+   
 3. [+ Containers] をクリックし [vhds] という名前でコンテナーを作成します。
 
 ![](create-vm-using-vhd/1-3.jpg)
 
 ### [2] コピー先の SAS を発行する
 
-1. 手順 [1] - 1 で作成した [vhds] を選択し、左メニュー "Settings" から、[Shared Access Signature] を選択します。
+1. 手順 [1] - 3 で作成したコンテナ― [vhds] を選択し、左メニュー "Settings" から、[Shared Access Signature] を選択します。
 
-2. [Shared Access Signature]の設定画面で、Permissionsに [Read] と [Write] を選択します。
+2. [Shared Access Signature]の設定画面で、Permissionsに [Read] と [Write] を選択します。121042826000292
 
 ![](create-vm-using-vhd/2-2.jpg)
 
@@ -54,18 +55,19 @@ ASM 環境 (クラシック VM) や非管理ディスクをご利用の場合は
 
 5. コピーした [Blob SAS URL] を以下の通り編集します。
    ※ VHD ファイル名は適宜設定してください。
+   **<span style="color:red;">※ ここで作成した SAS URL は 後の手順 [4] - 3 にて、コピー先の URL として使います。</span>**
 
 編集前: 
 **https://<ストレージ アカウント名>.blob.core.windows.net/vhds?<SAS>**
 
 例:
-> https://xxxxxxxx.blob.core.windows.net/vhds?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=略
+> https://xxxxxxxx.blob.core.windows.net/vhds?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=xxxxxxxxxx
 
 編集後: 
 **https://<ストレージ アカウント名>.blob.core.windows.net/vhds/<コピー後の VHD ファイル名>?<SAS>**
 
 例:
-> https://xxxxxxxx.blob.core.windows.net/vhds/<span color="red">osdisk.vhd</span>?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=略
+> https://xxxxxxxx.blob.core.windows.net/vhds/<span color="red">osdisk.vhd</span>?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=xxxxxxxxxx
 
 ### [3] VHD ファイルをエクスポートする
 ディスクの VHD ファイルをエクスポートするには、後述の 2 つの方法 (A および B) があります。
@@ -95,6 +97,7 @@ ASM 環境 (クラシック VM) や非管理ディスクをご利用の場合は
 ![](create-vm-using-vhd/3-4a.jpg)
 
 5. 表示された URL をテキスト エディタ等にコピーしておきます。
+  **<span style="color:red;">※ ここで作成した SAS URL は 後の手順 [4] - 3 にて、コピー元の URL として使います。</span>**
   ※ コピー作業が完了したら、上記「Cancel export」ボタンで、SAS 発行を解除してください。
   ※ SAS 発行を解除しないと当該 VM は起動できません。
 
@@ -119,6 +122,8 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 
 ![](create-vm-using-vhd/3-4b.jpg)
 
+
+スナップショットの取得が完了したら、停止 (割り当て解除) いただいていた元 VM を起動いただいて問題ございません。
 次に、VHD ファイルをエクスポートするための SAS を発行します。
 
 5. Azure Portal にて、[Snapshot] - [<当該スナップショット>] を選択します。
@@ -129,6 +134,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 ![](create-vm-using-vhd/3-8b.jpg)
 
 8. 表示された URL をテキスト エディタ等にコピーしておきます。
+      **<span style="color:red;">※ ここで作成した SAS URL は 後の手順 [4] - 3 にて、コピー元の URL として使います。</span>**
 
 ![](create-vm-using-vhd/3-9b.jpg)
 
@@ -144,7 +150,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 2. 管理者権限でコマンド プロンプトを起動し、AzCopy のフォルダに移動します。
 
 3. 以下のようにコマンドを実行し、VHD のコピーを行います。
-   **azcopy copy "<手順 3 でコピーしたURL>" "手順 2 の編集後の URL >" --blob-type PageBlob**
+   **azcopy copy "<手順 3 でコピーしたURL (コピー元)>" "手順 2 の編集後の URL (コピー先)>" --blob-type PageBlob**
 
 実行例：
 > azcopy copy "https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/abcd?sv=2018-03-28&sr=b&si=略&sig=略" "https://xxxxxxxx.blob.core.windows.net/vhds/osdisk.vhd?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=略" --blob-type PageBlob
@@ -194,6 +200,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 ![](create-vm-using-vhd/6-2.jpg)
 
 手順は以上です。
+なお、VHD ファイルをコピーするために作成したストレージ アカウントや VHD をエクスポートするために取得したスナップショットは、必要に応じて削除いただいて問題ございません。
 
 <hr>
 
