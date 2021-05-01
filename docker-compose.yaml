@@ -1,7 +1,7 @@
 version: '3'
 services:
   blog:
-    image: ghcr.io/jpaztech/blog-build-tools:latest
+    image: ghcr.io/cssjpn/blog-build-tools:latest
     working_dir: /blog
     command: ["npm", "start"]
     ports:
