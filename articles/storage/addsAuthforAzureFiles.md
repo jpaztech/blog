@@ -15,19 +15,24 @@ Azure ファイル共有をマウントする場合、認証方法にはスト�
 ## 前提条件
 Azure ファイル共有のオンプレ AD DS 認証をご使用いただく場合、以下の前提条件を満たしている必要があります。
 
-**・Azure AD Connect**
-　オンプレ AD は [Azure AD Connect](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/how-to-connect-install-roadmap) を使って Azure AD と同期している必要があります。
-　
-　以下は Azure AD Connect により オンプレ AD と Azure AD が同期した状態の一例となります。
-　![](addsAuthforAzureFiles/AzureFiles01.png)
+**・Azure AD Connect**  
 
-**・ドメイン参加**
-　　Azure ファイル共有 にアクセスするクライアント端末はドメイン参加またはドメインサーバーと通信できる必要があります。
-**・ポート 445 の開放**
+オンプレ AD は [Azure AD Connect](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/how-to-connect-install-roadmap) を使って Azure AD と同期している必要があります。
+
+以下は Azure AD Connect により オンプレ AD と Azure AD が同期した状態の一例となります。
+
+![](addsAuthforAzureFiles/AzureFiles01.png)
+
+**・ドメイン参加**  
+
+Azure ファイル共有 にアクセスするクライアント端末はドメイン参加またはドメインサーバーと通信できる必要があります。
+
+**・ポート 445 の開放**  
 
 また、前提条件の詳細に関しては以下の公開情報を必ずご確認ください。
-　□参考：[概要 - SMB を使用した Azure ファイル共有へのオンプレミスの Active Directory Domain Services 認証 > 前提条件](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-auth-active-directory-enable#prerequisites)
-　
+
+□参考：[概要 - SMB を使用した Azure ファイル共有へのオンプレミスの Active Directory Domain Services 認証 > 前提条件](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-auth-active-directory-enable#prerequisites)
+
 ---
 
 それでは、さっそくオンプレ AD DS 認証を有効化し、Windows Server へファイル共有をマウントしアクセスする手順をご紹介いたします。
@@ -37,20 +42,22 @@ Azure ファイル共有のオンプレ AD DS 認証をご使用いただく場�
 ### (1) Azure ファイル共有の作成
 (※すでに Azure ファイル共有を作成されている場合はこの手順は不要です。(2) へ進みます)
 
-　1-1. 対象のストレージアカウント「ファイル共有」へを押下
+1-1. 対象のストレージアカウント「ファイル共有」へを押下
 ![](addsAuthforAzureFiles/AzureFiles02.png)
 
-　1-2. 「+ファイル共有」を押下し、「名前」「クォータ」「層」を入力し新しいファイル共有を作成
+1-2. 「+ファイル共有」を押下し、「名前」「クォータ」「層」を入力し新しいファイル共有を作成
 ![](addsAuthforAzureFiles/AzureFiles03.png)
 
 ### (2) Azure ファイル共有に対するオンプレ AD DS 認証の有効化
-　2-1. AzFilesHybrid モジュールをダウンロードし解凍
-　https://github.com/Azure-Samples/azure-files-samples/releases
+2-1. AzFilesHybrid モジュールをダウンロードし解凍
 
-　2-2. Azure ファイル共有のオンプレ AD DS 認証を有効化するスクリプトを実行
-　□参考：[Join-AzStorageAccountForAuth を実行する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccountforauth)
-　
-　Join-AzStorageAccountForAuth コマンドレット例 
+https://github.com/Azure-Samples/azure-files-samples/releases
+
+2-2. Azure ファイル共有のオンプレ AD DS 認証を有効化するスクリプトを実行
+
+□参考：[Join-AzStorageAccountForAuth を実行する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccountforauth)
+
+Join-AzStorageAccountForAuth コマンドレット例 
 ```shell
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 
@@ -75,17 +82,18 @@ Join-AzStorageAccountForAuth `
 
 Update-AzStorageAccountAuthForAES256 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName
 ```
-　実行例
+実行例
 ![](addsAuthforAzureFiles/AzureFiles04.png)
 
-　2-3. 機能が有効になったことを確認
-　□参考：[機能が有効になっていることを確認する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#confirm-the-feature-is-enabled)
+2-3. 機能が有効になったことを確認
 
-　実行例
+□参考：[機能が有効になっていることを確認する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#confirm-the-feature-is-enabled)
+
+実行例
 ![](addsAuthforAzureFiles/AzureFiles05.png)
 
 ### (3)ファイル共有レベルのアクセス権限を付与
-　□参考：[共有レベルのアクセス許可](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-assign-permissions#share-level-permissions)
+□参考：[共有レベルのアクセス許可](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-assign-permissions#share-level-permissions)
 
 | Azure RBAC |     説明      | 
 | --- | ----------- | 
@@ -93,20 +101,22 @@ Update-AzStorageAccountAuthForAES256 -ResourceGroupName $ResourceGroupName -Stor
 | 記憶域ファイルデータの SMB 共有の共同作成者 | SMB による Azure Storage ファイル共有に対する読み取り、書き込み、削除のアクセスを許可します |
 | 記憶域ファイルデータの SMB 共有の閲覧者 | SMB による Azure ファイル共有に対する読み取りアクセスを許可します |
 
-　3.1 対象の Azure ファイル共有 > 「アクセス制御(IAM)」より上記必要なロールを付与
+3.1 対象の Azure ファイル共有 > 「アクセス制御(IAM)」より上記必要なロールを付与
 ![](addsAuthforAzureFiles/AzureFiles06.png)
 
-　3-2. ロールが付与されたことを確認
-　(※ここでは例としてユーザー testuser0[1|2] に **ストレージファイルデータの SMB 共有の管理者特権の共同作成者** を付与しています)
+3-2. ロールが付与されたことを確認
+(※ここでは例としてユーザー testuser0[1|2] に **ストレージファイルデータの SMB 共有の管理者特権の共同作成者** を付与しています)
 ![](addsAuthforAzureFiles/AzureFiles07.png)
 
 ### (4) Azure ファイル共有マウント用コマンドをコピー
 
-　Azure ファイル共有 [接続] より接続方法 [Active Directory] を選択し、表示されているコマンドをコピー
+Azure ファイル共有 [接続] より接続方法 [Active Directory] を選択し、表示されているコマンドをコピー
 ![](addsAuthforAzureFiles/AzureFiles08.png)
 
 ### (5) 手順(4) でロールを付与したユーザーでサインイン
+
 ここでは例としてユーザー testuser01 でサインインしています。
+
 ![](addsAuthforAzureFiles/AzureFiles11.png)
 
 ### (6) 手順(4) でコピーしたコマンドを実行
@@ -132,7 +142,9 @@ Azure ファイル共有マウント用コマンドをコピーし実行
 また、オンプレ AD DS 認証ではファイル共有へのアクセス元の端末がドメイン参加していない場合でも、オンプレ AD DS に参加しているドメインサーバーと通信できている状態であれば、認証時にオンプレ AD DS のユーザー資格情報を入力することで利用することも可能ですのでご参考としていただけますと幸いです。
 
 >□参考：[概要 - SMB を使用した Azure ファイル共有へのオンプレミスの Active Directory Domain Services 認証 > 前提条件](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-auth-active-directory-enable#prerequisites)
+>
 ><一部抜粋>
+>
 >オンプレミス マシンまたは Azure VM をオンプレミスの AD DS にドメイン参加させます。 ドメインに参加させる方法については、「コンピューターをドメインに参加させる」を参照してください。
 >マシンが AD DS にドメイン参加していない場合でも、マシンで AD ドメイン コントローラーが認識されていれば、認証に AD 資格情報を利用することはできます。
 
