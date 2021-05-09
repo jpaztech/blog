@@ -133,7 +133,7 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 
 ---
 
-なお、ストレージアカウントキーを使用してファイル共有をマウントすることで、Windows ACL (NTFS アクセス許可とも呼ばれます) を構成する事も可能です。
+なお、ストレージアカウントキーを使用してファイル共有をマウントすることで、Windows ACL (NTFS アクセス許可とも呼ばれます) を構成することも可能です。
 
 □参考：[パート 3: SMB 経由でディレクトリとファイル レベルのアクセス許可を構成する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-configure-permissions)
 
@@ -168,7 +168,7 @@ Azure ファイル共有マウント用コマンドをコピーし実行
 
 ---
 
-また、オンプレ AD DS 認証ではファイル共有へのアクセス元の端末がドメイン参加していない場合でも、オンプレ AD DS に参加しているドメインサーバーと通信できる状態であれば、認証に AD ユーザー資格情報を入力することで利用することも可能です。ご参考としていただけますと幸いです。
+また、オンプレ AD DS 認証ではファイル共有へのアクセス元の端末がドメイン参加していない場合でも、オンプレ AD DS に参加しているドメインサーバーと通信できる状態であれば、認証に AD ユーザー資格情報を入力しファイル共有へアクセスすることも可能です。ご参考としていただけますと幸いです。
 
 >□参考：[概要 - SMB を使用した Azure ファイル共有へのオンプレミスの Active Directory Domain Services 認証 > 前提条件](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-auth-active-directory-enable#prerequisites)
 >
@@ -195,6 +195,7 @@ Azure ファイル共有マウント用コマンドをコピーし実行
 
 ドメイン参加していない Windows 10 端末 (win10-noadds-client-apts) のエクスプローラーに UNC (\\\\<ストレージアカウント名>.file.core.windows.net\\<ファイル共有名>) を入力すると資格情報入力画面が表示されるため、AD ユーザー資格情報を入力しアクセスを行います。
 ![](addsAuthforAzureFiles/AzureFiles15.png)
+
 ここでは、ドメイン参加済みユーザー (win10client01@contoso.com) の AD ユーザー資格情報を利用しています。
 
 ![](addsAuthforAzureFiles/AzureFiles17.png)
