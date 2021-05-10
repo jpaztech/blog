@@ -41,7 +41,7 @@ ASM 環境 (クラシック VM) や非管理ディスクをご利用の場合は
 
 1. 手順 [1] - 3 で作成したコンテナ― [vhds] を選択し、左メニュー "Settings" から、[Shared Access Signature] を選択します。
 
-2. [Shared Access Signature]の設定画面で、Permissionsに [Read] と [Write] を選択します。121042826000292
+2. [Shared Access Signature]の設定画面で、Permissionsに [Read] と [Write] を選択します。
 
 ![](create-vm-using-vhd/2-2.jpg)
 
@@ -150,7 +150,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 2. 管理者権限でコマンド プロンプトを起動し、AzCopy のフォルダに移動します。
 
 3. 以下のようにコマンドを実行し、VHD のコピーを行います。
-   **azcopy copy "<手順 3 でコピーしたURL (コピー元)>" "手順 2 の編集後の URL (コピー先)>" --blob-type PageBlob**
+   **azcopy copy "<手順 [3] でコピーしたURL (コピー元)>" "手順 [2] の編集後の URL (コピー先)>" --blob-type PageBlob**
 
 実行例：
 > azcopy copy "https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/abcd?sv=2018-03-28&sr=b&si=略&sig=略" "https://xxxxxxxx.blob.core.windows.net/vhds/osdisk.vhd?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=略" --blob-type PageBlob
