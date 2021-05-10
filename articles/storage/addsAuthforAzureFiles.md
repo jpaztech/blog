@@ -42,18 +42,18 @@ Azure ファイル共有 にアクセスするクライアント端末はドメ�
 ### (1) Azure ファイル共有の作成
 (※すでに Azure ファイル共有を作成されている場合はこの手順は不要です。(2) へ進みます)
 
-1-1. 対象のストレージアカウント「ファイル共有」へを押下
+1-1. 対象のストレージアカウント「ファイル共有」へを押下します。
 ![](addsAuthforAzureFiles/AzureFiles02.png)
 
-1-2. 「+ファイル共有」を押下し、「名前」「クォータ」「層」を入力し新しいファイル共有を作成
+1-2. 「+ファイル共有」を押下し、「名前」「クォータ」「層」を入力し新しいファイル共有を作成します。
 ![](addsAuthforAzureFiles/AzureFiles03.png)
 
 ### (2) Azure ファイル共有に対するオンプレ AD DS 認証の有効化
-2-1. AzFilesHybrid モジュールをダウンロードし解凍
+2-1. AzFilesHybrid モジュールをダウンロードし解凍します。
 
 https://github.com/Azure-Samples/azure-files-samples/releases
 
-2-2. Azure ファイル共有のオンプレ AD DS 認証を有効化するスクリプトを実行
+2-2. Azure ファイル共有のオンプレ AD DS 認証を有効化するスクリプトを実行します。
 
 □参考：[Join-AzStorageAccountForAuth を実行する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccountforauth)
 
@@ -91,7 +91,7 @@ Update-AzStorageAccountAuthForAES256 -ResourceGroupName $ResourceGroupName -Stor
 実行例
 ![](addsAuthforAzureFiles/AzureFiles04.png)
 
-2-3. 機能が有効になったことを確認
+2-3. 機能が有効になったことを確認します。
 
 □参考：[機能が有効になっていることを確認する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#confirm-the-feature-is-enabled)
 
@@ -107,16 +107,17 @@ Update-AzStorageAccountAuthForAES256 -ResourceGroupName $ResourceGroupName -Stor
 | 記憶域ファイルデータの SMB 共有の共同作成者 | SMB による Azure Storage ファイル共有に対する読み取り、書き込み、削除のアクセスを許可します |
 | 記憶域ファイルデータの SMB 共有の閲覧者 | SMB による Azure ファイル共有に対する読み取りアクセスを許可します |
 
-3.1 対象の Azure ファイル共有 > 「アクセス制御(IAM)」より上記必要なロールを付与
+3-1. 対象の Azure ファイル共有 > 「アクセス制御(IAM)」より上記必要なロールを付与します。
 ![](addsAuthforAzureFiles/AzureFiles06.png)
 
-3-2. ロールが付与されたことを確認
+3-2. ロールが付与されたことを確認します。
+
 (※ここでは例としてユーザー testuser0[1|2] に **ストレージファイルデータの SMB 共有の管理者特権の共同作成者** を付与しています)
 ![](addsAuthforAzureFiles/AzureFiles07.png)
 
 ### (4) Azure ファイル共有マウント用コマンドをコピー
 
-Azure ファイル共有 [接続] より認証方法 [Active Directory] を選択し、表示されているコマンドをコピー
+Azure ファイル共有 [接続] より認証方法 [Active Directory] を選択し、表示されているコマンドをコピーします。
 ![](addsAuthforAzureFiles/AzureFiles08.png)
 
 ### (5) 手順(4) でロールを付与したユーザーでサインイン
@@ -159,10 +160,10 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 ここまではドメインコントローラーに昇格した Windows Server にて Azure ファイル共有に対する AD DS 認証を有効化を実施し、ファイル共有のマウントならびにアクセスを行いました。
 次は、上述のドメインに参加している Windows 10 端末にてファイル共有をマウントしアクセスが可能であるか確認します。
 
-ドメイン参加している Windows 10 端末にサインイン
+ドメイン参加している Windows 10 端末にサインインします。
 ![](addsAuthforAzureFiles/AzureFiles12.png)
 
-Azure ファイル共有マウント用コマンドをコピーし実行
+Azure ファイル共有マウント用コマンドをコピーし実行します。
 ![](addsAuthforAzureFiles/AzureFiles13.png)
 ファイル共有へアクセスができることを確認できました。
 
@@ -177,7 +178,7 @@ Azure ファイル共有マウント用コマンドをコピーし実行
 >オンプレミス マシンまたは Azure VM をオンプレミスの AD DS にドメイン参加させます。 ドメインに参加させる方法については、「コンピューターをドメインに参加させる」を参照してください。
 >マシンが AD DS にドメイン参加していない場合でも、マシンで AD ドメイン コントローラーが認識されていれば、認証に AD 資格情報を利用することはできます。
 
-ドメイン参加していない Windows 10 端末から、ドメイン参加済みのアカウントの AD ユーザー資格情報を利用してファイル共有へアクセスしてみます。
+ドメイン参加していない Windows 10 端末から、ドメイン参加済みアカウントの AD ユーザー資格情報を利用してファイル共有へアクセスしてみます。
 
 環境
 - ドメイン参加済みサーバー：win10-adds-server-apts
