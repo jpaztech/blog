@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Azure CDN の特徴やよくあるお問い合わせ、トラブル シューティングの紹介 | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チーム箕輪です。 Azure が提供している CDN サービスの Azure CDN において、ご利用いただける機能やよくあるお問合せ、各 SKU の特徴などを踏まえたトラブル シューティングの手順などをご紹介いたします。Azure CDN は現在 4 つの SKU があり、3 社の CDN プロバイダー (Microsoft &#x2F; Verizon &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure CDN の特徴やよくあるお問い合わせ、トラブル シューティングの紹介">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/cdn-common/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チーム箕輪です。 Azure が提供している CDN サービスの Azure CDN において、ご利用いただける機能やよくあるお問合せ、各 SKU の特徴などを踏まえたトラブル シューティングの手順などをご紹介いたします。Azure CDN は現在 4 つの SKU があり、3 社の CDN プロバイダー (Microsoft &#x2F; Verizon &#x2F;">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2020-07-15T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-10T05:27:28.840Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="AzureCDN">
+<meta property="article:tag" content="Troubleshooting">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" href="https://cssjpn.github.io/" target="_blank" rel="noopener">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-network/cdn-common" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Azure CDN の特徴やよくあるお問い合わせ、トラブル シューティングの紹介
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2020-07-15T00:00:00.000Z" itemprop="datePublished">2020-07-15</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+227e146d-8399-584d-aa3c-904519570203%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+CDN+%E3%81%AE%E7%89%B9%E5%BE%B4%E3%82%84%E3%82%88%E3%81%8F%E3%81%82%E3%82%8B%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%80%81%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB+%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E7%B4%B9%E4%BB%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fcdn-common%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fcdn-common.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fcdn-common.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/network/cdn-common/" data-id="ckoi5ygdf001n4go37xy57rk1" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure テクニカル サポート チーム箕輪です。</p>
+<p>Azure が提供している CDN サービスの Azure CDN において、ご利用いただける機能やよくあるお問合せ、各 SKU の特徴などを踏まえたトラブル シューティングの手順などをご紹介いたします。<br>Azure CDN は現在 4 つの SKU があり、3 社の CDN プロバイダー (Microsoft / Verizon / Akamai) で CDN サービスを提供しています。<br>本ブログは Azure CDN における共通的な事項をまとめたブログとなります。</p>
+<a id="more"></a> 
+
+<p>各 SKU の特徴や、各 SKU における情報採取の手順については、以下のブログでまとめていますのでご参照ください。</p>
+<ul>
+<li><a href="https://jpaztech.github.io/blog/network/cdn-specific-sku/">Azure CDN の各 SKU の特徴、トラブルシューティングの紹介</a></li>
+</ul>
+<p>本ブログでは、Azure CDN の共通的な機能として、以下の項目についてご案内しています。</p>
+<ul>
+<li>Azure CDN の特徴</li>
+<li>Azure CDN のよくあるお問合せ</li>
+<li>構築・設定変更時のエラーのトラブルシューティング</li>
+<li>接続エラーなどが発生した際のトラブルシューティング</li>
+</ul>
+<br>
+
+<p><span id="feature-of-azure-cdn"></span></p>
+<h2 id="Azure-CDN-の特徴"><a href="#Azure-CDN-の特徴" class="headerlink" title="Azure CDN の特徴"></a><a href="#feature-of-azure-cdn">Azure CDN の特徴</a></h2><p>Azure CDN は 3 社の CDN プロバイダー (Microsoft / Verizon / Akamai)  で CDN サービスを提供しています。<br>各社の CDN プラットフォームによりご利用いただける機能が異なり、各 SKU の比較は <a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-features" target="_blank" rel="noopener">弊社公開情報</a> でご案内しています。<br>Azure CDN の 4 つの SKU で共通して利用できる機能について、弊社公開情報のリンクとあわせてご紹介します。</p>
+<ul>
+<li>固定費用がかからない、転送量に応じた課金体系<br><a href="https://azure.microsoft.com/ja-jp/pricing/details/cdn/" target="_blank" rel="noopener">https://azure.microsoft.com/ja-jp/pricing/details/cdn/</a></li>
+<li>任意のリソース名でプロファイルとエンドポイントが構成でき、既定のエンドポイントは HTTPS に対応<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-create-new-endpoint" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-create-new-endpoint</a></li>
+<li>お客様に管理された任意のドメイン (カスタムドメイン) を利用可能<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-map-content-to-custom-domain" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-map-content-to-custom-domain</a></li>
+<li>Azure CDN で管理された無料の SSL 証明書を用いたカスタムドメインの HTTPS 接続を提供<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-custom-ssl?tabs=option-1-default-enable-https-with-a-cdn-managed-certificate" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-custom-ssl?tabs=option-1-default-enable-https-with-a-cdn-managed-certificate</a></li>
+<li>キャッシュされたコンテンツのキャッシュ消去 (Purge)<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-purge-endpoint" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-purge-endpoint</a></li>
+<li>コンテンツのキャッシュ期間の設定<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-caching-rules" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-caching-rules</a></li>
+<li>キャッシュされたコンテンツのファイル圧縮機能<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-improve-performance" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-improve-performance</a></li>
+<li>リクエストやキャッシュ ヒット数などのログ確認機能<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-azure-diagnostic-logs" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-azure-diagnostic-logs</a></li>
+<li>国/地域別のアクセス制御<br><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-restrict-access-by-country" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-restrict-access-by-country</a></li>
+</ul>
+<br>
+
+<p><span id="qa-of-azure-cdn"></span></p>
+<h2 id="Azure-CDN-のよくあるお問合せ"><a href="#Azure-CDN-のよくあるお問合せ" class="headerlink" title="Azure CDN のよくあるお問合せ"></a><a href="#qa-of-azure-cdn">Azure CDN のよくあるお問合せ</a></h2><p>Azure CDN において、お客様よりよくお問い合わせいただく内容についてご紹介いたします。</p>
+<br>
+
+<p><span id="q1"></span></p>
+<h4 id="Azure-CDN-のリソースのリージョンを指定したい-Azure-CDN-のリソースを日本だけに固定したい"><a href="#Azure-CDN-のリソースのリージョンを指定したい-Azure-CDN-のリソースを日本だけに固定したい" class="headerlink" title="Azure CDN のリソースのリージョンを指定したい / Azure CDN のリソースを日本だけに固定したい"></a><a href="#q1">Azure CDN のリソースのリージョンを指定したい / Azure CDN のリソースを日本だけに固定したい</a></h4><p>Azure CDN では、世界中で構成された CDN の POP からサービスを提供しており、リージョン単位でのサービス提供はしていません。<br>Azure CDN のプロファイルを構成される場合、既定では global というリージョンでリソースが構成され、特定のリージョンだけにお客様の構成情報を適応するといった機能はありません。<br>Azure CDN の構成方法によっては Azure CDN のリージョンが global 以外となる場合がありますが、いずれのリージョンであっても動作や機能に違いはありません。</p>
+<p>接続制限という観点で特定のリージョンを指定されたい場合は、<a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-restrict-access-by-country" target="_blank" rel="noopener">国/地域別の Azure CDN コンテンツの制限</a> の機能をご検討ください。</p>
+<br>
+
+<p><span id="q2"></span></p>
+<h4 id="Azure-CDN-から更新されたコンテンツが配信されない"><a href="#Azure-CDN-から更新されたコンテンツが配信されない" class="headerlink" title="Azure CDN から更新されたコンテンツが配信されない"></a><a href="#q2">Azure CDN から更新されたコンテンツが配信されない</a></h4><p>Azure CDN はクライアント (ユーザー) からの要求 URL に対して、CDN 上でキャッシュされたコンテンツがあれば CDN から応答し、キャッシュされたコンテンツが無い場合やキャッシュの有効期間が過ぎている場合は、配信元に対象のコンテンツを取得した上で、クライアント (ユーザー) に応答する動作となります。</p>
+<p>配信元のコンテンツを更新されたにもかかわらず、Azure CDN から更新される前のコンテンツが応答される場合は、Azure CDN 上のキャッシュを消去 (Purge) いただくことで、Azure CDN はクライアント (ユーザー) からの要求 URL に対して、配信元に更新されたコンテンツを取得し、クライアント (ユーザー)  に応答します。</p>
+<br>
+
+<p><span id="q3"></span></p>
+<h4 id="Azure-CDN-を利用した際に発生する費用の考え方について"><a href="#Azure-CDN-を利用した際に発生する費用の考え方について" class="headerlink" title="Azure CDN を利用した際に発生する費用の考え方について"></a><a href="#q3">Azure CDN を利用した際に発生する費用の考え方について</a></h4><p>Azure CDN おいて発生する費用の考え方については、以下の弊社公開情報にてご案内しています。<br>実際に発生する費用や、お客様の固有のご環境における費用のご質問についてご確認されたい場合は、課金の観点で弊社サポート担当までお問い合わせください。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-billing" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-billing</a></p>
+<br>
+
+<p><span id="q4"></span></p>
+<h4 id="新規でエンドポイントを設定したがエラーになる"><a href="#新規でエンドポイントを設定したがエラーになる" class="headerlink" title="新規でエンドポイントを設定したがエラーになる"></a><a href="#q4">新規でエンドポイントを設定したがエラーになる</a></h4><p>Azure CDN は世界中で構成された CDN の POP から CDN サービスを提供しているため、世界中で一意のリソース名で構成される必要があります。<br>設定されたいエンドポイント名が既に利用されている場合はエラーとなり設定ができないため、別のエンドポイント名をご利用ください。<br>(Azure CDN のプロファイル名は任意のリソース名を設定できます。)</p>
+<p>設定されたいエンドポイント名が利用可能かは、<a href="https://docs.microsoft.com/en-us/rest/api/cdn/checknameavailability" target="_blank" rel="noopener">こちらの REST API</a> によりご確認いただけます。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"contoso-cdn"</span>,</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"Microsoft.Cdn/Profiles/Endpoints"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(contoso-cdn をお客様のご利用されたいリソース名に置き換えて Body に入力し、REST API を実行してください)</span><br></pre></td></tr></table></figure>
+<br>
+
+<p><span id="q5"></span></p>
+<h4 id="カスタムドメインを別のエンドポイントに移行したい"><a href="#カスタムドメインを別のエンドポイントに移行したい" class="headerlink" title="カスタムドメインを別のエンドポイントに移行したい"></a><a href="#q5">カスタムドメインを別のエンドポイントに移行したい</a></h4><p>Azure CDN のエンドポイントに設定されたカスタムドメインの設定を維持したままエンドポイントの変更はできません。<br>カスタムドメインを別のエンドポイントに移行する場合、既存のカスタムドメインの設定を削除いただいた上で移行する必要があります。</p>
+<br>
+
+<p><span id="q6"></span></p>
+<h4 id="CORS-に対応する方法を知りたい"><a href="#CORS-に対応する方法を知りたい" class="headerlink" title="CORS に対応する方法を知りたい"></a><a href="#q6">CORS に対応する方法を知りたい</a></h4><p>HTTP ヘッダの CORS (クロス オリジン リソース共有) の利用方法については、以下の弊社公開上でご案内しています。<br>CORS の設定後、意図した動作とならない場合は、一度キャッシュ消去 (Purge) を実行いただき、動作をご確認ください。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-cors" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-cors</a> </p>
+<br>
+
+<p><span id="q7"></span></p>
+<h4 id="独自の証明書を利用したカスタムドメインの-HTTPS-有効化について"><a href="#独自の証明書を利用したカスタムドメインの-HTTPS-有効化について" class="headerlink" title="独自の証明書を利用したカスタムドメインの HTTPS 有効化について"></a><a href="#q7">独自の証明書を利用したカスタムドメインの HTTPS 有効化について</a></h4><p>カスタムドメインの HTTPS 有効化において、Azure CDN で管理された証明書 (DigiCert 社の証明書) 以外に、独自の証明書 (お客様に準備いただいた証明書) がご利用できます。<br>独自の証明書がご利用いただけるのは Standard Microsoft と Standard Verizon、Premium Verizon となります。<br>Standard Akamai では独自の証明書はご利用いただけず、Let’s Encrypt の証明書で HTTPS 接続が利用できます。<br>独自の証明書をご利用いただく際は、Azure CDN のリソースが構成された同じサブスクリプションに Azure Key Vault リソースを構成いただき、証明書をアップロードする必要があります。</p>
+<p>なお、Standard Microsoft では <a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-troubleshoot-allowed-ca" target="_blank" rel="noopener">特定の認証局 (CA) で発行された証明書</a> をご利用いただく必要があります。<br>Standard Verizon、Premium Verizon においては、任意の認証局 (CA) で発行された証明書が利用できますが、自己署名証明書は利用できず、また Azure Key Vault にアップロードいただく証明書には認証局 (CA) の中間証明書を含めるように構成する必要があります。<br>以下の openssl コマンドで、中間 CA 証明書を含んだ PFX 形式の証明書を構成できますのでご参照ください。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -<span class="built_in">export</span> -<span class="keyword">in</span> PublicSSLcert.cer -inkey PrivateKey.key -certfile IntermediateCAcert.cer -out PFXcert.pfx</span><br><span class="line"> </span><br><span class="line">* PublicSSLcert.cer : 認証局 (CA) より発行された SSL 証明書</span><br><span class="line">* PrivateKey.key : 認証局 (CA) に送付した CSR を構成された際の秘密鍵</span><br><span class="line">* IntermediateCAcert.cer : 認証局 (CA) の中間 CA 証明書</span><br><span class="line">* PFXcert.pfx : openssl コマンドにより出力される PFX 形式のファイル</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><span id="q8"></span></p>
+<h4 id="Azure-CDN-で利用されている-IP-リストが知りたい"><a href="#Azure-CDN-で利用されている-IP-リストが知りたい" class="headerlink" title="Azure CDN で利用されている IP リストが知りたい"></a><a href="#q8">Azure CDN で利用されている IP リストが知りたい</a></h4><p>Azure CDN で利用されている IP リストは、以下の弊社公開情報にて公開しています。<br>Standard Akamai においては、公開された IP リストはありません。<br>配信元 (オリジン) で Azure CDN からの接続を IP リストで制限されたい場合は、Standard Microsoft、Standard Verizon、Premium Verizon をご利用ください。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-pop-list-api" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-pop-list-api</a></p>
+<br>
+
+<p><span id="q9"></span></p>
+<h4 id="配信元-オリジン-に-HTTPS-だけ接続するようにしたい"><a href="#配信元-オリジン-に-HTTPS-だけ接続するようにしたい" class="headerlink" title="配信元 (オリジン) に HTTPS だけ接続するようにしたい"></a><a href="#q9">配信元 (オリジン) に HTTPS だけ接続するようにしたい</a></h4><p>Azure CDN の動作として、クライアント (ユーザー) からの要求プロトコルを用いて配信元 (オリジン) に接続する動作となります。<br>クライアント (ユーザー) が HTTP で要求 URL を送信した場合、Azure CDN は配信元 (オリジン) に HTTP でコンテンツを取得します。</p>
+<p>クライアント (ユーザー) からの HTTP の要求 URL を HTTPS にリダイレクトしたい場合、Standard Microsoft と Premium Verizon で提供しているルール エンジンを利用いただく必要があります。<br>Standard Akamai や Standard Verizon はルール エンジンが利用できないため、HTTPS リダイレクトは構成できません。<br>HTTPS リダイレクトを構成する方法は、以下の弊社公開情報でご案内しておりますのでご参照ください。<br>なお、Azure CDN のエンドポイントの設定で、HTTP を受け入れプロトコルとして許可していない場合、HTTPS へのリダイレクトは動作しない点はご注意ください。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-storage-custom-domain-https#http-to-https-redirection" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-storage-custom-domain-https#http-to-https-redirection</a></p>
+<br>
+
+<p><span id="q10"></span></p>
+<h4 id="Azure-CDN-で認証機能を利用したい"><a href="#Azure-CDN-で認証機能を利用したい" class="headerlink" title="Azure CDN で認証機能を利用したい"></a><a href="#q10">Azure CDN で認証機能を利用したい</a></h4><p>Premium Verizon では <a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-token-auth" target="_blank" rel="noopener">トークン認証</a> の機能を提供しておりますが、それ以外の認証機能 (基本認証、クライアント認証など) は Azure CDN では提供していません。<br>配信元 (オリジン) として Azure Storage をご利用されている環境では、Azure Storage の SAS (Shared Access Signature) の機能を利用し、以下の公開情報でご案内しておりますのでご参照ください。</p>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/cdn/cdn-sas-storage-support" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/cdn/cdn-sas-storage-support</a></p>
+<br>
+
+<p><span id="q11"></span></p>
+<h4 id="Azure-CDN-で対象の-URL-がキャッシュされているかを確認したい"><a href="#Azure-CDN-で対象の-URL-がキャッシュされているかを確認したい" class="headerlink" title="Azure CDN で対象の URL がキャッシュされているかを確認したい"></a><a href="#q11">Azure CDN で対象の URL がキャッシュされているかを確認したい</a></h4><p>Azure ポータルなどの機能で、対象の URL のコンテンツが CDN 上にキャッシュされているかを確認する機能はありませんが、対象の URL への応答における HTTP ヘッダを確認することで、CDN 上に対象の URL のコンテンツがキャッシュされているかを確認できます。<br>確認方法として、HTTP ヘッダの x-cache が HIT や TCP_HIT となっている場合、Azure CDN 上でキャッシュされたコンテンツが応答されている状態となります。</p>
+<p>HTTP ヘッダの x-cache の確認方法としては、<a href="https://docs.microsoft.com/ja-jp/azure/azure-portal/capture-browser-trace" target="_blank" rel="noopener">Web プラウザにおけるネットワーク トレース (F12) </a> で、対象 URL の HTTP の x-cache の応答ヘッダを確認いただくか、以下の curl コマンドの結果で x-cache を確認できます。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -H https://contoso-cdn.azureedge.net/xxx/xxx</span><br><span class="line"></span><br><span class="line">(http や https 以降を対象の URL に置き換えて実行ください)</span><br></pre></td></tr></table></figure>
+
+<p>Standard Akamai では、Web プラウザでは HTTP ヘッダの x-cache を確認できないため、以下の curl コマンドでご確認ください。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Pragma: akamai-x-cache-on"</span> \</span><br><span class="line">-IXGET https://contoso-cdn.azureedge.net/xxx/xxx</span><br><span class="line"></span><br><span class="line">(http や https 以降を対象の URL に置き換えて実行ください)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><span id="troubleshooting-changing-settings"></span></p>
+<h2 id="構築・設定変更時のエラーのトラブルシューティング"><a href="#構築・設定変更時のエラーのトラブルシューティング" class="headerlink" title="構築・設定変更時のエラーのトラブルシューティング"></a><a href="#troubleshooting-changing-settings">構築・設定変更時のエラーのトラブルシューティング</a></h2><p>Azure CDN を新規で構築されている場合、または設定変更後に Azure CDN を介してコンテンツが取得できなくなった場合は以下をお試しください。</p>
+<br>
+
+<p><span id="troubleshooting-1"></span></p>
+<h4 id="Azure-CDN-を新規で構築した場合"><a href="#Azure-CDN-を新規で構築した場合" class="headerlink" title="Azure CDN を新規で構築した場合"></a><a href="#troubleshooting-1">Azure CDN を新規で構築した場合</a></h4><p>Azure CDN を新規で構築された場合、世界中にある POP に構成情報を展開するため、新規でリソースを構成いただいた後に反映までしばらくお時間を要します。<br>Azure CDN の SKU によって以下の通り反映に要する時間が異なります。<br>特に Verizon SKU をご利用いただいているご環境においては設定の反映に 90 分はお時間を要し、90 分以内に動作を確認されても想定された動作とならない可能性があります。<br>その場合は、90 分お待ちいただいた上で動作をご確認ください。</p>
+<p>　Standard Microsoft : 10 分<br>　Standard Verizon / Premium Verizon : 90 分<br>　Standard Akamai : 1 分</p>
+<br>
+
+<p><span id="troubleshooting-2"></span></p>
+<h4 id="DNS-関連の変更をした場合"><a href="#DNS-関連の変更をした場合" class="headerlink" title="DNS 関連の変更をした場合"></a><a href="#troubleshooting-2">DNS 関連の変更をした場合</a></h4><p>DNS 関連の変更などをした場合、一般的に DNS の設定の反映にはしばらく時間を要するため、設定直後に確認された際には意図した結果とならない可能性があります。<br>例えば DNS の参照する先を変更した場合などは、クライアント環境においてキャッシュ DNS をクリアなどしてから状況が変わるかをお試しください。<br>また、<a href="https://digwebinterface.com/" target="_blank" rel="noopener">オンライン ツール</a> などをご利用いただき、DNS の最新の状況についてご確認ください。</p>
+<br>
+
+<p><span id="troubleshooting-3"></span></p>
+<h4 id="Azure-CDN-の設定反映"><a href="#Azure-CDN-の設定反映" class="headerlink" title="Azure CDN の設定反映"></a><a href="#troubleshooting-3">Azure CDN の設定反映</a></h4><p>Azure CDN は世界中にある POP の CDN のリソースに変更された構成情報を展開するため、Azure ポータルなどで変更された内容が各 POP に反映されるまで時間を要します。<br>目安としては 10 分ほどお待ちいただき、変更された内容が適応されているかをご確認ください。<br>また、既に CDN 上にキャッシュなどがある場合、意図した動作とならない可能性があるため、各設定の反映を確認するためにキャッシュの消去 (Purge) を一度実施いただくことをお勧めいたします。</p>
+<p>なお、設定変更後に時間を空けずに別の変更を設定された場合、設定の反映に齟齬が発生し、意図した設定が適応されない事象が発生する可能性があります。<br>そのため、各設定変更の後は少なくとも 10 分はお時間を空けてからお試しください。</p>
+<p>また、カスタムドメインやエンドポイントの削除を伴う変更については、短時間で削除、再生成をするとエラーとなる可能性があります。<br>同じカスタムドメインやエンドポイント名をご利用される場合は、削除後に目安として 2 時間ほど時間を空けてから再生成ください。</p>
+<br>
+
+<p><span id="troubleshooting-connection-error"></span></p>
+<h2 id="接続エラーなどが発生した際のトラブルシューティング"><a href="#接続エラーなどが発生した際のトラブルシューティング" class="headerlink" title="接続エラーなどが発生した際のトラブルシューティング"></a><a href="#troubleshooting-connection-error">接続エラーなどが発生した際のトラブルシューティング</a></h2><p>設定変更などを実施されていないご状況において、Azure CDN を介してコンテンツが取得できなくなった場合は以下をお試しください。</p>
+<p><strong>0. エラー状況の確認</strong></p>
+<p>Azure CDN を介して対象の URL において、ライアント (ユーザー) からコンテンツが取得できないエラーなどが発生した場合、<a href="https://docs.microsoft.com/ja-jp/azure/azure-portal/capture-browser-trace" target="_blank" rel="noopener">Web プラウザのネットワーク トレース (F12) の機能</a> や curl を利用し、対象の URL の応答結果の確認をすることで、エラーの状況を確認することができます。</p>
+<ul>
+<li><p><strong>HTTP レスポンスが応答されない</strong> <br>クライアント (ユーザー) から Azure CDN までのネットワークにおいて DNS レイヤーや TCP レイヤーに障害などが発生し接続ができていない可能性があります。<br>Azure CDN はパブリック ネットワークから接続ができるため、異なるクライアント環境やネットワーク環境から接続が可能かをご確認ください。<br>特定のネットワークからのみ接続ができない場合、ネットワーク管理者にネットワーク状況などのご確認をご依頼ください。</p>
+</li>
+<li><p><strong>いずれかの HTTP レスポンスが応答される</strong> <br>Azure CDN か、Azure CDN と配信元 (オリジン) 間のネットワーク、または配信元 (オリジン) で障害などが発生している可能性があります。<br>次の手順で、Azure CDN と配信元 (オリジン) の被疑箇所を切り分けます。</p>
+</li>
+</ul>
+<p><strong>1. 配信元の状況確認</strong> </p>
+<p>配信元 (オリジン) のエンドポイント (URL) にアクセスし、想定されるコンテンツが取得できるかをご確認ください。<br>配信元 (オリジン) から想定されたコンテンツが取得できない場合、配信元 (オリジン) の障害などの影響により Azure CDN からコンテンツが応答できていない可能性があります。<br>配信元 (オリジン) から想定されたコンテンツが取得でき、Azure CDN からコンテンツが取得できない場合は、次の手順で被疑箇所を切り分けます。</p>
+<p><strong>2. 配信元の証明書の状態を確認する</strong> </p>
+<p>Azure CDN はクライアント (ユーザー) からプロトコルで配信元 (オリジン) に転送してコンテンツを取得します。<br>HTTPS 接続においては、Azure CDN や配信元 (オリジン) の HTTPS 接続のための SSL/TLS 証明書の有効期限切れなどによりエラーが発生する場合があります。<br>この場合、HTTP 接続で Azure CDN を介してコンテンツの取得が可能かをご確認ください。</p>
+<p>TLS/SSL 証明書の状態については、以下の openssl コマンドを用いて確認することが可能です。<br>以下の openssl コマンドで証明書の有効期限切れなどが確認できた場合、証明書の状況をご確認ください。<br>証明書に問題がなく、引き続き Azure CDN からコンテンツが取得できない場合は、次の手順で改善されるかお試しください。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Azure CDN へのTLS 接続確認]</span><br><span class="line">openssl s_client -connect &lt;Azure CDN のエンドポイント (xxx..azureedge.net)&gt;:443 -servername &lt;FQDN&gt; -showcerts</span><br><span class="line"></span><br><span class="line">[バックエンドへの TLS 接続確認]</span><br><span class="line">openssl s_client -connect &lt;バックエンドのパブリック IP アドレスや FQDN&gt;:443 -servername &lt;FQDN&gt; -showcerts</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. キャッシュ消去 (Purge)</strong> </p>
+<p>Azure CDN 上でクライアント (ユーザー) からの要求 URL に対して意図しないコンテンツが CDN 上でキャッシュされて、エラーが応答されている可能性があります。<br>一度、キャッシュ消去 (Purge) を実施いただいた上で、クライアント (ユーザー) から Azure CDN に再接続し、エラー状況をご確認ください。</p>
+<p><strong>4. 情報採取</strong></p>
+<p>上記を実施いただき、事象が改善されない場合は、ご利用いただいている SKU に応じて情報取得をいただき、弊社サポート担当までお問い合わせください。</p>
+<ul>
+<li><a href="https://jpaztech.github.io/blog/network/cdn-specific-sku/#collect-information-standard-microsoft">Standard Microsoft においてエラー発生時にご提供いただきたい情報</a></li>
+<li><a href="https://jpaztech.github.io/blog/network/cdn-specific-sku/#collect-information-standard-verizon-premium-verizon">Standard Verizon / Premium Verizon においてエラー発生時にご提供いただきたい情報</a></li>
+<li><a href="https://jpaztech.github.io/blog/network/cdn-specific-sku/#collect-information-standard-akamai">Standard Akamai においてエラー発生時にご提供いただきたい情報</a></li>
+</ul>
+<br>
+
+<p>本ブログが皆様のお役に立てれば幸いです。</p>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/cdn-common.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../20200716-net/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          証明書の失効に関するアドバイザリ PVKM-5T8 の補足情報
+        
+      </div>
+    </a>
+  
+  
+    <a href="../cdn-specific-sku/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Azure CDN の各 SKU の特徴、トラブルシューティングの紹介</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../vm/win2016-jp-lpk-issue/">Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/create-vm-using-vhd/">Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法</a>
+          </li>
+        
+          <li>
+            <a href="../AzureFrontDoor-LockDown/">Azure Front Door を用いた App Service などへのセキュアな接続の構成</a>
+          </li>
+        
+          <li>
+            <a href="../firewall-rules/">Azure Firewall の各ルールの動作について</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/vm-replica-3/">VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ApplicationGateway/" rel="tag">ApplicationGateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Firewall/" rel="tag">Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">21</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Performance">Performance</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/PowerShell">PowerShell</a><span class="tag-list-count">3</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">3</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">3</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">1</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">18</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ApplicationGateway">ApplicationGateway</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Firewall">Firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NAT-Gateway">NAT Gateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NSG">NSG</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-IP-Address">Public IP Address</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-Peering">Public Peering</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SNAT">SNAT</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SSL">SSL</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">2</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">3</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">17</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">6</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Resource-Health">Resource Health</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Sample-Script">Sample Script</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Storage-Space">Storage Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Troubleshooting">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Windows">Windows</a><span class="tag-list-count">10</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/ARM/" style="font-size: 10px;">ARM</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 14.44px;">Application Gateway</a> <a href="../../tags/ApplicationGateway/" style="font-size: 12.22px;">ApplicationGateway</a> <a href="../../tags/Archive/" style="font-size: 20px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 11.11px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 12.22px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 11.11px;">Azure Backup</a> <a href="../../tags/Azure-Firewall/" style="font-size: 10px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 12.22px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 11.11px;">Azure Load Balancer</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 11.11px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 10px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/Certificate/" style="font-size: 11.11px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 12.22px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 10px;">DNS</a> <a href="../../tags/Disk/" style="font-size: 11.11px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 11.11px;">Drive Letter</a> <a href="../../tags/Error/" style="font-size: 10px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 12.22px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 11.11px;">FAQ</a> <a href="../../tags/Firewall/" style="font-size: 10px;">Firewall</a> <a href="../../tags/HowTo/" style="font-size: 15.56px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/Information/" style="font-size: 10px;">Information</a> <a href="../../tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 10px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 10px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 10px;">Managed Disk</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 11.11px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 10px;">NAT Gateway</a> <a href="../../tags/NSG/" style="font-size: 11.11px;">NSG</a> <a href="../../tags/Network/" style="font-size: 18.89px;">Network</a> <a href="../../tags/Other/" style="font-size: 11.11px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 12.22px;">PowerShell</a> <a href="../../tags/Public-IP-Address/" style="font-size: 10px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SNAT/" style="font-size: 10px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 13.33px;">Sample Script</a> <a href="../../tags/Storage/" style="font-size: 12.22px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 11.11px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Troubleshooting/" style="font-size: 12.22px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 11.11px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 17.78px;">VM</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN-Gateway/" style="font-size: 11.11px;">VPN Gateway</a> <a href="../../tags/WAF/" style="font-size: 13.33px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 16.67px;">Windows</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

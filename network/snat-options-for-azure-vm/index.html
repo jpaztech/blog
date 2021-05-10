@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Azure VM の外部接続 (SNAT) オプション まとめ | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Azure Networking テクニカル サポートの山口です。 Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和できるよ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure VM の外部接続 (SNAT) オプション まとめ">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="Azure Networking テクニカル サポートの山口です。 Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和できるよ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/flowchart-to-determine-snat-scenario.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/nat-gateway-snat.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/public-ip-address-snat.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/auzre-load-balancer-snat.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/azure-default-snat.png">
+<meta property="article:published_time" content="2020-06-16T04:30:00.000Z">
+<meta property="article:modified_time" content="2021-05-10T05:27:28.844Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="Azure Load Balancer">
+<meta property="article:tag" content="NAT Gateway">
+<meta property="article:tag" content="Public IP Address">
+<meta property="article:tag" content="SNAT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/flowchart-to-determine-snat-scenario.png">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" href="https://cssjpn.github.io/" target="_blank" rel="noopener">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-network/snat-options-for-azure-vm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Azure VM の外部接続 (SNAT) オプション まとめ
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2020-06-16T04:30:00.000Z" itemprop="datePublished">2020-06-16</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+2b02002d-b3f8-5038-9e94-ead0a2a5c291%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE%E5%A4%96%E9%83%A8%E6%8E%A5%E7%B6%9A+%28SNAT%29+%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3+%E3%81%BE%E3%81%A8%E3%82%81%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fsnat-options-for-azure-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="ckoi5ygds00224go36emmhwuc" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Azure Networking テクニカル サポートの山口です。</p>
+<p>Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和できるよう、本稿では外部接続の SNAT オプションを様々な角度から網羅的に紹介いたします。</p>
+<a id="more"></a>
+
+
+<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p><strong>仮定する知識</strong></p>
+<p>この記事では、一般的なネットワーク用語としてのネットワーク アドレス変換 (NAT) や NAPT について、ある程度知識があることを前提としています。これらの言葉に馴染みがなければ、以下の公式ドキュメントを参考に、まずは NAT についての技術背景を確認してみてください。インターネットを活用すれば、さらに多くの技術解説を見つけることが出来るはずです。</p>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#understanding-snat-and-pat" target="_blank" rel="noopener">Azure の Outbound connections &gt; SNAT と PAT の理解 | Microsoft Docs</a></li>
+</ul>
+<p><strong>外部接続と SNAT</strong></p>
+<p>Azure 仮想マシン (VM) がインターネット等のグローバル IP アドレス帯のサーバーと通信することを、<strong>外部接続 (outbound connection)</strong> と呼びます。外部接続では、仮想ネットワークで設定したプライベート IP アドレスから、グローバル IP アドレスに送信元 NAT (SNAT) する必要があります。この記事で取り扱うのは、外部接続の為に Azure が提供している SNAT のオプションについてです。</p>
+<p>結論から書くと、2020 年 6 月現在、Azure で利用できる SNAT のオプションは以下の 5 つ存在します。</p>
+<ul>
+<li>ユーザー定義ルートと仮想アプライアンス (e.g. Azure Firewall) による SNAT</li>
+<li>NAT Gateway</li>
+<li>パブリック Azure Load Balancer (外部ロードバランサー)</li>
+<li>パブリック IP アドレス</li>
+<li>Azure 既定の SNAT</li>
+</ul>
+<p>「ユーザー定義ルート (UDR) と仮想アプライアンス (NVA) による SNAT」に関しては、SNAT 可否やその動作仕様が NVA 製品に依存しますので、今回は残る 4 つの「Azure プラットフォームそのものが提供する SNAT」についてお話します (UDR+NVA で SNAT する場合も、結局 NVA 上では残りのいずれかの方法で SNAT する必要があります)。</p>
+<h2 id="判定フローチャート"><a href="#判定フローチャート" class="headerlink" title="判定フローチャート"></a>判定フローチャート</h2><p>個々の詳細を見る前に、SNAT オプション同士の依存関係を把握し、全体感を捉えておきましょう。</p>
+<p>というのも、環境によっては複数の SNAT オプションが構成されている可能性がある為です。例えば、NAT Gateway を関連付けたサブネットの中に、パブリック IP アドレスを付与した VM をデプロイするとどうなるでしょうか?</p>
+<p>そのような状況で役に立つフローチャートを作図しました。以下のフローに従えば、<strong>ある Azure VM のある NIC</strong> がどのように SNAT されるか判定できます。VM ではなく、<span style="color: #c00000">NIC に関する SNAT 方法判定</span>である点に注意してください。</p>
+<p><img src="/blog/network/snat-options-for-azure-vm/flowchart-to-determine-snat-scenario.png" alt="flowchar"></p>
+<p>なお、フローチャートに脚注で記載されているシナリオ {1, 2, 3} は、以下の公式ドキュメントのシナリオ番号に対応しています。</p>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#scenario-overview" target="_blank" rel="noopener">Azure の Outbound connections - Azure Load Balancer | Microsoft Docs</a></li>
+</ul>
+<p><strong>フローチャートの使い方</strong></p>
+<p>先程挙げた NAT Gateway とパブリック IP アドレスの共存環境の例を使って、フローチャートの使い方を説明します。</p>
+<ol>
+<li>左上の丸からスタートします。</li>
+<li>まずはじめに、UDR で宛先が NVA に向いているか確認します。この情報は、NIC の [有効なルート] から確認することが出来ます。この例では NVA もルート テーブルもデプロイしておらず、判定は “NO” だったとして次の条件文に進みます。</li>
+<li>サブネットに NAT Gateway が関連付けられているか確認します。この情報は、仮想ネットワークの [サブネット] から確認することが出来ます。この例では NAT Gateway が関連付けられています! 条件文の答えは “YES” なので、フローチャートはここで終了します。</li>
+</ol>
+<p>最終的に、パブリック IP アドレスではなく NAT Gateway が優先されて SNAT される動作であることが、このフローチャートから判定出来ました。</p>
+<p><strong>Standard SKU の外部接続構成か?</strong></p>
+<p>最後の「Standard SKU の外部接続構成か?」と記載された条件ボックスは、次のいずれか一つを満たす場合に “YES” と判定されます。</p>
+<ul>
+<li>VM には可用性セットが構成されていて、一つ以上の可用性セット内 VM が「Standard SKU の外部接続リソース」に関連付けられている。</li>
+<li>VM は仮想マシン スケール セット (VMSS) であり、一つ以上の VMSS 内 VM が「Standard SKU の外部接続リソース」に関連付けられている。</li>
+<li>複数の NIC が VM に関連付けられていて、一つ以上の NIC が「Standard SKU の外部接続リソース」に関連付けられている。</li>
+</ul>
+<p>ここで、Standard SKU の外部接続リソースとは、以下の Azure リソースを表します。</p>
+<ul>
+<li>Standard SKU のパブリック IP アドレス</li>
+<li>Standard SKU の Azure Load Balancer</li>
+</ul>
+<p>上記の通り、NAT Gateway は “Standard SKU の外部接続リソース” に該当しないため、可用性セットの一部 VM にだけ外部接続を構成したい場合や、複数 NIC を持つ VM の一部 NIC に外部接続を構成したい場合に使えます。</p>
+<p>このあたりの条件式を把握するのは難しく、個人的にも理解するのに最も時間がかかった部分ですが、 <strong>Standard SKU ではリソースの保護が強化されていて、明示的に通信設定をするまでは許可されない</strong> と理解すれば多少は飲み込みやすいと思います。同じ内容は、以下の公式ドキュメントにも記載されています。</p>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections" target="_blank" rel="noopener">Azure の Outbound connections - Azure Load Balancer | Microsoft Docs</a></li>
+</ul>
+<blockquote>
+<p>重要<br>…<br>アウトバウンド接続のコンテキストでは、単一スタンドアロン VM、可用性セット内のすべての VM、VMSS のすべてのインスタンスがグループとして動作します。 つまり、可用性セット内の単一 VM が Standard SKU に関連付けられている場合、この可用性セット内のすべての VM インスタンスが、Standard SKU に関連付けられている場合と同じ規則に従って動作するようになります。個々のインスタンスが直接関連付けられていない場合でも同様です。 この動作は、ロード バランサーに複数のネットワーク インターフェイスカードが接続されているスタンドアロン VM の場合にも見られます。 1 つの NIC をスタンドアロンとして追加された場合、同じ動作が行われます。</p>
+</blockquote>
+<p><strong>外部接続不可</strong></p>
+<p>最後に、フローチャートの中で赤色で記された<span style="color: #c00000;">「外部接続不可」</span>のシナリオについて補足しておきます。</p>
+<p>フローチャートからもわかるように、Azure では多くの SNAT オプションがあり、ほとんどの状況で外部接続が可能です。特に、NAT 装置を意識せずに VM をデプロイするだけでも (デフォルトゲートウェイが) SNAT を実施してくれる「Azure 既定の SNAT」のシナリオに関しては、特筆すべきポイントです。</p>
+<p>しかしながら、一つだけ SNAT 出来ないシナリオがあります。それが<span style="color: #c00000;">「外部接続不可」</span>のシナリオです。具体的には、Standard SKU の外部接続構成の NIC に、明示的に外部接続リソースを関連付けない場合に該当します (こうして言葉で説明するより、フローチャートを見てもらうほうが早いと思います)。</p>
+<p>「VM が外部接続できない、できなくなった」というお問い合わせは多数いただきますが、殆どの場合の根本原因は、単に<span style="color: #c00000;">「外部接続不可」</span>のシナリオに該当していたというものです。このため、過去にもブログ記事として紹介しています。</p>
+<ul>
+<li><a href="https://jpaztech1.z11.web.core.windows.net/Azure%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9.html#outbound-cannot-connect" target="_blank" rel="noopener">Azure ロードバランサー利用時の注意点 &gt; ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった</a></li>
+</ul>
+<blockquote>
+<p>ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった<br>こちらの事象についてよくある原因としては以下があります。</p>
+<ol>
+<li>Standard SKU の内部ロードバランサーのバックエンドプールに所属している</li>
+</ol>
+</blockquote>
+<p>上記ブログ記事は少し情報が古く (というより Azure の進化のスピードが本当にはやく)、現在はこのシナリオのワークアラウンドは以下の 4 つとなっていますが、<strong>明示的に外部接続のポリシーを構成する</strong> という根本的な考え方は変わりません。</p>
+<ul>
+<li>NVA (e.g. Azure Firewall) をデプロイし、0.0.0.0/0 のネクストホップを NVA に向ける UDR を構成する</li>
+<li>NAT Gateway をデプロイし、VM が配置されているサブネットに関連付ける</li>
+<li>Standard SKU のパブリック IP アドレスをデプロイし、VM に関連付ける</li>
+<li>Standard SKU の外部ロードバランサーをデプロイし、そのバックエンド プールに VM を配置する</li>
+</ul>
+<h2 id="機能比較"><a href="#機能比較" class="headerlink" title="機能比較"></a>機能比較</h2><p>フローチャートの他に、幾つかの機能項目をピックアップし SNAT オプション間で比較した表も用意しました。俯瞰的に機能を比べる目的でご利用ください。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">AzFW/NVA + UDR</th>
+<th align="center">NAT GW</th>
+<th align="center">Public IP</th>
+<th align="center">Public Azure Load Balancer</th>
+<th align="center">Default SNAT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">関連付け単位</td>
+<td align="center">サブネット[^1]</td>
+<td align="center">サブネット</td>
+<td align="center">NIC</td>
+<td align="center">バックエンド プール</td>
+<td align="center">NIC</td>
+</tr>
+<tr>
+<td align="center">送信元を固定出来るか</td>
+<td align="center">NVA 依存[^2]</td>
+<td align="center">はい</td>
+<td align="center">はい</td>
+<td align="center">はい</td>
+<td align="center">いいえ</td>
+</tr>
+<tr>
+<td align="center">SNAT ポート数を拡張出来るか</td>
+<td align="center">NVA 依存[^2]</td>
+<td align="center">はい</td>
+<td align="center">いいえ</td>
+<td align="center">はい</td>
+<td align="center">いいえ</td>
+</tr>
+<tr>
+<td align="center">SNAT ポート数が VM に静的割り当てされるか</td>
+<td align="center">NVA 依存[^2]</td>
+<td align="center">いいえ (動的確保)</td>
+<td align="center">はい (64000 個)</td>
+<td align="center">はい (数は構成依存)</td>
+<td align="center">はい (1024 個)</td>
+</tr>
+<tr>
+<td align="center">TCP アイドルタイムアウト</td>
+<td align="center">NVA 依存[^2]</td>
+<td align="center">4 ～ 120 分</td>
+<td align="center">4 分</td>
+<td align="center">4 ～ 120 分</td>
+<td align="center">4 分</td>
+</tr>
+<tr>
+<td align="center">利用可能なプロトコル</td>
+<td align="center">NVA 依存[^2]</td>
+<td align="center">TCP/UDP</td>
+<td align="center">TCP/UDP/ICMP/ESP</td>
+<td align="center">TCP/UDP</td>
+<td align="center">TCP/UDP/ICMP</td>
+</tr>
+<tr>
+<td align="center">インバウンド接続性も確保出来るか</td>
+<td align="center">NVA 依存[^2]</td>
+<td align="center">いいえ</td>
+<td align="center">はい</td>
+<td align="center">はい</td>
+<td align="center">いいえ</td>
+</tr>
+</tbody></table>
+<p>それぞれの行で意図している内容は、以下の通りです。</p>
+<ul>
+<li><strong>関連付け単位</strong>: SNAT のポリシーを適用する単位です。例えばサブネットが SNAT ポリシーの単位である場合、サブネット内のすべての VM は同じ方法で SNAT が実施されます。</li>
+<li><strong>送信元を固定出来るか</strong>: この項目が “はい” の SNAT オプションでは、特定の SNAT アドレス プールから送信元の IP アドレスを払い出す事ができます。”いいえ” の SNAT オプションでは、時間経過や VM の先道など、あるイベントをトリガーとして SNAT プールが変更される可能性があります。</li>
+<li><strong>SNAT ポート数を拡張出来るか</strong>: この項目が “はい” の SNAT オプションでは、構成状況を変更することで、ユーザーが各 VM に割り当てる SNAT ポート数を変動させることが出来ます。”いいえ” のオプションでは、予め定められた値のポート数が各 VM に割り当てられます。</li>
+<li><strong>SNAT ポート数が VM に静的割り当てされるか</strong>: この項目が “はい” の SNAT オプションでは、予め各 VM には最大の SNAT ポート数が定められます。基本的に SNAT ポート数は固定ですが、唯一の例外は NAT Gateway です。NAT Gateway では、利用状況に応じて SNAT ポート数は動的に VM に割り当てられます。</li>
+<li><strong>TCP アイドルタイムアウト</strong>: 外部接続の TCP 接続に関するタイムアウト値 (分) です。範囲が記載されている SNAT オプションに関しては、ユーザーが定めることが出来ます。</li>
+<li><strong>利用可能なプロトコル</strong>: 外部接続でサポートされているプロトコルです。すべての SNAT オプションで TCP/UDP はサポートされているものの、ICMP が利用できないオプションもあるので注意してください。</li>
+<li><strong>インバウンド接続性も確保出来るか</strong>: この項目が “はい” の SNAT オプションでは、Azure リソースを追加でデプロイすることなく、インバウンドの接続ポリシーも構成することが出来ます。</li>
+</ul>
+<p>[^1]: UDR の関連付け単位がサブネットであることに起因しています<br>[^2]: NVA による SNAT も結局は NAT Gateway、パブリック IP アドレス、外部 Azure Load Balancer、Azure 既定の SNAT のいずれかのオプションを NVA で利用しています。したがって、NVA の動作制限に加えて、これらの制限も当然加わります。</p>
+<h2 id="SNAT-オプションの詳細"><a href="#SNAT-オプションの詳細" class="headerlink" title="SNAT オプションの詳細"></a>SNAT オプションの詳細</h2><p>このセクションでは、各 SNAT オプションについて少し深堀りして説明します。</p>
+<p>主な特徴やユースケース、注意事項等を記載しますので、ここまでの内容を踏まえて興味の湧いた SNAT オプションについて、詳しく確認してみてください。</p>
+<h3 id="NAT-Gateway"><a href="#NAT-Gateway" class="headerlink" title="NAT Gateway"></a>NAT Gateway</h3><p><img src="/blog/network/snat-options-for-azure-vm/nat-gateway-snat.png" alt="nat-gateway"></p>
+<p><em>NAT ゲートウェイ (NAT Gateway)</em> は、複数ある SNAT オプションの中で唯一「外部接続だけを目的とした」専用サービスです。専用サービスとだけあって、SNAT プールの固定化はもちろん、動的なポート確保など、他の SNAT オプションにはない機能を有します。</p>
+<p><strong>特徴</strong></p>
+<ul>
+<li>フルマネージドな PaaS サービスで、高い可用性を有します。</li>
+<li>動的に SNAT ポートを確保できるのは NAT Gateway だけです[^3]。</li>
+<li>Public IP や Azure Load Balancer の SNAT よりも、NAT Gateway が優先されます[^4]。</li>
+<li>外部接続の TCP アイドル タイムアウトを最大 120 分に伸ばせます。</li>
+<li>NAT Gateway に追加できるパブリック IP アドレスの最大数は 16 個です。つまり、一つの NAT Gateway あたり、最大 64,000 * 16 = 1,024,000 ポートが SNAT ポートに使えます。</li>
+</ul>
+<p>[^3]: NAT Gateway の動的な SNAT ポート確保動作の詳細は、<a href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-gateway-resource#on-demand" target="_blank" rel="noopener">NAT ゲートウェイ リソースを使用した仮想ネットワークの設計 &gt; オンデマンド</a> をご覧ください。<br>[^4]: NAT Gateway と Public IP/Azure Load Balancer の共存環境における動作については、<a href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-gateway-resource#nat-and-vm-with-instance-level-public-ip-and-public-load-balancer" target="_blank" rel="noopener">NAT ゲートウェイ リソースを使用した仮想ネットワークの設計 &gt; インスタンスレベル パブリック IP とパブリック Load Balancer を使用した VM と NAT</a> をご覧ください。</p>
+<p><strong>基本的な構成方法</strong></p>
+<ol>
+<li>NAT Gateway リソースを作成する。</li>
+<li>対象のサブネットに NAT Gateway を関連付ける。</li>
+</ol>
+<p><strong>ユースケース</strong></p>
+<ul>
+<li>一般的な SNAT のシナリオ全般。</li>
+<li>大量に SNAT ポートが必要となる場合。</li>
+<li>複数の VM で SNAT プールを共有したいが、各 VM が消費する SNAT ポート数にばらつきがある場合。</li>
+</ul>
+<p><strong>注意事項</strong></p>
+<ul>
+<li>NAT Gateway では、インバウンドの接続性は提供されません。</li>
+<li>UDR で特定の経路のネクスト ホップを NVA や仮想ネットワーク ゲートウェイに向けている場合、それらを宛先とする通信は NAT Gateway を利用して SNAT されません。</li>
+<li>他の外部接続のサービスで言えば Standard SKU の扱いのサービスなので、Basic のサービスと共存出来ません (e.g. Basic SKU の Public IP が付与された VM がサブネットに存在すれば、NAT Gateway は関連付けできない)。</li>
+<li>ICMP プロトコルはサポートされません。</li>
+<li>その他の制限事項について、<a href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-overview#limitations" target="_blank" rel="noopener">公式ドキュメント</a> をご確認ください。</li>
+</ul>
+<p><strong>参考文献</strong></p>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-overview" target="_blank" rel="noopener">Azure Virtual Network NAT とは | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-gateway-resource" target="_blank" rel="noopener">NAT ゲートウェイ リソースを使用した仮想ネットワークの設計 - Azure Virtual Network NAT | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/virtual-network/troubleshoot-nat" target="_blank" rel="noopener">Azure Virtual Network NAT 接続のトラブルシューティング - Azure Virtual Network | Microsoft Docs</a></li>
+</ul>
+<h3 id="パブリック-IP-アドレス"><a href="#パブリック-IP-アドレス" class="headerlink" title="パブリック IP アドレス"></a>パブリック IP アドレス</h3><p><img src="/blog/network/snat-options-for-azure-vm/public-ip-address-snat.png" alt="public-ip-address"></p>
+<p>Azure VM のネットワーク インターフェイス (NIC) にパブリック IP アドレス (Public IP) を関連付けると、その NIC からの外部接続は Public IP によって SNAT される動作となります。</p>
+<p><strong>特徴</strong></p>
+<ul>
+<li>SNAT に利用される IP アドレスは必ず Public IP なので、送信元を固定することが出来ます。</li>
+<li>割り当てられるポート数は、Public IP が利用できるエフェメラル ポートの最大数 64,000 で固定されます。この 64,000 という数字は、もちろん用途にもよりますが、多くのワークロードで十分な SNAT ポート数です。</li>
+</ul>
+<p><strong>基本的な構成方法</strong></p>
+<ol>
+<li>パブリック IP アドレス リソースを作成する。</li>
+<li>対象の VM の NIC に関連付ける。</li>
+</ol>
+<p><strong>ユースケース</strong></p>
+<ul>
+<li>エフェメラル ポートを一つの VM で専有したい場合 (e.g. 多くの SNAT ポートを消費するフォワード プロキシ)。</li>
+<li>外部接続だけでなく VM 単位でのインバウンド接続も確保したい場合 (e.g. 特定拠点からリモート アクセスされる踏み台サーバー)。</li>
+</ul>
+<p><strong>注意事項</strong></p>
+<ul>
+<li>NAT Gateway による SNAT が実施されていないことが前提条件です。</li>
+<li>Basic SKU だと NAT Gateway と共存出来ない等、SKU 依存の制限が存在します。可用性ゾーンへの対応も考慮すると、基本的には Standard SKU の使用が推奨されます。</li>
+</ul>
+<p><strong>参考文献</strong></p>
+<ul>
+<li>[Azure の Outbound connections &gt; シナリオ 1:パブリック IP アドレスありの VM | Microsoft Docs](<a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#ilPublic" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#ilPublic</a> IP)</li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-network-public-ip-address" target="_blank" rel="noopener">Azure パブリック IP アドレスの作成、変更、削除 | Microsoft Docs</a></li>
+</ul>
+<h3 id="Azure-Load-Balancer"><a href="#Azure-Load-Balancer" class="headerlink" title="Azure Load Balancer"></a>Azure Load Balancer</h3><p><img src="/blog/network/snat-options-for-azure-vm/auzre-load-balancer-snat.png" alt="auzre-load-balancer-snat"></p>
+<p>外部ロードバランサーのバックエンド プールに Azure VM を配置すると、構成した規則に応じて、フロントエンドの Public IP で SNAT される動作となります。</p>
+<!-- [^Azure Load Balancer-snat-trigger]: 厳密にはバックエンド プールに VM を配置するだけでは不十分で、規則 (送信規則、負荷分散規則、インバウンド NAT 規則) を作るまでは SNAT されません。 -->
+
+<p>このシナリオでは、特に Azure Load Balancer の Standard SKU でのみ利用可能な <strong>送信規則 (outbound rule)</strong> が効果的に活用できます。送信規則を使うと、SNAT ポート割り当てのカスタマイズや、TCP アイドルタイムアウトの調節が柔軟に構成出来ます。</p>
+<p><strong>特徴</strong></p>
+<ul>
+<li>バックエンド プール単位で SNAT ポリシーが構成されるため、サブネットにとらわれずに複数 VM を同じ方法で SNAT できる。</li>
+<li>Standard SKU で利用可能な送信規則を使って、より仔細に SNAt ポリシーが構成できる。</li>
+<li>送信規則で制御できるパラメータは、以下の通り。<ul>
+<li>バックエンド プール (どの仮想マシンに SNAT ポリシーを適用するか)</li>
+<li>SNAT ポート数の割り当てかた (各仮想マシンに何ポートずつ割り当てるか)</li>
+<li>SNAT の対象とするプロトコル (TCP、UDP、または両方)</li>
+<li>TCP アイドルタイムアウト (4 分から最大 120 分まで)</li>
+<li>タイムアウト時の TCP リセット送信の有無</li>
+</ul>
+</li>
+</ul>
+<p><strong>基本的な構成方法</strong></p>
+<ol>
+<li>パブリック IP アドレスをフロントエンドに付与した Azure Load Balancer (外部ロードバランサー) をデプロイする。</li>
+<li>バックエンド プールを作成し、SNAT ポリシーを適用したい VM を複数追加する。</li>
+<li>送信規則、インバウンド NAT 規則、あるいは送信規則 (Standard SKU のみ) を構成する。</li>
+</ol>
+<p><strong>ユースケース</strong></p>
+<ul>
+<li>SNAT と同時に、インバウンド方向の負荷分散も同時に構成したい場合 (e.g. 処理の一部で外部送信が必要となる WEB サーバー)。</li>
+<li>サブネット以外の単位で、複数 VM を同一 SNAT ポリシー下としたい場合 (e.g. サブネットの一部の VM にのみインターネット接続を許可する)</li>
+</ul>
+<p><strong>注意事項</strong></p>
+<ul>
+<li>NAT Gateway、Public IP による SNAT が実施されていないことが前提条件です。</li>
+<li>Basic SKU と Standard SKU で、SNAT の動作が大きく異なります。これは、Standard SKU で送信規則が追加され、高い自由度で SNAT ポリシーを構成できるようになった為です。</li>
+<li>Basic SKU の場合、SNAT ポート数はバックエンド プールの VM の台数に依存して、Azure 基盤が自動で割り当てます。<ul>
+<li>具体的な対応表は、以下の公式ドキュメントに記載がある通りです。<br><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#ephemeral-port-preallocation-for-port-masquerading-snat-pat" target="_blank" rel="noopener">Azure の Outbound connections &gt; ポート マスカレード SNAT (PAT) 用のエフェメラル ポートの事前割り当て | Microsoft Docs</a></li>
+</ul>
+</li>
+<li>Standard SKU の場合、Basic SKU での自動割り当ての方法に加えて、送信規則を使って手動のポート数割り当てが行えます。<ul>
+<li>送信規則によるポート数の調節については、以下の公式ドキュメントを参考にしてください。<br><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#azure-load-balancer-outbound-rules" target="_blank" rel="noopener">Azure の Outbound connections &gt; Azure Load Balancer のアウトバウンド規則 | Microsoft Docs</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>参考文献</strong></p>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#scenario-2-load-balanced-vm-without-a-public-ip-address" target="_blank" rel="noopener">Azure の Outbound connections &gt; シナリオ 2:パブリック IP アドレスなしの負荷分散 VM | Microsoft Docs</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/configure-load-balancer-outbound-portal" target="_blank" rel="noopener">Azure portal を使用して負荷分散規則とアウトバウンド規則を構成する - Azure Load Balancer | Microsoft Docs</a></li>
+</ul>
+<h3 id="Azure-既定の-SNAT"><a href="#Azure-既定の-SNAT" class="headerlink" title="Azure 既定の SNAT"></a>Azure 既定の SNAT</h3><p><img src="/blog/network/snat-options-for-azure-vm/azure-default-snat.png" alt="azure-default-snat"></p>
+<p>パブリック IP アドレスや外部ロードバランサーにも関連づいていない状態でも、Azure VM は既定で外部接続できるようになっています。特に SNAT の構成をしていないのにも関わらず、外部接続ができることで驚いた経験をした方もいらっしゃるのではないでしょうか。</p>
+<p>特にパブリック IP アドレスをユーザーが確保しているわけではないため、SNAT プールはオンザフライでの提供となります。具体的には、VM がデプロイされている Azure リージョンで使用されるグローバル IP アドレスのうち、未使用なものがランダムに割り当てられます。そのため、VM を再起動するたびに、SNAT に利用される NAT アドレスは変動します。</p>
+<p>なお、各 Azure リージョンで使用されるグローバル IP アドレスは、以下ページからダウンロードできる JSON ファイルに定義されています。</p>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/download/details.aspx?id=56519" target="_blank" rel="noopener">Download Azure IP Ranges and Service Tags – Public Cloud from Official Microsoft Download Center</a></li>
+</ul>
+<p><strong>特徴</strong></p>
+<ul>
+<li>唯一パブリック IP アドレス リソースを作らずに SNAT が出来るシナリオ。</li>
+<li>未使用な IP アドレスがランダムで割り当てられるため、VM が起動するたびに SNAT アドレスが変動する。</li>
+<li>確保される SNAT ポート数は VM あたり 1024 で固定。</li>
+</ul>
+<p><strong>基本的な構成方法</strong></p>
+<p>以下のいずれかの環境で、VM は「Azure 既定の SNAT」で外部接続されます。</p>
+<ul>
+<li>VM を Basic SKU の内部 Azure Load Balancer のバックエンド プールに配置する</li>
+<li>NAT Gateway、パブリック IP アドレス、Azure Load Balancer と関係ないスタンドアロンな VM を構成する</li>
+</ul>
+<p><strong>ユースケース</strong></p>
+<ul>
+<li>テスト/開発用 VM で外部送信が必要になる場合 (e.g. ひとまずインターネットに通信できていれば特に問題ない開発マシン)</li>
+</ul>
+<p><strong>注意事項</strong></p>
+<ul>
+<li>パブリック IP アドレスを付与しなくても外部接続できるという利便性がある一方で、予期せず外部送信を許可していますケースもあります。外部接続を許可しない場合、VM を Standard SKU の内部ロードバランサー配下として意図的に「外部接続不可」環境にするか、NSG で外部送信を拒否する対策等を実施してください。</li>
+<li>SNAT プールが固定出来ないため、外部接続の接続先となるサーバーで ACL を実施するのが難しくなります。</li>
+<li>あくまでテスト目的か、インターネットとの接続性だけ得られていれば後は気にしないようなワークロードでのみご利用いただくことを推奨いたします。</li>
+</ul>
+<p><strong>参考文献</strong></p>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#scenario-3-standalone-vm-without-a-public-ip-address" target="_blank" rel="noopener">Azure の Outbound connections &gt; シナリオ 3:パブリック IP アドレスなしのスタンドアロン VM | Microsoft Docs</a></li>
+<li><a href="https://www.syuheiuda.com/?p=5074" target="_blank" rel="noopener">Azure VM の SNAT の話 – Made in container</a></li>
+</ul>
+<h2 id="最後に"><a href="#最後に" class="headerlink" title="最後に"></a>最後に</h2><p>記事のボリュームからも推察できる通り、Azure では SNAT のオプションが多く用意されています。</p>
+<p>ただ、自由度が上がる副作用として、どうしてもすべてのシナリオを網羅的に把握することが難しくなっています。外部接続できない時のトラブルシューティングや、他にどんな選択肢があるのかの確認に、ぜひ冒頭で紹介したフローチャートを活用していただければと思います。</p>
+<p>また、SNAT オプションの比較には、機能比較のセクションで示した比較表もご活用ください。当該の比較表は、各 SNAT オプションのすべての側面を映し出しているわけではありませんが、大まかにどのような違いがあるのかを知るには十分の情報を記載してあります。ファーストステップとしては丁度よい情報量だと思いますので、参考にしていただければ幸いです。</p>
+<hr>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/snat-options-for-azure-vm.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../tsg-azure-load-balancer-scoping/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          Azure Load Balancer のトラブルシューティング: スコーピング編
+        
+      </div>
+    </a>
+  
+  
+    <a href="../considerations-of-microsoft-peering/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Microsoft Peering 導入時の注意事項</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../vm/win2016-jp-lpk-issue/">Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/create-vm-using-vhd/">Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法</a>
+          </li>
+        
+          <li>
+            <a href="../AzureFrontDoor-LockDown/">Azure Front Door を用いた App Service などへのセキュアな接続の構成</a>
+          </li>
+        
+          <li>
+            <a href="../firewall-rules/">Azure Firewall の各ルールの動作について</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/vm-replica-3/">VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ApplicationGateway/" rel="tag">ApplicationGateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Firewall/" rel="tag">Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">21</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Performance">Performance</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/PowerShell">PowerShell</a><span class="tag-list-count">3</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">3</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">3</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">1</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">18</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ApplicationGateway">ApplicationGateway</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Firewall">Firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NAT-Gateway">NAT Gateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NSG">NSG</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-IP-Address">Public IP Address</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-Peering">Public Peering</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SNAT">SNAT</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SSL">SSL</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">2</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">3</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">17</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">6</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Resource-Health">Resource Health</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Sample-Script">Sample Script</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Storage-Space">Storage Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Troubleshooting">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Windows">Windows</a><span class="tag-list-count">10</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/ARM/" style="font-size: 10px;">ARM</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 14.44px;">Application Gateway</a> <a href="../../tags/ApplicationGateway/" style="font-size: 12.22px;">ApplicationGateway</a> <a href="../../tags/Archive/" style="font-size: 20px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 11.11px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 12.22px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 11.11px;">Azure Backup</a> <a href="../../tags/Azure-Firewall/" style="font-size: 10px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 12.22px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 11.11px;">Azure Load Balancer</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 11.11px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 10px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/Certificate/" style="font-size: 11.11px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 12.22px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 10px;">DNS</a> <a href="../../tags/Disk/" style="font-size: 11.11px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 11.11px;">Drive Letter</a> <a href="../../tags/Error/" style="font-size: 10px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 12.22px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 11.11px;">FAQ</a> <a href="../../tags/Firewall/" style="font-size: 10px;">Firewall</a> <a href="../../tags/HowTo/" style="font-size: 15.56px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/Information/" style="font-size: 10px;">Information</a> <a href="../../tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 10px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 10px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 10px;">Managed Disk</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 11.11px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 10px;">NAT Gateway</a> <a href="../../tags/NSG/" style="font-size: 11.11px;">NSG</a> <a href="../../tags/Network/" style="font-size: 18.89px;">Network</a> <a href="../../tags/Other/" style="font-size: 11.11px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 12.22px;">PowerShell</a> <a href="../../tags/Public-IP-Address/" style="font-size: 10px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SNAT/" style="font-size: 10px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 13.33px;">Sample Script</a> <a href="../../tags/Storage/" style="font-size: 12.22px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 11.11px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Troubleshooting/" style="font-size: 12.22px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 11.11px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 17.78px;">VM</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN-Gateway/" style="font-size: 11.11px;">VPN Gateway</a> <a href="../../tags/WAF/" style="font-size: 13.33px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 16.67px;">Windows</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
