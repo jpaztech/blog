@@ -181,12 +181,12 @@ Azure ファイル共有マウント用コマンドをコピーし実行しま�
 ドメイン参加していない Windows 10 端末から、ドメイン参加済みアカウントの AD ユーザー資格情報を利用してファイル共有へアクセスしてみます。
 
 環境
-- ドメイン参加済みサーバー：win10-adds-server-apts
+- ドメイン参加済みサーバー：win2016-adds-server-apts
 
 　　- ドメイン参加済みユーザー : win10client01@contoso.com
 - ドメイン未参加端末：win10-noadds-client-apts
 
-オンプレ AD DS に参加しているドメインサーバー (win10-adds-server-apts)
+オンプレ AD DS に参加しているドメインサーバー (win2016-adds-server-apts)
 ![](addsAuthforAzureFiles/AzureFiles16.png)
 
 ドメイン参加していない Windows 10 端末 (win10-noadds-client-apts)
