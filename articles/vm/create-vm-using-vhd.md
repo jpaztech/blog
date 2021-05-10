@@ -58,13 +58,13 @@ ASM 環境 (クラシック VM) や非管理ディスクをご利用の場合は
    **<span style="color:red;">※ ここで作成した SAS URL は 後の手順 [4] - 3 にて、コピー先の URL として使います。</span>**
 
 編集前: 
-**https://<ストレージ アカウント名>.blob.core.windows.net/vhds?<SAS>**
+**https://<ストレージ アカウント名>.blob.core.windows.net/vhds?<'SAS URL'>**
 
 例:
 > https://xxxxxxxx.blob.core.windows.net/vhds?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=xxxxxxxxxx
 
 編集後: 
-**https://<ストレージ アカウント名>.blob.core.windows.net/vhds/<コピー後の VHD ファイル名>?<SAS>**
+**https://<ストレージ アカウント名>.blob.core.windows.net/vhds/<コピー後の VHD ファイル名>?<'SAS URL'>**
 
 例:
 > https://xxxxxxxx.blob.core.windows.net/vhds/<span color="red">osdisk.vhd</span>?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=xxxxxxxxxx
