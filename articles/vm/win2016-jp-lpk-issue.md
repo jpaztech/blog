@@ -1,5 +1,5 @@
 ---
-title: Azure 環境における Windows Server 2016 の日本語の言語パック適用できない
+title: Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない
 date: 2021-5-10 14:00:00
 tags:
   - VM
