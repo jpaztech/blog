@@ -195,6 +195,7 @@ Azure ファイル共有マウント用コマンドをコピーし実行しま�
 ![](addsAuthforAzureFiles/AzureFiles14.png)
 
 ドメイン参加していない Windows 10 端末 (win10-noadds-client-apts) のエクスプローラーに UNC (\\\\<ストレージアカウント名>.file.core.windows.net\\<ファイル共有名>) を入力すると資格情報入力画面が表示されるため、AD ユーザー資格情報を入力しアクセスを行います。
+
 ![](addsAuthforAzureFiles/AzureFiles15.png)
 
 ここでは、ドメイン参加済みユーザー (win10client01@contoso.com) の AD ユーザー資格情報を利用しています。
