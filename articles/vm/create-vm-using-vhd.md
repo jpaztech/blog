@@ -41,7 +41,7 @@ ASM 環境 (クラシック VM) や非管理ディスクをご利用の場合は
 
 1. 手順 [1] - 3 で作成したコンテナ― [vhds] を選択し、左メニュー "Settings" から、[Shared Access Signature] を選択します。
 
-2. [Shared Access Signature]の設定画面で、Permissionsに [Read] と [Write] を選択します。121042826000292
+2. [Shared Access Signature]の設定画面で、Permissionsに [Read] と [Write] を選択します。
 
 ![](create-vm-using-vhd/2-2.jpg)
 
