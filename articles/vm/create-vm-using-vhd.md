@@ -150,7 +150,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 2. 管理者権限でコマンド プロンプトを起動し、AzCopy のフォルダに移動します。
 
 3. 以下のようにコマンドを実行し、VHD のコピーを行います。
-   **azcopy copy "<手順 3 でコピーしたURL (コピー元)>" "手順 2 の編集後の URL (コピー先)>" --blob-type PageBlob**
+   **azcopy copy "<手順 [3] でコピーしたURL (コピー元)>" "手順 [2] の編集後の URL (コピー先)>" --blob-type PageBlob**
 
 実行例：
 > azcopy copy "https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/abcd?sv=2018-03-28&sr=b&si=略&sig=略" "https://xxxxxxxx.blob.core.windows.net/vhds/osdisk.vhd?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=略" --blob-type PageBlob
@@ -162,7 +162,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 実行結果例 (途中省略)：
 ![](create-vm-using-vhd/4-3.jpg)
 
-4. VHDファイルのコピーが完了しますと、手順1で作成したストレージ アカウントのコンテナー [vhds] にて、コピーされた VHD ファイルが確認できます。
+4. VHDファイルのコピーが完了しますと、手順 [1] で作成したストレージ アカウントのコンテナー [vhds] にて、コピーされた VHD ファイルが確認できます。
 
 ![](create-vm-using-vhd/4-4.jpg)
 
@@ -188,7 +188,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
 
 ### [6] VHD ファイルから作成したディスクで VM を作成する。
 
-1. Azure Portal より [Disk] を開き、手順 5 で作成したDiskをクリックします。
+1. Azure Portal より [Disk] を開き、手順 [5] で作成したDiskをクリックします。
    ディスクのページ上部の [＋Create VM] をクリックし、コピーした VHD ファイルから作成した OS ディスクを使用した VM を作成します。
 
 ![](create-vm-using-vhd/6-1.jpg)
