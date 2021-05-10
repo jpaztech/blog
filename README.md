@@ -6,6 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [Azure 環境における Windows Server 2016 の日本語の言語パック適用できない](./articles/vm/win2016-jp-lpk-issue.md)
 - [Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法](./articles/vm/create-vm-using-vhd.md)
 - [VM 複製方法について part.1/3 2 つの方法の紹介](./articles/vm/vm-replica-1.md)
 - [VM 複製方法について part.2/3 一般化したイメージから VM を複製する手順](./articles/vm/vm-replica-2.md)
