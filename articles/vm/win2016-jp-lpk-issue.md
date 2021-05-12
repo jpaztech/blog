@@ -45,13 +45,13 @@ attrib -r -s -h *
    ※アスタリスクによるファイル指定ができないため、貴社環境に存在するファイルに基づきコマンドをご実施ください。 
    ※"<移動先>" を空欄にすることで、次回再起動時にファイルの削除がスケジュールされます。 <br>
    ```CMD
-    movefile.exe "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.0.regtrans-ms" "" 
-    movefile.exe "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.1.regtrans-ms" "" 
-    movefile.exe "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.2.regtrans-ms" "" 
-    movefile.exe "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.blf" "" 
-    movefile.exe "C:\Windows\System32\config\TxR\{711988c5-afbd-11e6-80c9-782bcb3928e1}.TM.blf """ 
-    movefile.exe "C:\Windows\System32\config\TxR\{711988c5-afbd-11e6-80c9-782bcb3928e1}.TMContainer00000000000000000001.regtrans-ms" "" 
-    movefile.exe "C:\Windows\System32\config\TxR\{711988c5-afbd-11e6-80c9-782bcb3928e1}.TMContainer00000000000000000002.regtrans-ms" "" 
+    movefile.exe /accepteula "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.0.regtrans-ms" ""
+    movefile.exe "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.1.regtrans-ms" ""
+    movefile.exe "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.2.regtrans-ms" ""
+    movefile.exe "C:\Windows\System32\config\TxR\{711988c4-afbd-11e6-80c9-782bcb3928e1}.TxR.blf" ""
+    movefile.exe "C:\Windows\System32\config\TxR\{711988c5-afbd-11e6-80c9-782bcb3928e1}.TM.blf" ""
+    movefile.exe "C:\Windows\System32\config\TxR\{711988c5-afbd-11e6-80c9-782bcb3928e1}.TMContainer00000000000000000001.regtrans-ms" ""
+    movefile.exe "C:\Windows\System32\config\TxR\{711988c5-afbd-11e6-80c9-782bcb3928e1}.TMContainer00000000000000000002.regtrans-ms" ""
     ```
     <br>
     下記と同様に表示されることをご確認後、システムの再起動を実施します。 
