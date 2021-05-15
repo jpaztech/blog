@@ -12,7 +12,7 @@ tags:
 
 <!-- more -->
 
-Windows OS の復旧手順に関しては、Windows サポートチームの公式ブログからご紹介しています。対処方法に関する記事内に記載されている [3] - [6] を Azure 環境上でお試しいただく方法について、本記事で紹介しています。
+Windows OS の復旧手順に関しては、Windows サポートチームのブログからご紹介しています。対処方法に関する記事内に記載されている [3] - [6] を Azure 環境上でお試しいただく方法について、本記事で紹介しています。
 
 > **OS が起動しなくなる問題が発生した場合の対処方法について – 概要**
 > [https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/](https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/)
