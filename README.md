@@ -6,6 +6,8 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [【管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順](./articles/vm/noboot-recovery-managed-disk.md)
+- [【非管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順](./articles/vm/noboot-recovery-unmanaged-disk.md)
 - [Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)](./articles/vm/windows-noboot-summary.md)
 - [Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない](./articles/vm/win2016-jp-lpk-issue.md)
 - [Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法](./articles/vm/create-vm-using-vhd.md)

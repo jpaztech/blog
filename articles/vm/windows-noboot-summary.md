@@ -8,7 +8,7 @@ tags:
 ---
 
 こんにちは。Azure テクニカル サポート チームの重田です。 
-今回は、旧公式ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。
+今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。
 
 更新元の記事：[Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)](https://jpaztech1.z11.web.core.windows.net/Azure%E4%B8%8A%E3%81%AEWindowsOS%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E6%83%85%E5%A0%B1%E3%81%BE%E3%81%A8%E3%82%81(2018%E5%B9%B48%E6%9C%8827%E6%97%A5%E7%89%88).html)
 
@@ -25,11 +25,11 @@ tags:
 なお、上記 Windows OS 観点のブログに記載されている [3] - [6] を Azure 環境上でお試しいただく方法については、下記の別記事で紹介しています。
 
 > **管理ディスクの場合：**
-> [管理ディスク編] 復旧 VM を使った Windows VM の Noboot 復旧手順
+> 【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順
 > https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/
 
 > **非管理ディスクの場合：**
-> [非管理ディスク編] 復旧 VM を使った Windows VM の Noboot 復旧手順
+> 【非管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順
 > https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/
 
 本記事では、Windows OS が起動しなくなる事象に関する Azure 観点での状況把握や復旧方法に関する Tips のまとめをご紹介します。
@@ -99,10 +99,10 @@ Azure Backup を使用できない場合は、ディスク リソースのスナ
 
 Azure 側の具体的な手順に関しては、再掲となりますが、下記の別記事でご紹介していますので、ご利用環境に合わせてご確認ください。
 
-> [管理ディスク編] 復旧 VM を使った Windows VM の Noboot 復旧手順
+> 【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順
 > https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/
 
-> [非管理ディスク編] 復旧 VM を使った Windows VM の Noboot 復旧手順
+> 【非管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順
 > https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/
 
 なお、公開情報としては下記がございますのでご確認ください。
@@ -220,5 +220,5 @@ Windows OS にアプリケーションを追加したり、Windows Update を適
 > [https://blogs.technet.microsoft.com/jpaztech/2018/05/29/aiming_no_downtime/](https://blogs.technet.microsoft.com/jpaztech/2018/05/29/aiming_no_downtime/)
 
 
-本稿が皆様のお役に立てれば幸いです。
+本記事が皆様のお役に立てれば幸いです。
 
