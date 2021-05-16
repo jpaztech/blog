@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版) | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの重田です。今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。 更新元の記事：Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)">
+<meta property="og:url" content="https://jpaztech.github.io/blog/vm/windows-noboot-summary/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの重田です。今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。 更新元の記事：Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2021-05-14T09:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-16T05:38:51.930Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="VM">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="noboot">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" href="https://cssjpn.github.io/" target="_blank" rel="noopener">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vm/windows-noboot-summary" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2021-05-14T09:00:00.000Z" itemprop="datePublished">2021-05-14</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+6ae15f34-41ad-5baa-88b7-78575ed88086%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E4%B8%8A%E3%81%AE+Windows+OS+%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E6%83%85%E5%A0%B1%E3%81%BE%E3%81%A8%E3%82%81+%282021+%E5%B9%B4+5+%E6%9C%88+14+%E6%97%A5%E6%9B%B4%E6%96%B0%E7%89%88%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fwindows-noboot-summary%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fwindows-noboot-summary.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fwindows-noboot-summary.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/vm/windows-noboot-summary/" data-id="ckoqr081h003w0mql7uov5q7q" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは。Azure テクニカル サポート チームの重田です。<br>今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。</p>
+<p>更新元の記事：<a href="https://jpaztech1.z11.web.core.windows.net/Azure%E4%B8%8A%E3%81%AEWindowsOS%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E6%83%85%E5%A0%B1%E3%81%BE%E3%81%A8%E3%82%81(2018%E5%B9%B48%E6%9C%8827%E6%97%A5%E7%89%88).html" target="_blank" rel="noopener">Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)</a></p>
+<a id="more"></a>
+
+<p>この Windows OS が起動しなくなる事象については、状況把握や復旧手段に関してご支援させていただいている際のポイントを、弊社 Windows サポートチームのブログからご紹介しています。</p>
+<blockquote>
+<p><strong>OS が起動しなくなる問題が発生した場合の対処方法について – 概要</strong><br><a href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/" target="_blank" rel="noopener">https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/</a></p>
+</blockquote>
+<blockquote>
+<p><strong>OS が起動しなくなる問題が発生した場合の対処方法について – 対処方法</strong><br><a href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/" target="_blank" rel="noopener">https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/</a></p>
+</blockquote>
+<p>なお、上記 Windows OS 観点のブログに記載されている [3] - [6] を Azure 環境上でお試しいただく方法については、下記の別記事で紹介しています。</p>
+<blockquote>
+<p><strong>管理ディスクの場合：</strong><br>【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/</a></p>
+</blockquote>
+<blockquote>
+<p><strong>非管理ディスクの場合：</strong><br>【非管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</a></p>
+</blockquote>
+<p>本記事では、Windows OS が起動しなくなる事象に関する Azure 観点での状況把握や復旧方法に関する Tips のまとめをご紹介します。</p>
+<hr>
+
+<h2 id="TIPS-1-ブート診断による画面確認"><a href="#TIPS-1-ブート診断による画面確認" class="headerlink" title="TIPS #1 ブート診断による画面確認"></a>TIPS #1 ブート診断による画面確認</h2><p>Windows VM ではブート診断を有効化していただくことで、Azure ポータル上から OS の画面ショットを見ることができます。<br>RDP 接続が出来ない場合には、ブート診断を使ってどのような画面になっているか確認をしましょう。<br>具体的な手順については、下記公開情報をご確認ください。</p>
+<blockquote>
+<p>ブート診断を使用して Azure の仮想マシンのトラブルシューティングを行う方法<br><a href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-diagnostics" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-diagnostics</a></p>
+</blockquote>
+<hr>
+
+<h2 id="TIPS-2-Azure-における復旧方法"><a href="#TIPS-2-Azure-における復旧方法" class="headerlink" title="TIPS #2 Azure における復旧方法"></a>TIPS #2 Azure における復旧方法</h2><p>Windows OS が起動しなくなる事象は原因追及が困難な場合が多く、対処方法を実施しても必ず Windows OS が起動できるようになる保証はないことをご注意下さい。<br>最も確実な方法は <strong>バックアップから復旧させる方法</strong> になりますので、<strong>定期的なバックアップのご取得</strong> をご実施くださいますようお願いいたします。</p>
+<p>もし、バックアップが存在しない場合には、上述の “<a href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/" target="_blank" rel="noopener">OS が起動しなくなる問題が発生した場合の対処方法について – 対処方法</a>“ にて記載されているような対処をお試しいただきます。</p>
+<h3 id="■-バックアップからリストアする"><a href="#■-バックアップからリストアする" class="headerlink" title="■ バックアップからリストアする"></a>■ バックアップからリストアする</h3><h4 id="Azure-Backup"><a href="#Azure-Backup" class="headerlink" title="Azure Backup"></a>Azure Backup</h4><p>Azure Backup にて、VM のバックアップを取得しておけば、何かあった場合に正常時の状態からの復元が行える可能性が高いです。<br>Azure Backup に関する公開情報をいくつかご紹介いたしますので、ご参考情報としてご確認いただけますと幸いです。</p>
+<blockquote>
+<p>Azure で仮想マシンをバックアップする<br><a href="https://docs.microsoft.com/ja-jp/azure/backup/quick-backup-vm-portal" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/backup/quick-backup-vm-portal</a></p>
+</blockquote>
+<blockquote>
+<p>Azure portal で Azure VM データを復元する方法<br><a href="https://docs.microsoft.com/ja-jp/azure/backup/backup-azure-arm-restore-vms" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/backup/backup-azure-arm-restore-vms</a></p>
+</blockquote>
+<blockquote>
+<p>Azure VM バックアップのサポート マトリックス<br><a href="https://docs.microsoft.com/ja-jp/azure/backup/backup-support-matrix-iaas" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/backup/backup-support-matrix-iaas</a></p>
+</blockquote>
+<h4 id="スナップショット"><a href="#スナップショット" class="headerlink" title="スナップショット"></a>スナップショット</h4><p>Azure Backup を使用できない場合は、ディスク リソースのスナップショットを取得し、有事の際にはそのスナップショットからディスクを復元する方法もあります。<br>スナップショットの取得に関する詳細な手順に関しましては、下記の公開情報をご確認ください。<br>なお、ディスクのスナップショットは、Azure Backup と異なり VM の稼働状態で取るとデータに不整合が発生する場合があります。<br>スナップショットを作成する前に VM を停止することをお勧めします。</p>
+<blockquote>
+<p>ポータルまたは PowerShell を使用してスナップショットを作成する<br><a href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk</a><br>※ 管理ディスク用の手順になります。</p>
+</blockquote>
+<h4 id="OS-ディスクのスワップ"><a href="#OS-ディスクのスワップ" class="headerlink" title="OS ディスクのスワップ"></a>OS ディスクのスワップ</h4><p>ディスクを復元した際には、事象が発生した VM の OS ディスクと入れ替えることが可能です。<br>詳細な手順は下記をご確認ください。</p>
+<blockquote>
+<p>VM の OS ディスクをスワップする<br><a href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm</a><br>※ 管理ディスク用の手順になります。</p>
+</blockquote>
+<h3 id="■-復旧用の-VM-を使って対応する"><a href="#■-復旧用の-VM-を使って対応する" class="headerlink" title="■ 復旧用の VM を使って対応する"></a>■ 復旧用の VM を使って対応する</h3><p>起動ができない VM の OS ディスクを、他の正常な VM にデータ ディスクとして接続することで、当該 OS ディスクに対する操作が可能となります。</p>
+<p>順序が前後しますが、”<a href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/" target="_blank" rel="noopener">OS が起動しなくなる問題が発生した場合の対処方法について – 対処方法</a>“ 内で紹介している “[3] SFC (System File Checker)、[4] regback を用いたレジストリ復旧、[5] 更新プログラムのアンインストール、[6] ファイルシステムの破損チェック” は、この方法で実施することができます。</p>
+<p>Azure 側の具体的な手順に関しては、再掲となりますが、下記の別記事でご紹介していますので、ご利用環境に合わせてご確認ください。</p>
+<blockquote>
+<p>【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/</a></p>
+</blockquote>
+<blockquote>
+<p>【非管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</a></p>
+</blockquote>
+<p>なお、公開情報としては下記がございますのでご確認ください。</p>
+<blockquote>
+<p>Azure Portal から OS ディスクを復旧 VM にアタッチして Windows VM のトラブルシューティングを行う<br><a href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows</a></p>
+</blockquote>
+<h3 id="■-Windows-の回復コンソールを使用する"><a href="#■-Windows-の回復コンソールを使用する" class="headerlink" title="■ Windows の回復コンソールを使用する"></a>■ Windows の回復コンソールを使用する</h3><p>“<a href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/" target="_blank" rel="noopener">OS が起動しなくなる問題が発生した場合の対処方法について – 対処方法</a>“ 内で紹介している、”[1] スタートアップ修復、[2] Boot 構成情報の修正” を実施する場合、Windows の回復コンソールの立ち上げが必要となります。<br>回復コンソールは、Azure 上からは直接操作ができませんので、Nested Hyper-V をご利用いただくか、VHD ファイルをオンプレミス環境にダウンロードし Hyper-V 環境を構築することで行います。</p>
+<p>オンプレミス環境に Hyper-V 環境が無い場合、Azure での Nested Hyper-V 用 VM を一時的に作成するということが便利です。<br>具体的な手順に関しては、下記ブログをご確認ください。</p>
+<blockquote>
+<p>Nested Hyper-V を使った VM の復旧<br><a href="https://docs.microsoft.com/en-us/archive/blogs/jpaztech/recover_vm_using_nested_hyperv" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/archive/blogs/jpaztech/recover_vm_using_nested_hyperv</a></p>
+</blockquote>
+<!-- 後で更新する -->
+
+<p>なお、オンプレミス環境で回復コンソールの立ち上げを実施する場合に関しても、オンプレミス環境で行う “Hyper-V 構築 → VHD のダウンロード → VM の起動” といった手順は、Nested Hyper-V を使った手順とほぼ同様となりますので、ご参考となれば幸いです。</p>
+<hr>
+
+<h2 id="TIPS-3-バックアップ取得に関する-Tips"><a href="#TIPS-3-バックアップ取得に関する-Tips" class="headerlink" title="TIPS #3 バックアップ取得に関する Tips"></a>TIPS #3 バックアップ取得に関する Tips</h2><p>上述の通り、Windows OS としての対処をご実施いただいても、事象が 100％ 復旧するという保証はなく、最も確実な復旧方法はバックアップから復旧させる方法になります。<br>バックアップからのリストアであれば、復旧までの時間がある程度予測できることも利点と言えます。<br>復旧をより確実なものとするために、以下のような点についても心がけてください。</p>
+<h3 id="■-バックアップの基本-Azure-Backup-で複数世代のバックアップを保持する"><a href="#■-バックアップの基本-Azure-Backup-で複数世代のバックアップを保持する" class="headerlink" title="■ バックアップの基本: Azure Backup で複数世代のバックアップを保持する"></a>■ バックアップの基本: Azure Backup で複数世代のバックアップを保持する</h3><p>Windows OS が起動できないという状態に陥った場合、何らかの形で Windows OS のデータ (レジストリやファイル システム、ファイル システムのメタデータ) が破損してしまっている場合があります。<br>このような場合において事例上少なくないのは、「バックアップを取得したその時点で、すでに何らかのデータが壊れてしまっていた」という状況です。</p>
+<p>Azure Backup は、VM を止めずにバックアップを取得するができます。<br>ただし、稼働中の OS は、起動時に必要なファイルの一部が破損しても、次の再起動までは走り続けることができるという場合があります。</p>
+<h4 id="Windows-イメージに何らかの支障が発生した状態で稼働が続いているとどのようになるか"><a href="#Windows-イメージに何らかの支障が発生した状態で稼働が続いているとどのようになるか" class="headerlink" title="Windows イメージに何らかの支障が発生した状態で稼働が続いているとどのようになるか"></a>Windows イメージに何らかの支障が発生した状態で稼働が続いているとどのようになるか</h4><p>「Windows VM を再起動したら、OS が正しく起動されなかった。OS の問題が起きているようなので、バックアップからリストアを行った。状況が改善しないため、何世代か前のバックアップを用いてリストアを複数試してみたが、どれをリストアしても同様に OS が正しく起動されない状態になってしまった。」といったシナリオになります。</p>
+<p>もともと Windows OS 内のレジストリやファイル システムが破損していたがそのまま稼働していた場合、再起動時に問題が顕在化し、OS が正しく起動できない事象が発生します。</p>
+<p>Azure Backup は「1 日ごとに 7 世代」といったポリシー設定に基づいて世代管理します。<br>その枠内で無事復旧できるイメージがあればいいですが、そうではない場合、Azure Backup でも復旧できないシナリオもある、ということをご紹介します。<br>稀で不運な事例ではありますが、リスクとしてご認識くださいますようお願いいたします。</p>
+<h3 id="■-ディスクのスナップショットを活用しよう"><a href="#■-ディスクのスナップショットを活用しよう" class="headerlink" title="■ ディスクのスナップショットを活用しよう"></a>■ ディスクのスナップショットを活用しよう</h3><p>VM を再起動して無事に Windows OS が起動できたことが保証できるタイミングまでを含めて確認いただくことが一番安全ではありますが、再起動なんて月に 1 度か、それ以下しかしない、という場合も勿論あります。</p>
+<p>その場合には、「正常な状態の VM を停止し、OS ディスクのスナップショットを作成しておく」ことをお勧めします。</p>
+<p>上述の通り、データに不整合がある状態になることを防ぐため、スナップショットを作成する前に VM を停止することをお勧めします。<br>スナップショット作成のために、VM を停止 / 開始させることで、開始後に OS が正しく起動することを確かめることもできます。<br>(ゲスト OS のシャットダウンを実施してから VM の停止をご実施いただくとより安全です。)<br>(OS 起動が確約されるのであれば、前のバージョンのスナップショットは削除しても問題ないので、1 世代分のスナップショットを保持すればよいということになります。)</p>
+<p>Windows OS にアプリケーションを追加したり、Windows Update を適用する、といったシステム変更に際してディスクのスナップショットを作成しておくと安心です。</p>
+<h4 id="追加コストの話"><a href="#追加コストの話" class="headerlink" title="追加コストの話"></a>追加コストの話</h4><p>スナップショットの課金形態や考え方は、非管理ディスクと管理ディスクで若干異なります。<br>追加でコストが発生する部分となりますので、適切に理解をするため下記の通りご紹介します。</p>
+<h4 id="非管理ディスクのスナップショット"><a href="#非管理ディスクのスナップショット" class="headerlink" title="非管理ディスクのスナップショット"></a>非管理ディスクのスナップショット</h4><p>非管理ディスクのスナップショットは、もとのディスク (VHD ファイル) のコピーではなく、その時点の差分データです。<br>そのため、VHD ファイルを誤って削除してしまうと、スナップショットも削除されてしまうのでご注意ください。<br>ただし課金の面では、差分の容量分のみが課金されます。</p>
+<p>例:</p>
+<ol>
+<li>元々の使用量が 30 GB のVHDでスナップショットを作成する。<br>この時点ではスナップショットぶんの課金ゼロであり、30 GB の VHD の容量分のみの課金となる。</li>
+<li>VHD ファイル上に 1 GB の変更が加わる。<br>この時点で以前のスナップショットとの差分で生じた 1 GB が加算された 31 GB ぶんの課金が発生する。</li>
+</ol>
+<p>上記の詳細については、下記公開情報をご確認ください。</p>
+<blockquote>
+<p>Blob スナップショットの課金方法について<br><a href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/understanding-how-snapshots-accrue-charges" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/rest/api/storageservices/understanding-how-snapshots-accrue-charges</a></p>
+</blockquote>
+<blockquote>
+<p>Managed Disks の価格<br><a href="https://azure.microsoft.com/ja-jp/pricing/details/managed-disks/" target="_blank" rel="noopener">https://azure.microsoft.com/ja-jp/pricing/details/managed-disks/</a></p>
+<blockquote>
+<p>&lt;抜粋 (2021/5/14) &gt;<br>Premium SSD Managed Disks の完全なスナップショットとイメージを Standard ストレージに格納できます。<br>ローカル冗長 (LRS) とゾーン冗長 (ZRS) スナップショットのいずれかのオプションをお選びいただけます。<br>Standard LRS と Standard ZRS どちらのオプションでも、これらのスナップショットとイメージはディスクの使用量に応じて月々 ¥5.600/GB で課金されます。<br>たとえば、プロビジョニングされた容量が 64 GB のマネージド ディスクのスナップショットを作成し、実際に使用したデータ サイズが 10 GB だった場合、スナップショットは、使用したデータ サイズである 10 GB に対してのみ課金されます。<br>Premium SSD マネージド ディスク ストレージに保存することを選択した場合、1 か月あたり ¥17.024/GB で課金されます。</p>
+</blockquote>
+</blockquote>
+<h4 id="管理ディスクのスナップショット"><a href="#管理ディスクのスナップショット" class="headerlink" title="管理ディスクのスナップショット"></a>管理ディスクのスナップショット</h4><p>管理ディスクのスナップショットは、もとのディスク (VHD ファイル) の完全な複製です。<br>そのため、スナップショットを作成した元のディスクを削除してもスナップショットは削除されず、スナップショットからディスクの作成 (復元) を実施することが可能です。<br>課金の面では、スナップショット元のデータのコピーのため、実使用量分のデータが課金対象になります。</p>
+<p>管理ディスクは、P10 (Premium, 128GiB) や S10 (Standard, 128GiB) といった決まったサイズごとに課金枠が決まっていますが、スナップショットはその中の実容量をベースに課金されます。<br>つまり、128 GiB の VHD 中、10 GiB しか使われていなかったら、10 GiB 分のみがスナップショットの課金額となります。</p>
+<p>なお、Premium ストレージのスナップショットを Standard ストレージに取る、ということも可能です。<br>例えば、P10 の管理ディスクとそのスナップショット (Standard ストレージ) に取得する場合、[もとのディスクの料金 (P10)] と、[Standard スナップショットの容量別課金 × 使用している実容量 GiB] の課金が発生することとなります。</p>
+<h3 id="■-参考資料"><a href="#■-参考資料" class="headerlink" title="■ 参考資料"></a>■ 参考資料</h3><p>バックアップと高可用性、DR との違い、といった点も理解しておくことが重要です。<br>高可用性環境なら、VM 1 台の OS が起動しなかった場合にも復旧のための時間的猶予が生まれます。</p>
+<p>下記ブログのアーカイブにて、Azure において様々に存在するダウンタイムを避けるサービスについて紹介しておりますので、ご参考情報としてご参照下さい。</p>
+<blockquote>
+<p>Azure エンジニアが解説する落ちないサービス入門<br><a href="https://blogs.technet.microsoft.com/jpaztech/2018/05/29/aiming_no_downtime/" target="_blank" rel="noopener">https://blogs.technet.microsoft.com/jpaztech/2018/05/29/aiming_no_downtime/</a></p>
+</blockquote>
+<p>本記事が皆様のお役に立てれば幸いです。</p>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/noboot/" rel="tag">noboot</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/windows-noboot-summary.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="../noboot-recovery-managed-disk/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="">Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)</a>
+          </li>
+        
+          <li>
+            <a href="../noboot-recovery-managed-disk/">【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順</a>
+          </li>
+        
+          <li>
+            <a href="../noboot-recovery-unmanaged-disk/">【非管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順</a>
+          </li>
+        
+          <li>
+            <a href="../../storage/addsAuthforAzureFiles/">オンプレ AD DS 認証を利用した Azure ファイル共有マウント手順</a>
+          </li>
+        
+          <li>
+            <a href="../win2016-jp-lpk-issue/">Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ApplicationGateway/" rel="tag">ApplicationGateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Firewall/" rel="tag">Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/noboot/" rel="tag">noboot</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">21</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Performance">Performance</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/PowerShell">PowerShell</a><span class="tag-list-count">3</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">3</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">3</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">1</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">18</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ApplicationGateway">ApplicationGateway</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Firewall">Firewall</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NAT-Gateway">NAT Gateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NSG">NSG</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-IP-Address">Public IP Address</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-Peering">Public Peering</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SNAT">SNAT</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SSL">SSL</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">2</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">4</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">20</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">6</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Resource-Health">Resource Health</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Sample-Script">Sample Script</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Storage-Space">Storage Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Troubleshooting">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Windows">Windows</a><span class="tag-list-count">13</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/noboot">noboot</a><span class="tag-list-count">3</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/ARM/" style="font-size: 10px;">ARM</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 14.44px;">Application Gateway</a> <a href="../../tags/ApplicationGateway/" style="font-size: 12.22px;">ApplicationGateway</a> <a href="../../tags/Archive/" style="font-size: 20px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 11.11px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 12.22px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 11.11px;">Azure Backup</a> <a href="../../tags/Azure-Firewall/" style="font-size: 10px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 12.22px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 11.11px;">Azure Load Balancer</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 11.11px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 10px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/Certificate/" style="font-size: 11.11px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 12.22px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 10px;">DNS</a> <a href="../../tags/Disk/" style="font-size: 11.11px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 11.11px;">Drive Letter</a> <a href="../../tags/Error/" style="font-size: 10px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 12.22px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 11.11px;">FAQ</a> <a href="../../tags/Firewall/" style="font-size: 10px;">Firewall</a> <a href="../../tags/HowTo/" style="font-size: 15.56px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/Information/" style="font-size: 10px;">Information</a> <a href="../../tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 10px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 10px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 10px;">Managed Disk</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 11.11px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 10px;">NAT Gateway</a> <a href="../../tags/NSG/" style="font-size: 11.11px;">NSG</a> <a href="../../tags/Network/" style="font-size: 17.78px;">Network</a> <a href="../../tags/Other/" style="font-size: 11.11px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 12.22px;">PowerShell</a> <a href="../../tags/Public-IP-Address/" style="font-size: 10px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SNAT/" style="font-size: 10px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 13.33px;">Sample Script</a> <a href="../../tags/Storage/" style="font-size: 13.33px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 11.11px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Troubleshooting/" style="font-size: 12.22px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 11.11px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 18.89px;">VM</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN-Gateway/" style="font-size: 11.11px;">VPN Gateway</a> <a href="../../tags/WAF/" style="font-size: 13.33px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 16.67px;">Windows</a> <a href="../../tags/noboot/" style="font-size: 12.22px;">noboot</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
