@@ -8,11 +8,12 @@ tags:
 ---
 
 こんにちは。Azure テクニカル サポート チームの重田です。 
-本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを、他の正常な VM にデータ ディスクとして接続する方法について紹介します。
+本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを他の正常な VM にデータ ディスクとして接続する方法について紹介します。
 
 <!-- more -->
 
-Windows OS の復旧手順に関しては、Windows サポートチームのブログからご紹介しています。対処方法に関する記事内に記載されている [3] - [6] を Azure 環境上でお試しいただく方法について、本記事で紹介しています。
+Windows OS の復旧手順に関しては、Windows サポートチームのブログからご紹介しています。
+本記事では、[対処方法] 編に記載されている切り分け [3] - [6] を Azure 環境上でお試しいただく方法について紹介しています。
 
 > **OS が起動しなくなる問題が発生した場合の対処方法について – 概要**
 > [https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/](https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/)
@@ -38,28 +39,33 @@ Windows OS の復旧手順に関しては、Windows サポートチームのブ�
 
 ### 1. 当該仮想マシンの OS ディスクのスナップショットを取得します
 Azure Portal より 仮想マシンを停止できるようであれば、停止してからご実施ください。
-Azure Portal より [Virtual Machine] - [<当該仮想マシン>] を開き、左メニュー "設定" から [ディスク] をクリックします。
-[<当該 OS ディスク>] をクリックし、[スナップショットの作成] をクリックします。
+
+1. Azure Portal より [Virtual Machine] - [<当該仮想マシン>] を開き、左メニュー "設定" から [ディスク] をクリックします。
+2. [<当該 OS ディスク>] をクリックし、[スナップショットの作成] をクリックします。
 
 ![](./noboot-recovery-managed-disk/1.png)
 
-適宜、値を設定し、[確認および作成] - [作成] をクリックします。
+3. 適宜、値を設定し、[確認および作成] - [作成] をクリックします。
 
 > スナップショットの作成
 > [https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk#use-the-azure-portal](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk#use-the-azure-portal)
  
 ### 2. スナップショットから、修復用 OS ディスクを作成します
-Azure Portal にて [リソースの作成] をクリックし、検索窓に "Managed Disks" と入力します。[作成] をクリックし、適宜値を設定します。[確認および作成] - [作成] をクリックします。
-※ "ソースの種類" を [スナップショット] に指定し、1 にて作成したスナップショットを指定します。
+1. Azure Portal にて [リソースの作成] をクリックし、検索窓に "Managed Disks" と入力します。
+2. [作成] をクリックし、適宜値を設定します。
+   "ソースの種類" を [スナップショット] に指定し、1 にて作成したスナップショットを指定します。
+3. [確認および作成] - [作成] をクリックします。
 
 > 管理ディスク (Managed Disks) スナップショットより VM をデプロイする
 > [https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/deployvmfromsnapshot](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/deployvmfromsnapshot)
 > 「2. スナップショットより "ディスク" リソースを作成する」をご確認ください。
  
 ### 3. 復旧作業用仮想マシンに、修復用 OS ディスクを接続します
-本事象のトラブルシューティングを行う復旧作業用仮想マシンを別途ご準備いただき、作成した OS ディスクをデータ ディスクとして接続します。
+1. 本事象のトラブルシューティングを行う復旧作業用仮想マシンを別途ご準備いただき、作成した OS ディスクをデータ ディスクとして接続します。
 
 ![](./noboot-recovery-managed-disk/3.png)
+
+2. 復旧作業用仮想マシンに RDP 接続します。
 
 ### 4.復旧作業用仮想マシンにて、切り分けを実施します
 
@@ -75,8 +81,8 @@ Azure Portal にて [リソースの作成] をクリックし、検索窓に "M
 
 ### 5. 修復用 OS ディスクを、対象仮想マシンの OS ディスクとスワップさせます
 
-復旧作業用仮想マシンを停止し、データ ディスクとして接続されている修復した OS ディスクをデタッチします。
-対象仮想マシンの OS ディスクを、修復した OS ディスクとスワップします。
+1. 復旧作業用仮想マシンを停止し、データ ディスクとして接続されている修復した OS ディスクをデタッチします。
+2. 対象仮想マシンの OS ディスクを、修復した OS ディスクとスワップします。
 
 ![](./noboot-recovery-managed-disk/4.png)
 
@@ -85,8 +91,7 @@ Azure Portal にて [リソースの作成] をクリックし、検索窓に "M
 > VM の OS ディスクをスワップする
 > [https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm)
 
-
-復旧対象仮想マシンを起動し、事象が解消されたかをご確認ください。
+3. 復旧対象仮想マシンを起動し、事象が解消されたかをご確認ください。
 
 手順は以上となります。
 

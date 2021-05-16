@@ -8,11 +8,12 @@ tags:
 ---
 
 こんにちは。Azure テクニカル サポート チームの重田です。 
-本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを、他の正常な VM にデータ ディスクとして接続する方法について紹介します。
+本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを他の正常な VM にデータ ディスクとして接続する方法について紹介します。
 
 <!-- more -->
 
-Windows OS の復旧手順に関しては、Windows サポートチームのブログからご紹介しています。対処方法に関する記事内に記載されている [3] - [6] を Azure 環境上でお試しいただく方法について、本記事で紹介しています。
+Windows OS の復旧手順に関しては、Windows サポートチームのブログからご紹介しています。
+本記事では、[対処方法] 編に記載されている切り分け [3] - [6] を Azure 環境上でお試しいただく方法について紹介しています。
 
 > **OS が起動しなくなる問題が発生した場合の対処方法について – 概要**
 > [https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/](https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-OutLine/)
@@ -60,18 +61,18 @@ Azure Storage Explorer については、下記公開情報をご確認くださ
 
 #### AzCopy をご利用いただく場合
 
-1. 復旧対象仮想マシンを停止 (割り当て解除) します。
-2. AzCopy コマンドを下記の通り実行します。
-
-   構文：
-   ```PowerShell
-   ./azcopy.exe copy "https://ストレージアカウント名.blob.core.windows.net/vhds/複製元のディスク名.vhd?SAS" "https://ストレージアカウント名.blob.core.windows.net/vhds/複製後のディスク名.vhd?SAS" --overwrite=prompt --s2s-preserve-access-tier=false --recursive
-   ```
-
 AzCopy については、下記公開情報をご確認ください。
 
 > AzCopy を使ってみる
 > [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10)
+
+
+1. 復旧対象仮想マシンを停止 (割り当て解除) します。
+2. AzCopy コマンドを下記の通り実行します。
+   構文：
+   ```PowerShell
+   ./azcopy.exe copy "https://ストレージアカウント名.blob.core.windows.net/vhds/複製元のディスク名.vhd?SAS" "https://ストレージアカウント名.blob.core.windows.net/vhds/複製後のディスク名.vhd?SAS" --overwrite=prompt --s2s-preserve-access-tier=false --recursive
+   ```
 
 ### 2. 復旧作業用の仮想マシンにて、複製した VHD ファイルをデータ ディスクとしてアタッチします
 
@@ -89,7 +90,7 @@ AzCopy については、下記公開情報をご確認ください。
 
    [OK] をクリックし、前の画面にて [保存] をクリックします。
 
-   ![](./noboot-recovery-unmanaged-disk/6.png)
+   ![](./noboot-recovery-unmsanaged-disk/6.png)
 
 4. 復旧作業用仮想マシンに RDP 接続し、追加したデータ ディスクが認識されるかを確認します。
  
