@@ -132,7 +132,7 @@ AzCopy については、下記公開情報をご確認ください。
    Azure PowerShell については、下記公開情報をご確認ください。
 
    > Install the Azure Az PowerShell module
-   > [https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-5.9.0](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-5.9.0)
+   > [https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-5.9.0](https://docs.microsoft.com/ja-jp/powershell/scripting/install/installing-powershell)
 
 6. 上記コマンド実施後、復旧対象仮想マシンの OS ディスクの参照先が変更されていることを確認します。
 
