@@ -4,7 +4,7 @@ date: 2021-5-14 17:30:00
 tags:
   - VM
   - Windows
-  - noboot
+  - Noboot
 ---
 
 こんにちは。Azure テクニカル サポート チームの重田です。 
