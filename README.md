@@ -6,6 +6,14 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)](./articles/vm/windows-noboot-summary.md)
+- [【管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順](./articles/vm/noboot-recovery-managed-disk.md)
+- [【非管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順](./articles/vm/noboot-recovery-unmanaged-disk.md)
+- [Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない](./articles/vm/win2016-jp-lpk-issue.md)
+- [Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法](./articles/vm/create-vm-using-vhd.md)
+- [VM 複製方法について part.1/3 2 つの方法の紹介](./articles/vm/vm-replica-1.md)
+- [VM 複製方法について part.2/3 一般化したイメージから VM を複製する手順](./articles/vm/vm-replica-2.md)
+- [VM 複製方法について part.3/3 OS ディスクのスナップショットから複製する手順](./articles/vm/vm-replica-3.md)
 - [Tracking ID PLWV-BT0 と可用性について](./articles/vm/plwv-bt0.md)
 - [リソース グループ名の大文字・小文字について](./articles/vm/resourcegroup-uppercase-lowercase.md)
 - [Azure Windows VM で記憶域スペースを拡張する](./articles/vm/extend-storage-space-on-azure-windows-vm.md)
@@ -17,14 +25,16 @@
 - [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./articles/vm/win2019-jp-lpk.md)
 - [リソース正常性（Resource Health）アラートの構成方法](./articles/vm/resource-health-alert.md)
 - [Azure リソースの意図しない削除について](./articles/vm/resource-delete.md)
-- [リソース グループ名の大文字・小文字について](resourcegroup-uppercase-lowercase.md)
 
 ## Storage
 - [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 - [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/storage/storageFirewall-403Error.md)
-- [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 
 ## Network
+- [Azure Front Door を用いた App Service などへのセキュアな接続の構成](./articles/network/AzureFrontDoor-LockDown.md)
+- [Azure Firewall の各ルールの動作について](f./articles/network/irewall-rules.md)
+- [VPN Gateway よくあるお問合せ - FAQ](./articles/network/vpngw-FAQ1.md)
+- [NSG と Azure Firewall の違い](./articles/network/difference-nsg-fw.md)
 - [TLS 証明書の更新に関するアナウンスの補足説明](./articles/network/tls-certificate-update-2020.md)
 - [VPN Gateway よくあるお問合せ - FAQ](./articles/network/vpngw-FAQ1.md)
 - [VPN Gateway サービスにおける Azure テクニカル サポートの対応範囲](./articles/network/vpngw-support-policy.md)

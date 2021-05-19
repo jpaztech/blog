@@ -181,7 +181,7 @@ BGP ハイジャッキングを防止する目的で、`Advertised public prefix
 * `Peer ASN` (MSEE と BGP ピアを張る AS 番号。`Customer ASN` ではありません)
 * `Advertised public prefixes` を `Peer ASN` で利用出来ることを示す証跡。例えば、他社様から借り受けたグローバル IP アドレスであれば、借り受けたことを示すメールの文面や pdf の文書等が該当します
 
-### 注意点: Microsoft 365 (旧 Oiffce 365) 利用時の承認について
+### 注意点: Microsoft 365 (旧 Office 365) 利用時の承認について
 
 BGP コミュニティのうち、(2021/03/12 現在) 以下の BGP コミュニティを選択するには、事前に Microsoft から承認を受ける必要があります。
 
@@ -190,21 +190,15 @@ BGP コミュニティのうち、(2021/03/12 現在) 以下の BGP コミュニ
 - Skype For Business Online (12076:5030)
 - その他の Office 365 Online サービス (12076:5100)
 
-* [Azure ExpressRoute: ルーティングの要件 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-routing#service-to-bgp-community-value)
+[Azure ExpressRoute: ルーティングの要件 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-routing#service-to-bgp-community-value)
 
 > ** Microsoft からの承認が必要です。「Microsoft ピアリングにルート フィルターを構成する\」を参照してください
 
-承認のフォームは以下のリンクから提供しておりますが、フォーム冒頭にも記載がある通り、法的規制などにより閉域網接続の正当性が認められる金融機関などのお客様を除いては、原則申請は承認されない点については予めご留意ください。
+[Azure ExpressRoute for Office 365](https://docs.microsoft.com/en-us/microsoft-365/enterprise/azure-expressroute?view=o365-worldwide) のドキュメントにも記載されている通り、承認を得るプロセスを開始するには、弊社のアカウント担当までご連絡をお願いいたします。
 
-* [ExpressRoute for Office 365 Request Form](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbRyOZxByRF1dLgv7k6ye5z8pUQkdLRTQ5QkcyOTU3VkNEOFdOWk9IRDZTUy4u)
-
-> Microsoft authorization is required to use ExpressRoute for Office 365. Microsoft reviews every customer request and authorizes ExpressRoute for Office 365 usage when a customer's regulatory requirement mandates direct connectivity. If you have such requirements, please provide the text excerpt and web link to the regulation which you interpret to mean that direct connectivity is required in the ExpressRoute for Office 365 Request Form to begin a Microsoft review. 
->
-> (抄訳)
-> ExpressRoute for Office 365 のご利用には Microsoft による承認が必要です。
-> Microsoft では、お客様の申請を検証して、閉域網での接続がお客様の規制要件によって義務付けられていると判断した場合に限り、ExpressRoute for Office 365 の使用を承認しています。
-> そのような要件がある場合は、ExpressRoute for Office 365 リクエスト フォームにて、閉域網接続が必要であることを示す規制文章の抜粋や Web リンクを提供してください。
-
+> Microsoft authorization is required to use ExpressRoute for Office 365. Microsoft reviews every customer request and authorizes ExpressRoute for Office 365 usage when a customer's regulatory requirement mandates direct connectivity. If you have such requirements, please contact your Microsoft account representative to begin a Microsoft review. Unauthorized subscriptions trying to create route filters for Office 365 will receive an error message.
+> 
+> (抄訳) ExpressRoute for Office 365 のご利用には Microsoft による承認が必要です。 Microsoft では、お客様の申請を検証して、閉域網での接続がお客様の規制要件によって義務付けられていると判断した場合に限り、ExpressRoute for Office 365 の使用を承認しています。 そのような要件がある場合は、お客様を担当させていただいている弊社のアカウント担当までご連絡いただき、レビューを開始してください。承認されていないサブスクリプションで Office 365 のルートフィルターを作成しようとしても、エラー メッセージが発生します。
 
 ## Microsoft Peering に関する FAQ
 
