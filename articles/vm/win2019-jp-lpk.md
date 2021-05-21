@@ -74,9 +74,3 @@ Azure Marketplace における Windows Server イメージは、基本的に英�
 >[https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/japanese_langpack_etc](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/japanese_langpack_etc)
 
 こちらの情報が、少しでも皆様のご参考となれば幸いでございます。
-
-<style>
-#article-entry img{
-  border: 1px royalblue solid !important;
-}
-</style>

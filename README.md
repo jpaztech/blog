@@ -31,8 +31,9 @@
 - [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/storage/storageFirewall-403Error.md)
 
 ## Network
+- [カスタム DNS サーバー よくあるお問い合わせ -FAQ](./articles\network\custom-dns-faq.md)
 - [Azure Front Door を用いた App Service などへのセキュアな接続の構成](./articles/network/AzureFrontDoor-LockDown.md)
-- [Azure Firewall の各ルールの動作について](f./articles/network/irewall-rules.md)
+- [Azure Firewall の各ルールの動作について](./articles/network/irewall-rules.md)
 - [VPN Gateway よくあるお問合せ - FAQ](./articles/network/vpngw-FAQ1.md)
 - [NSG と Azure Firewall の違い](./articles/network/difference-nsg-fw.md)
 - [TLS 証明書の更新に関するアナウンスの補足説明](./articles/network/tls-certificate-update-2020.md)
