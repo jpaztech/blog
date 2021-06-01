@@ -14,7 +14,6 @@ WinGAが正常に動作しなくなった場合に再インストールを行う
 
 今回は下記画像の3つのサービスを一旦削除し、インストールを行うシナリオとなります。  
 なお、バージョン 2.7.41491.971 から、WindowsAzureTelemetryService は RDAgent に統合されたため、 WindowsAzureTelemetryService が表示されない場合は WindowsAzureTelemetryService の停止・削除は不要となります。 
-WindowsAzureTelemetryService が表示されない場合は WindowsAzureTelemetryService の停止・削除は不要となります。  
 
 ![](./re-install-windows-azure-guest-agent/service.png) 
 
