@@ -12,7 +12,9 @@ tags:
 お問い合わせでご案内する頻度が多い、Windows ゲスト エージェント (WinGA) の再インストール方法をご案内いたします。
 WinGAが正常に動作しなくなった場合に再インストールを行うことで正常動作に戻ることが多くあります。
 
-今回は下記画像の3つのサービスを一旦削除し、インストールを行うシナリオとなります。
+今回は下記画像の3つのサービスを一旦削除し、インストールを行うシナリオとなります。  
+なお、バージョン 2.7.41491.971 から、WindowsAzureTelemetryService は RDAgent に統合されたため、  
+WindowsAzureTelemetryService が表示されない場合は WindowsAzureTelemetryService の停止・削除は不要となります。  
 
 ![](./re-install-windows-azure-guest-agent/service.png) 
 
@@ -29,7 +31,9 @@ WinGAが正常に動作しなくなった場合に再インストールを行う
 1. 管理者権限でコマンドプロンプトを起動します。
 
 1. 下記のコマンドでサービスを停止します。既に停止している場合は不要です。
-    
+    もしサービスが停止できない場合は、  
+    スタートメニューより[サービス] を検索 → 対象のサービスを右クリック → [プロパティ] → スタートアップの種類を [手動] に設定して VM を再起動してください。  
+
     ```CMD
     net stop rdagent
     net stop WindowsAzureGuestAgent
