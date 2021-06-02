@@ -205,8 +205,7 @@ body {
   color: #737373;
   margin-top: 1em;
   margin-bottom: 1em;
-/*margin-left: 20px*/
-  margin-left: 10px;
+  margin-left: 20px;
   line-height: 1em;
   text-shadow: 0 1px #fff;
   font-weight: bold;
@@ -1090,6 +1089,72 @@ width: 100% {
   display: block;
   max-width: 100%;
   margin: 0 auto;
+}
+div.alert {
+  display: block;
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  color: #5d627b;
+  background: #fff;
+  border-top: solid 10px;
+  -webkit-box-shadow: 0 3px 5px rgba(0,0,0,0.22);
+  box-shadow: 0 3px 5px rgba(0,0,0,0.22);
+}
+div.alert p {
+  margin-top: 0rem;
+  margin-bottom: 0;
+}
+div.alert p.alert-title {
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+}
+div.alert.is-info {
+  border-color: #e2daf1;
+}
+div.alert.is-info .alert-title:before {
+  content: "\f06a";
+  font-family: FontAwesome;
+  padding-right: 6px;
+}
+div.alert.is-warning {
+  border-color: #fff1cc;
+}
+div.alert.is-warning .alert-title:before {
+  content: "\f071";
+  font-family: FontAwesome;
+  padding-right: 6px;
+}
+div.alert.is-important {
+  border-color: #e0f2ff;
+}
+div.alert.is-important .alert-title:before {
+  content: "\f06a";
+  font-family: FontAwesome;
+  padding-right: 6px;
+}
+div.alert.is-caution {
+  border-color: #ffdacc;
+}
+div.alert.is-caution .alert-title:before {
+  content: "\f057";
+  font-family: FontAwesome;
+  padding-right: 6px;
+}
+div.alert.is-success {
+  border-color: #d2f9d2;
+}
+div.alert.is-success .alert-title:before {
+  content: "\f0eb";
+  font-family: FontAwesome;
+  padding-right: 6px;
+}
+div.alert.is-question {
+  border-color: #d2f9d2;
+}
+div.alert.is-question .alert-title:before {
+  content: "\f059";
+  font-family: FontAwesome;
+  padding-right: 6px;
 }
 #comments {
   background: #fff;
