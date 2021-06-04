@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>一時ディスクのドライブ文字が変わる | Japan Azure IaaS Core Support Blog</title>
+  <title>一時ディスクのドライブ文字が変わる (改善適用済み) | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Update: 11&#x2F;6 (Last: 8&#x2F;27) こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと設定しなければならない場合があります。その場合には、下記公開情報の手順にて一時ディスクのドライブ文字を変更">
+  <meta name="description" content="Update: 2021&#x2F;6&#x2F;4 Azure 基盤側の改善が適用済みであることを明記いたしました。Update: 11&#x2F;6 (Last: 8&#x2F;27)   こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一時ディスクのドライブ文字が変わる">
+<meta property="og:title" content="一時ディスクのドライブ文字が変わる (改善適用済み)">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-2/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="Update: 11&#x2F;6 (Last: 8&#x2F;27) こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと設定しなければならない場合があります。その場合には、下記公開情報の手順にて一時ディスクのドライブ文字を変更">
+<meta property="og:description" content="Update: 2021&#x2F;6&#x2F;4 Azure 基盤側の改善が適用済みであることを明記いたしました。Update: 11&#x2F;6 (Last: 8&#x2F;27)   こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2020-11-06T03:00:00.000Z">
-<meta property="article:modified_time" content="2021-06-02T12:06:18.153Z">
+<meta property="article:modified_time" content="2021-06-04T13:16:36.653Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -90,7 +90,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      一時ディスクのドライブ文字が変わる
+      一時ディスクのドライブ文字が変わる (改善適用済み)
     </h1>
   
 
@@ -102,14 +102,18 @@
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+03af22d2-2898-5fe4-9edb-dbd2f99034e4%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E4%B8%80%E6%99%82%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E6%96%87%E5%AD%97%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fdrive-letter-changed-2%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fdrive-letter-changed-2.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fdrive-letter-changed-2.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+03af22d2-2898-5fe4-9edb-dbd2f99034e4%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E4%B8%80%E6%99%82%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E6%96%87%E5%AD%97%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8B+%28%E6%94%B9%E5%96%84%E9%81%A9%E7%94%A8%E6%B8%88%E3%81%BF%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fdrive-letter-changed-2%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fdrive-letter-changed-2.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fdrive-letter-changed-2.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/drive-letter-changed-2/" data-id="ckpffbxoh002h0mo94lbm5hxw" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/drive-letter-changed-2/" data-id="ckpicq3or002h0nog5myr5sv1" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><span style="color:red;"><strong>Update: 11/6</strong> (Last: 8/27)</span></p>
+        <span style="color:red;">
+
+<p><strong>Update: 2021/6/4</strong> Azure 基盤側の改善が適用済みであることを明記いたしました。<br><strong>Update: 11/6</strong> (Last: 8/27)</p>
+</span>
+
 <p>こんにちは。Azure テクニカル サポート チームの重田です。</p>
 <p>Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、<br>お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと設定しなければならない場合があります。<br>その場合には、下記公開情報の手順にて一時ディスクのドライブ文字を変更いただけます。</p>
 <span id="more"></span>
@@ -119,7 +123,6 @@
 </ul>
 <p>しかしながら、一時ディスクのドライブ文字を D から変更いただいている場合、VM の停止 / 起動など物理ホスト サーバーの移動いただいた際に、一時ディスクのドライブ文字が変更される場合があります。</p>
 <hr>
-
 <h2 id="■-問題の動作につきまして"><a href="#■-問題の動作につきまして" class="headerlink" title="■ 問題の動作につきまして"></a>■ 問題の動作につきまして</h2><p>物理ホストの移動するタイミングにて、一時ディスクのドライブ文字が変更される動作は、下記のタイミング・条件によりごく稀に発生する場合があります。</p>
 <ul>
 <li><p><strong>タイミング:</strong><br>VM の停止 (割り当て解除) / 起動、再デプロイ、サイズ変更、ASR で対向リージョンにフェールオーバーを行ったなど、物理ホストサーバ移動後の VM の起動時</p>
@@ -128,18 +131,21 @@
 </li>
 <li><p><strong>変更点:</strong><br>一時ディスクのドライブ文字が、データ ドライブのドライブ文字に連続したドライブ文字に変更される<br>(例えば、データ ドライブ文字が D の時に一時ディスクのドライブ文字 が E に変更される)</p>
 </li>
-<li><p><strong>発生頻度:</strong><br><s>ごく稀</p>
+<li><p><strong>発生頻度:</strong><br><del>ごく稀</del></p>
 </li>
 </ul>
-<p>結論から申し上げますと、本動作は、現行の Azure の想定された起こりうる動作でございます。<br>すでに内部にて Azure の動作の改善点として確認されており、現在対処の準備を進めておりますが、現行の動作からの変更ということで長期にわたる可能性があり、直近での改善は困難であると想定されます。</s></p>
-<p><span style="color:red;">本動作につきましては Azure 基盤側にて順次改善が展開されております。<br>改善に伴い、物理ホストの移動が発生した場合、改善が適用された状態の物理ホストから一時ディスクがアタッチされるため、ゲスト OS 内で保持している改善が適用される前の物理ホストからアタッチされた一時ディスクの情報と、改善が適用された後の一時ディスクの情報に差異があった場合に、ドライブ文字が変更される場合がございます。</span></p>
-<p><span style="color:red;">1 度一時ディスクのドライブ文字が変更される場合がございますが、改善適用後に物理ホストの移動を伴う操作 (割り当て解除状態からの起動、再デプロイ、サイズ変更など) をご実施いただいた後であれば、本事象は発生しないことが期待されます。</span></p>
-<hr>
+<p><del>結論から申し上げますと、本動作は、現行の Azure の想定された起こりうる動作でございます。<br>すでに内部にて Azure の動作の改善点として確認されており、現在対処の準備を進めておりますが、現行の動作からの変更ということで長期にわたる可能性があり、直近での改善は困難であると想定されます。</del></p>
+<span style="color:red;">
 
+<p><strong>本動作につきましては Azure 基盤側にて改善の展開が完了しております。</strong><br>改善に伴い、物理ホストの移動が発生した場合、改善が適用された状態の物理ホストから一時ディスクがアタッチされるため、ゲスト OS 内で保持している改善が適用される前の物理ホストからアタッチされた一時ディスクの情報と、改善が適用された後の一時ディスクの情報に差異があった場合に、ドライブ文字が変更される場合がございます。</p>
+<p>もし、上記に伴いドライブ文字が変更された場合には手動で設定変更いただき、再度発生しないことを確認するため、物理ホストの移動を伴う操作 (割り当て解除状態からの起動、再デプロイ、サイズ変更など) をご実施ください。</p>
+<p>なお、上記の通り、1 度一時ディスクのドライブ文字が変更される場合がございますが、<strong>改善適用後に物理ホストの移動を伴う操作 (割り当て解除状態からの起動、再デプロイ、サイズ変更など) をご実施いただいた後であれば、本動作によりドライブ文字の変更は発生しない</strong> ことが想定されます。</p>
+</span>
+
+<hr>
 <h2 id="■-問題の動作による影響につきまして"><a href="#■-問題の動作による影響につきまして" class="headerlink" title="■ 問題の動作による影響につきまして"></a>■ 問題の動作による影響につきまして</h2><p>Azure Marketplace イメージから作成した Windows VM では、規定で pagefile.sys<br>(仮想メモリ / ページング ファイル) が一時ディスクにシステム管理サイズで設定されております。</p>
 <p>一時ディスクに pagefile.sys をご設定いただいている状況で、一時ディスクのドライブ文字が変更された場合、C ドライブに pagefile.sys が設定・配置されます。<br>そのため、ご利用状況によって pagefile.sys が拡張された際に、C ドライブの容量を圧迫することがございます。 </p>
 <hr>
-
 <h2 id="■-対処策につきまして"><a href="#■-対処策につきまして" class="headerlink" title="■ 対処策につきまして"></a>■ 対処策につきまして</h2><p>現在、本動作につきましては、下記 2 つの方法が対処策となります。</p>
 <ol>
 <li>一時ディスクを既定値である D ドライブで運用いただく。</li>
@@ -147,7 +153,13 @@
 </ol>
 <p>対処策 1 につきましては、ご利用いただくアプリケーションの要件でデータ ドライブのドライブ文字を D にしなければならないといった制約がない場合にご検討ください。</p>
 <p>対処策 2 につきましては、手動変更ではなく、タスクスケジューラにて登録した PowerShell スクリプトを OS 起動時に実行する方法 (スタートアップ スクリプト) になります。<br>具体的なサンプル スクリプトと、タスクスケジューラによるスクリプト実行設定を下記にご紹介いたします。</p>
-<p><span style="color:red;">追記：<br>上述の通り、1 度一時ディスクのドライブ文字が変更される場合がございますが、改善適用後に物理ホストの移動を伴う操作をご実施いただいた後であれば、本事象は発生しないことが期待されます。</span><br><span style="color:red;">そのため、一時ディスクのドライブ文字が意図せず変更された場合には、手動でドライブ文字ならびにページングファイルのご設定を修正いただき、その後は静観いただけますと幸いでございます。</span></p>
+<span style="color:red;">
+
+<p>追記：<br>上述の通り、1 度一時ディスクのドライブ文字が変更される場合がございますが、改善適用後に物理ホストの移動を伴う操作をご実施いただいた後であれば、<strong>本動作によりドライブ文字の変更は発生しない</strong> ことが想定されます。</p>
+<p>そのため、一時ディスクのドライブ文字が意図せず変更された場合には、手動でドライブ文字ならびにページングファイルのご設定を修正いただき、その後は静観いただけますと幸いでございます。</p>
+</span>
+
+
 <h3 id="□-サンプル-スクリプト"><a href="#□-サンプル-スクリプト" class="headerlink" title="□ サンプル スクリプト"></a>□ サンプル スクリプト</h3><p>本サンプル スクリプトは、ドライブ文字の設定状況を確認し、一時ディスクのドライブ文字が変更されている場合にはドライブ文字および pagefile.sys の設定を変更する処理を行う PowerShell スクリプトになります。<br>一時ディスクを <span style="color:red;"> <strong>T ドライブ</strong> </span>としておりますので、お客様にて必要に応じてご変更ください。</p>
 <p>※ 一時ディスクのドライブ文字が変更されていない場合には、特に設定変更の処理は実施されません。<br>※ 本スクリプトが実行された際には、<span style="color:red;"><strong>ゲスト OS の再起動</strong> </span>が実施されます。</p>
 <p>なお、お客様環境に導入いただく際には、十分な検証作業をご実施ください。</p>
@@ -159,8 +171,6 @@
 <p>但し、お客様は、（１）本サンプルコードが組み込まれたお客様のソフトウェア製品のマーケティングのためにマイクロソフトの会社名、ロゴまたは、商標を用いないこと、（２）本サンプルコードが組み込まれたお客様のソフトウェア製品に有効な著作権表示をすること、および（３）本サンプルコードの使用または頒布から生じるあらゆる損害 （弁護士費用を含む）に関する請求または訴訟について、マイクロソフトおよびマイクロソフトの取引業者に対し補償し、損害を与えないことに同意するものとします。</p>
 </blockquote>
 <figure class="highlight powershell"><figcaption><span>SampleScript.ps1</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#一時ディスクのラベル</span></span><br><span class="line"><span class="variable">$DriveLabel</span>=<span class="string">&quot;Temporary Storage&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#現在の一時ディスクのドライブ文字</span></span><br><span class="line"><span class="variable">$DriveLetter</span>=<span class="built_in">Get-Volume</span> | <span class="built_in">where</span> FileSystemLabel <span class="operator">-match</span> <span class="variable">$DriveLabel</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#変更したい一時ディスクのドライブ文字</span></span><br><span class="line"><span class="variable">$NewDriveLetter</span>=<span class="string">&quot;T&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#現在存在するドライブ文字</span></span><br><span class="line"><span class="variable">$AllLetter</span>=<span class="built_in">Get-Partition</span> | <span class="built_in">select</span> DriveLetter</span><br><span class="line"></span><br><span class="line"><span class="comment">#pagefile の設定情報があるレジストリ パス</span></span><br><span class="line"><span class="variable">$RegistryPath</span>=<span class="string">&quot;Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Memory Management&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pagefile の設定: T ドライブにシステム管理サイズで pagefile.sys を設置</span></span><br><span class="line"><span class="variable">$NewValue</span>=<span class="string">&quot;T:\pagefile.sys 0 0&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#ドライブの存在判定 (現在 T ドライブが存在しているか)</span></span><br><span class="line"><span class="keyword">if</span> (!(<span class="variable">$AllLetter</span>.DriveLetter <span class="operator">-contains</span> <span class="variable">$NewDriveLetter</span>)) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#存在しない場合</span></span><br><span class="line">    <span class="comment">#現在の一時ディスクのドライブ文字を T ドライブに再設定</span></span><br><span class="line">    <span class="built_in">Set-Partition</span> <span class="literal">-Driveletter</span> <span class="variable">$DriveLetter</span>.DriveLetter <span class="literal">-NewDriveLetter</span> <span class="variable">$NewDriveLetter</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#設定後、T ドライブに改めて pagefile.sys 設定</span></span><br><span class="line">    <span class="built_in">Set-ItemProperty</span> <span class="literal">-Path</span> <span class="variable">$RegistryPath</span> <span class="literal">-Name</span> PagingFiles <span class="literal">-Value</span> <span class="variable">$NewValue</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#OS 再起動</span></span><br><span class="line">    <span class="built_in">Restart-Computer</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
 
 <h3 id="□-タスクスケジューラの設定"><a href="#□-タスクスケジューラの設定" class="headerlink" title="□ タスクスケジューラの設定"></a>□ タスクスケジューラの設定</h3><p>タスクスケジューラは以下のようにご設定いただけますと、OS 起動時にスクリプトを実行することが可能となります。<br>上記サンプル スクリプトをお客様のご利用状況に合わせてご変更いただき (例えば、一時ディスクのドライブ文字を適宜ご変更いただくなど)、タスクスケジューラにご設定ください。</p>
 <ol>
@@ -188,6 +198,7 @@
 本稿が皆様のお役に立てれば幸いです。
 
 <hr>
+
       
       
         <div class="article-disclaimer">
