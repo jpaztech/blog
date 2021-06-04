@@ -9,7 +9,7 @@ tags:
 
 <span style="color:red;">
 
-**Update: 2021/6/4** 改善適用済みであることを明示的に記載しました。
+**Update: 2021/6/4** Azure 基盤側の改善が適用済みであることを明記いたしました。
 **Update: 11/6** (Last: 8/27)
 
 </span>
