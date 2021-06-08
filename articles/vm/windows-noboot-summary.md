@@ -35,7 +35,7 @@ tags:
 本記事では、Windows OS が起動しなくなる事象に関する Azure 観点での状況把握や復旧方法に関する Tips のまとめをご紹介します。
 
 
-<hr>
+---
 
 ## TIPS #1 ブート診断による画面確認
 
@@ -47,7 +47,7 @@ RDP 接続が出来ない場合には、ブート診断を使ってどのよう�
 > [https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-diagnostics](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-diagnostics)
 
 
-<hr>
+---
 
 ## TIPS #2 Azure における復旧方法
 
@@ -125,7 +125,7 @@ Azure 側の具体的な手順に関しては、再掲となりますが、下�
 
 なお、オンプレミス環境で回復コンソールの立ち上げを実施する場合に関しても、オンプレミス環境で行う "Hyper-V 構築 → VHD のダウンロード → VM の起動" といった手順は、Nested Hyper-V を使った手順とほぼ同様となりますので、ご参考となれば幸いです。
 
-<hr>
+---
 
 ## TIPS #3 バックアップ取得に関する Tips
 

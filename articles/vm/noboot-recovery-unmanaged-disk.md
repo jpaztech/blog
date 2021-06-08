@@ -24,7 +24,7 @@ Windows OS の復旧手順に関しては、Windows サポートチームのブ�
 
 本記事では、<span style="color:red;">**非管理ディスク**</span>をご利用の環境用の手順を紹介します。管理ディスクをご利用の場合は、「[【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順](https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/)」をご確認ください。
 
-<hr>
+---
 
 ## 概要
 1. 復旧対象仮想マシンの OS ディスク VHD ファイルを複製します
@@ -32,7 +32,7 @@ Windows OS の復旧手順に関しては、Windows サポートチームのブ�
 3. 復旧作業用仮想マシンにて、切り分けを実施します。
 4. 修復した VHD を Azure PowerShell にて現在の復旧対象の仮想マシンの VHD と差し替えます。
 
-<hr>
+---
 
 ## 手順
 
