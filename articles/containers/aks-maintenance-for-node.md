@@ -80,8 +80,8 @@ aks-nodepool1-40771167-vmss000001   Ready    agent   4d17h   v1.18.10
 aks-nodepool1-40771167-vmss000002   Ready    agent   4d17h   v1.18.10
 ```
 
-注意点としては、ノードを組み込んだ後に、Pod の配置の平滑化は行なわれることはありませんので、
-必要に応じて、[Descheduler](https://github.com/kubernetes-sigs/descheduler) 等による平滑化をご検討ください。
+> [!WARNING]
+> ノードを組み込んだ後に、Pod の配置の平滑化は行なわれることはありませんので、必要に応じて、[Descheduler](https://github.com/kubernetes-sigs/descheduler) 等による平滑化をご検討ください。
 
 ## 特定のノードを削除
 
@@ -132,17 +132,12 @@ az vmss delete-instances -g MC_labvmssaks_labvmssaks_japaneast -n aks-nodepool1-
 ```
 
 
-<div style="background-color:#e2daf1 !important; padding: 1px 14px !important; border-radius: 10px !important;">
-
-**注意**
-上記のように Azure のリソースを削除しない場合に、スケーリング操作を行なうと、まだノードがあると認識され、
-正しくスケーリング操作が行なわれません。
-
-例えば、3台ノードがあった場合に、1台ノードを ```kubectl delete``` により削除後、Azure のリソースを削除を行わないで、
-スケールイン (2 台) を行なった場合、先のノードが存在すると認識され、別の仮想マシンまたは仮想マシンスケールセット インスタンスが削除されてしまいます。
-
-そのため、本操作を実施される場合には、必ず Azure のリソースも併せて削除してください。
-</div>
+> [!WARNING]
+> 上記のように Azure のリソースを削除しない場合に、スケーリング操作を行なうと、まだノードがあると認識され、正しくスケーリング操作が行なわれません。
+>　
+> 例えば、3台ノードがあった場合に、1台ノードを ```kubectl delete``` により削除後、Azure のリソースを削除を行わないで、スケールイン (2 台) を行なった場合、先のノードが存在すると認識され、別の仮想マシンまたは仮想マシンスケールセット インスタンスが削除されてしまいます。
+>　
+> そのため、本操作を実施される場合には、必ず Azure のリソースも併せて削除してください。
 
 4. 必要に応じてスケールアウトを実施
 
@@ -165,7 +160,7 @@ $ az aks scale -g labasaks -n labasaks --node-count 3
 
 PodDisruptionBudget 設定されておりますと、Eviction API が呼ばれたときに、設定された Pod 数の稼働状況を見て、Pod を削除するか判断されますので、ワークロードの可用性に考慮して設定いただければと思います。
 
-  > ご参考情報;
+  > ご参考情報
   > * [Safely Drain a Node - Kubernetes](https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/)
   > * [Disruption - Kubernetess](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/)
   > * [ポッド中断バジェットを使用して可用性を計画する - Azure Kubernetes Service (AKS) での基本的なスケジューラ機能に関するベスト プラクティス](https://docs.microsoft.com/ja-jp/azure/aks/operator-best-practices-scheduler#plan-for-availability-using-pod-disruption-budgets)
