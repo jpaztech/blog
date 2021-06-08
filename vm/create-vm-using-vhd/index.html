@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/6-1.jpg">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/6-2.jpg">
 <meta property="article:published_time" content="2021-04-27T08:30:00.000Z">
-<meta property="article:modified_time" content="2021-06-04T13:16:36.625Z">
+<meta property="article:modified_time" content="2021-06-08T18:01:07.460Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="HowTo">
@@ -124,7 +124,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+cb2fc386-8bd3-556a-8579-f72605d7589b%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%8B%E3%82%89%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F+VHD+%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E7%94%A8%E3%81%84%E3%81%9F%E8%A4%87%E8%A3%BD+VM+%E3%81%AE%E4%BD%9C%E6%88%90%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fcreate-vm-using-vhd%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fcreate-vm-using-vhd.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fcreate-vm-using-vhd.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/" data-id="ckpicq3op002c0nog156p6zj1" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/" data-id="ckpocnhso002c0nqm2c2s8biy" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -136,7 +136,6 @@
 <p>本記事では、<strong>ディスクの VHD ファイルをエクスポートしてストレージ アカウントにコピーする手順</strong>、および、<strong>エクスポートされた VHD ファイルから複製 VM を新規に作成する手順</strong>について紹介します。</p>
 <p>なお、本記事の手順は ARM 環境にて管理ディスクを用いることを前提としています。<br>ASM 環境 (クラシック VM) や非管理ディスクをご利用の場合は対象としておりませんのでご注意ください。</p>
 <hr>
-
 <h2 id="■-ディスクの-VHD-ファイルをエクスポートしてストレージ-アカウントにコピーする手順"><a href="#■-ディスクの-VHD-ファイルをエクスポートしてストレージ-アカウントにコピーする手順" class="headerlink" title="■ ディスクの VHD ファイルをエクスポートしてストレージ アカウントにコピーする手順"></a>■ ディスクの VHD ファイルをエクスポートしてストレージ アカウントにコピーする手順</h2><h3 id="1-コピー先のストレージ-アカウントおよびコンテナ―を作成する"><a href="#1-コピー先のストレージ-アカウントおよびコンテナ―を作成する" class="headerlink" title="[1] コピー先のストレージ アカウントおよびコンテナ―を作成する"></a>[1] コピー先のストレージ アカウントおよびコンテナ―を作成する</h3><ol>
 <li>Azure Portal より [Storage Account] を開き、[+ Create] をクリックします。<br>必須項目を適宜設定し、[Review ＋ create] – [Create] をクリックしてストレージ アカウントを作成します。</li>
 </ol>
@@ -248,7 +247,6 @@
 </ol>
 <p><img src="/blog/vm/create-vm-using-vhd/4-4.jpg"></p>
 <hr>
-
 <h2 id="■-エクスポートされた-VHD-ファイルから複製-VM-を新規に作成する手順"><a href="#■-エクスポートされた-VHD-ファイルから複製-VM-を新規に作成する手順" class="headerlink" title="■ エクスポートされた VHD ファイルから複製 VM を新規に作成する手順"></a>■ エクスポートされた VHD ファイルから複製 VM を新規に作成する手順</h2><h3 id="5-VHD-ファイルから管理ディスクを作成する"><a href="#5-VHD-ファイルから管理ディスクを作成する" class="headerlink" title="[5] VHD ファイルから管理ディスクを作成する"></a>[5] VHD ファイルから管理ディスクを作成する</h3><ol>
 <li>Azure Portal より [Disk] を開き、[+ Create] をクリックします。</li>
 </ol>
@@ -278,7 +276,6 @@
 <p>手順は以上です。</p>
 <p>なお、VHD ファイルをコピーするために作成したストレージ アカウントや VHD をエクスポートするために取得したスナップショットは、必要に応じて削除いただいて問題ございません。</p>
 <hr>
-
 <h2 id="■-ご参考"><a href="#■-ご参考" class="headerlink" title="■ ご参考"></a>■ ご参考</h2><ul>
 <li>Azure から Windows VHD をダウンロードする<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/download-vhd">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/download-vhd</a></li>
 <li>Azure から Linux VHD をダウンロードする<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/download-vhd">https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/download-vhd</a></li>

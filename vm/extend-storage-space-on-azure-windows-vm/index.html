@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/12.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/13.png">
 <meta property="article:published_time" content="2021-02-05T07:30:00.000Z">
-<meta property="article:modified_time" content="2021-06-04T13:16:36.653Z">
+<meta property="article:modified_time" content="2021-06-08T18:01:07.488Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -117,7 +117,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+10109863-05a7-5a2a-b98b-3ca2aece721a%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Windows+VM+%E3%81%A7%E8%A8%98%E6%86%B6%E5%9F%9F%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9%E3%82%92%E6%8B%A1%E5%BC%B5%E3%81%99%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fextend-storage-space-on-azure-windows-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fextend-storage-space-on-azure-windows-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fextend-storage-space-on-azure-windows-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/" data-id="ckpicq3os002k0noggi3v125c" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/" data-id="ckpocnhss002k0nqm3api1d9l" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -126,42 +126,19 @@
 <p>Azure Windows VM において記憶域スペースをご構成いただいているお客様や、SQL VM (SQL Server on Windows Server) をご利用いただいているお客様より、ディスクの拡張方法に関してお問い合わせをいただくことが多いので、手順についてご紹介します。</p>
 <span id="more"></span>
 
-<div style="background-color:#d2f9d2 !important; padding: 1px 14px !important; border-radius: 10px !important;">
-
+<blockquote>
 <p><strong>ご参考</strong><br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/overview">記憶域スペースの概要</a></p>
 <p>対象サーバー OS:<br>Windows Server 2019、Windows Server 2016、Windows Server 2012 R2、Windows Server 2012</p>
-</div>
-
-<h2 id="■-通常の-Windows-VM-に関して"><a href="#■-通常の-Windows-VM-に関して" class="headerlink" title="■ 通常の Windows VM に関して"></a>■ 通常の Windows VM に関して</h2><h3 id="□-作業概要"><a href="#□-作業概要" class="headerlink" title="□ 作業概要"></a>□ 作業概要</h3><p>記憶域スペースを拡張いただく場合には、下記の 2 方法があります。それぞれの方法について、シンプル レイアウトの記憶域スペースを用いた検証結果を踏まえてご紹介します。</p>
+</blockquote>
+<hr>
+<h2 id="通常の-Windows-VM-に関して"><a href="#通常の-Windows-VM-に関して" class="headerlink" title="通常の Windows VM に関して"></a>通常の Windows VM に関して</h2><h3 id="作業概要"><a href="#作業概要" class="headerlink" title="作業概要"></a>作業概要</h3><p>記憶域スペースを拡張いただく場合には、下記の 2 方法があります。それぞれの方法について、シンプル レイアウトの記憶域スペースを用いた検証結果を踏まえてご紹介します。</p>
 <ol>
 <li>記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する。</li>
 <li>記憶域スペースを再作成する。<br>仮想ディスク上のデータを別ディスクなどに退避いただき、仮想ディスクならびに記憶域プールを削除する。<br>その後、記憶域プールを構成していたディスクを拡張し、再度記憶域プールならびに仮想ディスクを作成する。</li>
 </ol>
-<div style="background-color:#e2daf1 !important; padding: 1px 14px !important; border-radius: 10px !important;">
-
-<p><strong>注意</strong><br>記憶域プールは複数のディスクを 1 つの記憶域としてまとめて、まとめられた記憶域から仮想ディスクの領域を切り出します。<br>記憶域プール自体に新たに領域を足すことは想定されておりますが、すでに仮想ディスクとして切り出された土台となる領域 (記憶域プールを構成しているディスク) を拡張することは想定されておりません。</p>
-<p>例えば、1TB × 3 本のディスクで記憶域プールを構成している場合、この既に構成している 1 TB を 2 TB にすることで拡張することは想定しておりません。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/19.png"></p>
-<p>なお、Azure ディスク リソースは縮小いただくことがご実施いただけません。<br>公開情報:  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/find-unattached-disks">Azure IaaS VM ディスクと Premium マネージド ディスクおよびアンマネージド ディスクについてよく寄せられる質問</a></p>
-</div>
-
-<h3 id="□-方法-1-記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する"><a href="#□-方法-1-記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する" class="headerlink" title="□ 方法 1 : 記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する"></a>□ 方法 1 : 記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する</h3><p>方法 1 では、すでに構成されている記憶域プールにディスクを追加し、仮想ディスクおよびボリュームを拡張する方法をご紹介します。</p>
-<div style="background-color:#e2daf1 !important; padding: 1px 14px !important; border-radius: 10px !important;">
-
-<p><strong>注意</strong><br>Windows Server 2012、2012R2 においては、記憶域プールにディスクを追加する場合、「<span style="color:red;">列の数 (NumberOfColumns) × データのコピーの数 (NumberOfDataCopies)</span>」の台数分のディスクを増設する必要があります。</p>
-<p>記憶域プールには、仮想ディスクの 1 データ (ストライプ: ディスクに書き込む 1 トランザクションの単位) が、仮想ディスクを構成する物理ディスクのうち、何本の物理ディスクに分散して書き込まれるかを決定する、Numberofcolumns という値があります。<br>仮想ディスクを構成する物理ディスクを追加し、仮想ディスクを拡張する場合、データのコピーの数 (NumberOfDataCopies) を維持するため、NumberOfColumns の数の単位の利用可能なディスクが必要となります。</p>
-<p>公開情報: <a target="_blank" rel="noopener" href="https://blogs.technet.microsoft.com/askcorejp/2017/06/22/numberofcolumns-of-storagespace/">公開情報記憶域スペースの NumberOfColumns と仮想ディスクの拡張について</a></p>
-<p>例:<br>はじめに 3 本の物理ディスクの存在する記憶域プール内に作成した仮想ディスクは、NumberOfColumns が 3 で作成されているため、ディスクの拡張のためにも 3 本単位での利用可能な物理ディスクが必要になります。</p>
-<p>以下の PowerShell コマンドレットを実施することで仮想ディスクの現在の NumberOfColumns の値を確認することができます。</p>
-<blockquote>
-<p>Get-VirtualDisk –FriendlyName “&lt;仮想ディスク名&gt;” | FL NumberOfColumns</p>
-</blockquote>
-<p>なお、Windows Server 2016 以降の記憶域スペースにおいては、記憶域プールに割り当てられた領域をリバランス (再配置) するためのコマンド Optimize-StoragePool が用意されています。</p>
-<blockquote>
-<p>Optimize-StoragePool -FriendlyName “&lt;記憶域プール名&gt;”</p>
-</blockquote>
-<p>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/module/storage/optimize-storagepool?view=win10-ps">Optimize-StoragePool</a></p>
-</div>
-
+<div class="alert is-info"><p class="alert-title">Note</p><p>記憶域プールは複数のディスクを 1 つの記憶域としてまとめて、まとめられた記憶域から仮想ディスクの領域を切り出します。</p><p>記憶域プール自体に新たに領域を足すことは想定されておりますが、すでに仮想ディスクとして切り出された土台となる領域 (記憶域プールを構成しているディスク) を拡張することは想定されておりません。</p><p>　</p><p>例えば、1TB × 3 本のディスクで記憶域プールを構成している場合、この既に構成している 1 TB を 2 TB にすることで拡張することは想定しておりません。</p><p><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/19.png"></p><p>　</p><p>なお、Azure ディスク リソースは縮小いただくことがご実施いただけません。</p><p>公開情報:  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/find-unattached-disks">Azure IaaS VM ディスクと Premium マネージド ディスクおよびアンマネージド ディスクについてよく寄せられる質問</a></p></div>
+<h3 id="方法-1-記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する"><a href="#方法-1-記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する" class="headerlink" title="方法 1 : 記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する"></a>方法 1 : 記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する</h3><p>方法 1 では、すでに構成されている記憶域プールにディスクを追加し、仮想ディスクおよびボリュームを拡張する方法をご紹介します。</p>
+<div class="alert is-info"><p class="alert-title">Note</p><p>Windows Server 2012、2012R2 においては、記憶域プールにディスクを追加する場合、「<span style="color:red;">列の数 (NumberOfColumns) × データのコピーの数 (NumberOfDataCopies)</span>」の台数分のディスクを増設する必要があります。</p><p>　</p><p>記憶域プールには、仮想ディスクの 1 データ (ストライプ: ディスクに書き込む 1 トランザクションの単位) が、仮想ディスクを構成する物理ディスクのうち、何本の物理ディスクに分散して書き込まれるかを決定する、Numberofcolumns という値があります。</p><p>仮想ディスクを構成する物理ディスクを追加し、仮想ディスクを拡張する場合、データのコピーの数 (NumberOfDataCopies) を維持するため、NumberOfColumns の数の単位の利用可能なディスクが必要となります。</p><p>　</p><p>公開情報: <a target="_blank" rel="noopener" href="https://blogs.technet.microsoft.com/askcorejp/2017/06/22/numberofcolumns-of-storagespace/">公開情報記憶域スペースの NumberOfColumns と仮想ディスクの拡張について</a></p><p>　</p><p>例:</p><p>はじめに 3 本の物理ディスクの存在する記憶域プール内に作成した仮想ディスクは、NumberOfColumns が 3 で作成されているため、ディスクの拡張のためにも 3 本単位での利用可能な物理ディスクが必要になります。</p><p>　</p><p>以下の PowerShell コマンドレットを実施することで仮想ディスクの現在の NumberOfColumns の値を確認することができます。</p><p>　</p><p><code>Get-VirtualDisk –FriendlyName "<仮想ディスク名>" | FL NumberOfColumns</code></p><p>　</p><p>なお、Windows Server 2016 以降の記憶域スペースにおいては、記憶域プールに割り当てられた領域をリバランス (再配置) するためのコマンド Optimize-StoragePool が用意されています。</p><p>　</p><p><code>Optimize-StoragePool -FriendlyName "<記憶域プール名>"</code></p><p>　</p><p>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/module/storage/optimize-storagepool?view=win10-ps">Optimize-StoragePool</a></p></div>
 <p><strong>1. 既存の VM に新規ディスクを追加します</strong><br>管理ディスクを護衛用の場合は下記の公開情報をご参照いただき、Azure Portal または Azure PowerShell より VM に新規ディスク リソースを追加します。</p>
 <p>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/attach-managed-disk-portal#add-a-data-disk">Azure portal を使用して Windows VM にマネージド データ ディスクを接続する - データ ディスクの追加</a><br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/attach-disk-ps">PowerShell を使用して Windows VM にデータ ディスクを接続する</a></p>
 <p>非管理ディスクをご利用の場合は、下記をご参照ください。</p>
@@ -170,25 +147,21 @@
 <p><strong>2. VM に RDP 接続を行います。</strong></p>
 <p><strong>3. 記憶域プールにディスクを追加します</strong><br>[サーバー マネージャー] より、[ファイル サービスと記憶域サービス] - [ボリューム] - [記憶域プール] を開き、[&lt;対象の記憶域プール&gt;] を選択します。<br>“物理ディスク” の [タスク] - [物理ディスクの追加] をクリックします。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/2.png"></p>
 <p>追加するディスク (追加した新規ディスク) を選択し、[OK] をクリックします。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/3.png"></p>
-<div style="background-color:#e2daf1 !important; padding: 1px 14px !important; border-radius: 10px !important;">
-
-<p><strong>注意</strong></p>
+<div class="alert is-warning"><p class="alert-title">警告</p><p></p>
 <ul>
 <li>Windows Server 2012R2 以前では、仮想ディスク作成時の物理ディスク数単位で物理ディスクを追加します。</li>
 <li>Windows Server 2016 以降では、ディスク追加後に Optimize-StoragePool コマンドを実行します。<blockquote>
-<p>Optimize-StoragePool -FriendlyName “&lt;記憶域プール名&gt;”</p>
-</blockquote>
+<p>Optimize-StoragePool -FriendlyName “&lt;記憶域プール名&gt;”</p></div>
 </li>
 </ul>
-</div>
-
+</blockquote>
 <p><strong>4. 仮想ディスクを拡張します</strong><br>記憶域プールにディスクを追加後、”仮想ディスク” の [対象仮想ディスク] を右クリックし、[仮想ディスクの拡張] を選択します。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/4.png"></p>
 <p>拡張するサイズを指定し、[OK] をクリックします。以下の例では、拡張可能な最大サイズを選択し、拡張を実施しています。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/5.png"></p>
 <p>仮想ディスクの拡張が完了すると、以下の通り容量が増えます。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/6.png"></p>
 <p><strong>5. 仮想ディスク上のボリュームを拡張します</strong><br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/disk-management/extend-a-basic-volume">ベーシック ボリュームを拡張する</a></p>
 <p>[スタート] を右クリックし、[ディスクの管理] をクリックします。<br>開いた画面にて、仮想ディスク上の対象のボリュームを右クリックし、[ボリュームの拡張] をクリックします。<br>“ボリュームの拡張ウィザード” に沿って進み、拡張したいサイズを指定して [完了] をクリックします。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/8.png"></p>
 <p>ボリュームの拡張が完了すると、以下の通り容量が増えます。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/9.png"></p>
-<h3 id="□-方法-2-記憶域スペースを再作成する"><a href="#□-方法-2-記憶域スペースを再作成する" class="headerlink" title="□ 方法 2 : 記憶域スペースを再作成する"></a>□ 方法 2 : 記憶域スペースを再作成する</h3><p><strong>1. 仮想ディスクにあるデータを別領域に退避します</strong><br>拡張したいディスクにて構成している記憶域プール上の全仮想ディスクにあるデータを、仮想ディスク以外の領域 (退避用に新規ディスクを追加する、Azure Storage を利用するなど) にデータを退避 (コピーまたは移動) します。</p>
+<h3 id="方法-2-記憶域スペースを再作成する"><a href="#方法-2-記憶域スペースを再作成する" class="headerlink" title="方法 2 : 記憶域スペースを再作成する"></a>方法 2 : 記憶域スペースを再作成する</h3><p><strong>1. 仮想ディスクにあるデータを別領域に退避します</strong><br>拡張したいディスクにて構成している記憶域プール上の全仮想ディスクにあるデータを、仮想ディスク以外の領域 (退避用に新規ディスクを追加する、Azure Storage を利用するなど) にデータを退避 (コピーまたは移動) します。</p>
 <p><strong>2. 仮想ディスクを削除します</strong><br>[サーバー マネージャー] より、[ファイル サービスと記憶域サービス] - [ボリューム] - [記憶域プール] を開きます。<br>[&lt;対象の記憶域プール&gt;] を選択し、”仮想ディスク” の [対象仮想ディスク] を右クリックし、[仮想ディスクのデタッチ] を選択します。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/10.png"></p>
 <p>デタッチが完了すると、仮想ディスク名の横に “!” が表示されます。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/11.png"></p>
 <p>再度 [対象仮想ディスク] を右クリックし、[仮想ディスクの削除] を選択します。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/12.png"></p>
@@ -206,13 +179,13 @@
 <p><strong>6. 記憶域プールを作成します</strong><br>公開情報をご参照の上、記憶域プールを作成します。<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/deploy-standalone-storage-spaces#step-1-create-a-storage-pool">スタンドアロン サーバーに記憶域スペースを展開する - 手順 1: 記憶域プールを作成する</a></p>
 <p><strong>7. 仮想ディスクを作成します</strong><br>公開情報をご参照の上、仮想ディスクを作成します。<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/deploy-standalone-storage-spaces#step-2-create-a-virtual-disk">スタンドアロン サーバーに記憶域スペースを展開する - 手順 2: 仮想ディスクを作成する</a></p>
 <p><strong>8. ボリュームを作成します</strong><br>公開情報をご参照の上、ボリュームを作成します。<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/deploy-standalone-storage-spaces#step-3-create-a-volume">スタンドアロン サーバーに記憶域スペースを展開する - 手順 3: ボリュームを作成する</a></p>
-<h2 id="■-余談-SQL-VM-に関して"><a href="#■-余談-SQL-VM-に関して" class="headerlink" title="■ (余談) SQL VM に関して"></a>■ (余談) SQL VM に関して</h2><p>SQL ギャラリー イメージ にて VM を作成いただき構成された記憶域プールについては、Azure ポータルにて一部のストレージ設定を変更することが可能です。詳細は下記の公開情報をご参照ください。</p>
+<hr>
+<h2 id="余談-SQL-VM-に関して"><a href="#余談-SQL-VM-に関して" class="headerlink" title="(余談) SQL VM に関して"></a>(余談) SQL VM に関して</h2><p>SQL ギャラリー イメージ にて VM を作成いただき構成された記憶域プールについては、Azure ポータルにて一部のストレージ設定を変更することが可能です。詳細は下記の公開情報をご参照ください。</p>
 <p>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/azure-sql/virtual-machines/windows/storage-configuration">SQL Server VM のストレージの構成</a></p>
 <br>
-本稿は以上となりますが、いかがでしたでしょうか。
-本稿が皆様のお役に立てれば幸いです。
 
-<hr>
+<p>本記事は以上となりますが、いかがでしたでしょうか。<br>本記事が皆様のお役に立てれば幸いです。</p>
+
       
       
         <div class="article-disclaimer">
