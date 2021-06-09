@@ -19,7 +19,7 @@ Azure では RDP (Windows)/ SSH (Linux) 接続でのみ VM が管理できます
 
 今回は、新機能である Nested Hyper-V を使って、Azure 上の VM からリモート接続できない VM を起動させて、コンソール接続による動作確認やトラブルシュートを行える環境を構築する方法をご紹介します。
 
-Nested Hyper-V とは、端的にいうと Hyper-V の仮想マシンの中にさらに Hyper-V の仮想マシンが立ち上げられるという機能です。Windows Server 2016 の新機能として登場し、Windows Server でのコンテナー テクノロジーの活用や、Hyper-V を流用したセキュリティ向上などが見込まれています。
+Nested Hyper-V とは、端的にいうと Hyper-V の VM の中にさらに Hyper-V の VM が立ち上げられるという機能です。Windows Server 2016 の新機能として登場し、Windows Server でのコンテナー テクノロジーの活用や、Hyper-V を流用したセキュリティ向上などが見込まれています。
 
 ![](./recover_vm_using_nested_hyperv/nestedhyperv.png)
 
