@@ -80,7 +80,6 @@ YAML では `metadata.annotations` に `azure-load-balancer-internal: true` の�
 > Azure Kubernetes Service (AKS) で内部ロード バランサーを使用する
 > https://docs.microsoft.com/ja-jp/azure/aks/internal-lb
 
-
 ## さいごに
 
 この記事では、AKS に作成した Service (type: LoadBalancer) に対して、NSG でアクセス可能な IP アドレス範囲を制限する方法をご紹介いたしました。
