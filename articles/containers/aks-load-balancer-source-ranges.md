@@ -1,6 +1,6 @@
 ---
 title: Load Balancer Service にアクセス可能な IP アドレスを制限する
-date: 2021-06-10 12:00:00
+date: 2021-06-10 13:00:00
 tags:
   - Containers
   - Azure Kubernetes Service (AKS)
