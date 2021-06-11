@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/12.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/14.png">
 <meta property="article:published_time" content="2021-06-10T04:00:00.000Z">
-<meta property="article:modified_time" content="2021-06-10T03:51:22.575Z">
+<meta property="article:modified_time" content="2021-06-11T08:25:04.880Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="VM">
@@ -118,7 +118,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+18b63eab-7f78-51ad-99ce-21065252b080%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Windows+VM+%E3%81%A7%E5%AE%8C%E5%85%A8%E3%83%A1%E3%83%A2%E3%83%AA+%E3%83%80%E3%83%B3%E3%83%97%E3%82%92%E6%8E%A1%E5%8F%96%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fhow_to_get_a_complete_memory_dump%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fhow_to_get_a_complete_memory_dump.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fhow_to_get_a_complete_memory_dump.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/" data-id="ckpqd6975002o0mpb4orqbkd3" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/" data-id="ckps2e33q002o0ms65z0n8uc3" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -150,7 +150,7 @@
 <li>任意のボリュームをクリックします。</li>
 </ol>
 <p>例: メモリ 8 GB の VM サイズの場合<br><img src="/blog/vm/how_to_get_a_complete_memory_dump/01.png"></p>
-<div class="alert is-info"><p class="alert-title">Note</p><p>一時ディスク (Temporary Storage / 規定では D ドライブ) がある VM サイズをご利用の場合は、一時ディスクをご利用いただければと存じます。</p><p>一時ディスクがない VM サイズをご利用の場合は、任意のデータ ディスクをアタッチいただき、データ ディスク上のボリュームをご利用ください。</p></div>
+<div class="alert is-info"><p class="alert-title">Note</p><p>一時ディスク (Temporary Storage / 既定では D ドライブ) がある VM サイズをご利用の場合は、一時ディスクをご利用いただければと存じます。</p><p>一時ディスクがない VM サイズをご利用の場合は、任意のデータ ディスクをアタッチいただき、データ ディスク上のボリュームをご利用ください。</p></div>
 <ol start="6">
 <li>[カスタム サイズ] を有効にし、[初期サイズ]、[最大サイズ] に物理メモリ + 400 MB 以上の数値を入力します。</li>
 <li>[設定] ボタンをクリック後、[OK] をクリックします。</li>
@@ -173,7 +173,7 @@
 <li>完了しましたら [OK] ボタンをクリックします。</li>
 </ol>
 <p><img src="/blog/vm/how_to_get_a_complete_memory_dump/13.png"></p>
-<div class="alert is-warning"><p class="alert-title">警告</p><p>メモリ ダンプ ファイルは、物理メモリ サイズと同等のサイズとなります。</p><p>規定では C:\Windows 配下に MEMORY.DMP という名前でファイルが作成されることとなりますが、もし、C ドライブの空き容量が足りない場合などは、設定したページング ファイルのサイズ以上の充分な空き容量があるボリュームを保存先にご設定ください。</p></div>
+<div class="alert is-warning"><p class="alert-title">警告</p><p>メモリ ダンプ ファイルは、物理メモリ サイズと同等のサイズとなります。</p><p>既定では C:\Windows 配下に MEMORY.DMP という名前でファイルが作成されることとなりますが、もし、C ドライブの空き容量が足りない場合などは、設定したページング ファイルのサイズ以上の充分な空き容量があるボリュームを保存先にご設定ください。</p></div>
 <h4 id="レジストリから設定する場合-1"><a href="#レジストリから設定する場合-1" class="headerlink" title="レジストリから設定する場合"></a>レジストリから設定する場合</h4><p>下記のレジストリの値を設定してください。対象のレジストリ キーと値は下記のとおりです。</p>
 <blockquote>
 <p>キー　 : HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\CrashControl<br>値　　 : CrashDumpEnabled<br>タイプ : REG_DWORD<br>設定値 : 1</p>
@@ -208,7 +208,7 @@
 <p><img src="/blog/vm/how_to_get_a_complete_memory_dump/07.png"></p>
 <p><img src="/blog/vm/how_to_get_a_complete_memory_dump/08.png"></p>
 </li>
-<li><p>NMI が発行されると、以下のようなメッセージが表示され、物理メモリ上のデータがダンプ ファイルとして指定の場所 (規定: C:\Windows\MEMORY.DMP) に書き出されます。<br>末尾の表示が 100 % となった後、OS が再起動いたしますので、起動するまでしばらくお待ちください。<br>物理メモリの大きな VM をご利用の場合、ディスクへの書き出しにお時間を要す場合があります。</p>
+<li><p>NMI が発行されると、以下のようなメッセージが表示され、物理メモリ上のデータがダンプ ファイルとして指定の場所 (既定: C:\Windows\MEMORY.DMP) に書き出されます。<br>末尾の表示が 100 % となった後、OS が再起動いたしますので、起動するまでしばらくお待ちください。<br>物理メモリの大きな VM をご利用の場合、ディスクへの書き出しにお時間を要す場合があります。</p>
 <p><img src="/blog/vm/how_to_get_a_complete_memory_dump/09.png"></p>
 <p>なお、対象の Azure VM に対して強制割り込み (NMI) が発行されると、Windows OS であれば、ブルースクリーンの状態となります。</p>
 <p><img src="/blog/vm/how_to_get_a_complete_memory_dump/10.png"></p>
