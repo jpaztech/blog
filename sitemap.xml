@@ -51,20 +51,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/resourcegroup-uppercase-lowercase/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-operation/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
     
     <lastmod>2021-06-11</lastmod>
@@ -73,6 +59,20 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/resource-health-alert/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/resourcegroup-uppercase-lowercase/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/vm-operation/</loc>
     
     <lastmod>2021-06-11</lastmod>
     
@@ -93,20 +93,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/linux-expand-os-disk/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/marketplace-image-smb1/</loc>
     
     <lastmod>2021-06-11</lastmod>
@@ -121,7 +107,21 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/introduction-performance-tier-ssd/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/linux-expand-os-disk/</loc>
     
     <lastmod>2021-06-11</lastmod>
     
@@ -191,27 +191,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/other/azure_technical_support_explained/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/storage/addsAuthforAzureFiles/</loc>
     
     <lastmod>2021-06-11</lastmod>
@@ -240,7 +219,21 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/</loc>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/other/azure_technical_support_explained/</loc>
     
     <lastmod>2021-06-11</lastmod>
     
@@ -296,6 +289,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/appgw_change_subnet/</loc>
     
     <lastmod>2021-06-11</lastmod>
@@ -304,13 +304,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/bastion-nsg/</loc>
-    
-    <lastmod>2021-06-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
     
     <lastmod>2021-06-11</lastmod>
     
@@ -359,14 +352,21 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-sku-and-snat-options/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
     
     <lastmod>2021-06-11</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
+    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-sku-and-snat-options/</loc>
     
     <lastmod>2021-06-11</lastmod>
     
@@ -388,6 +388,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/upgrade-backup-container-asm2arm/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
     
     <lastmod>2021-06-11</lastmod>
     
