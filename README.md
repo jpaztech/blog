@@ -52,6 +52,7 @@
 - [NSG と Azure Firewall の違い](./articles/network/difference-nsg-fw.md)
 
 ## Containers
+- [Load Balancer Service にアクセス可能な IP アドレスを制限する](./articles/containers/aks-load-balancer-source-ranges.md)
 - [特定の AKS ノードを再起動または削除したい](./articles/containers/aks-maintenance-for-node.md)
 - [AAD Pod Identity の使用例 - AKS の Pod にマネージド ID で Azure リソースへのアクセス権を割り当てる](./articles/containers/aks-aad-pod-identity.md)
 - [AKS の送信トラフィック - Load Balancer SKU と SNAT オプション](./articles/containers/aks-load-balancer-sku-and-snat-options.md)
