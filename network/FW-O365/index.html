@@ -4,22 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>Azure Linux VM の OS ディスク拡張方法 | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure Firewall にOffice365 通信を許可する方法 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの青山です。 Azure Marketplace のイメージからデプロイしたほとんどの Linux VM は、OS ディスクサイズが 30GB となります。VM の用途次第では、このサイズでは &#x2F; 領域が不足することがあります。そこで今回は OS ディスクの拡張方法、および、パーティション、ファイルシステムの拡張方法についてご案内します。 なお、">
+  <meta name="description" content="こんにちは、Azure サポートチームの杜です。今回多数のお客様にお寄せいただいた Azure Firewall にて Office365 通信を許可する方法についてをご紹介します。 Azure Firewall のアプリケーション ルールでは、FQDN タブ の機能があり、その機能を用いて Windows Update などの通信を便利に許可できますが、残念ながら、現時点 Office365 用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure Linux VM の OS ディスク拡張方法">
-<meta property="og:url" content="https://jpaztech.github.io/blog/vm/linux-expand-os-disk/index.html">
+<meta property="og:title" content="Azure Firewall にOffice365 通信を許可する方法">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/FW-O365/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの青山です。 Azure Marketplace のイメージからデプロイしたほとんどの Linux VM は、OS ディスクサイズが 30GB となります。VM の用途次第では、このサイズでは &#x2F; 領域が不足することがあります。そこで今回は OS ディスクの拡張方法、および、パーティション、ファイルシステムの拡張方法についてご案内します。 なお、">
+<meta property="og:description" content="こんにちは、Azure サポートチームの杜です。今回多数のお客様にお寄せいただいた Azure Firewall にて Office365 通信を許可する方法についてをご紹介します。 Azure Firewall のアプリケーション ルールでは、FQDN タブ の機能があり、その機能を用いて Windows Update などの通信を便利に許可できますが、残念ながら、現時点 Office365 用">
 <meta property="og:locale" content="ja_JP">
-<meta property="article:published_time" content="2020-06-19T08:30:00.000Z">
-<meta property="article:modified_time" content="2021-06-14T01:07:10.280Z">
+<meta property="article:published_time" content="2021-04-04T05:30:00.000Z">
+<meta property="article:modified_time" content="2021-06-14T01:07:10.152Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="VM">
-<meta property="article:tag" content="HowTo">
-<meta property="article:tag" content="Disk">
-<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="Azure Firewall">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
@@ -82,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-vm/linux-expand-os-disk" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-network/FW-O365" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -91,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure Linux VM の OS ディスク拡張方法
+      Azure Firewall にOffice365 通信を許可する方法
     </h1>
   
 
@@ -99,65 +97,83 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2020-06-19T08:30:00.000Z" itemprop="datePublished">2020-06-19</time>
+  <time datetime="2021-04-04T05:30:00.000Z" itemprop="datePublished">2021-04-04</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+c0a4604a-0395-5213-acd3-2c20b783ddd8%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Linux+VM+%E3%81%AE+OS+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E6%8B%A1%E5%BC%B5%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Flinux-expand-os-disk%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Flinux-expand-os-disk.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Flinux-expand-os-disk.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+82fe7e7d-3f66-5865-8d42-3f4f64eb68da%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Firewall+%E3%81%ABOffice365+%E9%80%9A%E4%BF%A1%E3%82%92%E8%A8%B1%E5%8F%AF%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2FFW-O365%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2FFW-O365.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2FFW-O365.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/linux-expand-os-disk/" data-id="ckpvx2ha1002x0npp95c84b1w" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/FW-O365/" data-id="ckpvx2h9c001g0npp390q27nz" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure テクニカル サポート チームの青山です。</p>
-<p>Azure Marketplace のイメージからデプロイしたほとんどの Linux VM は、OS ディスクサイズが 30GB となります。VM の用途次第では、このサイズでは <code>/</code> 領域が不足することがあります。<br>そこで今回は OS ディスクの拡張方法、および、パーティション、ファイルシステムの拡張方法についてご案内します。</p>
-<p>なお、データディスクの拡張については下記公式ドキュメントに詳細手順がありますので、こちらを参考にしてください。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/expand-disks">Azure CLI を使用して Linux VM の仮想ハード ディスクを拡張する</a></li>
-</ul>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>作業前には必ず <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/tutorial-backup-vms">バックアップ</a> を取得しておきましょう。</p>
-<h2 id="Azure-ディスクの拡張"><a href="#Azure-ディスクの拡張" class="headerlink" title="Azure ディスクの拡張"></a>Azure ディスクの拡張</h2><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a> で <code>az login</code> が完了していることを前提とします。<br>CLI をインストールしていない場合は、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/cloud-shell/quickstart">Azure Cloud Shell の Bash</a> を使うと便利です。</p>
+        <p>こんにちは、Azure サポートチームの杜です。<br>今回多数のお客様にお寄せいただいた Azure Firewall にて Office365 通信を許可する方法についてをご紹介します。</p>
+<p>Azure Firewall のアプリケーション ルールでは、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/fqdn-tags">FQDN タブ</a> の機能があり、その機能を用いて Windows Update などの通信を便利に許可できますが、残念ながら、現時点 Office365 用の FQDN タグを提供していません。</p>
+<p>そのため、お客様側で必要な IP アドレス及び URL をアプリケーション ルールに登録する必要があります。ただし、Office365 関連の IP アドレス及び URL が多く存在し、Azure ポータルで登録するのは時間かかります。その代わりに、以下の PowerShell コマンドでは、一括で登録することは可能です。</p>
+<p>※ 弊社でも動作を確認しましたが、念のため、お客様の検証環境でもご確認のうえ本番環境への適用をお願いいたします。</p>
 <ol>
-<li>環境に合わせて変数を設定します。<code>myResourceGroup</code> には VM のリソースグループ名、<code>myVmName</code> には VM のリソース名、<code>myOsDiskSize</code> には拡張後の OS ディスクサイズを指定しましょう。以下の例では 100GB に拡張します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">myResourceGroup=<span class="string">&quot;contosogroup&quot;</span></span><br><span class="line">myVmName=<span class="string">&quot;contosovm&quot;</span></span><br><span class="line">myOsDiskSize=<span class="string">&quot;100&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>VM 実行中は接続されたディスクのサイズを変更できません。一度 VM を停止(割り当て解除)します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm deallocate --resource-group <span class="variable">$myResourceGroup</span> --name <span class="variable">$myVmName</span></span><br></pre></td></tr></table></figure></li>
-<li>ディスクサイズを変更します。管理ディスクの場合は、<code>az disk update</code> でサイズ変更します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">osdiskid=$(az vm show --resource-group <span class="variable">$myResourceGroup</span> --name <span class="variable">$myVmName</span> --query storageProfile.osDisk.managedDisk.id -o tsv)</span><br><span class="line">az disk update --ids <span class="variable">$osdiskid</span> --size-gb <span class="variable">$myOsDiskSize</span></span><br></pre></td></tr></table></figure>
-非管理ディスクの場合は、<code>az vm update</code> でサイズ変更します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm update -n <span class="variable">$myVmName</span> -g <span class="variable">$myResourceGroup</span> --<span class="built_in">set</span> StorageProfile.OSDisk.DiskSizeGB=<span class="variable">$myOsDiskSize</span></span><br></pre></td></tr></table></figure></li>
-<li>VM を起動します。Azure CLI での操作はここまでとなります。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm start --resource-group <span class="variable">$myResourceGroup</span> --name <span class="variable">$myVmName</span></span><br></pre></td></tr></table></figure></li>
+<li><p>以下の公開ドキュメントから Office365 通信関連のIPとURL一覧の JSON ファイルをダウンロードします</p>
+<p> <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/microsoft-365/enterprise/urls-and-ip-address-ranges?view=o365-worldwide">Office 365 URL および IP アドレス範囲</a></p>
+<p> ※「ダウンロード: 1 つの JSON 形式リスト内のすべての必須およびオプションの宛先。」のリンクをクリックします。</p>
+</li>
+<li><p>Azure PowerShell または ポータルより Cloud Shell を起動し、以下のコマンドレットを入力します。（&lt;&gt;の部分は環境に合わせて変更が必要となります）</p>
+</li>
+<li><p>構成を変更する対象のサブスクリプションを指定します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Select-AzSubscription</span> <span class="literal">-SubscriptionId</span> &lt;サブスクリプション ID&gt;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="ファイルシステムの拡張"><a href="#ファイルシステムの拡張" class="headerlink" title="ファイルシステムの拡張"></a>ファイルシステムの拡張</h2><p>Ubuntu など、cloud-init が予め有効なシステムでは、起動時に拡張が済んでいる場合があります。<br>ここでは、LVM 構成ではない RHEL7.6 でのコマンド例を紹介します。LVM 構成の場合は <a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%8B%A1%E5%BC%B5-LVM">ファイルシステムの拡張 (LVM)</a> を参照してください。</p>
-<ol>
-<li>VM に SSH 接続します。</li>
-<li><code>lsblk</code> コマンドで拡張するパーティションを確認します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk -p -o NAME,FSTYPE,SIZE,MOUNTPOINT</span><br></pre></td></tr></table></figure>
-以下の出力例では、<code>/</code> は <code>/dev/sda2</code> に 31.5G の xfs として作成されていることが確認できます。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NAME        FSTYPE  SIZE MOUNTPOINT</span><br><span class="line">/dev/fd0              4K</span><br><span class="line">/dev/sda            100G</span><br><span class="line">|-/dev/sda1 xfs     500M /boot</span><br><span class="line">`-/dev/sda2 xfs    31.5G /</span><br><span class="line">/dev/sdb              7G</span><br><span class="line">`-/dev/sdb1 ext4      7G /mnt/resource</span><br></pre></td></tr></table></figure></li>
-<li><code>yum</code> コマンドで、<code>cloud-utils-growpart</code> パッケージをインストールします。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y cloud-utils-growpart</span><br></pre></td></tr></table></figure></li>
-<li><code>growpart</code> コマンドでパーティションを拡張します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo growpart /dev/sda 2</span><br></pre></td></tr></table></figure></li>
-<li>再度 <code>lsblk</code> コマンドを使い、<code>/dev/sda2</code> が拡張されたかを確認してみましょう。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk -p /dev/sda2</span><br></pre></td></tr></table></figure>
-以下の出力例では、99.5G に拡張されたことが確認できます。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NAME      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">/dev/sda2   8:2    0 99.5G  0 part /</span><br></pre></td></tr></table></figure></li>
-<li>ファイルシステムを拡張します。xfs の場合は、<code>xfs_growfs</code>, ext4 の場合は、<code>resize2fs</code> コマンドを使います。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xfs_growfs /</span><br></pre></td></tr></table></figure>
-拡張されました。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">meta-data=/dev/sda2              isize=512    agcount=4, agsize=2065088 blks</span><br><span class="line">         =                       sectsz=512   attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=0 spinodes=0</span><br><span class="line">data     =                       bsize=4096   blocks=8260352, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0 ftype=1</span><br><span class="line">log      =internal               bsize=4096   blocks=4033, version=2</span><br><span class="line">         =                       sectsz=512   sunit=0 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">data blocks changed from 8260352 to 26086139</span><br></pre></td></tr></table></figure></li>
-<li>最後に、<code>df</code> コマンドで <code>/</code> のサイズを確認してみましょう。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -hT /</span><br></pre></td></tr></table></figure>
-目的のサイズになっていれば無事成功です。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Filesystem     Type  Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/sda2      xfs   100G  2.8G   97G   3% /</span><br></pre></td></tr></table></figure></li>
+<h2 id="Azure-Firewall-への適用コマンド"><a href="#Azure-Firewall-への適用コマンド" class="headerlink" title="Azure Firewall への適用コマンド"></a>Azure Firewall への適用コマンド</h2><p>Azure Firewall に直接にルールを設定する場合はこちらの手順を使用します。</p>
+<hr>
+<ol start="4">
+<li><p>Azure Firewall の情報を取得します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$Azfw</span> = <span class="built_in">Get-AzFirewall</span> <span class="literal">-Name</span> &lt;Azure Firewall 名&gt; <span class="literal">-ResourceGroupName</span> &lt;変更対象のリソースグループ&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>json ファイルの情報を読み込みます。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$export</span> = <span class="built_in">Get-Content</span> .\worldwide.json | <span class="built_in">ConvertFrom-Json</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Azure Firewall で定義する接続元のアドレス空間を指定します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$source_address</span> = &lt;接続元のアドレス空間&gt;</span><br><span class="line"><span class="comment">#例：source_address = &quot;10.0.0.0/24&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p> 宛先ポートを 80,443 に絞ります。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$urldata</span> =  <span class="variable">$export</span> | <span class="built_in">where</span> &#123; <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;80&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;443&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts  <span class="operator">-eq</span> <span class="string">&quot;80,443&quot;</span> &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Azure Firewall 用のルールを作成します。(80,443 ポートかつ、FQDN が含まれるものが対象となります) </p>
+<p> ※実行完了まで時間かかります。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$rules_with_urls</span> = <span class="variable">$urldata</span> | <span class="built_in">where</span> &#123; <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;80&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;443&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts  <span class="operator">-eq</span> <span class="string">&quot;80,443&quot;</span> &#125; | <span class="built_in">where</span> &#123; <span class="variable">$_</span>.urls &#125; | <span class="keyword">foreach</span> &#123; <span class="built_in">New-AzFirewallApplicationRule</span> <span class="literal">-Name</span> <span class="string">&quot;Allow-<span class="variable">$</span>(<span class="variable">$_</span>.ServiceAreaDisplayName.replace(&#x27; &#x27;, &#x27;&#x27;))-<span class="variable">$</span>(<span class="variable">$_</span>.id)&quot;</span> <span class="literal">-SourceAddress</span> <span class="variable">$source_address</span> <span class="literal">-Protocol</span> http, https <span class="literal">-TargetFqdn</span> <span class="variable">$_</span>.urls &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>ルールのセットを定義します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$AppRuleCollection</span> = <span class="built_in">New-AzFirewallApplicationRuleCollection</span> <span class="literal">-Name</span> &lt;ルール名&gt; <span class="literal">-Priority</span> &lt;優先度&gt; <span class="literal">-Rule</span> <span class="variable">$rules_with_urls</span> <span class="literal">-ActionType</span> <span class="string">&quot;Allow&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Azure Firewall の設定として定義します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$Azfw</span>.ApplicationRuleCollections.Add(<span class="variable">$AppRuleCollection</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>Azure Firewall へ設定を反映します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-AzFirewall</span> <span class="literal">-AzureFirewall</span> <span class="variable">$Azfw</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="ファイルシステムの拡張-LVM"><a href="#ファイルシステムの拡張-LVM" class="headerlink" title="ファイルシステムの拡張 (LVM)"></a>ファイルシステムの拡張 (LVM)</h2><p>ここでは、LVM 構成の RHEL8.2 でのコマンド例を紹介します。</p>
-<ol>
-<li>VM に SSH 接続します。</li>
-<li><code>lsblk</code> コマンドで拡張するパーティションを確認します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk -p -o NAME,FSTYPE,SIZE,MOUNTPOINT</span><br></pre></td></tr></table></figure>
-以下の出力例では、<code>/</code> としてマウントされている LV <code>rootlv</code> は <code>/dev/sda2</code> に作成されていることが確認できます。<br>ファイルシステムは xfs として作成されています。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NAME                          FSTYPE       SIZE MOUNTPOINT</span><br><span class="line">/dev/sda                                   100G</span><br><span class="line">├─/dev/sda1                   xfs          500M /boot</span><br><span class="line">├─/dev/sda2                   LVM2_member   63G</span><br><span class="line">│ ├─/dev/mapper/rootvg-tmplv  xfs            2G /tmp</span><br><span class="line">│ ├─/dev/mapper/rootvg-usrlv  xfs           10G /usr</span><br><span class="line">│ ├─/dev/mapper/rootvg-homelv xfs            1G /home</span><br><span class="line">│ ├─/dev/mapper/rootvg-varlv  xfs            8G /var</span><br><span class="line">│ └─/dev/mapper/rootvg-rootlv xfs            2G /</span><br><span class="line">├─/dev/sda14                                 4M</span><br><span class="line">└─/dev/sda15                  vfat         495M /boot/efi</span><br><span class="line">/dev/sdb                                     7G</span><br><span class="line">└─/dev/sdb1                   ext4           7G /mnt</span><br></pre></td></tr></table></figure></li>
-<li><code>yum</code> コマンドで、<code>cloud-utils-growpart</code> パッケージをインストールします。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y cloud-utils-growpart</span><br></pre></td></tr></table></figure></li>
-<li><code>growpart</code> コマンドでパーティションを拡張します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo growpart /dev/sda 2</span><br></pre></td></tr></table></figure></li>
-<li><code>pvresize</code> コマンドで、PV を拡張します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pvresize /dev/sda2</span><br></pre></td></tr></table></figure>
-成功すると、以下のような出力が得られます。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Physical volume &quot;/dev/sda2&quot; changed</span><br><span class="line">1 physical volume(s) resized or updated / 0 physical volume(s) not resized</span><br></pre></td></tr></table></figure></li>
-<li><code>vgs</code> コマンドで <code>rootlv</code> の含まれている <code>rootvg</code> の領域が増えたか確認してみます。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vgs</span><br></pre></td></tr></table></figure>
-以下の出力例では 76.02 GB が使用可能です。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VG     #PV #LV #SN Attr   VSize   VFree</span><br><span class="line">rootvg   1   5   0 wz--n- &lt;99.02g &lt;76.02g</span><br></pre></td></tr></table></figure></li>
-<li><code>lvextend</code> コマンドで、LV を拡張します。<br>今回は、空き容量を全て使って <code>rootlv</code> を拡張します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lvextend -l +100%FREE /dev/rootvg/rootlv</span><br></pre></td></tr></table></figure>
-成功すると、以下のような出力が得られます。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Size of logical volume rootvg/rootlv changed from 2.00 GiB (512 extents) to &lt;78.02 GiB (19973 extents).</span><br><span class="line">Logical volume rootvg/rootlv successfully resized.</span><br></pre></td></tr></table></figure></li>
-<li>ファイルシステムを拡張します。xfs の場合は、xfs_growfs, ext4 の場合は、resize2fs コマンドを使います。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xfs_growfs /</span><br></pre></td></tr></table></figure>
-成功すると、以下のような出力が得られます。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">meta-data=/dev/mapper/rootvg-rootlv isize=512    agcount=4, agsize=131072 blks</span><br><span class="line">         =                       sectsz=4096  attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=1, sparse=1, rmapbt=0</span><br><span class="line">         =                       reflink=1</span><br><span class="line">data     =                       bsize=4096   blocks=524288, imaxpct=25</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0, ftype=1</span><br><span class="line">log      =internal log           bsize=4096   blocks=2560, version=2</span><br><span class="line">         =                       sectsz=4096  sunit=1 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line">data blocks changed from 524288 to 20452352</span><br></pre></td></tr></table></figure></li>
-<li>最後に、df コマンドで / のサイズを確認してみましょう。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -hT /</span><br></pre></td></tr></table></figure>
-目的のサイズになっていれば無事成功です。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Filesystem                Type  Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/mapper/rootvg-rootlv xfs    79G  625M   78G   1% /</span><br></pre></td></tr></table></figure></li>
+<h2 id="Azure-Firewall-ポリシーへの適用コマンド"><a href="#Azure-Firewall-ポリシーへの適用コマンド" class="headerlink" title="Azure Firewall ポリシーへの適用コマンド"></a>Azure Firewall ポリシーへの適用コマンド</h2><p>Azure Firewall ポリシーの場合はこちらの手順を使用します</p>
+<hr>
+<ol start="4">
+<li><p> Azure Firewall ポリシーの情報を取得します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$fwpol</span> = <span class="built_in">Get-AzFirewallPolicy</span> <span class="literal">-Name</span> &lt;Azure Firewall ポリシー名&gt; <span class="literal">-ResourceGroupName</span> &lt;リソースグループ名&gt; </span><br></pre></td></tr></table></figure></li>
+<li><p>json ファイルの情報を読み込みます。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$export</span> = <span class="built_in">Get-Content</span> .\worldwide.json | <span class="built_in">ConvertFrom-Json</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Azure Firewall で定義する接続元のアドレス空間を指定します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$source_address</span> = &lt;接続元のアドレス空間&gt;</span><br><span class="line"><span class="comment">#例：source_address = &quot;10.0.0.0/24&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p> 宛先ポートを 80,443 に絞ります。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$urldata</span> =  <span class="variable">$export</span> | <span class="built_in">where</span> &#123; <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;80&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;443&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts  <span class="operator">-eq</span> <span class="string">&quot;80,443&quot;</span> &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Azure Firewall 用ポリシーのアプリケーション ルールを作成します。(80,443 ポートかつ、FQDN が含まれるものが対象となります) </p>
+<p> ※実行完了まで時間かかります。</p>
+<p> ※ コマンド実行時に警告文が表示される可能性がございますが、問題なくコマンドを実行することが可能です。</p>
+</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$rules_with_urls</span> = <span class="variable">$urldata</span> | <span class="built_in">where</span> &#123; <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;80&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts <span class="operator">-eq</span> <span class="string">&quot;443&quot;</span> <span class="operator">-or</span> <span class="variable">$_</span>.tcpPorts  <span class="operator">-eq</span> <span class="string">&quot;80,443&quot;</span> &#125; | <span class="built_in">where</span> &#123; <span class="variable">$_</span>.urls &#125; | <span class="keyword">foreach</span> &#123; <span class="built_in">New-AzFirewallPolicyApplicationRule</span> <span class="literal">-Name</span> <span class="string">&quot;Allow-<span class="variable">$</span>(<span class="variable">$_</span>.ServiceAreaDisplayName.replace(&#x27; &#x27;, &#x27;&#x27;))-<span class="variable">$</span>(<span class="variable">$_</span>.id)&quot;</span> <span class="literal">-SourceAddress</span> <span class="variable">$source_address</span> <span class="literal">-Protocol</span> http, https <span class="literal">-TargetFqdn</span> <span class="variable">$_</span>.urls &#125;</span><br></pre></td></tr></table></figure>
+
+
+<ol start="9">
+<li><p>アプリケーション ルールのコレクションを定義します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$AppRuleCollection</span> = <span class="built_in">New-AzFirewallPolicyFilterRuleCollection</span> <span class="literal">-Name</span> <span class="string">&quot;&lt;コレクション名&gt;&quot;</span> <span class="literal">-Priority</span> &lt;優先度&gt; <span class="literal">-Rule</span> <span class="variable">$rules_with_urls</span> <span class="literal">-ActionType</span> <span class="string">&quot;Allow&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>コレクションのグループを新規で作成します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$RCGroup</span> = <span class="built_in">New-AzFirewallPolicyRuleCollectionGroup</span> <span class="literal">-Name</span> <span class="string">&quot;&lt;任意のグループ名&gt;&quot;</span> <span class="literal">-Priority</span> &lt;優先度&gt; <span class="literal">-FirewallPolicyObject</span> <span class="variable">$fwpol</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Azure Firewall ポリシーへ設定を反映します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-AzFirewallPolicyRuleCollectionGroup</span> <span class="literal">-Name</span> <span class="variable">$RCGroup</span>.Name <span class="literal">-Priority</span> &lt;優先度&gt; <span class="literal">-RuleCollection</span> <span class="variable">$AppRuleCollection</span> <span class="literal">-FirewallPolicyObject</span> <span class="variable">$fwpol</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <hr>
+<h1 id="よくある質問"><a href="#よくある質問" class="headerlink" title="よくある質問"></a>よくある質問</h1><h2 id="Office365-の-FQDN-タグをサポートする予定はありますか？"><a href="#Office365-の-FQDN-タグをサポートする予定はありますか？" class="headerlink" title="Office365 の FQDN タグをサポートする予定はありますか？"></a>Office365 の FQDN タグをサポートする予定はありますか？</h2><p>現時点では具体的なリリース時期はまだ未定ですが、2021年末頃に予定されております。<br>ただし、こちらの日程はあくまで目途であり、実際には日程が多少前後する可能性がありますので、ご了承ください。</p>
+<h2 id="公開ドキュメントにある-URL-が更新があったら-Azure-Firewall-側も自動的に更新できますか？"><a href="#公開ドキュメントにある-URL-が更新があったら-Azure-Firewall-側も自動的に更新できますか？" class="headerlink" title="公開ドキュメントにある URL が更新があったら Azure Firewall 側も自動的に更新できますか？"></a>公開ドキュメントにある URL が更新があったら Azure Firewall 側も自動的に更新できますか？</h2><p>公開ドキュメントにある URL が更新されたら、FQDN タブのように自動的に Azure Firewall に反映できません。<br>Office 365 の通信要件は、不定期に更新される場合がありますので、定期的に公開ドキュメントを確認し、手動や PowerShell で更新することは推奨致します。</p>
+<p>以上、ご参考になれば幸いです。</p>
 
       
       
@@ -171,10 +187,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/linux-expand-os-disk.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/FW-O365.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -182,19 +198,19 @@
     
 <nav id="article-nav">
   
-    <a href="../drive-letter-changed-1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="../../vm/create-vm-using-vhd/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">次の記事</strong>
       <div class="article-nav-title">
         
-          データ ディスクのドライブ文字が変わる
+          Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法
         
       </div>
     </a>
   
   
-    <a href="../../network/tsg-azure-load-balancer-scoping/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../AzureFrontDoor-LockDown/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">Azure Load Balancer のトラブルシューティング: スコーピング編</div>
+      <div class="article-nav-title">Azure Front Door を用いた App Service などへのセキュアな接続の構成</div>
     </a>
   
 </nav>
@@ -217,19 +233,19 @@
           </li>
         
           <li>
-            <a href="../how_to_get_a_complete_memory_dump/">Azure Windows VM で完全メモリ ダンプを採取する方法</a>
+            <a href="../../vm/how_to_get_a_complete_memory_dump/">Azure Windows VM で完全メモリ ダンプを採取する方法</a>
           </li>
         
           <li>
-            <a href="../vm-operation/">Azure 仮想マシンにおける操作 (再起動、停止/起動、再デプロイ、再適用) について</a>
+            <a href="../../vm/vm-operation/">Azure 仮想マシンにおける操作 (再起動、停止/起動、再デプロイ、再適用) について</a>
           </li>
         
           <li>
-            <a href="../vm-redeploy/">Azure 仮想マシンの再デプロイ</a>
+            <a href="../../vm/vm-redeploy/">Azure 仮想マシンの再デプロイ</a>
           </li>
         
           <li>
-            <a href="../../network/custom-dns-faq/">カスタム DNS サーバー よくあるお問い合わせ - FAQ</a>
+            <a href="../custom-dns-faq/">カスタム DNS サーバー よくあるお問い合わせ - FAQ</a>
           </li>
         
       </ul>
