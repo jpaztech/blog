@@ -4,7 +4,7 @@ date: 2020-12-11 14:30:00
 tags:
   - Network
   - NSG
-  - Firewall
+  - Azure Firewall
 ---
 
 こんにちは、Azure サポートチームの薄井です。
@@ -28,6 +28,7 @@ tags:
 | FQDN によるフィルター処理              |  ×  |     ○    |
 | SNAT と DNAT                               |  ×  |     ○    |
 | 脅威インテリジェンスベースのフィルター処理 |  ×  |     ○    |
+| IDPS |  ×  |     ○ (Premium)    |
 | 価格 |  無料  |     有料    |
 
 ### 動作箇所
@@ -93,8 +94,11 @@ Azure 上で利用できる WAF については以下のドキュメントをご
 - [Web アプリケーション ファイアウォールのドキュメント](https://docs.microsoft.com/ja-jp/azure/web-application-firewall/)
 
 ### IDS/IPS との違いは何ですか
-一般的に言う IDS/IPS はネットワーク型で、ネットワーク上に流れるパケットを収集し、データやプロトコルなど分析し、攻撃パータンやルールにマッチした場合、検出・防止で制御します。
-現在、Azure 上で提供している IDS/IPS の機能は DDoS Protection Basic / Standard です。DDoS Protection はバックボーン ネットワーク上で攻撃検知・緩和が実施されます。
+一般的に言う IDS/IPS (IDPS) はネットワーク型で、ネットワーク上に流れるパケットを収集し、データやプロトコルなど分析し、攻撃パータンやルールにマッチした場合、検出・防止で制御します。
+Azure Firewall では Premium SKU で IDPS 機能を提供しています。
+また、DDoS Protection Basic / Standard ではバックボーン ネットワーク上で DDoS 攻撃検知・緩和が実施されます。
+
+- [Azure Firewall Premium プレビューの機能](https://docs.microsoft.com/ja-jp/azure/firewall/premium-features)
 
 以上、ご参考になれば幸いです。
 
