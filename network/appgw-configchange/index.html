@@ -6,18 +6,18 @@
   
   <title>Application Gateway 設定変更の影響 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure サポートチームの杜です。 Application Gateway に設定変更を行う際に既存接続(TCP コネクション)への影響についてご紹介させて頂きます。SKU により動作が異なっていますので、以下にて各 SKU の詳細をご説明します。 設定変更の影響基本的には既存接続に影響するような設定変更をしない限り影響はありません。 例えば、１つの Application Gate">
+  <meta name="description" content="こんにちは、Azure サポートチームの杜です。 Application Gateway に設定変更を行う際に既存接続(TCP コネクション)への影響についてご紹介させて頂きます。SKU により動作が異なっていますので、以下にて各 SKU の詳細をご説明します。 Application Gateway SKU Standard_v1 &amp; WAF_v1設定変更の影響基本的には既存接続に影響す">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Application Gateway 設定変更の影響">
 <meta property="og:url" content="https://jpaztech.github.io/blog/network/appgw-configchange/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure サポートチームの杜です。 Application Gateway に設定変更を行う際に既存接続(TCP コネクション)への影響についてご紹介させて頂きます。SKU により動作が異なっていますので、以下にて各 SKU の詳細をご説明します。 設定変更の影響基本的には既存接続に影響するような設定変更をしない限り影響はありません。 例えば、１つの Application Gate">
+<meta property="og:description" content="こんにちは、Azure サポートチームの杜です。 Application Gateway に設定変更を行う際に既存接続(TCP コネクション)への影響についてご紹介させて頂きます。SKU により動作が異なっていますので、以下にて各 SKU の詳細をご説明します。 Application Gateway SKU Standard_v1 &amp; WAF_v1設定変更の影響基本的には既存接続に影響す">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-configchange/v1_rst.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-configchange/v2_fin.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-configchange/v2_notification.png">
 <meta property="article:published_time" content="2021-07-05T05:30:00.000Z">
-<meta property="article:modified_time" content="2021-07-13T11:43:53.693Z">
+<meta property="article:modified_time" content="2021-07-14T11:21:06.406Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Application Gateway">
 <meta property="article:tag" content="Network">
@@ -107,44 +107,44 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3a6de671-5071-5b0f-8036-bf8e62264e2e%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%9B%B4%E3%81%AE%E5%BD%B1%E9%9F%BF%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fappgw-configchange%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fappgw-configchange.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fappgw-configchange.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/appgw-configchange/" data-id="ckr1zl17e001l0npgdvs486ug" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/appgw-configchange/" data-id="ckr3e7kmo001l0mo25ft9bk7o" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
         <p>こんにちは、Azure サポートチームの杜です。</p>
 <p>Application Gateway に設定変更を行う際に既存接続(TCP コネクション)への影響についてご紹介させて頂きます。<br>SKU により動作が異なっていますので、以下にて各 SKU の詳細をご説明します。</p>
-<h2 id="設定変更の影響"><a href="#設定変更の影響" class="headerlink" title="設定変更の影響"></a>設定変更の影響</h2><p>基本的には既存接続に影響するような設定変更をしない限り影響はありません。</p>
+<h2 id="Application-Gateway-SKU-Standard-v1-amp-WAF-v1"><a href="#Application-Gateway-SKU-Standard-v1-amp-WAF-v1" class="headerlink" title="Application Gateway SKU Standard_v1 &amp; WAF_v1"></a>Application Gateway SKU Standard_v1 &amp; WAF_v1</h2><h3 id="設定変更の影響"><a href="#設定変更の影響" class="headerlink" title="設定変更の影響"></a>設定変更の影響</h3><p>基本的には既存接続に影響するような設定変更をしない限り影響はありません。</p>
 <p>例えば、１つの Application Gateway に以下の設定が入っている場合は</p>
 <ul>
 <li>リスナー A → 要求ルーティング A → HTTP設定 A → バックエンド プール A, カスタム正常性プローブ A</li>
 <li>リスナー B → 要求ルーティング B → HTTP設定 B → バックエンド プール B, カスタム正常性プローブ B</li>
 </ul>
 <p>任意の設定 A に対する設定変更、もしくは新規設定を追加してもリスナー B への既存接続に影響しません。</p>
-<h2 id="影響がある場合の動作"><a href="#影響がある場合の動作" class="headerlink" title="影響がある場合の動作"></a>影響がある場合の動作</h2><p>既存接続が使用している設定を変更する場合、Application Gateway から クライアントに対して <strong>TCP RST</strong> を送信する動作だと確認しています。</p>
+<h3 id="影響がある場合の動作"><a href="#影響がある場合の動作" class="headerlink" title="影響がある場合の動作"></a>影響がある場合の動作</h3><p>既存接続が使用している設定を変更する場合、Application Gateway から クライアントに対して <strong>TCP RST</strong> を送信する動作だと確認しています。</p>
 <p>例えば、リスナー A が使用している証明書を更新しますと、パケット キャプチャにて以下の動作が確認しています。</p>
 <p>クライアント IP 192.168.0.172<br>Application Gateway パブリック IP 20.48.x.x</p>
 <p><img src="./v1_rst.png"></p>
 <blockquote>
 <p>パケット レベルの詳細動作について現時点では公開ドキュメントに記載されておらず、保証される動作わけではございませんので、予めご了承ください。</p>
 </blockquote>
-<h1 id="Application-Gateway-SKU-Standard-v2-amp-WAF-v2"><a href="#Application-Gateway-SKU-Standard-v2-amp-WAF-v2" class="headerlink" title="Application Gateway SKU Standard_v2 &amp; WAF_v2"></a>Application Gateway SKU Standard_v2 &amp; WAF_v2</h1><h2 id="設定変更の影響-1"><a href="#設定変更の影響-1" class="headerlink" title="設定変更の影響"></a>設定変更の影響</h2><p>基本的には全般の作業がすべての既存接続に影響を与えます。<br>たとえ関連しない新規設定を追加するだけでも、既存すべてのリスナーへの TCP 接続が切断される動作となります。</p>
+<h2 id="Application-Gateway-SKU-Standard-v2-amp-WAF-v2"><a href="#Application-Gateway-SKU-Standard-v2-amp-WAF-v2" class="headerlink" title="Application Gateway SKU Standard_v2 &amp; WAF_v2"></a>Application Gateway SKU Standard_v2 &amp; WAF_v2</h2><h3 id="設定変更の影響-1"><a href="#設定変更の影響-1" class="headerlink" title="設定変更の影響"></a>設定変更の影響</h3><p>基本的には全般の作業がすべての既存接続に影響を与えます。<br>たとえ関連しない新規設定を追加するだけでも、既存すべてのリスナーへの TCP 接続が切断される動作となります。</p>
 <p>例えば、１つの Application Gateway に以下の設定が入っている場合は</p>
 <ul>
 <li>リスナー A → 要求ルーティング A → HTTP設定 A → バックエンド プール A, カスタム正常性プローブ A</li>
 <li>リスナー B → 要求ルーティング B → HTTP設定 B → バックエンド プール B, カスタム正常性プローブ B</li>
 </ul>
 <p>任意の設定 A か B に対する設定変更、もしくは新規の HTTP 設定やバックエンド プールを追加しますと、リスナー A 及び B への既存接続が切断されます。</p>
-<h2 id="影響がある場合の動作-1"><a href="#影響がある場合の動作-1" class="headerlink" title="影響がある場合の動作"></a>影響がある場合の動作</h2><p>任意の設定が変更される場合は、Application Gateway から クライアントに対して <strong>TCP FIN</strong> を送信する動作だと確認しています。</p>
+<h3 id="影響がある場合の動作-1"><a href="#影響がある場合の動作-1" class="headerlink" title="影響がある場合の動作"></a>影響がある場合の動作</h3><p>任意の設定が変更される場合は、Application Gateway から クライアントに対して <strong>TCP FIN</strong> を送信する動作だと確認しています。</p>
 <p>例えば、リスナー A が使用している証明書を更新しますと、パケット キャプチャにて以下の動作が確認しています。</p>
 <p>クライアント IP 192.168.0.172<br>Application Gateway パブリック IP 20.48.x.x</p>
 <p><img src="./v2_fin.png"></p>
 <blockquote>
 <p>パケット レベルの詳細動作について現時点では公開ドキュメントに記載されていなく、保証される動作わけではございませんので、予めご了承ください。</p>
 </blockquote>
-<h1 id="よくある質問"><a href="#よくある質問" class="headerlink" title="よくある質問"></a>よくある質問</h1><h2 id="TCP-コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？"><a href="#TCP-コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？" class="headerlink" title="TCP コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？"></a>TCP コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？</h2><p>クライアントの接続設定と挙動により一概にご案内できませんが、例えば Chrome などのブラウザが再接続などによって基本的には瞬断以外の影響はないと思われますが、<br>もし少しの切断も許されないような環境でご利用の場合、メンテナンスの時間帯を設置して Application Gateway の設定変更をご実施頂きますようお願い致します。</p>
-<h2 id="設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？"><a href="#設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？" class="headerlink" title="設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？"></a>設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？</h2><p>Azure 基盤側の処理状況によって固定ではありませんが、数十秒から数分間かかる場合は多いと見受けられます。<br>Azure ポータルから設定変更した場合は、下記のような設定変更の通知が出た後、数十秒後に接続済みの TCP コネクションが Application Gateway 側よりクローズされる動作を確認しています。<br><img src="./v2_notification.png"></p>
-<h2 id="Application-Gateway-v2-が-KeyVault-と連携している場合では、Key-Vault-側で証明書を更新した際にも同じように瞬断などの影響を受けますか？"><a href="#Application-Gateway-v2-が-KeyVault-と連携している場合では、Key-Vault-側で証明書を更新した際にも同じように瞬断などの影響を受けますか？" class="headerlink" title="Application Gateway v2 が KeyVault と連携している場合では、Key Vault 側で証明書を更新した際にも同じように瞬断などの影響を受けますか？"></a>Application Gateway v2 が KeyVault と連携している場合では、Key Vault 側で証明書を更新した際にも同じように瞬断などの影響を受けますか？</h2><p>以下の公開ドキュメントに記載されている通り、KeyVault と連携した場合は証明書更新が検出されると Application Gateway に自動的に反映する動作となります。</p>
+<h2 id="よくある質問"><a href="#よくある質問" class="headerlink" title="よくある質問"></a>よくある質問</h2><h2 id="TCP-コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？"><a href="#TCP-コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？" class="headerlink" title="TCP コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？"></a>TCP コネクションが切断されますが、実際にクライアントに対してどんな影響されますか？</h2><p>クライアントの接続設定と挙動により一概にご案内できませんが、例えば Chrome などのブラウザが再接続などによって基本的には瞬断以外の影響はないと思われますが、<br>もし少しの切断も許されないような環境でご利用の場合、メンテナンスの時間帯を設置して Application Gateway の設定変更をご実施頂きますようお願い致します。</p>
+<h3 id="設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？"><a href="#設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？" class="headerlink" title="設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？"></a>設定変更してから既存接続が切断されるまでどのぐらい時間かかりますか？</h3><p>Azure 基盤側の処理状況によって固定ではありませんが、数十秒から数分間かかる場合は多いと見受けられます。<br>Azure ポータルから設定変更した場合は、下記のような設定変更の通知が出た後、数十秒後に接続済みの TCP コネクションが Application Gateway 側よりクローズされる動作を確認しています。<br><img src="./v2_notification.png"></p>
+<h3 id="Application-Gateway-v2-が-KeyVault-と連携している場合では、Key-Vault-側で証明書を更新した際にも同じように瞬断などの影響を受けますか？"><a href="#Application-Gateway-v2-が-KeyVault-と連携している場合では、Key-Vault-側で証明書を更新した際にも同じように瞬断などの影響を受けますか？" class="headerlink" title="Application Gateway v2 が KeyVault と連携している場合では、Key Vault 側で証明書を更新した際にも同じように瞬断などの影響を受けますか？"></a>Application Gateway v2 が KeyVault と連携している場合では、Key Vault 側で証明書を更新した際にも同じように瞬断などの影響を受けますか？</h3><p>以下の公開ドキュメントに記載されている通り、KeyVault と連携した場合は証明書更新が検出されると Application Gateway に自動的に反映する動作となります。</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/application-gateway/key-vault-certs">Key Vault 証明書を使用した TLS 終端</a></li>
 </ul>
