@@ -1,6 +1,6 @@
 ---
 title: Azure VPN ゲートウェイにメンテナンスがあったか確認する方法
-date: 2021-7-28 00:00
+date: 2021-07-28 00:00:00
 tags:
   - Network
   - VPN Gateway
