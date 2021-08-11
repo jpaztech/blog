@@ -15,6 +15,7 @@ Azure VM では、一部リージョンのみとはなりますが可用性ゾ�
   [https://docs.microsoft.com/ja-jp/azure/availability-zones/az-region](https://docs.microsoft.com/ja-jp/azure/availability-zones/az-region)
 
 可用性ゾーンを利用した VM を作成したい場合、VM で利用されるディスクも可用性ゾーンを利用している必要があり、一般に VM を新規デプロイする場合にのみ、この利用有無を設定できます。
+<!-- more -->
 
 しかし、運用をしている中で VM を可用性ゾーンへ組み入れる必要が発生したり、逆に、可用性ゾーンに組み入れられていると一部機能が対応しないため、可用性ゾーンから外したいという状況もあるかと思います。
 
