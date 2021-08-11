@@ -11,7 +11,7 @@ tags:
 
 Azure VM では、一部リージョンのみとはなりますが可用性ゾーンをサポートしています。
 
-- Azure での Availability Zones をサポートしているリージョン
+> Azure での Availability Zones をサポートしているリージョン
   [https://docs.microsoft.com/ja-jp/azure/availability-zones/az-region](https://docs.microsoft.com/ja-jp/azure/availability-zones/az-region)
 
 可用性ゾーンを利用した VM を作成したい場合、VM で利用されるディスクも可用性ゾーンを利用している必要があり、一般に VM を新規デプロイする場合にのみ、この利用有無を設定できます。
