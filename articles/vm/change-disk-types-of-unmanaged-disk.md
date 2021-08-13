@@ -69,20 +69,20 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
    ※コピー先のストレージ カウントは パフォーマンス: Premiumで作成します。
    ※コピー元と同じリージョン (VM を作成するリージョン) にストレージ アカウントを作成する必要があります。
 
-   ![](./change-disk-types-of-unmagaged-disk/01.png)
+   ![](./change-disk-types-of-unmanaged-disk/01.png)
 
 3. 作成した Preimum ストレージ アカウント内にコンテナーを作成します。
    ※下記では、"premium123container" という名前のコンテナーを作成しています。
 
-   ![](./change-disk-types-of-unmagaged-disk/02.png)
+   ![](./change-disk-types-of-unmanaged-disk/02.png)
 
 4. 作成したコンテナー内で、[共有アクセス トークン] を選択し、アクセス許可を "不変ストレージ" を除くすべての項目を許可し、[SAS トークンおよび URL を生成] をクリックします。
 
-   ![](./change-disk-types-of-unmagaged-disk/03.png)
+   ![](./change-disk-types-of-unmanaged-disk/03.png)
 
 5. 生成された [BLOB SAS URL] をテキスト エディタ等にコピーしておきます。
 
-   ![](./change-disk-types-of-unmagaged-disk/04.png)
+   ![](./change-disk-types-of-unmanaged-disk/04.png)
 
    コピーした [BLOB SAS URL] を下記の通り編集します。
 
@@ -96,15 +96,15 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
 6. コピー元の Standard ストレージ アカウントを選択し、コンテナー内にあります当該 VHD ファイルをクリックします。
    ※下記では、"vhds" という名前に VHD ファイルが格納されています。
 
-  　![](./change-disk-types-of-unmagaged-disk/05.png)
+  　![](./change-disk-types-of-unmanaged-disk/05.png)
 
 7. [共有アクセストークン]を選択し、 [SAS トークンおよび URL を生成] をクリックします。
 
-   ![](./change-disk-types-of-unmagaged-disk/06.png)
+   ![](./change-disk-types-of-unmanaged-disk/06.png)
 
 8. 表示された [BLOB SAS URL] をコピーします。
 
-   ![](./change-disk-types-of-unmagaged-disk/07.png)
+   ![](./change-disk-types-of-unmanaged-disk/07.png)
 
     コピーした [BLOB SAS URL] を下記の通り編集します。
     変更後に追記する VHD 名は、コピー後に格納される VHD ファイル名になりますので、コピー元と同様の名前でも任意の名前でも問題ありません。
@@ -136,7 +136,7 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
 
 10. コピーが成功したら、Premium ストレージのコンテナー内に当該vhdファイルがコピーされていることが確認できます。
 
-   ![](./change-disk-types-of-unmagaged-disk/08.png)
+   ![](./change-disk-types-of-unmanaged-disk/08.png)
 
 ### Premium ストレージ アカウントにコピーした VHD ファイルから VM を作成する
 
