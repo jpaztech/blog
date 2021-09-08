@@ -20,7 +20,7 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
 > 非管理ディスク (アンマネージド ディスク) は現状サポートされておりますが、管理ディスク (マネージド ディスク) のご利用を推奨しております。
 >　
 > 非管理ディスクの種類の変更をご検討の際には、管理ディスクへの移行につきましてもご検討ください。
-> なお、管理ディスクぼり点に関してご確認いただく場合は、下記をご参照ください。
+> なお、管理ディスクの利点に関してご確認いただく場合は、下記をご参照ください。
 > 　
 >> Azure IaaS VM ディスクと Premium マネージド ディスクおよびアンマネージド ディスクについてよく寄せられる質問
 >> [https://docs.microsoft.com/ja-jp/azure/virtual-machines/faq-for-disks](https://docs.microsoft.com/ja-jp/azure/virtual-machines/faq-for-disks)
@@ -46,10 +46,10 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
 それぞれの導入については、下記公開情報をご参照の上ご実施ください。
 
 > Azure PowerShell：
-> [https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-6.2.1](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-6.2.1)
+> [https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps)
 	
 > AzCopy：
-> [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10?toc=%2fazure%2fstorage%2fblobs%2ftoc.json](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10?toc=%2fazure%2fstorage%2fblobs%2ftoc.json)
+> [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10)
 
 > AzCopy を使ってみる
 > [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10)
@@ -66,7 +66,8 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
 1. Azure Portal より [ストレージ アカウント] を開きます。
  
 2. [+ 作成] をクリックしてコピー先のストレージ アカウントを作成します。
-   ※コピー先のストレージ カウントは パフォーマンス: Premiumで作成します。
+   ※コピー先のストレージ カウントは「パフォーマンス: Premium」で作成します。
+   ※コピー先のストレージ カウントは「Premium アカウントの種類: ページ BLOB」で作成します。
    ※コピー元と同じリージョン (VM を作成するリージョン) にストレージ アカウントを作成する必要があります。
 
    ![](./change-disk-types-of-unmanaged-disk/01.png)
@@ -90,7 +91,7 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
    `https://[ストレージ アカウント名].blob.core.windows.net/[コンテナー名]?`
    変更後：
    `https://[ストレージ アカウント名].blob.core.windows.net/[コンテナー名]/[VHD 名].vhd?`
-   <span style="color:red;">※ ここで編集した URL は 後の手順 9 にて、"コピー元の URL" として使います。</span>
+   <span style="color:red;">※ ここで編集した URL は 後の手順 9 にて、"コピー先の URL" として使います。</span>
 
  
 6. コピー元の Standard ストレージ アカウントを選択し、コンテナー内にあります当該 VHD ファイルをクリックします。
@@ -113,7 +114,7 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
    `https://[ストレージ アカウント名].blob.core.windows.net/[コンテナー名]?`
    変更後：
    `https://[ストレージ アカウント名].blob.core.windows.net/[コンテナー名]/[VHD 名].vhd?`
-   <span style="color:red;">※ ここで編集した URL は 後の手順 9 にて、"コピー先の URL" として使います。</span>
+   <span style="color:red;">※ ここで編集した URL は 後の手順 9 にて、"コピー元の URL" として使います。</span>
  
 9. AzCopy コマンドを実行します。
 
@@ -126,12 +127,12 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
      実行例：
      `azcopy copy “https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/osdisk.vhd?略" “https://xxxxxxxx.blob.core.windows.net/vhds/osdiskcopy.vhd?略" –blob-type PageBlob`
 
-   これにより、コピー先のリージョンのストレージアカウントにコピー元 VM の VHD ファイルをコピーすることができます。
+   これにより、コピー先のリージョンのストレージ アカウントに VHD ファイルをコピーすることができます。
    コピーが100% まで進行した後、少しおいて Job Summary が表示されます。
    Final Job Status: Completed と表示されていれば完了となります。
 
    > ご参考) AzCopy を使用して Azure ストレージ アカウント間で BLOB をコピーする
-   > [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-blobs-copy?toc=/azure/storage/blobs/toc.json#copy-a-blob](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-blobs-copy?toc=/azure/storage/blobs/toc.json#copy-a-blob)
+   > [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-blobs-copy#copy-a-blob](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-blobs-copy#copy-a-blob)
    > 参照箇所：BLOB をコピーする
 
 10. コピーが成功したら、Premium ストレージのコンテナー内に当該vhdファイルがコピーされていることが確認できます。
@@ -142,7 +143,7 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
 
 既存の VHD ファイルから VM を作成いただくには、Azure PowerShell や Azure CLI を用いて作成いただく必要があります。
 
-下記のブログ記事のアーカイブには、Azure PowerShell を用いて、ストレージ アカウントのコンテナー内にある vhd ファイルから非管理ディスクの VM を作成するが紹介されています。
+下記のブログ記事のアーカイブには、Azure PowerShell を用いて、ストレージ アカウントのコンテナー内にある vhd ファイルから非管理ディスクの VM を作成する手順が紹介されています。
 こちらは、Az モジュールではなく、古いモジュールである AzureRM を用いたスクリプトで記載されております。
 
 > ご参考) 特殊化 VHD ファイルから ARM 環境へ仮想マシンをデプロイする Azure PowerShell
@@ -150,7 +151,9 @@ OS ディスク (非管理ディスク) の種類を変更いただく場合に�
 
 本記事では、上記記事のスクリプトの Az モジュール版をご紹介いたします。
 
-なお、ご紹介するスクリプトは、リソース グループ / 仮想ネットワーク / サブネット / ネットワーク セキュリティ グループ (NSG) / 可用性セット (任意) は事前に作成されていることを前提としています。
+ご紹介するスクリプトは、**Windows VM** を作成するサンプル スクリプトになります。
+リソース グループ / 仮想ネットワーク / サブネット / ネットワーク セキュリティ グループ (NSG) / 可用性セット (任意) は事前に作成されていることを前提としています。
+
 本スクリプトで作成されないリソースは、必要に応じて別途作成をお願いいたします。
 
 また、スクリプトで作成する NSG は、仮想マシンのネットワーク インターフェース (NIC) に定義されます。
@@ -180,13 +183,13 @@ $OSdiskName = "OSディスク名"
 $VnetName = "仮想ネットワーク名"
 $SubnetName = "サブネット名"
 $NsgName = "ネットワーク セキュリティ グループ (NSG) 名"
-$Nic1Name = "ネットワーク インターフェイス (NIC) 名"
+$NicName = "ネットワーク インターフェイス (NIC) 名"
 $PrivateIpName = "プライベート IP アドレス"
 # 可用性セットは任意
 $AvailabilitySetName = "可用性セット名"
 
 #ログインおよびサブスクリプションの指定
-Login-AzAccount
+Connect-AzAccount
 Select-AzSubscription -SubscriptionId $SubscriptionId
 
 #対象の仮想ネットワーク、サブネットの情報を取得
@@ -196,18 +199,18 @@ $Subnet = Get-AzVirtualNetworkSubnetConfig -Name $SubnetName -VirtualNetwork $Vn
 #NSG の情報を取得
 $Nsg = Get-AzNetworkSecurityGroup -ResourceGroupName $ResourceGroupName -Name $NsgName
 
-#仮想マシンの設定を定義
+#仮想マシンの設定を定義 (Windows VM)
 $VmConfig = New-AzVMConfig -Name $VmName -VMSize $VmSize
 $VmConfig = Set-AzVMOSDisk -VM $VmConfig -VhdUri $VhdUri -Name $OSdiskName -CreateOption attach -Windows -Caching ReadWrite
 
 #NIC を作成
-$Nic1 = New-AzNetworkInterface -Name $Nic1Name -ResourceGroupName $ResourceGroupName -Location $Location -SubnetId $Subnet.Id -PrivateIpAddress $PrivateIpName -NetworkSecurityGroupId $Nsg.Id
+$Nic = New-AzNetworkInterface -Name $NicName -ResourceGroupName $ResourceGroupName -Location $Location -SubnetId $Subnet.Id -PrivateIpAddress $PrivateIpName -NetworkSecurityGroupId $Nsg.Id
 
 #NIC の情報を取得
-$Nic1 = Get-AzNetworkInterface -ResourceGroupName $ResourceGroupName -Name $Nic1Name
+$Nic = Get-AzNetworkInterface -ResourceGroupName $ResourceGroupName -Name $NicName
 
 #仮想マシンの設定の定義に NIC を追加
-$VmConfig = Add-AzVMNetworkInterface -VM $VmConfig -NetworkInterface $Nic1
+$VmConfig = Add-AzVMNetworkInterface -VM $VmConfig -NetworkInterface $Nic
 $VmConfig.NetworkProfile.NetworkInterfaces.Item(0).Primary = $true
 
 #可用性セットの情報を取得 (任意)
