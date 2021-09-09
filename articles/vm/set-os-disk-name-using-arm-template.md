@@ -15,7 +15,7 @@ Azure VM を作成いただく際、OS ディスクのリソース名は自動�
 
 <!-- more -->
 
-既存の VM の OS ディスクのリソース名を変更する手順については [既存 VM の OS ディスクのリソース名を変更する](https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/) に記載されていますので、併せてご確認いただけますと幸いです。
+既存の VM の OS ディスクのリソース名を変更する手順については、ブログ [既存 VM の OS ディスクのリソース名を変更する](https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/) に記載されていますので、併せてご確認いただけますと幸いです。
 
 ---
 
