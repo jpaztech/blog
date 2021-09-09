@@ -15,11 +15,14 @@ Azure VM を作成いただく際、OS ディスクのリソース名は自動�
 
 <!-- more -->
 
-既存の VM の OS ディスクのリソース名を変更する手順については [藤澤さんのブログ](藤澤さんのブログへのリンク) に記載されていますので、併せてご確認いただけますと幸いです。
+既存の VM の OS ディスクのリソース名を変更する手順については [既存 VM の OS ディスクのリソース名を変更する](https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/) に記載されていますので、併せてご確認いただけますと幸いです。
 
 ---
 
 ## 概要
+下記の手順で OS ディスク名を指定の上、VM をデプロイいたします。
+Windows VM、Linux VM ともに同様の手順となります。
+
 1. Azure Portal より ARM テンプレートを用意する
 2. OS ディスクの名前を設定する
 3. VM をデプロイする 
@@ -69,9 +72,9 @@ ARM テンプレート内の下記箇所を追記して、OS ディスクの名�
 
 ARM テンプレートのパラメータに関する詳細内容に関しましては
 下記の弊社公式ドキュメントをご参照ください。
- 
-参考：Azure Resource Manager テンプレートの仮想マシン
-https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/template-description
+
+> ご参考：Azure Resource Manager テンプレートの仮想マシン
+> https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/template-description
 
 ## 3. VM をデプロイする 
 必要な項目を設定し、画面下部にある  [確認と作成] を選択します。
