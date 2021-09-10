@@ -9,13 +9,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
-    
-    <lastmod>2021-09-10</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/win2016-jp-lpk-issue/</loc>
     
     <lastmod>2021-09-10</lastmod>
@@ -38,6 +31,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-replica-2/</loc>
+    
+    <lastmod>2021-09-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
     
     <lastmod>2021-09-10</lastmod>
     
@@ -100,13 +100,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/introduction-performance-tier-ssd/</loc>
-    
-    <lastmod>2021-09-10</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/linux-expand-os-disk/</loc>
     
     <lastmod>2021-09-10</lastmod>
@@ -122,6 +115,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/</loc>
+    
+    <lastmod>2021-09-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/introduction-performance-tier-ssd/</loc>
     
     <lastmod>2021-09-10</lastmod>
     
@@ -331,27 +331,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-maintenance-for-node/</loc>
-    
-    <lastmod>2021-09-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/information/test/</loc>
-    
-    <lastmod>2021-09-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/20200716-net/</loc>
-    
-    <lastmod>2021-09-10</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/AzureFrontDoor-LockDown/</loc>
     
     <lastmod>2021-09-10</lastmod>
@@ -395,6 +374,27 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
+    
+    <lastmod>2021-09-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-maintenance-for-node/</loc>
+    
+    <lastmod>2021-09-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/information/test/</loc>
+    
+    <lastmod>2021-09-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/20200716-net/</loc>
     
     <lastmod>2021-09-10</lastmod>
     
