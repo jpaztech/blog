@@ -6,7 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
-- [非管理ディスクの種類を Standard HDD から Premium SSD へ変更する手順](./articles/vm/change-disk-types-of-unmagaged-disk.md)
+- [既存 VM の OS ディスクのリソース名を変更する](./articles/vm/how-to-change-os-disk-name.md)
 - [VM の再作成により可用性ゾーンを変更する (Azure ポータル編)](./articles/vm/change-availability-zone-from-portal.md)
 - [Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない (修正展開済み)](./articles/vm/win2016-jp-lpk-issue.md)
 - [Azure Windows VM で完全メモリ ダンプを採取する方法](./articles/vm/how_to_get_a_complete_memory_dump.md)
