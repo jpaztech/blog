@@ -6,6 +6,12 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [非管理ディスクの種類を Standard HDD から Premium SSD へ変更する手順](./articles/vm/change-disk-types-of-unmagaged-disk.md)
+- [VM の再作成により可用性ゾーンを変更する (Azure ポータル編)](./articles/vm/change-availability-zone-from-portal.md)
+- [Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない (修正展開済み)](./articles/vm/win2016-jp-lpk-issue.md)
+- [Azure Windows VM で完全メモリ ダンプを採取する方法](./articles/vm/how_to_get_a_complete_memory_dump.md)
+- [Azure 仮想マシンにおける操作 (再起動、停止/起動、再デプロイ、再適用) について](./articles/vm/vm-operation.md)
+- [Azure 仮想マシンの再デプロイ](./articles/vm/vm-redeploy.md)
 - [Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)](./articles/vm/windows-noboot-summary.md)
 - [【管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順](./articles/vm/noboot-recovery-managed-disk.md)
 - [【非管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順](./articles/vm/noboot-recovery-unmanaged-disk.md)
@@ -31,7 +37,9 @@
 - [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/storage/storageFirewall-403Error.md)
 
 ## Network
-- [カスタム DNS サーバー よくあるお問い合わせ -FAQ](./articles\network\custom-dns-faq.md)
+- [Azure VPN ゲートウェイにメンテナンスがあったか確認する方法](./articles/network/vpngw-how-to-check-maintenance.md)
+- [Application Gateway 設定変更の影響](./articles/network/appgw-configchange.md)
+- [カスタム DNS サーバー よくあるお問い合わせ -FAQ](./articles/network/custom-dns-faq.md)
 - [Azure Front Door を用いた App Service などへのセキュアな接続の構成](./articles/network/AzureFrontDoor-LockDown.md)
 - [Azure Firewall の各ルールの動作について](./articles/network/irewall-rules.md)
 - [VPN Gateway よくあるお問合せ - FAQ](./articles/network/vpngw-FAQ1.md)
