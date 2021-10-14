@@ -3,7 +3,7 @@ title: Application Gateway - App Service 間のリダイレクトの問題
 date: 2021-10-14 12:00:00 
 tags: 
   - Network
-  - ApplicationGateway
+  - Application Gateway
   - リダイレクト
 ---
 
@@ -39,7 +39,7 @@ Application Gateway のバックエンドにマルチテナントである App S
 
 現在発生している問題がリダイレクトの問題かどうか確認しましょう。確認にはブラウザの F12 キーを押し開発者ツールを使用し、Network タブを確認します。※[参考サイトはこちら](https://docs.microsoft.com/ja-jp/azure/azure-portal/capture-browser-trace)
 
-確認してみるとクライアントから 「www.maotsunet.com」 に接続すると、応答ヘッダー内の Location ヘッダーにApp Service の既定の FQDN が入り、リダイレクトの指示がされています
+確認してみるとクライアントから 「www.maotsunet.com」 に接続すると、応答ヘッダー内の Location ヘッダーにApp Service の既定の FQDN が入り、リダイレクトの指示がされています。
 
 ![](./appgw-appservice-redirectissue/02.png)
 
@@ -79,59 +79,62 @@ Application Gateway V2 から追加された「書き換え規則」を使いま
 **3. 動作の確認**
 それぞれの作業内容についてご説明します。
 
-## 1. App Service側にもカスタムドメイン「www.maotsunet.com」 を登録する
+--------------------------------------------------------------------------------
+
+### 1. App Service側にもカスタムドメイン「www.maotsunet.com」 を登録する
 App Service はマルチテナント サービスのため、IP アドレスでのリクエストを受け入れることはできません。
 そのため、既定の FQDN 以外で接続したい場合は事前にカスタム ドメインの登録を行う必要があります。
 App Service にカスタム ドメインを設定する際に、カスタム ドメインの CNAME が既にApplication Gatewayなど WebApps 以外に向いている場合、カスタム ドメインの設定はできません。
-このような場合、awverify  (※) という名前の CNAME レコードを WebApps 向けに登録頂くことで回避することが可能です。
-例えば、カスタム ドメインにwww.maotsunet.com を登録しようとしている場合 ｍaotsunet.com の DNS ゾーンに以下のレコードを追加します。
+このような場合、App Service の「カスタム ドメインの検証 ID」を使用し、asuid という名前の TXT レコードを作成することで回避することが可能です。
+例えば、カスタム ドメインにwww.maotsunet.com を登録しようとしている場合 ｍaotsunet.com の DNS ゾーンに以下のレコードを追加します。App Service 側にカスタム ドメインを追加する作業の詳細については[こちら](https://docs.microsoft.com/ja-jp/azure/app-service/app-service-web-tutorial-custom-domain?tabs=cname#3-get-a-domain-verification-id)もご参照ください。
 
-```
-1)	「ｍaotsunet.com」 ゾーンを管理しているDNS サーバーに以下のようなレコードを追加します。
-- 名前：awverify.<ホスト名>
-- 種類：CNAME
-- 値：awverify.<Web Apps 名>.azurewebsites.net 
+
+1) App Service のカスタム ドメインの項目から「カスタム ドメイン検証 ID」をコピーします。
+![カスタム ドメインの検証 ID をコピー](./appgw-appservice-redirectissue/dnstxt.jpg)
+
+2)	「ｍaotsunet.com」 ゾーンを管理しているDNS サーバーに以下のようなレコードを追加します。
+- 名前：asuid.<ホスト名>
+- 種類：TXT
+- 値：コピーしたカスタムドメインの検証 ID
 
 【例】www.maotsunet.com というカスタムドメインで、 maotsuwebapp.azurewebsites.net という App Service のドメインの場合
-- 名前：awverify.www
-- 種類：CNAME
-- 値：awverify.maotsuwebapp.azurewebsites.net
-```
+- 名前：asuid.www
+- 種類：TXT
+- 値：123456789123456789123456789XXXXXXX
+
 (※) Azure DNS でゾーンの管理している場合は下記のように構成します
 
-![](./appgw-appservice-redirectissue/04.png)
+![](./appgw-appservice-redirectissue/azdns.jpg)
 
 これによって、カスタム ドメイン設定時の検証において、awverify のレコードを参照して検証を行うため、元のホスト名の CNAME が Application Gateway など WebApps 以外に向いている状態でカスタム ドメインが設定可能となります。
 
-```
-２）対象の WebApps の設定にてカスタム ドメインの 「検証」 ・ 「追加」 を行います
-```
-![](./appgw-appservice-redirectissue/05.png)
+
+3）対象の WebApps の設定にてカスタム ドメインの 「検証」 ・ 「カスタム ドメインの追加」 を行います
+![](./appgw-appservice-redirectissue/domainkensho.jpg)
 
 <span style="color: red"> (注意)
 Application Gateway と App Service 間で HTTPS プロトコルを使用する場合、カスタム ドメインの証明書を App Service 側にも設定する必要がありますのでご留意ください。また、作成した awverify の DNS レコードは WebApps 側のカスタム ドメインの設定後は不要となりますので、削除頂いても問題ございません。</span>
 
-## 2. Application Gateway 側で HTTP 設定とカスタム プローブの変更
+### 2. Application Gateway 側で HTTP 設定とカスタム プローブの変更
 次に Application Gateway 側の設定を変更します。
 
-```
 1）	管理ポータルより、正常性プローブを選択し、以下のように変更し保存します
     ※下記以外はそのままの設定で問題ありません
 
-・	ホスト： WebApps の既定の FQDN
+・	ホスト： カスタム ドメイン
 ・	ホスト名をバックエンド HTTP 設定から選択します：いいえ
-```
-![](./appgw-appservice-redirectissue/062.jpg)
-```
+
+![](./appgw-appservice-redirectissue/06.jpg)
+
 2）	HTTP 設定にて 「新しいホスト名でオーバーライドする」 で いいえ にチェックをいれ保存します
 ※カスタム プローブは １）で変更したものが紐づいている状態となります（ホスト名の箇所でカスタム ドメインを入れても問題ありません）
-```
+
 ![](./appgw-appservice-redirectissue/07.png)
 
 <span style="color: red">(注意)
- V2 を利用する場合、この変更により Application Gateway - App Service 間で HTTPS プロトコルを使用する場合にライブトラフィックで利用される証明書はカスタム ドメインの証明書となります。バックエンド側に登録したカスタム ドメイン用の証明書が自己署名証明書など、公的機関から発行されていない場合、Application Gateway の HTTP 設定でルート証明書をアップロードする必要があります。</span> ※この動作ついては [こちら](https://docs.microsoft.com/ja-jp/azure/application-gateway/ssl-overview#end-to-end-tls-with-the-v2-sku) のドキュメントをご確認ください。
+ V2 を利用する場合、この変更により Application Gateway - App Service 間で HTTPS プロトコルを使用する場合にライブトラフィックおよびプローブで利用される証明書はカスタム ドメインの証明書となります。バックエンド側に登録したカスタム ドメイン用の証明書が自己署名証明書など、公的機関から発行されていない場合、Application Gateway の HTTP 設定でルート証明書をアップロードする必要があります。</span> ※この動作ついては [こちら](https://docs.microsoft.com/ja-jp/azure/application-gateway/ssl-overview#end-to-end-tls-with-the-v2-sku) のドキュメントをご確認ください。
 
-## 3. 動作の確認
+### 3. 動作の確認
 設定は以上です。最後に再度意図した動作となっているかどうかご確認します。
 再度クライアントから Application Gateway にアクセスした際の F12 のログを確認すると Location ヘッダーの内容がカスタム ドメインとなっていることが確認できます。
 
