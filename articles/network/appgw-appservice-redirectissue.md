@@ -64,7 +64,7 @@ Application Gateway V2 から追加された「書き換え規則」を使いま
 
 #### 必要な作業
  * 「If（条件）」の一致させるパターン ： `(https?):\/\/.*azurewebsites\.net(.*)$`
- * 「Then（結果）」 のヘッダー値 ：`{http_resp_Location_1}://<span style="color: red">カスタム ドメイン</span>{http_resp_Location_2}`
+ * 「Then（結果）」 のヘッダー値 ：`{http_resp_Location_1}://<カスタム ドメイン名>{http_resp_Location_2}`
 
 ![](./appgw-appservice-redirectissue/03.png)
 
