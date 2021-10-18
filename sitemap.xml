@@ -23,13 +23,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-replica-1/</loc>
     
     <lastmod>2021-10-18</lastmod>
@@ -44,7 +37,21 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-redeploy/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -79,21 +86,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/plwv-bt0/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -121,6 +114,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/introduction-performance-tier-ssd/</loc>
     
     <lastmod>2021-10-18</lastmod>
@@ -142,14 +142,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/drive-letter-changed-2/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/drive-letter-changed-2/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -212,6 +212,34 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/storage/addsAuthforAzureFiles/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/other/technical_support_engineer_explained/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
     
     <lastmod>2021-10-18</lastmod>
@@ -226,14 +254,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/storage/addsAuthforAzureFiles/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/other/technical_support_engineer_explained/</loc>
+    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -254,14 +275,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
+    <loc>https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -289,7 +303,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
+    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/cdn-specific-sku/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -303,7 +324,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -324,14 +345,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/cdn-specific-sku/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -352,14 +366,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -415,13 +422,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/restore-vm-by-swap-manageddisk/</loc>
     
     <lastmod>2021-10-18</lastmod>
@@ -437,6 +437,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/upgrade-backup-container-asm2arm/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
@@ -527,6 +534,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/applicationgaetway-waf-01/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
+    
+    <lastmod>2021-10-18</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
     
     <lastmod>2021-10-18</lastmod>
@@ -549,20 +570,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/application-gateway-waf-vulnerability-detection/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/applicationgaetway-waf-01/</loc>
-    
-    <lastmod>2021-10-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
     
     <lastmod>2021-10-18</lastmod>
     
