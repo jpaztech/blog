@@ -63,8 +63,8 @@ Application Gateway V2 から追加された「書き換え規則」を使いま
 ※書き換え規則の設定方法の詳細については[こちら](https://docs.microsoft.com/ja-jp/azure/application-gateway/rewrite-http-headers-url#modify-a-redirection-url)もご参照ください。
 
 #### 必要な作業
- * 「If（条件）」の一致させるパターン ： (https?):\/\/.*azurewebsites\.net(.*)$
- * 「Then（結果）」 のヘッダー値 ：{http_resp_Location_1}://<span style="color: red">カスタム ドメイン</span>{http_resp_Location_2}
+ * 「If（条件）」の一致させるパターン ： `(https?):\/\/.*azurewebsites\.net(.*)$`
+ * 「Then（結果）」 のヘッダー値 ：`{http_resp_Location_1}://<span style="color: red">カスタム ドメイン</span>{http_resp_Location_2}`
 
 ![](./appgw-appservice-redirectissue/03.png)
 
@@ -152,7 +152,6 @@ Application Gateway と App Service 間で HTTPS プロトコルを使用する�
 
 <span id="reference"></span>
 ## <a href="#reference">参考情報</a>
-
 - [チュートリアル:既存のカスタム DNS 名を Azure App Service にマップする](https://docs.microsoft.com/ja-jp/azure/app-service/app-service-web-tutorial-custom-domain?tabs=cname#map-your-domain)
 
 - [Application Gateway での TLS 終了とエンド ツー エンド TLS の概要](https://docs.microsoft.com/ja-jp/azure/application-gateway/ssl-overview)
