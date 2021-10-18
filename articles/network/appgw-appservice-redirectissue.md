@@ -4,7 +4,6 @@ date: 2021-10-14 12:00:00
 tags: 
   - Network
   - Application Gateway
-  - リダイレクト
 ---
 
 こんにちは、Azure テクニカル サポート チームの大塚です。
