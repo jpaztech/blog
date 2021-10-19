@@ -105,14 +105,14 @@ App Service にカスタム ドメインを設定する際に、カスタム ド
 
 ![](./appgw-appservice-redirectissue/azdns.jpg)
 
-これによって、カスタム ドメイン設定時の検証において、awverify のレコードを参照して検証を行うため、元のホスト名の CNAME が Application Gateway など WebApps 以外に向いている状態でカスタム ドメインが設定可能となります。
+これによって、カスタム ドメイン設定時の検証において、asuid のレコードを参照して検証を行うため、元のホスト名の CNAME が Application Gateway など WebApps 以外に向いている状態でカスタム ドメインが設定可能となります。
 
 
 3）対象の WebApps の設定にてカスタム ドメインの 「検証」 ・ 「カスタム ドメインの追加」 を行います
 ![](./appgw-appservice-redirectissue/domainkensho.jpg)
 
 <span style="color: red"> (注意)
-Application Gateway と App Service 間で HTTPS プロトコルを使用する場合、カスタム ドメインの証明書を App Service 側にも設定する必要がありますのでご留意ください。また、作成した awverify の DNS レコードは WebApps 側のカスタム ドメインの設定後は不要となりますので、削除頂いても問題ございません。</span>
+Application Gateway と App Service 間で HTTPS プロトコルを使用する場合、カスタム ドメインの証明書を App Service 側にも設定する必要がありますのでご留意ください。また、作成した asuid の DNS レコードは WebApps 側のカスタム ドメインの設定後は不要となりますので、削除頂いても問題ございません。</span>
 
 ### 2. Application Gateway 側で HTTP 設定とカスタム プローブの変更
 次に Application Gateway 側の設定を変更します。
