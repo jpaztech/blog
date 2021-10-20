@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/08.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/09.png">
 <meta property="article:published_time" content="2021-10-14T03:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-18T09:49:18.291Z">
+<meta property="article:modified_time" content="2021-10-20T04:13:12.136Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Application Gateway">
 <meta property="article:tag" content="Network">
@@ -114,7 +114,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+29768c6d-e8ee-515f-8244-4bcbc8488d1f%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+-+App+Service+%E9%96%93%E3%81%AE%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%81%AE%E5%95%8F%E9%A1%8C%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fappgw-appservice-redirectissue%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fappgw-appservice-redirectissue.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fappgw-appservice-redirectissue.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/" data-id="ckuwh7acz001l0mnp4bu34xn7" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/" data-id="ckuz02s4l001l0no2axwv7y4e" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -175,9 +175,9 @@
 </ul>
 <p>(※) Azure DNS でゾーンの管理している場合は下記のように構成します</p>
 <p><img src="/blog/network/appgw-appservice-redirectissue/azdns.jpg"></p>
-<p>これによって、カスタム ドメイン設定時の検証において、awverify のレコードを参照して検証を行うため、元のホスト名の CNAME が Application Gateway など WebApps 以外に向いている状態でカスタム ドメインが設定可能となります。</p>
+<p>これによって、カスタム ドメイン設定時の検証において、asuid のレコードを参照して検証を行うため、元のホスト名の CNAME が Application Gateway など WebApps 以外に向いている状態でカスタム ドメインが設定可能となります。</p>
 <p>3）対象の WebApps の設定にてカスタム ドメインの 「検証」 ・ 「カスタム ドメインの追加」 を行います<br><img src="/blog/network/appgw-appservice-redirectissue/domainkensho.jpg"></p>
-<p><span style="color: red"> (注意)<br>Application Gateway と App Service 間で HTTPS プロトコルを使用する場合、カスタム ドメインの証明書を App Service 側にも設定する必要がありますのでご留意ください。また、作成した awverify の DNS レコードは WebApps 側のカスタム ドメインの設定後は不要となりますので、削除頂いても問題ございません。</span></p>
+<p><span style="color: red"> (注意)<br>Application Gateway と App Service 間で HTTPS プロトコルを使用する場合、カスタム ドメインの証明書を App Service 側にも設定する必要がありますのでご留意ください。また、作成した asuid の DNS レコードは WebApps 側のカスタム ドメインの設定後は不要となりますので、削除頂いても問題ございません。</span></p>
 <h3 id="2-Application-Gateway-側で-HTTP-設定とカスタム-プローブの変更"><a href="#2-Application-Gateway-側で-HTTP-設定とカスタム-プローブの変更" class="headerlink" title="2. Application Gateway 側で HTTP 設定とカスタム プローブの変更"></a>2. Application Gateway 側で HTTP 設定とカスタム プローブの変更</h3><p>次に Application Gateway 側の設定を変更します。</p>
 <p>1）    管理ポータルより、正常性プローブを選択し、以下のように変更し保存します<br>    ※下記以外はそのままの設定で問題ありません</p>
 <p>・    ホスト： カスタム ドメイン<br>・    ホスト名をバックエンド HTTP 設定から選択します：いいえ</p>
