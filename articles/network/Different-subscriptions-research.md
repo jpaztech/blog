@@ -22,7 +22,7 @@ Azure サポート要求を作成する
 >サポート リクエストを作成するには、[所有者](https://docs.microsoft.com/ja-jp/azure/role-based-access-control/built-in-roles#owner)か、[共同作成者](https://docs.microsoft.com/ja-jp/azure/role-based-access-control/built-in-roles#contributor)か、またはサブスクリプション レベルで[サポート リクエスト共同作成者](https://docs.microsoft.com/ja-jp/azure/role-based-access-control/built-in-roles#support-request-contributor)ロールが割り当てられている必要があります。  
 >Azure Active Directory シナリオなどのサブスクリプションを使用せずにサポート リクエストを作成するには、[管理者](https://docs.microsoft.com/ja-jp/azure/active-directory/roles/permissions-reference)である必要があります。
  
-本ポリシーは数年来存在しており、原則としてこのポリシーに従って運用を行ってまいりましたが、<br>これまで、例外的に、ユーザーからの権限を有する証跡などの提示などがなされた場合に対応が許容されるケースが存在しました。<br>一方で、[昨今の大規模なサイバー攻撃](<br>)に代表される、顧客情報漏洩のリスクが日々高まる状況となっています。<br>上記ポリシーをあらためてシステマチックに実装し、徹底することで、サポート経由でのソーシャル ハッキング、あるいはサポート担当者のクレデンシャル漏洩時のサポート ツールの悪用によるリスクを回避します。
+本ポリシーは数年来存在しており、原則としてこのポリシーに従って運用を行ってまいりましたが、<br>これまで、例外的に、ユーザーからの権限を有する証跡などの提示などがなされた場合に対応が許容されるケースが存在しました。<br>一方で、[昨今の大規模なサイバー攻撃](https://blogs.microsoft.com/on-the-issues/2021/10/24/new-activity-from-russian-actor-nobelium/)に代表される、顧客情報漏洩のリスクが日々高まる状況となっています。<br>上記ポリシーをあらためてシステマチックに実装し、徹底することで、サポート経由でのソーシャル ハッキング、あるいはサポート担当者のクレデンシャル漏洩時のサポート ツールの悪用によるリスクを回避します。
 
 上記 URL に記載のとおり、Azure サポートをご利用いただくお客様には、適切な権限 (サブスクリプション レベルにて "所有者"、"共同作成者"、ないしは "サポート リクエスト共同作成者") を設定の上、適切なサブスクリプションとリソース名を選択してお問い合わせください。
 
