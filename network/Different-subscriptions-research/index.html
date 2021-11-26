@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは、Azure サポート チームです。 2021 年 12 月より、Azure ポータルから「サブスクリプション A」でお問い合わせを起票し、お問い合わせ初期あるいは途中に「サブスクリプション B」のリソースの調査を依頼されるケースにおいて、「サブスクリプション B」 側のアクセス権の有無のチェックの徹底が行われます。アクセス権を持たない場合には例外無くお問い合わせ対応を中座させていただく">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2021-11-26T03:30:00.000Z">
-<meta property="article:modified_time" content="2021-11-26T05:04:05.687Z">
+<meta property="article:modified_time" content="2021-11-26T05:40:46.009Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="IaaS">
 <meta property="article:tag" content="VM">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+b2c3f2bf-f101-5648-b323-70a56c8c8609%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E7%99%BA%E8%A1%8C%E6%99%82%E3%81%A8%E3%80%8C%E7%95%B0%E3%81%AA%E3%82%8B%E3%80%8D%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%AA%BF%E6%9F%BB%E4%BE%9D%E9%A0%BC%E3%81%AB%E5%AF%BE%E3%81%97%E3%81%A6%E3%81%AE%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3+%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%81%8C%E5%BC%B7%E5%8C%96%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2FDifferent-subscriptions-research%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2FDifferent-subscriptions-research.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2FDifferent-subscriptions-research.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/Different-subscriptions-research/" data-id="ckwfx6qh3001e0nn7gffu6ami" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/Different-subscriptions-research/" data-id="ckwfyhwh7001e0opabra0gsp1" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -120,7 +120,7 @@
 <blockquote>
 <p>Azure ロールベースのアクセス制御<br>サポート リクエストを作成するには、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/role-based-access-control/built-in-roles#owner">所有者</a>か、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/role-based-access-control/built-in-roles#contributor">共同作成者</a>か、またはサブスクリプション レベルで<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/role-based-access-control/built-in-roles#support-request-contributor">サポート リクエスト共同作成者</a>ロールが割り当てられている必要があります。<br>Azure Active Directory シナリオなどのサブスクリプションを使用せずにサポート リクエストを作成するには、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/active-directory/roles/permissions-reference">管理者</a>である必要があります。</p>
 </blockquote>
-<p>本ポリシーは数年来存在しており、原則としてこのポリシーに従って運用を行ってまいりましたが、<br>これまで、例外的に、ユーザーからの権限を有する証跡などの提示などがなされた場合に対応が許容されるケースが存在しました。<br>一方で、<a href="br">昨今の大規模なサイバー攻撃</a>に代表される、顧客情報漏洩のリスクが日々高まる状況となっています。<br>上記ポリシーをあらためてシステマチックに実装し、徹底することで、サポート経由でのソーシャル ハッキング、あるいはサポート担当者のクレデンシャル漏洩時のサポート ツールの悪用によるリスクを回避します。</p>
+<p>本ポリシーは数年来存在しており、原則としてこのポリシーに従って運用を行ってまいりましたが、<br>これまで、例外的に、ユーザーからの権限を有する証跡などの提示などがなされた場合に対応が許容されるケースが存在しました。<br>一方で、<a target="_blank" rel="noopener" href="https://blogs.microsoft.com/on-the-issues/2021/10/24/new-activity-from-russian-actor-nobelium/">昨今の大規模なサイバー攻撃</a>に代表される、顧客情報漏洩のリスクが日々高まる状況となっています。<br>上記ポリシーをあらためてシステマチックに実装し、徹底することで、サポート経由でのソーシャル ハッキング、あるいはサポート担当者のクレデンシャル漏洩時のサポート ツールの悪用によるリスクを回避します。</p>
 <p>上記 URL に記載のとおり、Azure サポートをご利用いただくお客様には、適切な権限 (サブスクリプション レベルにて “所有者”、”共同作成者”、ないしは “サポート リクエスト共同作成者”) を設定の上、適切なサブスクリプションとリソース名を選択してお問い合わせください。</p>
 <h2 id="異なるサブスクリプションの調査の必要性が発生するシナリオの例"><a href="#異なるサブスクリプションの調査の必要性が発生するシナリオの例" class="headerlink" title="[異なるサブスクリプションの調査の必要性が発生するシナリオの例]"></a>[異なるサブスクリプションの調査の必要性が発生するシナリオの例]</h2><p>ご用件によって、異なるサブスクリプションの調査が必要となるシナリオが存在します。<br>一例として、同じ問題ではあるが、複数のサブスクリプションの参照が求められるトラブルシュートが発生する場合が挙げられます。<br>例えば、「サブスクリプション A」上の VM と「サブスクリプション B」上の VM の間での接続不良が発生し、両方の調査が求められるという状況です。<br>この場合、1 件で異なるサブスクリプションの調査が行える場合がございますが、その際には必ず、異なるサブスクリプション側にも、お問い合わせ起票者と同じユーザー アカウントが、”所有者”、”共同作成者”、ないしは “サポート リクエスト共同作成者”として設定されている必要があります。</p>
 <p>※この設定がない場合、解析を行うツール側でのセキュリティ チェックが行えないため、調査が行えません。<br>そのような場合、以下のワークアラウンドにご協力ください。</p>
