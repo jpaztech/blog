@@ -13,12 +13,11 @@ Azure Files へアクセスした際のログは、Azure Files の診断設定�
 この記事では Azure Files 診断設定機能の設定方法とどのようなログを取得することができるのかを紹介していきます。
 
 <!-- more -->
-本機能は現段階ではプレビューの機能となり商用環境での運用が正式にサポートされるものではございません。また取得できる情報等は予告なく変更される可能性がありますので、あらかじめご了承ください。
-> 本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものとなります。
+本機能は現段階ではプレビューの機能となり、商用環境での運用が正式にサポートされるものではございません。また取得できる情報等は予告なく変更される可能性がありますので、あらかじめご了承ください。
+本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものとなります。
 
-□参考：https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring?tabs=azure-portal#creating-a-diagnostic-setting
- 
 > [!NOTE]
+> 参考：https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring?tabs=azure-portal#creating-a-diagnostic-setting
 >Azure Monitor の Azure Storage ログはパブリック プレビュー段階にあり、すべてのパブリックおよび米国政府クラウド リージョンでプレビュー テスト用に使用できます。 このプレビューでは、BLOB (Azure Data Lake Storage Gen2 を含む)、ファイル、キュー、およびテーブルに対してログが有効になります。 この機能は、Azure Resource Manager デプロイ モデルを使用して作成されたすべてのストレージ アカウントで使用できます。 「ストレージ アカウントの概要」を参照してください。
 
 ---
@@ -27,10 +26,6 @@ Azure Files へアクセスした際のログは、Azure Files の診断設定�
 
 1. Azure Files 診断設定の設定手順
 2. 診断ログ内容を確認
-　2-1.SMB プロトコル・ストレージ アカウントキー認証の場合
-　2-2.SMB プロトコル・ID ベース認証の場合
-　2-3.NFS プロトコルの場合
-　2-4.HTTPS プロトコルの場合 
 
 ## 1. Azure Files 診断設定の設定手順
 
@@ -45,11 +40,12 @@ Azure Files へアクセスした際のログは、Azure Files の診断設定�
 1-4. [診断設定を追加する]をクリックします。
 ![](azureFilesMonitoring/azureFilesMonitoring03.png)
 
-1-5. [診断設定]ページにて、診断設定の名前、取得するログ操作の「カテゴリ (StorageRead(読み取り)、StorageWrite(書き込み)、削除(StorageDelete))」と「宛先の詳細」を選択します。
+1-5. [診断設定]ページにて、「診断設定の名前」、取得するログ操作の「カテゴリ」と「宛先の詳細」を選択します。
 
-診断設定の名前：任意の名前
-ログ：取得するログ操作のカテゴリ (StorageRead(読み取り)、StorageWrite(書き込み)、削除(StorageDelete))
-宛先の詳細：ログの送信先 ※ここではログの送信先としてストレージ アカウントを選択しています。
+- 診断設定の名前：任意の名前
+- ログ：取得するログ操作のカテゴリ (StorageRead(読み取り)、StorageWrite(書き込み)、削除(StorageDelete))
+- 宛先の詳細：ログの送信先 ※ここではログの送信先としてストレージ アカウントを選択しています。
+
 ![](azureFilesMonitoring/azureFilesMonitoring04.png)
 
 これで Azure Files の診断設定が完了です。
@@ -61,41 +57,42 @@ Azure Files へアクセスした際のログは、Azure Files の診断設定�
 
 ※ログは定期的に収集されますので、タイムラグが発生する可能性がございます。
 
-| カテゴリ | 説明 | 送信先ストレージ アカウント内コンテナ―名 |
+| カテゴリ | 説明 | 送信先ストレージ アカウント内コンテナー名 |
 |----|----|----|
 | StorageRead | オブジェクトに対する読み取り操作。 | insights-logs-storageread|
 | StorageWrite | オブジェクトに対する書き込み操作。 | insights-logs-storagewrite |
 | StorageDelete | オブジェクトに対する削除操作。 |insights-logs-storagedelete |
 
-□参考：収集とルーティング
+- 参考：収集とルーティング
 https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring?tabs=azure-portal#collection-and-routing
 
 Azure Files 内のオブジェクトに対して、「いつ、誰が、どのオブジェクトに、どのような操作を行ったか」を把握するために、Azure Files の診断設定にて取得したログを確認してみましょう。
 
 | プロパティ | 説明 |把握したい情報 |
 |----|----|----|
-| time | ストレージで要求が受信された協定世界時 (UTC) での時刻。 (例: 2018/11/08 21:09:36.6900118)。日本時間の場合は UTC +9 時間 |いつ|
+| time | ストレージで要求が受信された協定世界時 (UTC) での時刻。 (例: 2018/11/08 21:09:36.6900118)。日本時間の場合は UTC +9 時間。 |いつ|
 |category|要求された操作のカテゴリ。 例: StorageRead、StorageWrite、またはStorageDelete。 | 操作内容 |
-|operationName| 実行された REST 操作の種類。操作の完全な一覧については、「ストレージ分析のログに記録された操作とステータスメッセージ」のトピックを参照してください。| 操作内容 |
+|operationName| 実行された REST 操作の種類。| 操作内容 |
 | callerIpAddress |ポート番号を含む要求元の IP アドレス (例: 192.XXX.X.XXX:4362)。 |誰が|
 |smbPrimarySID |要求元の SID  |誰が|
 | uri | 要求された Uniform Resource Identifier | 対象オブジェクト|
 |properties |要求された操作の詳細  |対象オブジェクト|
 
-上記のように、各プロパティをご確認いただくことで、「いつ、誰が、どのオブジェクトに、どのような操作を行ったか」の情報を得ることができます。
+上記のように、各プロパティを確認することで、「いつ、誰が、どのオブジェクトに、どのような操作を行ったか」の情報を得ることができます。
 ただし、Azure Files へアクセスいただく際に使用されるプロトコルや認証方法により取得できるリソース ログのプロパティは異なります。
 また、リソース ログについては、プレビュー段階のため予告なく取得できる内容が変更となる可能性があることをご留意くださいませ。
 
->Azure Files にて使用可能なプロトコルや認証方法については以下をご参照ください。
-><参考>
->□Azure Files とは
->https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-introduction
->□ソリューション 4 - REST API ベースのツール (Storage Explorer や Powershell など) を使用する
->https://docs.microsoft.com/ja-jp/azure/storage/files/storage-troubleshoot-windows-file-connection-problems#solution-4---use-rest-api-based-tools-like-storage-explorerpowershell
->□SMB アクセスの Azure Files ID ベース認証オプションの概要
->https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-active-directory-overview
->□ストレージ アカウント アクセス キーを管理する
->https://docs.microsoft.com/ja-jp/azure/storage/common/storage-account-keys-manage?tabs=azure-portal
+Azure Files にて使用可能なプロトコルや認証方法については以下をご参照ください。
+
+<参考>
+- Azure Files とは
+https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-introduction
+- ソリューション 4 - REST API ベースのツール (Storage Explorer や Powershell など) を使用する
+https://docs.microsoft.com/ja-jp/azure/storage/files/storage-troubleshoot-windows-file-connection-problems#solution-4---use-rest-api-based-tools-like-storage-explorerpowershell
+- SMB アクセスの Azure Files ID ベース認証オプションの概要
+https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-active-directory-overview
+- ストレージ アカウント アクセス キーを管理する
+https://docs.microsoft.com/ja-jp/azure/storage/common/storage-account-keys-manage?tabs=azure-portal
 
 それでは、プロトコル、認証方法別にリソース ログのサンプルを見ていきます。
 以下は取得されたログの一例であり、すべてのログが網羅されているものではございませんのでご了承ください。
@@ -243,10 +240,12 @@ SMB プロトコルを使用し Azure Files を ID ベース認証でマウン�
 ID ベース認証を使用したアクセスの場合、リソース ログに SID が出力されるため、SID よりユーザーを特定することができます。
 
 例として使用した 2 つのユーザーの SID は以下となります。
+```
 User Name          SID
 ================== ==============================================
 contoso\testuser01 S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX-1103
 contoso\testuser02 S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX-1104
+```
 
 category: StorageRead
 ```shell
@@ -605,7 +604,7 @@ category: StorageDelete
 
 > [!NOTE]
 >より詳細なプロパティと説明に関しては、下記公開情報におまとめしておりますので併せてご参照ください。
->□参考：リソース ログ (プレビュー)
+>-参考：リソース ログ (プレビュー)
 >https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference#resource-logs-preview
 >
 >冒頭でも記載しておりますが、Azure Files の診断設定やリソース ログについては、プレビュー段階のため予告なく取得できる内容が変更となる可能性があることをご留意くださいませ。
