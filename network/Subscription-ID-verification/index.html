@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   
   
-  <title>サブスクリプション名とサブスクリプション ID の確認について | Japan Azure IaaS Core Support Blog</title>
+  <title>サブスクリプション ID とリソース ID の確認について | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure サポート チームです。 お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、我々サポートエンジニアからお客様にサブスクリプション名やサブスクリプション ID 、リソース ID の確認をお願いすることがあります。本トピックでは、このサブスクリプション名、サブスクリプション ID、リソース ID の確認方法についてご紹介いたします。 ※この記事は">
+  <meta name="description" content="こんにちは、Azure サポート チームです。 お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、我々サポートエンジニアからお客様にリソース情報 (サブスクリプション ID 、リソース ID) をお伺いすることがあります。本トピックでは、このサブスクリプション ID とリソース ID の確認方法についてご紹介いたします。 サブスクリプション ID とはMicros">
 <meta property="og:type" content="article">
-<meta property="og:title" content="サブスクリプション名とサブスクリプション ID の確認について">
+<meta property="og:title" content="サブスクリプション ID とリソース ID の確認について">
 <meta property="og:url" content="https://jpaztech.github.io/blog/network/Subscription-ID-verification/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure サポート チームです。 お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、我々サポートエンジニアからお客様にサブスクリプション名やサブスクリプション ID 、リソース ID の確認をお願いすることがあります。本トピックでは、このサブスクリプション名、サブスクリプション ID、リソース ID の確認方法についてご紹介いたします。 ※この記事は">
+<meta property="og:description" content="こんにちは、Azure サポート チームです。 お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、我々サポートエンジニアからお客様にリソース情報 (サブスクリプション ID 、リソース ID) をお伺いすることがあります。本トピックでは、このサブスクリプション ID とリソース ID の確認方法についてご紹介いたします。 サブスクリプション ID とはMicros">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/Subscription-ID-verification/01.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/Subscription-ID-verification/02.png">
@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/Subscription-ID-verification/05.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/Subscription-ID-verification/06.png">
 <meta property="article:published_time" content="2021-11-26T03:30:00.000Z">
-<meta property="article:modified_time" content="2021-11-29T04:49:42.686Z">
+<meta property="article:modified_time" content="2021-11-30T10:47:56.913Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Azure Portal">
 <meta name="twitter:card" content="summary">
@@ -95,7 +95,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      サブスクリプション名とサブスクリプション ID の確認について
+      サブスクリプション ID とリソース ID の確認について
     </h1>
   
 
@@ -107,16 +107,15 @@
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+a2727a19-4ad5-506e-9b41-048f02cd3a54%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E5%90%8D%E3%81%A8%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3+ID+%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2FSubscription-ID-verification%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2FSubscription-ID-verification.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2FSubscription-ID-verification.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+a2727a19-4ad5-506e-9b41-048f02cd3a54%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3+ID+%E3%81%A8%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9+ID+%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2FSubscription-ID-verification%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2FSubscription-ID-verification.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2FSubscription-ID-verification.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/Subscription-ID-verification/" data-id="ckwk6zswc001n0mnw8j6q5xui" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/Subscription-ID-verification/" data-id="ckwlz8ctx001n0no2e8ak57p3" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
         <p>こんにちは、Azure サポート チームです。</p>
-<p>お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、<br>我々サポートエンジニアからお客様にサブスクリプション名やサブスクリプション ID 、リソース ID の確認をお願いすることがあります。<br>本トピックでは、このサブスクリプション名、サブスクリプション ID、リソース ID の確認方法についてご紹介いたします。</p>
-<p>※この記事は 2021 年 12 月 1 日時点の情報を基に作成しており、 Azure の画面の表示内容および確認手順は将来的に変わる可能性がございます。予めご了承ください。</p>
+<p>お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、我々サポートエンジニアからお客様にリソース情報 (サブスクリプション ID 、リソース ID) をお伺いすることがあります。<br>本トピックでは、このサブスクリプション ID とリソース ID の確認方法についてご紹介いたします。</p>
 <h2 id="サブスクリプション-ID-とは"><a href="#サブスクリプション-ID-とは" class="headerlink" title="サブスクリプション ID とは"></a>サブスクリプション ID とは</h2><p>Microsoft Azure をご利用頂く際に、お客様と日本マイクロソフト株式会社は、無償または有償のサブスクリプション契約 (無料評価版、従量課金プラン等) を結びます。<br>お客様が締結したこのサブスクリプション契約を一意のものとして識別するために、マイクロソフトでは 32 桁の GUID を付与しています。この GUID がサブスクリプション ID で以下のフォーマットで表記されます。</p>
 <p>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</p>
 <h2 id="サブスクリプション名とサブスクリプション-ID-の確認方法について"><a href="#サブスクリプション名とサブスクリプション-ID-の確認方法について" class="headerlink" title="サブスクリプション名とサブスクリプション ID の確認方法について"></a>サブスクリプション名とサブスクリプション ID の確認方法について</h2><p>以下では、Azure Portal からサブスクリプション名とサブスクリプション ID 確認する方法についてご案内いたします。</p>
@@ -137,9 +136,7 @@
 </ol>
 <p><img src="/blog/network/Subscription-ID-verification/03.png"></p>
 <h3 id="特定のリソースからサブスクリプション名とサブスクリプション-ID-を確認する"><a href="#特定のリソースからサブスクリプション名とサブスクリプション-ID-を確認する" class="headerlink" title="特定のリソースからサブスクリプション名とサブスクリプション ID を確認する"></a>特定のリソースからサブスクリプション名とサブスクリプション ID を確認する</h3><p>特定のリソースからサブスクリプション名とサブスクリプション ID を確認するためには、リソースの概要画面上部から確認できます。<br><img src="/blog/network/Subscription-ID-verification/04.png"></p>
-<h2 id="リソース-ID-とは"><a href="#リソース-ID-とは" class="headerlink" title="リソース ID とは"></a>リソース ID とは</h2><p>Azure のリソース ID とは Azure Resource Manager におけるリソースの一意な識別子を示しており、<br>以下のフォーマットで表記されます。 /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderName}/ {resourceType}/{resourceName}</p>
-<p>我々、サポートエンジニアに特定のリソースの調査を依頼する場合、</p>
-<p>このリソース ID もしくは<br>サブスクリプション ID / リソース グループ名 / リソース名の三点をお知らせいただければスムーズに調査を進めることが可能です。</p>
+<h2 id="リソース-ID-とは"><a href="#リソース-ID-とは" class="headerlink" title="リソース ID とは"></a>リソース ID とは</h2><p>Azure のリソース ID とは Azure Resource Manager におけるリソースの一意な識別子を示しており、以下のフォーマットで表記されます。<br>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderName}/ {resourceType}/{resourceName}</p>
 <h2 id="リソース-ID-の確認方法について"><a href="#リソース-ID-の確認方法について" class="headerlink" title="リソース ID の確認方法について"></a>リソース ID の確認方法について</h2><ol>
 <li><p>調査対象のリソースの概要画面の右部の [JSON ビュー] をクリックします。 (例では Azure VM を示す。)<br><img src="/blog/network/Subscription-ID-verification/05.png"></p>
 </li>
@@ -211,7 +208,7 @@
           </li>
         
           <li>
-            <a href="">サブスクリプション名とサブスクリプション ID の確認について</a>
+            <a href="">サブスクリプション ID とリソース ID の確認について</a>
           </li>
         
           <li>
