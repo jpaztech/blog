@@ -1,5 +1,5 @@
 ---
-title: サブスクリプション名とサブスクリプション ID の確認について
+title: サブスクリプション ID とリソース ID の確認について
 date: 2021-11-26 12:30:00
 tags:
   - Azure Portal
@@ -7,11 +7,8 @@ tags:
 
 こんにちは、Azure サポート チームです。
 
-お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、
-我々サポートエンジニアからお客様にサブスクリプション名やサブスクリプション ID 、リソース ID の確認をお願いすることがあります。
-本トピックでは、このサブスクリプション名、サブスクリプション ID、リソース ID の確認方法についてご紹介いたします。
-
-※この記事は 2021 年 12 月 1 日時点の情報を基に作成しており、 Azure の画面の表示内容および確認手順は将来的に変わる可能性がございます。予めご了承ください。
+お客様から日々お問い合わせ頂いている内容について、正確に調査や状況確認を行うために、我々サポートエンジニアからお客様にリソース情報 (サブスクリプション ID 、リソース ID) をお伺いすることがあります。
+本トピックでは、このサブスクリプション ID とリソース ID の確認方法についてご紹介いたします。
 
 ## サブスクリプション ID とは
 Microsoft Azure をご利用頂く際に、お客様と日本マイクロソフト株式会社は、無償または有償のサブスクリプション契約 (無料評価版、従量課金プラン等) を結びます。
@@ -43,13 +40,8 @@ xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ![](Subscription-ID-verification/04.png)
 
 ## リソース ID とは
-Azure のリソース ID とは Azure Resource Manager におけるリソースの一意な識別子を示しており、
-以下のフォーマットで表記されます。 /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderName}/ {resourceType}/{resourceName}
-
-我々、サポートエンジニアに特定のリソースの調査を依頼する場合、
-
-このリソース ID もしくは
-サブスクリプション ID / リソース グループ名 / リソース名の三点をお知らせいただければスムーズに調査を進めることが可能です。
+Azure のリソース ID とは Azure Resource Manager におけるリソースの一意な識別子を示しており、以下のフォーマットで表記されます。
+/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderName}/ {resourceType}/{resourceName}
 
 ## リソース ID の確認方法について
 
