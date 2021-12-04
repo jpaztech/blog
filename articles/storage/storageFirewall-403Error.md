@@ -117,14 +117,14 @@ AzCopy コマンドにてオンプレミス / Azure VM から Azure Storage Blob
 "https://XXXXXXXXX.blob.core.windows.net:443/XXXXXXXXX/XXXXXXXXX.txt?timeout=901";"/";XXXXXXXXXXXXXXXXXX;0;
 192.100.0.102:4362;202Y-MM-DD;XXXX;0;XXX;XXX;XX;;;;;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXX"
 
-※ SASIpAuthorizationError : ID 認証を使用してアクセスした際のステータスメッセージ
+※ OAuthIpAuthorizationError : ID 認証を使用してアクセスした際のステータスメッセージ
 ```
 ```shell
 1.0;202Y-MM-DDTHH:MM:SS.ZZZZZZZ;PutBlob;SASIpAuthorizationError;403;X;X;sas;;XXXXXXXXX;blob;
 "https://XXXXXXXXX.blob.core.windows.net:443/XXXXXXXXX/XXXXXXXXX.txt?XXXXXXXXX;timeout=901";"/";XXXXXXXXX;0;
 192.100.0.102:4362;202Y-MM-DD;XXXX;0;XXX;XXX;XX;;;;;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXX"
 
-※ OAuthIpAuthorizationError : SAS を使用してアクセスした際のステータスメッセージ
+※ SASIpAuthorizationError : SAS を使用してアクセスした際のステータスメッセージ
 ```
 
 >参考 ) 
