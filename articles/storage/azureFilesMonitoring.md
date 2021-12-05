@@ -99,6 +99,7 @@ https://docs.microsoft.com/ja-jp/azure/storage/common/storage-account-keys-manag
 
 ### 2-1.SMB プロトコル・ストレージ アカウントキー認証の場合
 SMB プロトコルを使用し Azure Files をストレージ アカウントキー認証でマウント後、Azure Files 配下のオブジェクトを操作した際のログとなります。
+操作の要求元に関ましてアクセス元の IP アドレスの取得は可能ですが、詳細なユーザー情報の特定までは叶いません。
 
 category: StorageRead
 ```shell
@@ -490,6 +491,7 @@ category:StorageWrite
 
 ### 2-4.HTTPS プロトコルの場合
 Azure Portal より Azure Files 配下のオブジェクトを操作した際のログとなります。
+操作の要求元に関ましてアクセス元の IP アドレスの取得は可能ですが、詳細なユーザー情報の特定までは叶いません。
 
 category: StorageRead
 ```shell
