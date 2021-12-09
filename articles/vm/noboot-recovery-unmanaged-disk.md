@@ -27,18 +27,18 @@ Windows OS の復旧手順に関しては、Windows サポートチームのブ�
 ---
 
 ## 概要
-1. 復旧対象仮想マシンの OS ディスク VHD ファイルを複製します
-2. 復旧作業用の仮想マシンにて、複製した VHD ファイルをデータ ディスクとしてアタッチします
-3. 復旧作業用仮想マシンにて、切り分けを実施します。
-4. 修復した VHD を Azure PowerShell にて現在の復旧対象の仮想マシンの VHD と差し替えます。
+1. 復旧対象 VM の OS ディスク VHD ファイルを複製します
+2. 復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします
+3. 復旧作業用 VM にて、切り分けを実施します。
+4. 修復した VHD を Azure PowerShell にて現在の復旧対象 VM の VHD と差し替えます。
 
 ---
 
 ## 手順
 
-### 1. 復旧対象仮想マシンの OS ディスク VHD ファイルを複製します
+### 1. 復旧対象 VM の OS ディスク VHD ファイルを複製します
 
-Azure Storage Explorer または AzCopy をご利用いただく方法にて、復旧対象仮想マシンの OS ディスク VHD ファイルを複製します。
+Azure Storage Explorer または AzCopy をご利用いただく方法にて、復旧対象 VM の OS ディスク VHD ファイルを複製します。
 　
 #### Azure Storage Explorer をご利用いただく場合
 
@@ -46,8 +46,8 @@ Azure Storage Explorer については、下記公開情報をご確認くださ
 > Azure Storage Explorer
 > [https://azure.microsoft.com/ja-jp/features/storage-explorer/](https://azure.microsoft.com/ja-jp/features/storage-explorer/)
 
-1. 復旧対象仮想マシンを停止 (割り当て解除) します。
-2. Azure Storage Explorer にて [ストレージ アカウント] - [<ストレージ アカウント名>] - [Blob Containers] - [vhds (コンテナ―名)] を開き、復旧対象仮想マシンの OS ディスクの VHD を選択した状態で、[クローン] をクリックします。
+1. 復旧対象 VM を停止 (割り当て解除) します。
+2. Azure Storage Explorer にて [ストレージ アカウント] - [<ストレージ アカウント名>] - [Blob Containers] - [vhds (コンテナ―名)] を開き、復旧対象 VM の OS ディスクの VHD を選択した状態で、[クローン] をクリックします。
 
    ![](./noboot-recovery-unmanaged-disk/1.png)
 
@@ -67,19 +67,19 @@ AzCopy については、下記公開情報をご確認ください。
 > [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10)
 
 
-1. 復旧対象仮想マシンを停止 (割り当て解除) します。
+1. 復旧対象 VM を停止 (割り当て解除) します。
 2. AzCopy コマンドを下記の通り実行します。
    構文：
    ```PowerShell
    ./azcopy.exe copy "https://ストレージアカウント名.blob.core.windows.net/vhds/複製元のディスク名.vhd?SAS" "https://ストレージアカウント名.blob.core.windows.net/vhds/複製後のディスク名.vhd?SAS" --overwrite=prompt --s2s-preserve-access-tier=false --recursive
    ```
 
-### 2. 復旧作業用の仮想マシンにて、複製した VHD ファイルをデータ ディスクとしてアタッチします
+### 2. 復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします
 
-1. 復旧作業用の仮想マシンを作成します。
-   Azure Portal から [Virtual Machines] を開き、 [+ 追加] をクリックし、復旧対象仮想マシンと同様のリージョンにて、同様の OS バージョンの非管理ディスクを用いた仮想マシンを作成します。
+1. 復旧作業用の VM を作成します。
+   Azure Portal から [Virtual Machines] を開き、 [+ 追加] をクリックし、復旧対象 VM と同様のリージョンにて、同様の OS バージョンの非管理ディスクを用いた VM を作成します。
 2. 複製した VHD ファイルをデータ ディスクとしてアタッチします。
-   Azure Portal から [Virtual Machines] - [<復旧作業用の仮想マシン名>] を開き、左メニュー "設定" の [ディスク] をクリックします。
+   Azure Portal から [Virtual Machines] - [<復旧作業用の VM 名>] を開き、左メニュー "設定" の [ディスク] をクリックします。
 3. 開いた画面にて [+ データ ディスクの追加] をクリックします。
 
    ![](./noboot-recovery-unmanaged-disk/4.png)
@@ -92,9 +92,9 @@ AzCopy については、下記公開情報をご確認ください。
 
    ![](./noboot-recovery-unmsanaged-disk/6.png)
 
-4. 復旧作業用仮想マシンに RDP 接続し、追加したデータ ディスクが認識されるかを確認します。
+4. 復旧作業用 VM に RDP 接続し、追加したデータ ディスクが認識されるかを確認します。
  
-### 3. 復旧作業用仮想マシンにて、切り分けを実施します
+### 3. 復旧作業用 VM にて、切り分けを実施します
 
 下記 Windows OS 観点のブログに記載されている [3] - [6] をお試し下さい。
 
@@ -106,17 +106,17 @@ AzCopy については、下記公開情報をご確認ください。
 > Azure 仮想マシンのブート エラーのトラブルシューティング
 > [https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-error-troubleshoot](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-error-troubleshoot)
 
-### 4. 修復した VHD を Azure PowerShell にて現在の復旧対象の仮想マシンの VHD と差し替えます
+### 4. 修復した VHD を Azure PowerShell にて現在の復旧対象 VM の VHD と差し替えます
 
-1. Azure Portal より復旧作業用仮想マシンを停止 (割り当て解除) します。
-2. Azure Portal から [Virtual Machines] - [<復旧作業用の仮想マシン名>] を開き、左メニュー "設定" の [ディスク] をクリックします。
+1. Azure Portal より復旧作業用 VM を停止 (割り当て解除) します。
+2. Azure Portal から [Virtual Machines] - [<復旧作業用の VM 名>] を開き、左メニュー "設定" の [ディスク] をクリックします。
 3. データディスクをデタッチし、[保存] をクリックます。
-4. 復旧対象仮想マシンを停止 (割り当て解除) されていることを確認します。
+4. 復旧対象 VM を停止 (割り当て解除) されていることを確認します。
 
 5. PowerShell にて下記コマンドを実行します。
    ```PowerShell
    #VM 情報の取得
-   $VM = Get-AzVM -ResourceGroupName リソースグループ名 -name 復旧対象仮想マシン名
+   $VM = Get-AzVM -ResourceGroupName リソースグループ名 -name 復旧対象 VM 名
    #VHD ファイルの内容を差し替え
    $VM.StorageProfile.OsDisk.Vhd.Uri = "修復した VHD ファイルのパス"
    #VM 情報の更新
@@ -134,11 +134,11 @@ AzCopy については、下記公開情報をご確認ください。
    > Install the Azure Az PowerShell module
    > [https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-5.9.0](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-5.9.0)
 
-6. 上記コマンド実施後、復旧対象仮想マシンの OS ディスクの参照先が変更されていることを確認します。
+6. 上記コマンド実施後、復旧対象 VM の OS ディスクの参照先が変更されていることを確認します。
 
    ![](./noboot-recovery-unmanaged-disk/7.png)
 
-7. 復旧対象仮想マシンを起動し、事象が解消されたかをご確認ください。
+7. 復旧対象 VM を起動し、事象が解消されたかをご確認ください。
 
 手順は以上となります。
 本記事が皆様のお役に立てれば幸いです。
