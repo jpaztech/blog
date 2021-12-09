@@ -27,20 +27,20 @@ Windows OS の復旧手順に関しては、Windows サポートチームのブ�
 ---
 
 ## 概要
-1. 当該仮想マシンの OS ディスクのスナップショットを取得します
+1. 復旧対象 VM の OS ディスクのスナップショットを取得します
 2. スナップショットから、修復用 OS ディスクを作成します
-3. 復旧作業用仮想マシンに、修復用 OS ディスクを接続します
-4. 復旧作業用仮想マシンにて、切り分けを実施します
-5. 修復用 OS ディスクを、対象仮想マシンの OS ディスクとスワップさせます
+3. 復旧作業用 VM に、修復用 OS ディスクを接続します
+4. 復旧作業用 VM にて、切り分けを実施します
+5. 修復用 OS ディスクを、復旧対象 VM の OS ディスクとスワップさせます
 
 ---
 
 ## 手順
 
-### 1. 当該仮想マシンの OS ディスクのスナップショットを取得します
-Azure Portal より 仮想マシンを停止できるようであれば、停止してからご実施ください。
+### 1. 復旧対象 VM の OS ディスクのスナップショットを取得します
+Azure Portal より  VM を停止できるようであれば、停止してからご実施ください。
 
-1. Azure Portal より [Virtual Machine] - [<当該仮想マシン>] を開き、左メニュー "設定" から [ディスク] をクリックします。
+1. Azure Portal より [Virtual Machine] - [<復旧対象 VM >] を開き、左メニュー "設定" から [ディスク] をクリックします。
 2. [<当該 OS ディスク>] をクリックし、[スナップショットの作成] をクリックします。
 
 ![](./noboot-recovery-managed-disk/1.png)
@@ -60,14 +60,14 @@ Azure Portal より 仮想マシンを停止できるようであれば、停止
 > [https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/deployvmfromsnapshot](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/deployvmfromsnapshot)
 > 「2. スナップショットより "ディスク" リソースを作成する」をご確認ください。
  
-### 3. 復旧作業用仮想マシンに、修復用 OS ディスクを接続します
-1. 本事象のトラブルシューティングを行う復旧作業用仮想マシンを別途ご準備いただき、作成した OS ディスクをデータ ディスクとして接続します。
+### 3. 復旧作業用 VM に、修復用 OS ディスクを接続します
+1. 本事象のトラブルシューティングを行う復旧作業用 VM を別途ご準備いただき、作成した OS ディスクをデータ ディスクとして接続します。
 
 ![](./noboot-recovery-managed-disk/3.png)
 
-2. 復旧作業用仮想マシンに RDP 接続します。
+2. 復旧作業用 VM に RDP 接続します。
 
-### 4.復旧作業用仮想マシンにて、切り分けを実施します
+### 4.復旧作業用 VM にて、切り分けを実施します
 
 下記 Windows OS 観点のブログに記載されている [3] - [6] をお試し下さい。
 
@@ -79,10 +79,10 @@ Azure Portal より 仮想マシンを停止できるようであれば、停止
 > Azure 仮想マシンのブート エラーのトラブルシューティング
 > [https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-error-troubleshoot](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-error-troubleshoot)
 
-### 5. 修復用 OS ディスクを、対象仮想マシンの OS ディスクとスワップさせます
+### 5. 修復用 OS ディスクを、対象 VM の OS ディスクとスワップさせます
 
-1. 復旧作業用仮想マシンを停止し、データ ディスクとして接続されている修復した OS ディスクをデタッチします。
-2. 対象仮想マシンの OS ディスクを、修復した OS ディスクとスワップします。
+1. 復旧作業用 VM を停止し、データ ディスクとして接続されている修復した OS ディスクをデタッチします。
+2. 復旧対象 VM の OS ディスクを、修復した OS ディスクとスワップします。
 
 ![](./noboot-recovery-managed-disk/4.png)
 
@@ -91,7 +91,7 @@ Azure Portal より 仮想マシンを停止できるようであれば、停止
 > VM の OS ディスクをスワップする
 > [https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm)
 
-3. 復旧対象仮想マシンを起動し、事象が解消されたかをご確認ください。
+3. 復旧対象 VM を起動し、事象が解消されたかをご確認ください。
 
 手順は以上となります。
 

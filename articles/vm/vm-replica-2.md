@@ -22,7 +22,7 @@ tags:
 本記事では Azure ポータルで、一般化したイメージを使用し、VM を複製する詳細な方法をご紹介します。
 また、マネージド ディスクの使用を前提とさせていただきますので、アンマネージド ディスクをご利用いただいている場合は、下記手順より VM をマネージドディスクに変換をお願いいたします。
 
-- Azure VM を Azure Managed Disks に移行する  
+- 参考: Azure VM を Azure Managed Disks に移行する  
 [https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks)
 
 
@@ -69,8 +69,8 @@ VM を作成した後に、必要なソフトウェアをインストールし�
 ---
 #### 3-1. Windows VM で一般化を行う方法
 
-- 参考: Sysprep を使用して Windows VM を一般化する  
-[https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/capture-image-resource#generalize-the-windows-vm-using-sysprep](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/capture-image-resource#generalize-the-windows-vm-using-sysprep)
+- 参考: イメージ作成前に VM を一般化し、マシン固有の情報を削除します。 - Windows
+[https://docs.microsoft.com/ja-jp/azure/virtual-machines/generalize#windows](https://docs.microsoft.com/ja-jp/azure/virtual-machines/generalize#windows)
 
 ---
 #### 注意事項: Windows の Sysprep の設定を間違えないこと！
@@ -90,8 +90,8 @@ Generalize（一般化）のチェック ボックスにチェックが入って
 ---
 #### 3-2. Linux VM で一般化を行う方法
 
-参考: 手順 1:VM のプロビジョニングを解除する  
-https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm
+- 参考: 手順 1:VM のプロビジョニングを解除する  
+[https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm)
 
 今回はポータルからイメージを作成しますので、[手順 1:VM のプロビジョニングを解除する] が完了したら VM を停止しましょう。
 
