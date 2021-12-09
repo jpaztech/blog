@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-replica-2/img-040.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-replica-2/img-050.png">
 <meta property="article:published_time" content="2021-03-29T05:00:02.000Z">
-<meta property="article:modified_time" content="2021-12-09T07:56:42.791Z">
+<meta property="article:modified_time" content="2021-12-09T12:30:05.009Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="VM">
@@ -114,7 +114,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+0872976c-432a-53f6-8187-6113344377e7%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BVM+%E8%A4%87%E8%A3%BD%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6+part.2%2F3+%E4%B8%80%E8%88%AC%E5%8C%96%E3%81%97%E3%81%9F%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%81%8B%E3%82%89+VM+%E3%82%92%E8%A4%87%E8%A3%BD%E3%81%99%E3%82%8B%E6%89%8B%E9%A0%86%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fvm-replica-2%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fvm-replica-2.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fvm-replica-2.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/vm-replica-2/" data-id="ckwyo2tf7004c0mnq67o67l10" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/vm-replica-2/" data-id="ckwyxuch1004c0ns64e475y42" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -129,7 +129,7 @@
 <p>そのため 1 記事目の <a href="https://jpaztech.github.io/blog/vm/vm-replica-1">VM 複製方法について 2 つの方法の紹介</a> をご覧いただいている前提で記載させていただきます。  </p>
 <p>本記事では Azure ポータルで、一般化したイメージを使用し、VM を複製する詳細な方法をご紹介します。<br>また、マネージド ディスクの使用を前提とさせていただきますので、アンマネージド ディスクをご利用いただいている場合は、下記手順より VM をマネージドディスクに変換をお願いいたします。</p>
 <ul>
-<li>Azure VM を Azure Managed Disks に移行する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks</a></li>
+<li>参考: Azure VM を Azure Managed Disks に移行する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks</a></li>
 </ul>
 <p>一般化をするにあたり、下記の点についてはバックアップが無い場合取り返しがつきませんのでご注意ください。<br>念のため、バックアップをご取得いただいてからご実施いただくことをお勧めいたします。</p>
 <ul>
@@ -158,7 +158,7 @@
 <h3 id="3-VM-を一般化-マシン固有のファイルとデータを削除-する"><a href="#3-VM-を一般化-マシン固有のファイルとデータを削除-する" class="headerlink" title="3. VM を一般化 (マシン固有のファイルとデータを削除) する"></a>3. VM を一般化 (マシン固有のファイルとデータを削除) する</h3><p>一般化はゲスト OS 内部の操作で行うものとなります。<br>一般化の手順は Windows / Linux 両方とも公開情報にまとまっておりますので、下記をご参照の上、一般化を行い VM をシャットダウンします。  </p>
 <hr>
 <h4 id="3-1-Windows-VM-で一般化を行う方法"><a href="#3-1-Windows-VM-で一般化を行う方法" class="headerlink" title="3-1. Windows VM で一般化を行う方法"></a>3-1. Windows VM で一般化を行う方法</h4><ul>
-<li>参考: Sysprep を使用して Windows VM を一般化する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/capture-image-resource#generalize-the-windows-vm-using-sysprep">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/capture-image-resource#generalize-the-windows-vm-using-sysprep</a></li>
+<li>参考: イメージ作成前に VM を一般化し、マシン固有の情報を削除します。 - Windows<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/generalize#windows">https://docs.microsoft.com/ja-jp/azure/virtual-machines/generalize#windows</a></li>
 </ul>
 <hr>
 <h4 id="注意事項-Windows-の-Sysprep-の設定を間違えないこと！"><a href="#注意事項-Windows-の-Sysprep-の設定を間違えないこと！" class="headerlink" title="注意事項: Windows の Sysprep の設定を間違えないこと！"></a>注意事項: Windows の Sysprep の設定を間違えないこと！</h4><p>Windows OS では sysprep.exe を使って一般化を行いますが、最後の設定を間違えて、一般化したにもかかわらずその後複製した VM が正常に起動しないということがあります。</p>
@@ -166,7 +166,9 @@
 <p>英語の場合:<br><img src="/blog/vm/vm-replica-2/sysprep-en.png"> </p>
 <p>日本語の場合:<br><img src="/blog/vm/vm-replica-2/sysprep-jp.png"> </p>
 <hr>
-<h4 id="3-2-Linux-VM-で一般化を行う方法"><a href="#3-2-Linux-VM-で一般化を行う方法" class="headerlink" title="3-2. Linux VM で一般化を行う方法"></a>3-2. Linux VM で一般化を行う方法</h4><p>参考: 手順 1:VM のプロビジョニングを解除する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm">https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm</a></p>
+<h4 id="3-2-Linux-VM-で一般化を行う方法"><a href="#3-2-Linux-VM-で一般化を行う方法" class="headerlink" title="3-2. Linux VM で一般化を行う方法"></a>3-2. Linux VM で一般化を行う方法</h4><ul>
+<li>参考: 手順 1:VM のプロビジョニングを解除する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm">https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm</a></li>
+</ul>
 <p>今回はポータルからイメージを作成しますので、[手順 1:VM のプロビジョニングを解除する] が完了したら VM を停止しましょう。</p>
 <hr>
 <h3 id="4-一般化したVMより-イメージ-を作成する"><a href="#4-一般化したVMより-イメージ-を作成する" class="headerlink" title="4. 一般化したVMより [イメージ] を作成する"></a>4. 一般化したVMより [イメージ] を作成する</h3><p>ここまでの操作により、ゲスト OS 上で一般化が完了して VM は停止状態になりますので、[イメージ] を Azure ポータル上で作成します。  </p>

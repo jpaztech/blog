@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/noboot-recovery-unmsanaged-disk/6.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/7.png">
 <meta property="article:published_time" content="2021-05-14T08:30:00.000Z">
-<meta property="article:modified_time" content="2021-12-09T07:56:42.739Z">
+<meta property="article:modified_time" content="2021-12-09T12:30:04.953Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="Noboot">
@@ -112,7 +112,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+dd458c0e-7a60-5468-8587-24810caea0ac%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%90%E9%9D%9E%E7%AE%A1%E7%90%86%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E7%B7%A8%E3%80%91+%E5%BE%A9%E6%97%A7+VM+%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F+Windows+VM+%E3%81%AE+Noboot+%E5%BE%A9%E6%97%A7%E6%89%8B%E9%A0%86%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fnoboot-recovery-unmanaged-disk%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fnoboot-recovery-unmanaged-disk.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fnoboot-recovery-unmanaged-disk.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/" data-id="ckwyo2tet003o0mnq6jvq0ozh" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/" data-id="ckwyxucgs003o0ns68it51htr" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -130,22 +130,22 @@
 <p>本記事では、<span style="color:red;"><strong>非管理ディスク</strong></span>をご利用の環境用の手順を紹介します。管理ディスクをご利用の場合は、「<a href="https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/">【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順</a>」をご確認ください。</p>
 <hr>
 <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><ol>
-<li>復旧対象仮想マシンの OS ディスク VHD ファイルを複製します</li>
-<li>復旧作業用の仮想マシンにて、複製した VHD ファイルをデータ ディスクとしてアタッチします</li>
-<li>復旧作業用仮想マシンにて、切り分けを実施します。</li>
-<li>修復した VHD を Azure PowerShell にて現在の復旧対象の仮想マシンの VHD と差し替えます。</li>
+<li>復旧対象 VM の OS ディスク VHD ファイルを複製します</li>
+<li>復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします</li>
+<li>復旧作業用 VM にて、切り分けを実施します。</li>
+<li>修復した VHD を Azure PowerShell にて現在の復旧対象 VM の VHD と差し替えます。</li>
 </ol>
 <hr>
-<h2 id="手順"><a href="#手順" class="headerlink" title="手順"></a>手順</h2><h3 id="1-復旧対象仮想マシンの-OS-ディスク-VHD-ファイルを複製します"><a href="#1-復旧対象仮想マシンの-OS-ディスク-VHD-ファイルを複製します" class="headerlink" title="1. 復旧対象仮想マシンの OS ディスク VHD ファイルを複製します"></a>1. 復旧対象仮想マシンの OS ディスク VHD ファイルを複製します</h3><p>Azure Storage Explorer または AzCopy をご利用いただく方法にて、復旧対象仮想マシンの OS ディスク VHD ファイルを複製します。
+<h2 id="手順"><a href="#手順" class="headerlink" title="手順"></a>手順</h2><h3 id="1-復旧対象-VM-の-OS-ディスク-VHD-ファイルを複製します"><a href="#1-復旧対象-VM-の-OS-ディスク-VHD-ファイルを複製します" class="headerlink" title="1. 復旧対象 VM の OS ディスク VHD ファイルを複製します"></a>1. 復旧対象 VM の OS ディスク VHD ファイルを複製します</h3><p>Azure Storage Explorer または AzCopy をご利用いただく方法にて、復旧対象 VM の OS ディスク VHD ファイルを複製します。
 　</p>
 <h4 id="Azure-Storage-Explorer-をご利用いただく場合"><a href="#Azure-Storage-Explorer-をご利用いただく場合" class="headerlink" title="Azure Storage Explorer をご利用いただく場合"></a>Azure Storage Explorer をご利用いただく場合</h4><p>Azure Storage Explorer については、下記公開情報をご確認ください。</p>
 <blockquote>
 <p>Azure Storage Explorer<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/features/storage-explorer/">https://azure.microsoft.com/ja-jp/features/storage-explorer/</a></p>
 </blockquote>
 <ol>
-<li><p>復旧対象仮想マシンを停止 (割り当て解除) します。</p>
+<li><p>復旧対象 VM を停止 (割り当て解除) します。</p>
 </li>
-<li><p>Azure Storage Explorer にて [ストレージ アカウント] - [&lt;ストレージ アカウント名&gt;] - [Blob Containers] - [vhds (コンテナ―名)] を開き、復旧対象仮想マシンの OS ディスクの VHD を選択した状態で、[クローン] をクリックします。</p>
+<li><p>Azure Storage Explorer にて [ストレージ アカウント] - [&lt;ストレージ アカウント名&gt;] - [Blob Containers] - [vhds (コンテナ―名)] を開き、復旧対象 VM の OS ディスクの VHD を選択した状態で、[クローン] をクリックします。</p>
 <p><img src="/blog/vm/noboot-recovery-unmanaged-disk/1.png"></p>
 </li>
 <li><p>“BLOB を新しい名前で複製” 画面にて [&lt;複製後の VHD 名&gt;] を入力し、[複製] をクリックします。</p>
@@ -160,13 +160,13 @@
 <p>AzCopy を使ってみる<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10</a></p>
 </blockquote>
 <ol>
-<li>復旧対象仮想マシンを停止 (割り当て解除) します。</li>
+<li>復旧対象 VM を停止 (割り当て解除) します。</li>
 <li>AzCopy コマンドを下記の通り実行します。<br>構文：<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./azcopy.exe <span class="built_in">copy</span> <span class="string">&quot;https://ストレージアカウント名.blob.core.windows.net/vhds/複製元のディスク名.vhd?SAS&quot;</span> <span class="string">&quot;https://ストレージアカウント名.blob.core.windows.net/vhds/複製後のディスク名.vhd?SAS&quot;</span> -<span class="literal">-overwrite</span>=prompt -<span class="literal">-s2s</span><span class="literal">-preserve</span><span class="literal">-access</span><span class="literal">-tier</span>=false -<span class="literal">-recursive</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="2-復旧作業用の仮想マシンにて、複製した-VHD-ファイルをデータ-ディスクとしてアタッチします"><a href="#2-復旧作業用の仮想マシンにて、複製した-VHD-ファイルをデータ-ディスクとしてアタッチします" class="headerlink" title="2. 復旧作業用の仮想マシンにて、複製した VHD ファイルをデータ ディスクとしてアタッチします"></a>2. 復旧作業用の仮想マシンにて、複製した VHD ファイルをデータ ディスクとしてアタッチします</h3><ol>
-<li><p>復旧作業用の仮想マシンを作成します。<br>Azure Portal から [Virtual Machines] を開き、 [+ 追加] をクリックし、復旧対象仮想マシンと同様のリージョンにて、同様の OS バージョンの非管理ディスクを用いた仮想マシンを作成します。</p>
+<h3 id="2-復旧作業用-VM-にて、複製した-VHD-ファイルをデータ-ディスクとしてアタッチします"><a href="#2-復旧作業用-VM-にて、複製した-VHD-ファイルをデータ-ディスクとしてアタッチします" class="headerlink" title="2. 復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします"></a>2. 復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします</h3><ol>
+<li><p>復旧作業用の VM を作成します。<br>Azure Portal から [Virtual Machines] を開き、 [+ 追加] をクリックし、復旧対象 VM と同様のリージョンにて、同様の OS バージョンの非管理ディスクを用いた VM を作成します。</p>
 </li>
-<li><p>複製した VHD ファイルをデータ ディスクとしてアタッチします。<br>Azure Portal から [Virtual Machines] - [&lt;復旧作業用の仮想マシン名&gt;] を開き、左メニュー “設定” の [ディスク] をクリックします。</p>
+<li><p>複製した VHD ファイルをデータ ディスクとしてアタッチします。<br>Azure Portal から [Virtual Machines] - [&lt;復旧作業用の VM 名&gt;] を開き、左メニュー “設定” の [ディスク] をクリックします。</p>
 </li>
 <li><p>開いた画面にて [+ データ ディスクの追加] をクリックします。</p>
 <p><img src="/blog/vm/noboot-recovery-unmanaged-disk/4.png"></p>
@@ -175,10 +175,10 @@
 <p>[OK] をクリックし、前の画面にて [保存] をクリックします。</p>
 <p><img src="./noboot-recovery-unmsanaged-disk/6.png"></p>
 </li>
-<li><p>復旧作業用仮想マシンに RDP 接続し、追加したデータ ディスクが認識されるかを確認します。</p>
+<li><p>復旧作業用 VM に RDP 接続し、追加したデータ ディスクが認識されるかを確認します。</p>
 </li>
 </ol>
-<h3 id="3-復旧作業用仮想マシンにて、切り分けを実施します"><a href="#3-復旧作業用仮想マシンにて、切り分けを実施します" class="headerlink" title="3. 復旧作業用仮想マシンにて、切り分けを実施します"></a>3. 復旧作業用仮想マシンにて、切り分けを実施します</h3><p>下記 Windows OS 観点のブログに記載されている [3] - [6] をお試し下さい。</p>
+<h3 id="3-復旧作業用-VM-にて、切り分けを実施します"><a href="#3-復旧作業用-VM-にて、切り分けを実施します" class="headerlink" title="3. 復旧作業用 VM にて、切り分けを実施します"></a>3. 復旧作業用 VM にて、切り分けを実施します</h3><p>下記 Windows OS 観点のブログに記載されている [3] - [6] をお試し下さい。</p>
 <blockquote>
 <p>OS が起動しなくなる問題が発生した場合の対処方法について – 対処方法<br><a target="_blank" rel="noopener" href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/">https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/</a></p>
 </blockquote>
@@ -186,17 +186,17 @@
 <blockquote>
 <p>Azure 仮想マシンのブート エラーのトラブルシューティング<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-error-troubleshoot">https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/boot-error-troubleshoot</a></p>
 </blockquote>
-<h3 id="4-修復した-VHD-を-Azure-PowerShell-にて現在の復旧対象の仮想マシンの-VHD-と差し替えます"><a href="#4-修復した-VHD-を-Azure-PowerShell-にて現在の復旧対象の仮想マシンの-VHD-と差し替えます" class="headerlink" title="4. 修復した VHD を Azure PowerShell にて現在の復旧対象の仮想マシンの VHD と差し替えます"></a>4. 修復した VHD を Azure PowerShell にて現在の復旧対象の仮想マシンの VHD と差し替えます</h3><ol>
-<li><p>Azure Portal より復旧作業用仮想マシンを停止 (割り当て解除) します。</p>
+<h3 id="4-修復した-VHD-を-Azure-PowerShell-にて現在の復旧対象-VM-の-VHD-と差し替えます"><a href="#4-修復した-VHD-を-Azure-PowerShell-にて現在の復旧対象-VM-の-VHD-と差し替えます" class="headerlink" title="4. 修復した VHD を Azure PowerShell にて現在の復旧対象 VM の VHD と差し替えます"></a>4. 修復した VHD を Azure PowerShell にて現在の復旧対象 VM の VHD と差し替えます</h3><ol>
+<li><p>Azure Portal より復旧作業用 VM を停止 (割り当て解除) します。</p>
 </li>
-<li><p>Azure Portal から [Virtual Machines] - [&lt;復旧作業用の仮想マシン名&gt;] を開き、左メニュー “設定” の [ディスク] をクリックします。</p>
+<li><p>Azure Portal から [Virtual Machines] - [&lt;復旧作業用の VM 名&gt;] を開き、左メニュー “設定” の [ディスク] をクリックします。</p>
 </li>
 <li><p>データディスクをデタッチし、[保存] をクリックます。</p>
 </li>
-<li><p>復旧対象仮想マシンを停止 (割り当て解除) されていることを確認します。</p>
+<li><p>復旧対象 VM を停止 (割り当て解除) されていることを確認します。</p>
 </li>
 <li><p>PowerShell にて下記コマンドを実行します。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#VM 情報の取得</span></span><br><span class="line"><span class="variable">$VM</span> = <span class="built_in">Get-AzVM</span> <span class="literal">-ResourceGroupName</span> リソースグループ名 <span class="literal">-name</span> 復旧対象仮想マシン名</span><br><span class="line"><span class="comment">#VHD ファイルの内容を差し替え</span></span><br><span class="line"><span class="variable">$VM</span>.StorageProfile.OsDisk.Vhd.Uri = <span class="string">&quot;修復した VHD ファイルのパス&quot;</span></span><br><span class="line"><span class="comment">#VM 情報の更新</span></span><br><span class="line"><span class="built_in">Update-AzVM</span> –VM <span class="variable">$VM</span> –ResourceGroupName リソースグループ名</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#VM 情報の取得</span></span><br><span class="line"><span class="variable">$VM</span> = <span class="built_in">Get-AzVM</span> <span class="literal">-ResourceGroupName</span> リソースグループ名 <span class="literal">-name</span> 復旧対象 VM 名</span><br><span class="line"><span class="comment">#VHD ファイルの内容を差し替え</span></span><br><span class="line"><span class="variable">$VM</span>.StorageProfile.OsDisk.Vhd.Uri = <span class="string">&quot;修復した VHD ファイルのパス&quot;</span></span><br><span class="line"><span class="comment">#VM 情報の更新</span></span><br><span class="line"><span class="built_in">Update-AzVM</span> –VM <span class="variable">$VM</span> –ResourceGroupName リソースグループ名</span><br></pre></td></tr></table></figure>
 <p>結果例：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RequestId IsSuccessStatusCode StatusCode ReasonPhrase</span><br><span class="line">--------- ------------------- ---------- ------------</span><br><span class="line">                         True         OK OK</span><br></pre></td></tr></table></figure>
 
@@ -205,10 +205,10 @@
 <p>Install the Azure Az PowerShell module<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-5.9.0">https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-5.9.0</a></p>
 </blockquote>
 </li>
-<li><p>上記コマンド実施後、復旧対象仮想マシンの OS ディスクの参照先が変更されていることを確認します。</p>
+<li><p>上記コマンド実施後、復旧対象 VM の OS ディスクの参照先が変更されていることを確認します。</p>
 <p><img src="/blog/vm/noboot-recovery-unmanaged-disk/7.png"></p>
 </li>
-<li><p>復旧対象仮想マシンを起動し、事象が解消されたかをご確認ください。</p>
+<li><p>復旧対象 VM を起動し、事象が解消されたかをご確認ください。</p>
 </li>
 </ol>
 <p>手順は以上となります。<br>本記事が皆様のお役に立てれば幸いです。</p>
