@@ -22,7 +22,7 @@ tags:
 本記事では Azure ポータルで、一般化したイメージを使用し、VM を複製する詳細な方法をご紹介します。
 また、マネージド ディスクの使用を前提とさせていただきますので、アンマネージド ディスクをご利用いただいている場合は、下記手順より VM をマネージドディスクに変換をお願いいたします。
 
-- Azure VM を Azure Managed Disks に移行する  
+- 参考: Azure VM を Azure Managed Disks に移行する  
 [https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/migrate-to-managed-disks)
 
 
