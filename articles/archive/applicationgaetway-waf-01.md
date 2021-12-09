@@ -12,9 +12,9 @@ tags:
 
 
 ## ■ WAF でサポートされるルール
-2017 年 9 月現在、AppGW で利用できる WAF は、OWASP と呼ばれるオンライン上の国際的なオープン コミュニティで議論されている OWASP ModSecurity Core Rule Set (CRS) を採用しています。
+2021 年 11 月現在、AppGW で利用できる WAF は、OWASP と呼ばれるオンライン上の国際的なオープン コミュニティで議論されている OWASP ModSecurity Core Rule Set (CRS) を採用しています。
 
-利用できるものは、バージョン 2.2.9 および 3.0 になりますが、それ以外の WAF コンポーネント等は現状は利用はできません。
+利用できるものは、バージョン 2.2.9, 3.0 および 3.1 になりますが、それ以外の WAF コンポーネント等は現状は利用はできません。
 また、ご利用をいただくユーザーの方は、OWASP ModSecurity CRS の中で定義されているルールの中から、必要なものを選んでご利用をいただくこともできます。
 他の WAF コンポーネント等の導入は未定ですが、必要に応じて、新しいバージョンの CRS セットや他の WAF コンポーネント等は導入されるかと思います。
 
@@ -29,8 +29,8 @@ OWASP ModSecurity Core Rule Set (CRS) Project (Official Repository)
 マイクロソフトサポートでは AppGW 上の正常動作に関するご質問等はお受けしていますが、OWASP 側で制定している CRS ルールに関して踏み入ったご相談やアドバイスに関するサポートは提供しておりません。(コンサルティングサポートなど一部上位のサポート契約でご相談いただける場合もあります)
 もし各種 CRS ルールに関する詳細などを確認されたい場合には、関連するメーリングリスト等にご相談いただくか、直接 GitHub で公開されているソースコード等をご参照ください。
 
-OWASP ModSecurity Core Rule Set Project
-[https://www.owasp.org/index.php/Category:OWASP_ModSecurity_Core_Rule_Set_Project](https://www.owasp.org/index.php/Category:OWASP_ModSecurity_Core_Rule_Set_Project)
+OWASP ModSecurity Core Rule Set
+[https://owasp.org/www-project-modsecurity-core-rule-set/](https://owasp.org/www-project-modsecurity-core-rule-set/)
 
 
 ## ■ 留意点
