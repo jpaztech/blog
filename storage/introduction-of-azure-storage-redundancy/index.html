@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>【図解】ストレージ アカウントにおける冗長性の種類について | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの重田です。 Azure Storage では、4 つのデータ サービスが提供されており、日々多くのお客様にご利用いただいています。各データ サービスにはストレージ アカウントを通じてアクセスするため、お客様にてご要件に併せたストレージ アカウントの種類や冗長性 (データのレプリケート方法) の種類を選択いただく必要があります。 本記事では、Az">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【図解】ストレージ アカウントにおける冗長性の種類について">
+<meta property="og:url" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの重田です。 Azure Storage では、4 つのデータ サービスが提供されており、日々多くのお客様にご利用いただいています。各データ サービスにはストレージ アカウントを通じてアクセスするため、お客様にてご要件に併せたストレージ アカウントの種類や冗長性 (データのレプリケート方法) の種類を選択いただく必要があります。 本記事では、Az">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/01.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/02.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/03.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/12.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/04.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/13.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/09.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/05.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/10.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/14.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/06.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/11.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/15.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/16.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/07.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/17.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/19.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/08.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/18.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/19.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/21.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/20.png">
+<meta property="article:published_time" content="2021-12-10T08:30:00.000Z">
+<meta property="article:modified_time" content="2021-12-10T10:56:39.180Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="Storage">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/01.png">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://cssjpn.github.io/">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-storage/introduction-of-azure-storage-redundancy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【図解】ストレージ アカウントにおける冗長性の種類について
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2021-12-10T08:30:00.000Z" itemprop="datePublished">2021-12-10</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+bdd7bc9e-f6f3-5129-acaa-4832f9189cee%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%90%E5%9B%B3%E8%A7%A3%E3%80%91%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%86%97%E9%95%B7%E6%80%A7%E3%81%AE%E7%A8%AE%E9%A1%9E%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fstorage%2Fintroduction-of-azure-storage-redundancy%2F%29%0A*+Content+Source%3A+%5Barticles%2Fstorage%2Fintroduction-of-azure-storage-redundancy.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fstorage%2Fintroduction-of-azure-storage-redundancy.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/" data-id="ckx09y2xu00d70nuic8ek4iin" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは。Azure テクニカル サポート チームの重田です。</p>
+<p>Azure Storage では、4 つのデータ サービスが提供されており、日々多くのお客様にご利用いただいています。<br>各データ サービスにはストレージ アカウントを通じてアクセスするため、お客様にてご要件に併せたストレージ アカウントの種類や冗長性 (データのレプリケート方法) の種類を選択いただく必要があります。</p>
+<p>本記事では、Azure Storage として提供している 4 つのデータ サービスやストレージ アカウントの概要について説明した上で、レプリケートされたデータがどのように配置されているのかを図を用いてご紹介します。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="Azure-Storage-と-4-つのデータ-サービス"><a href="#Azure-Storage-と-4-つのデータ-サービス" class="headerlink" title="Azure Storage と 4 つのデータ サービス"></a>Azure Storage と 4 つのデータ サービス</h2><p>Azure では、お客様のデータを Azure 上に格納するために提供されている方法のうち、4 つのデータ サービス (Azure BLOB、Azure Files、Azure キュー、Azure テーブル) を Azure Storage という名前で呼んでいます。<br>各データ サービスの詳細につきましては、以下の公開情報に記載がありますのでご確認ください。</p>
+<blockquote>
+<p>ご参考) コア Azure Storage サービスの概要<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-introduction">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-introduction</a></p>
+<blockquote>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-introduction#blob-storage">Azure BLOB</a></strong>:<br>テキストおよびバイナリ データのための高度にスケーラブルなオブジェクト ストア。<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs#about-block-blobs">ブロック BLOB</a>:<br>大量のデータを効率的にアップロードするための最適化されています。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs#about-append-blobs">追加 BLOB</a>:<br>ブロックで構成され、追加操作用に最適化されています。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs#about-page-blobs">ページ BLOB</a>:<br>ランダムな読み取りと書き込みの操作用に最適化されています。</li>
+</ul>
+</li>
+<li><strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-introduction#azure-files">Azure Files</a></strong>:<br>クラウドまたはオンプレミスのデプロイ用のマネージド ファイル共有。<br>1 つの　Azure ファイル共有に対して、SMB と NFS の両方のプロトコルを使用したアクセスはサポートされませんが、同じストレージ アカウント内に SMB と NFS のファイル共有を作成することは可能です。<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/files/files-smb-protocol?tabs=azure-portal">SMB ファイル共有</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/files/files-nfs-protocol">NFS ファイル共有</a></li>
+</ul>
+</li>
+<li><strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-introduction#queue-storage">Azure キュー</a></strong>:<br>アプリケーション コンポーネント間の信頼性の高いメッセージングのためのメッセージング ストア。</li>
+<li><strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-introduction#table-storage">Azure テーブル</a></strong>:<br>構造化データのスキーマレス ストレージのための NoSQL ストア。</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>公開情報にて、コア Azure Storage サービスとして、Azure ディスクが記載されております。<br>これは、Azure 管理ディスクの実態が、仮想ハード ディスク (VHD ファイル) であり、Microsoft で管理しているストレージ アカウント上にページ BLOB (Azure BLOB で利用できる 3 種類の BLOB の 1 つ) として格納されているためになります。</p>
+<blockquote>
+<blockquote>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-introduction#disk-storage">Azure ディスク</a></strong>:<br>Azure VM のためのブロック レベルのストレージ ボリューム。</li>
+</ul>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="ストレージ-アカウントとは"><a href="#ストレージ-アカウントとは" class="headerlink" title="ストレージ アカウントとは"></a>ストレージ アカウントとは</h2><p>ストレージ アカウントとは、グローバルな一意な名前をもって、Azure Storage データ オブジェクト (BLOB、ファイル、キュー、テーブル) をグループ化するためのコンテナー (論理的な区画) です。<br>ストレージ アカウント内のデータには、 HTTP または HTTPS 経由などでアクセスすることが可能です。</p>
+<p>Azure Storage データ オブジェクトは、ストレージ アカウント作成時にご指定いただいたリージョンのデータセンター内の物理サーバー群 (ストレージ クラスターまたはスタンプと呼びます) に格納されております。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/01.png"></p>
+<hr>
+<h2 id="ストレージ-アカウントの種類"><a href="#ストレージ-アカウントの種類" class="headerlink" title="ストレージ アカウントの種類"></a>ストレージ アカウントの種類</h2><p>ストレージ アカウントには、パフォーマンスや用途によって複数の種類があります。<br>※ 本記事では、クラシック環境のストレージ アカウントおよび ARM 環境のレガシ ストレージ アカウントについては扱いません。</p>
+<blockquote>
+<p>ご参考) ストレージ アカウントの概要<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-account-overview">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-account-overview</a></p>
+<blockquote>
+<ul>
+<li><strong>Standard 汎用 v2</strong><br>BLOB、ファイル共有、キュー、テーブル用の Standard タイプのストレージ アカウント。<br>Azure Storage を使用するほとんどのシナリオにお勧めします。</li>
+<li><strong>Premium ブロック BLOB</strong><br>ブロック BLOB と追加 BLOB 用の Premium タイプのストレージ アカウント。<br>トランザクション レートが高く、比較的小さなオブジェクトが使用されるシナリオ、またはストレージ待ち時間が一貫して短いことが要求されるシナリオに推奨されます。</li>
+<li><strong>Premium ファイル共有</strong><br>ファイル共有専用の Premium タイプのストレージ アカウント。<br>エンタープライズまたはハイ パフォーマンス スケール アプリケーションにお勧めします。<br>SMB ファイル共有と NFS ファイル共有の両方をサポートするストレージアカウントが必要な場合は、このタイプのアカウントを使用します。</li>
+<li><strong>Premium ページ BLOB</strong><br>ページ BLOB に特化した Premium Storage アカウントの種類。</li>
+</ul>
+</blockquote>
+</blockquote>
+<p>各ストレージ アカウントの種類にてサポートされている Azure Storage のデータサービスは、下記の通りとなります。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/02.png"></p>
+<hr>
+<h2 id="冗長性-データのレプリケート方法-の種類と各データ-サービスのご利用可否"><a href="#冗長性-データのレプリケート方法-の種類と各データ-サービスのご利用可否" class="headerlink" title="冗長性 (データのレプリケート方法) の種類と各データ サービスのご利用可否"></a>冗長性 (データのレプリケート方法) の種類と各データ サービスのご利用可否</h2><p>Azure Storage では、ユーザー データを Azure 基盤側の計画されたイベント (メンテナンス) / 計画外のイベント (一時的なハードウェア障害、ネットワークの障害、災害など) から保護するため、常に複数 (構成によっては 3 つ以上) のコピーを実施しています。</p>
+<p>データのレプリケート方法としては、LRS、ZRS、GRS、GZRS の 4 種類と GRS、GZRS のセカンダリ リージョンへ読み取りアクセスが可能となった RA-GRS、RA-GZRS の計 6 種類があります。</p>
+<blockquote>
+<p>ご参考) Azure Storage の冗長性<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy#supported-azure-storage-services">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy#supported-azure-storage-services</a></p>
+</blockquote>
+<p>それぞれについて説明します。</p>
+<hr>
+<h3 id="ローカル冗長ストレージ-LRS"><a href="#ローカル冗長ストレージ-LRS" class="headerlink" title="ローカル冗長ストレージ (LRS)"></a>ローカル冗長ストレージ (LRS)</h3><p>LRS は、ストレージ アカウントを作成したリージョンの単一のデータ センター内で、データを同期的に 3 回複製します。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/03.png"></p>
+<p>最も安価なレプリケーション オプションですが、データセンター単位の障害が発生した場合には、回復不能となるリスクがあり、高可用性を必要とするアプリケーションには推奨されません。</p>
+<blockquote>
+<p>ご参考) ローカル冗長ストレージ<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy#locally-redundant-storage">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy#locally-redundant-storage</a></p>
+</blockquote>
+<p>なお、LRS で利用可能な Azure Storage データ サービスは以下の通りです。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/12.png"></p>
+<hr>
+<h3 id="ゾーン冗長ストレージ-ZRS"><a href="#ゾーン冗長ストレージ-ZRS" class="headerlink" title="ゾーン冗長ストレージ (ZRS)"></a>ゾーン冗長ストレージ (ZRS)</h3><p>ZRS は、可用性ゾーン対応リージョンでご利用いただけるレプリケーション オプションであり、ストレージ アカウントを作成したリージョンの 3 つの Azure 可用性ゾーン間で、データを同期的に複製します。</p>
+<p>可用性ゾーン対応リージョンの場合では、それぞれ異なる電源・ネットワーク・冷却装置を持つ物理的に分離された場所を 3 つに分け、複数のゾーンにデータをレプリケートすることで、ゾーン単位の障害が発生した場合でも別のゾーンからデータが利用できることを実現しています。</p>
+<blockquote>
+<p>ご参考) リージョンと可用性ゾーン<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/availability-zones/az-overview?context=/azure/virtual-machines/context/context">https://docs.microsoft.com/ja-jp/azure/availability-zones/az-overview?context=/azure/virtual-machines/context/context</a></p>
+</blockquote>
+<p>ZRS では、ゾーンごとにデータがレプリケートされているため、データセンター単位の障害やゾーン単位の障害が発生した場合でも、影響を受けていないゾーンに保管されているデータにアクセスすることが可能となります。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/04.png"></p>
+<p>リージョン単位の障害が発生した場合には回復不能となるリスクがあるため、さらに高可用性を必要とするアプリケーションをご利用の場合には、セカンダリ リージョンにもデータをレプリケートする Geo 冗長をご検討ください。</p>
+<blockquote>
+<p>ご参考) ゾーン冗長ストレージ<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy#zone-redundant-storage">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy#zone-redundant-storage</a></p>
+</blockquote>
+<p>なお、ZRS で利用可能な Azure Storage データ サービスは以下の通りです。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/13.png"></p>
+<div class="alert is-info"><p class="alert-title">Note</p><p><strong>コラム：ゾーンごとにデータがレプリケートされている場合はどこにアクセスしているのか</strong></p><p>　</p><p>ストレージ アカウント名は DNS ホスト名の一部となっており、エンドポイント (<strong>&lt;ストレージ アカウント名&gt;.&lt;サービス&gt;.core.windows.net</strong>) をご指定いただくことで、DNS 経由でデータが保存されている場所にアクセスします。</p><p>ZRS をご利用の場合、データはゾーンごとに複製されておりますため、ストレージ アカウントのエンドポイントは 3 つの IP アドレスに紐づけられています。</p><p>　</p><p><img src="/blog/storage/introduction-of-azure-storage-redundancy/09.png"></p><p>　</p><p>ZRS の保管されているデータに書き込みを行った場合には、リクエストを投げた際に一番応答の早いゾーンの IP アドレスに解決が行われ、そのゾーンに保存されているデータに対して書き込み操作が実施されます。</p><p>残りのゾーンについては、バックエンドで書き込み操作を実施した変更が同期されます。</p><p>　</p><p>ゾーンが使用できなくなった場合には、Azure 側で DNS の再指定などのネットワークの更新が実施されますので、お客様における切り替え作業は発生いたしません。</p><p>　</p><p>なお、ストレージ アカウントに紐づく IP アドレスを固定化することは叶いませんので、ストレージ アカウント内のデータにアクセスする際はエンドポイントとして提供されている <strong>&lt;ストレージ アカウント名&gt;.&lt;サービス&gt;.core.windows.net</strong> をご利用ください。</p></div>
+<hr>
+<h3 id="Geo-冗長ストレージ-GRS"><a href="#Geo-冗長ストレージ-GRS" class="headerlink" title="Geo 冗長ストレージ (GRS)"></a>Geo 冗長ストレージ (GRS)</h3><p>Geo 冗長は、プライマリ リージョンのデータをセカンダリ リージョンにもレプリケートする構成です。<br>セカンダリ リージョンは、プライマリ リージョンのペア リージョンになります。</p>
+<blockquote>
+<p>ご参考) すべての地域の Azure リージョン間レプリケーションのペアリング<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/availability-zones/cross-region-replication-azure#azure-cross-region-replication-pairings-for-all-geographies">https://docs.microsoft.com/ja-jp/azure/availability-zones/cross-region-replication-azure#azure-cross-region-replication-pairings-for-all-geographies</a></p>
+</blockquote>
+<p>GRS は、プライマリ リージョンで LRS を使用してデータを同期的に 3 回複製した後、データをセカンダリ リージョンに非同期的に複製します。セカンダリ リージョンでは LRS を利用して、単一のデータ センター内でデータを同期的に 3 回複製します。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/05.png"></p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/10.png"></p>
+<blockquote>
+<p>ご参考) geo 冗長ストレージ<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.json#geo-redundant-storage">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.json#geo-redundant-storage</a></p>
+</blockquote>
+<div class="alert is-warning"><p class="alert-title">警告</p><p>非同期の複製に関して、プライマリ リージョンに障害が発生した場合にも、最新の変更がセカンダリ リージョンに同期できていないおらず、最新の変更分に関してはデータが失われる可能性があります。</p><p>非同期的に行う複製の間隔 (回復ポイントの目標 / RPO) に関する SLA はありませんが、Azure Storage における RPO 目安としては 15 分未満となります。</p></div>
+<p>なお、GRS で利用可能な Azure Storage データ サービスは以下の通りです。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/14.png"></p>
+<hr>
+<h3 id="geo-ゾーン冗長ストレージ-GZRS"><a href="#geo-ゾーン冗長ストレージ-GZRS" class="headerlink" title="geo ゾーン冗長ストレージ (GZRS)"></a>geo ゾーン冗長ストレージ (GZRS)</h3><p>GZRS は、プライマリ リージョンで ZRS を使用してデータを同期的に 3 回複製した後、データをセカンダリ リージョンに非同期的に複製します。セカンダリ リージョンでは LRS を利用して、単一のデータ センター内でデータを同期的に 3 回複製します。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/06.png"></p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/11.png"></p>
+<blockquote>
+<p>ご参考) geo ゾーン冗長ストレージ<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.json#geo-zone-redundant-storage">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.json#geo-zone-redundant-storage</a></p>
+</blockquote>
+<p>なお、GRS で利用可能な Azure Storage データ サービスは以下の通りです。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/15.png"></p>
+<hr>
+<h3 id="GRS、GZRS-と-RA-GRS、RA-GZRS-の違い"><a href="#GRS、GZRS-と-RA-GRS、RA-GZRS-の違い" class="headerlink" title="GRS、GZRS と RA-GRS、RA-GZRS の違い"></a>GRS、GZRS と RA-GRS、RA-GZRS の違い</h3><p>GRS、GZRS と RA-GRS、RA-GZRS の違いは、セカンダリ リージョンのデータへのアクセス状況です。<br>それぞれについて説明します。</p>
+<p>なお、RA-GRS および RA-GZRS で利用可能な Azure Storage データ サービスは以下の通りです。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/16.png"></p>
+<h4 id="GRS、GZRS"><a href="#GRS、GZRS" class="headerlink" title="GRS、GZRS"></a>GRS、GZRS</h4><p>GRS、GZRS の場合は、エンドポイントによって、プライマリ リージョンのデータへの読み取り/書き込みが実施できます。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/07.png"></p>
+<p>セカンダリ リージョン上のデータについては、フェールオーバーによってエンドポイントに関連付いている IP アドレスが切り替わることで、アクセスが可能になります。<br>フェールオーバー中はプライマリ リージョンでの読み取り/書き込みアクセスができなくなり、フェールオーバー完了後に新しいプライマリ リージョン (元セカンダリ リージョン) にて読み取り/書き込みが実施できるようになります。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/17.png"></p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/19.png"></p>
+<h4 id="RA-GRS、RA-GZRS"><a href="#RA-GRS、RA-GZRS" class="headerlink" title="RA-GRS、RA-GZRS"></a>RA-GRS、RA-GZRS</h4><p>RA-GRS、RA-GZRS では、プライマリ リージョンのデータへの読み取り/書き込みとセカンダリ リージョンのデータに対して読み取りが実施できます。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/08.png"></p>
+<p>フェールオーバーを実施した場合、フェールオーバー中はプライマリ リージョンでの読み取り/書き込みアクセスができなくなりますが、セカンダリ リージョンの読み取りアクセスは継続してご利用いただけることが想定されています。<br>フェールオーバー完了後には、新しいプライマリ リージョン (元セカンダリ リージョン) にて読み取り/書き込みが実施できるようになります。</p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/18.png"></p>
+<p><img src="/blog/storage/introduction-of-azure-storage-redundancy/19.png"></p>
+<hr>
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>本記事でご紹介した内容のまとめは、以下の通りです。</p>
+<h3 id="冗長性-データのレプリケート方法-の種類"><a href="#冗長性-データのレプリケート方法-の種類" class="headerlink" title="冗長性 (データのレプリケート方法) の種類"></a>冗長性 (データのレプリケート方法) の種類</h3><p><img src="/blog/storage/introduction-of-azure-storage-redundancy/21.png"></p>
+<h3 id="ストレージ-アカウントの種類およびレプリケーションの種類に対するデータ-サービスのサポート状況"><a href="#ストレージ-アカウントの種類およびレプリケーションの種類に対するデータ-サービスのサポート状況" class="headerlink" title="ストレージ アカウントの種類およびレプリケーションの種類に対するデータ サービスのサポート状況"></a>ストレージ アカウントの種類およびレプリケーションの種類に対するデータ サービスのサポート状況</h3><p><img src="/blog/storage/introduction-of-azure-storage-redundancy/20.png"></p>
+<p>本記事の内容が皆様のお役に立てれば幸いです。</p>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/storage/introduction-of-azure-storage-redundancy.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="../../information/Different-subscriptions-research/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">お問い合わせ発行時と「異なる」サブスクリプションならびに AAD テナントの調査依頼に対してのセキュリティ チェックが強化されます</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="">【図解】ストレージ アカウントにおける冗長性の種類について</a>
+          </li>
+        
+          <li>
+            <a href="../../information/Different-subscriptions-research/">お問い合わせ発行時と「異なる」サブスクリプションならびに AAD テナントの調査依頼に対してのセキュリティ チェックが強化されます</a>
+          </li>
+        
+          <li>
+            <a href="../../information/Security-check-stricter/">電話経由における Azure サブスクリプションの調査のセキュリティ チェックが厳格化されます</a>
+          </li>
+        
+          <li>
+            <a href="../../information/Subscription-ID-verification/">サブスクリプション ID とリソース ID の確認について</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/rbac-vm-start-stop-restart/">特定のユーザーへ仮想マシンの起動 / 停止 / 再起動 のみの操作を許可する方法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ApplicationGateway/" rel="tag">ApplicationGateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Portal/" rel="tag">Azure Portal</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/How-To/" rel="tag">How To</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Noboot/" rel="tag">Noboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Oparation/" rel="tag">Oparation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RBAC/" rel="tag">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">22</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Noboot">Noboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Performance">Performance</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">4</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">4</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">4</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/Azure-Portal">Azure Portal</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">23</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Application-Gateway">Application Gateway</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ApplicationGateway">ApplicationGateway</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NAT-Gateway">NAT Gateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NSG">NSG</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-IP-Address">Public IP Address</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-Peering">Public Peering</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SNAT">SNAT</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">2</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">5</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">28</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/How-To">How To</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">8</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Noboot">Noboot</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Oparation">Oparation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RBAC">RBAC</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Resource-Health">Resource Health</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Sample-Script">Sample Script</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Storage-Space">Storage Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Troubleshooting">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Windows">Windows</a><span class="tag-list-count">15</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/ARM/" style="font-size: 11px;">ARM</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 15px;">Application Gateway</a> <a href="../../tags/ApplicationGateway/" style="font-size: 12px;">ApplicationGateway</a> <a href="../../tags/Archive/" style="font-size: 18px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 12px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 12px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 11px;">Azure Backup</a> <a href="../../tags/Azure-Firewall/" style="font-size: 12px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 13px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 11px;">Azure Load Balancer</a> <a href="../../tags/Azure-Portal/" style="font-size: 10px;">Azure Portal</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 11px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 10px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/Certificate/" style="font-size: 11px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 13px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 11px;">DNS</a> <a href="../../tags/Disk/" style="font-size: 13px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 11px;">Drive Letter</a> <a href="../../tags/Error/" style="font-size: 10px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 12px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 11px;">FAQ</a> <a href="../../tags/How-To/" style="font-size: 10px;">How To</a> <a href="../../tags/HowTo/" style="font-size: 16px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/Information/" style="font-size: 13px;">Information</a> <a href="../../tags/Linux/" style="font-size: 13px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 10px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 10px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 11px;">Managed Disk</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 11px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 10px;">NAT Gateway</a> <a href="../../tags/NSG/" style="font-size: 11px;">NSG</a> <a href="../../tags/Network/" style="font-size: 19px;">Network</a> <a href="../../tags/Noboot/" style="font-size: 13px;">Noboot</a> <a href="../../tags/Oparation/" style="font-size: 10px;">Oparation</a> <a href="../../tags/Other/" style="font-size: 11px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 12px;">PowerShell</a> <a href="../../tags/Public-IP-Address/" style="font-size: 10px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RBAC/" style="font-size: 10px;">RBAC</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SNAT/" style="font-size: 10px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 13px;">Sample Script</a> <a href="../../tags/Storage/" style="font-size: 14px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 11px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Troubleshooting/" style="font-size: 12px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 11px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 20px;">VM</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN-Gateway/" style="font-size: 12px;">VPN Gateway</a> <a href="../../tags/WAF/" style="font-size: 13px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 17px;">Windows</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
