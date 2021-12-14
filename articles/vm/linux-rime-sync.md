@@ -98,7 +98,6 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
    # 実行結果の例
    # ptp0 ptp1 ptp_hyperv
 
-   cat /sys/class/ptp/ptp0/clock_name
 
    # hyperv
    ```
