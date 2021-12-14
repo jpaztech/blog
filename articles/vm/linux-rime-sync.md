@@ -93,7 +93,7 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
 
    ```bash
    # root 権限にて実施
-   ls /sys/class/ptp
+   ls /dev/ptp*
 
    # 実行結果の例
    # ptp0 ptp1 ptp_hyperv
