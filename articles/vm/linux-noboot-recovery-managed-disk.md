@@ -174,6 +174,10 @@ Linux OS にて設定変更後、または新たにアプリケーションな�
 
   ```bash
   az vm repair restore -g rg-test -n testvm --verbose
+  # 省略 #
+  Continue with clean-up and delete resources? (y/n): n ※復旧 VM 作成時に作成されたリソースを削除するかの選択。
+  今回ご紹介の手順では n を選択し、後続の手順にて関連リソースを削除します。
+  y を選択いただいても問題ありません。
   ```
 
   コマンドが完了すると、復旧 VM にアタッチされていたディスクが自動的に問題の仮想マシンの OS ディスクとしてアタッチされます。
