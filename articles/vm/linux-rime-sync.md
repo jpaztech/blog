@@ -109,8 +109,8 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
 
    ```bash
    # root 権限にて実施
-　vi /etc/udev/rules.d/99-user-customize.rules
-　```
+ 　vi /etc/udev/rules.d/99-user-customize.rules
+ 　```
 　
    追加行
 
