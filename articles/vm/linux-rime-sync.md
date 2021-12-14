@@ -88,7 +88,9 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
    # hv_vmbus              106496  7 hv_storvsc,hv_utils,hid_hyperv,hv_balloon,hv_netvsc,hyperv_keyboard,hyperv_fb
     ```
 
-5. PTP クロックソースが hyperv であることを確認
+5. PTP クロックソースが (hyperv) であることを確認
+   高速ネットワークの利用有無など、環境によって出力結果が異なるため、後続の手順で正しいデバイス ファイルを選択するように hyperv の ptp クロックソースの情報を確認します。
+
    ```bash
    # root 権限にて実施
    ls /sys/class/ptp
