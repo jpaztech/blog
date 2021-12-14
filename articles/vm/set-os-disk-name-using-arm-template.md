@@ -5,8 +5,8 @@ tags:
   - VM
   - Disk
   - Managed Disk
-  - How To
-  - ARM
+  - HowTo
+  - ARM Template
 ---
 
 こんにちは。Azure テクニカル サポート チームの西澤です。
