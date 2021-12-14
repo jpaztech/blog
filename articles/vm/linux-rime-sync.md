@@ -97,21 +97,22 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
 
    # 実行結果の例
    # ptp0 ptp1 ptp_hyperv
-
    ```
 
-   - ptp_hyperv ファイルが存在する場合
-     →　手順 6 にて /dev/ptp_hyperv を指定します。
-   - ptp0 のみが表示された場合
-     →　手順 6  にて /dev/ptp0 を指定します。
-   - ptp0 と ptp1 ファイルのみが存在する場合
-     →　正しいクロックソースを指定できるよう udev ルールファイルを作成し、システムを再起動します。
+   **ptp_hyperv ファイルが存在する場合**
+   →　手順 6 にて /dev/ptp_hyperv を指定します。
+
+   **ptp0 のみが表示された場合**
+   →　手順 6  にて /dev/ptp0 を指定します。
+
+   **ptp0 と ptp1 ファイルのみが存在する場合**
+   →　正しいクロックソースを指定できるよう udev ルールファイルを作成し、システムを再起動します。
 
    ```bash
    # root 権限にて実施
- 　vi /etc/udev/rules.d/99-user-customize.rules
+   vi /etc/udev/rules.d/99-user-customize.rules
  　```
-　
+
    追加行
 
    ```bash
@@ -121,7 +122,7 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
 6. chrony を利用しPTP クロックソースを利用した時刻同期を構成
 以下の例は手順 5 の確認の結果、ptp0 が正しい PTP クロックソースと確認した場合の設定となります。
 
-```bash
+   ```bash
    # root 権限にて実施
    vi /etc/chrony.conf
    ```
