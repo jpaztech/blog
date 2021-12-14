@@ -170,25 +170,13 @@ Linux OS にて設定変更後、または新たにアプリケーションな�
 
 ### 4. 復旧 VM で修正した OS ディスクのコピーを、問題の VM の OS ディスクとスワップ
 
-公式ドキュメント内では "az vm repair restore" コマンドにて実施する方法のご案内がありますが、ここではポータルから操作する方法をご案内いたします。
-
-- データ ディスクとして接続されている修復した OS ディスクをデタッチします。
-  ![](./linux-noboot-recovery-managed-disk/07.png)
-
-- 問題の VM のディスクのメニューより、OS ディスクを、修復した OS ディスクとスワップします。
-  ![](./linux-noboot-recovery-managed-disk/08.png)
-  ![](./linux-noboot-recovery-managed-disk/09.png)
-
-  ※ 復旧 VM からディスクをデタッチした直後、選択項目に表示されない場合があります。
-  画面更新などを行い、少しお時間空けてから作業を実施ください。
-  時間を空けてもスワップ対象ディスクが表示されない場合、コマンドを利用してディスクをスワップ可能です。
+- "az vm repair restore" コマンドにて、問題の VM の OS ディスクを、修復した OS ディスクとスワップします。
 
   ```bash
-  az vm disk attach `
-  -g rg-test `
-  --vm-name testvm `
-  --name testvm-DiskCopy-yyyymmdd #省略
+  az vm repair restore -g rg-test -n testvm --verbose
   ```
+
+  コマンドが完了すると、復旧 VM にアタッチされていたディスクが自動的に問題の仮想マシンの OS ディスクとしてアタッチされます。
 
 - 問題の VM をポータルから起動し、ログインができるか確認
 
