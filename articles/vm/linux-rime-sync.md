@@ -98,7 +98,6 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
    # 実行結果の例
    # ptp0 ptp1 ptp_hyperv
 
-   # hyperv
    ```
 
 6. chrony を利用しPTP クロックソースを利用した時刻同期を構成
