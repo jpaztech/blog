@@ -113,8 +113,11 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
 　```
 　
    追加行
+
    ```bash
    SUBSYSTEM=="ptp", ATTR{clock_name}=="hyperv", SYMLINK += "ptp_hyperv"
+   ```
+
 6. chrony を利用しPTP クロックソースを利用した時刻同期を構成
 以下の例は手順 5 の確認の結果、ptp0 が正しい PTP クロックソースと確認した場合の設定となります。
 
