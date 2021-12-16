@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/12.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/14.png">
 <meta property="article:published_time" content="2021-06-10T04:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-14T13:10:37.728Z">
+<meta property="article:modified_time" content="2021-12-16T05:34:16.002Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="VM">
@@ -118,7 +118,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+18b63eab-7f78-51ad-99ce-21065252b080%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Windows+VM+%E3%81%A7%E5%AE%8C%E5%85%A8%E3%83%A1%E3%83%A2%E3%83%AA+%E3%83%80%E3%83%B3%E3%83%97%E3%82%92%E6%8E%A1%E5%8F%96%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fhow_to_get_a_complete_memory_dump%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fhow_to_get_a_complete_memory_dump.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fhow_to_get_a_complete_memory_dump.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/" data-id="ckx64hqwt003e0npub4ku9lcf" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/how_to_get_a_complete_memory_dump/" data-id="ckx8j2k7x003e0lqsbx2c8904" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -141,7 +141,7 @@
 <h2 id="完全メモリ-ダンプを採取するための-Windows-OS-の事前設定について"><a href="#完全メモリ-ダンプを採取するための-Windows-OS-の事前設定について" class="headerlink" title="完全メモリ ダンプを採取するための Windows OS の事前設定について"></a>完全メモリ ダンプを採取するための Windows OS の事前設定について</h2><p>物理メモリ上のデータを完全メモリ ダンプとして出力させるためには、事前に以下の設定が必要となります。こちらの設定を行っていない既定の状態でも、自動メモリ ダンプなどの採取はいただけますが、完全メモリ ダンプとして採取されたい場合には、明示的に設定をお願いいたします。</p>
 <p>なお、物理メモリを多く搭載した VM をご利用の場合、完全メモリ ダンプの採取に長時間を要すほか、出力先のディスクにも大きな空き容量が必要となります。このため、ご利用の環境やお客様側で必要とされるダンプの種類に合わせて、適宜設定をいただければと思います。</p>
 <div class="alert is-warning"><p class="alert-title">警告</p><p>下記の手順には、レジストリの編集方法が記載されています。</p><p>レジストリを誤って変更すると、深刻な問題が発生することがあります。</p><p>レジストリを編集する際には充分に注意し、ユーザー自身の責任において行ってください。</p><p>万一に備えて、編集の前にレジストリをバックアップしておくと、問題が発生した場合にレジストリを復元することができます。</p><p>バックアップおよび復元方法の詳細は、サポート技術情報「<a target="_blank" rel="noopener" href="https://support.microsoft.com/ja-jp/help/322756/">Windows でレジストリをバックアップおよび復元する方法</a>」をご確認ください。</p></div>
-<h3 id="1-ページ-ファイルの大きさを-物理メモリ-400-MB-以上の大きさに設定する"><a href="#1-ページ-ファイルの大きさを-物理メモリ-400-MB-以上の大きさに設定する" class="headerlink" title="1. ページ ファイルの大きさを 物理メモリ + 400 MB 以上の大きさに設定する"></a>1. ページ ファイルの大きさを 物理メモリ + 400 MB 以上の大きさに設定する</h3><div class="alert is-info"><p class="alert-title">Note</p><p>大容量の物理メモリを搭載し、且つ、非常に多くのドライバーをインストールした環境に対しては、ダンプ ファイルの取得を目的としたページング ファイルの大きさにおいて、”物理メモリ + 400 MB” の値が必要となる場合ございます。</p><p>本手順では、上記環境においてもご対応いただけるよう、ページ ファイルの大きさを “物理メモリ + 400 MB” 以上の大きさとしてご案内しております。</p></div>
+<h3 id="1-ページ-ファイルの大きさを-物理メモリ-400-MB-以上の大きさに設定する"><a href="#1-ページ-ファイルの大きさを-物理メモリ-400-MB-以上の大きさに設定する" class="headerlink" title="1. ページ ファイルの大きさを 物理メモリ + 400 MB 以上の大きさに設定する"></a>1. ページ ファイルの大きさを 物理メモリ + 400 MB 以上の大きさに設定する</h3><div class="alert is-info"><p class="alert-title">Note</p><p>大容量の物理メモリを搭載し、且つ、非常に多くのドライバーをインストールした環境に対しては、ダンプ ファイルの取得を目的としたページング ファイルの大きさにおいて、”物理メモリ + 400 MB” の値が必要となる場合があります。</p><p>　</p><p>この “+ 400 MB” とは、ダンプ ファイルのヘッダー情報や二次ダンプ ファイルのために使われる領域です。</p><p>より多くの環境においても対応できるように余裕を持たせた値となっておりますが、ご案内によっては、より少ない値 (1MB など) である場合もあります。</p><p>　</p><p>本手順では、ページ ファイルの大きさを “物理メモリ + 400 MB” 以上の大きさとしてご案内しております。</p></div>
 <h4 id="GUI-から設定する場合"><a href="#GUI-から設定する場合" class="headerlink" title="GUI から設定する場合"></a>GUI から設定する場合</h4><ol>
 <li>[ファイル名を指定して実行] から “sysdm.cpl” を起動し、[システムのプロパティ] を起動します。</li>
 <li>[詳細設定] タブに移動し、[パフォーマンス] の [設定] ボタンをクリックします。</li>
