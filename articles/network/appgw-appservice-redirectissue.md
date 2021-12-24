@@ -20,7 +20,7 @@ Application Gateway のバックエンドにマルチテナントである App S
 
 しかしながら Application Gateway のフロント エンドにカスタム ドメインを設定しており、バックエンドに指定した App Service 側でリダイレクトの応答が返されるシナリオでは前述の構成だと意図せず App Service の 既定の FQDN が利用されてしまい期待した動作とならない場合があります。
 
-この場合のトラブルシュートについては[こちら](https://docs.microsoft.com/ja-jp/azure/application-gateway/troubleshoot-app-service-redirection-app-service-url)のドキュメンとに対処方法が記載されております。このブログではこのドキュメントの手順をもう少しかみくだきご紹介いたします。
+この場合のトラブルシュートについては[こちら](https://docs.microsoft.com/ja-jp/azure/application-gateway/troubleshoot-app-service-redirection-app-service-url)のドキュメントに対処方法が記載されております。このブログではこのドキュメントの手順をもう少しかみくだきご紹介いたします。
 
 #### 現在の構成
 まず、現在の構成は以下とします。この状態でクライアントから 「www.maotsunet.com」 に接続すると、ブラウザの URL 表示が App Service のFQDN となってしまう事象が発生しています。これをカスタムドメインで表示させることが目的です。
@@ -85,7 +85,7 @@ App Service はマルチテナント サービスのため、IP アドレスで�
 そのため、既定の FQDN 以外で接続したい場合は事前にカスタム ドメインの登録を行う必要があります。
 App Service にカスタム ドメインを設定する際に、カスタム ドメインの CNAME が既にApplication Gatewayなど WebApps 以外に向いている場合、カスタム ドメインの設定はできません。
 このような場合、App Service の「カスタム ドメインの検証 ID」を使用し、asuid という名前の TXT レコードを作成することで回避することが可能です。
-例えば、カスタム ドメインにwww.maotsunet.com を登録しようとしている場合 ｍaotsunet.com の DNS ゾーンに以下のレコードを追加します。App Service 側にカスタム ドメインを追加する作業の詳細については[こちら](https://docs.microsoft.com/ja-jp/azure/app-service/app-service-web-tutorial-custom-domain?tabs=cname#3-get-a-domain-verification-id)もご参照ください。
+例えば、カスタム ドメインにwww.maotsunet.com を登録しようとしている場合 maotsunet.com の DNS ゾーンに以下のレコードを追加します。App Service 側にカスタム ドメインを追加する作業の詳細については[こちら](https://docs.microsoft.com/ja-jp/azure/app-service/app-service-web-tutorial-custom-domain?tabs=cname#3-get-a-domain-verification-id)もご参照ください。
 
 
 1) App Service のカスタム ドメインの項目から「カスタム ドメイン検証 ID」をコピーします。
