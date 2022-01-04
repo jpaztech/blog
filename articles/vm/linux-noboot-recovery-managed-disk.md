@@ -1,6 +1,6 @@
 ---
 title: 【管理ディスク編】復旧 VM を使った Linux VM の Noboot 復旧手順
-date: 2021-12-07 17:30:00
+date: 2022-01-04 15:00:00
 tags:
   - VM
   - Linux
