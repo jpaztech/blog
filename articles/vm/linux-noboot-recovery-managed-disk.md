@@ -70,7 +70,6 @@ Linux OS にて設定変更後、または新たにアプリケーションな�
   ![](./linux-noboot-recovery-managed-disk/01.png)
 
 - 上記確認したパブリック IP アドレス、手順 1 で作成したユーザ、パスワードで SSH ログインし、VM (testvm) のディスクをマウントし、chroot コマンドを実行します。
-  なお、復旧 VM の OS は SUSE となり、 SUSE で実行可能なコマンドは実行可能です。
 
   ```bash
   sudo su - 
