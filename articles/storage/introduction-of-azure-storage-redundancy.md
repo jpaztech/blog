@@ -176,7 +176,7 @@ GRS は、プライマリ リージョンで LRS を使用してデータを同�
 > [https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.json#geo-redundant-storage](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.json#geo-redundant-storage)
 
 > [!WARNING]
-> 非同期の複製に関して、プライマリ リージョンに障害が発生した場合にも、最新の変更がセカンダリ リージョンに同期できていないおらず、最新の変更分に関してはデータが失われる可能性があります。
+> 非同期の複製に関して、プライマリ リージョンに障害が発生した場合にも、最新の変更がセカンダリ リージョンに同期できておらず、最新の変更分に関してはデータが失われる可能性があります。
 > 非同期的に行う複製の間隔 (回復ポイントの目標 / RPO) に関する SLA はありませんが、Azure Storage における RPO 目安としては 15 分未満となります。
 
 なお、GRS で利用可能な Azure Storage データ サービスは以下の通りです。
