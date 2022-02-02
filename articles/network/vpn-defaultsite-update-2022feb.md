@@ -1,6 +1,6 @@
 ---
 title: 強制トンネリング利用時の VPN ゲートウェイの動作変更についてのアナウンス
-date: 2021-02-02 13:00
+date: 2022-02-02 14:00
 tags:
   - Network
   - VPN Gateway
@@ -58,7 +58,7 @@ Azure のサイト間 VPN においては、Azure 仮想ネットワークから
 
 ## 動作変更による影響が生じる条件
 
-以下の 6 つの条件に **すべて** 合致した場合に、今回の動作変更の影響を受けます。
+以下の 5 つの条件に **すべて** 合致した場合に、今回の動作変更の影響を受けます。
 
 - A. VPN 用の仮想ネットワーク ゲートウェイがある
 - B. ゲートウェイの SKU は末尾に AZ がつかないものである
@@ -124,21 +124,21 @@ A～E それぞれの条件について、合致しているかどうかを確�
 ### A. VPN 用の仮想ネットワーク ゲートウェイがあることの確認
 Azure ポータルで [仮想ネットワーク ゲートウェイ] メニューを開き、[ゲートウェイの種類] が [Vpn] のものがあれば、この条件に合致しています。
 
-![](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb_A_01.png)
+![画面イメージ](./vpn-defaultSite-update-2022feb/vpn-defaultsite-update-2022feb_A_01.png)
 
 ### B. ゲートウェイの SKU は末尾に AZ がつかないものであることの確認
 A. でみつけたゲートウェイをクリックし、[SKU] 欄を確認して「AZ」が含まれていれば、この条件に合致しています。
 
-![](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb_B_01.png)
+![画面イメージ](./vpn-defaultSite-update-2022feb/vpn-defaultsite-update-2022feb_B_01.png)
 
 ### C. サイト間 VPN を利用していることの確認
 A. でみつけたゲートウェイをクリックし、[接続] メニューをクリックします。
 
-![](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb_C_01.png)
+![画面イメージ](./vpn-defaultSite-update-2022feb/vpn-defaultsite-update-2022feb_C_01.png)
 
 [接続] オブジェクトが表示されれば、この条件に合致しています。
 
-![](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb_C_02.png)
+![画面イメージ](./vpn-defaultSite-update-2022feb/vpn-defaultsite-update-2022feb_C_02.png)
 
 ### D. BGP でデフォルト ルートを 0.0.0.0/0 を受信していないことの確認
 A. でみつけたゲートウェイをクリックし、[BGP ピア] メニューをクリックします。
