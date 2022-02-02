@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/windows-noboot-summary/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/win2016-jp-lpk-issue/</loc>
     
     <lastmod>2022-02-02</lastmod>
@@ -16,7 +23,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/windows-noboot-summary/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -37,13 +44,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-redeploy/</loc>
     
     <lastmod>2022-02-02</lastmod>
@@ -52,20 +52,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-operation/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/set-os-disk-name-using-arm-template/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -86,7 +72,21 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/set-os-disk-name-using-arm-template/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -100,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/plwv-bt0/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/plwv-bt0/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -240,13 +240,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/storage/azureFilesMonitoring/</loc>
     
     <lastmod>2022-02-02</lastmod>
@@ -254,7 +247,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/</loc>
+    <loc>https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/storage/addsAuthforAzureFiles/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -289,13 +289,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/storage/addsAuthforAzureFiles/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/other/technical_support_engineer_explained/</loc>
     
     <lastmod>2022-02-02</lastmod>
@@ -311,6 +304,27 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/firewall-rules/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -345,20 +359,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/firewall-rules/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
     
     <lastmod>2022-02-02</lastmod>
@@ -380,13 +380,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/appgw_change_subnet/</loc>
     
     <lastmod>2022-02-02</lastmod>
@@ -401,14 +394,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/ExpressRoutePrefixRollout/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -430,13 +423,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-maintenance-for-node/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -485,7 +471,21 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/ExpressRoutePrefixRollout/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-maintenance-for-node/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
@@ -618,6 +618,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/applicationgaetway-waf-01/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
+    
+    <lastmod>2022-02-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
     
     <lastmod>2022-02-02</lastmod>
@@ -640,20 +654,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/application-gateway-waf-vulnerability-detection/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/applicationgaetway-waf-01/</loc>
-    
-    <lastmod>2022-02-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
     
     <lastmod>2022-02-02</lastmod>
     
