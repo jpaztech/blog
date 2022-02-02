@@ -134,7 +134,7 @@ A. でみつけたゲートウェイをクリックし、[SKU] 欄を確認し�
 ### C. サイト間 VPN を利用していることの確認
 A. でみつけたゲートウェイをクリックし、[接続] メニューをクリックします。
 
-![画面イメージ](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb-c01png)
+![画面イメージ](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb-c01.png)
 
 [接続] オブジェクトが表示されれば、この条件に合致しています。
 
