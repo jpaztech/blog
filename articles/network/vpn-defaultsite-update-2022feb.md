@@ -127,7 +127,7 @@ Azure ポータルで [仮想ネットワーク ゲートウェイ] メニュー
 ![画面イメージ](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb-a01.png)
 
 ### B. ゲートウェイの SKU は末尾に AZ がつかないものであることの確認
-A. でみつけたゲートウェイをクリックし、[SKU] 欄を確認して「AZ」が含まれていれば、この条件に合致しています。
+A. でみつけたゲートウェイをクリックし、[SKU] 欄を確認して「AZ」が含まれていないものであれば、この条件に合致しています。（以下の画像は「AZ」が含まれる場合の例、つまり条件に合致しない例です）
 
 ![画面イメージ](./vpn-defaultsite-update-2022feb/vpn-defaultsite-update-2022feb-b01.png)
 
