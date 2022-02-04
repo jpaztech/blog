@@ -178,7 +178,8 @@ BGP ハイジャッキングを防止する目的で、`Advertised public prefix
 * ExpressRoute 回線のサービス キー
 * ExpressRoute 回線をデプロイしたリージョン
 * `Advertised public prefixes` (オンプレミス拠点から広報するパブリック IP アドレス)
-* `Peer ASN` (MSEE と BGP ピアを張る AS 番号。`Customer ASN` ではありません)
+* `Peer ASN`
+* (もし設定されている場合は) `Customer ASN`
 * `Advertised public prefixes` を `Peer ASN` で利用出来ることを示す証跡。例えば、他社様から借り受けたグローバル IP アドレスであれば、借り受けたことを示すメールの文面や pdf の文書等が該当します
 
 ### 注意点: Microsoft 365 (旧 Office 365) 利用時の承認について
