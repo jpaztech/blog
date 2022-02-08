@@ -47,7 +47,7 @@ VPN Gateway では Site-to-Site VPN 経由で接続された複数のサイト�
   
 ![](./vpngw-FAQ1/vpngw-er-coexist.png)
 
-__※追記__
+__※追記__  
 2021 年 9 月 より Route Server と呼ばれるサービスがリリースされました。
 Route Server の登場によって、ExpressRoute Gateway と VPN Gateway が BGP で学習した経路を双方の Gateway に広報することができるようになったため、ExpressRoute と S2S VPN 間のトランジット通信が可能となりました。
 Route Server の詳細および、ExpressRoute と S2S VPN 間のトランジットルーティングの詳細については、以下の公式ドキュメントをご参照下さい。
