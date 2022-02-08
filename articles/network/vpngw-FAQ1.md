@@ -43,9 +43,19 @@ VPN Gateway では Site-to-Site VPN 経由で接続された複数のサイト�
 
 ### VPN Gateway, ExpressRoute 共存環境のデザイン
 同一 VNET 内に ExpressRoute と VPN Gateway を配置することが可能です。  
-しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続された拠点 B 間は、Azure 経由で通信を行うことはできません (__共存環境では GW 間のトランジット通信はできません__)  
+~~しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続された拠点 B 間は、Azure 経由で通信を行うことはできません (__共存環境では GW 間のトランジット通信はできません__)~~
   
 ![](./vpngw-FAQ1/vpngw-er-coexist.png)
+
+__※追記__  
+2021 年 9 月 より Route Server と呼ばれるサービスがリリースされました。  
+Route Server の登場によって、ExpressRoute Gateway と VPN Gateway が BGP で学習した経路を双方の Gateway に広報することができるようになったため、ExpressRoute と S2S VPN 間のトランジット通信が可能となりました。  
+Route Server の詳細および、ExpressRoute と S2S VPN 間のトランジットルーティングの詳細については、以下の公式ドキュメントをご参照下さい。
+
+![](./vpngw-FAQ1/vpner-transit.png)
+
+ExpressRoute と Azure VPN に対する Azure Route Server のサポートについて  
+https://docs.microsoft.com/ja-jp/azure/route-server/expressroute-vpn-support
 
 ### BGP によるトラフィック制御方法
 VPN Gateway では IPsec 上で BGP を使用してオンプレミスサイトと経路交換をすることができます。  
