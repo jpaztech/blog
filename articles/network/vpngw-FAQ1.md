@@ -43,7 +43,7 @@ VPN Gateway では Site-to-Site VPN 経由で接続された複数のサイト�
 
 ### VPN Gateway, ExpressRoute 共存環境のデザイン
 同一 VNET 内に ExpressRoute と VPN Gateway を配置することが可能です。  
-~~しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続された拠点 B 間は、Azure 経由で通信を行うことはできません~~ (__既定の共存環境では GW 間のトランジット通信はできません__)  
+~~しかし、VPN Gateway Site-to-Site 接続で接続された拠点 A と ExpressRoute 接続された拠点 B 間は、Azure 経由で通信を行うことはできません (__共存環境では GW 間のトランジット通信はできません__)  ~~
   
 ![](./vpngw-FAQ1/vpngw-er-coexist.png)
 
