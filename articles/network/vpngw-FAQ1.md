@@ -54,7 +54,7 @@ Route Server の詳細および、ExpressRoute と S2S VPN 間のトランジッ
 
 ![](./vpngw-FAQ1/vpner-transit.png)
 
-ExpressRoute と Azure VPN に対する Azure Route Server のサポートについて
+ExpressRoute と Azure VPN に対する Azure Route Server のサポートについて  
 https://docs.microsoft.com/ja-jp/azure/route-server/expressroute-vpn-support
 
 ### BGP によるトラフィック制御方法
