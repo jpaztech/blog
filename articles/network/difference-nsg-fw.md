@@ -98,7 +98,7 @@ Azure 上で利用できる WAF については以下のドキュメントをご
 Azure Firewall では Premium SKU で IDPS 機能を提供しています。
 また、DDoS Protection Basic / Standard ではバックボーン ネットワーク上で DDoS 攻撃検知・緩和が実施されます。
 
-- [Azure Firewall Premium プレビューの機能](https://docs.microsoft.com/ja-jp/azure/firewall/premium-features)
+- [Azure Firewall Premium の機能](https://docs.microsoft.com/ja-jp/azure/firewall/premium-features)
 
 以上、ご参考になれば幸いです。
 
