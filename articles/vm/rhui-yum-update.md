@@ -1,6 +1,6 @@
 ---
 title: yum/dnf update に失敗する場合の原因と解決方法
-date: 2022-02-1 11:00:00
+date: 2022-02-14 11:00:00
 tags:
   - VM
   - RHEL
