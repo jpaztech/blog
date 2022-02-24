@@ -134,7 +134,7 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
 
    # 実行結果の例
    # Created symlink from /etc/systemd/system/multi-user.target.wants/chronyd.service to /usr/lib/systemd/system/chronyd.service.
-  ```
+   ```
 
 8. chrony による時刻同期状況を確認する ※PHC0 が存在すること
    ```bash
