@@ -1,5 +1,5 @@
 ---
-title: Liunx の NTP クライアント設定について
+title: Liunx の 時刻同期設定について
 date: 2022-02-24 15:30:00
 tags:
   - VM
