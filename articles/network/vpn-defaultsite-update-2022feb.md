@@ -20,7 +20,7 @@ Azure の仮想ネットワーク ゲートウェイ (以下「ゲートウェ�
 
 本記事では、動作変更の影響を受ける条件やその合致確認の方法、動作変更の内容および変更の影響を受けないようにする対処方法ついてまとめております。本記事を参考に影響有無を確認するとともに、影響が想定される場合は 2 月 24 日までにあらかじめ対処を実施いただければと思います。
 
-なお、以下の説明はリソース マネージャー モデル、クラシック モデルの両方に適用されますが、手順の説明はリソース マネージャー モデルを対象としています。クラシック モデルを対象とした手順は近日中に追記いたしますので、いましばらくお待ちいただけますようお願いいたします。
+前半ではリソース マネージャー モデル（新しいモデル）のための手順、後半ではクラシック モデル（古いモデル）のための手順をおまとめしておりますので、それぞれご利用の環境に合わせて確認ください。
 
 <br><br>
 
@@ -112,13 +112,9 @@ https://portal.azure.com/
 
 ※ ルート テーブルの設定手順は [公開資料](https://docs.microsoft.com/ja-jp/azure/virtual-network/manage-route-table) でも説明されておりますので、あわせてご覧ください。
 
-<br>
+<br>　<br>　<br>
 
------
-
-<br>
-
-## 補足: 条件に合致しているかどうかを確認するための詳細手順
+## 条件に合致しているかどうかを確認するための詳細手順
 A～E それぞれの条件について、合致しているかどうかを確認するための手順の一例をご紹介いたします。
 
 ### A. VPN 用の仮想ネットワーク ゲートウェイがあることの確認
@@ -159,4 +155,103 @@ Select-AzSubscription -SubscriptionId <確認したサブスクリプション I
 4) <b>以下のコマンドを実行し、対象のゲートウェイの構成情報を取得・表示します。</b><br>
 Get-AzVirtualNetworkGateway -Name <ゲートウェイの名前> -ResourceGroupName <ゲートウェイのリソース グループ名>
 
-5) <b>出力結果の中から、GatewayDefaultSite という行を探します。サイト名の情報が入っている場合は、この条件に合致します。「null」となっている場合は合致しません。
+5) <b>出力結果の中から、GatewayDefaultSite という行を探します。サイト名の情報が入っている場合は、この条件に合致します。「null」となっている場合は合致しません。</b>
+
+<br>
+
+-----
+
+<br>　<br>　<br>　<br>
+<b>※ 以下は、クラシック デプロイ モデルをご利用の方に向けた手順です。</b>
+<br>
+
+-----
+
+## (クラシックの場合) 条件にすべて合致した場合の対応
+クラシック デプロイ モデルをご利用の場合における具体的な手順の一例は以下のとおりです。各パラメーターについてはお客様の環境に合わせて確認および決定してください。
+
+### 事前準備: Azure PowerShell の利用
+クラシック デプロイ モデルにおける対処のためには、Azure PowerShell をご利用いただくことができます。対処用のコマンドを実行するためには、事前に以下のコマンドを実行する必要があります。
+
+1) <b>以下のコマンドを実行し、サインインします。</b><br>
+Add-AzureAccount
+
+2) <b>以下のコマンドを実行し、対象のサブスクリプションを指定します。</b><br>
+Select-AzureSubscription -SubscriptionId <サブスクリプション ID>
+
+### 対応手順の例
+具体的な手順の一例は以下のとおりです。各パラメーターについてはお客様の環境に合わせて確認および決定してください。
+
+1) <b>対象のサブネットにすでにルート テーブルが適用されているかどうかを確認します。</b><br>
+Get-AzureSubnetRouteTable -VirtualNetworkName "仮想ネットワーク名" -SubnetName "サブネット名"
+
+2) <b>すでに対象のサブネットにルート テーブルが適用されている場合は、手順 4) までスキップします。</b>
+
+3) <b>任意の名前でルート テーブルを作成します。</b><br>
+New-AzureRouteTable -Name "ルート テーブルの名前" -Location "リージョン名"
+
+4) <b>ルート テーブルに、0.0.0.0/0 のネクストホップを Internet に指定したルートを追加します。</b><br>
+Get-AzureRouteTable -Name "ルート テーブルの名前" | Set-AzureRoute -RouteName "DefaultRoute" -AddressPrefix "0.0.0.0/0" -NextHopType Internet
+
+5) <b>すでに対象のサブネットにルート テーブルが適用されている状態で作業を行った場合は、これで終了です。</b>
+
+6) <b>ルート テーブルをサブネットに適用します。</b><br>
+Set-AzureSubnetRouteTable -VirtualNetworkName "仮想ネットワーク名" -SubnetName "サブネット名" -RouteTableName "ルート テーブルの名前"
+
+<br>
+
+-----
+
+<br>
+
+## (クラシックの場合) 条件に合致しているかどうかを確認するための詳細手順
+
+クラシック デプロイ モデルをご利用の場合において、A～E それぞれの条件について、合致しているかどうかを確認するための手順の一例をご紹介いたします。
+
+### 事前準備: Azure PowerShell の利用
+クラシック デプロイ モデルにおける合致確認には、Azure PowerShell をご利用いただくことができます。合致確認用のコマンドを実行するためには、事前に以下のコマンドを実行する必要があります。
+
+1) <b>以下のコマンドを実行し、サインインします。</b><br>
+Add-AzureAccount
+
+2) <b>以下のコマンドを実行し、対象のサブスクリプションを指定します。</b><br>
+Select-AzureSubscription -SubscriptionId <確認したサブスクリプション ID>
+
+### A. VPN 用の仮想ネットワーク ゲートウェイがあることの確認
+(確認不要) 下記 E. の手順に包含されるため、本手順は割愛します。
+
+### B. ゲートウェイの SKU は末尾に AZ がつかないものであることの確認
+(確認不要) クラシックでは、必ず AZ がつかない SKU となりますので、本手順は割愛します。
+
+### C. サイト間 VPN を利用していることの確認
+(確認不要) 下記 E. の手順に包含されるため、本手順は割愛します。
+
+### D. BGP でデフォルト ルートを 0.0.0.0/0 を受信していないことの確認
+(確認不要) クラシックでは BGP は利用できないため、本手順は割愛します。
+
+### E. DefaultSiteの設定がされていることの確認
+1) <b>Azure PowerShell で以下のコマンドを実行します。</b><br>
+Get-AzureVirtualNetworkGateway
+
+2) <b>表示されたゲートウェイの一覧から、以下のように DefaultSite に値が入っているものがあれば、合致しています。</b><br>
+> GatewayId            : xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx<br>
+> GatewayName          : Default<br>
+> LastEventData        :<br>
+> GatewayType          : DynamicRouting<br>
+> LastEventTimeStamp   : xx/xx/xxxx xx:xx:xx<br>
+> LastEventMessage     : Successfully updated the gateway for the following virtual network: xxxx <b>← 通常、ここに対象の仮想ネットワーク名が入ります。</b><br>
+> LastEventID          : xxxxx<br>
+> State                : Provisioned<br>
+> VIPAddress           : x.x.x.x<br>
+> DefaultSite          : Site01 <b>← ここにサイト名が入っていれば該当しています。該当しない場合空欄です。</b><br>
+> GatewaySKU           : Standard<br>
+> Location             : Japan East<br>
+> VnetId               : xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx<br>
+> SubnetId             :<br>
+> EnableBgp            : False<br>
+> Asn                  : xxxxx<br>
+> BgpPeeringAddress    : x.x.x.x<br>
+> PeerWeight           : 0<br>
+> OperationDescription :<br>
+> OperationId          :<br>
+> OperationStatus      :<br>
