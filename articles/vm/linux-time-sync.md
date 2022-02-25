@@ -1,6 +1,6 @@
 ---
 title: Linux の 時刻同期設定について
-date: 2022-02-24 15:30:00
+date: 2022-02-25 16:30:00
 tags:
   - VM
   - Linux
@@ -70,7 +70,6 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
 2. chrony をインストール
    ```bash
    # root 権限にて実施
-   rpm -qa | grep chrony
    zypper install chrony
    ```
 
@@ -89,7 +88,7 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
    hv_utils               32768  1 
    ptp                    20480  1 hv_utils
    hv_vmbus              106496  7 hv_storvsc,hv_utils,hid_hyperv,hv_balloon,hv_netvsc,hyperv_keyboard,hyperv_fb
-    ```
+   ```
 
 5. PTP クロックソースを確認
    高速ネットワークの利用有無など、環境によって出力結果が異なるため、後続の手順で正しいデバイス ファイルを選択するように hyperv の ptp クロックソースの情報を確認します。
@@ -133,7 +132,7 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
    systemctl enable chronyd
 
    # 実行結果の例
-   # Created symlink from /etc/systemd/system/multi-user.target.wants/chronyd.service to /usr/lib/systemd/system/chronyd.service.
+   Created symlink from /etc/systemd/system/multi-user.target.wants/chronyd.service to /usr/lib/systemd/system/chronyd.service.
    ```
 
 8. chrony による時刻同期状況を確認する ※PHC0 が存在すること
@@ -142,10 +141,10 @@ Azure ホストとの時刻同期を行う際の手順についてご紹介し�
    chronyc sources
    
    # 実行結果の例
-   # 210 Number of sources = 1
-   # MS Name/IP address         Stratum Poll Reach LastRx Last sample
-   # ===============================================================================
-   # #* PHC0                          0   3   377     3  +2401ns[+5304ns] +/- 2032ns
+   210 Number of sources = 1
+   MS Name/IP address         Stratum Poll Reach LastRx Last sample
+   ===============================================================================
+   #* PHC0                          0   3   377     3  +2401ns[+5304ns] +/- 2032ns
    ```
 
 本記事が皆様のお役に立てれば幸いです。
