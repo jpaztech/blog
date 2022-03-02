@@ -12,14 +12,6 @@ Azure Files へのアクセスについて、「いつ、誰が、どのオブ�
 Azure Files へアクセスした際のログは、Azure Files の診断設定機能を使用することで、アクセス要求元や操作内容を大まかに把握することができます。
 この記事では Azure Files 診断設定機能の設定方法とどのようなログを取得することができるのかを紹介していきます。
 
-<!-- more -->
-本機能は現段階ではプレビューの機能となり、商用環境での運用が正式にサポートされるものではございません。また取得できる情報等は予告なく変更される可能性がありますので、あらかじめご了承ください。
-本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものとなります。
-
-> [!NOTE]
-> 参考：https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring?tabs=azure-portal#creating-a-diagnostic-setting
->Azure Monitor の Azure Storage ログはパブリック プレビュー段階にあり、すべてのパブリックおよび米国政府クラウド リージョンでプレビュー テスト用に使用できます。 このプレビューでは、BLOB (Azure Data Lake Storage Gen2 を含む)、ファイル、キュー、およびテーブルに対してログが有効になります。 この機能は、Azure Resource Manager デプロイ モデルを使用して作成されたすべてのストレージ アカウントで使用できます。 「ストレージ アカウントの概要」を参照してください。
-
 ---
 
 ## 概要
@@ -31,14 +23,14 @@ Azure Files へアクセスした際のログは、Azure Files の診断設定�
 
 1-1. Azure Portal > 対象のストレージ アカウントに移動します。
 
-1-2. [監視] > [診断設定 (プレビュー)] をクリックします。
-![](azureFilesMonitoring/azureFilesMonitoring01.png)
+1-2. [監視] > [診断設定] をクリックします。
+![](azureFilesMonitoring/azureFilesMonitoring09.png)
 
 1-3. 診断設定を有効にする種類として [file] を選択します。
-![](azureFilesMonitoring/azureFilesMonitoring02.png)
+![](azureFilesMonitoring/azureFilesMonitoring10.png)
 
 1-4. [診断設定を追加する]をクリックします。
-![](azureFilesMonitoring/azureFilesMonitoring03.png)
+![](azureFilesMonitoring/azureFilesMonitoring11.png)
 
 1-5. [診断設定]ページにて、「診断設定の名前」、取得するログ操作の「カテゴリ」と「宛先の詳細」を選択します。
 
@@ -80,7 +72,6 @@ Azure Files 内のオブジェクトに対して、「いつ、誰が、どの�
 
 上記のように、各プロパティを確認することで、「いつ、誰が、どのオブジェクトに、どのような操作を行ったか」の情報を得ることができます。
 ただし、Azure Files へアクセスいただく際に使用されるプロトコルや認証方法により取得できるリソース ログのプロパティは異なります。
-また、リソース ログについては、プレビュー段階のため予告なく取得できる内容が変更となる可能性があることをご留意くださいませ。
 
 Azure Files にて使用可能なプロトコルや認証方法については以下をご参照ください。
 
@@ -421,7 +412,7 @@ category: StorageDelete
 
 ### 2-3.NFS プロトコルの場合
 NFS プロトコルを使用し Azure Files をマウント後、Azure Files 配下のオブジェクトを操作した際のログとなります。
-なお、NFS プロトコルでの操作の場合、操作日時、操作内容までの確認はできますが、要求元の IP アドレスや対象オブジェクトの特定は現状叶いません。
+なお、NFS プロトコルでの操作の場合、操作日時、操作内容までの確認はできますが、要求元の IP アドレスや対象オブジェクトの特定は叶いません。
 
 category: StorageRead
 ```shell
@@ -606,10 +597,11 @@ category: StorageDelete
 
 > [!NOTE]
 >より詳細なプロパティと説明に関しては、下記公開情報におまとめしておりますので併せてご参照ください。
->-参考：リソース ログ (プレビュー)
->https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference#resource-logs-preview
->
->冒頭でも記載しておりますが、Azure Files の診断設定やリソース ログについては、プレビュー段階のため予告なく取得できる内容が変更となる可能性があることをご留意くださいませ。
+>-参考：
+>リソース ログ
+>https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference#resource-logs
+>StorageFileLogs
+>https://docs.microsoft.com/ja-jp/azure/azure-monitor/reference/tables/storagefilelogs
 
 ---
 
