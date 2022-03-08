@@ -1,18 +1,14 @@
 ---
-title: 一時ディスクのドライブ文字が変わる (改善適用済み)
-date: 2020-11-06 12:00:00
+title: 一時ディスクのドライブ文字が変わる
+date: 2022-03-09 17:30:00
 tags:
   - VM
   - Windows
   - Drive Letter
 ---
 
-<span style="color:red;">
-
-**Update: 2021/6/4** Azure 基盤側の改善が適用済みであることを明記いたしました。
-**Update: 11/6** (Last: 8/27)
-
-</span>
+> [!WARNING]
+> 2020 年 8 月 27 日に公開された、Azure 基盤起因で一時ディスクのドライブ文字が変わる内容につきましては、Azure 基盤側の改善が適用されたため、内容を取り下げさせていただきました。
 
 こんにちは。Azure テクニカル サポート チームの重田です。
 
@@ -24,7 +20,9 @@ Azure Windows VM では、規定で一時ディスクにドライブ文字 D が
 
 - Windows VM のデータ ドライブとしての D: ドライブの使用<br>[https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/change-drive-letter](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/change-drive-letter)
 
-しかしながら、一時ディスクのドライブ文字を D から変更いただいている場合、VM の停止 / 起動など物理ホスト サーバーの移動いただいた際に、一時ディスクのドライブ文字が変更される場合があります。
+しかしながら、一時ディスクのドライブ文字を D から変更いただいている場合、Sysprep をご実施いただいた際や ASR でフェールオーバーいただいた場合、Azure Backup やディスクのスナップショットから新規に仮想マシンを作成いただいた場合、一時ディスクのドライブ文字が変更されるといったお問い合わせをいただくことがあります。
+
+こちらは Azure 環境の想定動作となりますので、
 
 ---
 
