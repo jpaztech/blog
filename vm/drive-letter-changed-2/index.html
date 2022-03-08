@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>一時ディスクのドライブ文字が変わる (改善適用済み) | Japan Azure IaaS Core Support Blog</title>
+  <title>一時ディスクのドライブ文字が変わる | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Update: 2021&#x2F;6&#x2F;4 Azure 基盤側の改善が適用済みであることを明記いたしました。Update: 11&#x2F;6 (Last: 8&#x2F;27)   こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと">
+  <meta name="description" content="[!WARNING]2020 年 8 月 27 日に公開された、Azure 基盤起因で一時ディスクのドライブ文字が変わる内容につきましては、Azure 基盤側の改善が適用されたため、内容を取り下げさせていただきました。  こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一時ディスクのドライブ文字が変わる (改善適用済み)">
+<meta property="og:title" content="一時ディスクのドライブ文字が変わる">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-2/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="Update: 2021&#x2F;6&#x2F;4 Azure 基盤側の改善が適用済みであることを明記いたしました。Update: 11&#x2F;6 (Last: 8&#x2F;27)   こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと">
+<meta property="og:description" content="[!WARNING]2020 年 8 月 27 日に公開された、Azure 基盤起因で一時ディスクのドライブ文字が変わる内容につきましては、Azure 基盤側の改善が適用されたため、内容を取り下げさせていただきました。  こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、お客様の中">
 <meta property="og:locale" content="ja_JP">
-<meta property="article:published_time" content="2020-11-06T03:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-02T05:20:41.516Z">
+<meta property="article:published_time" content="2022-03-09T08:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-08T00:08:23.253Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="VM">
@@ -90,7 +90,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      一時ディスクのドライブ文字が変わる (改善適用済み)
+      一時ディスクのドライブ文字が変わる
     </h1>
   
 
@@ -98,22 +98,18 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2020-11-06T03:00:00.000Z" itemprop="datePublished">2020-11-06</time>
+  <time datetime="2022-03-09T08:30:00.000Z" itemprop="datePublished">2022-03-09</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+03af22d2-2898-5fe4-9edb-dbd2f99034e4%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E4%B8%80%E6%99%82%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E6%96%87%E5%AD%97%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8B+%28%E6%94%B9%E5%96%84%E9%81%A9%E7%94%A8%E6%B8%88%E3%81%BF%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fdrive-letter-changed-2%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fdrive-letter-changed-2.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fdrive-letter-changed-2.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+03af22d2-2898-5fe4-9edb-dbd2f99034e4%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E4%B8%80%E6%99%82%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E6%96%87%E5%AD%97%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fdrive-letter-changed-2%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fdrive-letter-changed-2.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fdrive-letter-changed-2.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/drive-letter-changed-2/" data-id="cl0941uxu003b0mmo1t661k6k" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/drive-letter-changed-2/" data-id="cl0hdjc3o003b0nqqa1ewho9j" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <span style="color:red;">
-
-<p><strong>Update: 2021/6/4</strong> Azure 基盤側の改善が適用済みであることを明記いたしました。<br><strong>Update: 11/6</strong> (Last: 8/27)</p>
-</span>
-
+        <div class="alert is-warning"><p class="alert-title">警告</p><p>2020 年 8 月 27 日に公開された、Azure 基盤起因で一時ディスクのドライブ文字が変わる内容につきましては、Azure 基盤側の改善が適用されたため、内容を取り下げさせていただきました。</p></div>
 <p>こんにちは。Azure テクニカル サポート チームの重田です。</p>
 <p>Azure Windows VM では、規定で一時ディスクにドライブ文字 D が割り当てられますが、<br>お客様の中には、アプリケーションの仕様上、データ ドライブを D ドライブと設定しなければならない場合があります。<br>その場合には、下記公開情報の手順にて一時ディスクのドライブ文字を変更いただけます。</p>
 <span id="more"></span>
@@ -121,7 +117,8 @@
 <ul>
 <li>Windows VM のデータ ドライブとしての D: ドライブの使用<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/change-drive-letter">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/change-drive-letter</a></li>
 </ul>
-<p>しかしながら、一時ディスクのドライブ文字を D から変更いただいている場合、VM の停止 / 起動など物理ホスト サーバーの移動いただいた際に、一時ディスクのドライブ文字が変更される場合があります。</p>
+<p>しかしながら、一時ディスクのドライブ文字を D から変更いただいている場合、Sysprep をご実施いただいた際や ASR でフェールオーバーいただいた場合、Azure Backup やディスクのスナップショットから新規に仮想マシンを作成いただいた場合、一時ディスクのドライブ文字が変更されるといったお問い合わせをいただくことがあります。</p>
+<p>こちらは Azure 環境の想定動作となりますので、</p>
 <hr>
 <h2 id="■-問題の動作につきまして"><a href="#■-問題の動作につきまして" class="headerlink" title="■ 問題の動作につきまして"></a>■ 問題の動作につきまして</h2><p>物理ホストの移動するタイミングにて、一時ディスクのドライブ文字が変更される動作は、下記のタイミング・条件によりごく稀に発生する場合があります。</p>
 <ul>
@@ -222,19 +219,10 @@
     
 <nav id="article-nav">
   
-    <a href="../../containers/aks-load-balancer-sku-and-snat-options/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          AKS の送信トラフィック - Load Balancer SKU と SNAT オプション
-        
-      </div>
-    </a>
   
-  
-    <a href="../change-availability-zone-using-powershell/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../network/expressroute-maintenance/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">VM の再作成により可用性ゾーンを変更する (PowerShell 編)</div>
+      <div class="article-nav-title">ExpressRoute の エッジ ルーターのメンテナンスに関して</div>
     </a>
   
 </nav>
@@ -253,6 +241,10 @@
       <ul>
         
           <li>
+            <a href="">一時ディスクのドライブ文字が変わる</a>
+          </li>
+        
+          <li>
             <a href="../../network/expressroute-maintenance/">ExpressRoute の エッジ ルーターのメンテナンスに関して</a>
           </li>
         
@@ -266,10 +258,6 @@
         
           <li>
             <a href="../rhui-yum-update/">yum/dnf update に失敗する場合の原因と解決方法</a>
-          </li>
-        
-          <li>
-            <a href="../../network/vpn-defaultsite-update-2022feb/">強制トンネリング利用時の VPN ゲートウェイの動作変更についてのアナウンス</a>
           </li>
         
       </ul>

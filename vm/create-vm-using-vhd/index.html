@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/6-1.jpg">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/6-2.jpg">
 <meta property="article:published_time" content="2021-04-27T08:30:00.000Z">
-<meta property="article:modified_time" content="2022-03-02T05:20:41.472Z">
+<meta property="article:modified_time" content="2022-03-08T00:08:23.221Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="HowTo">
@@ -124,7 +124,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+cb2fc386-8bd3-556a-8579-f72605d7589b%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%8B%E3%82%89%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F+VHD+%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E7%94%A8%E3%81%84%E3%81%9F%E8%A4%87%E8%A3%BD+VM+%E3%81%AE%E4%BD%9C%E6%88%90%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fcreate-vm-using-vhd%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fcreate-vm-using-vhd.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fcreate-vm-using-vhd.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/" data-id="cl0941uxr00360mmo4jbj0b0v" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/" data-id="cl0hdjc3m00360nqq761eb9l0" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -145,8 +145,10 @@
 </ul>
 <p><img src="/blog/vm/create-vm-using-vhd/1-1.jpg"></p>
 <ol start="2">
-<li>Storage Account 作成後、[Storage Account] - [&lt;当該ストレージ アカウント名&gt;] を選択し、左メニュー “Blob service” から [Containers] を選択します。</li>
-<li>[+ Containers] をクリックし [vhds] という名前でコンテナーを作成します。</li>
+<li><p>Storage Account 作成後、[Storage Account] - [&lt;当該ストレージ アカウント名&gt;] を選択し、左メニュー “Blob service” から [Containers] を選択します。</p>
+</li>
+<li><p>[+ Containers] をクリックし [vhds] という名前でコンテナーを作成します。</p>
+</li>
 </ol>
 <p><img src="/blog/vm/create-vm-using-vhd/1-3.jpg"></p>
 <h3 id="2-コピー先の-SAS-を発行する"><a href="#2-コピー先の-SAS-を発行する" class="headerlink" title="[2] コピー先の SAS を発行する"></a>[2] コピー先の SAS を発行する</h3><ol>
@@ -181,7 +183,7 @@
 <p>方法 A は対象の OS ディスクにて直接エクスポートを行う方法であり、エクスポートのキャンセルを実施するまで、当該 OS ディスクが関連付けられている VM を起動することはできません。<br>ダウンタイムを最小にする必要がある場合には、ディスクのスナップショットを取得し、そのスナップショットをエクスポートする方法 B をお勧めします。</p>
 <p>なお、下記の手順は OS ディスクのエクスポートについて記載しておりますが、データ ディスクをエクスポートいただく場合も同様となります。</p>
 <h4 id="A-ディスクから直接-VHD-ファイルをエクスポートする場合"><a href="#A-ディスクから直接-VHD-ファイルをエクスポートする場合" class="headerlink" title="A: ディスクから直接 VHD ファイルをエクスポートする場合"></a>A: ディスクから直接 VHD ファイルをエクスポートする場合</h4><ol>
-<li><p>複製元の VM を停止 (割り当て解除) します。<br>[Virtual Machines] - [&lt;当該 VM 名 (コピー元)&gt;] を選択し、[stop] をクリックします。<br>Statusが “Stopped (deallocated)” になったことを確認します。</p>
+<li><p>複製元の VM を停止 (割り当て解除) します。<br>[Virtual Machines] - [&lt;当該 VM 名 (コピー元)&gt;] を選択し、[stop] をクリックします。<br>Statusが “Stopped (deallocated)“ になったことを確認します。</p>
 </li>
 <li><p>左メニュー “Settings” より [Disks] を選択し、開いた画面 “OS disk” より、[&lt;当該 OS ディスク名&gt;] をクリックします。</p>
 </li>
@@ -192,13 +194,13 @@
 </ol>
 <p><img src="/blog/vm/create-vm-using-vhd/3-3a.jpg"></p>
 <ol start="4">
-<li>“URL expires in (seconds)” を適宜多めに設定し、[Generate URL] をクリックします。<br>既定では 3600 秒 (1 時間) ですが、ネットワーク環境によりダウンロードに時間がかかることも予想されますので、適宜 86400 秒などにご調整ください。</li>
+<li>“URL expires in (seconds)“ を適宜多めに設定し、[Generate URL] をクリックします。<br>既定では 3600 秒 (1 時間) ですが、ネットワーク環境によりダウンロードに時間がかかることも予想されますので、適宜 86400 秒などにご調整ください。</li>
 </ol>
 <p><img src="/blog/vm/create-vm-using-vhd/3-4a.jpg"></p>
 <ol start="5">
 <li>表示された URL をテキスト エディタ等にコピーしておきます。</li>
 </ol>
-<p>  <strong><span style="color:red;">※ ここで作成した SAS URL は 後の手順 [4] - 3 にて、コピー元の URL として使います。</span></strong><br>  ※ コピー作業が完了したら、上記「Cancel export」ボタンで、SAS 発行を解除してください。<br>  ※ SAS 発行を解除しないと当該 VM は起動できません。</p>
+<p>  <strong><span style="color:red;">※ ここで作成した SAS URL は 後の手順 [4] - 3 にて、コピー元の URL として使います。</span></strong><br>  ※ コピー作業が完了したら、上記 [Cancel export] ボタンで、SAS 発行を解除してください。<br>  ※ SAS 発行を解除しないと当該 VM は起動できません。</p>
 <p><img src="/blog/vm/create-vm-using-vhd/3-5a.jpg"></p>
 <h4 id="B-ディスクのスナップショットを取得し、そのスナップショットから-VHD-ファイルをエクスポートする場合"><a href="#B-ディスクのスナップショットを取得し、そのスナップショットから-VHD-ファイルをエクスポートする場合" class="headerlink" title="B: ディスクのスナップショットを取得し、そのスナップショットから VHD ファイルをエクスポートする場合"></a>B: ディスクのスナップショットを取得し、そのスナップショットから VHD ファイルをエクスポートする場合</h4><p>VM の長期にわたる停止が難しい場合には、取得いただいたディスクのスナップショットから VHD ファイルをエクスポートすることが可能です。</p>
 <p>はじめに、ディスクのスナップショットを取得します。</p>
@@ -219,7 +221,7 @@
 <ol start="5">
 <li>Azure Portal にて、[Snapshot] - [&lt;当該スナップショット&gt;] を選択します。</li>
 <li>左メニュー “Settings” から “Snapshot export” をクリックします。</li>
-<li>“URL expires in (seconds)” を適宜多めに設定し、[Generate URL] をクリックします。<br>既定では 3600 秒 (1 時間) ですが、ネットワーク環境によりダウンロードに時間がかかることも予想されますので、適宜 86400 秒などにご調整ください。</li>
+<li>“URL expires in (seconds)“ を適宜多めに設定し、[Generate URL] をクリックします。<br>既定では 3600 秒 (1 時間) ですが、ネットワーク環境によりダウンロードに時間がかかることも予想されますので、適宜 86400 秒などにご調整ください。</li>
 </ol>
 <p><img src="/blog/vm/create-vm-using-vhd/3-8b.jpg"></p>
 <ol start="8">
@@ -233,14 +235,14 @@
 <ol start="2">
 <li><p>管理者権限でコマンド プロンプトを起動し、AzCopy のフォルダに移動します。</p>
 </li>
-<li><p>以下のようにコマンドを実行し、VHD のコピーを行います。<br><strong>azcopy copy “&lt;手順 [3] でコピーしたURL (コピー元)&gt;” “手順 [2] の編集後の URL (コピー先)&gt;” –blob-type PageBlob</strong></p>
+<li><p>以下のようにコマンドを実行し、VHD のコピーを行います。<br><strong>azcopy copy “&lt;手順 [3] でコピーしたURL (コピー元)&gt;” “手順 [2] の編集後の URL (コピー先)&gt;” --blob-type PageBlob</strong></p>
 </li>
 </ol>
 <p>実行例：</p>
 <blockquote>
-<p>azcopy copy “<a target="_blank" rel="noopener" href="https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/abcd?sv=2018-03-28&amp;sr=b&amp;si=%E7%95%A5&amp;sig=%E7%95%A5&quot;">https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/abcd?sv=2018-03-28&amp;sr=b&amp;si=略&amp;sig=略&quot;</a> “<a target="_blank" rel="noopener" href="https://xxxxxxxx.blob.core.windows.net/vhds/osdisk.vhd?sp=rw&amp;st=2021-xx-xxTxx:xx:xxZ&amp;se=2021-xx-xxTxx:xx:xxZ&amp;spr=https&amp;sv=2020-02-10&amp;sr=c&amp;sig=%E7%95%A5&quot;">https://xxxxxxxx.blob.core.windows.net/vhds/osdisk.vhd?sp=rw&amp;st=2021-xx-xxTxx:xx:xxZ&amp;se=2021-xx-xxTxx:xx:xxZ&amp;spr=https&amp;sv=2020-02-10&amp;sr=c&amp;sig=略&quot;</a> –blob-type PageBlob</p>
+<p>azcopy copy “<a target="_blank" rel="noopener" href="https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/abcd?sv=2018-03-28&amp;sr=b&amp;si=%E7%95%A5&amp;sig=%E7%95%A5&quot;">https://xxxxxxxx.xxx.blob.storage.azure.net/xxxxxxxxxxxx/abcd?sv=2018-03-28&amp;sr=b&amp;si=略&amp;sig=略&quot;</a> “<a target="_blank" rel="noopener" href="https://xxxxxxxx.blob.core.windows.net/vhds/osdisk.vhd?sp=rw&amp;st=2021-xx-xxTxx:xx:xxZ&amp;se=2021-xx-xxTxx:xx:xxZ&amp;spr=https&amp;sv=2020-02-10&amp;sr=c&amp;sig=%E7%95%A5&quot;">https://xxxxxxxx.blob.core.windows.net/vhds/osdisk.vhd?sp=rw&amp;st=2021-xx-xxTxx:xx:xxZ&amp;se=2021-xx-xxTxx:xx:xxZ&amp;spr=https&amp;sv=2020-02-10&amp;sr=c&amp;sig=略&quot;</a> --blob-type PageBlob</p>
 </blockquote>
-<p>  これにより、コピー先のリージョンのストレージアカウントにコピー元 VM の VHD ファイルをコピーすることができます。<br>  コピーが100% まで進行した後、少しおいて Job Summary が表示されます。<br>  Final Job Status: Completed と表示されていれば完了となります。</p>
+<p>  これにより、コピー先のリージョンのストレージアカウントにコピー元 VM の VHD ファイルをコピーすることができます。<br>  コピーが 100 % まで進行した後、少しおいて Job Summary が表示されます。<br>  Final Job Status: Completed と表示されていれば完了となります。</p>
 <p>実行結果例 (途中省略)：<br><img src="/blog/vm/create-vm-using-vhd/4-3.jpg"></p>
 <ol start="4">
 <li>VHDファイルのコピーが完了しますと、手順 [1] で作成したストレージ アカウントのコンテナー [vhds] にて、コピーされた VHD ファイルが確認できます。</li>
@@ -266,7 +268,7 @@
 </ol>
 <p><img src="/blog/vm/create-vm-using-vhd/5-2.jpg"></p>
 <h3 id="6-VHD-ファイルから作成したディスクで-VM-を作成する。"><a href="#6-VHD-ファイルから作成したディスクで-VM-を作成する。" class="headerlink" title="[6] VHD ファイルから作成したディスクで VM を作成する。"></a>[6] VHD ファイルから作成したディスクで VM を作成する。</h3><ol>
-<li>Azure Portal より [Disk] を開き、手順 [5] で作成したDiskをクリックします。<br>ディスクのページ上部の [＋Create VM] をクリックし、コピーした VHD ファイルから作成した OS ディスクを使用した VM を作成します。</li>
+<li>Azure Portal より [Disk] を開き、手順 [5] で作成したDiskをクリックします。<br>ディスクのページ上部の [+ Create VM] をクリックし、コピーした VHD ファイルから作成した OS ディスクを使用した VM を作成します。</li>
 </ol>
 <p><img src="/blog/vm/create-vm-using-vhd/6-1.jpg"></p>
 <ol start="2">
@@ -340,6 +342,10 @@
       <ul>
         
           <li>
+            <a href="../drive-letter-changed-2/">一時ディスクのドライブ文字が変わる</a>
+          </li>
+        
+          <li>
             <a href="../../network/expressroute-maintenance/">ExpressRoute の エッジ ルーターのメンテナンスに関して</a>
           </li>
         
@@ -353,10 +359,6 @@
         
           <li>
             <a href="../rhui-yum-update/">yum/dnf update に失敗する場合の原因と解決方法</a>
-          </li>
-        
-          <li>
-            <a href="../../network/vpn-defaultsite-update-2022feb/">強制トンネリング利用時の VPN ゲートウェイの動作変更についてのアナウンス</a>
           </li>
         
       </ul>
