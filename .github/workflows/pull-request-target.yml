@@ -51,7 +51,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           azure-storage-connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          preview-base-url: "https://jpaztechblogstorage.z5.web.core.windows.net/" # need to update url.
+          preview-base-url: "https://jpaztechblogstorage.z11.web.core.windows.net/" # need to update url.
           branch-name: ${{ github.event.pull_request.head.label }}
           pr-url: ${{ github.event.pull_request.html_url }}
           repo-owner: ${{ github.event.repository.owner.login }}
