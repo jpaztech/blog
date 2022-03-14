@@ -58,6 +58,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/set-os-disk-name-using-arm-template/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/resource-health-alert/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/resourcegroup-uppercase-lowercase/</loc>
     
     <lastmod>2022-03-14</lastmod>
@@ -72,7 +86,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/set-os-disk-name-using-arm-template/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -86,20 +100,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/resource-health-alert/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/rbac-vm-start-stop-restart/</loc>
     
     <lastmod>2022-03-14</lastmod>
@@ -107,14 +107,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/plwv-bt0/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/plwv-bt0/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -219,14 +219,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -373,6 +373,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/cdn-specific-sku/</loc>
     
     <lastmod>2022-03-14</lastmod>
@@ -381,6 +388,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/considerations-of-microsoft-peering/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -401,21 +415,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -464,14 +471,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/</loc>
+    <loc>https://jpaztech.github.io/blog/information/Security-check-stricter/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
+    <loc>https://jpaztech.github.io/blog/information/Subscription-ID-verification/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -492,21 +499,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/information/Security-check-stricter/</loc>
+    <loc>https://jpaztech.github.io/blog/information/How-to-inquiry-to-the-Azure-Support/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/information/Subscription-ID-verification/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/</loc>
+    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -514,6 +514,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-sku-and-snat-options/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -548,6 +555,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/need-azurebox32-ico/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/powershell-applicationgateway-configuration/</loc>
     
     <lastmod>2022-03-14</lastmod>
@@ -562,35 +576,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/need-azurebox32-ico/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/monitor-io-throttoling-on-win-vm-arm/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/disk11-after20180104/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/dns-2016-09-16/</loc>
-    
-    <lastmod>2022-03-14</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/mayupdate_unable-to-rdp/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -632,14 +618,21 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/applicationgaetway-waf-01/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/disk11-after20180104/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/dns-2016-09-16/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/mayupdate_unable-to-rdp/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
@@ -668,6 +661,20 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/application-gateway-waf-vulnerability-detection/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/applicationgaetway-waf-01/</loc>
+    
+    <lastmod>2022-03-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
     
     <lastmod>2022-03-14</lastmod>
     
