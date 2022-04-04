@@ -45,13 +45,12 @@ tags:
 技術的なお問い合わせについては、有償サポート契約が必要であり、"技術 (各種 Azure サービスについて)" を選択します。  
 ここでは、技術的なお問い合わせをされる際のフローについて説明します。
 
-![](How-to-inquiry-to-the-Azure-Support/sr_creation2.png)
-
-
-> [!TIPS]
+> [!TIP]
 > **課金・サブスクリプション・クォータのサポートについての参考資料はこちらです**
 > Japan Azure 課金 サブスクリプション サポート ブログ - サポートにお問い合わせする方法について
 > https://jpazasms.github.io/blog/AzureSubscriptionManagement/20131030a/
+
+![](How-to-inquiry-to-the-Azure-Support/sr_creation2.png)
 
 #### サブスクリプション
 
