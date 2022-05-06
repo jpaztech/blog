@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御 | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは、Azure サポートチームの木下です。今回は、Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御ついてご案内します。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御">
+<meta property="og:url" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="こんにちは、Azure サポートチームの木下です。今回は、Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御ついてご案内します。">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac01.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac02.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac03.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac04.png">
+<meta property="article:published_time" content="2022-05-06T01:30:00.000Z">
+<meta property="article:modified_time" content="2022-05-06T02:54:37.737Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="Storage">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac01.png">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://cssjpn.github.io/">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-storage/storageFirewall-accesscontroll" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2022-05-06T01:30:00.000Z" itemprop="datePublished">2022-05-06</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+de3c2524-d81a-562a-ab11-018574e4ad18%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%8B%E3%82%89%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%B8%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%99%E3%82%8B%E9%9A%9B%E3%81%AE%E6%8C%99%E5%8B%95%E3%81%A8%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%85%83%E5%88%B6%E5%BE%A1%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fstorage%2FstorageFirewall-accesscontroll%2F%29%0A*+Content+Source%3A+%5Barticles%2Fstorage%2FstorageFirewall-accesscontroll.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fstorage%2FstorageFirewall-accesscontroll.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/" data-id="cl2tugdza002z0mnx66wx6i3i" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure サポートチームの木下です。<br>今回は、Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御ついてご案内します。</p>
+<span id="more"></span>
+
+<h2 id="Azure-VM-からストレージ-アカウントへアクセスする際の挙動"><a href="#Azure-VM-からストレージ-アカウントへアクセスする際の挙動" class="headerlink" title="Azure VM からストレージ アカウントへアクセスする際の挙動"></a>Azure VM からストレージ アカウントへアクセスする際の挙動</h2><p>VM からストレージ アカウントへアクセスを行う場合、両者のリージョンが異なる場合と、同じ場合ではアクセス元の IP アドレスが異なる点に、ご注意ください。</p>
+<h3 id="VM-とストレージ-アカウントが同一リージョンに存在する場合"><a href="#VM-とストレージ-アカウントが同一リージョンに存在する場合" class="headerlink" title="VM とストレージ アカウントが同一リージョンに存在する場合"></a>VM とストレージ アカウントが同一リージョンに存在する場合</h3><p><strong>パブリック エンドポイント または サービス エンドポイントを使用</strong></p>
+<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP とならず、Azure 内部で使用しているプライベート IP となります。</p>
+<h3 id="VM-とストレージ-アカウントが異なるリージョンに存在する場合"><a href="#VM-とストレージ-アカウントが異なるリージョンに存在する場合" class="headerlink" title="VM とストレージ アカウントが異なるリージョンに存在する場合"></a>VM とストレージ アカウントが異なるリージョンに存在する場合</h3><p><strong>パブリック エンドポイントを使用</strong></p>
+<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP となります。</p>
+<p><strong>サービス エンドポイントを使用</strong></p>
+<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP とならず、Azure 内部で使用しているプライベート IP となります。</p>
+<p>(ご留意)<br>サービス エンドポイントがある仮想ネットワークのリージョンがペア リージョンではない他のリージョンである場合、アクセス元 IP は VM のパブリック IP となります。<br>ただ、現在、プレビュー段階ではありますが、ペア リージョン以外の他のリージョンにある仮想ネットワークからのアクセスにおいてもサービス エンドポイントを利用することが可能となりましました。<br>つまり、サービス エンドポイントを有効化することで、他のリージョンからのアクセスの際にパブリック IP ではなく、Azure 内部で使用しているプライベート IP を利用することができるようになりました。</p>
+<p>参考）すべての地域の Azure リージョン間レプリケーションのペアリング<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/availability-zones/cross-region-replication-azure#azure-cross-region-replication-pairings-for-all-geographies">https://docs.microsoft.com/ja-jp/azure/availability-zones/cross-region-replication-azure#azure-cross-region-replication-pairings-for-all-geographies</a><br>※ペア リージョン例: 東日本リージョンと西日本リージョン</p>
+<p>参考）Azure Storage ファイアウォールおよび仮想ネットワークを構成する &gt; 他のリージョンの仮想ネットワークへのアクセスを有効にする (プレビュー)<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview</a></p>
+<blockquote>
+<p>&lt;抜粋&gt;</p>
+<p>別のリージョンにある仮想ネットワークからのアクセスを有効にするには、仮想ネットワークのサブスクリプションに AllowGlobalTagsForStorage 機能を登録します。 ストレージ サービス エンドポイントを備えた他のリージョンにあるサブネットでは、ストレージ アカウントとの通信にパブリック IP アドレスを使用しなくなりました。 トラフィックはすべてプライベート IP アドレスから送信され、それらのサブネットからのトラフィックを許可する IP ネットワーク ルールはいずれも影響を受けなくなりました。</p>
+</blockquote>
+<h3 id="VM-からストレージアカウントへのアクセス検証"><a href="#VM-からストレージアカウントへのアクセス検証" class="headerlink" title="VM からストレージアカウントへのアクセス検証"></a>VM からストレージアカウントへのアクセス検証</h3><p>・VM (東日本) から、ストレージ アカウント (東日本) に対して AzCopy を実施した結果</p>
+<p>[ VM の構成 ]</p>
+<p>パブリック IP : 40.115.XX.XX<br>プライベート IP : 10.1.0.4</p>
+<p>[ ストレージ アカウントの診断ログ] ※1 、※2</p>
+<p>サービス エンドポイント無効、パブリック エンドポイント経由のアクセス</p>
+<blockquote>
+<p>1.0;2022-05-01T09:19:01.3225693Z;GetBlobProperties;SASSuccess;200;4;4;sas;;storageaccountname;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50100;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50100;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 09:19:01 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+</blockquote>
+<p>アクセス元 IP は 10.1.0.4 であることが分かります。</p>
+<p>サービス エンドポイント有効、サービス エンドポイント経由のアクセス</p>
+<blockquote>
+<p>1.0;2022-05-01T10:43:08.5058732Z;PutBlob;SASSuccess;201;12;12;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50636;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50636;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 10:43:08 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+</blockquote>
+<p>アクセス元 IP は 10.1.0.4 であることが分かります。</p>
+<p>・VM (西日本) から、ストレージ アカウント (東日本) に対して AzCopy を実施した結果</p>
+<p>[ VM の構成 ]</p>
+<p>パブリック IP : 20.89.XX.XX<br>プライベート IP : 10.4.0.4</p>
+<p>[ ストレージ アカウントの診断ログ ] ※1 、※2</p>
+<p>サービス エンドポイント無効、パブリック エンドポイント経由のアクセス</p>
+<blockquote>
+<p>1.0;2022-05-01T09:20:17.4989380Z;GetBlobProperties;SASSuccess;200;3;3;sas;;storageaccountname;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;20.89.XX.XX:49842;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;20.89.XX.XX:49842;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 09:20:17 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+</blockquote>
+<p>アクセス元 IP は 20.89.XX.XX であることが分かります。</p>
+<p>サービス エンドポイント有効、サービス エンドポイント経由のアクセス</p>
+<blockquote>
+<p>1.0;2022-05-01T10:42:56.2621284Z;PutBlob;SASSuccess;201;11;11;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.4.0.4:50461;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x80x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.4.0.4:50461;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x80x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 10:42:56 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+</blockquote>
+<p>アクセス元 IP は 10.4.0.4 であることが分かります。</p>
+<p>・VM (米国中部) から、ストレージ アカウント (東日本) に対して AzCopy を実施した結果</p>
+<p>[ VM の構成 ]</p>
+<p>パブリック IP :  40.122.XX.XX<br>プライベート IP : 10.3.0.4</p>
+<p>[ ストレージ アカウントの診断ログ] ※1 、※2</p>
+<p>サービス エンドポイント無効、パブリック エンドポイント経由のアクセス</p>
+<blockquote>
+<p>1.0;2022-05-01T09:19:12.0009834Z;GetBlobProperties;SASSuccess;200;4;4;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;40.122.XX.XX:50144;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;40.122.XX.XX:50144;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 09:19:11 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+</blockquote>
+<p>アクセス元 IP は 40.122.XX.XX であることが分かります。</p>
+<p>サービス エンドポイント有効、サービスエ ンドポイント経由のアクセス</p>
+<blockquote>
+<p>1.0;2022-05-01T12:10:54.1043116Z;GetBlobProperties;SASSuccess;200;5;5;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.3.0.4:51283;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.3.0.4:51283;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 12:10:53 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+</blockquote>
+<p>アクセス元 IP は 10.3.0.4 であることが分かります。</p>
+<p>VM のリージョンとストレージ アカウントのリージョンがペア リージョンでない場合、サービス エンドポイントを利用する際は、以下公開ドキュメントの手順を実施する必要があります。</p>
+<p>参考）他のリージョンの仮想ネットワークへのアクセスを有効にする (プレビュー)<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview</a></p>
+<p>※1 ストレージ アカウントの診断ログは、BLOB コンテナーの $logs 配下に格納されます。<br>※2 ストレージ アカウントの診断ログ フォーマット</p>
+<p>参考）Storage分析ログの形式<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-log-format">https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-log-format</a></p>
+<h3 id="Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ"><a href="#Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ" class="headerlink" title="Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ"></a>Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ</h3><p>ストレージ アカウントのアクセス制御について、現段階では、仮想ネットワーク/サブネット単位、もしくは外部からのパブリック IP 単位での制御のみが可能です。<br>そのため、VM とストレージ アカウントが同一リージョンである場合、パブリック エンドポイント、サービス エンドポイントいずれを使用する場合も仮想ネットワーク/サブネット単位での制御までとなります。<br>VM とストレージ アカウントが異なるリージョンにある場合、パブリックエンドポイントを使用する際は、パブリック IP 単位での制御、サービスエンドポイントを使用する際は、仮想ネットワーク/サブネット単位での制御となります。</p>
+<h2 id="ストレージアカウントへのアクセス制御について"><a href="#ストレージアカウントへのアクセス制御について" class="headerlink" title="ストレージアカウントへのアクセス制御について"></a>ストレージアカウントへのアクセス制御について</h2><p>先述の通り、ストレージ アカウントのファイアウォールでは、仮想ネットワーク/サブネット単位、もしくは外部からのパブリック IP 単位での制御のみとなりますが、<br>「ストレージ アカウントへのアクセス制御を VM 単位で行う方法はあるか」というお問い合わせをいただくことがあります。<br>VM 単位でのアクセス元制御を行いたい場合、プレビュー段階の機能とはなりますが、プライベート エンドポイントに対する NSG を利用することで、プライベート エンドポイントの IP アドレスに対して NSG でアクセス制御を行うことが可能となります。</p>
+<p>参考）プライベート エンドポイントのネットワーク ポリシーを管理する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy">https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy</a></p>
+<blockquote>
+<p>&lt;抜粋&gt;<br>プライベート エンドポイントに対する NSG と UDR のサポートは、一部のリージョンでパブリック プレビュー段階です。 詳細については、「Private Link UDR のサポートのパブリック プレビュー」と「Private Link ネットワーク セキュリティ グループのサポートのパブリック プレビュー」を参照してください。 このプレビュー バージョンはサービス レベル アグリーメントなしで提供されています。運用環境のワークロードに使用することはお勧めできません。 特定の機能はサポート対象ではなく、機能が制限されることがあります。 詳しくは、Microsoft Azure プレビューの追加使用条件に関するページをご覧ください。</p>
+</blockquote>
+<h3 id="VM-単位でのストレージアカウントへのアクセス制御検証"><a href="#VM-単位でのストレージアカウントへのアクセス制御検証" class="headerlink" title="VM 単位でのストレージアカウントへのアクセス制御検証"></a>VM 単位でのストレージアカウントへのアクセス制御検証</h3><p>1.ストレージ アカウントに対して、プライベート エンドポイントを構成します。※3<br><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac01.png"></p>
+<p><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac02.png"></p>
+<p>2.プライベート エンドポイントのプレビュー機能 (AllowPrivateEndpointNSG) を有効化します。※4</p>
+<p>プライベート エンドポイントのプレビュー機能の有効化状況の確認</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-AzProviderFeature -ProviderNamespace Microsoft.Network -FeatureName AllowPrivateEndpointNSG</span><br></pre></td></tr></table></figure>
+
+<p>プライベート エンドポイントのプレビュー機能の有効化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Register-AzProviderFeature -FeatureName AllowPrivateEndpointNSG -ProviderNamespace Microsoft.Network</span><br></pre></td></tr></table></figure>
+
+<p>本機能の有効化には少しお時間を要しますが、RegistrationState が Registered となれば有効化完了です。</p>
+<p>3.対象の仮想ネットワーク/サブネットに対してプライベート エンドポイントの NSG を有効にします。※5</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">SubnetName = <span class="string">&quot;default&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash">VnetName = <span class="string">&quot;myVNet&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash">RGName = <span class="string">&quot;myResourceGroup&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash">virtualNetwork= Get-AzVirtualNetwork -Name <span class="variable">$VnetName</span> -ResourceGroupName <span class="variable">$RGName</span></span></span><br><span class="line"><span class="meta">($</span><span class="bash">virtualNetwork | Select -ExpandProperty subnets | Where-Object  &#123;<span class="variable">$_</span>.Name -eq <span class="variable">$SubnetName</span>&#125;).PrivateEndpointNetworkPolicies = <span class="string">&quot;Enabled&quot;</span></span>  </span><br><span class="line"><span class="meta">$</span><span class="bash">virtualNetwork | Set-AzVirtualNetwork</span></span><br></pre></td></tr></table></figure>
+
+<p>4.NSG を設定します。</p>
+<p>ソース IP アドレス/CIDR 範囲：アクセス元 VM のプライベート IP を登録</p>
+<p>宛先 IP アドレス/CIDR 範囲：ストレージ アカウントのプライベート エンドポイントが構成されている仮想ネットワークのアドレス空間から割り振られたプライベート IP を登録</p>
+<p><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac03.png"></p>
+<p>5.アクセス拒否した端末よりストレージアカウント内コンテナ―へアクセスします。</p>
+<p>NSG にてアクセス拒否した VM からストレージアカウント内コンテナ―へアクセスできないことを確認します。<br><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac04.png"></p>
+<p>上記のようにプライベート エンドポイントに対する NSG を利用することで VM 単位でのアクセス元制御を実現することは可能です。<br>ただし、公開ドキュメントに記載の通り、プライベート エンドポイントに対する NSG のサポートは現時点でプレビュー段階となり、商用環境での運用が正式にサポートされるものではございません。公開ドキュメント上の情報は予告なく変更される可能性がありますので、あらかじめご了承の上、ご利用をご検討くださいませ。</p>
+<p>参考）<br>※3<br>チュートリアル:Azure プライベート エンドポイントを使用してストレージ アカウントに接続する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/private-link/tutorial-private-endpoint-storage-portal">https://docs.microsoft.com/ja-jp/azure/private-link/tutorial-private-endpoint-storage-portal</a><br>Azure Storage のプライベート エンドポイントを使用する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-private-endpoints">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-private-endpoints</a></p>
+<p>※4<br>Public preview of Private Link Network Security Group Support<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/updates/public-preview-of-private-link-network-security-group-support/">https://azure.microsoft.com/ja-jp/updates/public-preview-of-private-link-network-security-group-support/</a></p>
+<p>※5<br>プライベート エンドポイントのネットワーク ポリシーを管理する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy#azure-powershell">https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy#azure-powershell</a></p>
+<hr>
+<p>本稿は以上となりますが、いかがでしたでしょうか。 本稿が皆様のお役に立てれば幸いです。</p>
+<p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/storage/storageFirewall-accesscontroll.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../network/expressroute-maintenance/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          ExpressRoute の エッジ ルーターのメンテナンスに関して
+        
+      </div>
+    </a>
+  
+  
+    <a href="../../information/How-to-inquiry-to-the-Azure-Support/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">お問い合わせの発行方法について</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../network/expressroute-maintenance/">ExpressRoute の エッジ ルーターのメンテナンスに関して</a>
+          </li>
+        
+          <li>
+            <a href="">Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御</a>
+          </li>
+        
+          <li>
+            <a href="../../information/How-to-inquiry-to-the-Azure-Support/">お問い合わせの発行方法について</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/linux-time-sync/">Linux の 時刻同期設定について</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/linux-noboot-recovery-managed-disk/">復旧 VM を使った Linux VM の Noboot 復旧手順</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM-Template/" rel="tag">ARM Template</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ApplicationGateway/" rel="tag">ApplicationGateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Portal/" rel="tag">Azure Portal</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Noboot/" rel="tag">Noboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Oparation/" rel="tag">Oparation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RBAC/" rel="tag">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHEL/" rel="tag">RHEL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHUI/" rel="tag">RHUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">22</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Noboot">Noboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Performance">Performance</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">5</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">5</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">5</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/Azure-Portal">Azure Portal</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">25</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Application-Gateway">Application Gateway</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ApplicationGateway">ApplicationGateway</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NAT-Gateway">NAT Gateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NSG">NSG</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-IP-Address">Public IP Address</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-Peering">Public Peering</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SNAT">SNAT</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">2</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">7</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">32</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/ARM-Template">ARM Template</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">10</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Noboot">Noboot</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Oparation">Oparation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RBAC">RBAC</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RHEL">RHEL</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RHUI">RHUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Resource-Health">Resource Health</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Sample-Script">Sample Script</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Storage-Space">Storage Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Troubleshooting">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Windows">Windows</a><span class="tag-list-count">15</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/03/">2022 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/ARM/" style="font-size: 10px;">ARM</a> <a href="../../tags/ARM-Template/" style="font-size: 11px;">ARM Template</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 15px;">Application Gateway</a> <a href="../../tags/ApplicationGateway/" style="font-size: 12px;">ApplicationGateway</a> <a href="../../tags/Archive/" style="font-size: 18px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 12px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 12px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 11px;">Azure Backup</a> <a href="../../tags/Azure-Firewall/" style="font-size: 12px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 14px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 11px;">Azure Load Balancer</a> <a href="../../tags/Azure-Portal/" style="font-size: 10px;">Azure Portal</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 11px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 10px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/Certificate/" style="font-size: 11px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 14px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 11px;">DNS</a> <a href="../../tags/Disk/" style="font-size: 13px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 11px;">Drive Letter</a> <a href="../../tags/Error/" style="font-size: 10px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 13px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 11px;">FAQ</a> <a href="../../tags/HowTo/" style="font-size: 16px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/Information/" style="font-size: 14px;">Information</a> <a href="../../tags/Linux/" style="font-size: 15px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 10px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 11px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 11px;">Managed Disk</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 11px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 10px;">NAT Gateway</a> <a href="../../tags/NSG/" style="font-size: 11px;">NSG</a> <a href="../../tags/Network/" style="font-size: 19px;">Network</a> <a href="../../tags/Noboot/" style="font-size: 14px;">Noboot</a> <a href="../../tags/Oparation/" style="font-size: 10px;">Oparation</a> <a href="../../tags/Other/" style="font-size: 11px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 12px;">PowerShell</a> <a href="../../tags/Public-IP-Address/" style="font-size: 10px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RBAC/" style="font-size: 10px;">RBAC</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/RHEL/" style="font-size: 10px;">RHEL</a> <a href="../../tags/RHUI/" style="font-size: 10px;">RHUI</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SNAT/" style="font-size: 10px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 13px;">Sample Script</a> <a href="../../tags/Storage/" style="font-size: 15px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 11px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Troubleshooting/" style="font-size: 12px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 11px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 20px;">VM</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN-Gateway/" style="font-size: 13px;">VPN Gateway</a> <a href="../../tags/WAF/" style="font-size: 13px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 17px;">Windows</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
