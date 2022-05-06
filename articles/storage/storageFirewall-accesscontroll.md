@@ -1,6 +1,6 @@
 ---
 title:  Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御
-date: 2022-05-10 17:30:00
+date: 2022-05-06 10:30:00
 tags:
   - Storage
 ---
@@ -59,12 +59,12 @@ https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?t
 
 サービス エンドポイント無効、パブリック エンドポイント経由のアクセス
 
->1.0;2022-05-01T09:19:01.3225693Z;GetBlobProperties;SASSuccess;200;4;4;sas;;storageaccountname;blob;"https://storageaccountname.blob.core.windows.net:443/container01/test.csv?sas";"/storageaccountname/container01/test.csv";d8bf55a9-601e-005f-583c-5d0abb000000;0;10.1.0.4:50100;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 09:19:01 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
+>1.0;2022-05-01T09:19:01.3225693Z;GetBlobProperties;SASSuccess;200;4;4;sas;;storageaccountname;blob;"https://storageaccountname.blob.core.windows.net:443/container01/test.csv?sas";"/storageaccountname/container01/test.csv";XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50100;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 09:19:01 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
 
 アクセス元 IP は 10.1.0.4 であることが分かります。
 
 サービス エンドポイント有効、サービス エンドポイント経由のアクセス
->1.0;2022-05-01T10:43:08.5058732Z;PutBlob;SASSuccess;201;12;12;sas;;akstor001;blob;"https://akstor001.blob.core.windows.net:443/container01/test.csv?sas";"/akstor001/container01/test.csv";188ffdda-b01e-002e-3c48-5dec90000000;0;10.1.0.4:50636;2019-12-12;624;806;337;0;806;;"XXXXXXXXXXXXXXXXXXXXXXXX";"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 10:43:08 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
+>1.0;2022-05-01T10:43:08.5058732Z;PutBlob;SASSuccess;201;12;12;sas;;akstor001;blob;"https://storageaccountname.blob.core.windows.net:443/container01/test.csv?sas";"/storageaccountname/container01/test.csv";XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50636;2019-12-12;624;806;337;0;806;;"XXXXXXXXXXXXXXXXXXXXXXXX";"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 10:43:08 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
 
 アクセス元 IP は 10.1.0.4 であることが分かります。
 
@@ -79,13 +79,13 @@ https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?t
 
 サービス エンドポイント無効、パブリック エンドポイント経由のアクセス
 
->1.0;2022-05-01T09:20:17.4989380Z;GetBlobProperties;SASSuccess;200;3;3;sas;;storageaccountname;blob;"https://storageaccountname.blob.core.windows.net:443/container02/test.csv?sas";"/storageaccountname/container02/test.csv";9eae8720-601e-00ab-693c-5dc14d000000;0;20.89.XX.XX:49842;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 09:20:17 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
+>1.0;2022-05-01T09:20:17.4989380Z;GetBlobProperties;SASSuccess;200;3;3;sas;;storageaccountname;blob;"https://storageaccountname.blob.core.windows.net:443/container02/test.csv?sas";"/storageaccountname/container02/test.csv";XXXXXXXXXXXXXXXXXXXXXXX;0;20.89.XX.XX:49842;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 09:20:17 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
 
 アクセス元 IP は 20.89.XX.XX であることが分かります。
 
 サービス エンドポイント有効、サービス エンドポイント経由のアクセス
 
->1.0;2022-05-01T10:42:56.2621284Z;PutBlob;SASSuccess;201;11;11;sas;;akstor001;blob;"https://akstor001.blob.core.windows.net:443/container02/test.csv?sas";"/akstor001/container02/test.csv";285feb24-101e-00b1-4b48-5da092000000;0;10.4.0.4:50461;2019-12-12;624;806;337;0;806;;"XXXXXXXXXXXXXXXXXXXXXXXX";"&quot;0x80x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 10:42:56 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
+>1.0;2022-05-01T10:42:56.2621284Z;PutBlob;SASSuccess;201;11;11;sas;;akstor001;blob;"https://storageaccountname.blob.core.windows.net:443/container02/test.csv?sas";"/storageaccountname/container02/test.csv";XXXXXXXXXXXXXXXXXXXXXXX;0;10.4.0.4:50461;2019-12-12;624;806;337;0;806;;"XXXXXXXXXXXXXXXXXXXXXXXX";"&quot;0x80x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 10:42:56 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
 
 アクセス元 IP は 10.4.0.4 であることが分かります。
 
@@ -100,13 +100,13 @@ https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?t
 
 サービス エンドポイント無効、パブリック エンドポイント経由のアクセス
 
->1.0;2022-05-01T09:19:12.0009834Z;GetBlobProperties;SASSuccess;200;4;4;sas;;akstor001;blob;"https://storageaccountname.blob.core.windows.net:443/container03/test.csv?sas";"/storageaccountname/container03/test.csv";20e6d4f9-401e-0067-363c-5dae7b000000;0;40.122.XX.XX:50144;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 09:19:11 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
+>1.0;2022-05-01T09:19:12.0009834Z;GetBlobProperties;SASSuccess;200;4;4;sas;;akstor001;blob;"https://storageaccountname.blob.core.windows.net:443/container03/test.csv?sas";"/storageaccountname/container03/test.csv";XXXXXXXXXXXXXXXXXXXXXXX;0;40.122.XX.XX:50144;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 09:19:11 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
 
 アクセス元 IP は 40.122.XX.XX であることが分かります。
 
 サービス エンドポイント有効、サービスエ ンドポイント経由のアクセス
 
->1.0;2022-05-01T12:10:54.1043116Z;GetBlobProperties;SASSuccess;200;5;5;sas;;akstor001;blob;"https://akstor001.blob.core.windows.net:443/container03/test.csv?sas";"/akstor001/container03/test.csv";21a919da-201e-002c-7e54-5d5228000000;0;10.3.0.4:51283;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 12:10:53 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
+>1.0;2022-05-01T12:10:54.1043116Z;GetBlobProperties;SASSuccess;200;5;5;sas;;akstor001;blob;"https://storageaccountname.blob.core.windows.net:443/container03/test.csv?sas";"/storageaccountname/container03/test.csv";XXXXXXXXXXXXXXXXXXXXXXX;0;10.3.0.4:51283;2019-12-12;413;0;543;0;0;;;"&quot;0x8DXXXXXXXXXXXXX&quot;";Sunday, 01-May-22 12:10:53 GMT;;"AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)";;"XXXXXXXXXXXXXXXXXXXXXXXX"
 
 アクセス元 IP は 10.3.0.4 であることが分かります。
 
@@ -181,6 +181,7 @@ $virtualNetwork | Set-AzVirtualNetwork
 ![](storageFirewall-accesscontroll/storageFW-ac03.png)
 
 5.アクセス拒否した端末よりストレージアカウント内コンテナ―へアクセスします。
+
 NSG にてアクセス拒否した VM からストレージアカウント内コンテナ―へアクセスできないことを確認します。
 ![](storageFirewall-accesscontroll/storageFW-ac04.png)
 
