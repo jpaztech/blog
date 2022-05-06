@@ -1,6 +1,6 @@
 ---
 title: "ExpressRoute の エッジ ルーターのメンテナンスに関して"
-date: 2022-01-XX XX:00:00
+date: 2022-01-14 10:00:00
 tags:
   - Network
   - ExpressRoute
