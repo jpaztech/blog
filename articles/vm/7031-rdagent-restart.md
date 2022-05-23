@@ -1,6 +1,6 @@
 ---
 title: イベント ログ Service Control Manage 7031 - RdAgent サービスの再起動について
-date: 2022-4-8 17:30:00
+date: 2022-5-23 17:30:00
 tags:
   - 仮想マシン
   - Windows
