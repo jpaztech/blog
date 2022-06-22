@@ -75,7 +75,8 @@ https://azure.microsoft.com/ja-jp/pricing/details/vpn-gateway/
 VPN Gateway Active / Active 構成では、 Active / Standby 構成と比較して、オンプレミスサイトとのトンネル数が2倍になります。  
 接続オンプレミスサイトが多く、 Site-to-Site トンネル数が 10 を超える場合にはトンネル数に応じた課金(Site-to-Site トンネル数)が発生いたしますので、ご注意ください。  
   
-合計トンネル数が 10 以下の環境では、 Active / Active と Active / Standby 構成で料金の差はございません。  
+合計トンネル数が 10 以下の環境では、 Active / Active と Active / Standby 構成で VPN Gateway 自体の料金に差はございません。
+(VPN Gateway に紐付ける追加のパブリック IP アドレスの料金は、追加で発生いたしますのでご承知おきください。)
   
 ### IKE バージョン、トンネルモードの推奨設定について
 VPN Gateway サービスでは、ゲートウェイ機器ベンダーと接続検証を実施しており、検証済ゲートウェイデバイスについては、以下サイトにてサンプルコンフィグをご提供しております。  
