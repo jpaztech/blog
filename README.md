@@ -6,6 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [Azure 上でデプロイした Windows の VM に DVD ドライブが表示される](./articles/vm/what-is-this-dvd-drive.md)
 - [既存 VM の OS ディスクのリソース名を変更する](./articles/vm/how-to-change-os-disk-name.md)
 - [VM の再作成により可用性ゾーンを変更する (Azure ポータル編)](./articles/vm/change-availability-zone-from-portal.md)
 - [Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない (修正展開済み)](./articles/vm/win2016-jp-lpk-issue.md)
