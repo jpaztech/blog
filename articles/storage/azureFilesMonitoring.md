@@ -482,7 +482,7 @@ category:StorageWrite
 
 ### 2-4.HTTPS プロトコルの場合
 Azure Portal より Azure Files 配下のオブジェクトを操作した際のログとなります。
-操作の要求元に関ましてアクセス元の IP アドレスの取得は可能ですが、詳細なユーザー情報の特定までは叶いません。
+操作の要求元に関しましてアクセス元の IP アドレスの取得は可能ですが、詳細なユーザー情報の特定までは叶いません。
 
 category: StorageRead
 ```shell
