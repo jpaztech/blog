@@ -1,0 +1,23 @@
+{
+  "filters": {
+    "comments": true,
+    "whitelist": {
+      "allow": [
+        "/^>.?",
+        "/.\\/./",
+        "/\\*注\\d/",
+        "/カスタマイズ/",
+        "アドバイザリ",
+        "C:",
+        "コンテナ",
+        "/\d～\d/",
+        "/\d*:\d*/",
+        "/※\d*/",
+        "/“.*”/"
+      ]
+    }
+  },
+  "rules": {
+    "ms-japanese-style-guide-modoki": false
+  }
+}

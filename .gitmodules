@@ -1,0 +1,6 @@
+[submodule "themes/jpaztech"]
+	path = themes/jpaztech
+	url = https://github.com/jpaztech/hexo-theme-jpaztech.git
+[submodule "themes/jpazure"]
+	path = themes/jpazure
+	url = https://github.com/jpazureid/hexo-theme-jpazure.git
