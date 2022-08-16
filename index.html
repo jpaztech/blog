@@ -84,6 +84,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-network/firewall-rules" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+    <!-- post date -->
+    <div class="article-meta">
+      <a href="network/firewall-rules/" class="article-date">
+  <time datetime="2022-08-16T03:30:00.000Z" itemprop="datePublished">2022-08-16</time>
+</a>
+      
+    </div>
+
+    
+    <!-- post title -->
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="network/firewall-rules/">Azure Firewall の各ルールの動作について</a>
+    </h1>
+  
+
+      </header>
+    
+
+    <!-- post caption -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        こんにちは、Azure サポートチーム檜山です。
+今回は Azure Firewall の各ルールの動作についてよくあるお問い合わせを紹介させていただきます。
+
+
+Azure Firewall のアプリケーションルールで許可されているように見える動作についてHTTP (80), HTTPS (443) の通信において、ネットワークルール、アプリケーションルールで明示的に拒否していない場合、ルールの処理順序に従って、Azure Firewall の既定の動作として、アプリケーションルールで拒否されることが想定される動作となります。
+この動作について Windows の Test-Netconnection や Linux の curl, nc コマンド等 (以下に記載) で TCP の 3way handshake による接続確認を実施した場合はアプリケーションルールで許可していないにもかか...
+        <p class="article-readmore">
+          <a href="network/firewall-rules/">Read more</a>
+        </p>
+      
+    </div>
+
+    <footer class="article-footer">
+      <!--a data-url="https://jpaztech.github.io/blog/network/firewall-rules/" data-id="cl6vmjhd600270pqubc3yfg24" class="article-share-link">共有</a-->
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vm/7031-rdagent-restart" class="article article-type-post" itemscope itemprop="blogPost">
 
   <div class="article-inner">
@@ -123,7 +176,7 @@
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/7031-rdagent-restart/" data-id="cl6vmad5n00340nry8fixbhfz" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/7031-rdagent-restart/" data-id="cl6vmjhdn00340pqu46dw015x" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3/" rel="tag">仮想マシン</a></li></ul>
@@ -173,7 +226,7 @@
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/" data-id="cl6vmad5l002z0nry4m24hsd2" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/" data-id="cl6vmjhdl002z0pqu5prad6ji" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Storage/" rel="tag">Storage</a></li></ul>
@@ -224,7 +277,7 @@
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/information/How-to-inquiry-to-the-Azure-Support/" data-id="cl6vmadan00dz0nryhyj597w2" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/information/How-to-inquiry-to-the-Azure-Support/" data-id="cl6vmjhht00dz0pquaw2g2ldp" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Information/" rel="tag">Information</a></li></ul>
@@ -281,7 +334,7 @@ Azure 時刻...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/linux-time-sync/" data-id="cl6vmad63003u0nry4rikfymm" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/linux-time-sync/" data-id="cl6vmjhe2003u0pquh3zbe97z" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -332,7 +385,7 @@ Azure 時刻...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/linux-noboot-recovery-managed-disk/" data-id="cl6vmad62003t0nryard706g8" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/linux-noboot-recovery-managed-disk/" data-id="cl6vmjhe1003t0pqu7n8f54hi" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Noboot/" rel="tag">Noboot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -382,7 +435,7 @@ Azure 時刻...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/rhui-yum-update/" data-id="cl6vmad6g004f0nry574i6ky5" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/rhui-yum-update/" data-id="cl6vmjhed004f0pqu1dg42ikv" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHEL/" rel="tag">RHEL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHUI/" rel="tag">RHUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -434,7 +487,7 @@ Azure 時刻...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/" data-id="cl6vmadax00eb0nry1kmc1kug" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/" data-id="cl6vmjhi300eb0pqu711561sz" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li></ul>
@@ -490,7 +543,7 @@ Azure 時刻...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/expressroute-maintenance/" data-id="cl6vmad5000250nry9ld3c3hr" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/expressroute-maintenance/" data-id="cl6vmjhd500250pqu0og3gw89" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Maintenance/" rel="tag">Maintenance</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
@@ -543,65 +596,10 @@ Azure 時刻...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/" data-id="cl6vmad4b00120nry6e29hkxq" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/" data-id="cl6vmjhcg00120pqufqh54dhp" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Containers/" rel="tag">Containers</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-storage/azureFilesMonitoring" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <div class="article-inner">
-    <!-- post date -->
-    <div class="article-meta">
-      <a href="storage/azureFilesMonitoring/" class="article-date">
-  <time datetime="2021-12-22T01:00:00.000Z" itemprop="datePublished">2021-12-22</time>
-</a>
-      
-    </div>
-
-    
-    <!-- post title -->
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="storage/azureFilesMonitoring/">Azure File の診断設定を試す</a>
-    </h1>
-  
-
-      </header>
-    
-
-    <!-- post caption -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        この記事は Microsoft Azure Tech Advent Calendar 2021 の 22 日目の記事になります。
-こんにちは、Azure テクニカル サポート チームの木下です。今回は Azure Files の診断設定機能を紹介いたします。Azure Files へのアクセスについて、「いつ、誰が、どのオブジェクトに、どのような操作を行ったか」という情報を取得したいというお問い合わせをいただくことがございます。Azure Files へアクセスした際のログは、Azure Files の診断設定機能を使用することで、アクセス要求元や操作内容を大まかに把握することができます。この記事では Azure Files 診断設定機能の設定方法とどのようなログを取得することができるのかを紹介していきます。
-
-概要
-Azure Files 診断設定の設定手順
-診断ログ内容を確認
-
-1. ...
-        <p class="article-readmore">
-          <a href="storage/azureFilesMonitoring/">Read more</a>
-        </p>
-      
-    </div>
-
-    <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/storage/azureFilesMonitoring/" data-id="cl6vmadaz00eg0nry6ncs2px0" class="article-share-link">共有</a-->
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Storage/" rel="tag">Storage</a></li></ul>
 
     </footer>
   </div>
@@ -627,6 +625,10 @@ Azure Files 診断設定の設定手順
       <ul>
         
           <li>
+            <a href="network/firewall-rules/">Azure Firewall の各ルールの動作について</a>
+          </li>
+        
+          <li>
             <a href="vm/7031-rdagent-restart/">イベント ログ Service Control Manage 7031 - RdAgent サービスの再起動について</a>
           </li>
         
@@ -640,10 +642,6 @@ Azure Files 診断設定の設定手順
         
           <li>
             <a href="vm/linux-time-sync/">Linux の 時刻同期設定について</a>
-          </li>
-        
-          <li>
-            <a href="vm/linux-noboot-recovery-managed-disk/">復旧 VM を使った Linux VM の Noboot 復旧手順</a>
           </li>
         
       </ul>
@@ -666,7 +664,7 @@ Azure Files 診断設定の設定手順
   <div class="widget-wrap">
     <h3 class="widget-title">アーカイブ</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/03/">2022 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/01/">2022 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2016/03/">2016 / 03</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/08/">2022 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/03/">2022 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/01/">2022 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2016/03/">2016 / 03</a></li></ul>
     </div>
   </div>
 
