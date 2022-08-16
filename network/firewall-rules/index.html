@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/firewall-rules/https-deny-browser.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/firewall-rules/FWdefault-flow.png">
 <meta property="article:published_time" content="2021-03-31T03:30:00.000Z">
-<meta property="article:modified_time" content="2022-07-26T06:27:59.693Z">
+<meta property="article:modified_time" content="2022-08-16T03:15:27.368Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="Azure Firewall">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+db5d8f43-0ebd-5238-9887-dc8f64b193fe%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Firewall+%E3%81%AE%E5%90%84%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AE%E5%8B%95%E4%BD%9C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Ffirewall-rules%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Ffirewall-rules.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Ffirewall-rules.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/firewall-rules/" data-id="cl61sqs9v00270oo694d2f8z6" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/firewall-rules/" data-id="cl6vm41x400270mmw2mr25770" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -202,6 +202,44 @@
 <li>NAT ルールはネットワークルールより優先的に評価されます。</li>
 <li>NAT ルールが適用されたトラフィックは暗黙的なネットワークルールにより許可されますが、この暗黙的なルールの優先度は明示的なネットワークルールの優先度よりも低くなります。</li>
 </ul>
+<h4 id="ブラックリスト形式でルールを設定できますか。"><a href="#ブラックリスト形式でルールを設定できますか。" class="headerlink" title="- ブラックリスト形式でルールを設定できますか。"></a>- ブラックリスト形式でルールを設定できますか。</h4><p>Azure Firewall は既定でホワイトリスト形式ですが、優先度が低いルールで広い範囲で許可するルールコレクションを設定し、優先度が高いルールコレクションで特定の通信を拒否するルールを設定することでブラックリスト形式で対応することができます。</p>
+<p>以下は設定例です。</p>
+<table>
+<thead>
+<tr>
+<th>優先度</th>
+<th>ネットワーク ルールコレクション</th>
+<th>プロトコル</th>
+<th>送信元</th>
+<th>宛先</th>
+<th>宛先ポート</th>
+<th>アクション</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>100</td>
+<td>Deny-SSH</td>
+<td>TCP</td>
+<td>10.0.0.0/8</td>
+<td>1.2.3.4/32</td>
+<td>22</td>
+<td>Allow</td>
+</tr>
+<tr>
+<td>200</td>
+<td>Allow-ALL</td>
+<td>TCP</td>
+<td>Any</td>
+<td>Any</td>
+<td>*</td>
+<td>Deny</td>
+</tr>
+</tbody></table>
+<p><em><strong>ただし、拒否ルールを作成する際は TCP の戻りのパケット (SYN/ACK) を拒否しないように考慮する必要があります。</strong></em><br>以下のドキュメントにも記載がありますが、TCP の戻りのパケット (SYN/ACK) を拒否するようなルールがある場合、SYN パケットが許可された後も、SYN/ACK パケットが Azure Firewall で拒否されてしまい通信を確立することができません。<br>診断ログにも出力されない動作であることを確認しているため、注意が必要です。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/rule-processing#three-way-handshake-behavior">https://docs.microsoft.com/ja-jp/azure/firewall/rule-processing#three-way-handshake-behavior</a></p>
+<blockquote>
+<p>ステートフル サービスとして、Azure Firewall では、送信元から送信先への許可されたトラフィックに対する TCP 3 方向ハンドシェイクを行います。 たとえば、VNet-A から VNet-B などです。<br>VNet-A から VNet-B への許可規則を作成しても、VNet-B から VNet-A への新たに開始される接続が許可されるわけではありません。<br>そのため、VNet-B から VNet-A への明示的な拒否規則を作成する必要はありません。 この拒否規則を作成すると、VNet-A から VNet-B への最初の許可規則の 3 方向ハンドシェイクを中断することになります。</p>
+</blockquote>
 <h2 id="参考情報"><a href="#参考情報" class="headerlink" title="参考情報"></a>参考情報</h2><p>Azure Firewall の概要や機能については以下にも記載がありますのでご一読ください。</p>
 <p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/overview">Azure Firewall とは</a></p>
 <p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/features">Azure Firewall の機能</a></p>
