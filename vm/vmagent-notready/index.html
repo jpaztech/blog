@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>「仮想マシンエージェントの状態が準備できていません」について | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは、Azure テクニカルサポートチームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「仮想マシンエージェントの状態が準備できていません」について">
+<meta property="og:url" content="https://jpaztech.github.io/blog/vm/vmagent-notready/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="こんにちは、Azure テクニカルサポートチームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready01.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready02.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready03.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready04.png">
+<meta property="article:published_time" content="2022-08-17T06:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-18T04:10:26.074Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="VM">
+<meta property="article:tag" content="VM Agent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready01.png">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://cssjpn.github.io/">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vm/vmagent-notready" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      「仮想マシンエージェントの状態が準備できていません」について
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2022-08-17T06:00:00.000Z" itemprop="datePublished">2022-08-17</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3c5b1af2-2d59-5d0a-927f-b03e9d3e8710%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%8C%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E7%8A%B6%E6%85%8B%E3%81%8C%E6%BA%96%E5%82%99%E3%81%A7%E3%81%8D%E3%81%A6%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93%E3%80%8D%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fvmagent-notready%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fvmagent-notready.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fvmagent-notready.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/vm/vmagent-notready/" data-id="cl6yiyggm004u0mpg7ruuctnb" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure テクニカルサポートチームの大野です。</p>
+<p>今回は、度々お問合せいただきます、こちらのメッセージについて、<br>想定される原因およびその判断ポイント、対処についてご紹介いたします。</p>
+<span id="more"></span>
+
+<p>結論からお伝えすると、このメッセージが表示されることが、<br>必ずしも対象仮想マシンへのネットワーク疎通が取れないことを意味するわけではありません。</p>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready01.png"> </p>
+<p>想定されるシナリオについては、以下４つに分類されるかと思います。</p>
+<h2 id="「仮想マシンエージェントの状態が準備できていません」の想定シナリオ"><a href="#「仮想マシンエージェントの状態が準備できていません」の想定シナリオ" class="headerlink" title="「仮想マシンエージェントの状態が準備できていません」の想定シナリオ"></a>「仮想マシンエージェントの状態が準備できていません」の想定シナリオ</h2><table>
+<thead>
+<tr>
+<th>シナリオ番号</th>
+<th>想定されるシナリオ</th>
+<th>SSH / RDP 接続可否</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>仮想マシンエージェントが停止している</td>
+<td>可</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている</td>
+<td>可</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ネットワークインターフェースが無効化されている</td>
+<td>不可</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ゲスト OS がハング等により稼働していない</td>
+<td>不可</td>
+</tr>
+</tbody></table>
+<h2 id="シナリオ1-仮想マシンエージェントが停止している"><a href="#シナリオ1-仮想マシンエージェントが停止している" class="headerlink" title="シナリオ1 : 仮想マシンエージェントが停止している"></a>シナリオ1 : 仮想マシンエージェントが停止している</h2><p>意図的に仮想マシンエージェントのプロセスを停止されている他、<br>仮想マシン エージェントに内在する不具合によって起動していないケースもございます。</p>
+<p>この場合、対象仮想マシンへの SSH 接続は引き続き可能ですが、<br>影響としては、仮想マシン エージェントが拡張機能の管理も兼ねているため、<br>拡張機能のインストールや動作に問題が生じることが想定されます。</p>
+<p>それでは、Linux (Red Hat Enterprise Linux 8.6) で試してみます。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># systemctl status waagent.service </span></span><br><span class="line">● waagent.service - Azure Linux Agent</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/waagent.service; enabled; vendor preset: disabled)</span><br><span class="line">  Drop-In: /usr/lib/systemd/system/waagent.service.d</span><br><span class="line">           └─10-Slice.conf, 11-CPUAccounting.conf, 12-CPUQuota.conf</span><br><span class="line">   Active: active (running) since Sun 2022-08-14 15:09:14 UTC; 3min 6s ago</span><br><span class="line"> Main PID: 1484 (python3.6)</span><br><span class="line">    Tasks: 6 (<span class="built_in">limit</span>: 49437)</span><br><span class="line">   Memory: 40.8M</span><br><span class="line">      CPU: 6.239s</span><br><span class="line">   CGroup: /azure.slice/waagent.service</span><br><span class="line">           ├─1484 /usr/bin/python3.6 -u /usr/sbin/waagent -daemon</span><br><span class="line">           └─1719 /usr/bin/python3.6 -u bin/WALinuxAgent-2.7.3.0-py2.7.egg -run-exthandlers</span><br><span class="line"></span><br><span class="line">...(省略)...</span><br><span class="line"></span><br><span class="line">[root@rhel86 ~]<span class="comment"># systemctl stop waagent.service </span></span><br><span class="line">[root@rhel86 ~]<span class="comment"># systemctl status waagent.service</span></span><br><span class="line">● waagent.service - Azure Linux Agent</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/waagent.service; enabled; vendor preset: disabled)</span><br><span class="line">  Drop-In: /usr/lib/systemd/system/waagent.service.d</span><br><span class="line">           └─10-Slice.conf, 11-CPUAccounting.conf, 12-CPUQuota.conf</span><br><span class="line">   Active: inactive (dead) since Sun 2022-08-14 15:12:35 UTC; 6s ago</span><br><span class="line">  Process: 1484 ExecStart=/usr/bin/python3.6 -u /usr/sbin/waagent -daemon (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 1484 (code=exited, status=0/SUCCESS)</span><br><span class="line">      CPU: 6.318s</span><br><span class="line"></span><br><span class="line">...(省略)...</span><br></pre></td></tr></table></figure>
+
+<p>しばらくしてから、対象仮想マシンの概要欄を確認すると、エラーになっていることがご確認いただけるかと思います。<br>一方、この状態では特段問題なく、SSH 接続いただけるかと思います。</p>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready02.png"> </p>
+<h3 id="判断いただくポイント"><a href="#判断いただくポイント" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>このシナリオでは、SSH / RDP 接続が可能なため、<br>まずは対象仮想マシンにアクセスいただき、仮想マシン エージェントのサービスが起動しているか確認いただければと思います。</p>
+<h3 id="想定される対処について"><a href="#想定される対処について" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>仮想マシン エージェントが停止している場合には、手動で起動を実施いたします。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux-azure-guest-agent#troubleshoot-a-not-ready-status">準備ができていない状態のトラブルシューティング - Azure Linux エージェントのトラブルシューティング</a></li>
+</ul>
+<p>もし、手動で起動してもエラーとなるようでしたら、仮想マシン エージェントを更新し、<br>再度お試しいただき、起動いただけるか、ご確認ください。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/update-linux-agent">VM で Azure Linux エージェントを更新する方法</a></li>
+</ul>
+<h2 id="シナリオ2-Wire-Server-168-63-129-16-への疎通がゲストOS-でブロックされている"><a href="#シナリオ2-Wire-Server-168-63-129-16-への疎通がゲストOS-でブロックされている" class="headerlink" title="シナリオ2 : Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている"></a>シナリオ2 : Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている</h2><p>Wire Server (168.63.129.16) は、仮想マシン内からのみアクセス可能な仮想パブリック IP アドレスになります。<br>仮想マシン エージェントからこの IP アドレスに対して正常性の通知を行っています。</p>
+<p>この IP アドレスへの通信は、ネットワークセキュリティグループ (NSG) で制限することはできませんが、<br>ゲスト OS のファイアウォール機能にて制限は可能です。</p>
+<p>試してみます。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># curl http://168.63.129.16/?comp=versions</span></span><br><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;Versions&gt;</span><br><span class="line">  &lt;Preferred&gt;</span><br><span class="line">    &lt;Version&gt;2015-04-05&lt;/Version&gt;</span><br><span class="line">  &lt;/Preferred&gt;</span><br><span class="line">  &lt;Supported&gt;</span><br><span class="line">    &lt;Version&gt;2015-04-05&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2012-11-30&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2012-09-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2012-05-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-12-31&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-10-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-08-31&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-04-07&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2010-12-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2010-28-10&lt;/Version&gt;</span><br><span class="line">  &lt;/Supported&gt;</span><br><span class="line">&lt;/Versions&gt;</span><br></pre></td></tr></table></figure>
+
+<p>168.63.129.16 に対して、アウトバウンド方向の通信を遮断します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># firewall-cmd --direct --add-rule ipv4 filter OUTPUT 0 -d  168.63.129.16/32 -j DROP</span></span><br><span class="line">success</span><br><span class="line">[root@rhel86 ~]<span class="comment"># firewall-cmd --direct --get-all-rules</span></span><br><span class="line">ipv4 filter OUTPUT 0 -d 168.63.129.16/32 -j DROP</span><br></pre></td></tr></table></figure>
+
+<p>遮断されていることを確認します。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]# curl http://168.63.129.16/?comp=versions</span><br><span class="line">curl: (7) Failed to connect to 168.63.129.16 port 80: Connection timed out</span><br></pre></td></tr></table></figure>
+
+<p>しばらく経つと、こちらの場合も、Azure ポータルから仮想マシン エージェントに問題がある旨ご確認いただけるかと思います。</p>
+<h3 id="判断いただくポイント-1"><a href="#判断いただくポイント-1" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>シナリオ1 と同様に、SSH 接続は引き続き可能なため、<br>対象仮想マシンに SSH 接続いただき、シナリオ1 の点を確認いただければと思います。</p>
+<p>こちらが問題なければ、168.63.129.16 に対してネットワーク疎通が取れているか確認いただくことで、<br>ご判断いただけるかと思います。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/what-is-ip-address-168-63-129-16#troubleshoot-connectivity">接続のトラブルシューティング - IP アドレス 168.63.129.16 とは</a></li>
+</ul>
+<p>その他ご判断いただく点といたしましては、仮想マシン エージェントのログ (<code>/var/log/waagent.log</code>) にて、<br>以下のようなログの出力からも Wire Server への疎通に問題があるということをご判断いただけるかと思います。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2022-08-11T07:27:33.509406Z ERROR SendTelemetryHandler ExtHandler Event: name=WALinuxAgent, op=ReportEventErrors, message=DroppedEventsCount: 1</span><br><span class="line">Reasons (first 5 errors): [ProtocolError] [Wireserver Exception] [HttpError] [HTTP Failed] POST http://168.63.129.16/machine -- IOError timed out -- 6 attempts made: Traceback (most recent call last):</span><br></pre></td></tr></table></figure>
+
+<h3 id="想定される対処について-1"><a href="#想定される対処について-1" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>上記の例では、ゲスト OS 内のファイアウォールの対象ルールを無効化いただくことで、<br>対処いただけますが、一概にこの点だけ確認すればよいというご案内ができないため、<br>適宜どのような制限が設定されているかご確認ください。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># firewall-cmd --direct --remove-rule ipv4 filter OUTPUT 0 -d  168.63.129.16/32 -j DROP</span></span><br><span class="line">success</span><br><span class="line">[root@rhel86 ~]<span class="comment"># firewall-cmd --direct --get-all-rules</span></span><br><span class="line">[root@rhel86 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p>また、特段制限をされていない場合、Wire Server 側に問題があることが想定されますので、<br>該当仮想マシンのご利用に影響がない時間を調整いただき、仮想マシンの再デプロイをご実施いただければと思います。</p>
+<h2 id="シナリオ3-ネットワークインターフェースが無効化されている"><a href="#シナリオ3-ネットワークインターフェースが無効化されている" class="headerlink" title="シナリオ3 : ネットワークインターフェースが無効化されている"></a>シナリオ3 : ネットワークインターフェースが無効化されている</h2><p>こちらが仮想マシン エージェントが稼働していない = ネットワーク接続できないと思われてしまうシナリオになります。<br>これは反対で、アウトバウンド方向のネットワーク疎通が取れないために、結果として仮想マシン エージェントから Wire Server にアクセスができず、<br>仮想マシン エージェントの状態が Not Ready となります。</p>
+<p>試しにネットワークインターフェース eth0 を無効化してみます。<br>しばらく待つと、SSH 接続が途切れます。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># ifconfig eth0 down</span></span><br><span class="line">client_loop: send disconnect: Broken pipe</span><br></pre></td></tr></table></figure>
+
+<p>その後再度 SSH 接続を試みますが、失敗します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh azureuser@xx.xxx.xxx.xxx</span><br><span class="line">ssh: connect to host xx.xxx.xxx.xxx port 22: Connection timed out</span><br></pre></td></tr></table></figure>
+
+<p>また、仮想マシン　エージェントが準備できていない旨のエラーメッセージが Azure ポータル上でご確認いただけるかと思います。</p>
+<h3 id="判断いただくポイント-2"><a href="#判断いただくポイント-2" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>こちらは対象仮想マシンのブート診断から参照可能なシリアル ログにて、下記のようにログインプロンプトが表示されているかご確認いただければと思います。<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready03.png"> </p>
+<p>上記より、ゲスト OS としては稼働しているものの、ネットワークとして疎通が取れていないということが想定されます (シナリオ 4 との切り分け)。</p>
+<h3 id="想定される対処について-2"><a href="#想定される対処について-2" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>ゲスト OS にてネットワークの疎通の問題においても、種々原因が上げられますため、<br>必ずこれを行えば解決するというものではございませんが、以下のネットワークインターフェースのリセットや、<br>IP アドレスの固定化が設定されていないかご確認いただければと思います。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/reset-network-interface-azure-linux-vm">Azure Linux VM のネットワーク インターフェイスをリセットする</a></li>
+</ul>
+<p> 上記と併せ、下記ドキュメントの “VM に接続できない” より、Linux / Windows それぞれ特化したトラブルシューティング手順をご確認ください。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/welcome-virtual-machines">Azure Virtual Machinesトラブルシューティングのドキュメント</a></li>
+</ul>
+<h2 id="シナリオ4-ゲスト-OS-がハング等により稼働していない"><a href="#シナリオ4-ゲスト-OS-がハング等により稼働していない" class="headerlink" title="シナリオ4 : ゲスト OS がハング等により稼働していない"></a>シナリオ4 : ゲスト OS がハング等により稼働していない</h2><p>ゲスト OS が動作しておらず、結果その上で仮想マシン エージェントが動作していないというシナリオになります。</p>
+<h3 id="判断いただくポイント-3"><a href="#判断いただくポイント-3" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>シナリオ3 と同様、シリアル ログをご確認いただき、ログインプロンプトが返ってきているかご確認いただき、<br>もしそうなっていないのであれば、ゲスト OS で正常にブートしていない可能性があります<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
+<p>下記の例では、存在しないマウントポイントをブート時にマウントしようとしてしまい、<br>Emergency モードで起動している状況になります。</p>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready04.png"> </p>
+<h3 id="想定される対処について-3"><a href="#想定される対処について-3" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>再起動/再デプロイにより、復旧いただけるかまずはご確認いただくことと、<br>取得済みのバックアップデータから復旧いただくこととなります。</p>
+<p>もし上記施策が当てはまらない場合は、下記仮想マシンのトラブルシューティングガイドにあります、”VM のデプロイ、アップグレード、移行” の “VM がブートしていない” に、<br>Linux / Windows それぞれ特化したトラブルシューティング手順があるので、ご参考いただければと思います。<br>また、シリアルコンソール機能のご利用が必要となりましたら、同じく下記ドキュメントの “リモート トラブルシューティング ツール” の “シリアル コンソール” を併せてご確認いただければと思います。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/welcome-virtual-machines">Azure Virtual Machinesトラブルシューティングのドキュメント</a></li>
+</ul>
+<p>本記事が皆様のお役に立てれば幸いです。</p>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM-Agent/" rel="tag">VM Agent</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/vmagent-notready.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="../../network/firewall-rules/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Azure Firewall の各ルールの動作について</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="">「仮想マシンエージェントの状態が準備できていません」について</a>
+          </li>
+        
+          <li>
+            <a href="../../network/firewall-rules/">Azure Firewall の各ルールの動作について</a>
+          </li>
+        
+          <li>
+            <a href="../7031-rdagent-restart/">イベント ログ Service Control Manage 7031 - RdAgent サービスの再起動について</a>
+          </li>
+        
+          <li>
+            <a href="../../storage/storageFirewall-accesscontroll/">Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御</a>
+          </li>
+        
+          <li>
+            <a href="../../information/How-to-inquiry-to-the-Azure-Support/">お問い合わせの発行方法について</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM-Template/" rel="tag">ARM Template</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ApplicationGateway/" rel="tag">ApplicationGateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Portal/" rel="tag">Azure Portal</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Noboot/" rel="tag">Noboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Oparation/" rel="tag">Oparation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RBAC/" rel="tag">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHEL/" rel="tag">RHEL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHUI/" rel="tag">RHUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM-Agent/" rel="tag">VM Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3/" rel="tag">仮想マシン</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">22</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Noboot">Noboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Performance">Performance</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">5</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">5</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">5</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/Azure-Portal">Azure Portal</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">25</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Application-Gateway">Application Gateway</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ApplicationGateway">ApplicationGateway</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NAT-Gateway">NAT Gateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NSG">NSG</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-IP-Address">Public IP Address</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-Peering">Public Peering</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SNAT">SNAT</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">2</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">7</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">33</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/ARM-Template">ARM Template</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">10</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Noboot">Noboot</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Oparation">Oparation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RBAC">RBAC</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RHEL">RHEL</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RHUI">RHUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Resource-Health">Resource Health</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Sample-Script">Sample Script</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Storage-Space">Storage Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Troubleshooting">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/VM-Agent">VM Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Windows">Windows</a><span class="tag-list-count">15</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/08/">2022 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/03/">2022 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/01/">2022 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/ARM/" style="font-size: 10px;">ARM</a> <a href="../../tags/ARM-Template/" style="font-size: 11px;">ARM Template</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 15px;">Application Gateway</a> <a href="../../tags/ApplicationGateway/" style="font-size: 12px;">ApplicationGateway</a> <a href="../../tags/Archive/" style="font-size: 18px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 12px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 12px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 11px;">Azure Backup</a> <a href="../../tags/Azure-Firewall/" style="font-size: 12px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 14px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 11px;">Azure Load Balancer</a> <a href="../../tags/Azure-Portal/" style="font-size: 10px;">Azure Portal</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 11px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 10px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/Certificate/" style="font-size: 11px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 14px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 11px;">DNS</a> <a href="../../tags/Disk/" style="font-size: 13px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 11px;">Drive Letter</a> <a href="../../tags/Error/" style="font-size: 10px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 13px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 11px;">FAQ</a> <a href="../../tags/HowTo/" style="font-size: 16px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/Information/" style="font-size: 14px;">Information</a> <a href="../../tags/Linux/" style="font-size: 15px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 10px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 11px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 11px;">Managed Disk</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 11px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 10px;">NAT Gateway</a> <a href="../../tags/NSG/" style="font-size: 11px;">NSG</a> <a href="../../tags/Network/" style="font-size: 19px;">Network</a> <a href="../../tags/Noboot/" style="font-size: 14px;">Noboot</a> <a href="../../tags/Oparation/" style="font-size: 10px;">Oparation</a> <a href="../../tags/Other/" style="font-size: 11px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 12px;">PowerShell</a> <a href="../../tags/Public-IP-Address/" style="font-size: 10px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RBAC/" style="font-size: 10px;">RBAC</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/RHEL/" style="font-size: 10px;">RHEL</a> <a href="../../tags/RHUI/" style="font-size: 10px;">RHUI</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SNAT/" style="font-size: 10px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 13px;">Sample Script</a> <a href="../../tags/Storage/" style="font-size: 15px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 11px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Troubleshooting/" style="font-size: 12px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 11px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 20px;">VM</a> <a href="../../tags/VM-Agent/" style="font-size: 10px;">VM Agent</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN-Gateway/" style="font-size: 13px;">VPN Gateway</a> <a href="../../tags/WAF/" style="font-size: 13px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 17px;">Windows</a> <a href="../../tags/%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3/" style="font-size: 10px;">仮想マシン</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
