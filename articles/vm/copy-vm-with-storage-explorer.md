@@ -1,6 +1,6 @@
 ---
 title: Azure Storage Explorer を用いて、コマンド無しで VM を別のリージョン・サブスクリプション・テナントに移動/複製をしてみよう
-date: 2022-7-29 14:00:00
+date: 2022-8-22 14:00:00
 tags:
   - VM
   - Windows
@@ -55,6 +55,10 @@ Azure Storage Explorer を使うと、上記のご要望がコマンド不要で
 ![](./copy-vm-with-storage-explorer/image1.png) 
    
 なお、転送や作成したディスク等には所定の料金が発生したしますのでこの点はご了承くださいませ。  
+
+また、Windows VM を複製しそれをご利用いただく場合、基本的には「一般化したイメージから VM を複製」いただく必要がございます。  
+この詳細は [Windows-VM を複製しようとしている方への注意喚起](https://jpaztech.github.io/blog/vm/vm-replica-1/#Windows-VMを複製しようとしている方への注意喚起) をご参照ください。  
+
 それでは早速詳細な手順を見ていきましょう。  
 
 ---
@@ -64,7 +68,7 @@ Azure Storage Explorer は GUI でマネージドディスクやストレージ�
 とっても便利なソフトウェアとなります！  
   
 まずは Azure Storage Explorer をインストールしましょう。  
-以下の URL より Azure Storage Explorer をインストールします。  
+以下の URL より Azure Storage Explorer を入手することができます。  
    
 ■ご参考：Azure Storage Explorer  
 <https://azure.microsoft.com/ja-jp/features/storage-explorer/>  
