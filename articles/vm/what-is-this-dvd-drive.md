@@ -1,6 +1,6 @@
 ---
 title: Azure 上でデプロイした Windows の VM に DVD ドライブが表示される
-date: 2022-7-12 15:00:00
+date: 2022-8-19 15:00:00
 tags:
   - VM
   - Windows
