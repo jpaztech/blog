@@ -6,6 +6,7 @@
 - [comming soon](./articles/information/)
 
 ## VM
+- [Azure 上でデプロイした Windows の VM に DVD ドライブが表示される](./articles/vm/what-is-this-dvd-drive.md)
 - [Azure Storage Explorer を用いて、コマンド無しで VM を別のリージョン・サブスクリプション・テナントに移動/複製をしてみよう](./articles/vm/copy-vm-with-storage-explorer.md)
 - [既存 VM の OS ディスクのリソース名を変更する](./articles/vm/how-to-change-os-disk-name.md)
 - [VM の再作成により可用性ゾーンを変更する (Azure ポータル編)](./articles/vm/change-availability-zone-from-portal.md)
