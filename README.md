@@ -7,6 +7,7 @@
 
 ## VM
 - [Azure 上でデプロイした Windows の VM に DVD ドライブが表示される](./articles/vm/what-is-this-dvd-drive.md)
+- [Azure Storage Explorer を用いて、コマンド無しで VM を別のリージョン・サブスクリプション・テナントに移動/複製をしてみよう](./articles/vm/copy-vm-with-storage-explorer.md)
 - [既存 VM の OS ディスクのリソース名を変更する](./articles/vm/how-to-change-os-disk-name.md)
 - [VM の再作成により可用性ゾーンを変更する (Azure ポータル編)](./articles/vm/change-availability-zone-from-portal.md)
 - [Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない (修正展開済み)](./articles/vm/win2016-jp-lpk-issue.md)
@@ -32,6 +33,7 @@
 - [Azure 環境における Windows Server 2019 の日本語の言語パック適用手順について](./articles/vm/win2019-jp-lpk.md)
 - [リソース正常性（Resource Health）アラートの構成方法](./articles/vm/resource-health-alert.md)
 - [Azure リソースの意図しない削除について](./articles/vm/resource-delete.md)
+- [「仮想マシンエージェントの状態が準備できていません」について](./vmagent-notready.md)
 
 ## Storage
 - [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
