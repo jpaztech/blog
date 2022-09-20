@@ -13,9 +13,11 @@
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの富田です。 Azure 上の VM およびマネージドディスクについて、    別のリージョンに移動&#x2F;複製をしたい   別のサブスクリプションに移動&#x2F;複製をしたい   別のテナントにあるサブスクリプションに移動&#x2F;複製をしたい    というご要望をいただくことがございます。 これらを実現する手段は幾つかありますが、Azure Storage Exp">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image1.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image15.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image2.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image3.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image4.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image1.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image4.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image5.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image6.png">
@@ -28,14 +30,14 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image13.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image14.png">
 <meta property="article:published_time" content="2022-08-22T05:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-20T01:59:52.168Z">
+<meta property="article:modified_time" content="2022-09-20T02:01:18.914Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="HowTo">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image1.png">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/image15.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -120,7 +122,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+77c060ab-ee38-5d73-8bf3-ee675d2f701e%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Storage+Explorer+%E3%82%92%E7%94%A8%E3%81%84%E3%81%A6%E3%80%81%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E7%84%A1%E3%81%97%E3%81%A7+VM+%E3%82%92%E5%88%A5%E3%81%AE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%83%BB%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%BB%E3%83%86%E3%83%8A%E3%83%B3%E3%83%88%E3%81%AB%E7%A7%BB%E5%8B%95%2F%E8%A4%87%E8%A3%BD%E3%82%92%E3%81%97%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fcopy-vm-with-storage-explorer%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fcopy-vm-with-storage-explorer.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fcopy-vm-with-storage-explorer.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/" data-id="cl89jtoj6003e0opebtic51jg" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/copy-vm-with-storage-explorer/" data-id="cl89jvkfl003e0mll6lb28n7v" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -134,52 +136,58 @@
 <p>というご要望をいただくことがございます。<br> <br>これらを実現する手段は幾つかありますが、<br>Azure Storage Explorer を使うと、上記のご要望がコマンド不要で全て GUI で完結することが可能です！<br>今回はこの方法についてスクリーンショットを交えて紹介させていただきます。  
    </p>
 <hr>
-<h1 id="手順の概要について"><a href="#手順の概要について" class="headerlink" title="手順の概要について"></a>手順の概要について</h1><p>まず、大まかな流れについてご説明させていただきます。  
+<h1 id="手順の概要について"><a href="#手順の概要について" class="headerlink" title="手順の概要について"></a>手順の概要について</h1><p> <br>まず、大まかな流れについてご説明させていただきます。  
    </p>
 <ul>
 <li>Azure Storage Explorer をインストールする  </li>
 <li>Azure Storage Explorer で対象のサブスクリプションに接続する  </li>
 <li>対象の VM を割り当て解除（停止）する  </li>
-<li>対象 VM の OS ディスクのスナップショットを一時的に作成  </li>
-<li>スナップショットから転送用ディスクを一時的に作成  </li>
-<li>転送用ディスクを移行先に複製する  </li>
+<li>VM 停止時間を最小にするために一時的にディスクコピーをする（任意のためスキップ可）  </li>
+<li>Azure Storage Explorer でディスクを移行先に複製する  </li>
 <li>複製したディスクから新規に VM を作成する  </li>
-<li>不要となったリソースを削除する  </li>
 </ul>
-<p> <br>勿論この方法で、  </p>
+<p>手順の概要図としては以下のようになります。<br>   <br><img src="/blog/vm/copy-vm-with-storage-explorer/image15.png"> </p>
+<p>勿論この方法で、  </p>
 <ul>
 <li>マネージドディスクだけを複製する  </li>
 <li>データディスクも含めて複製する  </li>
 <li>同一のサブスクリプション内に VM を複製する  </li>
 </ul>
-<p>といったことも可能です。<br> <br>なお、本手順としては OS ディスクを転送するのですが、<br>稼働中の VM の場合は、アタッチ済みの OS ディスクのリージョン間コピーができません。<br>また、VM が割り当て解除状態であれば、そのまま VM に接続にアタッチされている OS ディスクの転送は開始できるのですが、<br>転送が完了するまでは VM が起動できないという制約もあります。<br> <br>そのため、一旦 OS ディスクのコピーを一時的に作成して、<br>その一時的に作成した OS ディスクのコピーを転送するという方法としております。<br>下図のようなイメージです。  </p>
-<p><img src="/blog/vm/copy-vm-with-storage-explorer/image1.png"><br> <br>なお、転送や作成したディスク等には所定の料金が発生したしますのでこの点はご了承くださいませ。  </p>
-<p>また、Windows VM を複製しそれをご利用いただく場合、基本的には「一般化したイメージから VM を複製」いただく必要がございます。<br>この詳細は <a href="https://jpaztech.github.io/blog/vm/vm-replica-1/#Windows-VM%E3%82%92%E8%A4%87%E8%A3%BD%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E6%96%B9%E3%81%B8%E3%81%AE%E6%B3%A8%E6%84%8F%E5%96%9A%E8%B5%B7">Windows-VM を複製しようとしている方への注意喚起</a> をご参照ください。  </p>
+<p>といったことも可能です。  </p>
+<p>なお、転送や作成したディスク等には所定の料金が発生したしますのでこの点はご了承くださいませ。<br>また、Windows VM を複製しそれをご利用いただく場合、基本的には「一般化したイメージから VM を複製」いただく必要がございます。<br>この詳細は <a href="https://jpaztech.github.io/blog/vm/vm-replica-1/#Windows-VM%E3%82%92%E8%A4%87%E8%A3%BD%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E6%96%B9%E3%81%B8%E3%81%AE%E6%B3%A8%E6%84%8F%E5%96%9A%E8%B5%B7">Windows-VM を複製しようとしている方への注意喚起</a> をご参照ください。  </p>
 <p>それでは早速詳細な手順を見ていきましょう。  </p>
 <hr>
-<h1 id="Azure-Storage-Explorer-をインストールする"><a href="#Azure-Storage-Explorer-をインストールする" class="headerlink" title="Azure Storage Explorer をインストールする"></a>Azure Storage Explorer をインストールする</h1><p>Azure Storage Explorer は GUI でマネージドディスクやストレージアカウントのデータ管理を行える、<br>とっても便利なソフトウェアとなります！  </p>
+<h1 id="Azure-Storage-Explorer-をインストールする"><a href="#Azure-Storage-Explorer-をインストールする" class="headerlink" title="Azure Storage Explorer をインストールする"></a>Azure Storage Explorer をインストールする</h1><p>Azure Storage Explorer は GUI でマネージドディスクやストレージアカウントのデータ管理を行える、<br>とても便利なソフトウェアとなります！  </p>
 <p>まずは Azure Storage Explorer をインストールしましょう。<br>以下の URL より Azure Storage Explorer を入手することができます。<br> <br>■ご参考：Azure Storage Explorer<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/features/storage-explorer/">https://azure.microsoft.com/ja-jp/features/storage-explorer/</a>  
    </p>
 <hr>
-<h1 id="Azure-Storage-Explorer-で対象のサブスクリプションに接続する"><a href="#Azure-Storage-Explorer-で対象のサブスクリプションに接続する" class="headerlink" title="Azure Storage Explorer で対象のサブスクリプションに接続する"></a>Azure Storage Explorer で対象のサブスクリプションに接続する</h1><p>インストールが完了したら、Azure Storage Explorer を開き、各種操作が可能な Azure ユーザーでログインをします。<br>コンセントのアイコンの「接続ダイアログを開く」を選択し、「サブスクリプション」を選択の上ログインを実施ください。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image2.png"><br> <br>なお、別のテナントに VM コピーを試みる場合は上記のログイン作業を、２回実施します。<br>「移行元サブスクリプション」「移行先サブスクリプション」と 2 つともログインしておきましょう。  
+<h1 id="Azure-Storage-Explorer-で対象のサブスクリプションに接続する"><a href="#Azure-Storage-Explorer-で対象のサブスクリプションに接続する" class="headerlink" title="Azure Storage Explorer で対象のサブスクリプションに接続する"></a>Azure Storage Explorer で対象のサブスクリプションに接続する</h1><p>インストールが完了したら、Azure Storage Explorer を開き、各種操作が可能な Azure ユーザーでログインをします。<br>コンセントのアイコンの「接続ダイアログを開く」を選択し、「サブスクリプション」を選択の上ログインを実施してください。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image2.png"><br> <br>なお、別のテナントに VM コピーを試みる場合は上記のログイン作業を、２回実施します。<br>「移行元サブスクリプション」「移行先サブスクリプション」と 2 つともログインしておきましょう。  
    </p>
 <hr>
-<h1 id="対象の-VM-を割り当て解除（停止）する"><a href="#対象の-VM-を割り当て解除（停止）する" class="headerlink" title="対象の VM を割り当て解除（停止）する"></a>対象の VM を割り当て解除（停止）する</h1><p>スナップショットをとるため、対象となる VM を Azure ポータル等で割り当て解除（停止）しましょう。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image3.png"><br> <br>スナップショット自体は、VM が起動状態でも取得可能ですが、<br>移行後の VM の不具合を防止するため VM 停止状態でスナップショットを取得することを強く推奨いたします。  
+<h1 id="対象の-VM-を割り当て解除（停止）する"><a href="#対象の-VM-を割り当て解除（停止）する" class="headerlink" title="対象の VM を割り当て解除（停止）する"></a>対象の VM を割り当て解除（停止）する</h1><p>VM が割り当て解除（停止）状態でない場合は、ディスクの転送が叶いません。<br>転送を行うために、対象となる VM を Azure ポータル等で割り当て解除（停止）しましょう。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image3.png"> 
+  </p>
+<p>また、転送するディスク名も確認しておきましょう。<br>VM の [ディスク] ブレードより、複製を行いたいディスク名が確認できます。  </p>
+<p><img src="/blog/vm/copy-vm-with-storage-explorer/image4.png"> </p>
+<hr>
+<h1 id="VM-停止時間を最小にするために一時的にディスクコピーをする（任意のためスキップ可）"><a href="#VM-停止時間を最小にするために一時的にディスクコピーをする（任意のためスキップ可）" class="headerlink" title="VM 停止時間を最小にするために一時的にディスクコピーをする（任意のためスキップ可）"></a>VM 停止時間を最小にするために一時的にディスクコピーをする（任意のためスキップ可）</h1><p>こちらの手順は任意のためにスキップ可能です。<br>VM 停止時間を最小に抑えたい場合のみ実行をご検討ください。  </p>
+<p>VM が割り当て解除状態であれば、そのまま VM にアタッチされているディスクの転送は開始は可能です。<br>しかしながら、転送が完了するまでは VM が起動できないという制約もあります。<br> <br>同一リージョン等では転送にそれほど時間がかからないものと存じますが、一概な転送時間はご案内が叶いません。<br>大容量のディスクをリージョン間コピーする際など、<br>転送に時間がかかる場合は元の VM 起動ができない期間が発生する可能性もございます。  </p>
+<p>そのため、VM 停止時間を最小に抑えたい場合は、</p>
+<ul>
+<li>VM 停止後にディスクのスナップショットを取得する</li>
+<li>スナップショット取得が完了したら元の VM 起動する</li>
+<li>スナップショットから転送用ディスクを一時的に作成</li>
+<li>転送用ディスクを転送する</li>
+</ul>
+<p> <br>といった手順を実施することで、VM 停止時間を最小に抑えることが可能です。<br>この場合は以下の図のような流れとなります。  </p>
+<p><img src="/blog/vm/copy-vm-with-storage-explorer/image1.png"> </p>
+<p>それでは、この実際の手順を説明させていただきます。<br>VM 停止が完了したら、VM の [ディスク] ブレードより、複製を行いたいディスクを選択します。<br> <br>なおスナップショット自体は、VM が起動状態でも取得可能ですが、<br>移行後の VM の不具合を防止するため VM 停止状態でスナップショットを取得することを強く推奨いたします。  </p>
+<p><img src="/blog/vm/copy-vm-with-storage-explorer/image4.png"> </p>
+<p>上部にある [スナップショットの作成] を選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image5.png"><br> <br>スナップショット作成のオプションを選択します。<br>下記は一例とはなりますが、今回はスナップショットの種類は [フル] とし、記憶域の種類は [Standard HDD] としています。<br>設定が完了したら、[レビュー] を選択し、スナップショットを作成します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image6.png"><br> <br>これでスナップショット取得が完了となります。<br>なお、スナップショット取得の所要時間は一概には言えませんが、手元の Windws OS ディスク 128 GB では十数秒で完了しました。<br>スナップショット取得が完了したら、VM を起動頂いて大丈夫です。<br> <br>先ほど取得したスナップショットから一時的に転送用ディスクを作成します。<br>まずは、ポータル上部の検索ボックスで [スナップショット] を検索し、選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image7.png"><br> <br>先ほど取得したスナップショットを一覧より選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image8.png"><br> <br>上部に表示される [ディスクの作成] を選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image9.png"><br> <br>「転送用ディスク」としてマネージドディスクを作成します。<br>基本的には、デフォルトの設定で問題無いかと思いますが、下記例ではサイズにて [Standard HDD] のディスクを作成するように設定しています。<br>設定が完了したら [確認および作成] を選択し、マネージドディスクを作成します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image10.png"><br> <br>不要な課金を無くすためにも、この手順で一時的に作成した「スナップショット」および「転送用のマネージドディスク」は後ほど削除しましょう。<br>では「転送用ディスク」が作成できましたので、続きの手順に沿って Azure Storage Explorer でディスクを移行先に複製しましょう。<br>（任意のためスキップ可）の手順はここまでです。  </p>
+<hr>
+<h1 id="Azure-Storage-Explorer-でディスクを移行先に複製する"><a href="#Azure-Storage-Explorer-でディスクを移行先に複製する" class="headerlink" title="Azure Storage Explorer でディスクを移行先に複製する"></a>Azure Storage Explorer でディスクを移行先に複製する</h1><p>それでは、OS ディスク（または任意のディスク）を転送先にコピーしましょう。<br> <br>Azure Storage Explorer にて、<br>左側のエクスプローラーより転送対象となるディスクが存在するリソースグループを選択します。<br>そして、対象のディスクを選択し「コピー」を選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image11.png"><br> <br>次に、エクスプローラーで複製先となるリソースグループを選択の上、「貼り付け」を選択します。<br>この際、別テナントや別サブスクリプション上のリソースグループも選択が可能です。<br>以下のように複製先のリージョンを選ぶことが可能となっております。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image12.png"><br> <br>同一リソースグループ内に同一名のマネージドディスクは作成が叶いませんので、その際は上記画面でディスク名を変更くださいませ。<br>なお、転送状況は以下の通り Azure Storage Explorer 下部のアクティビティタブにてご確認が可能です。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image13.png"><br> <br>なお、データディスクも合わせて複製する必要がある場合は同様の手順で、OS ディスクと合わせて複製を行ってください。  
    </p>
 <hr>
-<h1 id="OS-ディスクのスナップショットを一時的に作成"><a href="#OS-ディスクのスナップショットを一時的に作成" class="headerlink" title="OS ディスクのスナップショットを一時的に作成"></a>OS ディスクのスナップショットを一時的に作成</h1><p>VM 停止が完了したら、VM の [ディスク] ブレードより、複製を行いたいディスクを選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image4.png"><br> <br>上部にある [スナップショットの作成] を選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image5.png"><br> <br>スナップショット作成のオプションを選択します。<br>下記は一例とはなりますが、今回はスナップショットの種類は [フル] とし、記憶域の種類は [Standard HDD] としています。<br>設定が完了したら、[レビュー] を選択し、スナップショットを作成します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image6.png"><br> <br>これでスナップショット取得が完了となります。<br>なお、スナップショット取得の所要時間は一概には言えませんが、手元の Windws OS ディスク 128 GB では十数秒で完了しました。<br>スナップショット取得が完了したら、VM を起動頂いて大丈夫です。  
-   </p>
-<hr>
-<h1 id="スナップショットから転送用ディスクを一時的に作成"><a href="#スナップショットから転送用ディスクを一時的に作成" class="headerlink" title="スナップショットから転送用ディスクを一時的に作成"></a>スナップショットから転送用ディスクを一時的に作成</h1><p>先ほど取得したスナップショットから一時的に転送用ディスクを作成します。<br>まずは、ポータル上部の検索ボックスで [スナップショット] を検索し、選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image7.png"><br> <br>先ほど取得したスナップショットを一覧より選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image8.png"><br> <br>上部に表示される [ディスクの作成] を選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image9.png"><br> <br>「転送用ディスク」としてマネージドディスクを作成します。<br>基本的には、デフォルトの設定で問題無いかと思いますが、下記例ではサイズにて [Standard HDD] のディスクを作成するように設定しています。<br>設定が完了したら [確認および作成] を選択し、マネージドディスクを作成します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image10.png"> 
-   </p>
-<hr>
-<h1 id="対象の-VM-の-OS-ディスクを移行先に複製する"><a href="#対象の-VM-の-OS-ディスクを移行先に複製する" class="headerlink" title="対象の VM の OS ディスクを移行先に複製する"></a>対象の VM の OS ディスクを移行先に複製する</h1><p>無事に「転送用ディスク」が作成できたら、これを転送先にコピーしましょう。<br> <br>Azure Storage Explorer にて、<br>左側のエクスプローラーより先ほど作成した「転送用ディスク」あるリソースグループを選択します。<br>そして、対象のディスクを選択し「コピー」を選択します。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image11.png"><br> <br>次に、エクスプローラーで複製先となるリソースグループを選択の上、「貼り付け」を選択します。<br>この際、別テナントや別サブスクリプション上のリソースグループも選択が可能です。<br>以下のように複製先のリージョンを選ぶことが可能となっております。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image12.png"><br> <br>同一リソースグループ内に同一名のマネージドディスクは作成が叶いませんので、その際は上記画面でディスク名を変更くださいませ。<br>なお、転送状況は以下の通り Azure Storage Explorer 下部のアクティビティタブにてご確認が可能です。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image13.png"><br> <br>なお、データディスクも合わせて複製する必要がある場合は同様の手順で、OS ディスクと合わせて複製を行ってください。  
-   </p>
-<hr>
-<h1 id="複製した-OS-ディスクから新規に-VM-を作成する"><a href="#複製した-OS-ディスクから新規に-VM-を作成する" class="headerlink" title="複製した OS ディスクから新規に VM を作成する"></a>複製した OS ディスクから新規に VM を作成する</h1><p>Azure ポータルで、移行先の複製した OS ディスクのリソースを表示します。<br>複製した OS ディスクから以下の通り VM 作成が可能です。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image14.png"><br> <br>データディスクがある場合は、この VM 作成時にデータディスクをアタッチしましょう。  
-   </p>
-<hr>
-<h1 id="不要となったリソースを削除する"><a href="#不要となったリソースを削除する" class="headerlink" title="不要となったリソースを削除する"></a>不要となったリソースを削除する</h1><p>不要な課金を無くすためにも、この手順で一時的に作成した「スナップショット」および「転送用のマネージドディスク」を削除しましょう。<br>また VM 複製でなく VM 移動の場合は、複製完了後に移行元の VM および不要なリソースを削除いただくようにお願いいたします。  </p>
+<h1 id="複製した-OS-ディスクから新規に-VM-を作成する"><a href="#複製した-OS-ディスクから新規に-VM-を作成する" class="headerlink" title="複製した OS ディスクから新規に VM を作成する"></a>複製した OS ディスクから新規に VM を作成する</h1><p>Azure ポータルで、移行先の複製した OS ディスクのリソースを表示します。<br>複製した OS ディスクから以下の通り VM 作成が可能です。<br> <br><img src="/blog/vm/copy-vm-with-storage-explorer/image14.png"><br> <br>データディスクがある場合は、この VM 作成時にデータディスクをアタッチしましょう。<br>また VM 複製でなく VM 移動の場合は、複製完了後に移行元の VM および不要なリソースを削除いただくようにお願いいたします。  </p>
 <hr>
 <p>以上が Azure Storage Explorer を用いて、コマンド無しで VM を別のリージョン・サブスクリプション・テナントに移動/複製する方法でした。<br>こちらの内容が皆様のお役に立てれば幸いでございます。</p>
 
