@@ -16,4 +16,4 @@ tags:
 Windows OS に言語パックをインストールされる際の注意点につきましては、下記弊社 Windows サポート チームのブログ記事もご参照くださいますと幸いです。
 
 > 言語パックインストール時のご留意点
-> [https://jpwinsup.github.io/blog/2022/06/17/UserInterfaceAndApps/LanguageSupport_IME/lp-consideration/](https://jpwinsup.github.io/blog/2022/06/17/UserInterfaceAndApps/LanguageSupport_IME/lp-consideration/)
+> [https://jpwinsup.github.io/blog/2022/06/22/UserInterfaceAndApps/LanguageSupport_IME/lp-consideration/](https://jpwinsup.github.io/blog/2022/06/22/UserInterfaceAndApps/LanguageSupport_IME/lp-consideration/)
