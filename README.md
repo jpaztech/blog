@@ -14,7 +14,6 @@
 - [Linux の 時刻同期設定について](./articles/vm/linux-time-sync.md)
 - [復旧 VM を使った Linux VM の Noboot 復旧手順](./articles/vm/linux-noboot-recovery-managed-disk.md)
 - [yum/dnf update に失敗する場合の原因と解決方法](./articles/vm/rhui-yum-update.md)
-
 - [既存 VM の OS ディスクのリソース名を変更する](./articles/vm/how-to-change-os-disk-name.md)
 - [VM の再作成により可用性ゾーンを変更する (Azure ポータル編)](./articles/vm/change-availability-zone-from-portal.md)
 - [Azure 環境における Windows Server 2016 にて日本語の言語パック適用ができない (修正展開済み)](./articles/vm/win2016-jp-lpk-issue.md)
@@ -46,8 +45,6 @@
 - [Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御](./articles/storage/storageFirewall-accesscontroll.md)
 - [Azure File の診断設定を試す](./articles/storage/addsAuthforAzureFiles.md)
 - [【図解】ストレージ アカウントにおける冗長性の種類について](./articles/storage/introduction-of-azure-storage-redundancy.md)
-- 
-
 - [Azure File Sync よくあるお問合せ - FAQ](./articles/storage/storageFileSyncFAQ.md)
 - [403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない](./articles/storage/storageFirewall-403Error.md)
 
@@ -55,7 +52,6 @@
 - [Azure Firewall の各ルールの動作について](./articles/network/firewall-rules.md)
 - [強制トンネリング利用時の VPN ゲートウェイの動作変更についてのアナウンス](./articles/network/tsg-azure-load-balancer-scoping.md)
 - [ExpressRoute の エッジ ルーターのメンテナンスに関して](./articles/network/expressroute-maintenance.md)
-
 - [Azure VPN ゲートウェイにメンテナンスがあったか確認する方法](./articles/network/vpngw-how-to-check-maintenance.md)
 - [Application Gateway 設定変更の影響](./articles/network/appgw-configchange.md)
 - [カスタム DNS サーバー よくあるお問い合わせ -FAQ](./articles/network/custom-dns-faq.md)
