@@ -7,7 +7,7 @@ tags:
   - Microsoft Peering
 ---
 
-Azure Networking テクニカル サポートの山口です。
+Azure Networking テクニカル サポート チームの山口です。
 
 Azure のネットワークとオンプレミス拠点ネットワークを直接接続する ExpressRoute と呼ばれるサービスがあります。ExpressRoute では利用目的に応じた複数のピアリング方法が用意されているのですが、今回は Microsoft Peering と呼ばれるピアリング サービスについて注目して、その構築時に留意いただく必要のあるポイントをいくつかご紹介したいと思います。
 

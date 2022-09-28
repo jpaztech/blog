@@ -7,6 +7,8 @@ tags:
   - FAQ
 ---
 
+こんにちは、Azure テクニカル サポート チームです。
+
 Azure VPN Gateway に関して、たびたびお問合せ頂く内容をご紹介させていただきます。  
 
 # VPN Gateway 全般的な FAQ

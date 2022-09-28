@@ -6,7 +6,7 @@ tags:
   - Application Gateway
 ---
 
-こんにちは、Azure サポートチームの杜です。
+こんにちは、Azure テクニカル サポート チームの杜です。
 
 Application Gateway に設定変更を行う際に既存接続(TCP コネクション)への影響についてご紹介させて頂きます。
 SKU により動作が異なっていますので、以下にて各 SKU の詳細をご説明します。

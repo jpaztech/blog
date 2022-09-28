@@ -7,7 +7,7 @@ tags:
   - Troubleshooting
 ---
 
-こんにちは、Azure テクニカル サポート チーム箕輪です。
+こんにちは、Azure テクニカル サポート チームの箕輪です。
 
 Azure が提供している CDN サービスの Azure CDN において、ご利用いただける機能やよくあるお問合せ、各 SKU の特徴などを踏まえたトラブル シューティングの手順などをご紹介いたします。
 Azure CDN は現在 4 つの SKU があり、3 社の CDN プロバイダー (Microsoft / Verizon / Akamai) で CDN サービスを提供しております。
