@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/21.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/20.png">
 <meta property="article:published_time" content="2021-12-10T08:30:00.000Z">
-<meta property="article:modified_time" content="2022-09-28T23:38:43.197Z">
+<meta property="article:modified_time" content="2022-09-29T00:26:32.975Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Storage">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+bdd7bc9e-f6f3-5129-acaa-4832f9189cee%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%90%E5%9B%B3%E8%A7%A3%E3%80%91%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E5%86%97%E9%95%B7%E6%80%A7%E3%81%AE%E7%A8%AE%E9%A1%9E%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fstorage%2Fintroduction-of-azure-storage-redundancy%2F%29%0A*+Content+Source%3A+%5Barticles%2Fstorage%2Fintroduction-of-azure-storage-redundancy.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fstorage%2Fintroduction-of-azure-storage-redundancy.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/" data-id="cl8m9qt7400f50nll33sfflc4" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/storage/introduction-of-azure-storage-redundancy/" data-id="cl8mbgbjj00f50mp37o01ettb" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -256,6 +256,10 @@
 <h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>本記事でご紹介した内容のまとめは、以下の通りです。</p>
 <h3 id="冗長性-データのレプリケート方法-の種類"><a href="#冗長性-データのレプリケート方法-の種類" class="headerlink" title="冗長性 (データのレプリケート方法) の種類"></a>冗長性 (データのレプリケート方法) の種類</h3><p><img src="/blog/storage/introduction-of-azure-storage-redundancy/21.png"></p>
 <h3 id="ストレージ-アカウントの種類およびレプリケーションの種類に対するデータ-サービスのサポート状況"><a href="#ストレージ-アカウントの種類およびレプリケーションの種類に対するデータ-サービスのサポート状況" class="headerlink" title="ストレージ アカウントの種類およびレプリケーションの種類に対するデータ サービスのサポート状況"></a>ストレージ アカウントの種類およびレプリケーションの種類に対するデータ サービスのサポート状況</h3><p><img src="/blog/storage/introduction-of-azure-storage-redundancy/20.png"></p>
+<div class="alert is-info"><p class="alert-title">Note</p><p>Update: 2022/9/29 - <strong>Azure Files で RA-GRS / RA-GZRS を選択した場合について</strong></p><p>　</p><p>Azure Files については、RA-GRS におけるセカンダリ リージョンの読み取りアクセスがサポートされていません。</p><p>ストレージ アカウントのレプリケーションの種類にて RA-GRS / RA-GZRS を選択いただいた場合、Azure Files では GRS / GZRS の機能がご利用いただけます。</p><p>　</p><p>ご参考) Azure Files のデプロイの計画</p><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-planning">https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-planning</a></p><p>抜粋：</p>
+<blockquote>
+<p>汎用バージョン 2 (GPv2) のストレージ アカウントでは、Azure Files ではサポートされていない 2 つの追加の冗長オプションが提供されています。</p><p>読み取りアクセス geo 冗長ストレージ (RA-GRS と呼ばれることもあります) と、読み取りアクセス geo ゾーン冗長ストレージ (RA-GZRS と呼ばれることもあります) です。</p><p>これらのオプション セットを使用して、ストレージ アカウントで Azure ファイル共有をプロビジョニングできますが、Azure Files ではセカンダリ リージョンからの読み取りはサポートされていません。</p><p>読み取りアクセス geo 冗長ストレージ アカウントまたは読み取りアクセス geo ゾーン冗長ストレージ アカウントにデプロイされた Azure ファイル共有は、それぞれ、geo 冗長ストレージまたは geo ゾーン冗長ストレージとして課金されます。</p></div>
+</blockquote>
 <p>本記事の内容が皆様のお役に立てれば幸いです。</p>
 
       
