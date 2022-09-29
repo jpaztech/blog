@@ -251,4 +251,18 @@ RA-GRS、RA-GZRS では、プライマリ リージョンのデータへの読�
 
 ![](introduction-of-azure-storage-redundancy/20.png)
 
+> [!NOTE]
+> Update: 2022/9/29 - **Azure Files で RA-GRS / RA-GZRS を選択した場合について**
+> 　
+> Azure Files については、RA-GRS におけるセカンダリ リージョンの読み取りアクセスがサポートされていません。
+> ストレージ アカウントのレプリケーションの種類にて RA-GRS / RA-GZRS を選択いただいた場合、Azure Files では GRS / GZRS の機能がご利用いただけます。
+> 　
+> ご参考) Azure Files のデプロイの計画
+> https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-planning
+> 抜粋：
+>> 汎用バージョン 2 (GPv2) のストレージ アカウントでは、Azure Files ではサポートされていない 2 つの追加の冗長オプションが提供されています。
+>> 読み取りアクセス geo 冗長ストレージ (RA-GRS と呼ばれることもあります) と、読み取りアクセス geo ゾーン冗長ストレージ (RA-GZRS と呼ばれることもあります) です。
+>> これらのオプション セットを使用して、ストレージ アカウントで Azure ファイル共有をプロビジョニングできますが、Azure Files ではセカンダリ リージョンからの読み取りはサポートされていません。
+>> 読み取りアクセス geo 冗長ストレージ アカウントまたは読み取りアクセス geo ゾーン冗長ストレージ アカウントにデプロイされた Azure ファイル共有は、それぞれ、geo 冗長ストレージまたは geo ゾーン冗長ストレージとして課金されます。
+
 本記事の内容が皆様のお役に立てれば幸いです。
