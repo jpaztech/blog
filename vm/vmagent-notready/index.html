@@ -4,21 +4,21 @@
   <meta charset="utf-8">
   
   
-  <title>「仮想マシンエージェントの状態が準備できていません」について | Japan Azure IaaS Core Support Blog</title>
+  <title>「仮想マシン エージェントの状態が準備できていません」について | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure テクニカルサポートチームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="「仮想マシンエージェントの状態が準備できていません」について">
+<meta property="og:title" content="「仮想マシン エージェントの状態が準備できていません」について">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/vmagent-notready/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure テクニカルサポートチームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready01.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready02.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready03.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready04.png">
 <meta property="article:published_time" content="2022-08-18T06:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-29T00:48:49.207Z">
+<meta property="article:modified_time" content="2022-09-30T02:45:20.387Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="VM Agent">
@@ -94,7 +94,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      「仮想マシンエージェントの状態が準備できていません」について
+      「仮想マシン エージェントの状態が準備できていません」について
     </h1>
   
 
@@ -106,20 +106,20 @@
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3c5b1af2-2d59-5d0a-927f-b03e9d3e8710%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%8C%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E7%8A%B6%E6%85%8B%E3%81%8C%E6%BA%96%E5%82%99%E3%81%A7%E3%81%8D%E3%81%A6%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93%E3%80%8D%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fvmagent-notready%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fvmagent-notready.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fvmagent-notready.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3c5b1af2-2d59-5d0a-927f-b03e9d3e8710%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%8C%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3+%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E7%8A%B6%E6%85%8B%E3%81%8C%E6%BA%96%E5%82%99%E3%81%A7%E3%81%8D%E3%81%A6%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93%E3%80%8D%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fvmagent-notready%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fvmagent-notready.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fvmagent-notready.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/vmagent-notready/" data-id="cl8mc8zzf00510mld2hkchia8" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/vmagent-notready/" data-id="cl8nvunwi00510mp69a486mm2" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure テクニカルサポートチームの大野です。</p>
+        <p>こんにちは、Azure テクニカル サポート チームの大野です。</p>
 <p>今回は、度々お問合せいただきます、こちらのメッセージについて、<br>想定される原因およびその判断ポイント、対処についてご紹介いたします。</p>
 <span id="more"></span>
 
 <p>結論からお伝えすると、このメッセージが表示されることが、<br>必ずしも対象仮想マシンへのネットワーク疎通が取れないことを意味するわけではありません。</p>
 <p><img src="/blog/vm/vmagent-notready/vmagent-notready01.png"> </p>
-<p>想定されるシナリオについては、以下４つに分類されるかと思います。</p>
+<p>想定されるシナリオについては、以下 4 つに分類されるかと思います。</p>
 <h2 id="「仮想マシンエージェントの状態が準備できていません」の想定シナリオ"><a href="#「仮想マシンエージェントの状態が準備できていません」の想定シナリオ" class="headerlink" title="「仮想マシンエージェントの状態が準備できていません」の想定シナリオ"></a>「仮想マシンエージェントの状態が準備できていません」の想定シナリオ</h2><table>
 <thead>
 <tr>
@@ -130,7 +130,7 @@
 </thead>
 <tbody><tr>
 <td>1</td>
-<td>仮想マシンエージェントが停止している</td>
+<td>仮想マシン エージェントが停止している</td>
 <td>可</td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 <td>3</td>
-<td>ネットワークインターフェースが無効化されている</td>
+<td>ネットワーク インターフェースが無効化されている</td>
 <td>不可</td>
 </tr>
 <tr>
@@ -149,7 +149,7 @@
 <td>不可</td>
 </tr>
 </tbody></table>
-<h2 id="シナリオ1-仮想マシンエージェントが停止している"><a href="#シナリオ1-仮想マシンエージェントが停止している" class="headerlink" title="シナリオ1 : 仮想マシンエージェントが停止している"></a>シナリオ1 : 仮想マシンエージェントが停止している</h2><p>意図的に仮想マシンエージェントのプロセスを停止されている他、<br>仮想マシン エージェントに内在する不具合によって起動していないケースもございます。</p>
+<h2 id="シナリオ1-仮想マシン-エージェントが停止している"><a href="#シナリオ1-仮想マシン-エージェントが停止している" class="headerlink" title="シナリオ1 : 仮想マシン エージェントが停止している"></a>シナリオ1 : 仮想マシン エージェントが停止している</h2><p>意図的に仮想マシン エージェントのプロセスを停止されている他、<br>仮想マシン エージェントに内在する不具合によって起動していないケースもございます。</p>
 <p>この場合、対象仮想マシンへの SSH 接続は引き続き可能ですが、<br>影響としては、仮想マシン エージェントが拡張機能の管理も兼ねているため、<br>拡張機能のインストールや動作に問題が生じることが想定されます。</p>
 <p>それでは、Linux (Red Hat Enterprise Linux 8.6) で試してみます。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># systemctl status waagent.service </span></span><br><span class="line">● waagent.service - Azure Linux Agent</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/waagent.service; enabled; vendor preset: disabled)</span><br><span class="line">  Drop-In: /usr/lib/systemd/system/waagent.service.d</span><br><span class="line">           └─10-Slice.conf, 11-CPUAccounting.conf, 12-CPUQuota.conf</span><br><span class="line">   Active: active (running) since Sun 2022-08-14 15:09:14 UTC; 3min 6s ago</span><br><span class="line"> Main PID: 1484 (python3.6)</span><br><span class="line">    Tasks: 6 (<span class="built_in">limit</span>: 49437)</span><br><span class="line">   Memory: 40.8M</span><br><span class="line">      CPU: 6.239s</span><br><span class="line">   CGroup: /azure.slice/waagent.service</span><br><span class="line">           ├─1484 /usr/bin/python3.6 -u /usr/sbin/waagent -daemon</span><br><span class="line">           └─1719 /usr/bin/python3.6 -u bin/WALinuxAgent-2.7.3.0-py2.7.egg -run-exthandlers</span><br><span class="line"></span><br><span class="line">...(省略)...</span><br><span class="line"></span><br><span class="line">[root@rhel86 ~]<span class="comment"># systemctl stop waagent.service </span></span><br><span class="line">[root@rhel86 ~]<span class="comment"># systemctl status waagent.service</span></span><br><span class="line">● waagent.service - Azure Linux Agent</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/waagent.service; enabled; vendor preset: disabled)</span><br><span class="line">  Drop-In: /usr/lib/systemd/system/waagent.service.d</span><br><span class="line">           └─10-Slice.conf, 11-CPUAccounting.conf, 12-CPUQuota.conf</span><br><span class="line">   Active: inactive (dead) since Sun 2022-08-14 15:12:35 UTC; 6s ago</span><br><span class="line">  Process: 1484 ExecStart=/usr/bin/python3.6 -u /usr/sbin/waagent -daemon (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 1484 (code=exited, status=0/SUCCESS)</span><br><span class="line">      CPU: 6.318s</span><br><span class="line"></span><br><span class="line">...(省略)...</span><br></pre></td></tr></table></figure>
@@ -166,7 +166,7 @@
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/update-linux-agent">VM で Azure Linux エージェントを更新する方法</a></li>
 </ul>
 <h2 id="シナリオ2-Wire-Server-168-63-129-16-への疎通がゲストOS-でブロックされている"><a href="#シナリオ2-Wire-Server-168-63-129-16-への疎通がゲストOS-でブロックされている" class="headerlink" title="シナリオ2 : Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている"></a>シナリオ2 : Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている</h2><p>Wire Server (168.63.129.16) は、仮想マシン内からのみアクセス可能な仮想パブリック IP アドレスになります。<br>仮想マシン エージェントからこの IP アドレスに対して正常性の通知を行っています。</p>
-<p>この IP アドレスへの通信は、ネットワークセキュリティグループ (NSG) で制限することはできませんが、<br>ゲスト OS のファイアウォール機能にて制限は可能です。</p>
+<p>この IP アドレスへの通信は、ネットワーク セキュリティ グループ (NSG) で制限することはできませんが、<br>ゲスト OS のファイアウォール機能にて制限は可能です。</p>
 <p>試してみます。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># curl http://168.63.129.16/?comp=versions</span></span><br><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;Versions&gt;</span><br><span class="line">  &lt;Preferred&gt;</span><br><span class="line">    &lt;Version&gt;2015-04-05&lt;/Version&gt;</span><br><span class="line">  &lt;/Preferred&gt;</span><br><span class="line">  &lt;Supported&gt;</span><br><span class="line">    &lt;Version&gt;2015-04-05&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2012-11-30&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2012-09-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2012-05-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-12-31&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-10-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-08-31&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2011-04-07&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2010-12-15&lt;/Version&gt;</span><br><span class="line">    &lt;Version&gt;2010-28-10&lt;/Version&gt;</span><br><span class="line">  &lt;/Supported&gt;</span><br><span class="line">&lt;/Versions&gt;</span><br></pre></td></tr></table></figure>
 
@@ -190,17 +190,17 @@
 
 <p>また、特段制限をされていない場合、Wire Server 側に問題があることが想定されますので、<br>該当仮想マシンのご利用に影響がない時間を調整いただき、仮想マシンの再デプロイをご実施いただければと思います。</p>
 <h2 id="シナリオ3-ネットワークインターフェースが無効化されている"><a href="#シナリオ3-ネットワークインターフェースが無効化されている" class="headerlink" title="シナリオ3 : ネットワークインターフェースが無効化されている"></a>シナリオ3 : ネットワークインターフェースが無効化されている</h2><p>こちらが仮想マシン エージェントが稼働していない = ネットワーク接続できないと思われてしまうシナリオになります。<br>これは反対で、アウトバウンド方向のネットワーク疎通が取れないために、結果として仮想マシン エージェントから Wire Server にアクセスができず、<br>仮想マシン エージェントの状態が Not Ready となります。</p>
-<p>試しにネットワークインターフェース eth0 を無効化してみます。<br>しばらく待つと、SSH 接続が途切れます。</p>
+<p>試しにネットワーク インターフェース eth0 を無効化してみます。<br>しばらく待つと、SSH 接続が途切れます。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># ifconfig eth0 down</span></span><br><span class="line">client_loop: send disconnect: Broken pipe</span><br></pre></td></tr></table></figure>
 
 <p>その後再度 SSH 接続を試みますが、失敗します。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh azureuser@xx.xxx.xxx.xxx</span><br><span class="line">ssh: connect to host xx.xxx.xxx.xxx port 22: Connection timed out</span><br></pre></td></tr></table></figure>
 
-<p>また、仮想マシン　エージェントが準備できていない旨のエラーメッセージが Azure ポータル上でご確認いただけるかと思います。</p>
-<h3 id="判断いただくポイント-2"><a href="#判断いただくポイント-2" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>こちらは対象仮想マシンのブート診断から参照可能なシリアル ログにて、下記のようにログインプロンプトが表示されているかご確認いただければと思います。<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
+<p>また、仮想マシン エージェントが準備できていない旨のエラー メッセージが Azure ポータル上でご確認いただけるかと思います。</p>
+<h3 id="判断いただくポイント-2"><a href="#判断いただくポイント-2" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>こちらは対象仮想マシンのブート診断から参照可能なシリアル ログにて、下記のようにログイン プロンプトが表示されているかご確認いただければと思います。<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
 <p><img src="/blog/vm/vmagent-notready/vmagent-notready03.png"> </p>
-<p>上記より、ゲスト OS としては稼働しているものの、ネットワークとして疎通が取れていないということが想定されます (シナリオ 4 との切り分け)。</p>
-<h3 id="想定される対処について-2"><a href="#想定される対処について-2" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>ゲスト OS にてネットワークの疎通の問題においても、種々原因が上げられますため、<br>必ずこれを行えば解決するというものではございませんが、以下のネットワークインターフェースのリセットや、<br>IP アドレスの固定化が設定されていないかご確認いただければと思います。</p>
+<p>上記より、ゲスト OS としては稼働しているものの、ネットワークとして疎通が取れていないということが想定されます (シナリオ4 との切り分け)。</p>
+<h3 id="想定される対処について-2"><a href="#想定される対処について-2" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>ゲスト OS にてネットワークの疎通の問題においても、種々原因が上げられますため、<br>必ずこれを行えば解決するというものではございませんが、以下のネットワーク インターフェースのリセットや、<br>IP アドレスの固定化が設定されていないかご確認いただければと思います。</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/reset-network-interface-azure-linux-vm">Azure Linux VM のネットワーク インターフェイスをリセットする</a></li>
 </ul>
@@ -209,11 +209,11 @@
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/welcome-virtual-machines">Azure Virtual Machinesトラブルシューティングのドキュメント</a></li>
 </ul>
 <h2 id="シナリオ4-ゲスト-OS-がハング等により稼働していない"><a href="#シナリオ4-ゲスト-OS-がハング等により稼働していない" class="headerlink" title="シナリオ4 : ゲスト OS がハング等により稼働していない"></a>シナリオ4 : ゲスト OS がハング等により稼働していない</h2><p>ゲスト OS が動作しておらず、結果その上で仮想マシン エージェントが動作していないというシナリオになります。</p>
-<h3 id="判断いただくポイント-3"><a href="#判断いただくポイント-3" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>シナリオ3 と同様、シリアル ログをご確認いただき、ログインプロンプトが返ってきているかご確認いただき、<br>もしそうなっていないのであれば、ゲスト OS で正常にブートしていない可能性があります<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
+<h3 id="判断いただくポイント-3"><a href="#判断いただくポイント-3" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>シナリオ3 と同様、シリアル ログをご確認いただき、ログイン プロンプトが返ってきているかご確認いただき、<br>もしそうなっていないのであれば、ゲスト OS で正常にブートしていない可能性があります<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
 <p>下記の例では、存在しないマウントポイントをブート時にマウントしようとしてしまい、<br>Emergency モードで起動している状況になります。</p>
 <p><img src="/blog/vm/vmagent-notready/vmagent-notready04.png"> </p>
-<h3 id="想定される対処について-3"><a href="#想定される対処について-3" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>再起動/再デプロイにより、復旧いただけるかまずはご確認いただくことと、<br>取得済みのバックアップデータから復旧いただくこととなります。</p>
-<p>もし上記施策が当てはまらない場合は、下記仮想マシンのトラブルシューティングガイドにあります、”VM のデプロイ、アップグレード、移行” の “VM がブートしていない” に、<br>Linux / Windows それぞれ特化したトラブルシューティング手順があるので、ご参考いただければと思います。<br>また、シリアルコンソール機能のご利用が必要となりましたら、同じく下記ドキュメントの “リモート トラブルシューティング ツール” の “シリアル コンソール” を併せてご確認いただければと思います。</p>
+<h3 id="想定される対処について-3"><a href="#想定される対処について-3" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>再起動/再デプロイにより、復旧いただけるかまずはご確認いただくことと、<br>取得済みのバックアップ データから復旧いただくこととなります。</p>
+<p>もし上記施策が当てはまらない場合は、下記仮想マシンのトラブルシューティング ガイドにあります、”VM のデプロイ、アップグレード、移行” の “VM がブートしていない” に、<br>Linux / Windows それぞれ特化したトラブルシューティング手順があるので、ご参考いただければと思います。<br>また、シリアルコンソール機能のご利用が必要となりましたら、同じく下記ドキュメントの “リモート トラブルシューティング ツール” の “シリアル コンソール” を併せてご確認いただければと思います。</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/welcome-virtual-machines">Azure Virtual Machinesトラブルシューティングのドキュメント</a></li>
 </ul>
@@ -289,7 +289,7 @@
           </li>
         
           <li>
-            <a href="">「仮想マシンエージェントの状態が準備できていません」について</a>
+            <a href="">「仮想マシン エージェントの状態が準備できていません」について</a>
           </li>
         
       </ul>

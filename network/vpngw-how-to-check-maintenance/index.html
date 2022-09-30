@@ -6,19 +6,19 @@
   
   <title>Azure VPN ゲートウェイにメンテナンスがあったか確認する方法 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure サポートチームです。今回は、Azure でお使いいただいている VPN ゲートウェイにおいて、メンテナンスが行われていたことを事後確認する方法をご紹介します。今回ご紹介する内容については以下の前提条件の下記載されておりますので予めご了承ください。 前提  メンテナンスの日時を事前に確認する方法ではなく、あくまで事後に確認する方法になります。 VPN ゲートウェイに対する全て">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームです。今回は、Azure でお使いいただいている VPN ゲートウェイにおいて、メンテナンスが行われていたことを事後確認する方法をご紹介します。今回ご紹介する内容については以下の前提条件の下記載されておりますので予めご了承ください。 前提  メンテナンスの日時を事前に確認する方法ではなく、あくまで事後に確認する方法になります。 VPN ゲートウェ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Azure VPN ゲートウェイにメンテナンスがあったか確認する方法">
 <meta property="og:url" content="https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure サポートチームです。今回は、Azure でお使いいただいている VPN ゲートウェイにおいて、メンテナンスが行われていたことを事後確認する方法をご紹介します。今回ご紹介する内容については以下の前提条件の下記載されておりますので予めご了承ください。 前提  メンテナンスの日時を事前に確認する方法ではなく、あくまで事後に確認する方法になります。 VPN ゲートウェイに対する全て">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームです。今回は、Azure でお使いいただいている VPN ゲートウェイにおいて、メンテナンスが行われていたことを事後確認する方法をご紹介します。今回ご紹介する内容については以下の前提条件の下記載されておりますので予めご了承ください。 前提  メンテナンスの日時を事前に確認する方法ではなく、あくまで事後に確認する方法になります。 VPN ゲートウェ">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/create-log-analytics-workspace.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/diag-setting.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/log-analytics-workspace-query.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/HostMaintenanceEvent.png">
 <meta property="article:published_time" content="2021-07-27T15:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-29T00:48:48.859Z">
+<meta property="article:modified_time" content="2022-09-30T02:45:20.102Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="VPN Gateway">
@@ -108,12 +108,12 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7c9a0c43-5910-5c9e-8d36-992ea3583fa5%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VPN+%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4%E3%81%AB%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%8C%E3%81%82%E3%81%A3%E3%81%9F%E3%81%8B%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fvpngw-how-to-check-maintenance%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fvpngw-how-to-check-maintenance.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fvpngw-how-to-check-maintenance.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/" data-id="cl8mc8zy2002k0mld5gkpa5fn" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/" data-id="cl8nvunvb002k0mp62v6ub7v4" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure サポートチームです。<br>今回は、Azure でお使いいただいている VPN ゲートウェイにおいて、メンテナンスが行われていたことを事後確認する方法をご紹介します。<br>今回ご紹介する内容については以下の前提条件の下記載されておりますので予めご了承ください。</p>
+        <p>こんにちは、Azure テクニカル サポート チームです。<br>今回は、Azure でお使いいただいている VPN ゲートウェイにおいて、メンテナンスが行われていたことを事後確認する方法をご紹介します。<br>今回ご紹介する内容については以下の前提条件の下記載されておりますので予めご了承ください。</p>
 <p><strong>前提</strong></p>
 <ul>
 <li>メンテナンスの日時を事前に確認する方法ではなく、あくまで事後に確認する方法になります。</li>
@@ -259,7 +259,7 @@
           </li>
         
           <li>
-            <a href="../../vm/vmagent-notready/">「仮想マシンエージェントの状態が準備できていません」について</a>
+            <a href="../../vm/vmagent-notready/">「仮想マシン エージェントの状態が準備できていません」について</a>
           </li>
         
       </ul>

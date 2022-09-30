@@ -6,16 +6,16 @@
   
   <title>Azure Load Balancer のトラブルシューティング: スコーピング編 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Azure Networking テクニカル サポートの山口です。 Azure Load Balancer (ALB) はワークロードを複数の Azure VM &#x2F; VMSS に負荷分散するサービスで、最も利用されている Azure サービスの一つです。利用数が多い分、ALB を経由するエンドノード間の通信に問題が生じたといったトラブルもよくお問い合わせいただきます。そこで、そうしたトラブルにおい">
+  <meta name="description" content="Azure Networking テクニカル サポート チームの山口です。 Azure Load Balancer (ALB) はワークロードを複数の Azure VM &#x2F; VMSS に負荷分散するサービスで、最も利用されている Azure サービスの一つです。利用数が多い分、ALB を経由するエンドノード間の通信に問題が生じたといったトラブルもよくお問い合わせいただきます。そこで、そうしたトラブ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Azure Load Balancer のトラブルシューティング: スコーピング編">
 <meta property="og:url" content="https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="Azure Networking テクニカル サポートの山口です。 Azure Load Balancer (ALB) はワークロードを複数の Azure VM &#x2F; VMSS に負荷分散するサービスで、最も利用されている Azure サービスの一つです。利用数が多い分、ALB を経由するエンドノード間の通信に問題が生じたといったトラブルもよくお問い合わせいただきます。そこで、そうしたトラブルにおい">
+<meta property="og:description" content="Azure Networking テクニカル サポート チームの山口です。 Azure Load Balancer (ALB) はワークロードを複数の Azure VM &#x2F; VMSS に負荷分散するサービスで、最も利用されている Azure サービスの一つです。利用数が多い分、ALB を経由するエンドノード間の通信に問題が生じたといったトラブルもよくお問い合わせいただきます。そこで、そうしたトラブ">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/scoping-flowchart.png">
 <meta property="article:published_time" content="2020-06-17T01:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-29T00:48:48.855Z">
+<meta property="article:modified_time" content="2022-09-30T02:45:20.098Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="Azure Load Balancer">
@@ -106,12 +106,12 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+5175219a-aab2-58e6-a3b2-cb39272eb0dd%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Load+Balancer+%E3%81%AE%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%3A+%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%94%E3%83%B3%E3%82%B0%E7%B7%A8%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Ftsg-azure-load-balancer-scoping%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Ftsg-azure-load-balancer-scoping.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Ftsg-azure-load-balancer-scoping.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/" data-id="cl8mc8zxz002f0mldavcnhjkt" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/" data-id="cl8nvunv9002f0mp63oibhjws" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Azure Networking テクニカル サポートの山口です。</p>
+        <p>Azure Networking テクニカル サポート チームの山口です。</p>
 <p>Azure Load Balancer (ALB) はワークロードを複数の Azure VM / VMSS に負荷分散するサービスで、最も利用されている Azure サービスの一つです。利用数が多い分、ALB を経由するエンドノード間の通信に問題が生じたといったトラブルもよくお問い合わせいただきます。そこで、そうしたトラブルにおいて、ALB の観点で原因箇所を切り分けるスコーピングの方法についてご紹介したいと思います。</p>
 <span id="more"></span>
 
@@ -262,7 +262,7 @@
           </li>
         
           <li>
-            <a href="../../vm/vmagent-notready/">「仮想マシンエージェントの状態が準備できていません」について</a>
+            <a href="../../vm/vmagent-notready/">「仮想マシン エージェントの状態が準備できていません」について</a>
           </li>
         
       </ul>
