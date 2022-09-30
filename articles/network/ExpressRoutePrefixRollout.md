@@ -9,7 +9,7 @@ tags:
   - Maintenance
 ---
 
-こんにちは。Azure サポートの宇田です。
+こんにちは。Azure テクニカル サポート チームの宇田です。
 
 今回は月次で行われている Public / Microsoft Peering の経路更新のメンテナンスについてご紹介します。
 

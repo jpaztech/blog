@@ -5,7 +5,7 @@ tags:
   - Network
   - Azure Firewall
 ---
-こんにちは、Azure サポートチーム檜山です。
+こんにちは、Azure テクニカル サポート チーム檜山です。
 
 今回は Azure Firewall の各ルールの動作についてよくあるお問い合わせを紹介させていただきます。
 
