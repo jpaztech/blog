@@ -6,7 +6,7 @@ tags:
   - AzureFrontDoor
   - FAQ
 ---
-こんにちは、Azure テクニカル サポート チーム 箕輪 です。
+こんにちは、Azure テクニカル サポート チームの箕輪です。
 
 Azure Front Door は、世界中に展開された Microsoft のリソースを用いて、レイヤー 7 (HTTP/HTTPS 層) で動作する負荷分散サービスとなります。
 このブログでは、Azure Front Door についてよくお問い合わせをいただく、App Service などへのセキュアな接続の構成についてご紹介します。

@@ -7,7 +7,7 @@ tags:
   - Azure Firewall
 ---
 
-こんにちは、Azure サポートチームの薄井です。
+こんにちは、Azure テクニカル サポート チームの薄井です。
 今回は Network Security Group (NSG) と Azure Firewall の違いについて紹介します。
 
 - NSG と Azure Firewall ってどっちもアクセス制御できるけれど何が違うの？
