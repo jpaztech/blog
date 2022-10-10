@@ -74,7 +74,47 @@ testvm02  testrg02  https://sample.blob.core.windows.net/vhds/sample.vhd
 
 ## 2. マネージド ディスクへの移行方法
 
-マネージド ディスクへの移行方法や注意事項については以下公開情報にておまとめしておりますのでご参考ください。
+アンマネージド ディスクからマネージド ディスクへの移行はデータのコピーではなく、管理層を移行するという挙動となりますため、ディスクに格納されているデータ量に関わらず数分程度で完了することが想定となります。
+ただし、移行操作に伴い VM の停止処理が発生しますので、この点は予めご留意いただきますようお願いいたします。
+
+アンマネージド ディスクを使用した仮想マシンをマネージド ディスクへ移行する手順としては以下となります。
+
+1.Azure Portal より対象の VM を選択します。
+
+2.対象 VM の  OS・データ ディスクの VHD ファイルが格納されている Azure Storage アカウントを確認します。
+
+![](./unmanaged-disk-retired/05.png)
+
+OS・データ ディスクの各 [VHD の URI] 箇所より Azure Storage アカウント名を確認することができます。
+
+![](./unmanaged-disk-retired/06.png)
+
+![](./unmanaged-disk-retired/07.png)
+
+3.[ディスク] ブレードの上部 [マネージド ディスクに移行] 項目をクリックします。
+
+![](./unmanaged-disk-retired/08.png)
+
+4.マネージド ディスクへの移行画面に遷移しますので、[移行] をクリックします。
+
+![](./unmanaged-disk-retired/09.png)
+
+5. VM が停止し、移行が開始されます。(約 2-3 分程度で完了します)
+
+![](./unmanaged-disk-retired/10.png)
+
+6.マネージド ディスクに変換されたことを確認します。
+
+![](./unmanaged-disk-retired/11.png)
+
+7.1 で確認した対象の Azure Storage アカウントのコンテナー内から VHD ファイル自体は削除されていないことを確認します。
+
+![](./unmanaged-disk-retired/12.png)
+
+![](./unmanaged-disk-retired/13.png)
+
+マネージド ディスクへの移行方法の詳細や注意事項については以下公開情報にておまとめしておりますのでご参考ください。
+なお、マネージド ディスクへの移行は必ずテスト環境等で検証を行っていただいた上でご実施いただきますようお願いいたします。
 
 > 参考）
 > - [Windows 仮想マシンをアンマネージド ディスクからマネージド ディスクに移行する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/convert-unmanaged-to-managed-disks)
