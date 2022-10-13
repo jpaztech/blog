@@ -4,21 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>NSG と Azure Firewall の違い | Japan Azure IaaS Core Support Blog</title>
+  <title>AKS に問題が発生した際にお寄せいただきたい情報について | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの薄井です。今回は Network Security Group (NSG) と Azure Firewall の違いについて紹介します。  NSG と Azure Firewall ってどっちもアクセス制御できるけれど何が違うの？ どういう場面で使い分けたらいいの？  という、よくありそうな疑問に回答します。">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの山下です。 今回は、ご利用いただいている AKS に問題（Pod に接続できない、Pending の状態となっている、等) が発生し、弊サポートチームにお問い合わせをいただく際に採取いただきたい情報についてご紹介します。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NSG と Azure Firewall の違い">
-<meta property="og:url" content="https://jpaztech.github.io/blog/network/difference-nsg-fw/index.html">
+<meta property="og:title" content="AKS に問題が発生した際にお寄せいただきたい情報について">
+<meta property="og:url" content="https://jpaztech.github.io/blog/containers/aks-collect-logs/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの薄井です。今回は Network Security Group (NSG) と Azure Firewall の違いについて紹介します。  NSG と Azure Firewall ってどっちもアクセス制御できるけれど何が違うの？ どういう場面で使い分けたらいいの？  という、よくありそうな疑問に回答します。">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの山下です。 今回は、ご利用いただいている AKS に問題（Pod に接続できない、Pending の状態となっている、等) が発生し、弊サポートチームにお問い合わせをいただく際に採取いただきたい情報についてご紹介します。">
 <meta property="og:locale" content="ja_JP">
-<meta property="article:published_time" content="2020-12-11T05:30:00.000Z">
-<meta property="article:modified_time" content="2022-10-13T08:27:19.183Z">
+<meta property="article:published_time" content="2022-10-13T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-13T08:27:19.147Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Network">
-<meta property="article:tag" content="Azure Firewall">
-<meta property="article:tag" content="NSG">
+<meta property="article:tag" content="Containers">
+<meta property="article:tag" content="Azure Kubernetes Service (AKS)">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
@@ -81,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-network/difference-nsg-fw" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-containers/aks-collect-logs" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -90,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      NSG と Azure Firewall の違い
+      AKS に問題が発生した際にお寄せいただきたい情報について
     </h1>
   
 
@@ -98,118 +97,29 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2020-12-11T05:30:00.000Z" itemprop="datePublished">2020-12-11</time>
+  <time datetime="2022-10-13T00:00:00.000Z" itemprop="datePublished">2022-10-13</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+d3170051-93a4-56a9-97e3-68cbd5e118cd%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BNSG+%E3%81%A8+Azure+Firewall+%E3%81%AE%E9%81%95%E3%81%84%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fdifference-nsg-fw%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fdifference-nsg-fw.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fdifference-nsg-fw.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3bba5fbe-b101-5453-bf31-f88725c36483%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAKS+%E3%81%AB%E5%95%8F%E9%A1%8C%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E9%9A%9B%E3%81%AB%E3%81%8A%E5%AF%84%E3%81%9B%E3%81%84%E3%81%9F%E3%81%A0%E3%81%8D%E3%81%9F%E3%81%84%E6%83%85%E5%A0%B1%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fcontainers%2Faks-collect-logs%2F%29%0A*+Content+Source%3A+%5Barticles%2Fcontainers%2Faks-collect-logs.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fcontainers%2Faks-collect-logs.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/difference-nsg-fw/" data-id="cl96ssl2u00250mpn5ygi2509" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/containers/aks-collect-logs/" data-id="cl96ssl2500120mpnhtys9bvr" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure テクニカル サポート チームの薄井です。<br>今回は Network Security Group (NSG) と Azure Firewall の違いについて紹介します。</p>
-<ul>
-<li>NSG と Azure Firewall ってどっちもアクセス制御できるけれど何が違うの？</li>
-<li>どういう場面で使い分けたらいいの？</li>
-</ul>
-<p>という、よくありそうな疑問に回答します。</p>
+        <p>こんにちは、Azure テクニカル サポート チームの山下です。</p>
+<p>今回は、ご利用いただいている AKS に問題（Pod に接続できない、Pending の状態となっている、等) が発生し、弊サポートチームにお問い合わせをいただく際に採取いただきたい情報についてご紹介します。</p>
 <span id="more"></span>
 
-<h2 id="NSG-と-Azure-Firewall-の機能比較"><a href="#NSG-と-Azure-Firewall-の機能比較" class="headerlink" title="NSG と Azure Firewall の機能比較"></a>NSG と Azure Firewall の機能比較</h2><p>以下の表は NSG と Azure Firewall の大まかな機能比較表です。</p>
-<table>
-<thead>
-<tr>
-<th align="left">機能</th>
-<th align="center">NSG</th>
-<th align="center">Azure Firewall</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">動作箇所</td>
-<td align="center">サブネットと VM の NIC</td>
-<td align="center">ネットワークの境界</td>
-</tr>
-<tr>
-<td align="left">対象レイヤー</td>
-<td align="center">L3/L4</td>
-<td align="center">L3/L4 + L7</td>
-</tr>
-<tr>
-<td align="left">サービスタグによるフィルター処理</td>
-<td align="center">○</td>
-<td align="center">○</td>
-</tr>
-<tr>
-<td align="left">FQDN によるフィルター処理</td>
-<td align="center">×</td>
-<td align="center">○</td>
-</tr>
-<tr>
-<td align="left">SNAT と DNAT</td>
-<td align="center">×</td>
-<td align="center">○</td>
-</tr>
-<tr>
-<td align="left">脅威インテリジェンスベースのフィルター処理</td>
-<td align="center">×</td>
-<td align="center">○</td>
-</tr>
-<tr>
-<td align="left">IDPS</td>
-<td align="center">×</td>
-<td align="center">○ (Premium)</td>
-</tr>
-<tr>
-<td align="left">価格</td>
-<td align="center">無料</td>
-<td align="center">有料</td>
-</tr>
-</tbody></table>
-<h3 id="動作箇所"><a href="#動作箇所" class="headerlink" title="動作箇所"></a>動作箇所</h3><p>NSG はサブネットや Azure 仮想マシンの NIC 上で動作します。<br>Azure Firewall はインターネット（仮想ネットワーク）と仮想ネットワークの境界で動作します。</p>
-<h3 id="サービスタグによるフィルター処理"><a href="#サービスタグによるフィルター処理" class="headerlink" title="サービスタグによるフィルター処理"></a>サービスタグによるフィルター処理</h3><p>サービス タグは、指定された Azure サービスからの IP アドレス プレフィックスのグループを表します。 サービス タグに含まれるアドレス プレフィックスの管理は Microsoft が行い、アドレスが変化するとサービス タグは自動的に更新されます。これにより、ネットワーク セキュリティ規則に対する頻繁な更新の複雑さを最小限に抑えられます。<br>なお、NSG と Azure Firewall では使用できるサービスタグは異なります。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/service-tags-overview">仮想ネットワーク サービス タグ</a></li>
-</ul>
-<h3 id="FQDN-によるフィルター処理"><a href="#FQDN-によるフィルター処理" class="headerlink" title="FQDN によるフィルター処理"></a>FQDN によるフィルター処理</h3><p>FQDN によるフィルター処理は Azure Firewall のみの機能となります。<br>FQDN タグを用いると、例えば VNET 内の Windows VM からの Windows Update を行うためのトラフィックを許可したりすることが可能です。<br>FQDN ターゲットを用いると任意の FQDN への HTTP, HTTPS および MSSQL へのアクセスを制御できます。また、*.microsoft.com への<br>アクセスを許可/拒否するといったワイルドカードを使用したルールを作成することもできます。<br>ネットワーク ルールでの FQDN フィルタリングにより、HTTP, HTTPS および MSSQL 以外のプロトコルも FQDN を用いたフィルター処理を行えます。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/fqdn-tags">Azure Firewall の FQDN タグの概要</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/firewall-faq#how-do-wildcards-work-in-an-application-rule-target-fqdn">アプリケーション ルールのターゲット FQDN でワイルドカードはどのように機能しますか。</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/fqdn-filtering-network-rules">ネットワーク ルールでの FQDN フィルタリング</a></li>
-</ul>
-<h3 id="SNAT-と-DNAT"><a href="#SNAT-と-DNAT" class="headerlink" title="SNAT と DNAT"></a>SNAT と DNAT</h3><p>Azure Firewall では Azure VM にパブリック IP アドレスを割り当てない場合でも、SNAT や DNAT の機能によって、<br>Azure Firewall のパブリック IP を利用することで Azure VM とインターネットとの間で通信が行えます。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/overview#outbound-snat-support">Azure Firewall とは</a></li>
-</ul>
-<h3 id="脅威インテリジェンスベースのフィルター処理"><a href="#脅威インテリジェンスベースのフィルター処理" class="headerlink" title="脅威インテリジェンスベースのフィルター処理"></a>脅威インテリジェンスベースのフィルター処理</h3><p>Azure Firewall では脅威インテリジェンスベースのフィルター処理をすることが可能です。<br>ファイアウォール用に脅威インテリジェンスベースのフィルター処理を有効にして、既知の悪意のある IP アドレスやドメインとの間のトラフィックの警告と拒否を行うことができます。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/threat-intel">Azure Firewall の脅威インテリジェンスベースのフィルター処理</a></li>
-</ul>
-<h3 id="価格"><a href="#価格" class="headerlink" title="価格"></a>価格</h3><p>NSG は無料ですが、Azure Firewall は課金が発生します。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/pricing/details/azure-firewall/">Azure Firewall の価格</a></li>
-</ul>
-<h2 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h2><h3 id="Azure-Firewall-にて通信制御のルールやログを一元管理する"><a href="#Azure-Firewall-にて通信制御のルールやログを一元管理する" class="headerlink" title="Azure Firewall にて通信制御のルールやログを一元管理する"></a>Azure Firewall にて通信制御のルールやログを一元管理する</h3><p>インターネット と VNet 間との通信やサブネット間の通信を全て Azure Firewall 経由とした場合は、<br>Azure Firewall 側で一元的に通信制御のルールを管理することができます。<br>また、診断ログの機能を使用した場合、FWで許可した通信と拒否した通信のログを一元的に記録することができます。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/tutorial-diagnostics">チュートリアル:Azure Firewall のログとメトリックを監視する</a></li>
-</ul>
-<h2 id="NSG-と-Azure-Firewall-のどちらを利用すべきか"><a href="#NSG-と-Azure-Firewall-のどちらを利用すべきか" class="headerlink" title="NSG と Azure Firewall のどちらを利用すべきか"></a>NSG と Azure Firewall のどちらを利用すべきか</h2><p>以上が NSG と Azure Firewall の比較でした。<br>まとめますと、どちらを利用するかは、以下のように決定していただければと思います。</p>
-<ul>
-<li>NSG のみの機能で実現できるような場面では NSG のみを利用</li>
-<li>Azure Firewall の機能が必要な場面では Azure Firewall を利用</li>
-<li>通信制御のログを一元管理する場合には Azure Firewall を利用</li>
-</ul>
-<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="WAF-との違いは何ですか"><a href="#WAF-との違いは何ですか" class="headerlink" title="WAF との違いは何ですか"></a>WAF との違いは何ですか</h3><p>WAF（Web Application Firewall）は、レイヤー 7 に特化して、Web アプリケーションを脆弱性や悪用から保護するファイアウォールです。<br>Azure Firewall は RDP、SSH、FTP など、あらゆるポートとプロトコルの送受信、HTTP/S 送信におけるアプリケーションの保護を行うものです。<br>Azure 上で利用できる WAF については以下のドキュメントをご参照いただければと思います。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/web-application-firewall/">Web アプリケーション ファイアウォールのドキュメント</a></li>
-</ul>
-<h3 id="IDS-IPS-との違いは何ですか"><a href="#IDS-IPS-との違いは何ですか" class="headerlink" title="IDS/IPS との違いは何ですか"></a>IDS/IPS との違いは何ですか</h3><p>一般的に言う IDS/IPS (IDPS) はネットワーク型で、ネットワーク上に流れるパケットを収集し、データやプロトコルなど分析し、攻撃パータンやルールにマッチした場合、検出・防止で制御します。<br>Azure Firewall では Premium SKU で IDPS 機能を提供しています。<br>また、DDoS Protection Basic / Standard ではバックボーン ネットワーク上で DDoS 攻撃検知・緩和が実施されます。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/firewall/premium-features">Azure Firewall Premium の機能</a></li>
-</ul>
-<p>以上、ご参考になれば幸いです。</p>
-<hr>
+<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>弊サポートチームでは、日々多くのお客様より AKS で発生した問題のご支援をしております。その際、状況の把握のためにいくつかのコマンドの実行をお願いしております。</p>
+<p>なお、「サポートの方で基板から確認してもらえないか」「代わりにコマンドを実行して確認してもらえないか」といったご相談をいただくこともございます。<br>しかしながら、Azure ではお客様のデータを保護する観点から、我々サポートチームからお客様環境にコマンドを実行して取得する、といった仕組みがございませんため、そのようなご相談をお受けすることが叶いませんことをご理解賜りますようお願い申し上げます。</p>
+<h2 id="取得いただきたい情報"><a href="#取得いただきたい情報" class="headerlink" title="取得いただきたい情報"></a>取得いただきたい情報</h2><p>それでは問題が発生している AKS クラスターより情報を採取するためのコマンドを以下にご案内いたします。お問い合わせいただく際には、下記コマンドの実行結果とともに、どのリソース (Pod/Service 等) で問題が発生しているかをお寄せください。問題の内容によっては必ずしも必要ではない情報もございますが、本記事では多くの状況に対応するという観点で網羅的に記載しておりますので、冗長な点はご容赦頂ければ幸いです。<br>実行した結果、何も出力されなかった場合や、kubectl コマンドの実行が失敗する場合には、その旨を弊サポートチームまでお知らせくださいますと幸いです。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes -o wide &gt; get_nodes.txt</span><br><span class="line">kubectl describe nodes &gt; describe_nodes.txt</span><br><span class="line">kubectl get pod -A -o wide &gt; get_pods.txt</span><br><span class="line">kubectl describe pods -A &gt; describe_pods.txt</span><br><span class="line">kubectl get svc -A &gt; get_svc.txt</span><br><span class="line">kubectl describe svc -A &gt; describe_svc.txt</span><br><span class="line">kubectl describe ep -A &gt; describe_ep.txt</span><br><span class="line">kubectl get ingress -A -o yaml &gt; ingress.yaml</span><br><span class="line">kubectl get networkpolicy -A -o yaml &gt; networkpolicy.yaml</span><br><span class="line">kubectl logs &lt;対象の pod 名&gt; -n &lt;pod の namespace&gt; --timestamps=true &gt; &lt;pod 名&gt;.log</span><br><span class="line">kubectl logs &lt;対象の pod 名&gt; -n &lt;pod の namespace&gt; --timestamps=true -p &gt; &lt;pod 名&gt;_p.log</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="補足事項"><a href="#補足事項" class="headerlink" title="補足事項"></a>補足事項</h3><p>Azure Portal からお問い合わせをいただく際、ファイルを複数添付できないという制限がございます。ご提供いただく際には一つのファイルに圧縮したうえで添付いただく、もしくはお問い合わせ後に弊サポートチームよりお知らせするアップロードサイトにてご提供いただきますようお願い申し上げます。</p>
+<p>本稿が少しでも皆様のご参考となれば幸いです。</p>
 
       
       
@@ -223,10 +133,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/difference-nsg-fw.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/containers/aks-collect-logs.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -234,19 +144,10 @@
     
 <nav id="article-nav">
   
-    <a href="../../storage/storageAccount-Restore/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          誤って削除してしまったストレージ アカウントを復旧する
-        
-      </div>
-    </a>
   
-  
-    <a href="../../vm/introduction-performance-tier-ssd/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../vm/unmanaged-disk-retired/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">Premium SSD のパフォーマンス レベルについて</div>
+      <div class="article-nav-title">アンマネージド ディスクを使用している仮想マシンのマネージド ディスクへの移行について</div>
     </a>
   
 </nav>
@@ -265,7 +166,7 @@
       <ul>
         
           <li>
-            <a href="../../containers/aks-collect-logs/">AKS に問題が発生した際にお寄せいただきたい情報について</a>
+            <a href="">AKS に問題が発生した際にお寄せいただきたい情報について</a>
           </li>
         
           <li>
