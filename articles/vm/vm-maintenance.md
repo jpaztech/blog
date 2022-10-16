@@ -97,7 +97,9 @@ Azure では 2017 年からホット パッチを使用しており、それ以�
 > 仮想化ホスト OS における特定のドライバーの置き換えが、人間には認識できないほどのわずかな時間にて成功しています。
 > このようなドライバーの更新は、たった 1 つのモジュールの置き換えであっても一般的な OS ではシステム再起動が
 > 必須となっていたものですが、Azure OS ではこの一部についてはシステムを一切停止させずに更新していくことが可能となっています。
->> [YouTube] [Inside Azure Datacenter Architecture with Mark Russinovich : Build 2018](https://www.youtube.com/watch?v=t3Vo37V9oU8&t=4149s)
+>> [YouTube] [Inside Azure Datacenter Architecture with Mark Russinovich : Build 2018](https://www.youtube.com/watch?v=t3Vo37V9oU8&t=4216s)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t3Vo37V9oU8?start=4239" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 大規模なホスト更新プログラムの中には、機能レベルのホット パッチでは適用できない変更が含まれているものもございます。それらの更新プログラムについては、メモリ保持メンテナンスを使用するようにしています。
 
@@ -111,6 +113,8 @@ Azure では 2018 年からメモリ保持メンテナンスを使用してお�
 > メモリ保持メンテナンスのデモは、以下のビデオにて公開されています。
 > 3D グラフィックスによるリアルタイムな映像が表示されていますが、1 秒未満のゲスト VM の停止時間にて、ホスト OS 側のドライバーの更新を行うことに成功しています。
 >> [YouTube] [Inside Azure Datacenter Architecture with Mark Russinovich : Build 2018](https://www.youtube.com/watch?v=t3Vo37V9oU8&t=4149s)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t3Vo37V9oU8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 > [!WARNING]
 > 現状、メモリ保持メンテナンスはさまざまな技術的理由により、M、N、H シリーズなど特定の VM サイズ シリーズに対応できておりません。
@@ -141,7 +145,7 @@ Azureをご利用いただく上で必要となるこれらのメンテナンス
 ご利用いただいている VM のオペレーティングシステムにより、古い Linux OS (カーネル) を利用されている場合には、想定以上にメンテナンスに対する影響の時間が長くなることもございます。
 また、OS だけでなく、ネットワーク インフラストラクチャーにおける更新作業についても、OS やお客様の VM 自体を停止するものではありませんが、TCP/IP の自動的なリトライ ロジックを超えて瞬断が発生する可能性がございます。
 
-**メンテナンスの影響時間は適用される更新プログラムやその内容により大きく左右されるため、一概にメンテナンス全体で 30 秒間影響を受けるものでは無く、また影響の大きなメンテナンス (メモリ保持メンテナンス) であった場合、多くのお客様で 30 秒以内にメンテナンスが収まっていたとしても、100 % のお客様で 30 秒以内にメンテナンスが完了することをお約束することは叶いません。**
+<span style="text-decoration:underline;">メンテナンスの影響時間は適用される更新プログラムやその内容により大きく左右されるため、一概にメンテナンス全体で 30 秒間影響を受けるものでは無く、また影響の大きなメンテナンス (メモリ保持メンテナンス) であった場合、多くのお客様で 30 秒以内にメンテナンスが収まっていたとしても、100 % のお客様で 30 秒以内にメンテナンスが完了することをお約束することは叶いません。</span>
 
 > [!NOTE]
 > Azure Virtual Machine の SLA も、これらのメンテナンスの改善と関連し向上しています。
