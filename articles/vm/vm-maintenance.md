@@ -1,6 +1,6 @@
 ---
 title: Azure IaaS VM で実施されるメンテナンスについて
-date: 2022-10-17 9:30:00
+date: 2022-10-17 9:00:00
 tags:
   - VM
   - maintenance
