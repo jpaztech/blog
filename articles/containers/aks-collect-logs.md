@@ -18,7 +18,8 @@ tags:
 
 ---
 ## 必要な権限について
-kubectl コマンドを実行し、各名前空間から関連するリソースを取得できる権限が必要になります。具体的には、Kubernetes RBAC を使用している AKS クラスターであれば「Azure Kubernetes Service クラスター ユーザー ロール」、Azure RBAC を使用している AKS クラスターであれば「Azure Kubernetes Service RBAC 管理者」または「Azure Kubernetes Service RBAC クラスター管理者」の権限が必要となります。
+kubectl コマンドを実行し、各ネームスペースから関連するリソースを取得できる権限が必要になります。
+具体的には、Kubernetes RBAC を使用している AKS クラスターであれば「Azure Kubernetes Service クラスター ユーザー ロール」、Azure RBAC を使用している AKS クラスターであれば「Azure Kubernetes Service RBAC 管理者」または「Azure Kubernetes Service RBAC クラスター管理者」の権限が必要となります。
 
 > 参考）
 > - [Azure Kubernetes Service (AKS) でのアクセスと ID オプション](https://learn.microsoft.com/ja-jp/azure/aks/concepts-identity)
