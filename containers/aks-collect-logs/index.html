@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの山下です。 今回は、ご利用いただいている AKS に問題（Pod に接続できない、Pending の状態となっている、等) が発生し、弊サポートチームにお問い合わせをいただく際に採取いただきたい情報についてご紹介します。">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2022-10-13T00:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-16T13:38:08.414Z">
+<meta property="article:modified_time" content="2022-10-17T08:04:28.456Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Containers">
 <meta property="article:tag" content="Azure Kubernetes Service (AKS)">
@@ -103,7 +103,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3bba5fbe-b101-5453-bf31-f88725c36483%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAKS+%E3%81%AB%E5%95%8F%E9%A1%8C%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E9%9A%9B%E3%81%AB%E3%81%8A%E5%AF%84%E3%81%9B%E3%81%84%E3%81%9F%E3%81%A0%E3%81%8D%E3%81%9F%E3%81%84%E6%83%85%E5%A0%B1%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fcontainers%2Faks-collect-logs%2F%29%0A*+Content+Source%3A+%5Barticles%2Fcontainers%2Faks-collect-logs.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fcontainers%2Faks-collect-logs.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/containers/aks-collect-logs/" data-id="cl9be7tvx00120mnu3md198wm" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/containers/aks-collect-logs/" data-id="cl9chqlgt00120mp34z7ibcfc" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -112,12 +112,26 @@
 <p>今回は、ご利用いただいている AKS に問題（Pod に接続できない、Pending の状態となっている、等) が発生し、弊サポートチームにお問い合わせをいただく際に採取いただきたい情報についてご紹介します。</p>
 <span id="more"></span>
 
-<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>弊サポートチームでは、日々多くのお客様より AKS で発生した問題のご支援をしております。その際、状況の把握のためにいくつかのコマンドの実行をお願いしております。</p>
-<p>なお、「サポートの方で基盤から確認してもらえないか」「代わりにコマンドを実行して確認してもらえないか」といったご相談をいただくこともございます。<br>しかしながら、Azure ではお客様のデータを保護する観点から、我々サポートチームからお客様環境にコマンドを実行して取得する、といった仕組みがございませんため、そのようなご相談をお受けすることが叶いませんことをご理解賜りますようお願い申し上げます。</p>
+<hr>
+<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>弊サポートチームでは、日々多くのお客様より AKS で発生した問題のご支援をしております。その際、状況の把握のためにいくつかのコマンドの実行をお願いしております。<br>本記事では、お問い合わせ前にお客様にて情報採取を可能とすることや、コマンドの内容に齟齬が生まれないようにすることを目的として、実行いただくコマンドをご紹介いたします。  </p>
+<hr>
+<h2 id="必要な権限について"><a href="#必要な権限について" class="headerlink" title="必要な権限について"></a>必要な権限について</h2><p>kubectl コマンドを実行し、各ネームスペースから関連するリソースを取得できる権限が必要になります。<br>具体的には、Kubernetes RBAC を使用している AKS クラスターであれば「Azure Kubernetes Service クラスター ユーザー ロール」、Azure RBAC を使用している AKS クラスターであれば「Azure Kubernetes Service RBAC 管理者」または「Azure Kubernetes Service RBAC クラスター管理者」の権限が必要となります。</p>
+<blockquote>
+<p>参考）</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/aks/concepts-identity">Azure Kubernetes Service (AKS) でのアクセスと ID オプション</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/aks/control-kubeconfig-access">Azure ロールベースのアクセス制御を使用して、Azure Kubernetes Service (AKS) 内の Kubernetes 構成ファイルへのアクセス権を定義する</a></li>
+</ul>
+</blockquote>
+<p>お客様にて何らかの異常を検知されたことでお問い合わせをいただいた際に、コマンドの実行をご案内したところ、お問い合わせいただいた方はコマンドを実行するための権限をお持ちではなかったため、情報の採取ならびに解決までにお時間を要してしまったケースも残念ながら過去に複数ございました。</p>
+<p>そのような時に、「サポートの方で基盤から確認してもらえないか」「代わりにコマンドを実行して確認してもらえないか」といったご相談をいただくこともございました。</p>
+<p>しかしながら、Azure ではお客様のデータを保護する観点から、我々サポートチームからお客様環境にコマンドを実行して取得する、といった仕組みがございませんため、そのようなご相談をお受けすることが残念ながら叶いません。  </p>
+<p>正常性を監視されている方には必要な権限を付与していただく、または情報のご取得ができる方へのエスカレーションができるよう、緊急時のプロセスをお客様内で確立していただくことを予めご検討くださいますよう、何卒お願い申し上げます。</p>
+<hr>
 <h2 id="取得いただきたい情報"><a href="#取得いただきたい情報" class="headerlink" title="取得いただきたい情報"></a>取得いただきたい情報</h2><p>それでは問題が発生している AKS クラスターより情報を採取するためのコマンドを以下にご案内いたします。お問い合わせいただく際には、下記コマンドの実行結果とともに、どのリソース (Pod/Service 等) で問題が発生しているかをお寄せください。問題の内容によっては必ずしも必要ではない情報もございますが、本記事では多くの状況に対応するという観点で網羅的に記載しておりますので、冗長な点はご容赦頂ければ幸いです。<br>実行した結果、何も出力されなかった場合や、kubectl コマンドの実行が失敗する場合には、その旨を弊サポートチームまでお知らせくださいますと幸いです。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes -o wide &gt; get_nodes.txt</span><br><span class="line">kubectl describe nodes &gt; describe_nodes.txt</span><br><span class="line">kubectl get pod -A -o wide &gt; get_pods.txt</span><br><span class="line">kubectl describe pods -A &gt; describe_pods.txt</span><br><span class="line">kubectl get svc -A &gt; get_svc.txt</span><br><span class="line">kubectl describe svc -A &gt; describe_svc.txt</span><br><span class="line">kubectl describe ep -A &gt; describe_ep.txt</span><br><span class="line">kubectl get ingress -A -o yaml &gt; ingress.yaml</span><br><span class="line">kubectl get networkpolicy -A -o yaml &gt; networkpolicy.yaml</span><br><span class="line">kubectl logs &lt;対象の pod 名&gt; -n &lt;pod の namespace&gt; --timestamps=true &gt; &lt;pod 名&gt;.log</span><br><span class="line">kubectl logs &lt;対象の pod 名&gt; -n &lt;pod の namespace&gt; --timestamps=true -p &gt; &lt;pod 名&gt;_p.log</span><br></pre></td></tr></table></figure>
 
-
+<hr>
 <h3 id="補足事項"><a href="#補足事項" class="headerlink" title="補足事項"></a>補足事項</h3><p>Azure Portal からお問い合わせをいただく際、ファイルを複数添付できないという制限がございます。ご提供いただく際には一つのファイルに圧縮したうえで添付いただく、もしくはお問い合わせ後に弊サポートチームよりお知らせするアップロードサイトにてご提供いただきますようお願い申し上げます。</p>
 <p>本稿が少しでも皆様のご参考となれば幸いです。</p>
 
