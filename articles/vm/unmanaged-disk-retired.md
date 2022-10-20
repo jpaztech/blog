@@ -70,6 +70,18 @@ testvm02  testrg02  https://sample.blob.core.windows.net/vhds/sample.vhd
 
 [Unmanageddisk] 項目に VHD ファイルの URL が表示されている仮想マシンは、マネージド ディスクを使用した仮想マシンとなります。
 
+### ▼ Azure PowerShell を使用する場合
+```sh
+PS /home/azureuser> Get-AzVM -Status | Select-Object Name,ResourceGroupName,@{Name="Unmanaged Disk"; Expression={$_.StorageProfile.OsDisk.Vhd.Uri}}
+
+Name                ResourceGroupName   Unmanaged Disk
+----                -----------------   --------------------------------
+testvm01            testrg01 
+testvm02            testrg02            https://sample.blob.core.windows.net/vhds/sample.vhd
+```
+
+[Unmanaged Disk] 項目に VHD ファイルの URL が表示されている仮想マシンは、マネージド ディスクを使用した仮想マシンとなります。
+
 ---
 
 ## 2. マネージド ディスクへの移行方法
