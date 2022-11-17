@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
 <meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの重田です。 オンプレミス環境の Hyper-V Guest を Azure 環境に移行した際や、Azure Windows VM を一般化 (sysprep) したイメージから複製 VM を作成したところ、割り当てられていたドライブ文字が以前の状態と変わったしまった、というお問い合わせをいただくことがありましたので、検証結果を交えてご説明させて">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/registry.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/registry-0.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/diskmanager-2.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/registry-2.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/diskmanager-2aft.png">
@@ -21,13 +21,13 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/registry-1.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/registry-1aft.png">
 <meta property="article:published_time" content="2020-06-25T08:30:00.000Z">
-<meta property="article:modified_time" content="2022-11-17T07:58:13.055Z">
+<meta property="article:modified_time" content="2022-11-17T15:27:31.367Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Drive Letter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/registry.png">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/registry-0.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -112,7 +112,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+46e31000-49a6-5c7a-811b-9f4eb95645f6%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%83%87%E3%83%BC%E3%82%BF+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%AE%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E6%96%87%E5%AD%97%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fdrive-letter-changed-1%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fdrive-letter-changed-1.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fdrive-letter-changed-1.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/" data-id="claks5wri003j0mqk9gp38eyh" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/drive-letter-changed-1/" data-id="clal87py3003j0mmvgyg04ybl" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -128,8 +128,8 @@
 </ul>
 <hr>
 <h2 id="ドライブ文字を割り当ての仕組み"><a href="#ドライブ文字を割り当ての仕組み" class="headerlink" title="ドライブ文字を割り当ての仕組み"></a>ドライブ文字を割り当ての仕組み</h2><p>※ ダイナミック ディスク構成による複数ディスクにまたがるボリュームにつきましては、レガシーな機能であり、Windows では非推奨となっておりますため、本稿ではベーシック ディスクについて説明しています。</p>
-<p>はじめに、Windows によるドライブ文字の割り当ては、すべてレジストリキー <strong>HKLM¥SYSTEM¥MountedDevices</strong> に格納されます。<br>このレジストリ キーには、¥??¥Volume{GUID} という名前の値 (ボリューム名のエントリ) と、¥DosDevices¥C: のような名前の値があり、格納されるデータは、ディスク シグネチャとそのボリュームに関連する最初のパーティションの開始オフセットです。<br>どのディスクのどこから始まるパーティションのドライブ、という情報に対して、ドライブ文字が紐づけられているイメージになります。</p>
-<p><img src="/blog/vm/drive-letter-changed-1/registry.png"></p>
+<p>はじめに、Windows によるドライブ文字の割り当ては、すべてレジストリキー <strong>HKLM¥SYSTEM¥MountedDevices</strong> に格納されます。<br>このレジストリ キーには、¥??¥Volume{GUID} という名前の値 (ボリューム名のエントリ) と、¥DosDevices¥C: のような名前の値があり、格納されるデータは、ディスク シグネチャとそのボリュームのパーティションの情報です。<br>どのディスクのどのパーティションのドライブ、という情報に対して、ドライブ文字が紐づけられているイメージになります。</p>
+<p><img src="/blog/vm/drive-letter-changed-1/registry-0.png"></p>
 <p>ドライブ文字の割り当てはマウント マネージャー (mountmgr.sys) が行っています。<br>マウント マネージャーが新しいボリュームに関する通知を受け取ると、新しいボリュームの GUID やディスク シグネチャを特定し、その情報をもとに MountedDevices レジストリ キーの内容が反映されている内部データベースを調べて、ドライブ文字の割り当てが含まれているかどうかを確認します。<br>このデータベースに新しいボリュームのエントリがない場合、マウント マネージャーは最初の未割り当てドライブ文字を採用して新規割り当てを定義し、それをデータベースに格納します。利用できるドライブ文字がない場合、ドライブ文字の割り当ては行われません。</p>
 <hr>
 <h2 id="いつドライブ文字が変わるのか"><a href="#いつドライブ文字が変わるのか" class="headerlink" title="いつドライブ文字が変わるのか"></a>いつドライブ文字が変わるのか</h2><h3 id="検証-1-Azure-Windows-VM-を-sysprep-し、複製-VM-を作成した場合"><a href="#検証-1-Azure-Windows-VM-を-sysprep-し、複製-VM-を作成した場合" class="headerlink" title="検証 1: Azure Windows VM を sysprep し、複製 VM を作成した場合"></a>検証 1: Azure Windows VM を sysprep し、複製 VM を作成した場合</h3><p><strong>&lt;検証概要&gt;</strong></p>
