@@ -250,7 +250,7 @@ psコマンド等で確認できるプロセスのメモリ使用量(RSS)の合�
 
 ### 補足: OOMKillの詳細情報
 
-OOMKillはLinux Kernelのメモリ関連機能である[memcg](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/memcg_test.html)により駆動されるため、発生時のカーネルメッセージを参照することで様々な情報が得られます。
+OOMKillはLinux Kernelのメモリ関連機能である[memcg](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/memcg_test.html)により駆動されるため、発生時のカーネルメッセージを参照することでさまざまな情報が得られます。
 例えば、下記メッセージ中のoom_memcgにはOOMKillの原因となった制限値が設定されていたmemcg(memory cgroup、プロセスの集合)が記載されているため、これが下記のように`/kubepods`となっていた場合はノードレベルのOOMKill、 `/kubepods/....`と続いていた場合はPod/コンテナーレベルのOOMKillとなります。
 
 ```
