@@ -102,7 +102,7 @@ Events:              <none>
 
 後者に関しては、Pod のメモリ要求の値、すなわち、Podのマニフェストの`spec.containers[].resources.requests.memory`の値を減らすこととなります。
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 (略)
