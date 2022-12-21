@@ -43,7 +43,7 @@ Events:
 
 Podのメモリ要求値、各ノードのメモリ割り当て状況は、各々`kubectl describe pods` `kubectl describe nodes`コマンドで確認できます。
 
-```
+```shell
 $ kubectl describe pod <pod名>
 (略)
 Containers:
