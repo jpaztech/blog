@@ -137,7 +137,7 @@ AKSでは、ユーザのPodの他に、CoreDNS等のシステムPodが配置さ�
 これは、実行中のPodがノードのメモリ不足によりEvict(退去)の対象となった場合に発生します。
 `kubectl describe pod`コマンドの結果にて下記のような記録があった場合にこのケースに該当します。
 
-```
+```shell
 $ kubectl describe pod <pod名>
 (略)
 Events:
