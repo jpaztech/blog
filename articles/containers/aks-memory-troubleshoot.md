@@ -1,5 +1,11 @@
+---
+title: AKSのメモリ関連トラブルシューティング
+date: 2022-12-21 12:00:00
+tags:
+  - Containers
+  - Azure Kubernetes Service (AKS)
+---
 
-# AKSのメモリ関連トラブルシューティング
 
 この記事は[Microsoft Azure Tech Advent Calendar 2022](https://qiita.com/advent-calendar/2022/microsoft-azure-tech)の21日目の記事です。
 
