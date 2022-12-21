@@ -57,7 +57,7 @@ Containers:
 ```
 この例では、Pod内のコンテナーに設定されているメモリ要求値が2Giになっています。
 
-```
+```shell
 $ kubectl describe node <node名>
 (略)
 Capacity:
