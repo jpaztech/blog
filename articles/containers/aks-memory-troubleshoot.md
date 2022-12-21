@@ -55,7 +55,7 @@ Containers:
       memory:     2Gi                    <- 2GiBのメモリを要求
     Environment:  <none>
 ```
-この例では、Pod内コンテナーに設定されているメモリ要求値が2Giになっており、
+この例では、Pod内のコンテナーに設定されているメモリ要求値が2Giになっています。
 
 ```
 $ kubectl describe node <node名>
