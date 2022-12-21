@@ -26,7 +26,7 @@ Azure Kubernetes Service(AKS)の運用に際して、メモリ関連の要因に
 
 PodがRunning状態とならず、`kubectl describe pod`コマンドにてStatusがPendingとなっており、Eventsが下記のような表示となっていた場合に、このケースに該当します。
 
-```
+```shell
 $ kubectl describe pod <pod名>
 (略)
 Status:       Pending
