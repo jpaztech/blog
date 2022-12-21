@@ -69,7 +69,7 @@ P70(16TB) でディスクを作成し、16TB でボリュームを作成した�
 クラスター サイズが拡張したいボリューム サイズに対応している場合の手順で、P70(16TB) のディスクを P80(32TB) に拡張した場合、16TB で作成済のボリュームのクラスター サイズはデフォルトと変わらず 4KB のままです。
 そのため、この作成済の 16TB ボリュームを 32TB にしたい場合、 8KB のクラスター サイズが必要となるので、クラスター サイズが 4KBのままでは 32TB に拡張することができず、実際実行した場合以下のようにエラーメッセージが表示されます。
 
-![](./extend-data-disk-related-to-a-cluster-size-01.png)	
+![](./extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-01.png)	
 
 #### クラスター サイズの変更はフォーマットが伴う
 上記の通り、32TB のボリュームを利用するためには、クラスター サイズを 8KB 以上に変更する必要がありますが、クラスター サイズを変更してしまうと、ボリュームのフォーマットが実施されることとなってしまいます。
@@ -88,7 +88,7 @@ Azure portal にて、対象の VM を選択します。
 左のメニューから [ディスク] を選択し、[新しいディスクを作成し接続する] を選択します。
 [保存] を選択したら、新しいデータ ディスクの作成と VM への接続の完了です。
 
-![](./extend-data-disk-related-to-a-cluster-size-02.png)
+![](./extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-02.png)
 
 #### 2. 新規ボリュームを作成する
 [公開情報：ハード ディスク パーティションを作成してフォーマットする (microsoft.com)](https://support.microsoft.com/ja-jp/windows/%E3%83%8F%E3%83%BC%E3%83%89-%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF-%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%81%99%E3%82%8B-bbb8e185-1bda-ecd1-3465-c9728f7d7d2e)
@@ -97,15 +97,15 @@ Azure portal にて、対象の VM を選択します。
 まず、[スタート]  ボタンを右クリックし、 [コンピューターの管理] を開きます。
 新規でアタッチしたディスクの上で右クリックし、[新しいボリューム]を選択し、希望のサイズで新規ボリュームを作成します。
 
-![](./extend-data-disk-related-to-a-cluster-size-03.png)
+![](./extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-03.png)
 
 しばらくすると、フォーマットが完了し、ボリュームが新規作成されます。
 
-![](./extend-data-disk-related-to-a-cluster-size-04.png)
+![](./extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-04.png)
 
 エクスプローラーでもボリュームが作成できたことを確認できます。
 
-![](./extend-data-disk-related-to-a-cluster-size-05.png)
+![](./extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-05.png)
 
 #### 3. 既存ボリューム上のデータを新規ボリュームにコピーする
 [公開情報：robocopy | Microsoft Docs](https://learn.microsoft.com/ja-jp/windows-server/administration/windows-commands/robocopy)
@@ -126,7 +126,7 @@ Azure portal にて、対象の仮想マシンを選択します。
 [保存] を選択したら、既存のデータ ディスクが VM から接続解除されます。
 ※デタッチしたディスクはストレージに残ります。 ディスクが削除されるわけではありません。
 
-![](./extend-data-disk-related-to-a-cluster-size-06.png)
+![](./extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-06.png)
 
 ## さいごに
 Azure Windows VM において、データ ディスク拡張前の Windows NTFS のクラスター サイズが、ディスク拡張後のボリューム サイズに対応していない際は、ディスクを拡張する方法にご留意ください。
