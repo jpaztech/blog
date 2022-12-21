@@ -148,7 +148,7 @@ Events:
   Normal   Killing              110s  kubelet  Stopping container <container名>
 ```
 
-Podのマニフェストに記載するメモリ要求(`spec.containers[].requests.memory`)はあくまでも「予算」のようなものであり、Podはこの値を超えてメモリを確保・使用することが可能です。
+Podのマニフェストに記載するメモリ要求(`spec.containers[].requests.memory`)はあくまでも「予算」のようなものであり、Podはこの値を超えてメモリを確保・使用できます。
 このため、要求の合計がノードの割当可能なメモリ量の範囲に収まるようにPodが配置されていても、それらのPod(の一部)が要求値を超えてメモリを確保・使用した場合には、ノードにてメモリ不足が発生します。
 このとき、要求を超えてメモリを使用しているPodの中から、Podに設定されている優先等を考慮して選択されたものが[evict](https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/)(退去)されます。
 (メモリ使用量が急激に増加した場合など、Evictが発生せずに後述するOOMKillが発生する場合もあります)
