@@ -1,11 +1,11 @@
---- 
+---
 title: Azure Linux エージェント (waagent) に出力されるメッセージについて 
 date: 2022-12-23 12:00:00 
 tags: 
   - VM 
   - Linux 
   - VM Agent 
---- 
+---
 
 こんにちは、Azure テクニカル サポートの木下です。 
 今回は、よくお問い合わせいただきます、Azure Linux エージェント (waagent) に出力されるメッセージについてご紹介いたします。 
