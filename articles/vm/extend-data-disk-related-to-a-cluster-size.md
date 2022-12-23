@@ -11,6 +11,8 @@ tags:
 Azure Windows VM において、データ ディスクの拡張方法に関してお問い合わせをいただくことがあります。
 今回はディスク拡張前の Windows NTFS のクラスター サイズ（アロケーション ユニットサイズ）が、ディスク拡張後のボリューム サイズに対応していない際に、ディスクを拡張する方法をご案内させていただきます。
 
+<!-- more -->
+
 ## 注意事項
 念のため、作業の実施前には、予期せぬご状況に備えてバックアップやスナップショットの取得をご実施いただければと存じます。
 [公開情報：Azure VM バックアップについて - Azure Backup | Microsoft Docs](https://learn.microsoft.com/ja-jp/azure/backup/backup-azure-vms-introduction)
