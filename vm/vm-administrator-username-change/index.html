@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Windows VM のビルトイン Administrator アカウントの名前変更について | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの洪です。Azure VM (Windows OS) 作成時には、OS 内で “ビルトイン Administrator” として 管理者アカウント のユーザー名をご指定いただくことになりますが、こちらのユーザー名の変更が可能であるかとのお問い合わせをいただくことがございます。本記事ではそのユーザー名を OS 上から変更する方法および関連の留意事項">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows VM のビルトイン Administrator アカウントの名前変更について">
+<meta property="og:url" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの洪です。Azure VM (Windows OS) 作成時には、OS 内で “ビルトイン Administrator” として 管理者アカウント のユーザー名をご指定いただくことになりますが、こちらのユーザー名の変更が可能であるかとのお問い合わせをいただくことがございます。本記事ではそのユーザー名を OS 上から変更する方法および関連の留意事項">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-01.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-02.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-03.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-04.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-05.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-06.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-07.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-08.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-09.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-10.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-11.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-12.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-13.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-14.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-15.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-16.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-17.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-18.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-19.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-20.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-21.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-22.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-23.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-24.png">
+<meta property="article:published_time" content="2022-12-21T15:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-23T07:41:35.694Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="VM">
+<meta property="article:tag" content="HowTo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/vm-administrator-username-change-01.png">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://cssjpn.github.io/">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vm/vm-administrator-username-change" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Windows VM のビルトイン Administrator アカウントの名前変更について
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2022-12-21T15:00:00.000Z" itemprop="datePublished">2022-12-22</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+280c993b-02a0-5783-a2a7-8a09852f3980%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BWindows+VM+%E3%81%AE%E3%83%93%E3%83%AB%E3%83%88%E3%82%A4%E3%83%B3+Administrator+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%AE%E5%90%8D%E5%89%8D%E5%A4%89%E6%9B%B4%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fvm-administrator-username-change%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fvm-administrator-username-change.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fvm-administrator-username-change.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/vm/vm-administrator-username-change/" data-id="clc07f8cg004w0lpdhw2l7tbg" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure テクニカル サポート チームの洪です。<br>Azure VM (Windows OS) 作成時には、OS 内で “ビルトイン Administrator” として <strong>管理者アカウント</strong> のユーザー名をご指定いただくことになりますが、こちらのユーザー名の変更が可能であるかとのお問い合わせをいただくことがございます。<br>本記事ではそのユーザー名を OS 上から変更する方法および関連の留意事項 についてご案内いたします。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="変更対象"><a href="#変更対象" class="headerlink" title="変更対象"></a>変更対象</h2><p>本記事にて案内しております手順は、以下のように作成されたユーザーを後から変更するものとなります。</p>
+<p>■ 確認例 - Azure ポータル画面<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-01.png"><br>※ Azure VM の管理者アカウントのユーザー名として、azureadmin を指定します。</p>
+<p>■ 確認例 - OS 上の画面<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-02.png"><br>※ Windows OS のビルトイン Administrator として azureadmin のユーザーが生成されます。<br>※ こちらのユーザー名の変更に関しまして、以下にご案内いたします。  </p>
+<h2 id="管理者アカウント-ユーザー名を変更する"><a href="#管理者アカウント-ユーザー名を変更する" class="headerlink" title="管理者アカウント ユーザー名を変更する"></a>管理者アカウント ユーザー名を変更する</h2><p>管理者アカウントのユーザー名は従来の Windows の動作のように Windows の [コンピューターの管理] で変更可能でございます。<br>詳細手順に関しましては以下をご確認ください。</p>
+<h2 id="■-手順"><a href="#■-手順" class="headerlink" title="■ 手順"></a>■ 手順</h2><h3 id="1-現在の管理者-ビルドイン-Administrator-のユーザー名を確認します。"><a href="#1-現在の管理者-ビルドイン-Administrator-のユーザー名を確認します。" class="headerlink" title="1. 現在の管理者 (ビルドイン Administrator) のユーザー名を確認します。"></a>1. 現在の管理者 (ビルドイン Administrator) のユーザー名を確認します。</h3><p>1-1. 画面左下側の Windows アイコンを右クリックし、[コンピューターの管理] を開きます。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-03.png"></p>
+<p>1-2. [ローカル ユーザーとグループ] - [ユーザー] を選択し、”Built-in account for administering the computer” にて 該当するユーザー名を確認します。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-04.png"><br>※ この例では、[azureadmin] になります。</p>
+<h3 id="2-管理者のユーザー名を変更します。"><a href="#2-管理者のユーザー名を変更します。" class="headerlink" title="2. 管理者のユーザー名を変更します。"></a>2. 管理者のユーザー名を変更します。</h3><p>2-1. 当該名前を右クリックし、[名前の変更] をクリックします。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-05.png"></p>
+<p>2-2. ご希望のユーザー名を入力し、変更が可能です。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-06.png"><br>※ この例では、[azureadminnew] に変更しました。</p>
+<h2 id="ユーザー名変更の影響および対処について"><a href="#ユーザー名変更の影響および対処について" class="headerlink" title="ユーザー名変更の影響および対処について"></a>ユーザー名変更の影響および対処について</h2><p>Windows OS のユーザーにつきましては、[C:\ユーザー] 配下にユーザー名でフォルダーが作成されますが、上記の手順で管理者のユーザー名をご変更いただいた際に、フォルダーの名前が自動で変更される動作はございません。<br>フォルダ名とログオン ユーザー名が異なっていても通常は問題ないためご放念いただく形となりますが、もしアプリケーションが動作しないなどやむを得ない理由があれば以下の手順で変更することは可能です。<br>フォルダー名を新しいユーザー名に変更する場合には、手動にてレジストリをご変更いただく必要がございます。<br>具体的な手順を下記にご案内いたします。</p>
+<blockquote>
+<p>[!CAUTION]<br>レジストリを誤って変更すると、深刻な問題が発生することがございます。<br>レジストリを編集する際には十分に注意してください。<br>万一に備えて、編集の前にはレジストリのバックアップまたは仮想マシンのバックアップ (Azure Backup やディ&gt; スクのスナップショット) をご取得いただきますようお願いします。<br>レジストリのバックアップおよび復元方法の詳細を参照するには、以下のサポート技術情報をご確認ください。<br>ご参考) <a target="_blank" rel="noopener" href="https://support.microsoft.com/ja-jp/help/322756/">Windows でレジストリをバックアップおよび復元する方法</a></p>
+</blockquote>
+<h2 id="■-手順-1"><a href="#■-手順-1" class="headerlink" title="■ 手順"></a>■ 手順</h2><p>※ 仮想マシン作成時に指定した管理者のユーザー名 azureadmin を azureadminnew に変更する場合を例にご説明いたします。</p>
+<h3 id="1-新しいローカル管理者アカウント-例-tempaccount-を作成します。"><a href="#1-新しいローカル管理者アカウント-例-tempaccount-を作成します。" class="headerlink" title="1. 新しいローカル管理者アカウント (例 tempaccount) を作成します。"></a>1. 新しいローカル管理者アカウント (例 tempaccount) を作成します。</h3><p>1-1. Windows で、[コントロール パネル] を検索し、開きます。</p>
+<p>1-2. [ユーザー アカウント] &gt; [ユーザー アカウント] &gt; [別のアカウントの管理] を選択し、[ユーザー アカウントの追加] から新しいアカウントを作成します。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-07.png"><br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-08.png"><br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-09.png"></p>
+<p>1-3. 新しいローカル アカウントをクリックし、[アカウントの種類の変更] をクリックします。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-10.png"></p>
+<p>1-4. [管理者] を選択し、[アカウントの種類の変更]をクリックします。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-11.png"></p>
+<p>1-5. 新しいローカルアカウントが、[ローカル アカウント Administrator] に表示されることを確認します。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-12.png"></p>
+<p>1-6. VMを再起動します。</p>
+<h3 id="2-Windows-ユーザー-フォルダーの名前を変更します。"><a href="#2-Windows-ユーザー-フォルダーの名前を変更します。" class="headerlink" title="2. Windows ユーザー フォルダーの名前を変更します。"></a>2. Windows ユーザー フォルダーの名前を変更します。</h3><p>2-1. 対象仮想マシンに、新しいローカル アカウント (例 tempaccount) にてログインします。(コマンド プロンプトの whoami から確認可能です。)<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-13.png"></p>
+<p>2-2. エクスプローラーを開き、C:\ユーザー から仮想マシン作成時に指定した管理者のユーザー フォルダーを右クリックし、[名前の変更] をクリックします。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-14.png"></p>
+<p>2-3. フォルダー名を変更したユーザー名(例. C:\Users\azureadminnew) に変更します。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-15.png"></p>
+<h3 id="3-ユーザーの-SID-を確認します。"><a href="#3-ユーザーの-SID-を確認します。" class="headerlink" title="3. ユーザーの SID を確認します。"></a>3. ユーザーの SID を確認します。</h3><p>3-1. コマンド プロンプトを開き、以下のコマンドを実行します。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WMIC useraccount get name,sid</span><br></pre></td></tr></table></figure>
+
+<p>3-2. 出力結果から、仮想マシン作成時に指定したユーザー名の SID を確認します。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-16.png"></p>
+<h3 id="4-レジストリ-エディターを使用して名前を変更したフォルダーをマップします。"><a href="#4-レジストリ-エディターを使用して名前を変更したフォルダーをマップします。" class="headerlink" title="4. レジストリ エディターを使用して名前を変更したフォルダーをマップします。"></a>4. レジストリ エディターを使用して名前を変更したフォルダーをマップします。</h3><p>4-1. キーボードの Windows キーと R キーを同時に押し、[ファイル名を指定して実行] を開きます。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-17.png"></p>
+<p>4-2. 「regedit」 を入力し、[OK] を押下します。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-18.png"></p>
+<p>4-3. [レジストリ エディター] にて、下記のパスに移動します。</p>
+<blockquote>
+<p>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList</p>
+</blockquote>
+<p><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-19.png"></p>
+<p>4-4. [ProfileList] 配下から、手順 3 で確認した SID を選択します。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-20.png"></p>
+<p>4-5. [ProfileImagePath] をダブル クリックします。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-21.png"></p>
+<p>4-6. [値のデータ] へ [C:\Users&lt;変更したユーザー名&gt;] (例 C:\Users\azureadminnew) を入力し、[OK] をクリックします。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-22.png"><br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-23.png"></p>
+<p>4-7. 当該仮想マシンを再起動します。</p>
+<h3 id="5-新しいローカル管理者アカウントを無効にします。"><a href="#5-新しいローカル管理者アカウントを無効にします。" class="headerlink" title="5. 新しいローカル管理者アカウントを無効にします。"></a>5. 新しいローカル管理者アカウントを無効にします。</h3><p>5-1. 対象仮想マシンに、変更後の管理者アカウント(例 azureadminnew) にてログインします。</p>
+<p>5-2. 管理者権限にてコマンドプロンプトを開きます。<br><img src="/blog/vm/vm-administrator-username-change/vm-administrator-username-change-24.png"></p>
+<p>5-3. 以下のコマンドを入力すると、新しいローカル管理者アカウント (例 tempaccount) が無効になります。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">net</span> user &lt;新しいローカル管理者アカウント名&gt; /active:no</span><br></pre></td></tr></table></figure>
+
+<p>※ 本手順では無効の方法を案内しておりますが、今後ご利用されない場合は削除していただいても問題ございません。</p>
+<h2 id="管理者アカウント名の注意事項"><a href="#管理者アカウント名の注意事項" class="headerlink" title="管理者アカウント名の注意事項"></a>管理者アカウント名の注意事項</h2><p>ユーザー名をご指定いただく際の注意事項に関しましては、以下のドキュメントにてご案内しております。<br>詳細内容をご確認いただいた上で、変更する名前をご決定いただけますようお願い申し上げます。</p>
+<blockquote>
+<p>ご参考) <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/faq#vm----------------------">VM を作成する際のユーザー名の要件は何ですか。</a><br>ユーザー名は最大 20 文字の長さまで指定できますが、末尾を句点 (“.”) にすることはできません。<br>次のユーザー名を指定することはできません。</p>
+</blockquote>
+<p>一方で、VM 作成後にゲスト OS 上の操作でユーザー名を変更した場合には、Azure としての制約が適用されないため、上記の要件以外のユーザー名を指定しても OS の動作は可能です。</p>
+<p>ただし、Azure VM 作成時に登録する管理者アカウントは、Azure Portal からそのパスワードをリセットする機能がございますが、ドキュメントに記載のユーザー名の要件に従っていない場合にはその操作が不可になりますため、その点ご留意いただけますようお願いいたします。</p>
+<h2 id="管理者アカウントの追加"><a href="#管理者アカウントの追加" class="headerlink" title="管理者アカウントの追加"></a>管理者アカウントの追加</h2><p>なお、 VM 構築後にゲスト OS 上の操作にて Administrator ユーザーを追加で作成いただくことも Azure としての制約はなく、ご利用いただける方法となります。</p>
+<p>ただし、ゲスト OS 上で “Administrator” ユーザーを作成いただいた場合に関しましても、Azure Portal にて当該ユーザーのパスワードリセットの操作は叶いませんので、その点についてご留意いただけますようお願いいたします。</p>
+<p>本稿が皆様のお役に立てれば幸いです。</p>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/vm-administrator-username-change.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../vmagent-error/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          Azure Linux エージェント (waagent) に出力されるメッセージについて
+        
+      </div>
+    </a>
+  
+  
+    <a href="../extend-data-disk-related-to-a-cluster-size/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Azure Windows VM でクラスター サイズが拡張したいボリューム サイズに対応してない場合について</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../vmagent-error/">Azure Linux エージェント (waagent) に出力されるメッセージについて</a>
+          </li>
+        
+          <li>
+            <a href="">Windows VM のビルトイン Administrator アカウントの名前変更について</a>
+          </li>
+        
+          <li>
+            <a href="../extend-data-disk-related-to-a-cluster-size/">Azure Windows VM でクラスター サイズが拡張したいボリューム サイズに対応してない場合について</a>
+          </li>
+        
+          <li>
+            <a href="../../containers/aks-memory-troubleshoot/">AKSのメモリ関連トラブルシューティング</a>
+          </li>
+        
+          <li>
+            <a href="../vm-maintenance/">Azure IaaS VM で実施されるメンテナンスについて</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM-Template/" rel="tag">ARM Template</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ApplicationGateway/" rel="tag">ApplicationGateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Portal/" rel="tag">Azure Portal</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Data-Disk/" rel="tag">Data Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Noboot/" rel="tag">Noboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Oparation/" rel="tag">Oparation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RBAC/" rel="tag">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHEL/" rel="tag">RHEL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHUI/" rel="tag">RHUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM-Agent/" rel="tag">VM Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/maintenance/" rel="tag">maintenance</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">22</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Noboot">Noboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Performance">Performance</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">7</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">7</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">5</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/Azure-Portal">Azure Portal</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">25</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Application-Gateway">Application Gateway</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ApplicationGateway">ApplicationGateway</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NAT-Gateway">NAT Gateway</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/NSG">NSG</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-IP-Address">Public IP Address</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Public-Peering">Public Peering</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/SNAT">SNAT</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">2</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">7</span><ul></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">43</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/ARM-Template">ARM Template</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Data-Disk">Data Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">14</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">9</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Managed-Disk">Managed Disk</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Noboot">Noboot</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Oparation">Oparation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RBAC">RBAC</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RHEL">RHEL</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/RHUI">RHUI</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Resource-Health">Resource Health</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Sample-Script">Sample Script</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Storage-Space">Storage Space</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Troubleshooting">Troubleshooting</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/VM-Agent">VM Agent</a><span class="tag-list-count">2</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/12/">2022 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/10/">2022 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/09/">2022 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/08/">2022 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/03/">2022 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/01/">2022 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/11/">2019 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/ARM/" style="font-size: 10px;">ARM</a> <a href="../../tags/ARM-Template/" style="font-size: 10.91px;">ARM Template</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 14.55px;">Application Gateway</a> <a href="../../tags/ApplicationGateway/" style="font-size: 11.82px;">ApplicationGateway</a> <a href="../../tags/Archive/" style="font-size: 18.18px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 11.82px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 11.82px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 10.91px;">Azure Backup</a> <a href="../../tags/Azure-Firewall/" style="font-size: 11.82px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 14.55px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 10.91px;">Azure Load Balancer</a> <a href="../../tags/Azure-Portal/" style="font-size: 10px;">Azure Portal</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 10.91px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 10px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/Certificate/" style="font-size: 10.91px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 14.55px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 10.91px;">DNS</a> <a href="../../tags/Data-Disk/" style="font-size: 10px;">Data Disk</a> <a href="../../tags/Disk/" style="font-size: 12.73px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 10.91px;">Drive Letter</a> <a href="../../tags/Error/" style="font-size: 10px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 12.73px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 10.91px;">FAQ</a> <a href="../../tags/HowTo/" style="font-size: 16.36px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/Information/" style="font-size: 13.64px;">Information</a> <a href="../../tags/Linux/" style="font-size: 15.45px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 10px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 10.91px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 11.82px;">Managed Disk</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 10.91px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 10px;">NAT Gateway</a> <a href="../../tags/NSG/" style="font-size: 10.91px;">NSG</a> <a href="../../tags/Network/" style="font-size: 19.09px;">Network</a> <a href="../../tags/Noboot/" style="font-size: 13.64px;">Noboot</a> <a href="../../tags/Oparation/" style="font-size: 10px;">Oparation</a> <a href="../../tags/Other/" style="font-size: 10.91px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 11.82px;">PowerShell</a> <a href="../../tags/Public-IP-Address/" style="font-size: 10px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RBAC/" style="font-size: 10px;">RBAC</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/RHEL/" style="font-size: 10px;">RHEL</a> <a href="../../tags/RHUI/" style="font-size: 10px;">RHUI</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SNAT/" style="font-size: 10px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 12.73px;">Sample Script</a> <a href="../../tags/Storage/" style="font-size: 14.55px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 10.91px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Troubleshooting/" style="font-size: 11.82px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 10.91px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 20px;">VM</a> <a href="../../tags/VM-Agent/" style="font-size: 10.91px;">VM Agent</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN-Gateway/" style="font-size: 12.73px;">VPN Gateway</a> <a href="../../tags/WAF/" style="font-size: 12.73px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 17.27px;">Windows</a> <a href="../../tags/maintenance/" style="font-size: 10px;">maintenance</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
