@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/windows-noboot-summary/</loc>
+    
+    <lastmod>2022-12-23</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/what-is-this-dvd-drive/</loc>
     
     <lastmod>2022-12-23</lastmod>
@@ -23,7 +30,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/windows-noboot-summary/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/vmagent-notready/</loc>
+    
+    <lastmod>2022-12-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -31,13 +45,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/vmagent-error/</loc>
-    
-    <lastmod>2022-12-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/vmagent-notready/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -52,13 +59,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-replica-2/</loc>
-    
-    <lastmod>2022-12-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -121,6 +121,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
+    
+    <lastmod>2022-12-23</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
     
     <lastmod>2022-12-23</lastmod>
@@ -129,13 +136,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/resource-health-alert/</loc>
-    
-    <lastmod>2022-12-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -352,13 +352,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
-    
-    <lastmod>2022-12-23</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
     
     <lastmod>2022-12-23</lastmod>
@@ -408,14 +401,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/</loc>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/firewall-rules/</loc>
+    <loc>https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -457,7 +450,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
+    <loc>https://jpaztech.github.io/blog/network/firewall-rules/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -478,13 +471,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw_change_subnet/</loc>
-    
-    <lastmod>2022-12-23</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/bastion-nsg/</loc>
     
     <lastmod>2022-12-23</lastmod>
@@ -492,7 +478,21 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
+    
+    <lastmod>2022-12-23</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
+    
+    <lastmod>2022-12-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/appgw_change_subnet/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -681,20 +681,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/automation-vm-start-deallocate/</loc>
-    
-    <lastmod>2022-12-23</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/azure-load-balancer-ip-fragmentation/</loc>
-    
-    <lastmod>2022-12-23</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/azure-powershell-3-8-0-install/</loc>
     
     <lastmod>2022-12-23</lastmod>
@@ -737,7 +723,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/application-gateway-waf-vulnerability-detection/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/automation-vm-start-deallocate/</loc>
+    
+    <lastmod>2022-12-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/azure-load-balancer-ip-fragmentation/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
@@ -773,6 +766,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/application-gateway-502-error-info/</loc>
+    
+    <lastmod>2022-12-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/application-gateway-waf-vulnerability-detection/</loc>
     
     <lastmod>2022-12-23</lastmod>
     
