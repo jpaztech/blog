@@ -6,6 +6,7 @@ tags:
   - Linux 
   - VM Agent 
 ---
+この記事は [Microsoft Azure Tech Advent Calendar 2022](https://qiita.com/advent-calendar/2022/microsoft-azure-tech) の 23 日目の記事です。
 
 こんにちは、Azure テクニカル サポートの木下です。 
 今回は、よくお問い合わせいただきます、Azure Linux エージェント (waagent) に出力されるメッセージについてご紹介いたします。 
