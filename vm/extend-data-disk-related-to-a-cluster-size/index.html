@@ -6,12 +6,12 @@
   
   <title>Azure Windows VM でクラスター サイズが拡張したいボリューム サイズに対応してない場合について | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの新見です。 Azure Windows VM において、データ ディスクの拡張方法に関してお問い合わせをいただくことがあります。今回はディスク拡張前の Windows NTFS のクラスター サイズ（アロケーション ユニットサイズ）が、ディスク拡張後のボリューム サイズに対応していない際に、ディスクを拡張する方法をご案内させていただきます。 注">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの新見です。 Azure Windows VM において、データ ディスクの拡張方法に関してお問い合わせをいただくことがあります。今回はディスク拡張前の Windows NTFS のクラスター サイズ（アロケーション ユニットサイズ）が、ディスク拡張後のボリューム サイズに対応していない際に、ディスクを拡張する方法をご案内させていただきます。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Azure Windows VM でクラスター サイズが拡張したいボリューム サイズに対応してない場合について">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの新見です。 Azure Windows VM において、データ ディスクの拡張方法に関してお問い合わせをいただくことがあります。今回はディスク拡張前の Windows NTFS のクラスター サイズ（アロケーション ユニットサイズ）が、ディスク拡張後のボリューム サイズに対応していない際に、ディスクを拡張する方法をご案内させていただきます。 注">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの新見です。 Azure Windows VM において、データ ディスクの拡張方法に関してお問い合わせをいただくことがあります。今回はディスク拡張前の Windows NTFS のクラスター サイズ（アロケーション ユニットサイズ）が、ディスク拡張後のボリューム サイズに対応していない際に、ディスクを拡張する方法をご案内させていただきます。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-01.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-02.png">
@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-05.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/extend-data-disk-related-to-a-cluster-size-06.png">
 <meta property="article:published_time" content="2022-12-21T05:00:00.000Z">
-<meta property="article:modified_time" content="2022-12-23T02:27:33.755Z">
+<meta property="article:modified_time" content="2022-12-23T02:32:28.968Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Data Disk">
@@ -110,13 +110,15 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7c8a80ba-c671-5069-ac5f-62b43c34c99f%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Windows+VM+%E3%81%A7%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%BC+%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%8C%E6%8B%A1%E5%BC%B5%E3%81%97%E3%81%9F%E3%81%84%E3%83%9C%E3%83%AA%E3%83%A5%E3%83%BC%E3%83%A0+%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%A6%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fextend-data-disk-related-to-a-cluster-size%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fextend-data-disk-related-to-a-cluster-size.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fextend-data-disk-related-to-a-cluster-size.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/" data-id="clbzw7cx2003o0mqf44uq6hfp" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/" data-id="clbzwdpvk003o0mohe5acdo8y" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
         <p>こんにちは。Azure テクニカル サポート チームの新見です。</p>
 <p>Azure Windows VM において、データ ディスクの拡張方法に関してお問い合わせをいただくことがあります。<br>今回はディスク拡張前の Windows NTFS のクラスター サイズ（アロケーション ユニットサイズ）が、ディスク拡張後のボリューム サイズに対応していない際に、ディスクを拡張する方法をご案内させていただきます。</p>
+<span id="more"></span>
+
 <h2 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h2><p>念のため、作業の実施前には、予期せぬご状況に備えてバックアップやスナップショットの取得をご実施いただければと存じます。<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/backup/backup-azure-vms-introduction">公開情報：Azure VM バックアップについて - Azure Backup | Microsoft Docs</a><br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/snapshot-copy-managed-disk?tabs=portal">公開情報：仮想ハード ディスクの Azure スナップショットを作成する - Azure Virtual Machines | Microsoft Docs</a></p>
 <p>また、記憶域スペースをご利用をいただいている場合においては、以下の手順をご参照ください。<br><a href="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/">公開情報：Azure Windows VM で記憶域スペースを拡張する | Japan Azure IaaS Core Support Blog (jpaztech.github.io)</a></p>
 <h2 id="クラスター-サイズが拡張したいボリューム-サイズに対応している場合"><a href="#クラスター-サイズが拡張したいボリューム-サイズに対応している場合" class="headerlink" title="クラスター サイズが拡張したいボリューム サイズに対応している場合"></a>クラスター サイズが拡張したいボリューム サイズに対応している場合</h2><h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>データ ディスクを拡張する際には、クラスター サイズが拡張したいボリューム サイズに対応している場合、Azure Portal 等にてディスクのサイズを拡張いただいた後、ゲスト OS 上の操作にてボリュームを拡張する必要があります。</p>
