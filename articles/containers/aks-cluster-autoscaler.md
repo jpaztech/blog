@@ -36,7 +36,7 @@ AKS では、AKS ノードとして利用している Azure 仮想マシンの�
 | [Azure CLI (az aks acale) / Azure Portal](https://learn.microsoft.com/ja-jp/azure/aks/scale-cluster?tabs=azure-cli) | 手動 | 水平 | ノード |
 | [ノード プールのサイズ変更](https://learn.microsoft.com/ja-jp/azure/aks/resize-node-pool?tabs=azure-cli) <br />  ※ドキュメント変更となっておりますが、ノードプールの作成・削除となります。| 手動 | 垂直 | ノード |
 
-今回はこれらの方法の内、自動でスケーリング可能な水平オートスケーラー (HPA) とクラスター オートスケーラーについて紹介いたします。 
+今回はこれらの方法のうち、自動でスケーリング可能な水平オートスケーラー (HPA) とクラスター オートスケーラーについて紹介します。 
 
 ## Pod のオートスケーリング (HPA)
 AKS では、Pod のレプリカ数を負荷に応じてスケーリングする Pod の水平オートスケーラー (HPA) を使用することが出来ます。 
