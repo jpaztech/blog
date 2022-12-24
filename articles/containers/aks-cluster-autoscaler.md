@@ -42,8 +42,9 @@ AKS では、AKS ノードとして利用している Azure 仮想マシンの�
 AKS では、Pod のレプリカ数を負荷に応じてスケーリングする Pod の水平オートスケーラー (HPA) を使用することが出来ます。 
 HPA は、Kubernetes の標準 API リソースであり、AKS 固有の機能ではありません。 
 そのため、HPA の内容に関しましては、下記 Kubernetes 公式ドキュメントの内容に準拠いたします。 
-　ご参考情報：Horizontal Pod Autoscalerウォークスルー | Kubernetes 
-　https://kubernetes.io/ja/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/ 
+
+> ご参考情報：Horizontal Pod Autoscalerウォークスルー | Kubernetes 
+> https://kubernetes.io/ja/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/ 
 
 HPA では、ノード上のメトリクス情報を kubelet を経由して Kubernetes クラスター内に存在するメトリクス サーバーに収集します。
 なお、このメトリクス サーバーは現時点でサポートされている AKS クラスターでは標準でデプロイされております。 
