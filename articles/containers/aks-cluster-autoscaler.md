@@ -224,14 +224,15 @@ AKS では、ノードをオートスケールするための機能として、�
 > クラスター オートスケーラーは、CPU やメモリ等のリソースの使用率を監視し自動でスケールする機能ではありません。
 > 新規 Pod がデプロイ可能な空きノードが不足し、Pending (割り当て不可) 状態となった際に自動でスケールアウトする機能となります。
 
-> [!WARNING] 
-> AKS のクラスター オートスケーラーを利用する場合、VMSS のオートスケール機能を有効にしないでください。 </br>
->AKS では、VMSS などの IaaS リソースの API を用いて直接変更することはサポート外となります。</br> 
->いずれの機能も有効にした場合は、 VMSS へ直接変更を加えたことにより、AKS クラスターがサポートされない状態になる恐れや、2 つのオートスケールの処理が競合することで、ノードの増減が想定通りに動作しない可能性がございます。 </br>
->　ご参考情報：エージェント ノードのユーザー カスタマイズ </br>
->　https://learn.microsoft.com/ja-jp/azure/aks/support-policies#user-customization-of-agent-nodes </br>
-> 　ご参考情報： AKS クラスターの作成とクラスター オートスケーラーの有効化 </br>
->　https://learn.microsoft.com/ja-jp/azure/aks/cluster-autoscaler#create-an-aks-cluster-and-enable-the-cluster-autoscaler 
+> [!WARNING]
+> AKS のクラスター オートスケーラーを利用する場合、VMSS のオートスケール機能を有効にしないでください。
+> AKS では、VMSS などの IaaS リソースの API を用いて直接変更することはサポート外となります。
+> いずれの機能も有効にした場合は、 VMSS へ直接変更を加えたことにより、AKS クラスターがサポートされない状態になる恐れや、2 つのオートスケ
+ールの処理が競合することで、ノードの増減が想定通りに動作しない可能性がございます。
+> > ご参考情報：エージェント ノードのユーザー カスタマイズ
+> > https://learn.microsoft.com/ja-jp/azure/aks/support-policies#user-customization-of-agent-nodes
+> > ご参考情報： AKS クラスターの作成とクラスター オートスケーラーの有効化
+> > https://learn.microsoft.com/ja-jp/azure/aks/cluster-autoscaler#create-an-aks-cluster-and-enable-the-cluster-autoscaler
  
 
 そのため、適切にクラスター オートスケーラーを利用するためには、各 Pod に適切なリソース要求を設定することが重要となります。 
