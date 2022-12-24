@@ -184,7 +184,6 @@ command terminated with exit code 130
 
 再度 kubectl top pods コマンドを用いて CPU の負荷状況を確認します。 
 ``` shell 
-
 $ kubectl top pods -l app=azure-vote-front
 NAME                                CPU(cores)   MEMORY(bytes) 
 azure-vote-front-7589b695dd-4q79q   1m           39Mi 
