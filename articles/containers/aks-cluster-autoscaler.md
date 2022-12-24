@@ -135,7 +135,7 @@ azure-vote-front   Deployment/azure-vote-front   2%/50%    3         10        3
 
 想定通り、Pod のレプリカ数が HPA の設定に従って Pod のレプリカ数が増えたことが確認できました。 
 
-次に、Pod に負荷をかけることによって HPA によって Pod のレプリカ数が増えることを確認します。 
+次に、Pod に負荷をかけることで、HPA によって Pod のレプリカ数が増えることを確認します。 
 まずは、事前に現在の Pod の CPU 負荷状況を kubectl top pods コマンドを用いて確認します。 
 ``` shell 
 $ kubectl top pods -l app=azure-vote-front
