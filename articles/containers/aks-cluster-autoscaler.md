@@ -335,7 +335,7 @@ Events:
 
 この状態で、ノード プール “usernp1” に対して、クラスター オートスケーラーを有効にします。 
 ```shell 
-az aks nodepool update \ 
+$ az aks nodepool update \
   --resource-group <リソースグループ名> \ 
   --cluster-name <クラスター名> \ 
   --name usernp1 \​ 
