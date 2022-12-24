@@ -194,7 +194,8 @@ azure-vote-front-7589b695dd-wb7mq   1m           45Mi
 ``` 
 
 Pod “azure-vote-front-7589b695dd-d7psh” の CPU 使用量が減少したことが確認できました。 
-その後、しばらくした後に下記のように、Pod のレプリカ数が最小の 3 に戻ることが確認できます。 
+その後、しばらくした後に、次のように Pod のレプリカ数が最小の 3 に戻ることが確認できます。 
+
 ``` shell 
 $ kubectl get hpa 
 NAME               REFERENCE                     TARGETS   MINPODS   MAXPODS   REPLICAS   AGE 
