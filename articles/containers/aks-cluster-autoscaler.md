@@ -77,7 +77,7 @@ $ git clone https://github.com/Azure-Samples/azure-voting-app-redis.git
 $ less ./azure-voting-app-redis/azure-vote-all-in-one-redis.yaml 
 ``` 
 
-azure-vote-front コンテナーでは、下記のリソース要求が設定されていることが確認できます。 
+azure-vote-front コンテナーでは、次のようにリソース要求が設定されていることが確認できます。 
 ``` yaml 
       containers: 
       - name: azure-vote-front 
