@@ -44,13 +44,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-replica-1/</loc>
     
     <lastmod>2022-12-24</lastmod>
@@ -59,6 +52,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-replica-2/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
@@ -163,6 +163,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/linux-expand-os-disk/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/linux-noboot-recovery-managed-disk/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/linux-time-sync/</loc>
     
     <lastmod>2022-12-24</lastmod>
@@ -185,20 +199,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/introduction-performance-tier-ssd/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/linux-expand-os-disk/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/linux-noboot-recovery-managed-disk/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
@@ -282,6 +282,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/7031-rdagent-restart/</loc>
     
     <lastmod>2022-12-24</lastmod>
@@ -304,13 +311,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
@@ -346,6 +346,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/storage/azureFilesMonitoring/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
@@ -395,13 +402,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
@@ -513,6 +513,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/information/Security-check-stricter/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/information/Subscription-ID-verification/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/information/test/</loc>
     
     <lastmod>2022-12-24</lastmod>
@@ -549,20 +563,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-502error/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/information/Security-check-stricter/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/information/Subscription-ID-verification/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
@@ -611,6 +611,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-kube-audit/</loc>
     
     <lastmod>2022-12-24</lastmod>
@@ -625,7 +632,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/</loc>
+    <loc>https://jpaztech.github.io/blog/containers/aks-cluster-autoscaler/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
@@ -744,6 +751,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
+    
+    <lastmod>2022-12-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
     
     <lastmod>2022-12-24</lastmod>
@@ -773,13 +787,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/applicationgaetway-waf-01/</loc>
-    
-    <lastmod>2022-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/asrreplication_resourcedisplaynameissue/</loc>
     
     <lastmod>2022-12-24</lastmod>
     
