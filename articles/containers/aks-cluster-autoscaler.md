@@ -362,7 +362,8 @@ nginx-67d6486785-hfcmw   1/1     Running   0          14m   10.244.3.5   aks-use
 期待通りノード プール “usernp1” に新規ノード “usernp1-70474131-vmss000001”が作成され、Pod “nginx-67d6486785-7rj7r” がデプロイされていることが確認できました。 
 
 最後に Pod のレプリカ数を 1 に減らし、ノードが自動削除されることを確認します。 
-マニフェスト ファイルを修正し、Pod のレプリカ数を 1 に減らした後に、再度マニフェスト ファイルの適用を行います。 
+マニフェスト ファイルを修正し、Pod のレプリカ数を 1 に減らした後に、再度マニフェスト ファイルを適用します。 
+
 ```shell 
 $ kubectl apply -f ca-test-pod.yaml 
 deployment.apps/nginx configured 
