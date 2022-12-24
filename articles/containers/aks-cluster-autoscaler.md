@@ -204,7 +204,6 @@ NAME               REFERENCE                     TARGETS   MINPODS   MAXPODS   R
 azure-vote-front   Deployment/azure-vote-front   0%/50%    3         10        3          38m 
 
 $ kubectl get pods 
-
 NAME                                READY   STATUS    RESTARTS   AGE 
 azure-vote-front-7589b695dd-d7psh   1/1     Running   0          39m 
 azure-vote-front-7589b695dd-km4hq   1/1     Running   0          39m 
