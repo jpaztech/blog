@@ -230,6 +230,7 @@ AKS では、ノードをオートスケールするための機能として、�
 ールの処理が競合することで、ノードの増減が想定通りに動作しない可能性がございます。
 > > ご参考情報：エージェント ノードのユーザー カスタマイズ
 > > https://learn.microsoft.com/ja-jp/azure/aks/support-policies#user-customization-of-agent-nodes
+> >　
 > > ご参考情報： AKS クラスターの作成とクラスター オートスケーラーの有効化
 > > https://learn.microsoft.com/ja-jp/azure/aks/cluster-autoscaler#create-an-aks-cluster-and-enable-the-cluster-autoscaler
  
