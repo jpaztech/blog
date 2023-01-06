@@ -23,7 +23,7 @@ tags:
 - VM の可用性に重大な変化があった場合、即座に通知を受け取り、迅速に修復アクションをトリガーし、エンドユーザーへの影響を防止する。
 - 刻々と変化するワークロードの感度やフェールオーバーのニーズに基づき、プラットフォームの回復ポリシーを動的に調整し、自動化する。
 
-その中で、上記ブログではプレビューであった [Azure Resource Graph](https://learn.microsoft.com/ja-jp/azure/governance/resource-graph/overview) を用いた VM の可用性情報の監視が GA として公開され、Azure Monitor による VM 可用性メトリックがプレビューとして一般公開されました。
+その中で、上記ブログではプレビューであった [Azure Resource Graph](https://learn.microsoft.com/ja-jp/azure/governance/resource-graph/overview) を用いた VM の可用性情報の監視が GA として公開され、Azure Monitor による VM 可用性メトリックがパブリック プレビューとして公開されました。
 
 >  **New Project Flash Update: Advancing Azure Virtual Machine availability monitoring**
 >  https://azure.microsoft.com/en-us/blog/advancing-azure-virtual-machine-availability-monitoring-with-project-flash-update/
