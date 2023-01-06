@@ -195,7 +195,7 @@ HealthResources
 | project ResourceId = tolower(tostring(properties.targetResourceId)), Annotation = tostring(properties.reason)
 | join (
     HealthResources
-    | where type == 'microsoft.resourcehealth/availabilitystatuses
+    | where type == 'microsoft.resourcehealth/availabilitystatuses'
     | project ResourceId = tolower(tostring(properties.targetResourceId)), AvailabilityState = tostring(properties.availabilityState))
     on ResourceId
 | project ResourceId, AvailabilityState, Annotation
@@ -213,7 +213,7 @@ HealthResources
 | project ResourceId = tolower(tostring(properties.targetResourceId)), AvailabilityState = tostring(properties.availabilityState)
 | join ( 
      HealthResources
-    | where type == "microsoft.resourcehealth/resourceannotations
+    | where type == "microsoft.resourcehealth/resourceannotations"
     | project ResourceId = tolower(tostring(properties.targetResourceId)), Reason = tostring(properties.reason), Context = tostring(properties.context), Category = tostring(properties.category))
     on ResourceId
 | project ResourceId, AvailabilityState, Reason, Context, Category
@@ -233,8 +233,8 @@ HealthResources
 | where  properties.availabilityState != 'Available'
 | project ResourceId = tolower(tostring(properties.targetResourceId)), AvailabilityState = tostring(properties.availabilityState), Location = location
 | join (
-    HealthResource
-    | where type == "microsoft.resourcehealth/resourceannotations
+    HealthResources
+    | where type == "microsoft.resourcehealth/resourceannotations"
     | project ResourceId = tolower(tostring(properties.targetResourceId)), Context = tostring(properties.context), Category = tostring(properties.category), Location = location)
     on ResourceId
 | summarize NumResources = count(ResourceId) by Location, Context, Category
@@ -251,8 +251,8 @@ HealthResources
 | where properties.AnnotationName contains 'VirtualMachineHostRebootedForRepair'
 | project ResourceId = tolower(tostring(properties.targetResourceId)), Reason = tostring(properties.reason), Context = tostring(properties.context), Category = tostring(properties.category), Location = location, Timestamp = tostring(properties.occurredTime)
 | join ( 
-    HealthResource
-    | where type == 'microsoft.resourcehealth/availabilitystatuses
+    HealthResources
+    | where type == 'microsoft.resourcehealth/availabilitystatuses'
     | project ResourceId = tolower(tostring(properties.targetResourceId)), AvailabilityState = tostring(properties.availabilityState), Location = location)
     on ResourceId
 | project ResourceId, Reason, Context, Category, AvailabilityState, Timestamp
@@ -270,7 +270,7 @@ HealthResources
 | project ResourceId = tolower(tostring(properties.targetResourceId)), Reason = tostring(properties.reason), Location = location, Timestamp = tostring(properties.occuredTime)
 | join ( 
     HealthResources
-    | where type == 'microsoft.resourcehealth/availabilitystatuses
+    | where type == 'microsoft.resourcehealth/availabilitystatuses'
     | project ResourceId = tolower(tostring(properties.targetResourceId)), AvailabilityState = tostring(properties.availabilityState), Location = location)
     on ResourceId
 | project ResourceId, Reason, AvailabilityState, Timestamp, Location
