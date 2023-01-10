@@ -3,7 +3,7 @@ title: Application Gateway の証明書関連のトラブルシューティン�
 date: 2020-05-11 12:30:00
 tags:
   - Network
-  - ApplicationGateway
+  - Application Gateway
   - Certificate
   - SSL
 ---
