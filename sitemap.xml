@@ -2,20 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/win2016-jp-lpk-issue/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/win2019-jp-lpk/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/windows-noboot-summary/</loc>
     
     <lastmod>2023-01-10</lastmod>
@@ -30,7 +16,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vmagent-error/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/win2016-jp-lpk-issue/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/win2019-jp-lpk/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -38,6 +31,20 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/vmagent-notready/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/vmagent-error/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -52,13 +59,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/vm-replica-2/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-replica-3/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -114,6 +114,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/resource-health-alert/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/resourcegroup-uppercase-lowercase/</loc>
     
     <lastmod>2023-01-10</lastmod>
@@ -128,21 +135,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/resource-health-alert/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -247,6 +247,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/</loc>
     
     <lastmod>2023-01-10</lastmod>
@@ -255,13 +262,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/drive-letter-changed-2/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/extend-data-disk-related-to-a-cluster-size/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -296,20 +296,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/7031-rdagent-restart/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/azure-kms-update/</loc>
     
     <lastmod>2023-01-10</lastmod>
@@ -325,6 +311,20 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/7031-rdagent-restart/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -401,6 +401,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/tls-certificate-update-2020/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
     
     <lastmod>2023-01-10</lastmod>
@@ -422,14 +436,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/tls-certificate-update-2020/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/</loc>
+    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -437,6 +444,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/custom-dns-faq/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -458,20 +472,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/firewall-rules/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/custom-dns-faq/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -513,7 +513,28 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/FW-O365/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/appgw-502error/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -527,7 +548,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
+    <loc>https://jpaztech.github.io/blog/information/Security-check-stricter/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/information/Subscription-ID-verification/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -556,34 +584,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/ExpressRoutePrefixRollout/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/FW-O365/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-502error/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/information/Security-check-stricter/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/information/Subscription-ID-verification/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -660,13 +660,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/restore-vm-by-swap-manageddisk/</loc>
     
     <lastmod>2023-01-10</lastmod>
@@ -682,6 +675,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/upgrade-backup-container-asm2arm/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -710,6 +710,20 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/monitor-io-throttoling-on-win-vm-arm/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/disk11-after20180104/</loc>
+    
+    <lastmod>2023-01-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/dns-2016-09-16/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -752,20 +766,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/backup-morethan-1tb-disk/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/disk11-after20180104/</loc>
-    
-    <lastmod>2023-01-10</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/dns-2016-09-16/</loc>
     
     <lastmod>2023-01-10</lastmod>
     
@@ -1111,13 +1111,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/tags/Azure-Firewall/</loc>
-    <lastmod>2023-01-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/ApplicationGateway/</loc>
     <lastmod>2023-01-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
