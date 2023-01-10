@@ -3,7 +3,7 @@ title: Application Gateway でサブネットを変更する方法
 date: 2020-04-21 14:30:00 
 tags:
   - Network
-  - ApplicationGateway
+  - Application Gateway
 ---
 
 こんにちは、Azure テクニカル サポート チームの薄井です。

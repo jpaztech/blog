@@ -3,7 +3,7 @@ title: Application Gateway の散発的な 502 エラー
 date: 2020-09-28 17:30:00
 tags:
   - Network
-  - ApplicationGateway
+  - Application Gateway
   - 502
   - Error
 ---
