@@ -8,18 +8,26 @@ tags:
   - Migration
 ---
 
-こんにちは。Azure テクニカル サポート チームの鳥越です。  
-2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点で既に 90% が Azure Resource Manager モデルで利用されておりました。  
+こんにちは。Azure テクニカル サポート チームの鳥越です。
+2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点で既に 90% が Azure Resource Manager モデルで利用されておりました。
 
-Azure 初期で利用されておりました Azure Service Manager (ASM) を介した IaaS 仮想マシン (VM) の管理を2020 年 2 月 28 日 に 非推奨として **2023 年 3 月 1 日** に完全に廃止される予定です。  
+Azure 初期で利用されておりました Azure Service Manager (ASM) を介した IaaS 仮想マシン (VM) の管理を 2020 年 2 月 28 日 に 非推奨として **2023 年 9 月 1 日** に完全に廃止される予定です。
 
-> ■ご参考： 2023 年 3 月 1 日までに IaaS リソースを Azure Resource Manager に移行する  
+> ■ ご参考: Migrate your IaaS resources to Azure Resource Manager by September 1, 2023
+> [https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation](https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation)
+> (ご参考: 日本語 URL)
 > [https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation](https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation)
 
-そのため、これから 2023 年 3 月 1 日までに移行計画を立てていらっしゃるお客様に対して、移行がスムーズに行えるようにあらかじめ確認しておくべきポイントをお纏めしました。  
-本内容がお客様の移行作業に少しでもお役に立てば幸いでございます。  
+> [!IMPORTANT]
+> **(2023/01/27 Update)**: 当初、2023 年 3 月 1日とご説明しておりました ASM の廃止は **2023 年 9 月 1 日** に延期されました。
+> 現在これ以上の延期は計画されておりません。
+
+そのため、これから 2023 年 9 月 1 日までに移行計画を立てていらっしゃるお客様に対して、移行がスムーズに行えるようにあらかじめ確認しておくべきポイントをお纏めしました。
+
+本内容がお客様の移行作業に少しでもお役に立てば幸いでございます。
 
 ---
+
 ## 移行作業の全体像
 
 > ■ご参考：プラットフォームでサポートされているクラシックから Azure Resource Manager への移行に関する技術的な詳細  
