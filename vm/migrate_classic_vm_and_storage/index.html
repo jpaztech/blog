@@ -6,12 +6,12 @@
   
   <title>Classic VM から ARM への移行についての注意事項 (VM、ストレージ編) | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの鳥越です。2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点で既に 90% が Azure Resource Manager モデルで利用されておりました。   Azure 初期で利用されておりました Azure Service Manager (ASM)">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの鳥越です。2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点ですでに 90% が Azure Resource Manager モデルで利用されておりました。 Azure 初期で利用されておりました Azure Service Manager (ASM)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Classic VM から ARM への移行についての注意事項 (VM、ストレージ編)">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの鳥越です。2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点で既に 90% が Azure Resource Manager モデルで利用されておりました。   Azure 初期で利用されておりました Azure Service Manager (ASM)">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの鳥越です。2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点ですでに 90% が Azure Resource Manager モデルで利用されておりました。 Azure 初期で利用されておりました Azure Service Manager (ASM)">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/image1.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/image2.png">
@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/image9.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/image10.png">
 <meta property="article:published_time" content="2022-12-29T08:30:00.000Z">
-<meta property="article:modified_time" content="2023-01-10T12:56:57.435Z">
+<meta property="article:modified_time" content="2023-01-27T06:44:16.514Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Migration">
 <meta property="article:tag" content="Storage">
@@ -116,182 +116,150 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+14d261a3-37a4-5f76-b048-3f2e5269e2f5%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BClassic+VM+%E3%81%8B%E3%82%89+ARM+%E3%81%B8%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85+%28VM%E3%80%81%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E7%B7%A8%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fmigrate_classic_vm_and_storage%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fmigrate_classic_vm_and_storage.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fmigrate_classic_vm_and_storage.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/" data-id="clcq8m44m00gd0nmzhmwo7zb7" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/" data-id="clde5sbdv00gd0nmi5x6w5zw6" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは。Azure テクニカル サポート チームの鳥越です。<br>2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点で既に 90% が Azure Resource Manager モデルで利用されておりました。  </p>
-<p>Azure 初期で利用されておりました Azure Service Manager (ASM) を介した IaaS 仮想マシン (VM) の管理を2020 年 2 月 28 日 に 非推奨として <strong>2023 年 3 月 1 日</strong> に完全に廃止される予定です。  </p>
+        <p>こんにちは。Azure テクニカル サポート チームの鳥越です。<br>2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点ですでに 90% が Azure Resource Manager モデルで利用されておりました。</p>
+<p>Azure 初期で利用されておりました Azure Service Manager (ASM) を介した IaaS 仮想マシン (VM) の管理を 2020 年 2 月 28 日 に 非推奨として <strong>2023 年 9 月 1 日</strong> に完全に廃止される予定です。</p>
 <blockquote>
-<p>■ご参考： 2023 年 3 月 1 日までに IaaS リソースを Azure Resource Manager に移行する<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation">https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation</a></p>
+<p>■ ご参考: Migrate your IaaS resources to Azure Resource Manager by September 1, 2023<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation">https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation</a><br>(ご参考: 日本語 URL)<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation">https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation</a></p>
 </blockquote>
-<p>そのため、これから 2023 年 3 月 1 日までに移行計画を立てていらっしゃるお客様に対して、移行がスムーズに行えるようにあらかじめ確認しておくべきポイントをお纏めしました。<br>本内容がお客様の移行作業に少しでもお役に立てば幸いでございます。  </p>
+<div class="alert is-important"><p class="alert-title">重要</p><p><strong>(2023/01/27 Update)</strong>: 当初、2023 年 3 月 1日とご説明しておりました ASM の廃止は <strong>2023 年 9 月 1 日</strong> に延期されました。</p><p>現在これ以上の延期は計画されておりません。</p></div>
+<p>そのため、これから 2023 年 9 月 1 日までに移行計画を立てていらっしゃるお客様に対して、移行がスムーズに行えるようにあらかじめ確認しておくべきポイントをお纏めしました。</p>
+<p>本内容がお客様の移行作業に少しでもお役に立てば幸いでございます。</p>
+<span id="more"></span>
+
 <hr>
 <h2 id="移行作業の全体像"><a href="#移行作業の全体像" class="headerlink" title="移行作業の全体像"></a>移行作業の全体像</h2><blockquote>
-<p>■ご参考：プラットフォームでサポートされているクラシックから Azure Resource Manager への移行に関する技術的な詳細<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-deep-dive">https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-deep-dive</a></p>
+<p>■ ご参考: プラットフォームでサポートされているクラシックから Azure Resource Manager への移行に関する技術的な詳細<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-deep-dive">https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-deep-dive</a></p>
 </blockquote>
-<p>Azure ではリソースの管理操作にかかわる Control Plane と実際のリソースに対する Data Plane が存在します。<br>ASM (Azure Service Manager) から ARM (Azure Resource Manager) への移行は Control Plane に対する操作となります。  </p>
+<p>Azure ではリソースの管理操作にかかわる Control Plane と実際のリソースに対する Data Plane が存在します。<br>ASM (Azure Service Manager) から ARM (Azure Resource Manager) への移行は Control Plane に対する操作となります。</p>
 <p><img src="/blog/vm/migrate_classic_vm_and_storage/image1.png"></p>
-<p>原則として Data Plane はそのまま使用可能なので、ユーザー目線から見た場合、VM の動作状況や、ストレージアカウント上へのアクセスには影響がないように見えます。<br>しかしながら、移行非対応の機能のための構成変更に伴い、ユーザー目線でのダウンタイムが発生する可能性はございます。  </p>
-<p>例えば、クラシック VM においては、「仮想ネットワークに配置されていない VM」という構成があり得ましたが、ARM<br>における VM では全ての仮想マシンが仮想ネットワーク上に配置されます。<br>従いまして、仮想ネットワークに配置されていないクラシック VM を、ARM に移行する場合、移行手順の途上で VM の停止が伴います。  </p>
-<p><img src="/blog/vm/migrate_classic_vm_and_storage/image2.png"></p>
+<p>原則として Data Plane はそのまま使用可能なので、ユーザー目線から見た場合、VM の動作状況や、ストレージアカウント上へのアクセスには影響がないように見えます。<br>しかしながら、移行非対応の機能のための構成変更に伴い、ユーザー目線でのダウンタイムが発生する可能性はございます。</p>
+<p>たとえば、クラシック VM においては、「仮想ネットワークに配置されていない VM」という構成があり得ましたが、ARM における VM ではすべての仮想マシンが仮想ネットワーク上に配置されます。<br>従いまして、仮想ネットワークに配置されていないクラシック VM を、ARM に移行する場合、移行手順の途上で VM の停止が伴います。</p>
+<p>また、移行中は、管理系の操作が行えないことも合わせてご理解いただく必要がございます。<br>例えば、VMのサイズ変更、開始、停止、再起動、再デプロイ、ディスクの構成変更、ネットワーク的な構成変更が実施できなくなる操作となります。<br>そのため、移行で問題が生じたときに、VM 側の操作ができないといった事態に陥る可能性もゼロではございません。</p>
+<h3 id="移行をサポートしていないリソース"><a href="#移行をサポートしていないリソース" class="headerlink" title="移行をサポートしていないリソース"></a>移行をサポートしていないリソース</h3><p><img src="/blog/vm/migrate_classic_vm_and_storage/image2.png"></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-overview#unsupported-features-and-configurations">https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-overview#unsupported-features-and-configurations</a></p>
 <hr>
-<h2 id="移行をサポートしていないリソース"><a href="#移行をサポートしていないリソース" class="headerlink" title="移行をサポートしていないリソース"></a>移行をサポートしていないリソース</h2><p>また、移行中は、管理系の操作が行えないことも合わせてご理解いただく必要がございます。<br>例えば、VMのサイズ変更、開始、停止、再起動、再デプロイ、ディスクの構成変更、ネットワーク的な構成変更<br>が実施できなくなる操作となります。<br>そのため、移行で問題が生じたときに、VM 側の操作ができないといった事態に陥る可能性もゼロではございません。  </p>
+<p>全体的な移行の流れは下記の図のようになります。</p>
 <p><img src="/blog/vm/migrate_classic_vm_and_storage/image3.png"></p>
-<p>全体的な移行の流れは上記図のようになります。  </p>
-<hr>
-<h2 id="事前準備-重要"><a href="#事前準備-重要" class="headerlink" title="事前準備 (重要)"></a>事前準備 (重要)</h2><h3 id="1-クラシックリソースの操作に対応した、クラシック用の-Azure-PowerShell-を実施前にご用意ください。"><a href="#1-クラシックリソースの操作に対応した、クラシック用の-Azure-PowerShell-を実施前にご用意ください。" class="headerlink" title="(1) クラシックリソースの操作に対応した、クラシック用の Azure PowerShell を実施前にご用意ください。"></a>(1) クラシックリソースの操作に対応した、クラシック用の Azure PowerShell を実施前にご用意ください。</h3><p>クラシックリソース用の Azure PowerShell コマンドは、現行の ARM 対応の”AzureRM” や “Az” というモジュールではなく、”Azure” という名称で配布されています。<br>インストール方法は、以下の技術文書をご参照ください。  </p>
+<h2 id="移行の事前準備-重要"><a href="#移行の事前準備-重要" class="headerlink" title="移行の事前準備 (重要)"></a>移行の事前準備 (重要)</h2><h3 id="1-クラシックリソースの操作に対応した、クラシック用の-Azure-PowerShell-を実施前にご用意ください。"><a href="#1-クラシックリソースの操作に対応した、クラシック用の-Azure-PowerShell-を実施前にご用意ください。" class="headerlink" title="(1) クラシックリソースの操作に対応した、クラシック用の Azure PowerShell を実施前にご用意ください。"></a>(1) クラシックリソースの操作に対応した、クラシック用の Azure PowerShell を実施前にご用意ください。</h3><p>クラシックリソース用の Azure PowerShell コマンドは、現行の ARM 対応の <code>AzureRM</code> や <code>Az</code> というモジュールではなく、<code>Azure</code> という名称で配布されています。<br>インストール方法は、以下の技術文書をご参照ください。</p>
 <blockquote>
-<p>■ご参考：Azure PowerShell Service Management モジュールのインストール<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/powershell/azure/servicemanagement/install-azure-ps?view=azuresmps-4.0.0">https://learn.microsoft.com/ja-jp/powershell/azure/servicemanagement/install-azure-ps?view=azuresmps-4.0.0 </a></p>
+<p>■ ご参考: Azure PowerShell Service Management モジュールのインストール<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/powershell/azure/servicemanagement/install-azure-ps?view=azuresmps-4.0.0">https://learn.microsoft.com/ja-jp/powershell/azure/servicemanagement/install-azure-ps?view=azuresmps-4.0.0 </a></p>
 </blockquote>
-<p>なお、クラシック Azure PowerShell によるリソース管理には、Azure サブスクリプションにおける [従来の管理者]<br>の割り当てが必要になることにご注意ください。  </p>
+<p>なお、クラシック Azure PowerShell によるリソース管理には、Azure サブスクリプションにおける <strong>従来の管理者</strong> の割り当てが必要になることにご注意ください。</p>
 <blockquote>
-<p>■ご参考：Azure の従来のサブスクリプション管理者<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/role-based-access-control/classic-administrators">https://learn.microsoft.com/ja-jp/azure/role-based-access-control/classic-administrators</a></p>
+<p>■ ご参考: Azure の従来のサブスクリプション管理者<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/role-based-access-control/classic-administrators">https://learn.microsoft.com/ja-jp/azure/role-based-access-control/classic-administrators</a></p>
 </blockquote>
-<p>多くの場合、移行が失敗した場合には、コマンドベースで回復作業を実施します。<br>そのため、事前にクラシックリソース用 Azure PowerShell を利用いただける環境をご用意いただけますと幸いです。  </p>
-<h3 id="2-クラシック-Azure-PowerShellを用いて事前チェックをお願いいたします"><a href="#2-クラシック-Azure-PowerShellを用いて事前チェックをお願いいたします" class="headerlink" title="(2) クラシック Azure PowerShellを用いて事前チェックをお願いいたします"></a>(2) クラシック Azure PowerShellを用いて事前チェックをお願いいたします</h3><p>例えば、よくあるお問合せとして、ストレージアカウント内にディスクリソースが存在するためクラシックストレージアカウントの移行に失敗するといったお問い合わせがございます。  </p>
-<p>Portal 側の手順ではこの点考慮されていない部分がございますので、下記について PowerShell を利用いただきチェックいただけますと幸いです。<br>VM が移行完了しておらず、クラシックストレージアカウントに VM で利用中のディスクリソースが残ってしまっていないかの等のチェック方法は以下の通りです。  </p>
-<ul>
-<li>(2-1) ディスクがストレージ アカウントに格納されている仮想マシンを移行する。  </li>
-</ul>
-<p>次のコマンドは、ストレージ アカウント内のすべての VM ディスクの<br>RoleName および DiskName プロパティを返します。 RoleName<br>はディスクが接続される仮想マシンの名前です。<br>このコマンドでディスクが返される場合、ストレージ<br>アカウントを移行する前にこれらのディスクが接続されている仮想マシンが移行されている必要があります。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$storageAccountName</span> = <span class="string">&#x27;yourStorageAccountName&#x27;</span></span><br><span class="line"></span><br><span class="line">Get-AzureDisk | where-Object &#123;<span class="variable">$_</span>.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125; | Select-Object -ExpandProperty AttachedTo -Property DiskName | Format-List -Property RoleName, DiskName  </span><br></pre></td></tr></table></figure>
+<p>多くの場合、移行が失敗した場合には、コマンドベースで回復作業を実施します。<br>そのため、事前にクラシックリソース用 Azure PowerShell を利用いただける環境をご用意いただけますと幸いです。</p>
+<h3 id="2-クラシック-Azure-PowerShell-を用いて事前チェックをお願いいたします"><a href="#2-クラシック-Azure-PowerShell-を用いて事前チェックをお願いいたします" class="headerlink" title="(2) クラシック Azure PowerShell を用いて事前チェックをお願いいたします"></a>(2) クラシック Azure PowerShell を用いて事前チェックをお願いいたします</h3><p>たとえば、よくあるお問い合わせとして、ストレージアカウント内にディスクリソースが存在するためクラシックストレージアカウントの移行に失敗するといったお問い合わせがございます。</p>
+<p>Portal 側の手順では、この点が考慮されていない部分がございますので、下記のように PowerShell を利用してチェックをいただけますと幸いです。<br>VM の移行が完了しておらず、クラシックストレージアカウントに VM で利用中のディスクリソースが残ってしまっていないかなどのチェック方法は以下のとおりです。</p>
+<h4 id="2-1-ディスクがストレージ-アカウントに格納されている仮想マシンを移行する。"><a href="#2-1-ディスクがストレージ-アカウントに格納されている仮想マシンを移行する。" class="headerlink" title="(2-1) ディスクがストレージ アカウントに格納されている仮想マシンを移行する。"></a>(2-1) ディスクがストレージ アカウントに格納されている仮想マシンを移行する。</h4><p>次のコマンドは、ストレージ アカウント内のすべての VM ディスクの RoleName および DiskName プロパティを返します。RoleName はディスクが接続される仮想マシンの名前です。<br>このコマンドでディスクが返される場合、ストレージアカウントを移行する前にこれらのディスクが接続されている仮想マシンが移行されている必要があります。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$storageAccountName</span> = <span class="string">&#x27;yourStorageAccountName&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Get-AzureDisk</span> | <span class="built_in">where-Object</span> &#123;<span class="variable">$_</span>.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125; | <span class="built_in">Select-Object</span> <span class="literal">-ExpandProperty</span> AttachedTo <span class="literal">-Property</span> DiskName | <span class="built_in">Format-List</span> <span class="literal">-Property</span> RoleName, DiskName</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>(2-2) ストレージ アカウントに格納されている、接続されていない VM ディスクを削除する。  </li>
-</ul>
-<p>次のコマンドを使用して、ストレージ アカウントの接続されていない VM<br>ディスクを探します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$storageAccountName</span> = <span class="string">&#x27;yourStorageAccountName&#x27;</span></span><br><span class="line"></span><br><span class="line">Get-AzureDisk | where-Object</span><br><span class="line">&#123;<span class="variable">$_</span>.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125; | Where-Object -Property AttachedTo -EQ <span class="variable">$null</span> | Format-List -Property DiskName</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-ストレージ-アカウントに格納されている、接続されていない-VM-ディスクを削除する。"><a href="#2-2-ストレージ-アカウントに格納されている、接続されていない-VM-ディスクを削除する。" class="headerlink" title="(2-2) ストレージ アカウントに格納されている、接続されていない VM ディスクを削除する。"></a>(2-2) ストレージ アカウントに格納されている、接続されていない VM ディスクを削除する。</h4><p>次のコマンドを使用して、ストレージ アカウントの接続されていない VM のディスクを探します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$storageAccountName</span> = <span class="string">&#x27;yourStorageAccountName&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Get-AzureDisk</span> | <span class="built_in">where-Object</span></span><br><span class="line">&#123;<span class="variable">$_</span>.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125; | <span class="built_in">Where-Object</span> <span class="literal">-Property</span> AttachedTo <span class="operator">-EQ</span> <span class="variable">$null</span> | <span class="built_in">Format-List</span> <span class="literal">-Property</span> DiskName</span><br></pre></td></tr></table></figure>
 
 <p>上記のコマンドでディスクが返された場合、次のコマンドを使用してこれらのディスクを削除します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AzureDisk -DiskName <span class="string">&#x27;yourDiskName&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Remove-AzureDisk</span> <span class="literal">-DiskName</span> <span class="string">&#x27;yourDiskName&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>(2-3) ストレージ アカウントに格納されている VM イメージを削除する。  </li>
-</ul>
-<p>次のコマンドは、ストレージ アカウントに格納されたすべての VM イメージと OS ディスクを返します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-AzureVmImage | Where-Object &#123; <span class="variable">$_</span>.OSDiskConfiguration.MediaLink -ne <span class="variable">$null</span> -and <span class="variable">$_</span>.OSDiskConfiguration.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125; | Select-Object -Property ImageName, ImageLabel</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-ストレージ-アカウントに格納されている-VM-イメージを削除する。"><a href="#2-3-ストレージ-アカウントに格納されている-VM-イメージを削除する。" class="headerlink" title="(2-3) ストレージ アカウントに格納されている VM イメージを削除する。"></a>(2-3) ストレージ アカウントに格納されている VM イメージを削除する。</h4><p>次のコマンドは、ストレージ アカウントに格納されたすべての VM イメージと OS ディスクを返します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-AzureVmImage</span> | <span class="built_in">Where-Object</span> &#123; <span class="variable">$_</span>.OSDiskConfiguration.MediaLink <span class="operator">-ne</span> <span class="variable">$null</span> <span class="operator">-and</span> <span class="variable">$_</span>.OSDiskConfiguration.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125; | <span class="built_in">Select-Object</span> <span class="literal">-Property</span> ImageName, ImageLabel</span><br></pre></td></tr></table></figure>
 
 <p>次のコマンドは、ストレージ アカウントに格納されたすべての VM イメージとデータ ディスクを返します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-AzureVmImage | Where-Object &#123;<span class="variable">$_</span>.DataDiskConfigurations -ne <span class="variable">$null</span> -and (<span class="variable">$_</span>.DataDiskConfigurations | Where-Object &#123;<span class="variable">$_</span>.MediaLink -ne <span class="variable">$null</span> -and <span class="variable">$_</span>.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125;).Count -gt 0 &#125; | Select-Object -Property ImageName, ImageLabel</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-AzureVmImage</span> | <span class="built_in">Where-Object</span> &#123;<span class="variable">$_</span>.DataDiskConfigurations <span class="operator">-ne</span> <span class="variable">$null</span> <span class="operator">-and</span> (<span class="variable">$_</span>.DataDiskConfigurations | <span class="built_in">Where-Object</span> &#123;<span class="variable">$_</span>.MediaLink <span class="operator">-ne</span> <span class="variable">$null</span> <span class="operator">-and</span> <span class="variable">$_</span>.MediaLink.Host.Contains(<span class="variable">$storageAccountName</span>)&#125;).Count <span class="operator">-gt</span> <span class="number">0</span> &#125; | <span class="built_in">Select-Object</span> <span class="literal">-Property</span> ImageName, ImageLabel</span><br></pre></td></tr></table></figure>
 
 <p>次のコマンドを使用して、上記のコマンドによって返されるすべての VM イメージを削除します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AzureVMImage -ImageName <span class="string">&#x27;yourImageName&#x27;</span>  </span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Remove-AzureVMImage</span> <span class="literal">-ImageName</span> <span class="string">&#x27;yourImageName&#x27;</span>  </span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="検証フェーズ"><a href="#検証フェーズ" class="headerlink" title="検証フェーズ"></a>検証フェーズ</h2><p>検証フェーズでは移行対象リソースが前提条件を満たしているのかチェックします。<br>ただし、この検証フェーズですべての前提条件がチェックされる訳ではない点注意が必要です。  </p>
-<p><img src="/blog/vm/migrate_classic_vm_and_storage/image4.png"></p>
-<hr>
-<h2 id="準備フェーズ"><a href="#準備フェーズ" class="headerlink" title="準備フェーズ"></a>準備フェーズ</h2><p>準備フェーズでは、リソースの実体に対して、ASM側にもARM側にもリソースが表示されるようになります。  </p>
+<h2 id="検証フェーズ-Validate"><a href="#検証フェーズ-Validate" class="headerlink" title="検証フェーズ (Validate)"></a>検証フェーズ (Validate)</h2><p>検証フェーズでは移行対象リソースが前提条件を満たしているのかチェックします。<br>ただし、この検証フェーズですべての前提条件がチェックされる訳ではない点に注意が必要です。</p>
+<p><img src="/blog/vm/migrate_classic_vm_and_storage/image4.png"><br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-deep-dive#checks-not-done-in-the-validate-operation">https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-deep-dive#checks-not-done-in-the-validate-operation</a></p>
+<h2 id="準備フェーズ-Prepare"><a href="#準備フェーズ-Prepare" class="headerlink" title="準備フェーズ (Prepare)"></a>準備フェーズ (Prepare)</h2><p>準備フェーズでは、リソースの実体に対して、ASM 側にも ARM 側にもリソースが表示されるようになります。</p>
 <p><img src="/blog/vm/migrate_classic_vm_and_storage/image5.png"></p>
-<p>このタイミングで管理系操作はロックされるため、Commit で実行フェーズに進むか Abort で強制終了するかのどちらかの作業が必要となります。  </p>
-<h3 id="準備フェーズでの重要な注意点"><a href="#準備フェーズでの重要な注意点" class="headerlink" title="準備フェーズでの重要な注意点"></a>準備フェーズでの重要な注意点</h3><p>注意点となりますが、ASM から ARM への移行に際し VM 単位で実施する場合に  </p>
-<p>Prepare -&gt; Commit<br>の間に 4 分間の間隔を空けないと移行処理が失敗するという報告がございます。  </p>
-<p>このような状態に陥った場合、Portalでの対処ができず、先にご案内しましたクラシック用の PowerShell により以下のコマンドで Commit を実行いただく必要がございます。  </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># クラシック VM が配置されているクラウドサービス名に置き換えてください</span></span><br><span class="line"><span class="variable">$serviceName</span> = <span class="string">&quot;My Service&quot;</span></span><br><span class="line"><span class="variable">$deployment</span> = Get-AzureDeployment -ServiceName <span class="variable">$serviceName</span>  </span><br><span class="line"><span class="variable">$deploymentName</span> = <span class="variable">$deployment</span>.DeploymentName  </span><br><span class="line">Move-AzureService -Commit -ServiceName <span class="variable">$serviceName</span> -DeploymentName <span class="variable">$deploymentName</span>  </span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="実行フェーズ"><a href="#実行フェーズ" class="headerlink" title="実行フェーズ"></a>実行フェーズ</h2><p>実行フェーズにてリソースの実体に対してクラシック側の参照が切り離される動作となります。  </p>
-<p>これにより ARM への移行が完了します。  </p>
+<p>このタイミングで管理系操作はロックされるため、Commit で実行フェーズに進むか Abort で強制終了するかのどちらかの作業が必要となります。</p>
+<h3 id="準備フェーズでの重要な注意点"><a href="#準備フェーズでの重要な注意点" class="headerlink" title="準備フェーズでの重要な注意点"></a>準備フェーズでの重要な注意点</h3><p>注意点となりますが、ASM から ARM への移行に際し VM 単位で実施する場合に、Prepare -&gt; Commit の間に 4 分間の間隔を空けないと移行処理が失敗するという報告がございます。</p>
+<p>このような状態に陥った場合、Portal での対処ができず、先にご案内しましたクラシック用の PowerShell により以下のコマンドで Commit を実行いただく必要がございます。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$serviceName</span> = <span class="string">&quot;My Service&quot;</span>   <span class="comment"># クラシック VM が配置されているクラウドサービス名に置き換えてください</span></span><br><span class="line"><span class="variable">$deployment</span> = <span class="built_in">Get-AzureDeployment</span> <span class="literal">-ServiceName</span> <span class="variable">$serviceName</span></span><br><span class="line"><span class="variable">$deploymentName</span> = <span class="variable">$deployment</span>.DeploymentName</span><br><span class="line"><span class="built_in">Move-AzureService</span> <span class="literal">-Commit</span> <span class="literal">-ServiceName</span> <span class="variable">$serviceName</span> <span class="literal">-DeploymentName</span> <span class="variable">$deploymentName</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="実行フェーズ-Commit"><a href="#実行フェーズ-Commit" class="headerlink" title="実行フェーズ (Commit)"></a>実行フェーズ (Commit)</h2><p>実行フェーズにてリソースの実体に対してクラシック側の参照が切り離される動作となります。</p>
+<p>これにより ARM への移行が完了します。</p>
 <p><img src="/blog/vm/migrate_classic_vm_and_storage/image6.png"></p>
 <hr>
-<h2 id="ASMから-ARM-に移行される際の-FAQ"><a href="#ASMから-ARM-に移行される際の-FAQ" class="headerlink" title="ASMから ARM に移行される際の FAQ"></a>ASMから ARM に移行される際の FAQ</h2><p>公式ドキュメントとしては以下のご用意がございます。  </p>
+<h2 id="ASM-から-ARM-に移行される際の-FAQ"><a href="#ASM-から-ARM-に移行される際の-FAQ" class="headerlink" title="ASM から ARM に移行される際の FAQ"></a>ASM から ARM に移行される際の FAQ</h2><p>公式ドキュメントとしては以下のご用意がございます。</p>
 <blockquote>
-<p>■ご参考：クラシックから Azure Resource Manager への移行に関してよく寄せられる質問<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-faq">https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-faq</a></p>
+<p>■ ご参考: クラシックから Azure Resource Manager への移行に関してよく寄せられる質問<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-faq">https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration-classic-resource-manager-faq</a></p>
 </blockquote>
 <p>問題が発生した場合の対処コマンドについては、以下に記載させていただきます。</p>
-<ol>
-<li>移行の Abort  </li>
-</ol>
-<p>移行作業をどうしても Abort したい場合には下記コマンドを実施ください。<br>デバッグ出力も併せて表示されますので、何らかのエラーが発生する場合は、デバッグ出力も添えて Azure サポート窓口へのお問い合わせをご検討ください。  </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># クラシック VM が配置されているクラウドサービス名に置き換えてください</span></span><br><span class="line"><span class="variable">$serviceName</span> = <span class="string">&quot;My Service&quot;</span></span><br><span class="line"><span class="variable">$deployment</span> = Get-AzureDeployment -ServiceName <span class="variable">$serviceName</span>  </span><br><span class="line"><span class="variable">$deploymentName</span> = <span class="variable">$deployment</span>.DeploymentName  </span><br><span class="line">Move-AzureService -Abort -ServiceName <span class="variable">$serviceName</span> -DeploymentName <span class="variable">$deploymentName</span> -debug -verbose</span><br></pre></td></tr></table></figure>
+<h3 id="Q1-移行の-Abort-はできますか？"><a href="#Q1-移行の-Abort-はできますか？" class="headerlink" title="Q1. 移行の Abort はできますか？"></a>Q1. 移行の Abort はできますか？</h3><p>移行作業をどうしても Abort したい場合には下記コマンドを実施ください。<br>デバッグ出力も併せて表示されますので、何らかのエラーが発生する場合は、デバッグ出力も添えて Azure サポート窓口へのお問い合わせをご検討ください。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$serviceName</span> = <span class="string">&quot;My Service&quot;</span>   <span class="comment"># クラシック VM が配置されているクラウドサービス名に置き換えてください</span></span><br><span class="line"><span class="variable">$deployment</span> = <span class="built_in">Get-AzureDeployment</span> <span class="literal">-ServiceName</span> <span class="variable">$serviceName</span>  </span><br><span class="line"><span class="variable">$deploymentName</span> = <span class="variable">$deployment</span>.DeploymentName  </span><br><span class="line"><span class="built_in">Move-AzureService</span> <span class="literal">-Abort</span> <span class="literal">-ServiceName</span> <span class="variable">$serviceName</span> <span class="literal">-DeploymentName</span> <span class="variable">$deploymentName</span> <span class="literal">-debug</span> <span class="literal">-verbose</span></span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>ストレージアカウントのコミット方法  </li>
-</ol>
-<p>移行作業でポータルから操作ができず、Azure PowerShell を利用してコミットが必要なケースが存在します。<br>そのような場合には以下のように Commit の実施をお願いいたします。<br>デバッグ出力も併せて表示されますので、何らかのエラーが発生する場合は、デバッグ出力も添えて Azure サポート窓口へのお問い合わせをご検討ください。  </p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$storageAccountName</span> = <span class="string">&quot;myStorageAccount&quot;</span>  </span><br><span class="line">Move-AzureStorageAccount -Commit -StorageAccountName <span class="variable">$storageAccountName</span> -debug -verbose  </span><br></pre></td></tr></table></figure>
+<h3 id="Q2-ストレージアカウントを-Azure-PowerShell-で-Commit-する方法はありますか？"><a href="#Q2-ストレージアカウントを-Azure-PowerShell-で-Commit-する方法はありますか？" class="headerlink" title="Q2. ストレージアカウントを Azure PowerShell で Commit する方法はありますか？"></a>Q2. ストレージアカウントを Azure PowerShell で Commit する方法はありますか？</h3><p>移行作業でポータルから操作ができず、Azure PowerShell を利用して Commit が必要なケースが存在します。<br>そのような場合には以下のように Commit の実施をお願いいたします。<br>デバッグ出力も併せて表示されますので、何らかのエラーが発生する場合は、デバッグ出力も添えて Azure サポート窓口へのお問い合わせをご検討ください。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$storageAccountName</span> = <span class="string">&quot;myStorageAccount&quot;</span></span><br><span class="line"><span class="built_in">Move-AzureStorageAccount</span> <span class="literal">-Commit</span> <span class="literal">-StorageAccountName</span> <span class="variable">$storageAccountName</span> <span class="literal">-debug</span> <span class="literal">-verbose</span></span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>VNETを含んだVM の移行について  </li>
+<h3 id="Q3-VNET-を含んだ-VM-の移行で問題が発生したときはどうすればよいですか？"><a href="#Q3-VNET-を含んだ-VM-の移行で問題が発生したときはどうすればよいですか？" class="headerlink" title="Q3. VNET を含んだ VM の移行で問題が発生したときはどうすればよいですか？"></a>Q3. VNET を含んだ VM の移行で問題が発生したときはどうすればよいですか？</h3><p>VNET を含んだ VM の移行については今回割愛しておりますが、移行に問題が発生した際に、PowerShell を利用した切り分け作業の実施が必要となります。</p>
+<p>上記のとおり、PowerShell 環境の事前の準備と問題が発生した際には <code>-debug</code> オプションと <code>-verbose</code> オプションを利用した原因調査の実施が必要となりますのであらかじめご承知おきいただけますと幸いです。</p>
+<h3 id="Q4-移行がスタックした際にクラシック-VM-から新規-の-ARM-の-VM-を手動で作成できますか？"><a href="#Q4-移行がスタックした際にクラシック-VM-から新規-の-ARM-の-VM-を手動で作成できますか？" class="headerlink" title="Q4. 移行がスタックした際にクラシック VM から新規 の ARM の VM を手動で作成できますか？"></a>Q4. 移行がスタックした際にクラシック VM から新規 の ARM の VM を手動で作成できますか？</h3><p>移行が途中でスタックした際には、上述の通り管理操作を行うことができません。<br>そのため、VM の起動再開といった作業が実現できないこととなります。</p>
+<p>この場合、VM で利用されていた VHD を利用して新たに VM を作成することで、スタックの状況を回避することが可能となります。<br>作業としては以下の流れで作業の実施をお願いいたします。</p>
+<h4 id="4-1-コピー先-URL-を準備"><a href="#4-1-コピー先-URL-を準備" class="headerlink" title="(4-1) コピー先 URL を準備"></a>(4-1) コピー先 URL を準備</h4><h5 id="手順A-ARM-仮想マシン用のストレージ-アカウントを作成します。"><a href="#手順A-ARM-仮想マシン用のストレージ-アカウントを作成します。" class="headerlink" title="手順A. ARM 仮想マシン用のストレージ アカウントを作成します。"></a>手順A. ARM 仮想マシン用のストレージ アカウントを作成します。</h5><ol>
+<li>Azure Portal より <strong>[ストレージ アカウント]</strong> を開き、<strong>[追加]</strong> をクリックします。<br>適宜値を設定し、ストレージ アカウントを作成します。</li>
+<li>作成後、<strong>[ストレージ アカウント]</strong> - <strong>[&lt;当該ストレージ アカウント名&gt;]</strong> を選択し、左メニュー <strong>[Blob service]</strong> から <strong>[コンテナー]</strong> を選択します。</li>
+<li><strong>[+ コンテナー]</strong> をクリックし <code>vhds</code> という名前でコンテナーを作成します。</li>
 </ol>
-<p>VNETを含んだVM移行については今回割愛しておりますが、移行に問題が発生した際に、PowerShell を利用した切り分け作業の実施が必要となります。  </p>
-<p>上記の通り、PowerShell 環境の事前の準備と問題が発生した際には -debug オプションと -verbose オプションを利用した原因調査の実施が必要となりますのであらかじめご承知おきいただけますと幸いです。</p>
-<ol start="4">
-<li>移行がスタックした際にクラシック VM から新規 の ARM の VM を手動で作成する  </li>
+<h5 id="手順B-VHD-ファイルをコピーするためのコピー先の-SAS-を発行します。"><a href="#手順B-VHD-ファイルをコピーするためのコピー先の-SAS-を発行します。" class="headerlink" title="手順B. VHD ファイルをコピーするためのコピー先の SAS を発行します。"></a>手順B. VHD ファイルをコピーするためのコピー先の SAS を発行します。</h5><ol>
+<li><strong>手順A-1</strong> で作成した <strong>[&lt;当該ストレージ アカウント名&gt;]</strong> を選択し、左メニュー <strong>[設定]</strong> から <strong>[Shared Access Signature]</strong> を選択します。</li>
+<li>適宜設定を行い、<strong>[SAS と接続文字列を生成する]</strong> をクリックします。</li>
+<li><strong>[Blob service の SAS URL]</strong> をテキストエディタ等にコピーしておきます。</li>
 </ol>
-<p>移行が途中でスタックした際には上記記載の通り管理操作を行うことができません。<br>そのため、VM の起動再開といった作業が実現できないこととなります。<br>この場合、VM で利用されていた VHD を利用して新たにVMを作成することで、スタックの状況を回避することが可能となります。<br>作業としては以下の流れで作業の実施をお願いいたします。  </p>
-<h3 id="4-1-コピー先-URL-を準備"><a href="#4-1-コピー先-URL-を準備" class="headerlink" title="4-1 コピー先 URL を準備"></a>4-1 コピー先 URL を準備</h3><p>a.ARM 仮想マシン用のストレージ アカウントを作成します。  </p>
-<p>a-1.Azure Portal より [ストレージ アカウント] を開き、[追加] をクリックします。<br>適宜値を設定し、ストレージ アカウントを作成します。  </p>
-<p>a-2.作成後、[ストレージ アカウント] - [&lt;当該ストレージ アカウント&gt;] を選択し、左メニュー &quot;Blob service&quot; から [コンテナー] を選択します。<br>[+ コンテナー] をクリックし [vhds] という名前でコンテナーを作成します。  </p>
-<p>b.VHD ファイルをコピーするためのコピー先の SAS を発行します。  </p>
-<p>b-1.a-1 で作成した [&lt;当該ストレージ アカウント&gt;] を選択し、左メニュー &quot;設定&quot;から、[Shared Access Signature] を選択します。  </p>
-<p>b-2.適宜設定を行い、[SAS と接続文字列を生成する] をクリックします。  </p>
-<p>b-3.[Blob service の SAS URL] をテキストエディタ等にコピーしておきます。  </p>
-<p>c.b-3 を下記の通り編集し、テキスト エディタ等にコピーしておきます。  </p>
-<blockquote>
-<p>編集前: https://&lt;ストレージ アカウント名&gt;.blob.core.windows.net/?&lt;SAS&gt;  </p>
-</blockquote>
-<blockquote>
-<p>編集後: https://&lt;ストレージ アカウント名&gt;.blob.core.windows.net/vhds/&lt;コピー後の VHD ファイル名&gt;?&lt;SAS&gt;  </p>
-</blockquote>
-<p>コピー後の VHD ファイル名は「.vhd」拡張子となるようにご指定ください。  </p>
-<blockquote>
-<p>【ご参考】<br>a から c の手順は、当初より公開しております以下の記事にも記載がございます。<br>Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法のページにおける<br>[1] コピー先のストレージ アカウントおよびコンテナ―を作成する、[2] コピー先の SAS を発行する<br>の手順と同様です。  </p>
-<p>■ご参考：Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法<br><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/">https://jpaztech.github.io/blog/vm/create-vm-using-vhd/</a></p>
-</blockquote>
-<h3 id="4-2-コピー元のVMの停止"><a href="#4-2-コピー元のVMの停止" class="headerlink" title="4-2 コピー元のVMの停止"></a>4-2 コピー元のVMの停止</h3><p>d. コピー元の仮想マシンを停止します。  </p>
-<h3 id="4-3-コピー元-URL-を準備"><a href="#4-3-コピー元-URL-を準備" class="headerlink" title="4-3 コピー元 URL を準備"></a>4-3 コピー元 URL を準備</h3><p>事前に VM のディスクに関してスナップショットを取得します。  </p>
-<p>e.クラシック仮想マシン の VHD にてスナップショットを取得します。  </p>
-<p>e-1.Azure Portal にて、[ストレージ アカウント] - [&lt;当該 (クラシック) ストレージアカウント名&gt;] を選択し、左メニュー &quot;Blob service&quot; から [コンテナー] を選択します。  </p>
-<p>e-2.[vhds (コンテナー名)] - [&lt;ファイル名.vhd&gt;] の […] をクリックし、[スナップショットの作成] をクリックします。  </p>
-<p>e-3.[vhds (コンテナー名)] - [&lt;ファイル名.vhd&gt;] の […] をクリックし、[スナップショットの表示] をクリックします。  </p>
-<p>該当スナップショットの […] をクリックし、ダブルクリックして表示される [スナップショットのプロパティ] から URL をテキスト エディタ等にコピーしておきます。  </p>
-<p>f.クラシック仮想マシン で作成した VHD ファイルをコピーするための SAS を発行します。  </p>
-<p>f-1.上記 e-2, 3 と同様に [vhds (コンテナー名)] - [&lt;ファイル名.vhd&gt;] の […] をクリックし、[SAS の生成] をクリックします。</p>
-<p>f-2.適宜設定を行い、[SAS トークンおよび URL を生成] をクリックします。  </p>
-<p>f-3.[BLOB SAS トークン] をテキスト エディタ等にコピーしておきます。  </p>
-<p>g.コピー元の URL を合わせ、テキスト エディタ等準備しておきます。  </p>
-<p>スナップショットを azcopy で複製する場合のコピー元URL作成手順は　以下のようになります。  </p>
+<h5 id="手順C-手順D-3-で取得した-URL-を下記のとおり編集し、テキスト-エディタ等にコピーしておきます。"><a href="#手順C-手順D-3-で取得した-URL-を下記のとおり編集し、テキスト-エディタ等にコピーしておきます。" class="headerlink" title="手順C. 手順D-3 で取得した URL を下記のとおり編集し、テキスト エディタ等にコピーしておきます。"></a>手順C. 手順D-3 で取得した URL を下記のとおり編集し、テキスト エディタ等にコピーしておきます。</h5><p><strong>編集前</strong>: <code>https://&#123;ストレージ アカウント名&#125;.blob.core.windows.net/?&#123;SAS&#125;</code><br><strong>編集後</strong>: <code>https://&#123;ストレージ アカウント名&#125;.blob.core.windows.net/vhds/&#123;コピー後の VHD ファイル名&#125;?&#123;SAS&#125;</code></p>
+<p>コピー後の VHD ファイル名は「.vhd」拡張子となるようにご指定ください。</p>
+<div class="alert is-success"><p class="alert-title">ヒント</p><p>A から C の手順は、当初より公開しております以下の記事にも記載がございます。</p><p>Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法のページにおける</p><p><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/#1-%E3%82%B3%E3%83%94%E3%83%BC%E5%85%88%E3%81%AE%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8-%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%8A%E3%82%88%E3%81%B3%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E2%80%95%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B">[1] コピー先のストレージ アカウントおよびコンテナ―を作成する</a></p><p><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/#2-%E3%82%B3%E3%83%94%E3%83%BC%E5%85%88%E3%81%AE-SAS-%E3%82%92%E7%99%BA%E8%A1%8C%E3%81%99%E3%82%8B">[2] コピー先の SAS を発行する</a></p><p>の手順と同様です。</p><p>　</p><p>■ ご参考: Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法</p><p><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/">https://jpaztech.github.io/blog/vm/create-vm-using-vhd/</a></p></div>
+<h4 id="4-2-コピー元のVMの停止"><a href="#4-2-コピー元のVMの停止" class="headerlink" title="(4-2) コピー元のVMの停止"></a>(4-2) コピー元のVMの停止</h4><h5 id="手順D-コピー元の仮想マシンを停止します。"><a href="#手順D-コピー元の仮想マシンを停止します。" class="headerlink" title="手順D. コピー元の仮想マシンを停止します。"></a>手順D. コピー元の仮想マシンを停止します。</h5><h4 id="4-3-コピー元-URL-を準備"><a href="#4-3-コピー元-URL-を準備" class="headerlink" title="(4-3) コピー元 URL を準備"></a>(4-3) コピー元 URL を準備</h4><p>事前に VM のディスクに関してスナップショットを取得します。</p>
+<h5 id="手順E-クラシック仮想マシン-の-VHD-にてスナップショットを取得します。"><a href="#手順E-クラシック仮想マシン-の-VHD-にてスナップショットを取得します。" class="headerlink" title="手順E. クラシック仮想マシン の VHD にてスナップショットを取得します。"></a>手順E. クラシック仮想マシン の VHD にてスナップショットを取得します。</h5><ol>
+<li>Azure Portal にて、<strong>[ストレージ アカウント]</strong> - <strong>[&lt;当該 (クラシック) ストレージアカウント名&gt;]</strong> を選択し、左メニュー <strong>[Blob service]</strong> から <strong>[コンテナー]</strong> を選択します。</li>
+<li>スナップショットを作成します。<br> <strong>[vhds (コンテナー名)]</strong> - <strong>[&lt;ファイル名.vhd&gt;]</strong> の <strong>[…]</strong> をクリックし、<strong>[スナップショットの作成]</strong> をクリックします。</li>
+<li>スナップショットを表示します。<br> <strong>[vhds (コンテナー名)]</strong> - <strong>[&lt;ファイル名.vhd&gt;]</strong> の <strong>[…]</strong> をクリックし、<strong>[スナップショットの表示]</strong> をクリックします。<br> 該当スナップショットの <strong>[…]</strong> をクリックし、ダブルクリックして表示される <strong>[スナップショットのプロパティ]</strong> から URL をテキスト エディタ等にコピーしておきます。</li>
+</ol>
+<h5 id="手順F-クラシック仮想マシンで作成した-VHD-ファイルをコピーするための-SAS-を発行します。"><a href="#手順F-クラシック仮想マシンで作成した-VHD-ファイルをコピーするための-SAS-を発行します。" class="headerlink" title="手順F. クラシック仮想マシンで作成した VHD ファイルをコピーするための SAS を発行します。"></a>手順F. クラシック仮想マシンで作成した VHD ファイルをコピーするための SAS を発行します。</h5><ol>
+<li><strong>手順E-2, 3</strong> と同様に <strong>[vhds (コンテナー名)]</strong> - <strong>[&lt;ファイル名.vhd&gt;]</strong> の <strong>[…]</strong> をクリックし、<strong>[SAS の生成]</strong> をクリックします。</li>
+<li>適宜設定を行い、<strong>[SAS トークンおよび URL を生成]</strong> をクリックします。</li>
+<li><strong>[BLOB SAS トークン]</strong> をテキスト エディタ等にコピーしておきます。</li>
+</ol>
+<h5 id="手順G-コピー元の-URL-を合わせ、テキスト-エディタ等準備しておきます。"><a href="#手順G-コピー元の-URL-を合わせ、テキスト-エディタ等準備しておきます。" class="headerlink" title="手順G. コピー元の URL を合わせ、テキスト エディタ等準備しておきます。"></a>手順G. コピー元の URL を合わせ、テキスト エディタ等準備しておきます。</h5><p>スナップショットを AzCopy で複製する場合に、コピー元 URL を作成する手順は以下のようになります。</p>
 <p><img src="/blog/vm/migrate_classic_vm_and_storage/image7.png"></p>
-<p>g-1.e-3 で準備したURLを前半（VHDのパスまで）、後半（?マークから後ろ）に分けます。  </p>
+<ol>
+<li><p><strong>手順E-3</strong> で準備した URL を前半 (VHD のパスまで)、後半 (? マークから後ろ) に分けます。<br> <strong>例: 元々のスナップショットの URL が以下の場合</strong><br> <code>https://&#123;コピー元のストレージアカウント&#125;.blob.core.windows.net/vhds/&#123;ファイル名&#125;.vhd?snapshot=YYYY-MM-DDThhmm:ss.nnnnnnnZ</code></p>
+<p> <strong>前半</strong>:<br> <code>https://&#123;コピー元のストレージアカウント&#125;.blob.core.windows.net/vhds/&#123;ファイル名&#125;.vhd</code></p>
+<p> <strong>後半</strong> (? マークから後ろ):<br> <code>snapshot=YYYY-MM-DDThhmm:ss.nnnnnnnZ</code></p>
+</li>
+<li><p>（<strong>手順G-1</strong> の前半部分）＋ (?) + (SAS文字列) + (&amp;) +(<strong>手順G-1</strong> の後半部分）を連結し、以下のようなコピー元 URL を準備します。<br> <code>https://&#123;コピー元のストレージアカウント&#125;.blob.core.windows.net/vhds/&#123;ファイル名&#125;.vhd?&#123;SAS文字列&#125;&amp;snapshot=YYYY-MM-DDThh:mmss.nnnnnnnZ</code></p>
+</li>
+</ol>
+<h4 id="4-4-AzCopy-コマンドで-VHD-ファイルをコピー"><a href="#4-4-AzCopy-コマンドで-VHD-ファイルをコピー" class="headerlink" title="(4-4) AzCopy コマンドで VHD ファイルをコピー"></a>(4-4) AzCopy コマンドで VHD ファイルをコピー</h4><h5 id="手順H-作業環境に-AzCopy-コマンドをダウンロードします。"><a href="#手順H-作業環境に-AzCopy-コマンドをダウンロードします。" class="headerlink" title="手順H. 作業環境に AzCopy コマンドをダウンロードします。"></a>手順H. 作業環境に AzCopy コマンドをダウンロードします。</h5><p>Azure Cloud Shell をご利用の場合、この手順は不要です。</p>
 <blockquote>
-<p>元々のスナップショットの URL は以下とした場合の例。  </p>
-<p>https://&lt;コピー元のストレージアカウント＞.blob.core.windows.net/vhds/ファイル名.vhd ?snapshot=YYYY-MM-DDThhmm:ss.nnnnnnnZ  </p>
+<p>■ ご参考: AzCopy を使ってみる<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10</a></p>
 </blockquote>
-<blockquote>
-<p>前半：<br>https://&lt;コピー元のストレージアカウント＞.blob.core.windows.net/vhds/ファイル名.vhd  </p>
-</blockquote>
-<blockquote>
-<p>後半（?マークから後ろ）：<br>snapshot=YYYY-MM-DDThhmm:xxxxxxxxx  </p>
-</blockquote>
-<p>g-2. （g-1の前半部分）＋（?）＋（SAS文字列）+ (＆) +（g-1の後半部分）を連結し、以下のようなコピー元URLを準備します。  </p>
-<blockquote>
-<p>https://&lt;コピー元のストレージアカウント＞.blob.core.windows.net/vhds/ファイル名.vhd?＜SAS文字列＞&amp;snapshot=YYYY-MM-DDThh:mmss.nnnnnnnZ  </p>
-</blockquote>
-<h3 id="4-4-AzCopy-コマンドを準備Azcopy-で-vhd-ファイルをコピー"><a href="#4-4-AzCopy-コマンドを準備Azcopy-で-vhd-ファイルをコピー" class="headerlink" title="4-4 AzCopy コマンドを準備Azcopy で vhd ファイルをコピー"></a>4-4 AzCopy コマンドを準備Azcopy で vhd ファイルをコピー</h3><p>h.作業環境に AzCopy コマンドをダウンロードします。<br>(Cloud Shell をご利用の場合は不要です。)  </p>
-<blockquote>
-<p>■ご参考：AzCopy を使ってみる<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10</a></p>
-</blockquote>
-<p>i.以下のようにコマンドを実行し、VHD をコピーします。  </p>
-<p>azcopy copy &quot;&lt;事前準備 g で準備した URL ファイル名.vhd?SAS文字列&amp;snapshot=日時を含む文字列&gt;&quot; &quot;&lt;事前準備 c でコピーした URL? SAS&gt;&quot; --blob-type PageBlob  </p>
+<h5 id="手順I-以下のようにコマンドを実行し、VHD-をコピーします。"><a href="#手順I-以下のようにコマンドを実行し、VHD-をコピーします。" class="headerlink" title="手順I. 以下のようにコマンドを実行し、VHD をコピーします。"></a>手順I. 以下のようにコマンドを実行し、VHD をコピーします。</h5><p><code>azcopy copy &quot;&#123;手順Gで準備したURLとファイル名.vhd?SAS文字列&amp;snapshot=日時を含む文字列&#125;&quot; &quot;&#123;手順CでコピーしたURL?SAS文字列&#125;&quot; --blob-type PageBlob</code></p>
 <p><img src="/blog/vm/migrate_classic_vm_and_storage/image8.png"></p>
 <p>正常に転送が完了した場合は以下のような例の表示となります。</p>
 <p><img src="/blog/vm/migrate_classic_vm_and_storage/image9.png"></p>
-<p>これにより、ARM 環境のストレージアカウントに ASM 環境の VHD ファイルのコピーができました。  </p>
-<h3 id="4-5-vhdを元にディスクを作成、仮想マシンを作成"><a href="#4-5-vhdを元にディスクを作成、仮想マシンを作成" class="headerlink" title="4-5 vhdを元にディスクを作成、仮想マシンを作成"></a>4-5 vhdを元にディスクを作成、仮想マシンを作成</h3><p>j.ARM 環境の仮想マシンを作成します。  </p>
-<p>j-1.Azure Portal より [ディスク] を開き、[+ 追加] をクリックします。  </p>
-<p>j-2.適宜設定を行い、[確認および作成] - [作成] をクリックします。  </p>
-<p>・d-1 のストレージ アカウントと同様の &quot;リソース グループ&quot; を選択します。<br>・&quot;ソースの種類&quot; は [ストレージ BLOB] を選択します。<br>・&quot;ソース BLOB&quot; は d-1 のストレージ アカウントの vhds にコピーした VHD ファイルを選択します。<br>・&quot;OS の種類&quot; は適宜選択します。  </p>
-<p><img src="/blog/vm/migrate_classic_vm_and_storage/image10.png"></p>
-<p>j-3.Azure Portal より作成した OS ディスクを開き、[+ VM の作成] をクリックします。  </p>
-<p>j-4.適宜設定を行い、[確認および作成] - [作成] をクリックします。  </p>
-<p>k.ARM 仮想マシンに接続し、必要に応じて動作を確認します。  </p>
-<blockquote>
-<p>【ご参考】<br>j から k の手順は、当初より公開しております以下の記事にも記載がございます。<br>Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法のページにおける<br>[5] VHD ファイルから管理ディスクを作成する<br>[6] VHD ファイルから作成したディスクで VM を作成する。<br>と同様です。  </p>
-<p>■ご参考：Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法<br><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/">https://jpaztech.github.io/blog/vm/create-vm-using-vhd/</a></p>
-</blockquote>
-<p>以上の手順で、移行がスタックした際にクラシック VM から新規 の ARM の VM を手動で作成することが可能となります。<br>これらの記事の内容が皆様のお役にたてれば幸いでございます。</p>
+<p>これにより、ARM 環境のストレージアカウントに ASM 環境の VHD ファイルのコピーができました。</p>
+<h4 id="4-5-vhdを元にディスクを作成、仮想マシンを作成"><a href="#4-5-vhdを元にディスクを作成、仮想マシンを作成" class="headerlink" title="(4-5) vhdを元にディスクを作成、仮想マシンを作成"></a>(4-5) vhdを元にディスクを作成、仮想マシンを作成</h4><h5 id="手順J-ARM-環境の仮想マシンを作成します。"><a href="#手順J-ARM-環境の仮想マシンを作成します。" class="headerlink" title="手順J. ARM 環境の仮想マシンを作成します。"></a>手順J. ARM 環境の仮想マシンを作成します。</h5><ol>
+<li>Azure Portal より <strong>[ディスク]</strong> を開き、<strong>[+ 追加]</strong> をクリックします。</li>
+<li>適宜設定を行い、<strong>[確認および作成]</strong> - <strong>[作成]</strong> をクリックします。<ol>
+<li><code>ソースの種類</code> は <strong>[ストレージ BLOB]</strong> を選択します。</li>
+<li><code>ソース BLOB</code> は <strong>手順C</strong> のストレージ アカウントの <code>vhds</code> にコピーした VHD ファイルを選択します。</li>
+<li><code>OS の種類</code> は適宜選択します。<br><img src="/blog/vm/migrate_classic_vm_and_storage/image10.png"></li>
+</ol>
+</li>
+<li>Azure Portal より作成した OS ディスクを開き、<strong>[+ VM の作成]</strong> をクリックします。</li>
+<li>適宜設定を行い、<strong>[確認および作成]</strong> - <strong>[作成]</strong> をクリックします。</li>
+</ol>
+<h5 id="手順K-ARM-仮想マシンに接続し、必要に応じて動作を確認します。"><a href="#手順K-ARM-仮想マシンに接続し、必要に応じて動作を確認します。" class="headerlink" title="手順K. ARM 仮想マシンに接続し、必要に応じて動作を確認します。"></a>手順K. ARM 仮想マシンに接続し、必要に応じて動作を確認します。</h5><p>以上の手順で、移行がスタックした際にクラシック VM から新規 の ARM の VM を手動で作成することが可能となります。</p>
+<div class="alert is-success"><p class="alert-title">ヒント</p><p>J から K の手順は、当初より公開しております以下の記事にも記載がございます。</p><p>Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法のページにおける</p><p><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/#5-VHD-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8B%E3%82%89%E7%AE%A1%E7%90%86%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B">[5] VHD ファイルから管理ディスクを作成する</a></p><p><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/#6-VHD-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8B%E3%82%89%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%A7-VM-%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E3%80%82">[6] VHD ファイルから作成したディスクで VM を作成する。</a></p><p>と同様です。</p><p>　</p><p>■ ご参考: Azure VM からエクスポートした VHD ファイルを用いた複製 VM の作成方法</p><p><a href="https://jpaztech.github.io/blog/vm/create-vm-using-vhd/">https://jpaztech.github.io/blog/vm/create-vm-using-vhd/</a></p></div>
+<p>これらの記事の内容が皆様のお役にたてれば幸いでございます。</p>
 
       
       
