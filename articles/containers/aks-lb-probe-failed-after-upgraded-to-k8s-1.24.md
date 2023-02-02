@@ -86,8 +86,11 @@ default backend の `/` は HTTP 404 ステータスを返すために、正常�
 NGINX Ingress Controller の Helm Chart では、既定で Service の `spec.ports.appProtocol` を出力するように values.yaml が構成されています。 
 一方、Service のアノテーションは `annotations: {}` のように、値が空となっていいます。 
 
-> https://github.com/kubernetes/ingress-nginx/blob/f90f37bed66d343e6c57ea981d6c4e90e4955975/charts/ingress-nginx/values.yaml#L460-L468 
-> https://github.com/kubernetes/ingress-nginx/blob/f90f37bed66d343e6c57ea981d6c4e90e4955975/charts/ingress-nginx/templates/controller-service.yaml#L53-L71 
+> ご参考) Helm Chart の該当箇所
+> values.yaml
+> https://github.com/kubernetes/ingress-nginx/blob/f90f37bed66d343e6c57ea981d6c4e90e4955975/charts/ingress-nginx/values.yaml#L460-L468
+> controller-service.yaml テンプレート
+> https://github.com/kubernetes/ingress-nginx/blob/f90f37bed66d343e6c57ea981d6c4e90e4955975/charts/ingress-nginx/templates/controller-service.yaml#L53-L71
 
 そのため、Kubernetes 1.23 以前に NGINX Ingress Controller をインストールしていた場合には、Kubernetes 1.24 にアップグレードする前に、Ingress Controller の Service に対して、プローブのリクエスト パスが `/heathz` になるように、事前にアノテーションを追加しておく必要があります。 
 
