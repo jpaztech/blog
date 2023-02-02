@@ -155,8 +155,7 @@ Kubernetes 1.24 のクラスターで、正常性プローブの状態を回復�
 
 Service にアノテーションを追加し、カスタム ヘルスプローブ パスを設定することで、Kubernetes 1.23 から 1.24 へアップグレードした際にも正常性プローブが成功します。 
 
-```yaml 
-# Service にアノテーションを設定する例 
+```yaml Service にアノテーションを設定する例 
 apiVersion: v1 
 kind: Service 
 metadata: 
