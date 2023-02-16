@@ -1,6 +1,6 @@
 ---
 title: Azure マーケットプレイスのイメージの OS ディスクサイズの確認・拡張・縮小について
-date: 2023-1-10 17:30:00
+date: 2023-2-16 17:30:00
 tags:
   - VM
   - Windows
@@ -11,13 +11,13 @@ tags:
 
 こんにちは。Azure テクニカル サポート チームの富田です。  
 今回はお問い合わせいただくことの多い、Azure マーケットプレイスのイメージの OS ディスクサイズについて、  
-確認方法・拡張方法・縮小不可について解説させていただきます。  
+確認方法・拡張方法・縮小不可などの点について解説させていただきます。  
 
 ---
 ## 1.イメージの URN を把握する
 
-イメージの OS ディスクサイズを確認したり、コマンドベースでイメージを指定してデプロイを行う場合は、  
-まずはそのイメージの URN（Uniform Resource Name）を把握する必要があります。
+イメージの OS ディスクサイズを確認や、コマンドベースでイメージを指定してデプロイを行う場合は、  
+まずは当該イメージの URN（Uniform Resource Name）を把握する必要があります。
 イメージの URN は以下のような 4 つの情報の組み合わせで構成されています。  
 
  - Publisher
@@ -33,7 +33,7 @@ tags:
  - Sku : 2022-datacenter-azure-edition
  - Version : 20348.1366.221207
 
-ひとつここで注意したい点は、Azure マーケットプレイスのイメージにおける Version は、あくまでイメージの Version であって、  
+ここでひとつ注意したい点は、Azure マーケットプレイスのイメージにおける Version は、あくまでイメージの Version であって、  
 「Windows Server 2012」「Windows Server 2019」といった OS の違いは、Sku の方で定義されているということです。  
 
 同じ Windows Server 2022 Datacenter: Azure Edition でも、イメージの Version が古いものはビルド等が古いといったこととなります。  
@@ -121,7 +121,7 @@ $skuName = "SKU 名"
 Get-AzVMImage -Location $locName -PublisherName $pubName -Offer $offerName -Sku $skuName | Select PublisherName, Offer, Skus, Version
 ```
 以下が実際に実行した結果の一部です。  
-無事に Version 一覧も取得できて、Publisher, Offer, Sku, Version の組み合わせでイメージの URN が把握できました。
+無事に Version 一覧も取得でき、Publisher, Offer, Sku, Version の組み合わせでイメージの URN が把握できました。
 
 ![](./os-disk-size-of-image/2022-12-29-12-11-28.png)
 
@@ -179,7 +179,7 @@ az vm image list \
     --all --output table
 ```
 以下が実際に実行した結果の一部です。  
-無事に Version 一覧も取得できて、Publisher, Offer, Sku, Version の組み合わせでイメージの URN が把握できました。
+無事に Version 一覧も取得でき、Publisher, Offer, Sku, Version の組み合わせでイメージの URN が把握できました。
 
 ![](./os-disk-size-of-image/2022-12-29-13-43-57.png)
 
@@ -187,6 +187,7 @@ az vm image list \
 ## 2.イメージの OS ディスクサイズを確認する
 
 上述の方法でイメージ URN を把握すれば、 Azure CLI の下記コマンド使用することで、そのイメージの OS ディスクサイズを確認することが可能です。
+なお恐縮ながら Azure PowerShell では確認が叶いませんものと存じます。  
 
 ```SHELL
  az vm image show --location ＜リージョン名＞ --urn ＜パブリッシャー名＞:＜オファー名＞:＜SKU 名＞:＜バージョン番号＞
@@ -238,17 +239,20 @@ az vm create --resource-group ＜リソースグループ名＞ --name ＜VM 名
 
 > [!NOTE]
 > 既定の OS ディスクサイズより小さな値を指定することはできません。  
-> また、サードパーティ様のイメージでは OS ディスクの拡張がサポートがされない可能性もございます点、ご了承くださいませ。
+> また、サードパーティ様のイメージでは OS ディスクの拡張がサポートされない可能性もございます点、ご了承くださいませ。
 
 例としてこちらのコマンドで以下のように、300 GB の OS ディスクを持つ Windows Server がデプロイできました。
 
 ![](./os-disk-size-of-image/2022-12-29-15-07-19.png)
 
+なお恐縮ながら Azure PowerShell ではこのような VM デプロイ時の OS ディスクサイズ指定が叶いませんものと存じまため、  
+Azure PowerShell の場合はデプロイ後に OS ディスクサイズをご変更いただけますと幸いです。
+
 ---
 ## 5.OS ディスクサイズの縮小について
 
-大変恐縮ではございますが、OS ディスク・データディスク共に、  
-Azure マネージドディスクの縮小はサポートされておりませんものとなります。
+恐縮ではございますが、OS ディスク・データディスク共に、  
+現在 Azure マネージドディスクの縮小はサポートされておりませんものとなります。
 
 > ■ご参考：マネージド ディスクを縮小またはダウンサイズできますか?
 > [https://learn.microsoft.com/ja-jp/azure/virtual-machines/faq-for-disks#----------------------------](https://learn.microsoft.com/ja-jp/azure/virtual-machines/faq-for-disks#----------------------------)
@@ -256,5 +260,7 @@ Azure マネージドディスクの縮小はサポートされておりませ�
 
 そのため小さな OS ディスクが必要なときは、Windows Server の場合は先述の smalldisk を使用することや、  
 Linux の場合オンプレミス環境等で任意の VHD のサイズをご用意いただき、Azure へアップロードしてご利用いただくといったことをご検討いただけますと幸いです。
+
+上記の解説内容が、皆様のお役に立てますと幸いでございます。  
 
 
