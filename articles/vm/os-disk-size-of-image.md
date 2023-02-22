@@ -247,7 +247,7 @@ az vm create --resource-group ＜リソースグループ名＞ --name ＜VM 名
 
 ![](./os-disk-size-of-image/2022-12-29-15-07-19.png)
 
-なお恐縮ながら Azure PowerShell ではこのような VM デプロイ時の OS ディスクサイズ指定が叶いませんものと存じまため、  
+なお恐縮ながら Azure PowerShell ではこのような VM デプロイ時の OS ディスクサイズ指定が叶いませんものと存じますため、  
 Azure PowerShell の場合はデプロイ後に OS ディスクサイズをご変更いただけますと幸いです。
 
 ---
