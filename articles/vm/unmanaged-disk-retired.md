@@ -68,7 +68,7 @@ testvm01  testrg01
 testvm02  testrg02  https://sample.blob.core.windows.net/vhds/sample.vhd
 ```
 
-[Unmanageddisk] 項目に VHD ファイルの URL が表示されている仮想マシンは、マネージド ディスクを使用した仮想マシンとなります。
+[Unmanageddisk] 項目に VHD ファイルの URL が表示されている仮想マシンは、アンマネージド ディスクを使用した仮想マシンとなります。
 
 ### ▼ Azure PowerShell を使用する場合
 ```sh
@@ -80,7 +80,7 @@ testvm01            testrg01
 testvm02            testrg02            https://sample.blob.core.windows.net/vhds/sample.vhd
 ```
 
-[Unmanaged Disk] 項目に VHD ファイルの URL が表示されている仮想マシンは、マネージド ディスクを使用した仮想マシンとなります。
+[Unmanaged Disk] 項目に VHD ファイルの URL が表示されている仮想マシンは、アンマネージド ディスクを使用した仮想マシンとなります。
 
 ---
 
