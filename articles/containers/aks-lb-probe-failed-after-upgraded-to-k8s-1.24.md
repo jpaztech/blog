@@ -32,9 +32,9 @@ AKS クラスターに Type LoadBalancer の Service を作成すると、自動
 
 AKS 上で Service (Type LoadBalancer) を作成した場合には、Service オブジェクトに設定された値に基づいて、Azure Load Balancer の正常性プローブが自動的に構成されます。 
 
-正常性プローブで使用するプロトコルは、Service の `spec.portsAppProtocol` フィールドの設定値 (tcp, http, https) が使用されます。 
+正常性プローブで使用するプロトコルは、Service の `spec.ports.appProtocol` フィールドの設定値 (tcp, http, https) が使用されます。
 また、プロトコルが http/https の場合、`service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path` アノテーションで指定されたパスに対して、正常性プローブのリクエストが送信されます。 
-`spec.portsAppProtocol` が設定されていない場合は、アノテーションによるリクエスト パスの指定は無視され、tcp プロトコルを使用する正常性プローブが構成されます。 
+`spec.ports.appProtocol` が設定されていない場合は、アノテーションによるリクエスト パスの指定は無視され、tcp プロトコルを使用する正常性プローブが構成されます。
 
 Kubernetes バージョン 1.24以降では、Service のアノテーション `service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path` が設定されて**いない場合**に、正常性プローブの既定の構成が変更されました。 
 Kubernetes バージョン 1.23 以前と 1.24 以降では、次のような違いがあります。 
@@ -279,4 +279,4 @@ NetworkPolicyなどでネットワーク通信を制限している場合には�
 この記事では、AKS の Kubernetes バージョンを 1.24 にアップグレードした際に、Load Balancer Service の正常性プローブが成功しなくなる事象と、その対処方法について解説しました。 
 Kubernetes バージョンのアップグレード作業や、Load Balancer サービスへのアクセスが成功しない場合のトラブルシューティングのご参考にいただけますと幸いでございます。 
 
-本稿が少しでも皆様のご参考となれば幸いです。 
+本稿が少しでも皆様のご参考となれば幸いです。
