@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/containers/aks-lb-probe-failed-after-upgraded-to-k8s-1.24/aks-lb-probe-failed-after-upgraded-to-k8s-1.24-06.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/containers/aks-lb-probe-failed-after-upgraded-to-k8s-1.24/aks-lb-probe-failed-after-upgraded-to-k8s-1.24-07.png">
 <meta property="article:published_time" content="2023-02-02T04:00:00.000Z">
-<meta property="article:modified_time" content="2023-03-09T00:38:50.665Z">
+<meta property="article:modified_time" content="2023-03-15T06:25:31.482Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Containers">
 <meta property="article:tag" content="Azure Kubernetes Service (AKS)">
@@ -111,7 +111,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+eed15b28-dedb-57f5-a963-54f8543890a1%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAKS+1.24+%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E6%99%82%E3%81%ABAzure+Load+Balancer+%E3%81%AE%E6%AD%A3%E5%B8%B8%E6%80%A7%E3%83%97%E3%83%AD%E3%83%BC%E3%83%96%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB%E3%81%8C%E5%A4%89%E6%9B%B4%E3%81%95%E3%82%8C%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fcontainers%2Faks-lb-probe-failed-after-upgraded-to-k8s-1.24%2F%29%0A*+Content+Source%3A+%5Barticles%2Fcontainers%2Faks-lb-probe-failed-after-upgraded-to-k8s-1.24.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fcontainers%2Faks-lb-probe-failed-after-upgraded-to-k8s-1.24.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/containers/aks-lb-probe-failed-after-upgraded-to-k8s-1.24/" data-id="clf0dsaxd00ft0nljcfwc9a7h" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/containers/aks-lb-probe-failed-after-upgraded-to-k8s-1.24/" data-id="clf9at9r600ft0npr6czn7z4j" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -127,7 +127,7 @@
 <p>ご参考) Azure Load Balancer の正常性プローブ<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-custom-probe-overview">https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-custom-probe-overview</a> </p>
 </blockquote>
 <h2 id="Service-Type-LoadBalancer-に設定される正常性プローブ"><a href="#Service-Type-LoadBalancer-に設定される正常性プローブ" class="headerlink" title="Service (Type LoadBalancer) に設定される正常性プローブ"></a>Service (Type LoadBalancer) に設定される正常性プローブ</h2><p>AKS 上で Service (Type LoadBalancer) を作成した場合には、Service オブジェクトに設定された値に基づいて、Azure Load Balancer の正常性プローブが自動的に構成されます。 </p>
-<p>正常性プローブで使用するプロトコルは、Service の <code>spec.portsAppProtocol</code> フィールドの設定値 (tcp, http, https) が使用されます。<br>また、プロトコルが http/https の場合、<code>service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path</code> アノテーションで指定されたパスに対して、正常性プローブのリクエストが送信されます。<br><code>spec.portsAppProtocol</code> が設定されていない場合は、アノテーションによるリクエスト パスの指定は無視され、tcp プロトコルを使用する正常性プローブが構成されます。 </p>
+<p>正常性プローブで使用するプロトコルは、Service の <code>spec.ports.appProtocol</code> フィールドの設定値 (tcp, http, https) が使用されます。<br>また、プロトコルが http/https の場合、<code>service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path</code> アノテーションで指定されたパスに対して、正常性プローブのリクエストが送信されます。<br><code>spec.ports.appProtocol</code> が設定されていない場合は、アノテーションによるリクエスト パスの指定は無視され、tcp プロトコルを使用する正常性プローブが構成されます。</p>
 <p>Kubernetes バージョン 1.24以降では、Service のアノテーション <code>service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path</code> が設定されて<strong>いない場合</strong>に、正常性プローブの既定の構成が変更されました。<br>Kubernetes バージョン 1.23 以前と 1.24 以降では、次のような違いがあります。 </p>
 <ul>
 <li>Kubernetes バージョン &lt;= 1.23 の場合 <ul>
@@ -204,7 +204,7 @@
 <p>また、Azure Portal の画面では、Load Balancerのメトリックで、正常性プローブの状態を確認できます。<br><code>Health Probe Status</code> メトリックの値から、過去の正常性プローブの状態を確認できますので、事象の発生や解消のタイミングを確認する際にご活用ください。 </p>
 <p><img src="/blog/containers/aks-lb-probe-failed-after-upgraded-to-k8s-1.24/aks-lb-probe-failed-after-upgraded-to-k8s-1.24-07.png"></p>
 <h2 id="さいごに"><a href="#さいごに" class="headerlink" title="さいごに"></a>さいごに</h2><p>この記事では、AKS の Kubernetes バージョンを 1.24 にアップグレードした際に、Load Balancer Service の正常性プローブが成功しなくなる事象と、その対処方法について解説しました。<br>Kubernetes バージョンのアップグレード作業や、Load Balancer サービスへのアクセスが成功しない場合のトラブルシューティングのご参考にいただけますと幸いでございます。 </p>
-<p>本稿が少しでも皆様のご参考となれば幸いです。 </p>
+<p>本稿が少しでも皆様のご参考となれば幸いです。</p>
 
       
       
