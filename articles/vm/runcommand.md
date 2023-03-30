@@ -1,6 +1,6 @@
 ---
 title: Azure から OS にコマンドを発行する実行コマンド (RunCommand) 拡張機能について解説
-date: 2023-3-20 13:00:00
+date: 2023-3-30 13:00:00
 tags:
   - VM
   - Windows
@@ -71,18 +71,30 @@ Windows または Linux の Azure VM 内でコマンドやスクリプトをリ�
 ## 実行コマンドをデプロイする
 ### 仮想マシンで実行する
 
-マネージド実行コマンドとアクション実行コマンドでは、Azure CLI/PowerShell のコマンドに違いがあり、
+マネージド実行コマンドとアクション実行コマンドでは、Azure PowerShell/CLI のコマンドに違いがあり、
 それぞれのコマンドをご利用いただくことで使い分けることができます。
 仮想マシンで実行コマンドを利用する際のコマンドについては、こちらの比較表をご参照ください。
 
+#### Azure PowerShell
+
 | 操作 | アクション実行コマンド | マネージド実行コマンド |
 | :---- | :---- | :---- |
-| 実行<br>作成・更新 ※1 | az vm run-command **invoke**<br>**Invoke**-AzVMRunCommand　| az vm run-command **create**<br>**Set**-AzVMRunCommand |
-| 削除 | az vm run-command **invoke**<br>**Invoke**-AzVMRunCommand | az vm run-command **delete**<br>**Remove**-AzVMRunCommand |
-| 一覧表示 ※1 | - | az vm run-command **list**<br>**Get**-AzVMRunCommand |
-| 実行状態と結果の取得 ※1 | - | az vm run-command **show**<br>**Get**-AzVMRunCommand |
+| 実行<br>作成・更新 ※1 | [**Invoke**-AzVMRunCommand](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command#powershell) ※2　| [**Set**-AzVMRunCommand](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#execute-a-script-with-the-vm-1)  |
+| 削除 | [**Invoke**-AzVMRunCommand](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command#action-run-command-removal) ※2 | [**Remove**-AzVMRunCommand](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#delete-runcommand-resource-from-the-vm-1) |
+| 一覧表示 ※1 | - | [**Get**-AzVMRunCommand](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#list-all-deployed-runcommand-resources-on-a-vm-1) ※2 |
+| 実行状態と結果の取得 ※1 | - | [**Get**-AzVMRunCommand](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#get-execution-status-and-results-1) ※2 |
+
+#### Azure CLI
+
+| 操作 | アクション実行コマンド | マネージド実行コマンド |
+| :---- | :---- | :---- |
+| 実行<br>作成・更新 ※1 | [az vm run-command **invoke**](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command#azure-cli) ※2 | [az vm run-command **create**](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#execute-a-script-with-the-vm)<br>[az vm run-command **update**](https://learn.microsoft.com/ja-jp/cli/azure/vm/run-command?view=azure-cli-latest#az-vm-run-command-update) |
+| 削除 | [az vm run-command **invoke**](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command#action-run-command-removal) ※2 | [az vm run-command **delete**](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#delete-runcommand-resource-from-the-vm) |
+| 一覧表示 ※1 | - | [az vm run-command **list**](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#list-all-deployed-runcommand-resources-on-a-vm) |
+| 実行状態と結果の取得 ※1 | - | [az vm run-command **show**](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#get-execution-status-and-results) |
 
 ※1 : マネージド実行コマンドのみで実行可能な操作です。
+※2 : パラメータで操作を使い分けます。詳細につきましては、リンク先の公開ドキュメントをご確認ください。
 
 アクション実行コマンドで、仮想マシン上でカスタム スクリプトを実行する際のコマンド例は、以下のとおりとなります。
 
@@ -122,16 +134,28 @@ Set-AzVMRunCommand `
 ## 仮想マシン スケール セット (VMSS) で実行する
 実行コマンドは、仮想マシン スケール セット (VMSS) で利用することができます。
 仮想マシンで実行する場合と同様に、アクション実行コマンドとマネージド実行コマンドで、
-Azure CLI/PowerShell のコマンドに違いがあります。こちらの比較表をご参照ください。
+Azure PowerShell/CLI のコマンドに違いがあります。こちらの比較表をご参照ください。
+
+#### Azure PowerShell
 
 | 操作 | アクション実行コマンド | マネージド実行コマンド |
 | :---- | :---- | :---- |
-| 実行<br>作成・更新 ※1<br>追加 ※1 | az vmss run-command **invoke**<br>**Invoke**-AzVmssVMRunCommand<br>&emsp;　| az vmss run-command **create**<br>**Set**-AzVmssVMRunCommand<br>**Add**-AzVmssRunCommand |
-| 削除 | az vmss run-command **invoke**<br>**Invoke**-AzVmssVMRunCommand<br>&emsp; | az vmss run-command **delete**<br>**Remove**-AzVmssVMRunCommand<br>**Remove**-AzVmssRunCommand |
-| 一覧表示 ※1 | - | az vmss run-command **list**<br>**Get**-AzVmssVMRunCommand |
-| 実行状態と結果の取得 ※1 | - | az vmss run-command **show**<br>**Get**-AzVmssVMRunCommand |
+| 実行<br>作成・更新・追加 ※1 | [**Invoke**-AzVmssVMRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/invoke-azvmssvmruncommand) ※2　| [**Set**-AzVmssVMRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/set-azvmssvmruncommand)<br>[**Add**-AzVmssRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/add-azvmssruncommand) |
+| 削除 | [**Invoke**-AzVmssVMRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/invoke-azvmssvmruncommand) ※2 | [**Remove**-AzVmssVMRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/remove-azvmssvmruncommand)<br>[**Remove**-AzVmssRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/remove-azvmssruncommand) |
+| 一覧表示 ※1 | - | [**Get**-AzVmssVMRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/get-azvmssvmruncommand) ※2 |
+| 実行状態と結果の取得 ※1 | - | [**Get**-AzVmssVMRunCommand](https://learn.microsoft.com/ja-jp/powershell/module/az.compute/get-azvmssvmruncommand) ※2 |
+
+#### Azure CLI
+
+| 操作 | アクション実行コマンド | マネージド実行コマンド |
+| :---- | :---- | :---- |
+| 実行<br>作成・更新 ※1 | [az vmss run-command **invoke**](https://learn.microsoft.com/ja-jp/cli/azure/vmss/run-command?view=azure-cli-latest#az-vmss-run-command-invoke) ※2 | [az vmss run-command **create**](https://learn.microsoft.com/ja-jp/cli/azure/vmss/run-command?view=azure-cli-latest#az-vmss-run-command-create)<br>[az vmss run-command **update**](https://learn.microsoft.com/ja-jp/cli/azure/vmss/run-command?view=azure-cli-latest#az-vmss-run-command-update) |
+| 削除 | [az vmss run-command **invoke**](https://learn.microsoft.com/ja-jp/cli/azure/vmss/run-command?view=azure-cli-latest#az-vmss-run-command-invoke) ※2 | [az vmss run-command **delete**](https://learn.microsoft.com/ja-jp/cli/azure/vmss/run-command?view=azure-cli-latest#az-vmss-run-command-delete) |
+| 一覧表示 ※1 | - | [az vmss run-command **list**](https://learn.microsoft.com/ja-jp/cli/azure/vmss/run-command?view=azure-cli-latest#az-vmss-run-command-list) |
+| 実行状態と結果の取得 ※1 | - | [az vmss run-command **show**](https://learn.microsoft.com/ja-jp/cli/azure/vmss/run-command?view=azure-cli-latest#az-vmss-run-command-show) |
 
 ※1 : マネージド実行コマンドのみで実行可能な操作です。
+※2 : パラメータで操作を使い分けます。詳細につきましては、リンク先の公開ドキュメントをご確認ください。
 
 アクション実行コマンドで、VMSS 内の仮想マシン (インスタンス ID が `0` ) 上で、
 カスタム スクリプトを実行する際のコマンド例は、以下のとおりとなります。
@@ -255,6 +279,9 @@ Set-AzVMRunCommand `
   -RunAsUser <実行ユーザ名> `
   -RunAsPassword <実行ユーザのパスワード>
 ``` 
+
+> ***RunAsUser および RunAsPassword パラメーターを使用して別のユーザーとして VM で実行コマンドを作成または更新する***
+> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#create-or-update-run-command-on-a-vm-as-a-different-user-using-runasuser-and-runaspassword-parameters](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/run-command-managed#create-or-update-run-command-on-a-vm-as-a-different-user-using-runasuser-and-runaspassword-parameters)
 
 ---
 ## 複数の仮想マシンでスクリプトを実行する
