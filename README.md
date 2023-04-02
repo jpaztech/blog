@@ -61,6 +61,7 @@
 
 ## Network
 
+- [Firewall からインターネットに SNAT して通信する時のパブリック IP の使われ方](./articles/network/fw-snat.md)
 - [Azure Firewall の各ルールの動作について](./articles/network/firewall-rules.md)
 - [強制トンネリング利用時の VPN ゲートウェイの動作変更についてのアナウンス](./articles/network/tsg-azure-load-balancer-scoping.md)
 - [ExpressRoute の エッジ ルーターのメンテナンスに関して](./articles/network/expressroute-maintenance.md)
