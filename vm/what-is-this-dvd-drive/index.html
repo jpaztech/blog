@@ -15,7 +15,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/what-is-this-dvd-drive/what-is-this-dvd-drive.png">
 <meta property="article:published_time" content="2022-08-19T06:00:00.000Z">
-<meta property="article:modified_time" content="2023-03-27T05:10:01.299Z">
+<meta property="article:modified_time" content="2023-04-11T02:04:11.816Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Windows">
 <meta property="article:tag" content="VM">
@@ -106,7 +106,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7c23ff54-c3fa-5892-9419-b6c782c1c437%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E4%B8%8A%E3%81%A7%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%81%97%E3%81%9F+Windows+%E3%81%AE+VM+%E3%81%AB+DVD+%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E3%81%8C%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fwhat-is-this-dvd-drive%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fwhat-is-this-dvd-drive.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fwhat-is-this-dvd-drive.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/what-is-this-dvd-drive/" data-id="clfqdecxq005g0nn39qghebdu" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/what-is-this-dvd-drive/" data-id="clgbmd7ua005g0npm8y6ngews" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -114,7 +114,7 @@
         <p>こんにちは、Azure テクニカル サポート チームの富田です。<br><strong>Azure 上でデプロイした Windows の VM に D ドライブ や E ドライブとして CD / DVD ドライブが表示される</strong><br>というお問い合わせをいただくことがあるため、これについて解説させていただきます。  </p>
 <p><img src="/blog/vm/what-is-this-dvd-drive/what-is-this-dvd-drive.png"> </p>
 <p>結論から申し上げますと、 <strong>これは仮想マシン作成後の予期された動作であり、VM を割り当て解除することで消えます。</strong><br>以下に解説させていただきます。  </p>
-<p>Azure の Marketplace から Windows の仮想マシンを作成した場合、初回起動の際に DVD ドライブ がマウントされる動作となります。<br>一時ディスクの無い VM サイズの場合は D ドライブに、<br>一時ディスクのある VM サイズの場合は E ドライブとして規定でマウントされると存じます。  </p>
+<p>Azure の Marketplace から Windows の仮想マシンを作成した場合、初回起動の際に DVD ドライブ がマウントされる動作となります。<br>一時ディスクの無い VM サイズの場合は D ドライブに、<br>一時ディスクのある VM サイズの場合は E ドライブとして既定でマウントされると存じます。  </p>
 <p>このドライブは、Windows 環境をデプロイする際にセットアップに必要な情報を読み込むためにマウントされますが、<br>お客様が仮想マシンを停止 (割り当て解除) された場合や、Azure 側のメンテナンスなどに伴ってホスト サーバーの変更が発生した際に切断されます。  </p>
 <p>仮想マシンの停止 (割り当て解除) / 起動または再デプロイ、仮想マシンのサイズ変更などにより、仮想マシンへのリソースの割り当てを<br>一度解除いただくことで、次回起動時からはこの DVD ドライブ はマウントされません。  </p>
 <p>なお、再起動や OS からのシャットダウンの場合は、仮想マシンへのリソースの割り当て解除が行われません。<br>そのため、Azure Portal 等より仮想マシンの停止 (割り当て解除) や再デプロイ等を行うようにお願いいたします。</p>
