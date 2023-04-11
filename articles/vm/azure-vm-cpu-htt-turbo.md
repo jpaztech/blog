@@ -1,6 +1,6 @@
 ---
 title: Azure VM の CPU コア数 / CPU の種類 / ターボブーストについての解説
-date: 2023-3-30 17:30:00
+date: 2023-4-11 17:30:00
 tags:
   - VM
   - Windows
