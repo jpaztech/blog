@@ -1,6 +1,6 @@
 ---
 title: Firewall からインターネットに SNAT して通信する時のパブリック IP の使われ方
-date: 2023-04-02 14:30:00 
+date: 2023-04-16 14:30:00 
 tags:
   - Network
   - Azure Firewall
