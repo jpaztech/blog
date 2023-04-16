@@ -4,20 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>Azure KMS の IP アドレスが変わります | Japan Azure IaaS Core Support Blog</title>
+  <title>Firewall からインターネットに SNAT して通信する時のパブリック IP の使われ方 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの鳥越です。 近日中に新しい Azure KMS の IP アドレスがリリースされる予定となっております。そこで本記事では、Azure KMS の IP アドレスに関する下記の資料の補足をご紹介します。">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの薄井です。今回は Azure Firewall に関連付けたパブリック IP の SNAT 時の使われ方について紹介します。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure KMS の IP アドレスが変わります">
-<meta property="og:url" content="https://jpaztech.github.io/blog/vm/azure-kms-update/index.html">
+<meta property="og:title" content="Firewall からインターネットに SNAT して通信する時のパブリック IP の使われ方">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/fw-snat/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの鳥越です。 近日中に新しい Azure KMS の IP アドレスがリリースされる予定となっております。そこで本記事では、Azure KMS の IP アドレスに関する下記の資料の補足をご紹介します。">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの薄井です。今回は Azure Firewall に関連付けたパブリック IP の SNAT 時の使われ方について紹介します。">
 <meta property="og:locale" content="ja_JP">
-<meta property="article:published_time" content="2022-09-20T02:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-16T07:30:24.641Z">
+<meta property="article:published_time" content="2023-04-02T05:30:00.000Z">
+<meta property="article:modified_time" content="2023-04-16T07:30:24.565Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Windows">
-<meta property="article:tag" content="VM">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="Azure Firewall">
+<meta property="article:tag" content="NAT Gateway">
+<meta property="article:tag" content="Public IP Address">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
@@ -80,7 +82,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-vm/azure-kms-update" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-network/fw-snat" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -89,7 +91,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure KMS の IP アドレスが変わります
+      Firewall からインターネットに SNAT して通信する時のパブリック IP の使われ方
     </h1>
   
 
@@ -97,68 +99,68 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2022-09-20T02:00:00.000Z" itemprop="datePublished">2022-09-20</time>
+  <time datetime="2023-04-02T05:30:00.000Z" itemprop="datePublished">2023-04-02</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+67379a39-3e10-5bee-a26d-28ee59135dc3%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+KMS+%E3%81%AE+IP+%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8A%E3%81%BE%E3%81%99%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fazure-kms-update%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fazure-kms-update.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fazure-kms-update.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7c81329b-24ed-5df1-940f-5a5d7726d1f5%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BFirewall+%E3%81%8B%E3%82%89%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88%E3%81%AB+SNAT+%E3%81%97%E3%81%A6%E9%80%9A%E4%BF%A1%E3%81%99%E3%82%8B%E6%99%82%E3%81%AE%E3%83%91%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF+IP+%E3%81%AE%E4%BD%BF%E3%82%8F%E3%82%8C%E6%96%B9%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Ffw-snat%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Ffw-snat.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Ffw-snat.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/azure-kms-update/" data-id="clgj37y2f003b0npg0yhzezm5" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/fw-snat/" data-id="clgj37y1z002c0npg7s2j035m" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは。Azure テクニカル サポート チームの鳥越です。</p>
-<p>近日中に新しい Azure KMS の IP アドレスがリリースされる予定となっております。<br>そこで本記事では、Azure KMS の IP アドレスに関する下記の資料の補足をご紹介します。</p>
+        <p>こんにちは、Azure テクニカル サポート チームの薄井です。<br>今回は Azure Firewall に関連付けたパブリック IP の SNAT 時の使われ方について紹介します。</p>
 <span id="more"></span>
-<p>なお、下記ブログ記事も合わせてご参考いただけますと幸いです。</p>
+
+<h2 id="Azure-Firewall-のパブリック-IP-による-SNAT-について"><a href="#Azure-Firewall-のパブリック-IP-による-SNAT-について" class="headerlink" title="Azure Firewall のパブリック IP による SNAT について"></a>Azure Firewall のパブリック IP による SNAT について</h2><p>Azure Firewall を経由してインターネット宛に通信するときは、関連付けられているパブリック IP へ送信元のアドレス変換（SNAT）が行われます。パブリック IP が 1 つしかない時はそのパブリック IP のアドレスしか使用されませんが、複数のパブリック IP アドレスが Azure Firewall に関連付けられている場合の動作について、以下のドキュメントではランダムに選択する旨の記載がございます。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/deploy-multi-public-ip-powershell">Azure PowerShell を使用して複数のパブリック IP アドレスを使用する Azure Firewall をデプロイする</a></p>
 <blockquote>
-<p>ご参考) Azure Windows Virtual Machine Activation: two new KMS IP addresses (…and why you should care)<br><a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/azure-compute-blog/azure-windows-virtual-machine-activation-two-new-kms-ip/ba-p/3621189">https://techcommunity.microsoft.com/t5/azure-compute-blog/azure-windows-virtual-machine-activation-two-new-kms-ip/ba-p/3621189</a><br>ご参考) Generally available: New KMS DNS in Azure Global Cloud<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/updates/new-kms-dns-in-azure-global-cloud/">https://azure.microsoft.com/en-us/updates/new-kms-dns-in-azure-global-cloud/</a></p>
+<p>SNAT -送信 SNAT 接続に追加のポートを使用できるので、SNAT ポートが不足する可能性が低減されます。 現時点では、Azure Firewall は、<em><strong>接続に使用する送信元パブリック IP アドレスをランダムに選択します。</strong></em> ネットワークにダウンストリーム フィルターがある場合、ファイアウォールに関連付けられているすべてのパブリック IP アドレスを許可する必要があります。 この構成を簡略化するには、パブリック IP アドレス プレフィックスを使用することを検討してください。</p>
 </blockquote>
+<p>この記載は通信ごとにランダムにパブリック IP が使用される、つまり確率的に関連付けられている全てのパブリック IP が均等に使用されるかのように読み取れますが、<strong>実際のパブリック IP の使われ方は、基本的にプライマリのパブリック IP から使用されることが多く、そのパブリック IP のSNAT ポート数を使い切るまで他のパブリック IP は使用されません。</strong></p>
+<p>通信先への送信元 IP アドレスを分散させたい場合には NAT ゲートウェイが必要となります。</p>
+<h2 id="NAT-ゲートウェイ-による-SNAT-について"><a href="#NAT-ゲートウェイ-による-SNAT-について" class="headerlink" title="NAT ゲートウェイ による SNAT について"></a>NAT ゲートウェイ による SNAT について</h2><p>Azure Firewall Subnet に NAT ゲートウェイを関連付けることにより、Azure Firewall のパブリック IP ではなく、NAT ゲートウェイで SNAT を行うことができるようになります。NAT ゲートウェイによる SNAT では関連付けられているパブリック IP がランダムかつほぼ均等に使用されます。<br>注意点として、NAT ゲートウェイはゾーン冗長をサポートしていないため、利用する場合は Azure Firewall をゾーン冗長しないようにデプロイする必要があります。<br>Azure Firewall と NAT ゲートウェイを組み合わせて使用する方法については以下のドキュメントをご参照ください。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/integrate-with-nat-gateway">Azure Virtual Network NAT を使用した SNAT ポートのスケーリング | Microsoft Learn</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/nat-gateway/tutorial-hub-spoke-nat-firewall">チュートリアル： ハブ アンド スポーク ネットワークで NAT ゲートウェイと Azure Firewall を統合する - Azure Virtual Network NAT | Microsoft Learn</a></p>
+<h2 id="Azure-Firewall-と-NAT-Gateway-の比較表"><a href="#Azure-Firewall-と-NAT-Gateway-の比較表" class="headerlink" title="Azure Firewall と NAT Gateway の比較表"></a>Azure Firewall と NAT Gateway の比較表</h2><p>以下の表は Azure Firewall のパブリック IP による SNAT と NAT Gateway の機能比較表です。</p>
+<table>
+<thead>
+<tr>
+<th align="left">機能</th>
+<th align="center">Firewall のパブリック IP</th>
+<th align="center">NAT ゲートウェイ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SNAT ポート数（パブリック IP 1 つにつき）</td>
+<td align="center">2,496 * FW 内部インスタンス数 ※1</td>
+<td align="center">64,512</td>
+</tr>
+<tr>
+<td align="left">関連付けられる パブリック IP の数</td>
+<td align="center">250</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="left">パブリック IP が使用される順番</td>
+<td align="center">基本的にプライマリから使用され、ポートが枯渇すると次が使用される</td>
+<td align="center">ランダムかつほぼ均等に使用される</td>
+</tr>
+<tr>
+<td align="left">ゾーン冗長のサポート</td>
+<td align="center">○</td>
+<td align="center">×</td>
+</tr>
+<tr>
+<td align="left">価格</td>
+<td align="center">FW と FW のパブリック IP の価格</td>
+<td align="center">FW と FW のパブリック IP, NAT ゲートウェイと NAT ゲートウェイ のパブリック IP の価格</td>
+</tr>
+</tbody></table>
+<p>※1 Azure Firewall の内部インスタンス数は最低 2 となり、負荷に応じてスケールアウトします。</p>
+<p>以上、ご参考になれば幸いです。</p>
 <hr>
-<h2 id="〇-何が起こりますか"><a href="#〇-何が起こりますか" class="headerlink" title="〇 何が起こりますか?"></a>〇 何が起こりますか?</h2><p>2022 年 7 月に新しい Azure KMS の IP アドレスとして、20.118.99.224 と 40.83.235.53 の 2 つの新しい KMS IP アドレスを発表しました。</p>
-<p>Azure グローバル クラウドの KMS サーバーの最初の DNS 名は azkms.core.windows.net で　20.118.99.224 および 40.83.235.53 を指し示します。<br>Azure グローバル クラウドの KMS サーバーの 2 番目の DNS 名は kms.core.windows.net で、IP アドレスは 23.102.135.246 です。</p>
-<p>つまり、カスタム ルート構成を行っている環境では、Azure グローバル クラウドの 3 つの IP アドレスすべてをカスタム ルートに追加する必要があります。</p>
-<hr>
-<h2 id="〇-どのような影響がありますか"><a href="#〇-どのような影響がありますか" class="headerlink" title="〇 どのような影響がありますか?"></a>〇 どのような影響がありますか?</h2><p>ほとんどの仮想マシンについて影響はないと考えられますが、旧来の Azure KMS の IPアドレス(23.102.135.246) を UDR などで登録している、または、kms.core.windows.net に対する URL アクセスを限定している環境については、azkms のエンドポイントを追加いただく必要がございます。</p>
-<p>追加されない場合、仮想マシンは Azure KMS サーバーにアクセスできないため、以下のようなエラーメッセージが記録されます。</p>
-<blockquote>
-<p>「エラー: 0xC004F074 ソフトウェア ライセンス サービスで、コンピューターのライセンス認証ができなかったことが報告されました。キー管理サービス (KMS) に接続できませんでした。詳細については、アプリケーション イベント ログを参照してください。」</p>
-</blockquote>
-<p>動作影響に関して、認証に失敗した場合のライセンスの猶予期間は 180 日間です。<br>つまり、お客様の構成の関係で、新しい azkms エンドポイントにアクセスできなかった場合、前回のアクセス認証から 180 日間の猶予がありますので、慌てて対策を行う必要はありません。</p>
-<p>また、実際のライセンス切れが発生した場合には、通知モード (ライセンス認証切れ状態) となりますが、こちらは仮想マシンの稼働に大きな影響 (強制シャットダウン、ログオン不可、サーバー / クライアント機能の使用制限など) を与えるものではありません。<br>なお、通知モードは、再度 KMS 認証を行い成功した際に解除されます。</p>
-<p>そのため、今回の通知からの変更で間に合わなかった場合には、180 日間の猶予において対策を実施いただけますと幸いです。</p>
-<blockquote>
-<p>ご参考) Windows ライセンス認証が期限切れになるとどうなりますか?<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-activation-problems#what-happens-if-windows-activation-period-expires">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-activation-problems#what-happens-if-windows-activation-period-expires</a></p>
-</blockquote>
-<hr>
-<h2 id="〇-どのような対応が必要ですか"><a href="#〇-どのような対応が必要ですか" class="headerlink" title="〇 どのような対応が必要ですか?"></a>〇 どのような対応が必要ですか?</h2><p>以下のお客様については、新しい Azure KMS エンドポイントへのアクセス許可を追加いただくようお願いいたします。</p>
-<p><strong>対象の構成</strong></p>
-<blockquote>
-<ul>
-<li>UDR にて旧来の Azure KMS の IP アドレス (23.102.135.246) を指定している</li>
-<li>エンドポイントを kms.core.windows.net のみに限定している</li>
-</ul>
-</blockquote>
-<p><strong>必要な対応</strong><br>新しい KMS エンドポイントへのアクセス許可を追加</p>
-<blockquote>
-<ul>
-<li>エンドポイント : azkms.core.windows.net</li>
-<li>新しいKMS IP アドレス : 20.118.99.224 と 40.83.235.53</li>
-</ul>
-</blockquote>
-<hr>
-<h2 id="〇-新しい-Azure-KMS-エンドポイントへの接続確認方法"><a href="#〇-新しい-Azure-KMS-エンドポイントへの接続確認方法" class="headerlink" title="〇 新しい Azure KMS エンドポイントへの接続確認方法"></a>〇 新しい Azure KMS エンドポイントへの接続確認方法</h2><p>以下のコマンドを実施し、疎通に問題がないかご確認お願いいたします。</p>
-<ol>
-<li>PowerShell を開く</li>
-<li>次のコマンドを実施する<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test-netconnection</span> azkms.core.windows.net <span class="literal">-port</span> <span class="number">1688</span> </span><br><span class="line"><span class="built_in">test-netconnection</span> <span class="number">20.118</span>.<span class="number">99.224</span> <span class="literal">-port</span> <span class="number">1688</span> </span><br><span class="line"><span class="built_in">test-netconnection</span> <span class="number">40.83</span>.<span class="number">235.53</span> <span class="literal">-port</span> <span class="number">1688</span> </span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>接続が可能であれば特に対処は必要ありません。<br>接続が失敗した場合には、前項の「どのような対応が必要ですか?」をご確認いただき、設定変更をお願いいたします。</p>
-<hr>
-<h2 id="〇-補足事項"><a href="#〇-補足事項" class="headerlink" title="〇 補足事項"></a>〇 補足事項</h2><p>今回の変更ですが、今後多くのお客様が Azure を利用していく上で、Azure KMS サーバーを増強し、負荷上昇による認証失敗を解消するための措置となります。<br>今後も弊社 Azure インフラストラクチャの安定した稼働に努めてまいりますので、お手数をおかけしますが、作業についてご理解給われますと幸いです。</p>
-<br>
-ご紹介は以上となります。
-上記情報がお役に立てれば幸いです。
 
       
       
@@ -172,10 +174,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/azure-kms-update.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/fw-snat.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -183,19 +185,19 @@
     
 <nav id="article-nav">
   
-    <a href="../how-to-rename-vm/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="../../vm/azure-vm-cpu-htt-turbo/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">次の記事</strong>
       <div class="article-nav-title">
         
-          Azureで仮想マシン名を変更する
+          Azure VM の CPU コア数 / CPU の種類 / ターボブーストについての解説
         
       </div>
     </a>
   
   
-    <a href="../copy-vm-with-storage-explorer/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../vm/runcommand/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">Azure Storage Explorer を用いて、コマンド無しで VM を別のリージョン・サブスクリプション・テナントに移動/複製をしてみよう</div>
+      <div class="article-nav-title">Azure から OS にコマンドを発行する実行コマンド (RunCommand) 拡張機能について解説</div>
     </a>
   
 </nav>
@@ -214,19 +216,19 @@
       <ul>
         
           <li>
-            <a href="../azure-vm-cpu-htt-turbo/">Azure VM の CPU コア数 / CPU の種類 / ターボブーストについての解説</a>
+            <a href="../../vm/azure-vm-cpu-htt-turbo/">Azure VM の CPU コア数 / CPU の種類 / ターボブーストについての解説</a>
           </li>
         
           <li>
-            <a href="../../network/fw-snat/">Firewall からインターネットに SNAT して通信する時のパブリック IP の使われ方</a>
+            <a href="">Firewall からインターネットに SNAT して通信する時のパブリック IP の使われ方</a>
           </li>
         
           <li>
-            <a href="../runcommand/">Azure から OS にコマンドを発行する実行コマンド (RunCommand) 拡張機能について解説</a>
+            <a href="../../vm/runcommand/">Azure から OS にコマンドを発行する実行コマンド (RunCommand) 拡張機能について解説</a>
           </li>
         
           <li>
-            <a href="../os-disk-size-of-image/">Azure マーケットプレイスのイメージの OS ディスクサイズの確認・拡張・縮小について</a>
+            <a href="../../vm/os-disk-size-of-image/">Azure マーケットプレイスのイメージの OS ディスクサイズの確認・拡張・縮小について</a>
           </li>
         
           <li>
