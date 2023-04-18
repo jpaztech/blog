@@ -87,9 +87,6 @@
 - [Application Gateway の証明書関連のトラブルシューティング](./articles/network/appgw-troubleshooting-cert.md)
 - [Application Gateway でサブネットを変更する方法](./articles/network/appgw_change_subnet.md)
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
-- [ExpressRoute 回線のピアリングの情報が表示されない](./articles/network/expressroute-peering-information-not-displaying.md)
-- [Azure 上にメールサーバー/SMTP サーバーを構築する場合の注意事項](./articles/network/smtp-on-azurevm.md)
-- [Azure VM からのメール送信に関するアナウンス (2017 年 11 月)](./articles/network/smtp-block-announcement-november-2017.md)
 
 ## Containers
 
@@ -131,3 +128,6 @@
 - [Azure Automation： Runbook Webhook を使って仮想マシンの自動垂直スケール（スケールアップ / ダウン）](./articles/archive/automation-runbook-webhook.md)
 - [Azure Automation で VM を自動停止する](./articles/archive/automation-vm-auto-deallocate.md)
 - [Azure Load Balancer で IP フラグメンテーションは未サポート](./articles/archive/azure-load-balancer-ip-fragmentation.md)
+- [ExpressRoute 回線のピアリングの情報が表示されない](./articles/archive/expressroute-peering-info-portalissue.md)
+- [Azure 上にメールサーバー/SMTP サーバーを構築する場合の注意事項](./articles/archive/smtp-on-azurevm.md)
+- [Azure VM からのメール送信に関するアナウンス (2017 年 11 月)](./articles/archive/smtp-block-announcement-november-2017.md)

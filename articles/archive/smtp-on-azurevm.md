@@ -2,10 +2,10 @@
 title: "Azure 上にメールサーバー/SMTP サーバーを構築する場合の注意事項"
 date: 2016-06-09 10:58:26
 tags:
+  - Archive
   - Network
   - SMTP
   - Public IP Address
-  - Archive
 ---
 
 > [!WARNING]
