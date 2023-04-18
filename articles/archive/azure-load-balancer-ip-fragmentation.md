@@ -3,6 +3,7 @@ title: Azure Load Balancer で IP フラグメンテーションは未サポー�
 date: 2018-11-08 20:34:27
 tags:
   - Archive
+  - Network
   - Load Balancer
   - IP Fragmentation
 ---

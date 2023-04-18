@@ -2,6 +2,7 @@
 title: ExpressRoute 回線のピアリングの情報が表示されない
 date: 2017-06-09 06:36
 tags:
+  - Archive
   - Network
   - ExpressRoute
 ---
@@ -20,7 +21,7 @@ ExpressRoute 回線のピアリングに関する情報 (ルート テーブル�
 
 #### ポータルを利用する場合
 ポータル (https://portal.azure.com) 上から ExpressRoute の構成を開き、ExpressRouteの構成情報の画面にある [最新の情報に更新] をクリックします。
-![](./expressroute-peering-information-not-displaying/expressroute-peering-information-not-displaying-1.png)
+![](./expressroute-peering-info-portalissue/expressroute-peering-info-portalissue-1.png)
 
 #### Azure PowerShell を利用する場合
 Azure PowerShell コマンドで、以下のコマンドを実施して、ExpressRoute の情報を取得し更新します。
