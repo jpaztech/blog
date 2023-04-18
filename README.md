@@ -88,6 +88,8 @@
 - [Application Gateway でサブネットを変更する方法](./articles/network/appgw_change_subnet.md)
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
 - [ExpressRoute 回線のピアリングの情報が表示されない](./articles/network/expressroute-peering-information-not-displaying.md)
+- [Azure 上にメールサーバー/SMTP サーバーを構築する場合の注意事項](./articles/network/smtp-on-azurevm.md)
+- [Azure VM からのメール送信に関するアナウンス (2017 年 11 月)](./articles/network/smtp-block-announcement-november-2017.md)
 
 ## Containers
 
