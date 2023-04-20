@@ -50,14 +50,14 @@ tags:
 
 [参考:マイクロソフトのグローバル ネットワーク](https://learn.microsoft.com/ja-jp/azure/networking/microsoft-global-network)<br>
 (抜粋) 最適なパフォーマンスと整合性を保証するために、Microsoft Azure 内のデータセンター間、または Virtual Machines、Microsoft 365、Xbox、SQL DB、Storage、仮想ネットワークなどの Microsoft サービス間のあらゆるトラフィックはこのグローバル トラフィック内でルーティングされ、決してパブリック インターネットを経由しません。<br>
-<br>
+<br><br>
 <u>**シナリオ 2 : サービス エンドポイントを有効化**</u><br>
 この構成では、仮想マシンから Blob に対して、サービス エンドポイントを介して接続します。<br>
 接続元のクライアントは、接続先の FQDN に対して名前解決の結果として Blob のパブリック IP アドレスが応答されます。<br>
 接続元のクライアントは、Blob のパブリック IP アドレスに対して、サービス エンドポイントで追加された内部経路情報 (VirtualNetworkServiceEndpoint) に従って、Azure 内部で最適化された経路で接続します。<br>
 <br>
 ![](./pe-difference-se/02.png)
-<br>
+<br><br>
 <u>**シナリオ 3 : プライベート エンドポイントを有効化**</u><br>
 この構成では、仮想マシンから Blob に対して、プライベート エンドポイントを介して接続します。<br>
 接続元のクライアントは、接続先の FQDN に対して名前解決の結果として Blob 接続用のプライベート エンドポイントの IP アドレス (プライベート IP アドレス) が応答されます。<br>
