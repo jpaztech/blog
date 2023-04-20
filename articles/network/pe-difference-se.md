@@ -24,8 +24,8 @@ tags:
 | 接続先の IP アドレス | Azure PaaS のパブリック IP アドレス | PE のプライベート IP アドレス |
 | 接続制限 | Azure PaaS の設定でサブネット単位の指定 (*2) | PE のサブネットの NSG で指定 (*3) |
 | 接続元の IP アドレス(*4) | サブネット上のリソースのプライベート IP アドレス | PE に接続するリソースの IP アドレス |
+
 ※ 上記の表にあるサブネットは、Azure の仮想ネットワーク上のサブネットを指します。<br>
-<br>
 
 (*1)PLS は Private Link Service を指す。Azure 内部ロードバランサーに対して関連付けする機能。<br>
 [Azure Private Link サービスとは](https://learn.microsoft.com/ja-jp/azure/private-link/private-link-service-overview)<br>
