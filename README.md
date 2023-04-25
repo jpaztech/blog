@@ -131,3 +131,6 @@
 - [ExpressRoute 回線のピアリングの情報が表示されない](./articles/archive/expressroute-peering-info-portalissue.md)
 - [Azure 上にメールサーバー/SMTP サーバーを構築する場合の注意事項](./articles/archive/smtp-on-azurevm.md)
 - [Azure VM からのメール送信に関するアナウンス (2017 年 11 月)](./articles/archive/smtp-block-announcement-november-2017.md)
+- [ExpressRoute の Public Peering の構成変更について](./articles/archive/change-expressroute-public-peering.md)
+- [ExpressRoute の Public Peering と Microsoft Peering に関するアナウンス](./articles/archive/expressroute-announcement-march-2018.md)
+- [ExpressRoute のデプロイ モデル変更に関するアナウンス](./articles/archive/announcement-about-expressroute-deployment-model.md)
