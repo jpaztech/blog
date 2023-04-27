@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/archive/nva-troubleshooting/NvaWithoutSnat.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/archive/nva-troubleshooting/NvaWithSnat.png">
 <meta property="article:published_time" content="2018-08-27T08:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-27T05:59:54.826Z">
+<meta property="article:modified_time" content="2023-04-27T10:02:01.947Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Archive">
 <meta property="article:tag" content="Network">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+0c6836cf-b428-5004-a98e-2f3dcb1c20d2%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E4%BB%AE%E6%83%B3%E3%82%A2%E3%83%97%E3%83%A9%E3%82%A4%E3%82%A2%E3%83%B3%E3%82%B9+%28NVA%29+%E7%B5%8C%E7%94%B1%E3%81%A7%E9%80%9A%E4%BF%A1%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E6%99%82%E3%81%AE%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fnva-troubleshooting%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fnva-troubleshooting.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fnva-troubleshooting.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/nva-troubleshooting/" data-id="clgyptzkk00140npaelad4abm" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/archive/nva-troubleshooting/" data-id="clgyyhcc700140noaaaah9kln" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -140,13 +140,12 @@
 <p><strong>NVA 内部の動作についてのお問い合わせは基本的に弊社では承ることができませんので、確認が必要な場合はサードパーティ ベンダへご確認をお願いします。</strong></p>
 </blockquote>
 <h2 id="チェックポイント"><a href="#チェックポイント" class="headerlink" title="チェックポイント"></a>チェックポイント</h2><ol>
-<li><a href="#udr">ユーザー定義ルート (UDR)</a></li>
-<li><a href="#forwarding">IP 転送</a></li>
-<li><a href="#nsg">ネットワーク セキュリティ グループ (NSG)</a></li>
-<li><a href="#nat">ネットワーク アドレス変換 (NAT)</a></li>
-<li><a href="#capture">パケット キャプチャ</a></li>
+<li><a href="#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%881-%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E5%AE%9A%E7%BE%A9%E3%83%AB%E3%83%BC%E3%83%88-UDR">ユーザー定義ルート (UDR)</a></li>
+<li><a href="#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%882-IP-%E8%BB%A2%E9%80%81">IP 転送</a></li>
+<li><a href="#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%883-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3-%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97-NSG">ネットワーク セキュリティ グループ (NSG)</a></li>
+<li><a href="#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%884-%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF-%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E5%A4%89%E6%8F%9B-NAT">ネットワーク アドレス変換 (NAT)</a></li>
+<li><a href="#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%885-%E3%83%91%E3%82%B1%E3%83%83%E3%83%88-%E3%82%AD%E3%83%A3%E3%83%97%E3%83%81%E3%83%A3">パケット キャプチャ</a></li>
 </ol>
-<p><a id="udr"></a></p>
 <h2 id="チェックポイント1-ユーザー定義ルート-UDR"><a href="#チェックポイント1-ユーザー定義ルート-UDR" class="headerlink" title="チェックポイント1 : ユーザー定義ルート (UDR)"></a>チェックポイント1 : ユーザー定義ルート (UDR)</h2><p>NVA をファイアーウォールや VPN 等の用途で利用する場合、ユーザー定義ルート (UDR) の設定が必要となる場合がありますので、UDR が正しく設定されているかをご確認ください。</p>
 <p>UDR の設定として、[ルート] の [アドレス プレフィックス] にはアクセスしたい宛先のアドレス空間、[次ホップ] には NVA の IP アドレスを指定します。</p>
 <p>[サブネット] は NVA を経由させる通信のクライアントとなる VM が接続されたサブネットに関連付けます。</p>
@@ -163,7 +162,6 @@
 <p>  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-network-network-interface#view-network-interface-settings">https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-network-network-interface#view-network-interface-settings</a></p>
 </li>
 </ul>
-<p><a id="forwarding"></a></p>
 <h2 id="チェックポイント2-IP-転送"><a href="#チェックポイント2-IP-転送" class="headerlink" title="チェックポイント2 : IP 転送"></a>チェックポイント2 : IP 転送</h2><p>NVA を利用する場合、ネットワーク インターフェースの設定で [IP 転送] を有効化する必要がありますので、IP 転送が有効化されているかをご確認ください。</p>
 <p>NVA に複数のNIC を接続し通信を制御する場合、通信を流す全ての NIC で [IP 転送] を有効化する必要があります。</p>
 <p>サードパーティから提供される VM イメージは既定で有効となっている場合があります。</p>
@@ -173,11 +171,9 @@
 <p>  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-network-network-interface#enable-or-disable-ip-forwarding">https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-network-network-interface#enable-or-disable-ip-forwarding</a></p>
 </li>
 </ul>
-<p><a id="nsg"></a></p>
 <h2 id="チェックポイント3-ネットワーク-セキュリティ-グループ-NSG"><a href="#チェックポイント3-ネットワーク-セキュリティ-グループ-NSG" class="headerlink" title="チェックポイント3 : ネットワーク セキュリティ グループ (NSG)"></a>チェックポイント3 : ネットワーク セキュリティ グループ (NSG)</h2><p>NSG の受信規則、送信規則にて通信を制限している環境で、NVA を経由した通信が想定どおりに動作しない場合があります。</p>
 <p>まずは切り分けとして受信規則、送信規則共に Any to Any の通信を許可するルールを明示的に入れ、通信できるかをご確認いただくことをおすすめします。</p>
 <p>(NSG の既定の規則では、仮想ネットワーク内同士の通信が許可されています。しかし、NVA を利用するケースにおいては、パケットの送信元や宛先が、仮想ネットワーク外のアドレスになる場合があると思います。このような、既定の規則でカバーできていない通信があることに起因して、「NSG は既定のままにしているのに、NVA にパケットが着信しない」というお問い合わせをいただくことがあります。このような問題が疑われる場合、明示的に Any to Any の通信を許可していただければ、NSG の問題かどうか切り分けることができます。)</p>
-<p><a id="nat"></a></p>
 <h2 id="チェックポイント4-ネットワーク-アドレス変換-NAT"><a href="#チェックポイント4-ネットワーク-アドレス変換-NAT" class="headerlink" title="チェックポイント4 : ネットワーク アドレス変換 (NAT)"></a>チェックポイント4 : ネットワーク アドレス変換 (NAT)</h2><p>NVA を利用する場合に NVA 側で NAT を行う必要がある場合があります。</p>
 <p>例えば以下のような構成の場合、クライアントから VM 1 への通信は送信元が 10.0.1.4, 宛先が 10.0.3.4 のまま VM#1 までパケットが送られますが (SNATなし ①,②)、戻りの通信は宛先が 10.0.1.4 となるため (SNATなし ③) 、NVA を経由せず通信が想定どおりにできない場合があります。</p>
 <p>そのようなケースでは、NVA で送信元アドレス変換 (SNAT) することで (SNATあり ②) 、戻りの通信も NVA を経由するようになり (SNATあり ③) 、想定通りの通信を行うことができます。</p>
@@ -188,7 +184,6 @@
 <p>  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/architecture/reference-architectures/dmz/nva-ha">https://docs.microsoft.com/ja-jp/azure/architecture/reference-architectures/dmz/nva-ha</a></p>
 </li>
 </ul>
-<p><a id="capture"></a></p>
 <h2 id="チェックポイント5-パケット-キャプチャ"><a href="#チェックポイント5-パケット-キャプチャ" class="headerlink" title="チェックポイント5 : パケット キャプチャ"></a>チェックポイント5 : パケット キャプチャ</h2><p>上記のチェックポイントを確認後もうまく通信できない場合、クライアント、NVA、接続先の VM のそれぞれでパケット キャプチャを行い、以下の確認をすることをおすすめします。</p>
 <ol>
 <li>クライアントにて宛先アドレスへパケットを送信できているか</li>

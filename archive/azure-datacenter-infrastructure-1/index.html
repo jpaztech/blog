@@ -14,7 +14,7 @@
 <meta property="og:description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。 皆さんこんにちは。Azure テクニカルサポートの平原です。 クラウド上でサービスを提供する場合、利用しているサービスはすべて「ネットワークの向こう側」にあります。何か問題が発生した時など、トラブルシューティングをする際に、ネットワークの仕組みなど知っておくとよいこともあります。本トピックでは、Azure を後ろからサポー">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2017-12-06T13:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-27T05:59:54.802Z">
+<meta property="article:modified_time" content="2023-04-27T10:02:01.923Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Archive">
 <meta property="article:tag" content="Network">
@@ -103,7 +103,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+90d465e1-ae74-5dc0-9c67-e56c6f4bf703%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC+%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF+%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E3%82%B9%E3%83%88%E3%83%A9%E3%82%AF%E3%83%81%E3%83%A3%E3%83%BC%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fazure-datacenter-infrastructure-1%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fazure-datacenter-infrastructure-1.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fazure-datacenter-infrastructure-1.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/azure-datacenter-infrastructure-1/" data-id="clgyptzjx000d0npa79z5eocp" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/archive/azure-datacenter-infrastructure-1/" data-id="clgyyhcba000d0noa3pdm31pw" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -141,11 +141,15 @@
 </ul>
 <p>英語のドキュメントなるのですが、以下ネットワーク部門の CVP の Yousef Khalidi のブログにも記載がありますので、もし興味がありましたらご覧ください。</p>
 <ul>
-<li>The network is a living organism  <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/the-network-is-a-living-organism/">https://azure.microsoft.com/en-us/blog/the-network-is-a-living-organism/</a></li>
+<li><p>The network is a living organism</p>
+<p>  <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/the-network-is-a-living-organism/">https://azure.microsoft.com/en-us/blog/the-network-is-a-living-organism/</a></p>
+</li>
 </ul>
 <p>また、マイクロソフトを支えるネットワークの技術は、上記説明した内容も含めて外部学会でも公開されています。英語とはなりますが、もし興味があれば、ご参考ください。</p>
 <ul>
-<li>Microsoft’s open approach to networking  <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/microsoft-s-open-approach-to-networking/">https://azure.microsoft.com/en-us/blog/microsoft-s-open-approach-to-networking/</a></li>
+<li><p>Microsoft’s open approach to networking</p>
+<p>  <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/microsoft-s-open-approach-to-networking/">https://azure.microsoft.com/en-us/blog/microsoft-s-open-approach-to-networking/</a></p>
+</li>
 </ul>
 <h2 id="Azure-データセンターとインターネット"><a href="#Azure-データセンターとインターネット" class="headerlink" title="Azure データセンターとインターネット"></a>Azure データセンターとインターネット</h2><p>インターネットから通信する場合はどうなっているのでしょうか？</p>
 <p>こちらについては、上記項目で説明を少ししましたが、基本的に Azure データセンターはマイクロソフト バックボーン ネットワークに所属をしています。インターネットから通信をする場合には、当該バックボーンネットワークを経由して通信ができるようになっています。例えば、ある人が、プロバイダー経由で接続する場合には、以下のような経路で接続します。</p>
@@ -164,7 +168,9 @@
 <p>当該公開されているIPアドレスは、継続的に行われているデータセンターの拡張作業や増強などで、変更になる可能性があります。詳細は上記リンクをご参照ください。</p>
 <h3 id="セキュリティ"><a href="#セキュリティ" class="headerlink" title="セキュリティ"></a>セキュリティ</h3><p>また、知っておいた方がよい事実として、インターネットからの接続については、外部者からの攻撃 (DoS 攻撃等) を防ぐために、多重的な防御を展開しています。詳細な防御方法の細かな構成については、機密になっているため公開情報はありませんが、ネットワーク防御に関する記事は、以下にまとまっていますので、もし興味があればぜひご覧ください。もしインターネットに公開するサービスを展開される場合には、お役に立つ内容かと思います。</p>
 <ul>
-<li>Microsoft クラウド サービスとネットワーク セキュリティ  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/best-practices-network-security?toc=/azure/security/toc.json">https://docs.microsoft.com/ja-jp/azure/best-practices-network-security?toc=%2fazure%2fsecurity%2ftoc.json</a></li>
+<li><p>Microsoft クラウド サービスとネットワーク セキュリティ</p>
+<p>  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/best-practices-network-security?toc=/azure/security/toc.json">https://docs.microsoft.com/ja-jp/azure/best-practices-network-security?toc=%2fazure%2fsecurity%2ftoc.json</a></p>
+</li>
 </ul>
 <h2 id="Azure-データセンター間の通信"><a href="#Azure-データセンター間の通信" class="headerlink" title="Azure データセンター間の通信"></a>Azure データセンター間の通信</h2><p>Azure データセンター間の通信は、どうなっているのでしょうか？例えば、東日本と西日本間の通信を考える場合や、さらに、東日本から北米間の通信はどうなっているのでしょうか？こちらの内容も疑問に持たれたことがあるかもしれません。</p>
 <p>データセンター間の接続では、実はインターネットは利用しておらず、マイクロソフトの持つバックボーン ネットワークを利用しています。仮に、通信が大陸間を超える場合は、マイクロソフトが利用できる海底の光ケーブルを通ることになります。またこれらの回線は、複数経路で多重化されており、ある１経路で異常が出たとしても、自動で他の経路を迂回するように構成がされています。また将来のネットワーク帯域の需要に向けて、マイクロソフトでは海底ケーブルの増強にも投資をしています。</p>
@@ -178,7 +184,9 @@
 <p>ExpressRoute は、専用線であり、インターネットを経由することなく Azure の各種サービスに接続することが可能になります。専用線のため、直接お客様のオンプレミス環境に対して専用線を引くことになりますが (もしくは回線業者が提供する専用線のつながったWAN に接続する形になりますが)、専用線の出口には、マイクロソフトデータセンターと接続している Microsoft Enterprise Edge (MSEE) が配置されています。MSEE は、冗長性構成となっており1つのサイト当たり、2台以上で構成されています。そのため、もしExpressRoute を引く場合には、既定で冗長構成が構成されています。</p>
 <p>この MSEE は Meet-Me サイトと呼ばれる場所に配置され、ExpressRoute を提供する回線業者と MSEE をつなぐ場所となっています。MSEE は、Meet-Me のサイトから、直接対象のデータセンターへとつながるようになっています。この辺りのお話は、英語のドキュメントなるのですが、以下ネットワーク部門の CVP の Yousef Khalidi のブログにも記載がありますので、もし興味がありましたらご覧ください。</p>
 <ul>
-<li>Microsoft ExpressRoute: Office 365, Azure Government Cloud, more partners, simplified billing  <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/microsoft-azure-expressroute-more-partners-and-new-billing-choices/">https://azure.microsoft.com/en-us/blog/microsoft-azure-expressroute-more-partners-and-new-billing-choices/</a></li>
+<li><p>Microsoft ExpressRoute: Office 365, Azure Government Cloud, more partners, simplified billing</p>
+<p>  <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/microsoft-azure-expressroute-more-partners-and-new-billing-choices/">https://azure.microsoft.com/en-us/blog/microsoft-azure-expressroute-more-partners-and-new-billing-choices/</a></p>
+</li>
 </ul>
 <p>今回の内容はいかがでしたでしょうか？もし以上の内容が、構築をする上でも少しでもお役に立てば幸いです。</p>
 
