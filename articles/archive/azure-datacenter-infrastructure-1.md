@@ -54,13 +54,13 @@ Azure をホストしているデータセンターの話になると、また�
 英語のドキュメントなるのですが、以下ネットワーク部門の CVP の Yousef Khalidi のブログにも記載がありますので、もし興味がありましたらご覧ください。
 
 - The network is a living organism
-    
+
     https://azure.microsoft.com/en-us/blog/the-network-is-a-living-organism/
 
 また、マイクロソフトを支えるネットワークの技術は、上記説明した内容も含めて外部学会でも公開されています。英語とはなりますが、もし興味があれば、ご参考ください。
 
 - Microsoft’s open approach to networking
-    
+
     https://azure.microsoft.com/en-us/blog/microsoft-s-open-approach-to-networking/
 
 ## Azure データセンターとインターネット
@@ -80,7 +80,7 @@ Azure をホストしているデータセンターの話になると、また�
     https://www.microsoft.com/en-us/download/details.aspx?id=56519
 
 - [Office 365] Office 365 URL および IP アドレス範囲
-    
+
     https://support.office.com/ja-jp/article/Office-365-URL-%E3%81%8A%E3%82%88%E3%81%B3-IP-%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E7%AF%84%E5%9B%B2-8548a211-3fe7-47cb-abb1-355ea5aa88a2
 
 当該公開されているIPアドレスは、継続的に行われているデータセンターの拡張作業や増強などで、変更になる可能性があります。詳細は上記リンクをご参照ください。
@@ -90,7 +90,7 @@ Azure をホストしているデータセンターの話になると、また�
 また、知っておいた方がよい事実として、インターネットからの接続については、外部者からの攻撃 (DoS 攻撃等) を防ぐために、多重的な防御を展開しています。詳細な防御方法の細かな構成については、機密になっているため公開情報はありませんが、ネットワーク防御に関する記事は、以下にまとまっていますので、もし興味があればぜひご覧ください。もしインターネットに公開するサービスを展開される場合には、お役に立つ内容かと思います。
 
 - Microsoft クラウド サービスとネットワーク セキュリティ
-    
+
     https://docs.microsoft.com/ja-jp/azure/best-practices-network-security?toc=%2fazure%2fsecurity%2ftoc.json
 
 ## Azure データセンター間の通信
@@ -114,7 +114,7 @@ ExpressRoute は、専用線であり、インターネットを経由するこ�
 この MSEE は Meet-Me サイトと呼ばれる場所に配置され、ExpressRoute を提供する回線業者と MSEE をつなぐ場所となっています。MSEE は、Meet-Me のサイトから、直接対象のデータセンターへとつながるようになっています。この辺りのお話は、英語のドキュメントなるのですが、以下ネットワーク部門の CVP の Yousef Khalidi のブログにも記載がありますので、もし興味がありましたらご覧ください。
 
 - Microsoft ExpressRoute: Office 365, Azure Government Cloud, more partners, simplified billing
-    
+
     https://azure.microsoft.com/en-us/blog/microsoft-azure-expressroute-more-partners-and-new-billing-choices/
 
 今回の内容はいかがでしたでしょうか？もし以上の内容が、構築をする上でも少しでもお役に立てば幸いです。
