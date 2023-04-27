@@ -135,3 +135,7 @@
 - [ExpressRoute の Public Peering の構成変更について](./articles/archive/change-expressroute-public-peering.md)
 - [ExpressRoute の Public Peering と Microsoft Peering に関するアナウンス](./articles/archive/expressroute-announcement-march-2018.md)
 - [ExpressRoute のデプロイ モデル変更に関するアナウンス](./articles/archive/announcement-about-expressroute-deployment-model.md)
+- [2017 年 3 月 31 日夜間から発生した東日本データセンターの障害についての原因調査報告書 (RCA) の抄訳](./articles/archive/rca34296489.md)
+- [Azure データセンター ネットワーク インフラストラクチャー](./articles/archive/azure-datacenter-infrastructure-1.md)
+- [ネットワーク仮想アプライアンス (NVA) 経由で通信できない時のチェックポイント](./articles/archive/nva-troubleshooting.md)
+- [Azure ロードバランサー利用時の注意点](./articles/archive/azurelb-tips.md)
