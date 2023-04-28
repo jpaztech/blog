@@ -90,7 +90,7 @@ Windows 環境では、標準機能のパフォーマンスモニターを利用
 > [https://jpwinsup.github.io/blog/2021/06/07/Performance/SystemResource/PerformanceLogging/](https://jpwinsup.github.io/blog/2021/06/07/Performance/SystemResource/PerformanceLogging/)
 
 > ご参考：Azure Windows 仮想マシンでの CPU 使用率の高い問題のトラブルシューティング - プロセスを特定する
-> [https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-high-cpu-issues-azure-windows-vm#identify-the-process](https://jpwinsup.github.io/blog/2021/06/07/Performance/SystemResource/PerformanceLogging/)
+> [https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-high-cpu-issues-azure-windows-vm#identify-the-process](https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-high-cpu-issues-azure-windows-vm#identify-the-process)
 
 
 #### 【Linux 環境で問題のプロセスを追跡する】
