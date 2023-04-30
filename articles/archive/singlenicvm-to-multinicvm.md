@@ -15,8 +15,6 @@ tags:
 
 ## はじめに
 
-* * *
-
 NIC とは、ネットワークインターフェイスカードの略です。Azure Portal から仮想マシンを作成するときは単数 NIC がついている仮想マシンしか作成できないのですが、Azure PowerShell などを使うことにより最初から複数の NIC を持った仮想マシンを作成することができます。
 
 最初から複数 NIC を持った仮想マシンを作成する方法は、下記のドキュメントをご覧ください。
@@ -36,8 +34,6 @@ NIC とは、ネットワークインターフェイスカードの略です。A
 それでは、早速中身に入りましょう。
 
 ## 単数 NIC の仮想マシンを複数 NIC にする
-
-* * *
 
 以下のPowerShellを用いてください。解説は後述します。
 
@@ -116,8 +112,6 @@ Update-AzureRmVm -ResourceGroupName $resourceGroup -VM $vm
 start-azurermvm -name $vmName -ResourceGroupName $resourceGroup
 ```
 ## 解説
-
-* * *
 
 NIC を単数から複数にするうえで重要なのは、**"プライマリNIC"** を指定するということです。
 
