@@ -14,6 +14,14 @@ AKS 上のアプリケーション Pod から、 SQL Database や Key Vault、Bl
 
 この記事では、AKS 上の Pod へ Azure AD Pod Identity を使ってマネージド ID を割り当てる方法を解説します。サンプル アプリケーションを動かしながら、マネージド ID の持つアクセス権で Azure Key Vault へアクセスする例をご紹介します。
 
+🚩 **Update: 2023/5/1**
+Pod にマネージド ID を割り当てるための新しい方法である **Azure Workload Identity** が [GA となりました](https://azure.microsoft.com/ja-jp/updates/ga-azure-active-directory-workload-identity-with-aks-2/)。AAD Pod Identity は Azure Workload Identity に[置き換えられます](https://cloudblogs.microsoft.com/opensource/2022/01/18/announcing-azure-active-directory-azure-ad-workload-identity-for-kubernetes/)。
+今後、新規に開発・構築をする際には Azure Workload Identity の利用をご検討ください。
+> [Azure Kubernetes Service (AKS) で Azure AD ワークロード ID を使用する - Azure Kubernetes Service | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/aks/workload-identity-overview)
+
+AAD Pod Identity から移行する場合は、次のドキュメントをご参照ください。
+> [ポッド マネージド ID からワークロード ID に移行する - Azure Kubernetes Service | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/aks/workload-identity-migrate-from-pod-identity)
+
 <!-- more -->
 
 ---
