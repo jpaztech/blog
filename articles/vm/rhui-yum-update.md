@@ -1,6 +1,6 @@
 ---
 title: yum/dnf update に失敗する場合の原因と解決方法
-date: 2022-02-14 11:00:00
+date: 2023-05-02 11:00:00
 tags:
   - VM
   - RHEL
@@ -28,9 +28,10 @@ Azure Marketplace から 作成した RHEL VM は、規定で Azure RHUI への�
  
 VM から、Azure RHUI にアクセスするためには、下記の IP アドレスに対する送信規則の 443 ポートの通信許可を設定する必要があります。
 Azure RHUI の IP アドレスは下記公開ドキュメントにおまとめしておりますのでご確認ください。
+RHEL 7、RHEL 8 は RHUI 3、RHEL 9 は RHUI 4 が利用されております。
 
 >  □ 参考 : RHUI コンテンツ配信サーバーの IP アドレス
->    https://docs.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui#the-ips-for-the-rhui-content-delivery-servers
+>    https://learn.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui#the-ips-for-the-rhui-content-delivery-servers
 
 > [!IMPORTANT]
 > ※Azure RHUI へのアクセスは、弊社バックボーンネットワーク経由にて接続されており、
@@ -53,7 +54,7 @@ Azure VM 内から、curl コマンド等を使うことで、Azure RHUI への�
 ```
 
 < 実行結果例 (成功時) >
-```bash
+```
     [root@rheltest ~]# curl -v https://rhui-1.microsoft.com:443
     * Rebuilt URL to: https://rhui-1.microsoft.com:443/
     *   Trying 52.187.75.218...
@@ -104,7 +105,7 @@ Azure VM 内から、curl コマンド等を使うことで、Azure RHUI への�
 ```
 
 < 実行結果例 (失敗時) > 
-```bash
+```
     [root@rhelvm ~]# curl -v https://rhui-1.microsoft.com:443
     * Rebuilt URL to: https://rhui-1.microsoft.com:443/
     *   Trying 52.187.75.218...
@@ -123,7 +124,7 @@ Azure RHUI への接続確認が失敗する場合には、NSG やプロキシ�
 ## エラーの原因その 1 : Azure RHUI への接続ができない (NSG)
 
 セキュリティ上の理由から、Network Security Group (NSG) を利用して、
-Azure VM からインターネットへのアクセスを制限を設定している場合がございます。
+Azure VM からインターネットへのアクセスを制限を設定している場合があるかと存じます。
 Azure portal から対象の仮想マシンを選択後、[ネットワーク] から確認することができます。
 下記画像の例では、送信ポートの規則で、インターネットへの接続を拒否しています。
 
@@ -132,7 +133,7 @@ Azure portal から対象の仮想マシンを選択後、[ネットワーク] �
 本設定がある場合には、Azure RHUI への接続確認は、失敗することが想定され、
 yum update を実施した際や、パッケージのインストール時にはタイムアウトエラーが発生します。
 
-```bash
+```
     [root@rhelvm ~]# yum update
     Red Hat Enterprise Linux 8 for x86_64 - BaseOS - Extended Update Support from RHUI (RPMs)                                                              0.0  B/s |   0  B     01:30
     Failed to download metadata for repo 'rhel-8-for-x86_64-baseos-eus-rhui-rpms'
@@ -153,7 +154,8 @@ Azure RHUI サーバーの IP アドレスに対する送信規則の 443 ポー
 ## エラーの原因その 2 : Azure RHUI への接続ができない (Proxy 等)
 
 Azure VM から、オンプレミスのネットワークインフラストラクチャや、プロキシ、NVA (仮想アプライアンス) 経由での Azure RHUI へのアクセスはサポートされていないため、
-Azure VM から直接、Azure RHUI に接続する必要があります。
+Azure RHUI へのアクセスは、Azure 内の IP アドレス範囲内の VM から直接アクセスする必要がございます。 
+Azure Firewall をご利用の場合には、適切に Azure RHUI に対してアクセスできるよう設定頂くことで、アクセス可能となります。
 
 この場合の解決方法としては、Azure VM が Azure RHUI の IP アドレスに直接接続できるようユーザー定義のルートテーブル UDR (User Defined Route) を作成する必要があります。
 下記画像のように、RHUI コンテンツ配信サーバーの IP アドレス全てに対して、
@@ -163,7 +165,7 @@ Azure VM から直接、Azure RHUI に接続する必要があります。
 
 Azure VM のルートテーブルの作成手順については、下記公開ドキュメントをご確認ください。
 >   □ 参考 : ルート テーブルの作成、変更、削除 | ルートの作成
->	https://docs.microsoft.com/ja-jp/azure/virtual-network/manage-route-table#create-a-route-table
+>	https://learn.microsoft.com/ja-jp/azure/virtual-network/manage-route-table#create-a-route-table
 
 
 > [!TIP]
@@ -172,12 +174,28 @@ Azure VM のルートテーブルの作成手順については、下記公開�
 
 ---
 
-## エラーの原因その 3 : クライアント証明書の期限切れ
+## エラーの原因その 3 : Azure RHUI への接続ができない (外部接続不可の構成)
+ご利用の環境によっては、Standard SKU の内部ロードバランサーのバックエンドにAzure VM を配置し、外部へのインターネット接続を制限している場合もあるかと思います。
+外部接続不可の環境では、yum update を実施した際や、パッケージのインストール時にタイムアウトエラーが発生します。
+Azure RHUI に接続するためには、NAT Gateway または VM にパブリック IP アドレスを関連付けいただくといった構成に変更する必要があります。
+
+ご利用の VM が外部接続不可な構成であるかについての確認手順については、
+以下の弊社ブログにもお纏めしておりますのでご参照ください。
+>   □ 参考 : Azure VM の外部接続 (SNAT) オプション まとめ
+>	https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/
+
+> [!IMPORTANT]
+> ※内部ロードバランサーのバックエンドに VM がない場合でも、可用性セット内の VM が内部ロードバランサーのバックエンドに配置されている場合、
+> 可用性セット内の VM は全て外部接続ができなくなり、RHUI に繋がらない事象が発生するのでご注意ください。可用性セットの構成変更等ご検討頂ければと思います。
+
+---
+
+## エラーの原因その 4 : クライアント証明書の期限切れ
 古い RHEL VM イメージを利用している際には、 TLS/SSL クライアント証明書の期限が切れているために、
 Azure RHUI に接続できない問題が発生することがあります。
 クライアント証明書の期限が切れた際には、yum update を実施した際に下記のようなエラーが出力されることがあります。
 
-```bash
+```
     [root@rhelvm ~]# yum update
     Loaded plugins: langpacks, product-id, search-disabled-repos
     rhui-microsoft-azure-rhel7-eus                                                                   | 2.1 kB  00:00:00
@@ -189,6 +207,16 @@ Azure RHUI に接続できない問題が発生することがあります。
     Trying other mirror.
 ```
 
+```
+    [root@rhel82 ~]# yum update
+    Red Hat Enterprise Linux 8 for x86_64 - BaseOS - Extended Update Support from RHUI (RPM 0.0  B/s |   0  B     00:02
+    Errors during downloading metadata for repository 'rhel-8-for-x86_64-baseos-eus-rhui-rpms':
+      - Curl error (56): Failure when receiving data from the peer for https://rhui-3.microsoft.com/pulp/repos/content/eus/rhel8/rhui/8.2/x86_64/baseos/os/repodata/repomd.xml [OpenSSL SSL_read: error:14094415:SSL routines:ssl3_read_bytes:sslv3 alert certificate expired, errno 0]
+      - Curl error (56): Failure when receiving data from the peer for https://rhui-1.microsoft.com/pulp/repos/content/eus/rhel8/rhui/8.2/x86_64/baseos/os/repodata/repomd.xml [OpenSSL SSL_read: error:14094415:SSL routines:ssl3_read_bytes:sslv3 alert certificate expired, errno 0]
+      - Curl error (56): Failure when receiving data from the peer for https://rhui-2.microsoft.com/pulp/repos/content/eus/rhel8/rhui/8.2/x86_64/baseos/os/repodata/repomd.xml [OpenSSL SSL_read: error:14094415:SSL routines:ssl3_read_bytes:sslv3 alert certificate expired, errno 0]
+    Error: Failed to download metadata for repo 'rhel-8-for-x86_64-baseos-eus-rhui-rpms': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
+```
+
 この場合の解決方法としては、下記コマンドを実施頂き、
 クライアント証明書を更新頂くことで、Azure RHUI へのアクセスができるようになることが想定されます。
 
@@ -196,12 +224,15 @@ Azure RHUI に接続できない問題が発生することがあります。
 sudo yum update -y --disablerepo='*' --enablerepo='*microsoft*'
 ```
 
-※本コマンドは、ruhi の rpm のみを更新するコマンドとなります。
+※本コマンドは、rhui の rpm のみを更新するコマンドとなります。
+本事象については、以下の公開ドキュメントにもお纏めしております。
 
+> □ 参考 : Azure での RHUI 証明書の問題のトラブルシューティング
+> https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-linux-rhui-certificate-issues?tabs=rhel7-eus%2Crhel7-noneus%2Crhel7-rhel-sap-apps
 
 > [!TIP]
 > 解消しない場合には、下記コマンドも併せてお試しください
-> 
+> #キャッシュデータの削除し、キャッシュの更新
 > sudo yum clean all
 > sudo yum makecache
 
@@ -216,6 +247,6 @@ yum repolist all コマンドを実行頂き、有効なリポジトリをご確
 RHSM や サテライトに接続する必要があります。
  
 > □ 参考 : Azure のオンデマンド Red Hat Enterprise Linux VM 用 Red Hat Update Infrastructure
->	https://docs.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui
+>	https://learn.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui
 
 本稿が皆様のお役に立てれば幸いです。
