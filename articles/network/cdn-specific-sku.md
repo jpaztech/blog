@@ -9,8 +9,6 @@ tags:
 
 こんにちは、Azure テクニカル サポート チームの箕輪です。
 
-> **先日通知されました取り、Azure CDN の Akamai SKU は、2023 年 10 月 31 日に廃止される予定です。ご検討をされているお客様は何卒ご留意いただければと存じます。**
-
 Azure が提供している CDN サービスの Azure CDN において、ご利用いただける機能やよくあるお問合せ、各 SKU の特徴などを踏まえたトラブル シューティングの手順などをご紹介いたします。
 Azure CDN は現在 4 つの SKU があり、3 社の CDN プロバイダー (Microsoft / Verizon / Akamai) で CDN サービスを提供しております。
 本ブログは Azure CDN で提供している 4 つの SKU の特徴や、各 SKU における情報採取手順などをまとめたブログとなります。
@@ -90,9 +88,6 @@ Premium Verizon は他の SKU と価格が異なりますが、多機能のル�
 <span id="standard-akamai"></span>
 
 #### <a href="#standard-akamai">Standard Akamai</a>
-
-> **先日通知されました取り、Azure CDN の Akamai SKU は、2023 年 10 月 31 日に廃止される予定です。**
-
 Standard Akamai は Akamai 社の CDN プラットフォームを用いて CDN サービスを提供しております。
 Akamai 社は世界最大規模の CDN プラットフォームで CDN サービスを提供しており、動的なサイトの最適化に優れています。
 なお、Akamai 社が提供している Akamai Control Center (旧 Luna Control Center) は Azure CDN ではご利用いただけません。
@@ -206,6 +201,20 @@ Premium Verizon のルール エンジンの設定においては、**Lock Draft
 
 <br>
 
+<span id="setting-of-waf"></span>
+
+## <a href="#setting-of-waf">WAF の設定</a>
+WAF の機能は 2020 年 7 月時点で Standard Microsoft においてプレビュー提供をしています。
+WAF では OWASP のルール セットに準拠した Azure で管理されたルール セットの他に、カスタム規則でルールを設定することができます。
+Standard Microsoft で構成されたエンドポイントに対して 1 つの WAF が関連付けできます。
+
+[https://docs.microsoft.com/ja-jp/azure/web-application-firewall/cdn/cdn-overview](https://docs.microsoft.com/ja-jp/azure/web-application-firewall/cdn/cdn-overview)
+
+2020 年 7月時点の動作として、WAF がエンドポイントに関連付けられた状態において、カスタム規則の変更は一部制限がかかる場合があります。
+WAF のカスタム規則において意図した設定が追加できない場合は、一度エンドポイントとの関連付けを解除した上で設定の変更をお試しください。
+
+<br>
+
 <span id="collect-information"></span>
 
 ## <a href="#collect-information">エラー発生時の情報採取手順</a>
@@ -262,8 +271,6 @@ Verizon 社のエンジニアとスムーズに連携して調査をするため
 <span id="collect-information-standard-akamai"></span>
 
 #### <a href="#collect-information-standard-akamai">Standard Akamai においてエラー発生時にご提供いただきたい情報</a>
-> **先日通知されました取り、Azure CDN の Akamai SKU は、2023 年 10 月 31 日に廃止される予定です。**
-
 Standard Akamai は Akamai 社の CDN プラットフォームでサービスを提供しているため、調査は Akamai 社のエンジニアと共同で実施いたします。
 Standard Akamai では、CDN からエラーメッセージを応答された場合に、画面上に **Reference** と呼ばれるエラー コードが記載されます。
 この  **Reference**  のエラー コードを元に調査することが可能となりますので、お問合せ時にご共有いただけますと幸いです。
