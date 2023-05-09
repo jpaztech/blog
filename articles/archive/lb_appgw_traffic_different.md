@@ -7,6 +7,8 @@ tags:
   - Load Balancer
   - Application Gateway
 ---
+> [!WARNING]
+> 本記事は、投稿より時間が経過しており、**一部内容が古い可能性があります。**
 
 こんにちは、Azure サポートチームの山崎です。
 今回は Load Balancer と Application Gateway の通信の違いについてご紹介します。
