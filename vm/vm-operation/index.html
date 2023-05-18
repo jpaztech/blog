@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-operation/vm-redeploy.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vm-operation/vm-reapply.png">
 <meta property="article:published_time" content="2021-05-24T08:30:00.000Z">
-<meta property="article:modified_time" content="2023-05-15T07:38:36.002Z">
+<meta property="article:modified_time" content="2023-05-18T05:13:22.303Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Oparation">
@@ -109,7 +109,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+34aa244e-151d-5094-a9dc-499bf6527d59%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E6%93%8D%E4%BD%9C+%28%E5%86%8D%E8%B5%B7%E5%8B%95%E3%80%81%E5%81%9C%E6%AD%A2%2F%E8%B5%B7%E5%8B%95%E3%80%81%E5%86%8D%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%80%81%E5%86%8D%E9%81%A9%E7%94%A8%29+%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fvm-operation%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fvm-operation.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fvm-operation.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/vm-operation/" data-id="clhoja7lj006m0nmeaslxcyu4" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/vm-operation/" data-id="clhsoez96006m0np7axcg0ud4" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -151,7 +151,7 @@
 </tbody></table>
 <p>※1 明示的に物理ホスト サーバーの移動を行うわけではございません。可能性として、停止前と同一の物理ホスト サーバーで起動する場合もございます。<br>※2 仮想マシンの再起動が必須となる操作ではありませんが、目標となるあるべき状態 (Goal State) に実体が追いつこうとした動作の結果、再起動が発生する可能性があります。</p>
 <hr>
-<h2 id="■-仮想マシンの再起動"><a href="#■-仮想マシンの再起動" class="headerlink" title="■ 仮想マシンの再起動"></a>■ 仮想マシンの再起動</h2><p>再起動は、<strong>ゲスト OS の再起動</strong> を実施する操作です。ゲスト OS として Graceful Shutdown ※1 を実施し、その後起動します。<br>Graceful Shutdown とは、仮想マシンをシャットダウンする際にシステム内部で決められた手順に従い正常に仮想マシンを終了させることを意味します。<br>再起動による物理ホスト サーバーの移動は発生しません。<br>ゲスト OS 内のプロセスが正常な状態となっていない場合の切り分けとして、再起動の実行をご案内しています。</p>
+<h2 id="■-仮想マシンの再起動"><a href="#■-仮想マシンの再起動" class="headerlink" title="■ 仮想マシンの再起動"></a>■ 仮想マシンの再起動</h2><p>再起動は、<strong>ゲスト OS の再起動</strong> を実施する操作です。ゲスト OS として Graceful Shutdown を実施し、その後起動します。<br>Graceful Shutdown とは、仮想マシンをシャットダウンする際にシステム内部で決められた手順に従い正常に仮想マシンを終了させることを意味します。<br>再起動による物理ホスト サーバーの移動は発生しません。<br>ゲスト OS 内のプロセスが正常な状態となっていない場合の切り分けとして、再起動の実行をご案内しています。</p>
 <h3 id="Azure-Portal-での操作画面"><a href="#Azure-Portal-での操作画面" class="headerlink" title="Azure Portal での操作画面"></a>Azure Portal での操作画面</h3><p><img src="/blog/vm/vm-operation/vm-restart.png"></p>
 <hr>
 <h2 id="■-仮想マシンの停止-割り当て解除-起動"><a href="#■-仮想マシンの停止-割り当て解除-起動" class="headerlink" title="■ 仮想マシンの停止 (割り当て解除) / 起動"></a>■ 仮想マシンの停止 (割り当て解除) / 起動</h2><p>停止 (割り当て解除) は、仮想マシンが稼働する <strong>物理ホスト サーバーから割り当てられているリソースの割り当てを解除</strong> する操作であり、起動は <strong>物理ホスト サーバーからリソースを割り当てる</strong> 操作です。<br>再デプロイと異なり、明示的に別の物理ホスト サーバーでデプロイを行うための手段ではありませんが、起動によって仮想マシンがデプロイされる物理ホスト サーバーは前回と異なる場合がほとんどになります。</p>
