@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの富田です。今回はお問い合わせいただくことの多い Azure VM の CPU に関する以下の点を解説させていただきます。    CPU の vCPU 数 &#x2F; 物理コア数 &#x2F; 論理スレッド数について 制約付き vCPU 対応の VM サイズについて CPU の種類について ターボブースト機能について  まず Azure VM ではそのスペックにつ">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2023-04-11T08:30:00.000Z">
-<meta property="article:modified_time" content="2023-05-18T07:02:40.883Z">
+<meta property="article:modified_time" content="2023-05-25T03:20:42.637Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -104,7 +104,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7f4ef9b7-e3fc-56bb-9fc2-c164a2155306%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE+CPU+%E3%82%B3%E3%82%A2%E6%95%B0+%2F+CPU+%E3%81%AE%E7%A8%AE%E9%A1%9E+%2F+%E3%82%BF%E3%83%BC%E3%83%9C%E3%83%96%E3%83%BC%E3%82%B9%E3%83%88%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E8%A7%A3%E8%AA%AC%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fazure-vm-cpu-htt-turbo%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fazure-vm-cpu-htt-turbo.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fazure-vm-cpu-htt-turbo.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/azure-vm-cpu-htt-turbo/" data-id="clhssbk5x004k0nqqfqlz9bej" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/azure-vm-cpu-htt-turbo/" data-id="cli2kh331004k0nmibltr7u5i" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -156,7 +156,7 @@
 <p>ーーーーーー抜粋ーーーーーー<br>Dasv5 シリーズおよび Dadsv5 シリーズは、AMD の第 3 世代 EPYCTM 7763v プロセッサを、最大 256 MB の L3 キャッシュを備えた<strong>マルチスレッド構成で</strong>利用し、汎用ワークロードを実行するための顧客オプションを増やします。<br>ーーーーーーーーーーーーーー</p>
 </blockquote>
 <p>また、恐縮ながら物理ホスト サーバー 1 台に搭載された合計物理コア数やソケット数はお客様に公開が叶いません点ご理解賜りますと幸いでございます。  </p>
-<div class="alert is-info"><p class="alert-title">Note</p><p>ソフトウェアについてはパブリック クラウド環境の場合はオンプレミスの物理サーバーと違ったライセンス ルールがある場合がございます。</p><p>「ライセンス上どのように CPU 数などをカウントするか？」「パブリッククラウドとオンプレミス環境でのライセンスの違いはあるか？」など、</p><p>各ソフトウェア ライセンスの観点については、そのソフトウェア ライセンスを取り扱っている会社様にご確認をお願いいたします。  </p></div>
+<div class="alert is-info"><p class="alert-title">Note</p><p>ソフトウェアについてはパブリック クラウド環境の場合はオンプレミスの物理サーバーと違ったライセンス ルールがある場合がございます。</p><p>「ライセンス上どのように CPU 数などをカウントするか？」「パブリッククラウドとオンプレミス環境でのライセンスの違いはあるか？」など、各ソフトウェア ライセンスの観点については、そのソフトウェア ライセンスを取り扱っている会社様にご確認をお願いいたします。  </p></div>
 <hr>
 <h2 id="制約付き-vCPU-対応の-VM-サイズについて"><a href="#制約付き-vCPU-対応の-VM-サイズについて" class="headerlink" title="制約付き vCPU 対応の VM サイズについて"></a>制約付き vCPU 対応の VM サイズについて</h2><p>ソフトウェアによっては vCPU の数によって、ライセンス料金が決定されるものがございます。<br>例えばその際に、  </p>
 <blockquote>
@@ -181,7 +181,7 @@
 <hr>
 <h2 id="CPU-の種類について"><a href="#CPU-の種類について" class="headerlink" title="CPU の種類について"></a>CPU の種類について</h2><p>同じ VM サイズでも物理ホスト サーバーに搭載された CPU の種類が異なるため、VM の実行される CPU の種類が変わるといったことがございます。<br>例えば、以下のように Dv4 および Dsv4 シリーズは、ブログ執筆の 2023 年 4 月時点では、以下 2 種類の CPU でご提供をさせていただいております。  </p>
 <blockquote>
-<p>■ご参考：■ご参考：Dv4 および Dsv4 シリーズ<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv4-dsv4-series">https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv4-dsv4-series</a></p>
+<p>■ご参考：Dv4 および Dsv4 シリーズ<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv4-dsv4-series">https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv4-dsv4-series</a></p>
 </blockquote>
 <blockquote>
 <p>ーーーーーー抜粋ーーーーーー<br>Dv4 および Dsv4 シリーズは、ハイパースレッド構成の第 3 世代 Intel® Xeon® Platinum 8370C (Ice Lake) プロセッサまたは Intel® Xeon® Platinum 8272CL (Cascade Lake) プロセッサ上で実行されます。<br>ーーーーーーーーーーーーーー</p>
