@@ -10,7 +10,7 @@ tags:
 こんにちは。Azure テクニカル サポート チームの重田です。 
 今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。
 
-更新元の記事：[Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)](https://jpaztech1.z11.web.core.windows.net/Azure%E4%B8%8A%E3%81%AEWindowsOS%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E6%83%85%E5%A0%B1%E3%81%BE%E3%81%A8%E3%82%81(2018%E5%B9%B48%E6%9C%8827%E6%97%A5%E7%89%88).html)
+~~更新元の記事：Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)~~
 
 <!-- more -->
 
@@ -87,7 +87,7 @@ Azure Backup を使用できない場合は、ディスク リソースのスナ
 詳細な手順は下記をご確認ください。
 
 > VM の OS ディスクをスワップする
-> [https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-os-disk-for-the-vm)
+> [https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-failed-vms-os-disk-with-the-repaired-disk](https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-failed-vms-os-disk-with-the-repaired-disk)
 > ※ 管理ディスク用の手順になります。
 
 
