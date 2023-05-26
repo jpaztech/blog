@@ -6,12 +6,12 @@
   
   <title>【非管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの重田です。本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを他の正常な VM にデータ ディスクとして接続する方法について紹介します。">
+  <meta name="description" content="[!WARNING]本記事は非管理ディスクに関する情報を掲載しておりますが、非管理ディスクについては 2022 年 9 月 13 日より非推奨となっております。非管理ディスクの完全な廃止は 2023 年 9 月 30 日を予定しておりますが、できる限り速やかに管理ディスクへの移行をご計画いただけますようお願い申し上げます。なお、2023 年 9 月 30 日以降、新規の非管理ディスクの作成が不可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【非管理ディスク編】 復旧 VM を使った Windows VM の Noboot 復旧手順">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの重田です。本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを他の正常な VM にデータ ディスクとして接続する方法について紹介します。">
+<meta property="og:description" content="[!WARNING]本記事は非管理ディスクに関する情報を掲載しておりますが、非管理ディスクについては 2022 年 9 月 13 日より非推奨となっております。非管理ディスクの完全な廃止は 2023 年 9 月 30 日を予定しておりますが、できる限り速やかに管理ディスクへの移行をご計画いただけますようお願い申し上げます。なお、2023 年 9 月 30 日以降、新規の非管理ディスクの作成が不可">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/1.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/2.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/noboot-recovery-unmsanaged-disk/6.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/7.png">
 <meta property="article:published_time" content="2021-05-14T08:30:00.000Z">
-<meta property="article:modified_time" content="2023-05-26T05:00:30.537Z">
+<meta property="article:modified_time" content="2023-05-26T05:14:04.807Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -112,12 +112,14 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+dd458c0e-7a60-5468-8587-24810caea0ac%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%90%E9%9D%9E%E7%AE%A1%E7%90%86%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E7%B7%A8%E3%80%91+%E5%BE%A9%E6%97%A7+VM+%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F+Windows+VM+%E3%81%AE+Noboot+%E5%BE%A9%E6%97%A7%E6%89%8B%E9%A0%86%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fnoboot-recovery-unmanaged-disk%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fnoboot-recovery-unmanaged-disk.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fnoboot-recovery-unmanaged-disk.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/" data-id="cli43h9eh005t0oo4ep34hp6e" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/" data-id="cli43ypfj005t0np49l1u7bjh" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは。Azure テクニカル サポート チームの重田です。<br>本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを他の正常な VM にデータ ディスクとして接続する方法について紹介します。</p>
+        <div class="alert is-warning"><p class="alert-title">警告</p><p>本記事は非管理ディスクに関する情報を掲載しておりますが、非管理ディスクについては 2022 年 9 月 13 日より非推奨となっております。</p><p>非管理ディスクの完全な廃止は 2023 年 9 月 30 日を予定しておりますが、できる限り速やかに管理ディスクへの移行をご計画いただけますようお願い申し上げます。</p><p>なお、2023 年 9 月 30 日以降、新規の非管理ディスクの作成が不可となる予定です。本記事で紹介する手順が利用できなくなる可能性がございますことご留意いただけますよう重ねてお願い申し上げます。</p>
+<p>非管理ディスクの非推奨化/廃止に関する詳細は下記の公式ドキュメントをご確認ください。</p><p>  <strong>2025 年 9 月 30 日までに Azure アンマネージド ディスクを移行してください</strong></p><p>  <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/unmanaged-disks-deprecation">https://learn.microsoft.com/ja-jp/azure/virtual-machines/unmanaged-disks-deprecation</a></p></div>
+<p>こんにちは。Azure テクニカル サポート チームの重田です。<br>本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを他の正常な VM にデータ ディスクとして接続する方法について紹介します。</p>
 <span id="more"></span>
 
 <p>Windows OS の復旧手順に関しては、Windows サポートチームのブログからご紹介しています。<br>本記事では、[対処方法] 編に記載されている切り分け [3] - [6] を Azure 環境上でお試しいただく方法について紹介しています。</p>
@@ -164,7 +166,10 @@
 <li>AzCopy コマンドを下記の通り実行します。<br>構文：<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./azcopy.exe <span class="built_in">copy</span> <span class="string">&quot;https://ストレージアカウント名.blob.core.windows.net/vhds/複製元のディスク名.vhd?SAS&quot;</span> <span class="string">&quot;https://ストレージアカウント名.blob.core.windows.net/vhds/複製後のディスク名.vhd?SAS&quot;</span> -<span class="literal">-overwrite</span>=prompt -<span class="literal">-s2s</span><span class="literal">-preserve</span><span class="literal">-access</span><span class="literal">-tier</span>=false -<span class="literal">-recursive</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="2-復旧作業用-VM-にて、複製した-VHD-ファイルをデータ-ディスクとしてアタッチします"><a href="#2-復旧作業用-VM-にて、複製した-VHD-ファイルをデータ-ディスクとしてアタッチします" class="headerlink" title="2. 復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします"></a>2. 復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします</h3><ol>
-<li><p>復旧作業用の VM を作成します。<br>Azure Portal から [Virtual Machines] を開き、 [+ 追加] をクリックし、復旧対象 VM と同様のリージョンにて、同様の OS バージョンの非管理ディスクを用いた VM を作成します。</p>
+<li><p>復旧作業用の VM を作成します。<br>Azure CLI を利用して az vm create コマンドに –use-unmanaged-disk オプションを指定することで作成が可能です。<br>詳細は下記のコマンドリファレンスをご確認ください。</p>
+<blockquote>
+<p>az vm create<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/cli/azure/vm?view=azure-cli-latest#az-vm-create">https://learn.microsoft.com/ja-jp/cli/azure/vm?view=azure-cli-latest#az-vm-create</a></p>
+</blockquote>
 </li>
 <li><p>複製した VHD ファイルをデータ ディスクとしてアタッチします。<br>Azure Portal から [Virtual Machines] - [&lt;復旧作業用の VM 名&gt;] を開き、左メニュー “設定” の [ディスク] をクリックします。</p>
 </li>
