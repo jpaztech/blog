@@ -1,6 +1,6 @@
---- 
+---
 title: ポイント対サイト VPN の TLS に関するアナウンス
-date: 2023-05-02 18:30:00 
+date: 2018-06-01 12:30:38 
 tags: 
   - Archive
   - Network
