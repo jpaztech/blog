@@ -1,10 +1,11 @@
---- 
-title: p2s-vpn-error798
-date: 2023-05-01 21:00:00 
-tags: 
+---
+title: Azure ポイント対サイト接続における エラー798
+date: 2016-03-08 19:34:29
+tags:
   - Archive
   - Network
 ---
+
 こんにちは、Azure サポート チーム 大塚です。
 
 さて、今回のお題は Azure ポイント対サイト接続についてです。
