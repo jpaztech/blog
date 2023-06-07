@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-configchange/v2_fin.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-configchange/v2_notification.png">
 <meta property="article:published_time" content="2021-07-05T05:30:00.000Z">
-<meta property="article:modified_time" content="2023-06-07T04:35:56.567Z">
+<meta property="article:modified_time" content="2023-06-07T13:33:13.913Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Application Gateway">
 <meta property="article:tag" content="Network">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3a6de671-5071-5b0f-8036-bf8e62264e2e%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+%E8%A8%AD%E5%AE%9A%E5%A4%89%E6%9B%B4%E3%81%AE%E5%BD%B1%E9%9F%BF%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fappgw-configchange%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fappgw-configchange.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fappgw-configchange.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/appgw-configchange/" data-id="clil7vy3f003g0ns5g8ov1tyg" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/appgw-configchange/" data-id="clilr2v6v003g0npbevjyeq30" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -150,6 +150,7 @@
 <li>HTTP2（無効→有効、有効→無効）の変更</li>
 <li>バックエンド設定に接続ドレイン（無効→有効、有効→無効、タイムアウト時間）の変更</li>
 <li>バックエンド設定に Cookie ベースのアフィニティ（無効→有効、有効→無効、Cookie名）の変更</li>
+<li>診断設定の追加、編集、削除</li>
 </ul>
 <h2 id="Application-Gateway-SKU-Standard-v2-amp-WAF-v2"><a href="#Application-Gateway-SKU-Standard-v2-amp-WAF-v2" class="headerlink" title="Application Gateway SKU Standard_v2 &amp; WAF_v2"></a>Application Gateway SKU Standard_v2 &amp; WAF_v2</h2><h3 id="設定変更の影響-1"><a href="#設定変更の影響-1" class="headerlink" title="設定変更の影響"></a>設定変更の影響</h3><p>基本的には全般の作業がすべての既存接続に影響を与えます。<br>たとえ関連しない新規設定を追加するだけでも、既存すべてのリスナーへの TCP 接続が切断される動作となります。</p>
 <p>例えば、１つの Application Gateway に以下の設定が入っている場合は</p>
