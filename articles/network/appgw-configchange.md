@@ -54,6 +54,7 @@ Application Gateway パブリック IP 20.48.x.x
 * HTTP2（無効→有効、有効→無効）の変更
 * バックエンド設定に接続ドレイン（無効→有効、有効→無効、タイムアウト時間）の変更
 * バックエンド設定に Cookie ベースのアフィニティ（無効→有効、有効→無効、Cookie名）の変更
+* 診断設定の追加、編集、削除
 
 ## Application Gateway SKU Standard_v2 & WAF_v2
 ### 設定変更の影響
