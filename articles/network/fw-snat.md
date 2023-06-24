@@ -14,6 +14,8 @@ tags:
 <!-- more -->
 
 ## Azure Firewall のパブリック IP による SNAT について
+> **ドキュメントが更新され、現在は実際のパブリック IP の使われ方に沿った内容となっています。**
+
 Azure Firewall を経由してインターネット宛に通信するときは、関連付けられているパブリック IP へ送信元のアドレス変換（SNAT）が行われます。パブリック IP が 1 つしかない時はそのパブリック IP のアドレスしか使用されませんが、複数のパブリック IP アドレスが Azure Firewall に関連付けられている場合の動作について、以下のドキュメントではランダムに選択する旨の記載がございます。
 
 [Azure PowerShell を使用して複数のパブリック IP アドレスを使用する Azure Firewall をデプロイする](https://learn.microsoft.com/ja-jp/azure/firewall/deploy-multi-public-ip-powershell)
