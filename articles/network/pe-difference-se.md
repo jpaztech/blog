@@ -44,7 +44,7 @@ tags:
 接続元のクライアントは、接続先の FQDN に対して名前解決の結果として Azure Blob のパブリック IP アドレスが応答されます。
 接続元のクライアントは、Azure Blob のパブリック IP アドレスに対して、Azure の既定の経路 (0.0.0.0/0) に従って、インターネット経由で接続します。
 
-下記の図は便宜上インターネットに接続している構成図としていますが、[Azure の仮想マシンから Azure PaaS へ接続は Azure バックボーン ネットワークを経由して接続する](https://learn.microsoft.com/ja-jp/azure/networking/microsoft-global-network)ため、実際の通信はパブリック インターネットを経由しません。
+下記の図は説明の便宜上インターネットに接続している構成図としていますが、[Azure の仮想マシンから Azure PaaS へ接続は Microsoft バックボーン ネットワークを経由して接続する](https://learn.microsoft.com/ja-jp/azure/networking/microsoft-global-network)ため、実際の通信はパブリック インターネットを経由しません。
 
 
 ![](./pe-difference-se/01.png)<br><br>
@@ -54,9 +54,10 @@ tags:
 この構成では、仮想マシンから Blob に対して、サービス エンドポイントを介して接続します。
 接続元のクライアントは、接続先の FQDN に対して名前解決の結果として Azure Blob のパブリック IP アドレスが応答されます。
 接続元のクライアントは、Azure Blob のパブリック IP アドレスに対して、サービス エンドポイントで追加された内部経路情報 (VirtualNetworkServiceEndpoint) に従って、Azure 内部で最適化された経路で接続します。
+この時の接続経路は、Microsoft バックボーン ネットワーク内で完結します。
 
 
-![](./pe-difference-se/02.png)<br><br>
+![](./pe-difference-se/02a.png)<br><br>
 
 
 <br><u>**シナリオ 3 : プライベート エンドポイントを有効化**</u><br>
