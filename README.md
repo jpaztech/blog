@@ -139,3 +139,4 @@
 - [Azure データセンター ネットワーク インフラストラクチャー](./articles/archive/azure-datacenter-infrastructure-1.md)
 - [ネットワーク仮想アプライアンス (NVA) 経由で通信できない時のチェックポイント](./articles/archive/nva-troubleshooting.md)
 - [Azure ロードバランサー利用時の注意点](./articles/archive/azurelb-tips.md)
+- [ポイント対サイトVPNに関する重要な通知について](./articles/archive/important_information_p2s_cert.md)
