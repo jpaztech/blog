@@ -40,15 +40,14 @@ Windows VM の場合「OS ディスクのスナップショットから VM を�
 [https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/backup-and-storage/windows-installations-disk-duplication](https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/backup-and-storage/windows-installations-disk-duplication)
  
 >＝＝＝＝＝抜粋＝＝＝＝＝  
->複製またはイメージ化された Windows インストールを展開する場合は、イメージをキャプチャする前にシステム準備 (Sysprep) ツールを使用する必要があります。  
+>When you deploy a duplicated or imaged Windows installation, it is required that the System Preparation (Sysprep) tool is used before the capture of the image.   
 >＝＝＝＝＝＝＝＝＝＝＝＝  
  
-- 参考: Azure Portal を使用して VHD から VM を作成する  
-[https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/create-vm-specialized-portal](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/create-vm-specialized-portal)
+- 参考: サポートされていないシナリオ - Sysprep (システム準備) の概要  
+[https://learn.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/sysprep--system-preparation--overview#unsupported-scenarios](https://learn.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/sysprep--system-preparation--overview#unsupported-scenarios)
  
 >＝＝＝＝＝抜粋＝＝＝＝＝  
->複数の VM を作成する場合は、特殊化されたディスクを使用しないでください。  
->代わりに、より大規模なデプロイの場合は、イメージを作成してから、そのイメージを使用して複数の VM を作成します。  
+>PC を一般化せずに Windows イメージを別の PC に移動またはコピーすることはサポートされていません。  
 >＝＝＝＝＝＝＝＝＝＝＝＝  
 
 ---

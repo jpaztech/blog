@@ -144,3 +144,4 @@
 - [SSL 証明書の更新に関するアナウンス](./articles/archive/ssl-intermediate-ca-change.md)
 - [Azure で単数 NIC の仮想マシンを複数 NIC にする](./articles/archive/singlenicvm-to-multinicvm.md)
 - [Azure 仮想マシンにおける不要な NIC を削除する方法](./articles/archive/delete-nic.md)
+

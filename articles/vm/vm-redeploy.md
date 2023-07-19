@@ -54,9 +54,9 @@ Azure 仮想マシンで接続不可などの問題が発生した際に、Azure
 ### ■ Azure PowerShell を利用して再デプロイを実施する
 こちらの手順では下記の PowerShell モジュールを使用しています。最新のモジュールについては各リンクをご確認ください。
 
->- PowerShell 7.1 
+>- PowerShell
 >([PowerShell をインストールする](https://docs.microsoft.com/ja-jp/powershell/scripting/install/installing-powershell))
->- AzPowerShell 5.9.0
+>- AzPowerShell
 >([Azure PowerShell をインストールする](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps))
 
 

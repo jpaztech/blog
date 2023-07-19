@@ -6,6 +6,14 @@ tags:
   - Windows
   - Noboot
 ---
+> [!WARNING]
+> 本記事は非管理ディスクに関する情報を掲載しておりますが、非管理ディスクについては 2022 年 9 月 13 日より非推奨となっております。
+> 非管理ディスクの完全な廃止は 2023 年 9 月 30 日を予定しておりますが、できる限り速やかに管理ディスクへの移行をご計画いただけますようお願い申し上げます。
+> なお、2023 年 9 月 30 日以降、新規の非管理ディスクの作成が不可となる予定です。本記事で紹介する手順が利用できなくなる可能性がございますことご留意いただけますよう重ねてお願い申し上げます。
+>
+> 非管理ディスクの非推奨化/廃止に関する詳細は下記の公式ドキュメントをご確認ください。
+>   **2025 年 9 月 30 日までに Azure アンマネージド ディスクを移行してください**
+>   [https://learn.microsoft.com/ja-jp/azure/virtual-machines/unmanaged-disks-deprecation](https://learn.microsoft.com/ja-jp/azure/virtual-machines/unmanaged-disks-deprecation)
 
 こんにちは。Azure テクニカル サポート チームの重田です。 
 本記事では、Windows OS が起動しなくなる事象が発生した際に Windows OS の復旧手順を実施するために、起動ができない VM の OS ディスクを他の正常な VM にデータ ディスクとして接続する方法について紹介します。
@@ -77,7 +85,11 @@ AzCopy については、下記公開情報をご確認ください。
 ### 2. 復旧作業用 VM にて、複製した VHD ファイルをデータ ディスクとしてアタッチします
 
 1. 復旧作業用の VM を作成します。
-   Azure Portal から [Virtual Machines] を開き、 [+ 追加] をクリックし、復旧対象 VM と同様のリージョンにて、同様の OS バージョンの非管理ディスクを用いた VM を作成します。
+   Azure CLI を利用して az vm create コマンドに --use-unmanaged-disk オプションを指定することで作成が可能です。
+   詳細は下記のコマンドリファレンスをご確認ください。
+   > az vm create
+   > [https://learn.microsoft.com/ja-jp/cli/azure/vm?view=azure-cli-latest#az-vm-create](https://learn.microsoft.com/ja-jp/cli/azure/vm?view=azure-cli-latest#az-vm-create)
+
 2. 複製した VHD ファイルをデータ ディスクとしてアタッチします。
    Azure Portal から [Virtual Machines] - [<復旧作業用の VM 名>] を開き、左メニュー "設定" の [ディスク] をクリックします。
 3. 開いた画面にて [+ データ ディスクの追加] をクリックします。
