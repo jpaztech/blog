@@ -139,7 +139,9 @@
 - [Azure データセンター ネットワーク インフラストラクチャー](./articles/archive/azure-datacenter-infrastructure-1.md)
 - [ネットワーク仮想アプライアンス (NVA) 経由で通信できない時のチェックポイント](./articles/archive/nva-troubleshooting.md)
 - [Azure ロードバランサー利用時の注意点](./articles/archive/azurelb-tips.md)
+- [ポイント対サイトVPNに関する重要な通知について](./articles/archive/important_information_p2s_cert.md)
 - [Load Balancer と Application Gateway の通信の違い](./articles/archive/lb_appgw_traffic_different.md)
 - [SSL 証明書の更新に関するアナウンス](./articles/archive/ssl-intermediate-ca-change.md)
 - [Azure で単数 NIC の仮想マシンを複数 NIC にする](./articles/archive/singlenicvm-to-multinicvm.md)
 - [Azure 仮想マシンにおける不要な NIC を削除する方法](./articles/archive/delete-nic.md)
+
