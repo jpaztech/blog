@@ -1,7 +1,7 @@
 ---
 title: Azure VM の作成者を確認する方法
 
-date: 2023-6-21
+date: 2023-7-31
 tags:
   - VM
   - HowTo
