@@ -1,7 +1,7 @@
 ---
-title: Azure VM の作成者を確認する方法
+title: Azure VM の作成/起動/停止ユーザーを確認する方法
 
-date: 2023-7-31
+date: 2023-7-31 18:00:00
 tags:
   - VM
   - HowTo
