@@ -1,6 +1,6 @@
 ---
-title: イベント ログ Service Control Manage 7031 - RdAgent サービスの再起動について
-date: 2023-7-28 17:30:00
+title: ゲスト OS 内からネットワーク接続のプロパティを変更しないでください
+date: 2023-7-31 17:30:00
 tags:
   - VM
   - Windows
