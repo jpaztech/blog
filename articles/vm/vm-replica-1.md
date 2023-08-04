@@ -40,7 +40,7 @@ Windows VM の場合「OS ディスクのスナップショットから VM を�
 [https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/backup-and-storage/windows-installations-disk-duplication](https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/backup-and-storage/windows-installations-disk-duplication)
  
 >＝＝＝＝＝抜粋＝＝＝＝＝  
->When you deploy a duplicated or imaged Windows installation, it is required that the System Preparation (Sysprep) tool is used before the capture of the image.   
+>重複またはイメージ化された Windows インストールを展開する場合は、イメージのキャプチャ前にシステム準備 (Sysprep) ツールを使用する必要があります。  
 >＝＝＝＝＝＝＝＝＝＝＝＝  
  
 - 参考: サポートされていないシナリオ - Sysprep (システム準備) の概要  
