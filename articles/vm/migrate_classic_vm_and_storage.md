@@ -13,7 +13,7 @@ tags:
 
 Azure 初期で利用されておりました Azure Service Manager (ASM) を介した IaaS 仮想マシン (VM) の管理を 2020 年 2 月 28 日 に 非推奨として **2023 年 9 月 6 日** に完全に廃止される予定です。
 
-> ■ ご参考: Migrate your IaaS resources to Azure Resource Manager by September 1, 2023
+> ■ ご参考: Migrate your IaaS resources to Azure Resource Manager by September 6, 2023
 > [https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation](https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation)
 > (ご参考: 日本語 URL)
 > [https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation](https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation)
