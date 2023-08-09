@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/image9.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/image10.png">
 <meta property="article:published_time" content="2022-12-29T08:30:00.000Z">
-<meta property="article:modified_time" content="2023-08-09T03:04:28.129Z">
+<meta property="article:modified_time" content="2023-08-09T03:34:12.193Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Migration">
@@ -116,7 +116,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+14d261a3-37a4-5f76-b048-3f2e5269e2f5%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BClassic+VM+%E3%81%8B%E3%82%89+ARM+%E3%81%B8%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85+%28VM%E3%80%81%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E7%B7%A8%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fmigrate_classic_vm_and_storage%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fmigrate_classic_vm_and_storage.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fmigrate_classic_vm_and_storage.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/" data-id="cll35czxu00ip0nnn5wlldkrn" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/" data-id="cll36f76700ip0npb1rmmdnuj" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -124,7 +124,7 @@
         <p>こんにちは。Azure テクニカル サポート チームの鳥越です。<br>2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点ですでに 90% が Azure Resource Manager モデルで利用されておりました。</p>
 <p>Azure 初期で利用されておりました Azure Service Manager (ASM) を介した IaaS 仮想マシン (VM) の管理を 2020 年 2 月 28 日 に 非推奨として <strong>2023 年 9 月 6 日</strong> に完全に廃止される予定です。</p>
 <blockquote>
-<p>■ ご参考: Migrate your IaaS resources to Azure Resource Manager by September 1, 2023<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation">https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation</a><br>(ご参考: 日本語 URL)<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation">https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation</a></p>
+<p>■ ご参考: Migrate your IaaS resources to Azure Resource Manager by September 6, 2023<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation">https://learn.microsoft.com/en-us/azure/virtual-machines/classic-vm-deprecation</a><br>(ご参考: 日本語 URL)<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation">https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation</a></p>
 </blockquote>
 <div class="alert is-important"><p class="alert-title">重要</p><p><strong>(2023/01/27 Update)</strong>: 当初、2023 年 3 月 1日とご説明しておりました ASM の廃止は <strong>2023 年 9 月 1 日</strong> に延期されました。</p><p>その後、2023 年 9 月 6 日まで更に延期されましたが、現在これ以上の延期は計画されておりません。</p></div>
 <p>そのため、これから 2023 年 9 月 6 日までに移行計画を立てていらっしゃるお客様に対して、移行がスムーズに行えるようにあらかじめ確認しておくべきポイントをお纏めしました。</p>
