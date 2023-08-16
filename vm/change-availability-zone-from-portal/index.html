@@ -16,17 +16,18 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/1.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/2.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/3.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/4.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/13.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/5.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/6.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/7.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/8.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/14.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/9.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/10.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/11.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/15.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/16.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/12.png">
 <meta property="article:published_time" content="2021-08-11T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-16T07:01:28.010Z">
+<meta property="article:modified_time" content="2023-08-16T07:19:52.490Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Availability Zone">
@@ -117,7 +118,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7c8e5275-a838-5d91-90a1-334e6460e366%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BVM+%E3%81%AE%E5%86%8D%E4%BD%9C%E6%88%90%E3%81%AB%E3%82%88%E3%82%8A%E5%8F%AF%E7%94%A8%E6%80%A7%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B+%28Azure+%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%AB%E7%B7%A8%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fchange-availability-zone-from-portal%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fchange-availability-zone-from-portal.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fchange-availability-zone-from-portal.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/" data-id="cllddwoj5005e0np1fntd8671" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/change-availability-zone-from-portal/" data-id="clldekdm2005e0nt84acpa5lw" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -153,8 +154,8 @@
 <p><img src="/blog/vm/change-availability-zone-from-portal/2.png"></p>
 <h3 id="2-ディスクのスナップショットを作成する"><a href="#2-ディスクのスナップショットを作成する" class="headerlink" title="2. ディスクのスナップショットを作成する"></a>2. ディスクのスナップショットを作成する</h3><p>画面の “＋ スナップショットの作成” をクリックします。</p>
 <p><img src="/blog/vm/change-availability-zone-from-portal/3.png"></p>
-<p>必要項目を適宜入力し、[確認および作成] - [作成] をクリックします。<br>“記憶域の種類” は、スナップショットを高パフォーマンスのディスクに保存する必要がある場合を除き、 [Standard_HDD] を選択します。</p>
-<p><img src="/blog/vm/change-availability-zone-from-portal/4.png"></p>
+<p>必要項目を適宜入力し、[確認および作成] - [作成] をクリックします。<br>“ストレージの種類” は、スナップショットを高パフォーマンスのディスクに保存する必要がある場合を除き、 [Standard HDD<br>(ローカル冗長ストレージ)] を選択します。</p>
+<p><img src="/blog/vm/change-availability-zone-from-portal/13.png"></p>
 <p>データディスクがある場合、データディスクについても同様にスナップショットを作成します。</p>
 <p><img src="/blog/vm/change-availability-zone-from-portal/5.png"></p>
 <h3 id="3-ディスクのスナップショットから新規にディスクを作成する"><a href="#3-ディスクのスナップショットから新規にディスクを作成する" class="headerlink" title="3. ディスクのスナップショットから新規にディスクを作成する"></a>3. ディスクのスナップショットから新規にディスクを作成する</h3><p>Azure ポータル 上部の検索バーに “スナップショット” と入力し、サービス [スナップショット] を選択します。<br>上記手順で作成した OS ディスクおよび、データ ディスクのスナップショットが作成されていることを確認します。</p>
@@ -162,14 +163,15 @@
 <p>OS ディスクのスナップショットを選択し、[+ ディスクの作成] をクリックします。</p>
 <p><img src="/blog/vm/change-availability-zone-from-portal/7.png"></p>
 <p>必要項目を適宜入力し、[確認および作成] - [作成] をクリックします。<br>可用性ゾーンを希望のゾーン番号に変更します。<br>こちらの手順では、元々選択していた “1” から “2” へとゾーンを変更しています。</p>
-<p><img src="/blog/vm/change-availability-zone-from-portal/8.png"></p>
+<p><img src="/blog/vm/change-availability-zone-from-portal/14.png"></p>
 <p>データ ディスクについても同様にディスクを作成します。</p>
 <h3 id="4-新規に作成したディスクから-VM-を作成する"><a href="#4-新規に作成したディスクから-VM-を作成する" class="headerlink" title="4. 新規に作成したディスクから VM を作成する"></a>4. 新規に作成したディスクから VM を作成する</h3><p>Azure ポータル上部の検索バーに “ディスク” と入力し、サービス [ディスク] を選択します。<br>上記手順で作成した OS ディスクおよび、データ ディスクが作成されていることを確認します。</p>
 <p><img src="/blog/vm/change-availability-zone-from-portal/9.png"></p>
 <p>作成した OS ディスクを選択し、[+ VM の作成] をクリックします。<br>表示されているディスクの状態が “Unattached”、可用性ゾーンが指定した番号であるかを確認します。</p>
 <p><img src="/blog/vm/change-availability-zone-from-portal/10.png"></p>
 <p>必要項目を適宜入力し、[確認および作成] - [作成] をクリックします。<br>可用性ゾーンの番号は、作成したディスクと同じ番号を指定します。<br>データ ディスクは [既存のディスクの接続] より、スナップショットから作成したデータ ディスクを適宜選択します。<br>VNET は同様に既存のものから選択出来ますが、NIC は新規に作成されます。</p>
-<p><img src="/blog/vm/change-availability-zone-from-portal/11.png"></p>
+<p><img src="/blog/vm/change-availability-zone-from-portal/15.png"></p>
+<p><img src="/blog/vm/change-availability-zone-from-portal/16.png"></p>
 <p>作成された VM が、指定のゾーン番号で表示されていること(こちらの手順ではゾーン “2” )を確認します。</p>
 <p><img src="/blog/vm/change-availability-zone-from-portal/12.png"></p>
 <h3 id="5-作成したスナップショット、および元々利用していたリソースを削除する"><a href="#5-作成したスナップショット、および元々利用していたリソースを削除する" class="headerlink" title="5. 作成したスナップショット、および元々利用していたリソースを削除する"></a>5. 作成したスナップショット、および元々利用していたリソースを削除する</h3><p>作成した VM が正常動作することを確認後、元々利用していたリソース、および元々利用していたリソースを削除し、手順は完了です。</p>
