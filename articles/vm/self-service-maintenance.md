@@ -1,6 +1,6 @@
 ---
 title: セルフサービスメンテナンスについて（FAQ）
-date: 2023-7-31 17:30:00
+date: 2023-8-18 12:00:00
 tags:
   - VM
   - Windows
@@ -9,20 +9,20 @@ tags:
 ---
 
 こんにちは、Azure テクニカル サポート チームの富田です。  
-今回はよくお問い合わせ頂く VM（仮想マシン）のセルフサービスメンテナンスについて、以下のような内容を解説させていただきます。
+今回はよくお問い合わせいただく VM（仮想マシン）の「再起動を伴うメンテナンス」に伴い、事前にメンテナンスが可能となるセルフサービスメンテナンスについて、以下のような内容を解説させていただきます。
 
-- セルフサービスメンテナンスの概要
-- 再起動を伴うメンテナンスの通知のサンプルはありますか？
-- 再起動を伴うメンテナンス対象 VM の確認はどのように行えばよいですか？
-- 再起動を伴うメンテナンスの計画をメール通知するにはどうすればよいですか？
-- セルフサービスメンテナンスはどうやって実行すればよいですか？
-- 通常の割り当て解除や再起動等でセルフサービスメンテナンスは完了しますか？
-- 再起動を伴うメンテナンス対象一覧から対象 VM が消えていたのですが何故ですか？
-- 再起動を伴うメンテナンスの完了（成功）の確認方法はありますか？
-- セルフサービスメンテナンス実行時は VM が起動している必要がありますか？
-- セルフサービスメンテナンス期間中にメンテナンスをしないとどうなりますか？
-- 別のサブスクリプションではこのメンテナンスが通知されませんが何故ですか？
-- メールでのみ対象 VM が通知される再起動を伴うメンテナンスについて
+- [セルフサービスメンテナンスの概要](.#%E3%82%BB%E3%83%AB%E3%83%95%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AE%E6%A6%82%E8%A6%81)
+- [再起動を伴うメンテナンス対象 VM の確認はどのように行えばよいですか？](.#%E5%86%8D%E8%B5%B7%E5%8B%95%E3%82%92%E4%BC%B4%E3%81%86%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E5%AF%BE%E8%B1%A1-VM-%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%81%AF%E3%81%A9%E3%81%AE%E3%82%88%E3%81%86%E3%81%AB%E8%A1%8C%E3%81%88%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%EF%BC%9F)
+- [再起動を伴うメンテナンスの計画をメール通知するにはどうすればよいですか？](.#%E5%86%8D%E8%B5%B7%E5%8B%95%E3%82%92%E4%BC%B4%E3%81%86%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AE%E8%A8%88%E7%94%BB%E3%82%92%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%9A%E7%9F%A5%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF%E3%81%A9%E3%81%86%E3%81%99%E3%82%8C%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%EF%BC%9F)
+- [再起動を伴うメンテナンスの通知のサンプルはありますか？](.#%E5%86%8D%E8%B5%B7%E5%8B%95%E3%82%92%E4%BC%B4%E3%81%86%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AE%E9%80%9A%E7%9F%A5%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%81%AF%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%81%8B%EF%BC%9F)
+- [セルフサービスメンテナンスはどのように実行すればよいですか？](.#%E3%82%BB%E3%83%AB%E3%83%95%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AF%E3%81%A9%E3%81%AE%E3%82%88%E3%81%86%E3%81%AB%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8C%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%EF%BC%9F)
+- [通常の割り当て解除や再起動等でセルフサービスメンテナンスは完了しますか？](.#%E9%80%9A%E5%B8%B8%E3%81%AE%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6%E8%A7%A3%E9%99%A4%E3%82%84%E5%86%8D%E8%B5%B7%E5%8B%95%E7%AD%89%E3%81%A7%E3%82%BB%E3%83%AB%E3%83%95%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AF%E5%AE%8C%E4%BA%86%E3%81%97%E3%81%BE%E3%81%99%E3%81%8B%EF%BC%9F)
+- [再起動を伴うメンテナンス対象一覧から対象 VM が消えていたのですが何故ですか？](.#%E5%86%8D%E8%B5%B7%E5%8B%95%E3%82%92%E4%BC%B4%E3%81%86%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E5%AF%BE%E8%B1%A1%E4%B8%80%E8%A6%A7%E3%81%8B%E3%82%89%E5%AF%BE%E8%B1%A1-VM-%E3%81%8C%E6%B6%88%E3%81%88%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E3%81%99%E3%81%8C%E4%BD%95%E6%95%85%E3%81%A7%E3%81%99%E3%81%8B%EF%BC%9F)
+- [再起動を伴うメンテナンスの完了（成功）の確認方法はありますか？](.#%E5%86%8D%E8%B5%B7%E5%8B%95%E3%82%92%E4%BC%B4%E3%81%86%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AE%E5%AE%8C%E4%BA%86%EF%BC%88%E6%88%90%E5%8A%9F%EF%BC%89%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95%E3%81%AF%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%81%8B%EF%BC%9F)
+- [セルフサービスメンテナンス実行時は VM が起動している必要がありますか？](.#%E3%82%BB%E3%83%AB%E3%83%95%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E5%AE%9F%E8%A1%8C%E6%99%82%E3%81%AF-VM-%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E5%BF%85%E8%A6%81%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%99%E3%81%8B%EF%BC%9F)
+- [セルフサービスメンテナンス期間中にメンテナンスをしないとどうなりますか？](.#%E3%82%BB%E3%83%AB%E3%83%95%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E6%9C%9F%E9%96%93%E4%B8%AD%E3%81%AB%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%82%92%E3%81%97%E3%81%AA%E3%81%84%E3%81%A8%E3%81%A9%E3%81%86%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%81%8B%EF%BC%9F)
+- [別のサブスクリプションではこのメンテナンスが通知されませんが何故ですか？](.#%E5%88%A5%E3%81%AE%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%A7%E3%81%AF%E3%81%93%E3%81%AE%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%8C%E9%80%9A%E7%9F%A5%E3%81%95%E3%82%8C%E3%81%BE%E3%81%9B%E3%82%93%E3%81%8C%E4%BD%95%E6%95%85%E3%81%A7%E3%81%99%E3%81%8B%EF%BC%9F)
+- [メールでのみ対象 VM が通知される再起動を伴うメンテナンスについて](.#%E3%83%A1%E3%83%BC%E3%83%AB%E3%81%A7%E3%81%AE%E3%81%BF%E5%AF%BE%E8%B1%A1-VM-%E3%81%8C%E9%80%9A%E7%9F%A5%E3%81%95%E3%82%8C%E3%82%8B%E5%86%8D%E8%B5%B7%E5%8B%95%E3%82%92%E4%BC%B4%E3%81%86%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
 ---
 ## セルフサービスメンテナンスの概要
@@ -46,29 +46,6 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 > [!TIP]
 > セルフサービスメンテナンスを実行しても、実際は Azure 基盤側にてハードウェアのメンテナンスがトリガーされるわけではございません。  
 > セルフサービスメンテナンスが実行された場合、お客様の VM がメンテナンス対象の物理ホストサーバーからメンテナンス対象外の物理ホストサーバーに移動されるものとなります。
-
----
-## 再起動を伴うメンテナンスの通知のサンプルはありますか？
-
-以下は、再起動を伴うメンテナンスの通知のサンプルとなります。  
-「サービス正常性」の「計画メンテナンス」より確認頂くことが可能でございます。  
-**メンテナンス毎に内容は変わりますので、実際に通知されたメンテナンス通知内容のご確認をお願い申し上げます。** 
-
->Dear Azure customer,
->
->One or more Azure Virtual Machines (VMs) associated with your subscription require a maintenance update to migrate these VMs to newer hardware. While the vast majority of platform maintenance causes no interruption to your services, this update will require a reboot.  
->
->This maintenance has two phases: the self-service phase and a scheduled maintenance phase.  
->
->Azure Service Health provides you with the current status of each VM that requires maintenance and allows you to initiate the self-service maintenance proactively – any time between now and July 26, 2023 (23:59 UTC). If self-service maintenance has not been completed by then, Azure will automatically initiate maintenance on any VM that still requires it, sometime between July 27, 2023 (00:00 UTC) to August 02, 2023 (23:59 UTC). This scheduled maintenance will be performed one update domain at a time, to limit impact to environments configured for high availability.  
->
->You can view a list of Affected Resources for this event under the ServiceHealth/PlannedMaintenance tab in the Azure portal  
->
->You should expect each VM to be unavailable for up to 15 minutes after initiating the maintenance and note that operating system and data disks will be retained, but temporary storage will be lost during this maintenance. If you are using Dv1 or DSv1 VM sizes, please refer to the documentation [here](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-previous-gen) to understand performance changes if any.  
->
->If you are using Proximity Placement Groups, please refer to the documentation [here](https://docs.microsoft.com/en-us/azure/virtual-machines/co-location#planned-maintenance-and-proximity-placement-groups) to understand how to verify the alignment of your resources and to take appropriate action if some resources are not aligned.  
->
->We apologize for any impact that this maintenance may have. We strive to minimize the impact of platform maintenance, and to provide you with as much visibility and control as possible.  
 
 ---
 ## 再起動を伴うメンテナンス対象 VM の確認はどのように行えばよいですか？
@@ -120,8 +97,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 ---
 ## 再起動を伴うメンテナンスの計画をメール通知するにはどうすればよいですか？
 
-一部のメンテナンスについては、設定をしなくとも管理者にメール通知されることがございますが、
-原則として再起動が伴うメンテナンスが計画された際にメールで通知を行うには、サービス正常性のアラート設定を行う必要がございます。  
+一部のメンテナンスについては、設定をしなくとも管理者にメール通知されることがございますが、原則として再起動が伴うメンテナンスが計画された際にメールで通知を行うには、サービス正常性のアラート設定を行う必要がございます。  
 
 ■ご参考：ポータルの通知とアラート  
 [https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-notifications-portal#notification-and-alerts-in-the-portal](https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-notifications-portal#notification-and-alerts-in-the-portal)
@@ -132,7 +108,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 >ーーーーーーーーーーーーーー  
 
 メンテナンスに限らず、サービス正常性アラートは Azure サービス自体の正常性を監視するのに役立ちます。  
-サービス正常性アラートについては別途解説ブログ記事もございますので、参考としてご案内させていただきます。  
+サービス正常性アラートについては別途弊社の解説ブログ記事もございますので、参考としてご案内させていただきます。  
 
 ■ご参考：サービス正常性アラートの設定手順と推奨設定について
 [https://jpazmon-integ.github.io/blog/ame/HowToSetUpServiceHealthAlertsAndRecommendedSettings/](https://jpazmon-integ.github.io/blog/ame/HowToSetUpServiceHealthAlertsAndRecommendedSettings/)
@@ -160,7 +136,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 ![](./self-service-maintenance/2023-07-26-13-30-54.png)
 
 アクションにて、メンテナンスが計画された際にどのように通知アクションを行うのか設定します。  
-既に既存のアクション グループが存在する場合は「アクション グループの選択」を選んでください。  
+既にアクション グループが存在する場合は「アクション グループの選択」を選んでください。  
 新規にメール通知を行うアクション グループを作成する際は、「アクション グループの作成」を選択いただき、任意のメールアドレスへ通知を行うアクショングループを新規作成してください。
 
 ![](./self-service-maintenance/2023-07-26-13-31-57.png)
@@ -172,7 +148,30 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 これで再起動を伴うメンテナンスが計画された際に、メール通知を行うアラートが作成できました。
 
 ---
-## セルフサービスメンテナンスどうやって実行すればよいですか？
+## 再起動を伴うメンテナンスの通知のサンプルはありますか？
+
+以下は、再起動を伴うメンテナンスの通知のサンプルとなります。  
+「サービス正常性」の「計画メンテナンス」より確認頂くことが可能でございます。  
+**メンテナンス毎に内容は変わりますので、実際に通知されたメンテナンス通知内容のご確認をお願い申し上げます。** 
+
+>Dear Azure customer,
+>
+>One or more Azure Virtual Machines (VMs) associated with your subscription require a maintenance update to migrate these VMs to newer hardware. While the vast majority of platform maintenance causes no interruption to your services, this update will require a reboot.  
+>
+>This maintenance has two phases: the self-service phase and a scheduled maintenance phase.  
+>
+>Azure Service Health provides you with the current status of each VM that requires maintenance and allows you to initiate the self-service maintenance proactively – any time between now and July 26, 2023 (23:59 UTC). If self-service maintenance has not been completed by then, Azure will automatically initiate maintenance on any VM that still requires it, sometime between July 27, 2023 (00:00 UTC) to August 02, 2023 (23:59 UTC). This scheduled maintenance will be performed one update domain at a time, to limit impact to environments configured for high availability.  
+>
+>You can view a list of Affected Resources for this event under the ServiceHealth/PlannedMaintenance tab in the Azure portal  
+>
+>You should expect each VM to be unavailable for up to 15 minutes after initiating the maintenance and note that operating system and data disks will be retained, but temporary storage will be lost during this maintenance. If you are using Dv1 or DSv1 VM sizes, please refer to the documentation [here](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-previous-gen) to understand performance changes if any.  
+>
+>If you are using Proximity Placement Groups, please refer to the documentation [here](https://docs.microsoft.com/en-us/azure/virtual-machines/co-location#planned-maintenance-and-proximity-placement-groups) to understand how to verify the alignment of your resources and to take appropriate action if some resources are not aligned.  
+>
+>We apologize for any impact that this maintenance may have. We strive to minimize the impact of platform maintenance, and to provide you with as much visibility and control as possible.  
+
+---
+## セルフサービスメンテナンスはどのように実行すればよいですか？
 
 セルフサービスメンテナンスを実行するためには、通常の再起動操作とは別の操作が必要となります。  
 具体的な実行方法としては、以下のドキュメントに記載の通り、Azure ポータル / Azure PowerShell / Azure CLI より実行することが可能です。  
@@ -216,7 +215,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 ## 再起動を伴うメンテナンス対象一覧から対象 VM が消えていたのですが何故ですか？
 
 以下のドキュメントに記載の通り、VM がメンテナンス対象から外れることがございます。  
-多いのは、お客様の方で VM の割り当て解除および起動が行われたことで、メンテナンス対象外の物理ホストサーバーに VM が移動したことでメンテナンス対象外となるといったパターンです。  
+よくあるシナリオとしては、お客様の方で VM の割り当て解除および起動が行われたことで、メンテナンス対象外の物理ホストサーバーに VM が移動したことによりメンテナンス対象外となるといったパターンです。  
 メンテナンス対象から表示が消えている VM については、セルフサービスメンテナンスが不要となっておりますので、特にご対応をいただく必要はございません。
 
 ■ご参考：よく寄せられる質問  
@@ -238,7 +237,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 
 先述のサービス正常性の計画メンテナンスの対象 VM 確認画面上で、「影響を受けるリソース」の一覧をご確認いただき、以下のいずれかの状態であればメンテナンスが完了（成功）していると考えていただいて差し支えございません。
 
-- 対象の VM　について「状態」の列が「更新済み」のと表示さていている。
+- 対象の VM　について「状態」の列が「更新済み」と表示さていている。
 - もしくは、対象の VM が「影響を受けるリソース」の一覧表示から消えている。
 
 ![](./self-service-maintenance/2023-07-26-14-46-32.png)
@@ -254,7 +253,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 
 セルフサービスメンテナンスの実行可能な期間が終了すると、予定メンテナンス フェーズになります。  
 セルフサービスメンテナンス期間中にセルフサービスメンテナンスを実行せずに、予定メンテナンス フェーズに入った場合は、自動的に再起動を伴うメンテナンスが実行されます。  
-この場合、予定メンテナンス フェーズではお客様の方でメンテナンス実行の時間を制御することは叶いません点、ご了承くださいませ。  
+この場合、予定メンテナンス フェーズではお客様の方でメンテナンス実行のタイミングを制御することは叶いません点、ご了承くださいませ。  
 
 ---
 ##  別のサブスクリプションではこのメンテナンスが通知されませんが何故ですか？
@@ -266,7 +265,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 ## メールでのみ対象 VM が通知される再起動を伴うメンテナンスについて
 
 稀ではございますが、再起動を伴うメンテナンスについて、Azure ポータル等では対象 VM の確認が叶わず、メールでのみメンテナンス対象 VM が通知される場合がございます。  
-この場合は、メール内に対象 VM の通知を行った旨やどのような対応が必要か記載されておりますため、通知に記載の内容をご確認いただきご対応をお願い申し上げます。
+この場合は、そのメール内に対象 VM の通知を行った旨やどのような対応が必要かといった内容が記載されておりますため、通知に記載の内容をご確認いただきご対応をお願い申し上げます。
 
 ---
 
