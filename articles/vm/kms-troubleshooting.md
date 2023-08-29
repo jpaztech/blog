@@ -161,8 +161,25 @@ cscript c:\windows\system32\slmgr.vbs /dlv
 
 ![](./kms-troubleshooting/2023-08-02-11-37-28.png)
 
-上記のように、ライセンスの状態やライセンス認証先の情報の確認が可能でございます。
+上記のように、ライセンスの状態やライセンス認証先の情報の確認が可能でございます。  
+ライセンスの有効期限が切れた状態などでは上記コマンドでライセンス認証先 KMS サーバーの情報が表示されないことがございます。  
+そのような場合は別の方法として以下のコマンドで確認可能です。  
 
+```powershell
+# dummy
+# 設定されているライセンス認証先 KMS サーバーのドメインを確認
+reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v KeyManagementServiceName
+
+# 設定されているライセンス認証先 KMS サーバーのポート番号を確認
+reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v KeyManagementServicePort
+```
+
+もしライセンス認証先 KMS サーバーを IP アドレスを固定で指定してしまっている場合など、KMS ライセンス認証先の修正が必要な場合は以下のコマンドで修正可能です。  
+なお、修正後に設定を反映させるために先述の手動のライセンス認証のコマンド実行も合わせてお願いいたします。  
+
+```powershell
+cscript c:\windows\system32\slmgr.vbs /skms azkms.core.windows.net:1688
+```
 
 ---
 ### KMS サーバーへの名前解決および疎通確認コマンドの実行
@@ -173,7 +190,6 @@ KMS ライセンス認証が失敗している原因として、名前解決が�
 - DNS での名前解決の確認
 
 ```powershell
-# dummy
 # 古い情報での名前解決を抑止するため DNS キャッシュをクリア
 ipconfig /flushdns
 
@@ -234,7 +250,7 @@ https://learn.microsoft.com/ja-jp/windows-server/get-started/activation-troubles
 
 イベント ID 8198, 8200 は KMS ライセンス認証の失敗時に表示されることのあるログとなります。  
 
-後述の「KMS サーバーの一時的な負荷」のセクションに記載の通り、一時的な KMS サーバーの負荷の問題で表示される可能性がございますが、「12289：ライセンス認証の結果表示」にて正常にライセンス認証がされている場合は無視可能となります。  
+後述の[「KMS サーバーの一時的な負荷」](./#KMS-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E4%B8%80%E6%99%82%E7%9A%84%E3%81%AA%E8%B2%A0%E8%8D%B7)のセクションに記載の通り、一時的な KMS サーバーの負荷の問題で表示される可能性がございますが、「12289：ライセンス認証の結果表示」にて正常にライセンス認証がされている場合は無視可能となります。  
 そのため、「8198, 8200：ライセンス認証の失敗」は常に発生しておらず単発的な場合は、無視いただいて問題ございません。
 
 ---
