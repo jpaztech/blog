@@ -172,8 +172,12 @@ reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Softw
 
 # 設定されているライセンス認証先 KMS サーバーのポート番号を確認
 reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v KeyManagementServicePort
+```
 
-# 万が一設定が間違っている場合は以下のコマンドで修正可能です
+もしライセンス認証先 KMS サーバーを IP アドレスを固定で指定してしまっている場合など、KMS ライセンス認証先の修正が必要な場合は以下のコマンドで修正可能です。  
+なお、修正後に設定を反映させるために先述の手動のライセンス認証のコマンド実行も合わせてお願いいたします。  
+
+```powershell
 cscript c:\windows\system32\slmgr.vbs /skms azkms.core.windows.net:1688
 ```
 
