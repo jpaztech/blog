@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/kms-troubleshooting/2023-08-03-11-26-51.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/kms-troubleshooting/2023-08-07-09-13-40.png">
 <meta property="article:published_time" content="2023-08-17T08:30:00.000Z">
-<meta property="article:modified_time" content="2023-08-18T01:24:18.877Z">
+<meta property="article:modified_time" content="2023-08-29T07:18:31.266Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -123,7 +123,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+c9b17ead-22f3-57a4-a917-bb3403317f86%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Windows+VM+%E3%81%AE+KMS+%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9%E8%AA%8D%E8%A8%BC%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fkms-troubleshooting%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fkms-troubleshooting.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fkms-troubleshooting.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/kms-troubleshooting/" data-id="cllfwqt5e00iu0nmv5tbneeuj" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/kms-troubleshooting/" data-id="cllvz8pzx00iu0ntg1ovghezm" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -220,13 +220,18 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cscript c:\windows\system32\slmgr.vbs /dlv</span><br></pre></td></tr></table></figure>
 
 <p><img src="/blog/vm/kms-troubleshooting/2023-08-02-11-37-28.png"></p>
-<p>上記のように、ライセンスの状態やライセンス認証先の情報の確認が可能でございます。</p>
+<p>上記のように、ライセンスの状態やライセンス認証先の情報の確認が可能でございます。<br>ライセンスの有効期限が切れた状態などでは上記コマンドでライセンス認証先 KMS サーバーの情報が表示されないことがございます。<br>そのような場合は別の方法として以下のコマンドで確認可能です。  </p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 設定されているライセンス認証先 KMS サーバーのドメインを確認</span></span><br><span class="line">reg query <span class="string">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform&quot;</span> /v KeyManagementServiceName</span><br><span class="line"></span><br><span class="line"><span class="comment"># 設定されているライセンス認証先 KMS サーバーのポート番号を確認</span></span><br><span class="line">reg query <span class="string">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform&quot;</span> /v KeyManagementServicePort</span><br></pre></td></tr></table></figure>
+
+<p>もしライセンス認証先 KMS サーバーを IP アドレスを固定で指定してしまっている場合など、KMS ライセンス認証先の修正が必要な場合は以下のコマンドで修正可能です。<br>なお、修正後に設定を反映させるために先述の手動のライセンス認証のコマンド実行も合わせてお願いいたします。  </p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cscript c:\windows\system32\slmgr.vbs /skms azkms.core.windows.net:<span class="number">1688</span></span><br></pre></td></tr></table></figure>
+
 <hr>
 <h3 id="KMS-サーバーへの名前解決および疎通確認コマンドの実行"><a href="#KMS-サーバーへの名前解決および疎通確認コマンドの実行" class="headerlink" title="KMS サーバーへの名前解決および疎通確認コマンドの実行"></a>KMS サーバーへの名前解決および疎通確認コマンドの実行</h3><p>KMS ライセンス認証が失敗している原因として、名前解決ができていないといった事や、疎通が失敗している可能性がございます。<br>この点の原因切り分けのためには以下の PowerShell コマンドを実行します。</p>
 <ul>
 <li>DNS での名前解決の確認</li>
 </ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 古い情報での名前解決を抑止するため DNS キャッシュをクリア</span></span><br><span class="line">ipconfig /flushdns</span><br><span class="line"></span><br><span class="line"><span class="comment"># KMS サーバーの名前解決が可能か確認する</span></span><br><span class="line">nslookup kms.core.windows.net</span><br><span class="line">nslookup azkms.core.windows.net</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 古い情報での名前解決を抑止するため DNS キャッシュをクリア</span></span><br><span class="line">ipconfig /flushdns</span><br><span class="line"></span><br><span class="line"><span class="comment"># KMS サーバーの名前解決が可能か確認する</span></span><br><span class="line">nslookup kms.core.windows.net</span><br><span class="line">nslookup azkms.core.windows.net</span><br></pre></td></tr></table></figure>
 
 <p>成功した場合は、以下のように KMS サーバーの IP アドレスが名前解決されます。</p>
 <p><img src="/blog/vm/kms-troubleshooting/2023-08-02-11-43-58.png"></p>
@@ -261,7 +266,7 @@
 <li>8198, 8200：ライセンス認証の失敗</li>
 </ul>
 <p>イベント ID 8198, 8200 は KMS ライセンス認証の失敗時に表示されることのあるログとなります。  </p>
-<p>後述の「KMS サーバーの一時的な負荷」のセクションに記載の通り、一時的な KMS サーバーの負荷の問題で表示される可能性がございますが、「12289：ライセンス認証の結果表示」にて正常にライセンス認証がされている場合は無視可能となります。<br>そのため、「8198, 8200：ライセンス認証の失敗」は常に発生しておらず単発的な場合は、無視いただいて問題ございません。</p>
+<p>後述の<a href="./#KMS-%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E4%B8%80%E6%99%82%E7%9A%84%E3%81%AA%E8%B2%A0%E8%8D%B7">「KMS サーバーの一時的な負荷」</a>のセクションに記載の通り、一時的な KMS サーバーの負荷の問題で表示される可能性がございますが、「12289：ライセンス認証の結果表示」にて正常にライセンス認証がされている場合は無視可能となります。<br>そのため、「8198, 8200：ライセンス認証の失敗」は常に発生しておらず単発的な場合は、無視いただいて問題ございません。</p>
 <hr>
 <h2 id="よくあるトラブルのパターン"><a href="#よくあるトラブルのパターン" class="headerlink" title="よくあるトラブルのパターン"></a>よくあるトラブルのパターン</h2><p>お客様から「ライセンス認証が失敗する」といった場合に、よくあるトラブルのパターンおよびその対処方法についてご案内をさせていただきます。  </p>
 <hr>
