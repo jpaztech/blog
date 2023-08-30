@@ -6,6 +6,17 @@ tags:
   - Resource Health
 ---
 
+> [!NOTE]
+> リソース正常性アラートについてはプレビューが終了し、現在以下の公式ドキュメントのご用意がございます。  
+> こちらの公式ドキュメントより最新の情報をご確認いただけますと幸いです。  
+>   
+> ■ご参考：Azure portal で Resource Health アラートを構成する  
+> [https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-alert-monitor-guide](https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-alert-monitor-guide)  
+>   
+> ■ご参考：Resource Manager テンプレートを使用して Resource Health アラートを構成する  
+> [https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-alert-arm-template-guide](https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-alert-arm-template-guide)  
+
+
 こんにちは、Azure テクニカル サポート チームの安田です。
 
 「Azure 基盤側の障害によって仮想マシンが ダウン / 復旧 した際に通知を受け取りたい。」
@@ -13,11 +24,13 @@ tags:
 そこで今回は、リソース正常性アラートという機能を用いて、障害発生時に仮想マシンがダウンした際に、アラートを受け取る方法をお伝えします。
 
 <span style="color:gray;">
+  <s>
 <ul>
     <li>ブログ執筆時点では本機能はプレビュー段階となりますので、通知が正常に送付されない可能性がありますので、予めご了承ください。</li>
     <li>(鋭意開発中ですが、現段階では一般公開の目途は決まっておりません。)</li>
     <li>また、リソース正常性についても、正しく表記されないことがあることもあるため、表記に差異があれば、サポート部門までお問い合わせください。</li>
 </ul>
+  </s>
 </span>
 
 ## サービス正常性監視やハートビート監視との住み分けについて
@@ -79,11 +92,16 @@ Azure が提供している他のリソース監視サービスとの違いを�
 
 ## アラート作成前に
 
-前提として、現段階ではアラートはポータルから作成することはできず、 Resource Manager テンプレートをデプロイして作成する必要があります。テンプレート内容やデプロイ手順の詳細は下記ドキュメントを参考ください。
+<s>前提として、現段階ではアラートはポータルから作成することはできず、 Resource Manager テンプレートをデプロイして作成する必要があります。</s>テンプレート内容やデプロイ手順の詳細は下記ドキュメントを参考ください。
 
 >Resource Manager テンプレートを使用して Resource Health アラートを構成する
 >[https://docs.microsoft.com/ja-jp/azure/service-health/resource-health-alert-arm-template-guide](https://docs.microsoft.com/ja-jp/azure/service-health/resource-health-alert-arm-template-guide)
 
+> [!TIP]
+> 現在は以下の通り、Azure Portal からもアラートを作成することが可能となりました。  
+>   
+> ■ご参考：Azure portal で Resource Health アラートを構成する  
+> [https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-alert-monitor-guide](https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-alert-monitor-guide)
 
 ### ■ Azure PowerShell のインストール
 
