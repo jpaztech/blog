@@ -1,18 +1,25 @@
 ---
 title: クラシック VM で使用していた VHD から ARM VM を作成する手順
-date: 2023-9-4 9:00:00
+date: 2023-9-1 9:00:00
 tags:
   - VM
   - Windows
   - Linux
   - HowTo
-  - Disk
 ---
 
 こんにちは、Azure テクニカル サポート チームの富田です。  
-Azure のクラシック VM は 2023 年 9 月 6 日を持ちまして廃止となりました。  
+Azure のクラシック VM は 2023 年 9 月 6 日を持ちまして廃止となります。  
 そのためこれ以降サポートされる VM は ARM（Azure Resource Manager）の VM となります。  
-今回はクラシック VM で使用していた OS ディスクの VHD から ARM VM を作成する手順をご説明させていただきます。
+クラシック VM の ARM VM への移行については以下の通りドキュメント等がございます。  
+
+■ご参考：2023 年 9 月 6 日までに IaaS リソースを Azure Resource Manager に移行する  
+[https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation](https://learn.microsoft.com/ja-jp/azure/virtual-machines/classic-vm-deprecation )  
+
+■ご参考：Classic VM から ARM への移行についての注意事項 (VM、ストレージ編)  
+[https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage](https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage)  
+
+他方、上記とは別の方法としてクラシック VM で使用していた OS ディスクの VHD から ARM VM を作成することも可能でございますので、今回はこの手順についてご説明させていただきます。  
 
 >[!NOTE]
 >クラシック VM で使用していた VHD はクラシックストレージアカウントに保存されておりますが、クラシックストレージアカウントも 2024 年 8 月 31 日に完全に廃止されます。
@@ -24,6 +31,7 @@ Azure のクラシック VM は 2023 年 9 月 6 日を持ちまして廃止と�
 ---
 ## 手順の大まかな流れ
 
+クラシック VM で使用していた OS ディスクの VHD から ARM VM を作成する手順についてご紹介させていただきます。  
 クラシックストレージアカウントに保存されている VHD からそのままでは ARM VM の作成が叶いませんため、以下の手順を踏む必要がございます。  
 
 1. クラシックストレージアカウントから ARM ストレージアカウントへ VHD をコピーする。（AzCopy コマンド実行）
@@ -32,7 +40,7 @@ Azure のクラシック VM は 2023 年 9 月 6 日を持ちまして廃止と�
 
 ![](./classic-vhd-to-arm-vm/2023-08-16-11-01-20.png)
 
-ディスクリソースの作成のためには ARM ストレージアカウントに VHD を一旦コピーする必要があるため少し手順が多いですが一つずつ解説させていただきます。
+ディスクリソースの作成のためには ARM ストレージアカウントに VHD を一旦コピーする必要があるため少し手順が多いですが一つずつ解説させていただきます。  
 それでは、それぞれの手順の詳細をご案内させていただきます。
 
 ---
@@ -79,6 +87,7 @@ Blob URI より以下の通り、クラシックストレージアカウント�
 ![](./classic-vhd-to-arm-vm/2023-08-15-16-27-20.png)
 
 表示されたクラシックストレージアカウントの画面にて、左側のメニューより「Shared Access Signature」を選択し、以下の画像の例のように SAS トークンを生成し **<②コピー元 SAS トークン>** としてメモします。
+この際 SAS の有効期限等を適切に設定をお願いいたします。  
 
 ![](./classic-vhd-to-arm-vm/2023-08-16-09-20-13.png)
 
@@ -107,8 +116,9 @@ Blob URI より以下の通り、クラシックストレージアカウント�
 
 ![](./classic-vhd-to-arm-vm/2023-08-15-16-03-53.png)
 
-作成したコンテナーを選択し、コンテナーの画面の左側のメニューより「共有アクセス トークン」を選択の上、以下の図の例のようにコピー先の URL を生成します。
-この「BLOB SAS URL」が **<③コピー先 URL>** となります。  
+作成したコンテナーを選択し、コンテナーの画面の左側のメニューより「共有アクセス トークン」を選択の上、以下の図の例のようにコピー先の URL を生成します。  
+この際も SAS の有効期限等を適切に設定をお願いいたします。  
+以下のように表示された「BLOB SAS URL」が **<③コピー先 URL>** となります。  
 
 ![](./classic-vhd-to-arm-vm/2023-08-15-16-19-19.png)
 
@@ -138,6 +148,9 @@ azcopy copy 'https://classicsasample8.blob.core.windows.net/vhds/os-disk.vhd?sv=
 AzCopy はコマンドベースでファイルのコピーなどを行えるコマンドライン ユーティリティです。  
 今回は既定で AzCopy がインストールされている Cloud Shell を利用した手順をご紹介させていただきます。  
 既に AzCopy がインストールされている環境をお持ちの場合はそちらをご利用いただいても問題ございません。  
+
+■ご参考：AzCopy を使ってみる  
+[https://learn.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10](https://learn.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10)
 
 まず、ポータル右上の Cloud Shell 起動ボタンを選択します。
 
@@ -197,7 +210,7 @@ Cloud Shell が起動したら用意した AzCopy コマンドを実行します
 ![](./classic-vhd-to-arm-vm/2023-08-16-11-44-29.png)
 
 新規 ARM VM の作成画面に遷移いたしますので、お客様の環境に合わせて ARM VM の作成を実施くださいませ。  
-データディスクのアタッチも可能でございます。  
+作成時に「ディスク」のタブよりデータディスクのアタッチも可能でございます。  
 
 ![](./classic-vhd-to-arm-vm/2023-08-16-14-38-17.png)
 
