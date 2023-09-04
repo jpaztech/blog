@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/windows-noboot-summary/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/what-is-this-dvd-drive/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -17,13 +24,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/win2019-jp-lpk/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/windows-noboot-summary/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -72,14 +72,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-operation/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/vm-highusage/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-highusage/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/vm-operation/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -135,13 +135,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/runcommand/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/resourcegroup-uppercase-lowercase/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -156,6 +149,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/runcommand/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/resource-delete/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -164,13 +171,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/resource-health-alert/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -212,13 +212,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/linux-time-sync/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -227,6 +220,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/marketplace-image-smb1/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/migrate_classic_vm_and_storage/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -527,6 +527,27 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/custom-dns-faq/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/difference-nsg-fw/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/expressroute-maintenance/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/firewall-rules/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -548,21 +569,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/custom-dns-faq/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw_change_subnet/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/difference-nsg-fw/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/expressroute-maintenance/</loc>
+    <loc>https://jpaztech.github.io/blog/network/bastion-nsg/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -590,14 +604,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw_change_subnet/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/bastion-nsg/</loc>
+    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -605,13 +612,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -758,6 +758,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/restore-vm-by-swap-manageddisk/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/singlenicvm-to-multinicvm/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/smtp-block-announcement-november-2017/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -808,20 +822,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/restore-vm-by-swap-manageddisk/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/singlenicvm-to-multinicvm/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -898,6 +898,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/disk11-after20180104/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/dns-2016-09-16/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/expressroute-announcement-march-2018/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -940,48 +954,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/backup-morethan-1tb-disk/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/change-expressroute-public-peering/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/delete-nic/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/disk11-after20180104/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/dns-2016-09-16/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/automation-vm-start-deallocate/</loc>
-    
-    <lastmod>2023-09-04</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/azure-datacenter-infrastructure-1/</loc>
     
     <lastmod>2023-09-04</lastmod>
@@ -1010,14 +982,28 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/backup-morethan-1tb-disk/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/announcement-about-expressroute-deployment-model/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/change-expressroute-public-peering/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/delete-nic/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/automation-vm-start-deallocate/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
@@ -1059,7 +1045,21 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/about-application-gateway/</loc>
+    
+    <lastmod>2023-09-04</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/announcement-about-expressroute-deployment-model/</loc>
     
     <lastmod>2023-09-04</lastmod>
     
