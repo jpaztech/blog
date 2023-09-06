@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/14.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/15.png">
 <meta property="article:published_time" content="2021-09-10T00:30:00.000Z">
-<meta property="article:modified_time" content="2023-09-04T04:38:33.965Z">
+<meta property="article:modified_time" content="2023-09-06T00:03:02.285Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="HowTo">
@@ -121,7 +121,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+f98e9f59-99a7-56f0-8c8a-376bf63cb1cc%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E6%97%A2%E5%AD%98+VM+%E3%81%AE+OS+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%AE%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E5%90%8D%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fhow-to-change-os-disk-name%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fhow-to-change-os-disk-name.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fhow-to-change-os-disk-name.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/" data-id="clm4e62u300600nn0bwo75nzb" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/" data-id="clm6z7gi300600njue3c0haay" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -138,7 +138,7 @@
 <li>元の OS ディスクと 2 のディスクを入れ替える (スワップする)</li>
 <li>VM の動作確認をする</li>
 </ol>
-<div class="alert is-warning"><p class="alert-title">警告</p><p>本手順は、<strong>ARM デプロイ モデル</strong> の VM にて、<strong>管理ディスク</strong> をご利用いただいていることを前提としています。</p><p>　</p><p>スナップショットを取得する際、OS ディスクのスワップを行う際には、<strong>VM が停止済み (割り当て解除)</strong> 状態である必要があります。ダウンタイムが発生するため、業務影響の少ない時間帯にご実施ください。</p></div>
+<div class="alert is-warning"><p class="alert-title">警告</p><p>本手順は、<strong>管理ディスク</strong> をご利用いただいていることを前提としています。</p><p>　</p><p>スナップショットを取得する際、OS ディスクのスワップを行う際には、<strong>VM が停止済み (割り当て解除)</strong> 状態である必要があります。ダウンタイムが発生するため、業務影響の少ない時間帯にご実施ください。</p></div>
 <hr>
 <h2 id="手順"><a href="#手順" class="headerlink" title="手順"></a>手順</h2><h3 id="1-OS-ディスクのスナップショットを作成する"><a href="#1-OS-ディスクのスナップショットを作成する" class="headerlink" title="1. OS ディスクのスナップショットを作成する"></a>1. OS ディスクのスナップショットを作成する</h3><ol>
 <li><p>Azure Portal の上部検索バーから、[Virtual Machines] で検索します。<br><img src="/blog/vm/how-to-change-os-disk-name/01.png"></p>
@@ -165,7 +165,9 @@
 </li>
 <li><p>[ディスクの作成] を選択します。<br><img src="/blog/vm/how-to-change-os-disk-name/09.png"></p>
 </li>
-<li><p>必要項目を適宜入力し、[確認および作成] をクリックします。<br> 変更後の OS ディスク名は、”ディスクの詳細” の “ディスク名” で任意の値を入力してください。<br> <img src="/blog/vm/how-to-change-os-disk-name/10.png"></p>
+<li><p>必要項目を適宜入力し、[確認および作成] をクリックします。<br> 変更後の OS ディスク名は、”ディスクの詳細” の “ディスク名” で任意の値を入力してください。</p>
+<div class="alert is-warning"><p class="alert-title">警告</p><p>スナップショットから管理ディスクを作成する際、[可用性ゾーン] の項目に対象 VM の可用性設定を反映する必要があります。</p><p>可用性ゾーンを設定している場合にはそのゾーン番号を、可用性セットを設定している場合、または冗長化していない場合には [インフラストラクチャ冗長は必要ありません] をご選択ください。</p></div>
+<p> <img src="/blog/vm/how-to-change-os-disk-name/10.png"></p>
 </li>
 </ol>
 <h3 id="3-元の-OS-ディスクと-2-のディスクを入れ替える-スワップする"><a href="#3-元の-OS-ディスクと-2-のディスクを入れ替える-スワップする" class="headerlink" title="3. 元の OS ディスクと 2 のディスクを入れ替える (スワップする)"></a>3. 元の OS ディスクと 2 のディスクを入れ替える (スワップする)</h3><p>※ VM が停止済み (割り当て解除) 状態である必要があります。<br>※ 対象 VM が起動している場合には [停止] をクリックし、”停止済み (割り当て解除)” 状態となっていることを確認します。</p>
