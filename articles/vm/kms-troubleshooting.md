@@ -208,6 +208,7 @@ nslookup azkms.core.windows.net
 
 ```powershell
 Test-NetConnection -ComputerName kms.core.windows.net -Port 1688
+Test-NetConnection -ComputerName azkms.core.windows.net -Port 1688
 ```
 
 成功した場合は、以下のような **TcpTestSucceeded : True** の結果が表示されます。
