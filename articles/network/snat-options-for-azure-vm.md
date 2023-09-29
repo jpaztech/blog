@@ -54,7 +54,8 @@ Azure VM では既定 SNAT により(インターネット等のグローバル 
 上記の外部接続ポリシーの機能比較については、後述の[機能比較](https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/#%E6%A9%9F%E8%83%BD%E6%AF%94%E8%BC%83) をご参照いただき、
 お客様の構成に沿う、外部接続ポリシーを構成いただけますと幸いでございます。
 
-※追記 (2023 年 9 月 29 日) ここまで
+<span style="color: #c00000;"> ※追記 (2023 年 9 月 29 日) ここまで </span>
+
 
 <!-- more -->
 
