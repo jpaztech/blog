@@ -114,7 +114,7 @@
       
         <p>Azure Networking テクニカル サポート チームの山口です。</p>
 <p>Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和できるよう、本稿では外部接続の SNAT オプションを様々な角度から網羅的に紹介いたします。</p>
-<p><span style="color: #c00000;"> ※追記 </span></p>
+<p><span style="color: #c00000;"> ※追記 (2023 年 9 月 29 日) </span></p>
 <p>2023 年 9 月 Azure の既定の送信アクセス (既定の SNAT) 廃止のアナウンス (Tracking ID:3T84-PZZ) が通知されました。<br>これは、2025 年 9 月 30 日以降、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。<br>動作変更の内容および変更の影響を受けないようにする対処方法をご確認の上、2025 年 9 月 30 日よりも前にご対応いただけますと幸いでございます。</p>
 <h2 id="動作変更の内容"><a href="#動作変更の内容" class="headerlink" title="動作変更の内容"></a>動作変更の内容</h2><p>現在、Azure VM に対してパブリック IP アドレスや外部ロードバランサーにも関連付いていない、または Azure VM がデプロイされているサブネットに対して NAT Gateway が関連付いていない場合でも、<br>Azure VM では既定 SNAT により(インターネット等のグローバル IP アドレス帯のサーバー宛への通信)ができる動作となっております。</p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access">Azure での既定の送信アクセス - IP サービス</a></p>
@@ -137,6 +137,7 @@
 <li>Standard SKU の外部ロードバランサーをデプロイし、そのバックエンド プールに Azure VM を配置する。</li>
 </ul>
 <p>上記の外部接続ポリシーの機能比較については、後述の<a href="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/#%E6%A9%9F%E8%83%BD%E6%AF%94%E8%BC%83">機能比較</a> をご参照いただき、<br>お客様の構成に沿う、外部接続ポリシーを構成いただけますと幸いでございます。</p>
+<p>※追記 (2023 年 9 月 29 日) ここまで</p>
         
           <p class="article-more-link">
             <a href="network/snat-options-for-azure-vm/#more">Read More</a>
@@ -146,7 +147,7 @@
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="cln42q6nx00km0ns15fkp76od" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="cln437k0700km0npp9zuna8p9" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/SNAT/" rel="tag">SNAT</a></li></ul>
@@ -196,7 +197,7 @@
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/classic-vhd-to-arm-vm/" data-id="cln42q6jm005j0ns19nzh1f3y" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/classic-vhd-to-arm-vm/" data-id="cln437jtf005j0npp00lu7gtd" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -254,7 +255,7 @@
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/self-service-maintenance/" data-id="cln42q6nk00j50ns1e4cd2q2g" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/self-service-maintenance/" data-id="cln437jzh00j50nppb0b04hgz" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -306,7 +307,7 @@ KMS ライセンス...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/kms-troubleshooting/" data-id="cln42q6nf00iw0ns19l0r2r8x" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/kms-troubleshooting/" data-id="cln437jz900iw0npp22p9fc48" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/KMS/" rel="tag">KMS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -356,7 +357,7 @@ KMS ライセンス...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/azure-files-user-mount/" data-id="cln42q6jh00560ns186sb29c3" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/azure-files-user-mount/" data-id="cln437jt900560npp8gxwbss3" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Azure-Files/" rel="tag">Azure Files</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -407,7 +408,7 @@ KMS ライセンス...
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/vm-create-activity-log/" data-id="cln42q6ka007d0ns153am1lxj" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/vm-create-activity-log/" data-id="cln437juh007d0npp600q1ld1" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -461,7 +462,7 @@ Azure VM のゲスト OS 内から DNS サーバーの設定や ゲスト OS 自
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/avoiding-changes-to-DNS-and-IP-in-GuestOS/" data-id="cln42q6jg00540ns1a1at2bcb" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/avoiding-changes-to-DNS-and-IP-in-GuestOS/" data-id="cln437jt800540npp205c915l" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -514,7 +515,7 @@ Azure VM のゲスト OS 内から DNS サーバーの設定や ゲスト OS 自
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/" data-id="cln42q6n700ie0ns1bbmlh3ds" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/" data-id="cln437jyy00ie0npp92ji9h19" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li></ul>
@@ -570,7 +571,7 @@ Note本記事では各種の上限について数値を交えて解説してお�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/disk-metrics/" data-id="cln42q6nd00ir0ns12wq2d99t" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/disk-metrics/" data-id="cln437jz600ir0nppgplabign" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Disk/" rel="tag">Disk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -620,7 +621,7 @@ Note本記事では各種の上限について数値を交えて解説してお�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/rhui-yum-update/" data-id="cln42q6k600730ns12w7f1xaj" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/rhui-yum-update/" data-id="cln437ju500730nppff7693on" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHEL/" rel="tag">RHEL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHUI/" rel="tag">RHUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
