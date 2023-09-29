@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/os-disk-size-of-image/2022-12-29-14-32-25.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/os-disk-size-of-image/2022-12-29-15-07-19.png">
 <meta property="article:published_time" content="2023-02-22T08:30:00.000Z">
-<meta property="article:modified_time" content="2023-09-29T06:34:48.116Z">
+<meta property="article:modified_time" content="2023-09-29T06:40:43.548Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -122,7 +122,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+51ed082e-a6b3-59d0-9a8b-9b28425afd5f%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E3%83%9E%E3%83%BC%E3%82%B1%E3%83%83%E3%83%88%E3%83%97%E3%83%AC%E3%82%A4%E3%82%B9%E3%81%AE%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%81%AE+OS+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E7%A2%BA%E8%AA%8D%E3%83%BB%E6%8B%A1%E5%BC%B5%E3%83%BB%E7%B8%AE%E5%B0%8F%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fos-disk-size-of-image%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fos-disk-size-of-image.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fos-disk-size-of-image.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/os-disk-size-of-image/" data-id="cln48bvhc006o0nll9fn2auuh" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/os-disk-size-of-image/" data-id="cln48jhfe006o0onq9cfu2nsj" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -157,7 +157,7 @@
 <p><img src="/blog/vm/os-disk-size-of-image/2022-12-29-11-34-57.png"></p>
 <p>対象のイメージの画面上で、「プラン」を選択の上、「使用状況確認とサポート」タブを選択します。</p>
 <p><img src="/blog/vm/os-disk-size-of-image/2022-12-29-11-43-09.png"></p>
-<p>上記のように、URN が表示されます。<br>恐縮ながら Azure ポータルでは Version の一覧の確認は叶いませんため、Version について確認が必要な場合は、後述のコマンドベースでのご確認をお願いいたします。</p>
+<p>上記のように、URN が表示されます。<br>恐縮ながら Azure ポータルでは Version の一覧の確認は叶いませんため、Version について確認が必要な場合は、後述のコマンドベースでのご確認をお願いいたします。<br>稀に上記のポータルの表示が URN と一致しないケースがございますので、その際は後述の「Azure PowerShell」「Azure CLI」でご確認くださいませ。</p>
 <hr>
 <h2 id="1-2-Azure-PowerShell-でイメージの-URN-を把握する"><a href="#1-2-Azure-PowerShell-でイメージの-URN-を把握する" class="headerlink" title="1-2.Azure PowerShell でイメージの URN を把握する"></a>1-2.Azure PowerShell でイメージの URN を把握する</h2><p>基本的に以下の公式ドキュメントの方法となりますが、実際にコマンドの実行結果と共に見ていきましょう。<br>Publisher → Offer → Sku → Version の順で絞り込んで検索していくような形となります。</p>
 <blockquote>
