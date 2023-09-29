@@ -1,6 +1,6 @@
 ---
 title: "Azure VM の外部接続 (SNAT) オプション まとめ"
-date: 2020-06-16 13:30:00
+date: 2023-09-29 15:00:00
 tags:
   - Network
   - NAT Gateway
@@ -12,6 +12,49 @@ tags:
 Azure Networking テクニカル サポート チームの山口です。
 
 Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和できるよう、本稿では外部接続の SNAT オプションを様々な角度から網羅的に紹介いたします。
+
+<span style="color: #c00000;"> ※追記 </span>
+
+2023 年 9 月 Azure の既定の送信アクセス (既定の SNAT) 廃止のアナウンス (Tracking ID:3T84-PZZ) が通知されました。
+
+これは、2025 年 9 月 30 日以降、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。
+
+動作変更の内容および変更の影響を受けないようにする対処方法をご確認の上、2025 年 9 月 30 日よりも前にご対応いただけますと幸いでございます。
+ 
+## 動作変更の内容
+現在、Azure VM に対してパブリック IP アドレスや外部ロードバランサーにも関連付いていない、または Azure VM がデプロイされているサブネットに対して NAT Gateway が関連付いていない場合でも、
+Azure VM では既定 SNAT により(インターネット等のグローバル IP アドレス帯のサーバー宛への通信)ができる動作となっております。
+
+[Azure での既定の送信アクセス - IP サービス](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access)
+
+今回行われた通知では、2025 年 9 月 30 日以降、この既定の SNAT が廃止され、既存で利用されている Azure VM も含め、Azure VM からの外部接続を行う場合は、明示的に外部接続ポリシーを設定する必要があるという内容となっております。
+
+## 動作変更による影響が生じる条件
+以下の条件に **すべて** 合致した場合、インターネット宛の通信は Azure 既定の SNAT が使用されるため今回の動作変更の影響を受けます。
+
+- A. グローバル IP 宛の宛先が UDR で NVA (e.g. Azure Firewall) に向いていない。
+- B. Azure VM がデプロイされているサブネットに対し NAT Gateway が関連付けられていない。
+- C. Azure VM に パブリック IP アドレスが関連付けられていない。
+- D. 外部ロードバランサーのバックエンドプールに Azure VM が関連付けられていない。
+
+後述の判定フローチャートをご確認いただくことで、Azure 既定の SNAT を利用されているか確認することも可能です。
+ 
+## 条件にすべて合致した場合の対応
+上記の 4 つの条件に **すべて** 合致した場合、動作変更の影響が生じます。
+
+つまり、Azure VM に対して明示的な外部接続ポリシー (グローバル IP による SNAT/NAT Gateway による SNAT/外部 Azure Load Balancer による SNAT/NVA による SNAT) が無ければ、
+2025 年 9 月 30 日以降の動作変更によって、外部接続ができなくなります。
+予期せず、外部接続に失敗することを防ぐためには、予め明示的な外部接続ポリシーを設定する必要があります。
+
+具体的には、以下のいずれかの対応を行ってください。
+
+* NVA (e.g. Azure Firewall) をデプロイし、0.0.0.0/0 のネクストホップを NVA に向ける UDR を構成する。
+* NAT Gateway をデプロイし、VM が配置されているサブネットに関連付ける。
+* Standard SKU のパブリック IP アドレスをデプロイし、VM のネットワークインターフェースに関連付ける。
+* Standard SKU の外部ロードバランサーをデプロイし、そのバックエンド プールに VM を配置する。
+
+上記の外部接続ポリシーの機能比較については、後述の[機能比較](https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/#%E6%A9%9F%E8%83%BD%E6%AF%94%E8%BC%83) をご参照いただき、
+お客様の構成に沿う、外部接続ポリシーを構成いただけますと幸いでございます。
 
 <!-- more -->
 
@@ -265,6 +308,7 @@ Azure VM のネットワーク インターフェイス (NIC) にパブリック
 * [Azure portal を使用して負荷分散規則とアウトバウンド規則を構成する - Azure Load Balancer | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/load-balancer/configure-load-balancer-outbound-portal)
 
 ### Azure 既定の SNAT
+<span style="color: #c00000;"> 本ブログ上部の※追記に記載の通り、2025 年 9 月 30 日以降 Azure 既定の SNAT は廃止されます。対応方法については、上述の [条件にすべて合致した場合の対応] をご参照下さい。</span>
 
 ![azure-default-snat](./snat-options-for-azure-vm/azure-default-snat.png)
 
