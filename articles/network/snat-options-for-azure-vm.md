@@ -19,38 +19,25 @@ Azure では、インターネット宛てのアウトバウンド方向の接�
 > 
 > **通知内容と影響範囲**
 >
-> 2025 年 9 月 30 日を過ぎると、Azure 既定の送信アクセス (既定の SNAT) で送信接続している Azure VM は、インターネットへのアウトバウンド通信ができない状態になります。以降、既存で利用されている Azure VM も含め、Azure VM からの送信接続には明示的な設定が必要となります。
+> 2025 年 9 月 30 日を過ぎると、Azure 既定の送信アクセス (既定の SNAT) で送信接続している Azure VM は、インターネットへのアウトバウンド通信ができなくなります。2025 年 10 月以降、既存の Azure VM も含め、Azure VM からの送信接続には明示的な送信接続の設定が必要となります。
 >
-> 既定の送信アクセスとは、送信接続の方法をユーザーが指定していない場合でも、Azure VM がインターネット接続できるようにする仕組みです。具体的には、Azure プラットフォーム上で使われていないパブリック IP アドレスを一時的に借りて SNAT を行います。
+> 既定の送信アクセスとは、ユーザーが明示的に送信接続の指定をしていない場合でも、Azure VM がインターネットにアクセスできるようにする仕組みです。具体的には、Azure プラットフォーム上で使われていないパブリック IP アドレスを一時的に借りて SNAT を行います。
 > 
-> つまり、当変更の影響を受けるのは、明示的な送信接続を構成していない Azure VM です。以下に示す明示的な送信接続の構成の**いずれにも該当しない**場合は、影響対象であると判断することができます (反対に一つでも当てはまるものがあれば対象ではありません)。
+> ある Azure VM が既定の送信アクセスを利用しているか判定するには、本記事で説明している[判定フローチャート](#%E5%88%A4%E5%AE%9A%E3%83%95%E3%83%AD%E3%83%BC%E3%83%81%E3%83%A3%E3%83%BC%E3%83%88) をご参照ください。大まかな指針としては、**明示的な送信接続を構成していない Azure VM は影響を受ける可能性がある**とお考えいただければ幸いです。明示的な送信接続の構成には次のようなものが含まれます。
 >
-> 明示的な送信接続の構成：
->
-> - デフォルト ルート (0.0.0.0/0) のネクストホップが NVA や Azure Firewall に向いている (確認方法: [ネットワーク インターフェイスの有効なルート](https://learn.microsoft.com/ja-jp/azure/virtual-network/diagnose-network-routing-problem#diagnose-using-azure-portal))
-> - VM のサブネットに NAT Gateway を関連付けている
-> - VM の NIC にパブリック IP アドレスを関連付けている
-> - パブリック ロードバランサー (Standard SKU) の送信規則を構成している
->
-> 本記事で説明している[判定フローチャート](#%E5%88%A4%E5%AE%9A%E3%83%95%E3%83%AD%E3%83%BC%E3%83%81%E3%83%A3%E3%83%BC%E3%83%88)でも Azure VM がどの送信接続を利用しているか判定できるので、併せてご確認ください。
+> - デフォルト ルートのネクストホップが仮想アプライアンス (Azure Firewall など) に向いている
+> - VM のサブネットに NAT ゲートウェイを関連付けている
+> - NIC にパブリック IP アドレスを関連付けている
+> - パブリック ロードバランサーの送信規則に紐づくバックエンド プールに存在する
 >
 > **対応方法**
 >
-> 影響を受ける Azure VM が 2025 年 9 月 30 日以降もインターネットへの送信接続を必要とする場合、明示的な送信接続にネットワーク構成を変更すること対応が可能です。後述の[機能比較](#%E6%A9%9F%E8%83%BD%E6%AF%94%E8%BC%83) などで各方法の比較を行った後、以下のいずれかのアクションを実施します。
+> 対象の Azure VM が 2025 年 10 月以降もインターネットへの送信接続を必要とする場合、明示的な送信接続にネットワーク構成を変更する必要があります。本記事の[機能比較](#%E6%A9%9F%E8%83%BD%E6%AF%94%E8%BC%83)などをご参考に移行先の送信接続構成を決定し、次のような対応をお願いできますと幸いです。
 >
-> - Azure Firewall (または送信接続をサポートするサードパーティ製の NVA) をデプロイし、デフォルトルートのネクストホップを Azure Firewall に向ける ([参考](https://learn.microsoft.com/ja-jp/azure/firewall/tutorial-firewall-deploy-portal))
-> - VM のサブネットに NAT Gateway を関連付ける ([参考](https://learn.microsoft.com/ja-jp/azure/nat-gateway/tutorial-migrate-outbound-nat))
-> - VM に NIC にパブリック IP アドレスを関連付ける ([参考](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/associate-public-ip-address-vm?tabs=azure-portal))
+> - Azure Firewall などの仮想アプライアンスをデプロイし、デフォルトルートのネクストホップを仮想アプライアンスに向ける ([参考](https://learn.microsoft.com/ja-jp/azure/firewall/tutorial-firewall-deploy-portal))
+> - VM のサブネットに NAT ゲートウェイを関連付ける ([参考](https://learn.microsoft.com/ja-jp/azure/nat-gateway/tutorial-migrate-outbound-nat))
+> - NIC にパブリック IP アドレスを関連付ける ([参考](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/associate-public-ip-address-vm?tabs=azure-portal))
 > - パブリック ロードバランサーの送信規則を構成する ([参考](https://learn.microsoft.com/ja-jp/azure/load-balancer/egress-only))
->
-> **補足事項**
->
-> 今後作成する予定の Azure VM に関しても、原則として既定の送信アクセスを利用しないようお願い致します。将来的にリタイアが決まっていることも大きな理由の一つですが、そもそも暗黙的にインターネット トラフィックを許可することはセキュリティ リスクを高めるためです。また、既定の送信アクセスには次のような問題点もあります。
-> 
-> - 送信元 IP アドレスを固定化できない
-> - SNAT ポート枯渇が発生しやすい
-> 
-> インターネットへのアウトバウンド接続が必要な場合は、「対応方法」で示した明示的な送信接続のいずれかを採用ください。
 
 <!-- more -->
 
