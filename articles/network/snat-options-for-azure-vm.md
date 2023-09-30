@@ -30,7 +30,7 @@ Azure では、インターネット宛てのアウトバウンド方向の接�
 > - デフォルト ルート (0.0.0.0/0) のネクストホップが NVA や Azure Firewall に向いている (確認方法: [ネットワーク インターフェイスの有効なルート](https://learn.microsoft.com/ja-jp/azure/virtual-network/diagnose-network-routing-problem#diagnose-using-azure-portal))
 > - VM のサブネットに NAT Gateway を関連付けている
 > - VM の NIC にパブリック IP アドレスを関連付けている
-> - 外部ロードバランサー (Standard SKU) の送信規則を構成している
+> - パブリック ロードバランサー (Standard SKU) の送信規則を構成している
 >
 > 本記事で説明している[判定フローチャート](#%E5%88%A4%E5%AE%9A%E3%83%95%E3%83%AD%E3%83%BC%E3%83%81%E3%83%A3%E3%83%BC%E3%83%88)でも Azure VM がどの送信接続を利用しているか判定できるので、併せてご確認ください。
 >
@@ -41,7 +41,7 @@ Azure では、インターネット宛てのアウトバウンド方向の接�
 > - Azure Firewall (または送信接続をサポートするサードパーティ製の NVA) をデプロイし、デフォルトルートのネクストホップを Azure Firewall に向ける ([参考](https://learn.microsoft.com/ja-jp/azure/firewall/tutorial-firewall-deploy-portal))
 > - VM のサブネットに NAT Gateway を関連付ける ([参考](https://learn.microsoft.com/ja-jp/azure/nat-gateway/tutorial-migrate-outbound-nat))
 > - VM に NIC にパブリック IP アドレスを関連付ける ([参考](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/associate-public-ip-address-vm?tabs=azure-portal))
-> - 外部ロードバランサーの送信規則を構成する ([参考](https://learn.microsoft.com/ja-jp/azure/load-balancer/egress-only))
+> - パブリック ロードバランサーの送信規則を構成する ([参考](https://learn.microsoft.com/ja-jp/azure/load-balancer/egress-only))
 >
 > **補足事項**
 >
@@ -100,7 +100,7 @@ SNAT ポート枯渇が発生したからと言って、他のプロトコルや
 1. デフォルトルートのネクストホップを仮想アプライアンスに向ける
 2. サブネットに NAT ゲートウェイを関連付ける
 3. NIC にパブリック IP アドレス (インスタンス レベルのパブリック IP アドレス) を関連付ける
-4. 外部ロードバランサーの送信規則を構成する
+4. パブリック ロードバランサーの送信規則を構成する
 5. 既定の送信アクセスを利用する ※ 2025 年 9 月で廃止、非推奨
 
 なお、このうち Azure 基盤に備わっている SNAT 機能を利用しているのはパターン 2-5 です。パターン 1 については、(パターン 2-5 のいずれかの SNAT 機能を利用している) 仮想アプライアンスに送信接続を肩代わりしてもらうことによって成り立っています。したがって、基盤側で準備されている SNAT オプションを比較したい場合は、パターン 2-5 を重点的に確認するのが良いでしょう。
@@ -216,7 +216,7 @@ SNAT ポート枯渇が発生したからと言って、他のプロトコルや
 * Azure Firewall などのアプライアンス装置をデプロイし、デフォルトルート (0.0.0.0/0) のネクストホップをアプライアンス装置に向ける
 * NAT ゲートウェイを Azure VM が配置されているサブネットに関連付ける
 * Standard SKU のパブリック IP アドレスを Azure VM の NIC に関連付ける
-* Standard SKU の外部ロードバランサーを送信規則を構成する
+* Standard SKU のパブリック ロードバランサーを送信規則を構成する
 
 ## 構成の比較
 
