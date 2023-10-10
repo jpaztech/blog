@@ -14,10 +14,11 @@ Azure Networking テクニカル サポート チームの山口です。
 Azure では、インターネット宛てのアウトバウンド方向の接続 (送信接続) をいくつかの方法で実装できます。選択の幅があることは喜ばしいですが、一方で内容の把握のが難しい側面も否めません。そこで本記事では、Azure VM に使える送信接続の構成をまとめて説明します。また、ある Azure VM がどの構成に該当しているか判定するためのフローチャートや、各構成の特徴についても併せて紹介します。
 
 > [!NOTE]
-> <span style="color: #c00000;">2023 年 9 月、送信接続の構成の一つである[既定の送信アクセス](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access)の提供終了がアナウンスされました (Tracking ID: 3T84-PZZ)。</span>
+> <span style="color: #c00000;">2023 年 9 月、送信接続の構成の一つである[既定の送信アクセス](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access)の提供終了がアナウンスされました。</span>
 >
 > これは、2025 年 9 月 30 日以降に作成された Azure VM は、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。廃止アナウンスに関する補足については、当ブログサイトの以下の記事をご参照の上、技術的な内容については併せて本記事をご確認いただけますと幸いでございます。
 >
+> [Azure 既定の送信アクセスの動作変更のアナウンスに関する補足 (Tracking ID:3T84-PZZ)](https://jpaztech.github.io/blog/network/default-outbound-access-will-be-retired/)
 <!-- more -->
 
 ## はじめに
