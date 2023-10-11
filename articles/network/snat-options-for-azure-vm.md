@@ -337,7 +337,6 @@ NAT の方式には NAPT が利用されています。バックエンド プー
 
 Basic SKU のロードバランサーでは、負荷分散規則の自動アウトバウンド NAT は必ず有効です。一方で、Standard SKU のロードバランサーの場合、自動アウトバウンド NAT の ON/OFF を設定するフラグ項目が負荷分散規則に存在します。具体的には、`disableOutboundSnat` パラメータを false に設定すると自動アウトバウンド NAT が有効となります。
 
-
 **特徴**
 
 * 負荷分散規則と合わせて構成する性質上、インバウンドとアウトバウンド両方の接続性を確保できます。
@@ -403,7 +402,6 @@ Basic SKU のロードバランサーでは、負荷分散規則の自動アウ�
 
 * [Azure での既定の送信アクセス - Azure Virtual Network | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access)
 * [アウトバウンド接続の送信元ネットワーク アドレス変換 (SNAT) - Azure Load Balancer | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections)
-* [Azure VM の SNAT の話 – Made in container](https://www.syuheiuda.com/?p=5074)
 
 ## 最後に
 
