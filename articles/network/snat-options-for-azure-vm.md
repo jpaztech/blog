@@ -176,7 +176,8 @@ Azure Portal で確認する場合は。[パブリック IP アドレスの関�
 > 
 > 1. Standard SKU の内部ロードバランサーのバックエンドプールに所属している
 >
-> 引用: [Azure ロードバランサー利用時の注意点 > ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった](https://jpaztech1.z11.web.core.windows.net/Azure%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9.html#outbound-cannot-connect)
+> 引用: [Azure ロードバランサー利用時の注意点 > ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった](https://jpaztech.github.io/blog/archive/azurelb-tips/)
+
 
 もし、送信接続ができない場合や、あるタイミングを境に送信接続できない状況になってしまった場合は、以下のような対応で事象が緩和するかご確認ください。
 
