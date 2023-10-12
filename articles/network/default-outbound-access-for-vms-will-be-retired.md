@@ -37,4 +37,4 @@ Q3. 明示的な送信接続方法が様々ありますが、どの送信接続�
 A3. 現在、明示的な送信接続方法は、4 パターンございますが、各構成パターンによって特性が異なります。
 当ブログサイトの以下の記事に記載されている「構成の比較」をご確認の上、お客様の通信要件に合った明示的な送信接続方法をご利用下さい。
 
-[Azure VM の外部接続 (SNAT) オプション まとめ - 構成の比較 | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/#%E5%88%A4%E5%AE%9A%E3%83%95%E3%83%AD%E3%83%BC%E3%83%81%E3%83%A3%E3%83%BC%E3%83%88)
+[Azure VM の外部接続 (SNAT) オプション まとめ - 構成の比較 | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/#%E6%A7%8B%E6%88%90%E3%81%AE%E6%AF%94%E8%BC%83)
