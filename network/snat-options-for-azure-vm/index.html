@@ -4,22 +4,25 @@
   <meta charset="utf-8">
   
   
-  <title>Azure VM の外部接続 (SNAT) オプション まとめ | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure VM の送信接続 (SNAT) オプション まとめ | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Azure Networking テクニカル サポート チームの山口です。 Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和">
+  <meta name="description" content="Azure Networking テクニカル サポート チームの山口です。 Azure では、インターネット宛てのアウトバウンド方向の接続 (送信接続) をいくつかの方法で実装できます。選択の幅があることは喜ばしいですが、一方で内容の把握のが難しい側面も否めません。そこで本記事では、Azure VM に使える送信接続の構成をまとめて説明します。また、ある Azure VM がどの構成に該当している">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure VM の外部接続 (SNAT) オプション まとめ">
+<meta property="og:title" content="Azure VM の送信接続 (SNAT) オプション まとめ">
 <meta property="og:url" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="Azure Networking テクニカル サポート チームの山口です。 Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和">
+<meta property="og:description" content="Azure Networking テクニカル サポート チームの山口です。 Azure では、インターネット宛てのアウトバウンド方向の接続 (送信接続) をいくつかの方法で実装できます。選択の幅があることは喜ばしいですが、一方で内容の把握のが難しい側面も否めません。そこで本記事では、Azure VM に使える送信接続の構成をまとめて説明します。また、ある Azure VM がどの構成に該当している">
 <meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/snat-port-exhaustion.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/flowchart-to-determine-snat-scenario.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/effective-routes-afw.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/default-snat-condition.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/nat-gateway-snat.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/public-ip-address-snat.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/auzre-load-balancer-snat.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/azure-default-snat.png">
-<meta property="article:published_time" content="2023-09-29T06:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-29T06:40:43.224Z">
+<meta property="article:published_time" content="2023-09-30T09:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-12T03:31:39.354Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="Public IP Address">
@@ -27,7 +30,7 @@
 <meta property="article:tag" content="Azure Load Balancer">
 <meta property="article:tag" content="SNAT">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/flowchart-to-determine-snat-scenario.png">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/snat-port-exhaustion.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -98,7 +101,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure VM の外部接続 (SNAT) オプション まとめ
+      Azure VM の送信接続 (SNAT) オプション まとめ
     </h1>
   
 
@@ -106,349 +109,390 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2023-09-29T06:00:00.000Z" itemprop="datePublished">2023-09-29</time>
+  <time datetime="2023-09-30T09:00:00.000Z" itemprop="datePublished">2023-09-30</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+2b02002d-b3f8-5038-9e94-ead0a2a5c291%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE%E5%A4%96%E9%83%A8%E6%8E%A5%E7%B6%9A+%28SNAT%29+%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3+%E3%81%BE%E3%81%A8%E3%82%81%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fsnat-options-for-azure-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+2b02002d-b3f8-5038-9e94-ead0a2a5c291%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE%E9%80%81%E4%BF%A1%E6%8E%A5%E7%B6%9A+%28SNAT%29+%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3+%E3%81%BE%E3%81%A8%E3%82%81%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fsnat-options-for-azure-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="cln48jhjg00km0onqg5lb7sfm" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="clnmmig0u00km0nob1rtb6ewj" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
         <p>Azure Networking テクニカル サポート チームの山口です。</p>
-<p>Azure VM がインターネットに接続する際には、パブリック IP アドレスでの送信元 NAT (SNAT) が必要です。Azure は、外部接続の SNAT に関して多くのオプションを提供していますが、オプションが多くて便利な反面、全オプションの列挙やオプション間の比較が難しいのも事実です。そうした難しさを少しでも緩和できるよう、本稿では外部接続の SNAT オプションを様々な角度から網羅的に紹介いたします。</p>
-<p><span style="color: #c00000;"> ※追記 (2023 年 9 月 29 日) </span></p>
-<p>2023 年 9 月 Azure の既定の送信アクセス (既定の SNAT) 廃止のアナウンス (Tracking ID:3T84-PZZ) が通知されました。<br>これは、2025 年 9 月 30 日以降、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。<br>動作変更の内容および変更の影響を受けないようにする対処方法をご確認の上、2025 年 9 月 30 日よりも前にご対応いただけますと幸いでございます。</p>
-<h2 id="動作変更の内容"><a href="#動作変更の内容" class="headerlink" title="動作変更の内容"></a>動作変更の内容</h2><p>現在、Azure VM に対してパブリック IP アドレスや外部ロードバランサーにも関連付いていない、または Azure VM がデプロイされているサブネットに対して NAT Gateway が関連付いていない場合でも、<br>Azure VM では既定 SNAT により(インターネット等のグローバル IP アドレス帯のサーバー宛への通信)ができる動作となっております。</p>
-<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access">Azure での既定の送信アクセス - IP サービス</a></p>
-<p>今回行われた通知では、2025 年 9 月 30 日以降、この既定の SNAT が廃止され、Azure VM からの外部接続を行う場合は、明示的に外部接続ポリシーを設定する必要があるという内容となっております。</p>
-<h2 id="動作変更による影響が生じる条件"><a href="#動作変更による影響が生じる条件" class="headerlink" title="動作変更による影響が生じる条件"></a>動作変更による影響が生じる条件</h2><p>以下の条件に <strong>すべて</strong> 合致した場合、インターネット宛の通信は Azure 既定の SNAT が使用されるため今回の動作変更の影響を受けます。</p>
-<ul>
-<li>A. グローバル IP 宛の宛先が UDR で NVA (e.g. Azure Firewall) に向いていない。</li>
-<li>B. Azure VM がデプロイされているサブネットに対し NAT Gateway が関連付けられていない。</li>
-<li>C. Azure VM に パブリック IP アドレスが関連付けられていない。</li>
-<li>D. 外部ロードバランサーのバックエンドプールに Azure VM が関連付けられていない。</li>
-</ul>
-<p>後述の判定フローチャートをご確認いただくことで、Azure 既定の SNAT を利用されているか確認することも可能です。</p>
-<h2 id="条件にすべて合致した場合の対応"><a href="#条件にすべて合致した場合の対応" class="headerlink" title="条件にすべて合致した場合の対応"></a>条件にすべて合致した場合の対応</h2><p>上記の 4 つの条件に <strong>すべて</strong> 合致した場合、動作変更の影響が生じます。</p>
-<p>つまり、Azure VM に対して明示的な外部接続ポリシー (グローバル IP による SNAT/NAT Gateway による SNAT/外部 Azure Load Balancer による SNAT/NVA による SNAT) が無ければ、<br>2025 年 9 月 30 日以降の動作変更によって、外部接続ができなくなります。<br>予期せず、外部接続に失敗することを防ぐためには、予め明示的な外部接続ポリシーを設定する必要があります。</p>
-<p>具体的には、以下のいずれかの対応を行ってください。</p>
-<ul>
-<li>NVA (e.g. Azure Firewall) をデプロイし、0.0.0.0/0 のネクストホップを NVA に向ける UDR を構成する。</li>
-<li>NAT Gateway をデプロイし、Azure VM が配置されているサブネットに関連付ける。</li>
-<li>Standard SKU のパブリック IP アドレスをデプロイし、Azure VM のネットワークインターフェースに関連付ける。</li>
-<li>Standard SKU の外部ロードバランサーをデプロイし、そのバックエンド プールに Azure VM を配置する。</li>
-</ul>
-<p>上記の外部接続ポリシーの機能比較については、後述の<a href="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/#%E6%A9%9F%E8%83%BD%E6%AF%94%E8%BC%83">機能比較</a> をご参照いただき、<br>お客様の構成に沿う、外部接続ポリシーを構成いただけますと幸いでございます。</p>
-<p><span style="color: #c00000;"> ※追記 (2023 年 9 月 29 日) ここまで </span></p>
+<p>Azure では、インターネット宛てのアウトバウンド方向の接続 (送信接続) をいくつかの方法で実装できます。選択の幅があることは喜ばしいですが、一方で内容の把握のが難しい側面も否めません。そこで本記事では、Azure VM に使える送信接続の構成をまとめて説明します。また、ある Azure VM がどの構成に該当しているか判定するためのフローチャートや、各構成の特徴についても併せて紹介します。</p>
+<div class="alert is-info"><p class="alert-title">Note</p><p><span style="color: #c00000;">2023 年 9 月、送信接続の構成の一つである<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access">既定の送信アクセス</a>の提供終了がアナウンスされました。</span></p>
+<p>これは、2025 年 9 月 30 日以降に作成された Azure VM は、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。廃止アナウンスに関する補足については、当ブログサイトの以下の記事をご参照の上、技術的な内容については併せて本記事をご確認いただけますと幸いでございます。</p>
+<p><a href="https://jpaztech.github.io/blog/network/default-outbound-access-will-be-retired/">Azure 既定の送信アクセスの動作変更のアナウンスに関する補足 (Tracking ID:3T84-PZZ)</a></p></div>
 <span id="more"></span>
 
-
-<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p><strong>仮定する知識</strong></p>
-<p>この記事では、一般的なネットワーク用語としてのネットワーク アドレス変換 (NAT) や NAPT について、ある程度知識があることを前提としています。これらの言葉に馴染みがなければ、以下の公式ドキュメントを参考に、まずは NAT についての技術背景を確認してみてください。インターネットを活用すれば、さらに多くの技術解説を見つけることが出来るはずです。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#understanding-snat-and-pat">Azure の Outbound connections &gt; SNAT と PAT の理解 | Microsoft Docs</a></li>
-</ul>
-<p><strong>外部接続と SNAT</strong></p>
-<p>Azure 仮想マシン (VM) がインターネット等のグローバル IP アドレス帯のサーバーと通信することを、<strong>外部接続 (outbound connection)</strong> と呼びます。外部接続では、仮想ネットワークで設定したプライベート IP アドレスから、グローバル IP アドレスに送信元 NAT (SNAT) する必要があります。この記事で取り扱うのは、外部接続の為に Azure が提供している SNAT のオプションについてです。</p>
-<p>結論から書くと、2020 年 6 月現在、Azure で利用できる SNAT のオプションは以下の 5 つ存在します。</p>
-<ul>
-<li>ユーザー定義ルートと仮想アプライアンス (e.g. Azure Firewall) による SNAT</li>
-<li>NAT Gateway</li>
-<li>パブリック Azure Load Balancer (外部ロードバランサー)</li>
-<li>パブリック IP アドレス</li>
-<li>Azure 既定の SNAT</li>
-</ul>
-<p>「ユーザー定義ルート (UDR) と仮想アプライアンス (NVA) による SNAT」に関しては、SNAT 可否やその動作仕様が NVA 製品に依存しますので、今回は残る 4 つの「Azure プラットフォームそのものが提供する SNAT」についてお話します (UDR+NVA で SNAT する場合も、結局 NVA 上では残りのいずれかの方法で SNAT する必要があります)。</p>
-<h2 id="判定フローチャート"><a href="#判定フローチャート" class="headerlink" title="判定フローチャート"></a>判定フローチャート</h2><p>個々の詳細を見る前に、SNAT オプション同士の依存関係を把握し、全体感を捉えておきましょう。</p>
-<p>というのも、環境によっては複数の SNAT オプションが構成されている可能性がある為です。例えば、NAT Gateway を関連付けたサブネットの中に、パブリック IP アドレスを付与した VM をデプロイするとどうなるでしょうか?</p>
-<p>そのような状況で役に立つフローチャートを作図しました。以下のフローに従えば、<strong>ある Azure VM のある NIC</strong> がどのように SNAT されるか判定できます。VM ではなく、<span style="color: #c00000">NIC に関する SNAT 方法判定</span>である点に注意してください。</p>
-<p><img src="/blog/network/snat-options-for-azure-vm/flowchart-to-determine-snat-scenario.png" alt="flowchar"></p>
-<p>なお、フローチャートに脚注で記載されているシナリオ {1, 2, 3} は、以下の公式ドキュメントのシナリオ番号に対応しています。</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#scenario-overview">Azure の Outbound connections - Azure Load Balancer | Microsoft Docs</a></li>
-</ul>
-<p><strong>フローチャートの使い方</strong></p>
-<p>先程挙げた NAT Gateway とパブリック IP アドレスの共存環境の例を使って、フローチャートの使い方を説明します。</p>
+<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Azure VM をはじめとする仮想ネットワーク (VNet) のコンピューティング リソースは、必要に応じてインターネット上のサーバーにアクセスします。たとえば、Web ブラウザが TLS/SSL 証明書の失効を検証する場合や、外部の権威 DNS サーバーに再帰問い合わせを実施する場合などです。この接続は、Azure から外部に出ていくように見えることから、アウトバウンド方向の接続あるいは <strong>送信接続</strong> と呼ばれます。</p>
+<p>インターネット上のホストと通信するために、パケットの送信元と宛先 IP アドレスは共にパブリック IP アドレス (グローバル IP アドレス) である必要があります。特に、送信接続の文脈では、宛先はパブリック IP アドレスであることが確定しているため、送信元のパブリック IP アドレスをいかにして確保するかが重要となります。</p>
+<p>一般に、これを実現する方法は大きく２つあります。</p>
 <ol>
-<li>左上の丸からスタートします。</li>
-<li>まずはじめに、UDR で宛先が NVA に向いているか確認します。この情報は、NIC の [有効なルート] から確認することが出来ます。この例では NVA もルート テーブルもデプロイしておらず、判定は “NO” だったとして次の条件文に進みます。</li>
-<li>サブネットに NAT Gateway が関連付けられているか確認します。この情報は、仮想ネットワークの [サブネット] から確認することが出来ます。この例では NAT Gateway が関連付けられています! 条件文の答えは “YES” なので、フローチャートはここで終了します。</li>
+<li>送信元のホスト (オペレーティング システムのネットワーク インターフェイス) に、パブリック IP アドレスを割り当てます。これで送信元ホストはグローバル アドレス帯のセグメントに参加している状態となり、インターネットを介して宛先ホストとエンド・ツー・エンドな通信が行えます。</li>
+<li>送信元のホストには、プライベート IP アドレスのみを割り当てます。その代わり、送信元ホストの外部にあるネットワーク装置で、送信元 IP アドレスをパブリック IP アドレスに変換します。</li>
 </ol>
-<p>最終的に、パブリック IP アドレスではなく NAT Gateway が優先されて SNAT される動作であることが、このフローチャートから判定出来ました。</p>
-<p><strong>Standard SKU の外部接続構成か?</strong></p>
-<p>最後の「Standard SKU の外部接続構成か?」と記載された条件ボックスは、次のいずれか一つを満たす場合に “YES” と判定されます。</p>
+<p>このうち、Azure でサポートされているのは 2 番目の方法です。これは、ネットワークのアドレス変換 (Network Address Translation; NAT) と呼ばれる技術を使っています。特に送信元を変換するので送信元 NAT (Source NAT; SNAT) と呼ばれることもあります。Azure では、仮想化基盤に実装された仮想的なルーター (各サブネットの最初のユーザブル アドレスでホストされるデフォルトゲートウェイ) が、Azure VM のパケットに対して SNAT を実施します。このようなルーターを NAT 装置と呼びます。</p>
+<p>SNAT の実現方法は、さらに 2 つの方式に細分化できます。</p>
 <ul>
-<li>VM には可用性セットが構成されていて、一つ以上の可用性セット内 VM が「Standard SKU の外部接続リソース」に関連付けられている。</li>
-<li>VM は仮想マシン スケール セット (VMSS) であり、一つ以上の VMSS 内 VM が「Standard SKU の外部接続リソース」に関連付けられている。</li>
-<li>複数の NIC が VM に関連付けられていて、一つ以上の NIC が「Standard SKU の外部接続リソース」に関連付けられている。</li>
+<li><strong>Basic NAT</strong>: 2 つの IP アドレスを 1 対 1 の関係で変換する NAT です。狭義の NAT と呼ばれることもあります。NAT 装置上では、単純にアドレスの対応付けを覚えておくだけで良いので、それ以上のステート管理が不要です。</li>
+<li><strong>NAPT (Network Address Port Translation)</strong>: プロトコルやポート番号の情報を利用することで、アドレスを 1 対多の関係で変換できる NAT です。たとえば、複数のクライアントに同じパブリック IP アドレスでの SNAT を提供できます。NAT 装置は、5 タプル (プロトコル、送信元アドレス、送信元ポート番号、宛先アドレス、宛先ポート番号) でフローを一意に識別し、フローごとのアドレスの対応付けを NAT テーブルと呼ばれるデータベースに記録します。</li>
 </ul>
-<p>ここで、Standard SKU の外部接続リソースとは、以下の Azure リソースを表します。</p>
+<p>特に、後者の NAPT による SNAT では<strong>SNAT ポート枯渇</strong>に留意する必要があります。</p>
+<p>NAPT を使用して複数のクライアントに共通の SNAT アドレスを割り当てると、当然 SNAT 後の送信元アドレスは同じものになります。さらに、通信先のエンドポイント (プロトコル、宛先アドレス、宛先ポート番号) が同じである場合は、フローを識別できる情報は 5 タプルのうち送信元ポート番号 (SNAT ポート) だけです。したがって、同一エンドポイント宛ての接続が発生するたびに SNAT ポートを割り当てる (消費する) 必要があり、ポート番号を使い切るとそれ以降の送信接続が失敗します。</p>
+<p>SNAT ポートがどのように消費されるかを示すため、次のようなシナリオを考えます。SNAT 装置が、あるパブリック IP アドレス (<code>SNAT</code>) を使って、プライベート IP アドレスだけが割り当てられた Azure VM #1 (<code>10.0.0.4</code>) と #2 (<code>10.0.0.5</code>) に対して NAPT による SNAT を提供します。VM 間で SNAT ポートの奪い合いが発生しないよう、各 VM に 100 個ずつ SNAT ポートを事前に割り当てることにします。</p>
+<p><img src="/blog/network/snat-options-for-azure-vm/snat-port-exhaustion.png" alt="snat-port-exhaustion"></p>
+<p>ここで、VM から Web サーバー (<code>WEB</code>) に対する大量の HTTP アクセスを発生させました。この通信は、[プロトコル、宛先 IP アドレス、宛先ポート] がすべて同一 (<code>TCP, WEB:80</code>) であることに留意してください。コネクションを識別しなければならない SNAT 装置は、SNAT ポートをコネクションごとに消費していきながら SNAT を行います。</p>
+<p>そして、VM #1 からの 101 個目の接続を受け付けた時、使える SNAT ポートが存在しないことに気が付きます。なぜなら、VM #1 には 100 個の SNAT ポートのみを割り当てたからです。これが SNAT ポートが枯渇した状態です。一度消費した SNAT ポートを再利用するには、既存のコネクションを VM か WEB サーバーが FIN/RST で終了するか、SNAT 装置上のアイドルタイムアウトで強制切断するのを待つ必要があります。</p>
+<p>ただし、SNAT ポート枯渇が発生したからと言って、他のプロトコルや宛先の通信に影響がでるわけではありません。あくまで SNAT ポートはコネクションを識別するための一要素にすぎず、5 タプルの他の値で識別できれば SNAT ポートが重複しても問題ないためです。たとえば、この状況でも VM #1 から DNS サーバー (<code>DNS:53</code>) に対する UDP の接続要求は成功します。</p>
+<p>SNAT ポート枯渇は、同じエンドポイントへのアクセスを繰り返すワークロードで発生する可能性が高まります。たとえば次のようなシナリオです。</p>
 <ul>
-<li>Standard SKU のパブリック IP アドレス</li>
-<li>Standard SKU の Azure Load Balancer</li>
+<li>外部の DNS サーバーへの問い合わせ</li>
+<li>インターネット上のプロキシ サーバーの利用</li>
+<li>コネクションプーリングを使わないデータベース アクセス</li>
+<li>ファイル共有 サーバーとの連携</li>
 </ul>
-<p>上記の通り、NAT Gateway は “Standard SKU の外部接続リソース” に該当しないため、可用性セットの一部 VM にだけ外部接続を構成したい場合や、複数 NIC を持つ VM の一部 NIC に外部接続を構成したい場合に使えます。</p>
-<p>このあたりの条件式を把握するのは難しく、個人的にも理解するのに最も時間がかかった部分ですが、 <strong>Standard SKU ではリソースの保護が強化されていて、明示的に通信設定をするまでは許可されない</strong> と理解すれば多少は飲み込みやすいと思います。同じ内容は、以下の公式ドキュメントにも記載されています。</p>
+<p>枯渇を防止するためには、SNAT ポート数の十分な確保だけでなく、アプリケーションでコネクションを再利用したり不要なコネクションをこまめに切断することが効果的です。</p>
+<h2 id="構成パターンの一覧"><a href="#構成パターンの一覧" class="headerlink" title="構成パターンの一覧"></a>構成パターンの一覧</h2><p>それでは、具体的にどのような構成を取れば、送信接続 (SNAT) が可能になるのでしょうか。2023 年 9 月現在、Azure VM の送信接続に使える構成パターンは次の通りです。</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections">Azure の Outbound connections - Azure Load Balancer | Microsoft Docs</a></li>
+<li>サブネットに NAT ゲートウェイを関連付ける</li>
+<li>NIC にパブリック IP アドレスを関連付ける</li>
+<li>パブリック ロードバランサーで送信規則を定義する</li>
+<li>パブリック ロードバランサーで自動アウトバウンド NAT が有効な負荷分散規則を定義する</li>
+<li>既定の送信アクセスを利用する ※ 2025 年 9 月で廃止、非推奨</li>
 </ul>
-<blockquote>
-<p>重要<br>…<br>アウトバウンド接続のコンテキストでは、単一スタンドアロン VM、可用性セット内のすべての VM、VMSS のすべてのインスタンスがグループとして動作します。 つまり、可用性セット内の単一 VM が Standard SKU に関連付けられている場合、この可用性セット内のすべての VM インスタンスが、Standard SKU に関連付けられている場合と同じ規則に従って動作するようになります。個々のインスタンスが直接関連付けられていない場合でも同様です。 この動作は、ロード バランサーに複数のネットワーク インターフェイスカードが接続されているスタンドアロン VM の場合にも見られます。 1 つの NIC をスタンドアロンとして追加された場合、同じ動作が行われます。</p>
-</blockquote>
-<p><strong>外部接続不可</strong></p>
-<p>最後に、フローチャートの中で赤色で記された<span style="color: #c00000;">「外部接続不可」</span>のシナリオについて補足しておきます。</p>
-<p>フローチャートからもわかるように、Azure では多くの SNAT オプションがあり、ほとんどの状況で外部接続が可能です。特に、NAT 装置を意識せずに VM をデプロイするだけでも (デフォルトゲートウェイが) SNAT を実施してくれる「Azure 既定の SNAT」のシナリオに関しては、特筆すべきポイントです。</p>
-<p>しかしながら、一つだけ SNAT 出来ないシナリオがあります。それが<span style="color: #c00000;">「外部接続不可」</span>のシナリオです。具体的には、Standard SKU の外部接続構成の NIC に、明示的に外部接続リソースを関連付けない場合に該当します (こうして言葉で説明するより、フローチャートを見てもらうほうが早いと思います)。</p>
-<p>「VM が外部接続できない、できなくなった」というお問い合わせは多数いただきますが、殆どの場合の根本原因は、単に<span style="color: #c00000;">「外部接続不可」</span>のシナリオに該当していたというものです。このため、過去にもブログ記事として紹介しています。</p>
+<h2 id="判定フローチャート"><a href="#判定フローチャート" class="headerlink" title="判定フローチャート"></a>判定フローチャート</h2><p>ここでは、ある Azure VM がどの構成パターンで送信接続を実現しているか判定するためのフローチャートを示します。</p>
+<p>より厳密に言えば、これは NIC に対しての判定チャートです。なぜなら、同一 Azure VM にアタッチされた NIC であっても、NIC ごとに異なる送信接続を構成できるためです。たとえば、異なる二つのサブネットに足を出す Azure VM に対し、片方のサブネットでは NAT ゲートウェイを使った送信接続を、もう一方のサブネットでは Azure Firewall を使った送信接続を構成することが可能です。</p>
+<p>また、構成間の優先度も考慮して作成されています。たとえば、ある NIC に対して NAT ゲートウェイとインスタンス レベルのパブリック IP アドレスが両方構成された場合、NAT ゲートウェイによる SNAT で送信接続が行われます。当該のフローチャートを使うと、このような依存関係を判断できます。</p>
+<p><img src="/blog/network/snat-options-for-azure-vm/flowchart-to-determine-snat-scenario.png" alt="flowchart"></p>
+<h3 id="各ステップの詳細"><a href="#各ステップの詳細" class="headerlink" title="各ステップの詳細"></a>各ステップの詳細</h3><h4 id="ルートのネクストホップがインターネット？"><a href="#ルートのネクストホップがインターネット？" class="headerlink" title="ルートのネクストホップがインターネット？"></a>ルートのネクストホップがインターネット？</h4><p>本ステップは、トラフィックが SNAT の対象であるか判定します。</p>
+<p>Azure では、パブリック IP アドレスに宛てた通信が必ずしもパブリック IP アドレスで SNAT されるとは限りません。ルートテーブル上でインターネットにルーティングされる通信だけが、SNAT の対象です (SNAT の対象であることと SNAT に成功することは別である点に注意してください。フローチャートの接続不可に相当する構成であれば SNAT に失敗します)。一方で、SNAT の対象にならないパブリック IP アドレス宛てのトラフィックは、次のような状況で発生します。</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://jpaztech1.z11.web.core.windows.net/Azure%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9.html#outbound-cannot-connect">Azure ロードバランサー利用時の注意点 &gt; ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった</a></li>
+<li>VNet のアドレス範囲にパブリック IP アドレスを使用している場合</li>
+<li>強制トンネリング (オンプレミス拠点にインターネット トラフィックを引き込むネットワーク構成) を採用している場合</li>
+<li>Azure Firewall などのネットワーク仮想アプライアンスをインターネット ゲートウェイとして利用している場合</li>
+<li>サービス エンドポイントを利用している場合</li>
 </ul>
+<p>こうしたシナリオの判断は、Azure VM に設定された<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/diagnose-network-routing-problem#diagnose-using-azure-portal">有効なルート</a>で確認できます。具体的には、ルートのネクストホップが [インターネット] となっている場合は  SNAT の対象で、そうでない場合は対象外です。</p>
+<p>初期状態では、デフォルトルート (0.0.0.0/0) のネクストホップが [インターネット] に向けられているため、仮想ネットワークやオンプレミス拠点のアドレス範囲以外に宛てられたトラフィック、つまりほとんどのトラフィックが SNAT の対象です。当該ステップの判定では、この既定のデフォルトルートを無効化あるいは上書きするようなルートが定義されていないかを重点的に確認していただくのが良いでしょう。</p>
+<p>たとえば、次のような状況について考えてみます。</p>
+<p><img src="/blog/network/snat-options-for-azure-vm/effective-routes-afw.png" alt="effective-routes-afw"></p>
+<ul>
+<li>既定のデフォルトルートが無効となり、代わりにネクストホップが [仮想アプライアンス] のユーザー定義ルートが設定されています。したがって、Azure VM では SNAT を試みず、仮想アプライアンス側でインターネット トラフィックを処理 (フィルタリングや SNAT) する構成だと判断できます。</li>
+<li>ただし、<a href="https://jpaztech.github.io/blog/vm/azure-kms-update/">KMS サーバーをホストする 3 つのアドレス</a> のネクストホップが [インターネット] に設定されています。これらのエンドポイントに関しては、仮想アプライアンスを使わず Azure VM 側で SNAT することが意図されているようです。</li>
+</ul>
+<p>したがって、この例での当該ステップへの回答は次の通りです。</p>
+<ul>
+<li>KMS サーバー宛てのトラフィック: はい (SNAT の対象)</li>
+<li>それ以外のインターネット宛てのトラフィック: いいえ (SNAT の対象外)</li>
+</ul>
+<h4 id="NAT-ゲートウェイがサブネットに関連付けられている？"><a href="#NAT-ゲートウェイがサブネットに関連付けられている？" class="headerlink" title="NAT ゲートウェイがサブネットに関連付けられている？"></a>NAT ゲートウェイがサブネットに関連付けられている？</h4><p>本ステップでは、NAT ゲートウェイによる SNAT 構成であるか判定します。これは、NIC がデプロイされているサブネットのプロパティで確認できます。以下に、Azure Portal での確認方法の例を示します。</p>
+<ol>
+<li>対象の Azure VM の [ネットワーク] メニューで、 NIC がデプロイされている仮想ネットワーク/サブネットを確認する</li>
+<li>対象の仮想ネットワークの [サブネット] メニューから、対象サブネットを開く</li>
+<li>[NAT ゲートウェイ] の項目に NAT ゲートウェイの名前が存在すれば、本ステップの回答は「はい」です</li>
+</ol>
+<h4 id="パブリック-IP-が-NIC-に関連付けられている？"><a href="#パブリック-IP-が-NIC-に関連付けられている？" class="headerlink" title="パブリック IP が NIC に関連付けられている？"></a>パブリック IP が NIC に関連付けられている？</h4><p>本ステップでは、NIC に関連付けたパブリック IP アドレス (インスタンス レベルのパブリック IP アドレス) による SNAT 構成であるか判定します。NIC プロパティを見て、プライマリ IP 構成にパブリック IP アドレスが紐づけられているか確認してください。</p>
+<p>Azure Portal で確認する場合は。<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/associate-public-ip-address-vm?tabs=azure-portal">パブリック IP アドレスの関連付けの手順</a>を参考に、次のような手順で実行します。</p>
+<ol>
+<li>対象の NIC の [IP 構成] メニューで、プライマリの IP 構成を確認する</li>
+<li>パブリック IP アドレスの欄にアドレスが表示されていれば、本ステップの回答は「はい」です</li>
+</ol>
+<h4 id="送信規則を定義している？"><a href="#送信規則を定義している？" class="headerlink" title="送信規則を定義している？"></a>送信規則を定義している？</h4><p>本ステップでは、送信規則を使った SNAT 構成であるか判定します。送信規則は Standard SKU のパブリック ロードバランサーでのみ利用できる機能で、送信接続を定義したバックエンド プールの VM に対して SNAT を提供します。Azure Portal での確認方法の例は次の通りです。</p>
+<ol>
+<li>対象の Azure VM の [ネットワーク] メニューで、対象の NIC を確認します</li>
+<li>[負荷分散] タブを開き、所属しているロードバランサーとバックエンド プールの一覧を確認します。</li>
+<li>種別がパブリックで SKU が Standard であるロードバランサーのみを抽出します。</li>
+<li>対象のロードバランサーの [送信規則] メニューを開き、対象のバックエンド プールに関連付けられた送信規則がある場合、本ステップの回答は「はい」です</li>
+</ol>
+<h4 id="自動アウトバウンド-NAT-が有効な負荷分散規則を定義している？"><a href="#自動アウトバウンド-NAT-が有効な負荷分散規則を定義している？" class="headerlink" title="自動アウトバウンド NAT が有効な負荷分散規則を定義している？"></a>自動アウトバウンド NAT が有効な負荷分散規則を定義している？</h4><p>本ステップでは、アウトバウンド NAT の自動プログラミングが有効な負荷分散規則による SNAT 構成であるか判定します。</p>
+<p>パブリック ロードバランサーでは、負荷分散規則を定義すると同時に送信接続を有効化できます。この暗黙的な SNAT は、自動アウトバウンド NAT などと呼ばれます。Azure Portal での確認方法の例は次の通りです。</p>
+<ol>
+<li>対象の Azure VM の [ネットワーク] メニューで、対象の NIC を確認します</li>
+<li>[負荷分散] タブを開き、所属しているロードバランサーとバックエンド プールの一覧を確認します。</li>
+<li>種別がパブリックであるロードバランサーのみを抽出します。</li>
+<li>対象のロードバランサーの [負荷分散規則] メニューを開き、対象のバックエンド プールに定義された負荷分散規則が次のいずれかに該当していれば本ステップの回答は「はい」です</li>
+</ol>
+<ul>
+<li>Basic SKU のパブリック ロードバランサーの負荷分散規則が定義されている</li>
+<li>Standard SKU のパブリックロードバランサーの負荷分散規則が定義されており、その負荷分散規則で自動アウトバウンド NAT が有効化されている</li>
+</ul>
+<h4 id="既定の送信アクセスの条件を満たしている？"><a href="#既定の送信アクセスの条件を満たしている？" class="headerlink" title="既定の送信アクセスの条件を満たしている？"></a>既定の送信アクセスの条件を満たしている？</h4><p>本ステップでは、<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access">既定の送信アクセス</a> が有効なシナリオであるか確認します。</p>
+<p>既定の送信アクセスとは、明示的に送信接続の設定をしていない Azure VM に最低限の送信接続を提供する Azure プラットフォームの SNAT 機能です。次の 2 つの条件をすべて満たす Azure VM は、既定の送信アクセスでの送信接続が有効です。</p>
+<ul>
+<li><strong>条件1</strong>: 同一の可用性セット(※) に含まれるすべての NIC が、Standard SKU のパブリック IP アドレス、ロードバランサーのいずれにも関連付けられていない。</li>
+<li><strong>条件2</strong>: フレキシブル オーケストレーション モードで動作する VMSS のインスタンスではない。</li>
+</ul>
+<p>※ 可用性セットを作成していない場合は、「可用性セット」と「Azure VM」を置き替えてください (遺体台の Azure VM だけが所属する疑似的な可用性セットを考える)。同様に、VMSS のインスタンスの場合は、「可用性セット」と「VMSS」を置き替えてください。</p>
+<p><img src="/blog/network/snat-options-for-azure-vm/default-snat-condition.png" alt="default-snat-condition-1"></p>
+<h4 id="送信接続-不可"><a href="#送信接続-不可" class="headerlink" title="送信接続 不可"></a>送信接続 不可</h4><p>最後に「送信接続 不可」のシナリオについて補足します。</p>
+<p>フローチャートからもわかるように、Azure では多くの SNAT オプションがあり、多くの状況で送信接続が可能です。特に、まったく SNAT の構成を意識せず、Azure VM をデプロイするだけで送信接続が勝手にできるようになる「既定の送信アクセス」は、特筆すべき機能です。それだけに、いざ送信接続ができなくなった時にパニックに陥ってしまうという、諸刃の剣としての側面もあります。</p>
+<p>実際、技術サポートでも「Azure VM が送信接続できない、できなくなった」という類のお問い合わせは、頻繁に目にするシナリオのひとつです。中でも、ロードバランサーの構成変更作業を契機として事象が発生するケースが多く、過去にロードバランサー関連の TIPS としてブログ記事を公開しています。</p>
 <blockquote>
 <p>ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった<br>こちらの事象についてよくある原因としては以下があります。</p>
 <ol>
 <li>Standard SKU の内部ロードバランサーのバックエンドプールに所属している</li>
 </ol>
+<p>引用: <a href="https://jpaztech.github.io/blog/archive/azurelb-tips/">Azure ロードバランサー利用時の注意点 &gt; ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった</a></p>
 </blockquote>
-<p>上記ブログ記事は少し情報が古く (というより Azure の進化のスピードが本当にはやく)、現在はこのシナリオのワークアラウンドは以下の 4 つとなっていますが、<strong>明示的に外部接続のポリシーを構成する</strong> という根本的な考え方は変わりません。</p>
+<p>もし、送信接続ができない場合や、あるタイミングを境に送信接続できない状況になってしまった場合は、以下のような対応で事象が緩和するかご確認ください。</p>
 <ul>
-<li>NVA (e.g. Azure Firewall) をデプロイし、0.0.0.0/0 のネクストホップを NVA に向ける UDR を構成する</li>
-<li>NAT Gateway をデプロイし、VM が配置されているサブネットに関連付ける</li>
-<li>Standard SKU のパブリック IP アドレスをデプロイし、VM に関連付ける</li>
-<li>Standard SKU の外部ロードバランサーをデプロイし、そのバックエンド プールに VM を配置する</li>
+<li>NAT ゲートウェイを Azure VM が配置されているサブネットに関連付ける</li>
+<li>パブリック IP アドレスを Azure VM の NIC に関連付ける</li>
+<li>Standard SKU のパブリック ロードバランサーを利用して送信規則を構成する</li>
 </ul>
-<h2 id="機能比較"><a href="#機能比較" class="headerlink" title="機能比較"></a>機能比較</h2><p>フローチャートの他に、幾つかの機能項目をピックアップし SNAT オプション間で比較した表も用意しました。俯瞰的に機能を比べる目的でご利用ください。</p>
+<h2 id="構成の比較"><a href="#構成の比較" class="headerlink" title="構成の比較"></a>構成の比較</h2><p>次の表は、各構成にどのような特性があるかを示したものです。詳細は後述のセクションで確認していただければと思いますが、横ぐしで比較する際に参考となれば幸いです。</p>
 <table>
 <thead>
 <tr>
-<th align="center"></th>
-<th align="center">AzFW/NVA + UDR</th>
-<th align="center">NAT GW</th>
-<th align="center">Public IP</th>
-<th align="center">Public Azure Load Balancer</th>
-<th align="center">Default SNAT</th>
+<th align="left"></th>
+<th align="left">NAT ゲートウェイ</th>
+<th align="left">インスタンスレベル パブリック IP アドレス</th>
+<th align="left">送信規則</th>
+<th align="left">負荷分散規則</th>
+<th align="left">既定の送信アクセス</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">関連付け単位</td>
-<td align="center">サブネット[^1]</td>
-<td align="center">サブネット</td>
-<td align="center">NIC</td>
-<td align="center">バックエンド プール</td>
-<td align="center">NIC</td>
+<td align="left">構成単位</td>
+<td align="left">サブネット</td>
+<td align="left">NIC</td>
+<td align="left">バックエンド プール</td>
+<td align="left">バックエンド プール</td>
+<td align="left">可用性セット</td>
 </tr>
 <tr>
-<td align="center">送信元を固定出来るか</td>
-<td align="center">NVA 依存[^2]</td>
-<td align="center">はい</td>
-<td align="center">はい</td>
-<td align="center">はい</td>
-<td align="center">いいえ</td>
+<td align="left">アドレスの割り当て</td>
+<td align="left">固定</td>
+<td align="left">固定</td>
+<td align="left">固定</td>
+<td align="left">固定</td>
+<td align="left">ランダム</td>
 </tr>
 <tr>
-<td align="center">SNAT ポート数を拡張出来るか</td>
-<td align="center">NVA 依存[^2]</td>
-<td align="center">はい</td>
-<td align="center">いいえ</td>
-<td align="center">はい</td>
-<td align="center">いいえ</td>
+<td align="left">NAT 方式</td>
+<td align="left">NAPT</td>
+<td align="left">Basic NAT</td>
+<td align="left">NAPT</td>
+<td align="left">NAPT</td>
+<td align="left">NAPT</td>
 </tr>
 <tr>
-<td align="center">SNAT ポート数が VM に静的割り当てされるか</td>
-<td align="center">NVA 依存[^2]</td>
-<td align="center">いいえ (動的確保)</td>
-<td align="center">はい (64000 個)</td>
-<td align="center">はい (数は構成依存)</td>
-<td align="center">はい (1024 個)</td>
+<td align="left">最大 SNAT ポート数</td>
+<td align="left">~64,512*16</td>
+<td align="left"></td>
+<td align="left">64,000</td>
+<td align="left">1,024</td>
+<td align="left">1,024</td>
 </tr>
 <tr>
-<td align="center">TCP アイドルタイムアウト</td>
-<td align="center">NVA 依存[^2]</td>
-<td align="center">4 ～ 120 分</td>
-<td align="center">4 分</td>
-<td align="center">4 ～ 120 分</td>
-<td align="center">4 分</td>
+<td align="left">アイドル タイムアウト[分]</td>
+<td align="left">4~120</td>
+<td align="left">4</td>
+<td align="left">4~100</td>
+<td align="left">4</td>
+<td align="left">4</td>
 </tr>
 <tr>
-<td align="center">利用可能なプロトコル</td>
-<td align="center">NVA 依存[^2]</td>
-<td align="center">TCP/UDP</td>
-<td align="center">TCP/UDP/ICMP/ESP</td>
-<td align="center">TCP/UDP</td>
-<td align="center">TCP/UDP/ICMP</td>
+<td align="left">プロトコル</td>
+<td align="left">TCP/UDP</td>
+<td align="left">TCP/UDP/ICMP/ESP</td>
+<td align="left">TCP/UDP</td>
+<td align="left">TCP/UDP</td>
+<td align="left">TCP/UDP</td>
 </tr>
 <tr>
-<td align="center">インバウンド接続性も確保出来るか</td>
-<td align="center">NVA 依存[^2]</td>
-<td align="center">いいえ</td>
-<td align="center">はい</td>
-<td align="center">はい</td>
-<td align="center">いいえ</td>
+<td align="left">インバウンド接続</td>
+<td align="left">なし</td>
+<td align="left">あり</td>
+<td align="left">なし</td>
+<td align="left">あり</td>
+<td align="left">なし</td>
 </tr>
 </tbody></table>
-<p>それぞれの行で意図している内容は、以下の通りです。</p>
 <ul>
-<li><strong>関連付け単位</strong>: SNAT のポリシーを適用する単位です。例えばサブネットが SNAT ポリシーの単位である場合、サブネット内のすべての VM は同じ方法で SNAT が実施されます。</li>
-<li><strong>送信元を固定出来るか</strong>: この項目が “はい” の SNAT オプションでは、特定の SNAT アドレス プールから送信元の IP アドレスを払い出す事ができます。”いいえ” の SNAT オプションでは、時間経過や VM の先道など、あるイベントをトリガーとして SNAT プールが変更される可能性があります。</li>
-<li><strong>SNAT ポート数を拡張出来るか</strong>: この項目が “はい” の SNAT オプションでは、構成状況を変更することで、ユーザーが各 VM に割り当てる SNAT ポート数を変動させることが出来ます。”いいえ” のオプションでは、予め定められた値のポート数が各 VM に割り当てられます。</li>
-<li><strong>SNAT ポート数が VM に静的割り当てされるか</strong>: この項目が “はい” の SNAT オプションでは、予め各 VM には最大の SNAT ポート数が定められます。基本的に SNAT ポート数は固定ですが、唯一の例外は NAT Gateway です。NAT Gateway では、利用状況に応じて SNAT ポート数は動的に VM に割り当てられます。</li>
-<li><strong>TCP アイドルタイムアウト</strong>: 外部接続の TCP 接続に関するタイムアウト値 (分) です。範囲が記載されている SNAT オプションに関しては、ユーザーが定めることが出来ます。</li>
-<li><strong>利用可能なプロトコル</strong>: 外部接続でサポートされているプロトコルです。すべての SNAT オプションで TCP/UDP はサポートされているものの、ICMP が利用できないオプションもあるので注意してください。</li>
-<li><strong>インバウンド接続性も確保出来るか</strong>: この項目が “はい” の SNAT オプションでは、Azure リソースを追加でデプロイすることなく、インバウンドの接続ポリシーも構成することが出来ます。</li>
+<li><strong>構成単位</strong>: 同じ送信接続が構成されるスコープです。たとえば、サブネットが構成単位である場合、サブネット内のすべての NIC は同じ方法で送信接続されます。</li>
+<li><strong>アドレスの割り当て</strong>: “固定” の構成では、特定の SNAT アドレス プールから送信元 IP アドレスが払い出されることを保証できます。これにより、宛先側のホストで送信元を使った ACL を利用できます。”ランダム” の構成では、SNAT アドレスを限定できません。Azure VM の割り当てを停止すると、パブリック IP アドレスが変化します。</li>
+<li><strong>NAT 方式</strong>: “Basic NAT” は、1対1 のステートレス NAT によって実装されていることを表します。これが採用されているのは、インスタンスレベルのパブリック IP アドレスだけです。”NAPT” は、NAPT を利用した SNAT であることを表します。この方式では、SNAT ポートを使い切ると同じ宛先ホストへの同時接続が制限される「ポート枯渇」の問題が発生する可能性があります。</li>
+<li><strong>最大 SNAT ポート数</strong>: NIC が利用できる最大の SNAT ポート数を表します。NAT ゲートウェイでは、利用状況に応じて SNAT ポートを動的に分配するため、他の Azure VM の稼働状況にも左右されます。理論上、NAT ゲートウェイ全体で最大 64,512 * 16 = 1,032,192 個の SNAT ポートが確保できます。</li>
+<li><strong>アイドルタイムアウト</strong>: TCP コネクションをアウトバウンド向けに確立した時のアイドル タイムアウト値 (分) です。タイムアウト値よりも長くアイドル状態が続くコネクションに関しては、それ以降の接続が保証されません。範囲が記載されているものに関しては、設定により変動できます。ロードバランサーの場合、タイムアウト時に RST を通知する機能があります。</li>
+<li><strong>プロトコル</strong>: 送信接続でサポートされているプロトコルです。すべてのオプションで TCP/UDP はサポートされています。ICMP が利用できないオプションもあるので、外部サーバーへの ping 監視のシナリオでは注意してください。</li>
+<li><strong>インバウンド接続</strong>: 「なし」の場合、送信接続のためだけにパブリック IP アドレスが使用されます。「あり」の場合、外部からの接続エンドポイントとしてもパブリック IP アドレスが利用されます。</li>
 </ul>
-<p>[^1]: UDR の関連付け単位がサブネットであることに起因しています<br>[^2]: NVA による SNAT も結局は NAT Gateway、パブリック IP アドレス、外部 Azure Load Balancer、Azure 既定の SNAT のいずれかのオプションを NVA で利用しています。したがって、NVA の動作制限に加えて、これらの制限も当然加わります。</p>
-<h2 id="SNAT-オプションの詳細"><a href="#SNAT-オプションの詳細" class="headerlink" title="SNAT オプションの詳細"></a>SNAT オプションの詳細</h2><p>このセクションでは、各 SNAT オプションについて少し深堀りして説明します。</p>
-<p>主な特徴やユースケース、注意事項等を記載しますので、ここまでの内容を踏まえて興味の湧いた SNAT オプションについて、詳しく確認してみてください。</p>
-<h3 id="NAT-Gateway"><a href="#NAT-Gateway" class="headerlink" title="NAT Gateway"></a>NAT Gateway</h3><p><img src="/blog/network/snat-options-for-azure-vm/nat-gateway-snat.png" alt="nat-gateway"></p>
-<p><em>NAT ゲートウェイ (NAT Gateway)</em> は、複数ある SNAT オプションの中で唯一「外部接続だけを目的とした」専用サービスです。専用サービスとだけあって、SNAT プールの固定化はもちろん、動的なポート確保など、他の SNAT オプションにはない機能を有します。</p>
+<p>また、送信接続の構成を選択する際は、以下の公式ドキュメントも併せてご確認ください。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/well-architected/mission-critical/mission-critical-networking-connectivity#internet-egress">Azure でのミッション クリティカルなワークロードのネットワークと接続 - Microsoft Azure Well-Architected Framework | Microsoft Learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections">アウトバウンド接続の送信元ネットワーク アドレス変換 (SNAT) - Azure Load Balancer | Microsoft Learn</a></li>
+</ul>
+<h2 id="構成の詳細"><a href="#構成の詳細" class="headerlink" title="構成の詳細"></a>構成の詳細</h2><p>ここからは、送信接続の構成ごとに特徴・ユースケース・注意事項を紹介していきます。</p>
+<h3 id="NAT-ゲートウェイ"><a href="#NAT-ゲートウェイ" class="headerlink" title="NAT ゲートウェイ"></a>NAT ゲートウェイ</h3><p><img src="/blog/network/snat-options-for-azure-vm/nat-gateway-snat.png" alt="nat-gateway"></p>
+<p>NAT ゲートウェイは、送信接続の SNAT を主な目的として設計されたネットワーク サービスです。専門的なサービスなだけあって、送信元アドレスの固定化はもちろん、動的なポート確保によりるポート資源の有効活用など、他の SNAT 方式にはない機能を有します。</p>
 <p><strong>特徴</strong></p>
 <ul>
-<li>フルマネージドな PaaS サービスで、高い可用性を有します。</li>
-<li>動的に SNAT ポートを確保できるのは NAT Gateway だけです[^3]。</li>
-<li>Public IP や Azure Load Balancer の SNAT よりも、NAT Gateway が優先されます[^4]。</li>
-<li>外部接続の TCP アイドル タイムアウトを最大 120 分に伸ばせます。</li>
-<li>NAT Gateway に追加できるパブリック IP アドレスの最大数は 16 個です。つまり、一つの NAT Gateway あたり、最大 64,000 * 16 = 1,024,000 ポートが SNAT ポートに使えます。</li>
+<li>フルマネージドな PaaS サービスで、高い可用性を有します。最新の SLA では、可用性が 99.99% を下回ると一部料金の返金 (サービス クレジット) を受け取ることができます。</li>
+<li>複数の VM で SNAT ポート プールを共有し、動的に SNAT ポートを確保できるのは NAT ゲートウェイだけです。[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/nat-gateway-snat">参考</a>]</li>
+<li>NAT ゲートウェイに追加できるパブリック IP アドレスの最大数は 16 個です。パブリック IP アドレスあたり 64,152 の SNAT ポートが確保されるため、NAT ゲートウェイ全体で最大 64,512 * 16 = 1,032,192 の SNAT ポートを確保できます。[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/nat-gateway-resource#snat-ports">参考</a>]</li>
+<li>送信接続の TCP アイドル タイムアウトを 4 分から最大 120 分まで伸ばせます。[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/nat-gateway-resource#tcp-idle-timeout">参考</a>]</li>
+<li>Azure Monitor のメトリックで NAT ゲートウェイで処理されたデータサイズ、パケット数、現在の接続数を確認することができます。[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/nat-metrics">参考</a>]</li>
 </ul>
-<p>[^3]: NAT Gateway の動的な SNAT ポート確保動作の詳細は、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-gateway-resource#on-demand">NAT ゲートウェイ リソースを使用した仮想ネットワークの設計 &gt; オンデマンド</a> をご覧ください。<br>[^4]: NAT Gateway と Public IP/Azure Load Balancer の共存環境における動作については、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-gateway-resource#nat-and-vm-with-instance-level-public-ip-and-public-load-balancer">NAT ゲートウェイ リソースを使用した仮想ネットワークの設計 &gt; インスタンスレベル パブリック IP とパブリック Load Balancer を使用した VM と NAT</a> をご覧ください。</p>
-<p><strong>基本的な構成方法</strong></p>
+<p><strong>構成方法</strong></p>
 <ol>
-<li>NAT Gateway リソースを作成する。</li>
-<li>対象のサブネットに NAT Gateway を関連付ける。</li>
+<li>NAT ゲートウェイ リソースを作成する。</li>
+<li>対象のサブネットに NAT ゲートウェイを関連付ける。</li>
 </ol>
 <p><strong>ユースケース</strong></p>
 <ul>
-<li>一般的な SNAT のシナリオ全般。</li>
-<li>大量に SNAT ポートが必要となる場合。</li>
-<li>複数の VM で SNAT プールを共有したいが、各 VM が消費する SNAT ポート数にばらつきがある場合。</li>
+<li>一般的な送信接続のシナリオ全般</li>
+<li>大量のインターネットへの接続が必要となる場合</li>
+<li>複数の Azure VM で SNAT 用のパブリック IP アドレス (SNAT ポート) を共有したい場合</li>
 </ul>
 <p><strong>注意事項</strong></p>
 <ul>
-<li>NAT Gateway では、インバウンドの接続性は提供されません。</li>
-<li>UDR で特定の経路のネクスト ホップを NVA や仮想ネットワーク ゲートウェイに向けている場合、それらを宛先とする通信は NAT Gateway を利用して SNAT されません。</li>
-<li>他の外部接続のサービスで言えば Standard SKU の扱いのサービスなので、Basic のサービスと共存出来ません (e.g. Basic SKU の Public IP が付与された VM がサブネットに存在すれば、NAT Gateway は関連付けできない)。</li>
+<li>NAT ゲートウェイを使用する NIC は、Basic SKU のインスタンス レベル パブリック IP アドレスを関連付けたり、Basic SKU のロードバランサーのバックエンドに配置できません。</li>
+<li>仮想ネットワーク内の通信に対する一般的な NAT 装置として利用できません。あくまで、インターネットへの送信接続における SNAT 機能だけを提供します。</li>
+<li>インバウンド方向のインターネット接続を受け付けることはできません。インバウンド接続性が必要な場合、Application Gateway やロードバランサーなどの利用を検討してください。</li>
+<li>NAT ゲートウェイの可用性オプションは、特定可用性ゾーンへの固定 (zonal) または非ゾーン (regional) のいずれかです。可用性ゾーン レベルの冗長性が必要なシステムに組み込む場合は、可用性ゾーンごとにサブネットを作成し、複数の NAT ゲートウェイを各サブネットに関連付けるようにします。[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/nat-availability-zones">参考</a>]</li>
 <li>ICMP プロトコルはサポートされません。</li>
-<li>その他の制限事項について、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-overview#limitations">公式ドキュメント</a> をご確認ください。</li>
 </ul>
 <p><strong>参考文献</strong></p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-overview">Azure Virtual Network NAT とは | Microsoft Docs</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/nat-gateway-resource">NAT ゲートウェイ リソースを使用した仮想ネットワークの設計 - Azure Virtual Network NAT | Microsoft Docs</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/troubleshoot-nat">Azure Virtual Network NAT 接続のトラブルシューティング - Azure Virtual Network | Microsoft Docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/nat-overview">Azure NAT Gateway とは | Microsoft Learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/nat-gateway-resource">Azure NAT Gateway リソース | Microsoft Learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/nat-gateway/troubleshoot-nat">Azure NAT Gateway のトラブルシューティング - Azure Virtual Network | Microsoft Learn</a></li>
 </ul>
-<h3 id="パブリック-IP-アドレス"><a href="#パブリック-IP-アドレス" class="headerlink" title="パブリック IP アドレス"></a>パブリック IP アドレス</h3><p><img src="/blog/network/snat-options-for-azure-vm/public-ip-address-snat.png" alt="public-ip-address"></p>
-<p>Azure VM のネットワーク インターフェイス (NIC) にパブリック IP アドレス (Public IP) を関連付けると、その NIC からの外部接続は Public IP によって SNAT される動作となります。</p>
+<h3 id="インスタンス-レベルのパブリック-IP-アドレス"><a href="#インスタンス-レベルのパブリック-IP-アドレス" class="headerlink" title="インスタンス レベルのパブリック IP アドレス"></a>インスタンス レベルのパブリック IP アドレス</h3><p><img src="/blog/network/snat-options-for-azure-vm/public-ip-address-snat.png" alt="public-ip-address"></p>
+<p>Azure VM の NIC にパブリック IP アドレス (インスタンス レベルのパブリック IP アドレス) を関連付けると、そのパブリック IP アドレスで通信が SNAT されるようになります。1 対 1 のステートレス NAT (Basic NAT) として実装されるため、基盤側では SNAT ポートを管理しません。</p>
 <p><strong>特徴</strong></p>
 <ul>
-<li>SNAT に利用される IP アドレスは必ず Public IP なので、送信元を固定することが出来ます。</li>
-<li>割り当てられるポート数は、Public IP が利用できるエフェメラル ポートの最大数 64,000 で固定されます。この 64,000 という数字は、もちろん用途にもよりますが、多くのワークロードで十分な SNAT ポート数です。</li>
+<li>基盤に備わる SNAT 機能の中で、唯一 NAPT を利用しない (SNAT ポートを使わない) 方式による SNAT です。SNAT ポートの枯渇を心配する必要はありません。</li>
+<li>SNAT アドレスが一つの VM に占有され、他の VM に使われないことを保証できます。</li>
+<li>構成が非常にシンプルです。</li>
 </ul>
-<p><strong>基本的な構成方法</strong></p>
+<p><strong>構成方法</strong></p>
 <ol>
 <li>パブリック IP アドレス リソースを作成する。</li>
-<li>対象の VM の NIC に関連付ける。</li>
+<li>対象の Azure VM の NIC に関連付ける。</li>
 </ol>
 <p><strong>ユースケース</strong></p>
 <ul>
-<li>エフェメラル ポートを一つの VM で専有したい場合 (e.g. 多くの SNAT ポートを消費するフォワード プロキシ)。</li>
-<li>外部接続だけでなく VM 単位でのインバウンド接続も確保したい場合 (e.g. 特定拠点からリモート アクセスされる踏み台サーバー)。</li>
+<li>単一の Azure VM に対する送信接続の確保 (NAT ゲートウェイなどを導入するまでの一時的な対策)</li>
+<li>送信接続だけでなく、Azure VM へのインバウンド接続も確保したい場合</li>
 </ul>
 <p><strong>注意事項</strong></p>
 <ul>
-<li>NAT Gateway による SNAT が実施されていないことが前提条件です。</li>
 <li>Basic SKU だと NAT Gateway と共存出来ない等、SKU 依存の制限が存在します。可用性ゾーンへの対応も考慮すると、基本的には Standard SKU の使用が推奨されます。</li>
+<li>SNAT ポートの消費を気にしなくて済む反面、OS のネットワーク スタックでエフェメラル ポートが枯渇する可能があります。エフェメラルポートの枯渇が疑われる場合は、次のような情報を参考にしてください。<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/windows-client/networking/tcp-ip-port-exhaustion-troubleshooting">TCP/IP ポート枯渇のトラブルシューティング - Windows Client | Microsoft Learn</a></li>
 </ul>
 <p><strong>参考文献</strong></p>
 <ul>
-<li>[Azure の Outbound connections &gt; シナリオ 1:パブリック IP アドレスありの VM | Microsoft Docs](<a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#ilPublic">https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#ilPublic</a> IP)</li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-network-public-ip-address">Azure パブリック IP アドレスの作成、変更、削除 | Microsoft Docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections">アウトバウンド接続の送信元ネットワーク アドレス変換 (SNAT) - Azure Load Balancer | Microsoft Learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/virtual-network-public-ip-address">Azure パブリック IP アドレスを作成、変更、または削除する - Azure Virtual Network | Microsoft Learn</a></li>
 </ul>
-<h3 id="Azure-Load-Balancer"><a href="#Azure-Load-Balancer" class="headerlink" title="Azure Load Balancer"></a>Azure Load Balancer</h3><p><img src="/blog/network/snat-options-for-azure-vm/auzre-load-balancer-snat.png" alt="auzre-load-balancer-snat"></p>
-<p>外部ロードバランサーのバックエンド プールに Azure VM を配置すると、構成した規則に応じて、フロントエンドの Public IP で SNAT される動作となります。</p>
-<!-- [^Azure Load Balancer-snat-trigger]: 厳密にはバックエンド プールに VM を配置するだけでは不十分で、規則 (送信規則、負荷分散規則、インバウンド NAT 規則) を作るまでは SNAT されません。 -->
-
-<p>このシナリオでは、特に Azure Load Balancer の Standard SKU でのみ利用可能な <strong>送信規則 (outbound rule)</strong> が効果的に活用できます。送信規則を使うと、SNAT ポート割り当てのカスタマイズや、TCP アイドルタイムアウトの調節が柔軟に構成出来ます。</p>
+<h3 id="送信規則"><a href="#送信規則" class="headerlink" title="送信規則"></a>送信規則</h3><p><img src="/blog/network/snat-options-for-azure-vm/auzre-load-balancer-snat.png" alt="auzre-load-balancer-snat"></p>
+<p>送信規則は Standard SKU のパブリック ロードバランサーで利用可能な送信接続構成です。バックエンド プールに Azure VM を配置して送信規則を定義すると、フロントエンドのパブリック IP アドレスを使った SNAT が提供されます。</p>
+<p>NAT の方式には NAPT が利用されています。バックエンド プール内の Azure VM に対して、各々どの程度の SNAT ポート数を割り与えるか、予め設定しておきます。パブリック IP アドレスあたり 64,000 の SNAT ポートを持つので、これをバックエンド プール内の Azure VM で分配する形になります。たとえば、8 台なら 8,000 ポートずつ割り振ることができます。</p>
 <p><strong>特徴</strong></p>
 <ul>
-<li>バックエンド プール単位で SNAT ポリシーが構成されるため、サブネットにとらわれずに複数 VM を同じ方法で SNAT できる。</li>
-<li>Standard SKU で利用可能な送信規則を使って、より仔細に SNAt ポリシーが構成できる。</li>
-<li>送信規則で制御できるパラメータは、以下の通り。<ul>
-<li>バックエンド プール (どの仮想マシンに SNAT ポリシーを適用するか)</li>
-<li>SNAT ポート数の割り当てかた (各仮想マシンに何ポートずつ割り当てるか)</li>
+<li>バックエンド プールの単位で構成されるため、サブネットをまたいで複数の Azure VM を同じ方法で SNAT できる。</li>
+<li>送信規則で制御できるパラメータが豊富。<ul>
+<li>バックエンド プール (どの Azure VM を対象とするか)</li>
+<li>フロントエンド IP 構成 (どのパブリック IP アドレスで SNAT するか)</li>
+<li>SNAT ポート数の割り当て (各 Azure VM へ自動的に均等に割り当てる方式か、明示的に値を入力する方式が選択できます)</li>
 <li>SNAT の対象とするプロトコル (TCP、UDP、または両方)</li>
-<li>TCP アイドルタイムアウト (4 分から最大 120 分まで)</li>
-<li>タイムアウト時の TCP リセット送信の有無</li>
+<li>TCP アイドルタイムアウト (4 分から最大 100 分まで)</li>
+<li>アイドル タイムアウト時の TCP リセット送信の有無</li>
 </ul>
 </li>
+<li>インバウンド接続性も、負荷分散規則やインバウンド NAT 規則を作成すれば確保できる。作成しなければ、単に送信接続のみを行う SNAT 装置として使うことも可能。</li>
 </ul>
-<p><strong>基本的な構成方法</strong></p>
+<p><strong>構成方法</strong></p>
 <ol>
-<li>パブリック IP アドレスをフロントエンドに付与した Azure Load Balancer (外部ロードバランサー) をデプロイする。</li>
-<li>バックエンド プールを作成し、SNAT ポリシーを適用したい VM を複数追加する。</li>
-<li>送信規則、インバウンド NAT 規則、あるいは送信規則 (Standard SKU のみ) を構成する。</li>
+<li>パブリック IP アドレスをフロントエンドに付与したパブリック ロードバランサーを作成する。</li>
+<li>バックエンド プールに対象の Azure VM の NIC を追加する。</li>
+<li>送信規則を作成する。</li>
 </ol>
 <p><strong>ユースケース</strong></p>
 <ul>
-<li>SNAT と同時に、インバウンド方向の負荷分散も同時に構成したい場合 (e.g. 処理の一部で外部送信が必要となる WEB サーバー)。</li>
-<li>サブネット以外の単位で、複数 VM を同一 SNAT ポリシー下としたい場合 (e.g. サブネットの一部の VM にのみインターネット接続を許可する)</li>
+<li>SNAT と同時に、インバウンド方向の負荷分散も同時に構成したい場合 (例: 外部への DB アクセスが必要となるアプリケーション サーバー)</li>
+<li>サブネット以外の単位で、複数の Azure VM の送信接続を制御したい場合 (例: サブネット内の一部の Azure VM に、まとめてインターネット接続を許可する)</li>
 </ul>
 <p><strong>注意事項</strong></p>
 <ul>
-<li>NAT Gateway、Public IP による SNAT が実施されていないことが前提条件です。</li>
-<li>Basic SKU と Standard SKU で、SNAT の動作が大きく異なります。これは、Standard SKU で送信規則が追加され、高い自由度で SNAT ポリシーを構成できるようになった為です。</li>
-<li>Basic SKU の場合、SNAT ポート数はバックエンド プールの VM の台数に依存して、Azure 基盤が自動で割り当てます。<ul>
-<li>具体的な対応表は、以下の公式ドキュメントに記載がある通りです。<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#ephemeral-port-preallocation-for-port-masquerading-snat-pat">Azure の Outbound connections &gt; ポート マスカレード SNAT (PAT) 用のエフェメラル ポートの事前割り当て | Microsoft Docs</a></li>
-</ul>
-</li>
-<li>Standard SKU の場合、Basic SKU での自動割り当ての方法に加えて、送信規則を使って手動のポート数割り当てが行えます。<ul>
-<li>送信規則によるポート数の調節については、以下の公式ドキュメントを参考にしてください。<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#azure-load-balancer-outbound-rules">Azure の Outbound connections &gt; Azure Load Balancer のアウトバウンド規則 | Microsoft Docs</a></li>
-</ul>
-</li>
+<li>複数のパブリック IP アドレス (フロントエンド IP 構成) をまとめて指定すると、バックエンド プール全体としては 64,000 x &lt;IP アドレスの数&gt; だけ SNAT ポートが用意されます。しかし、どれだけパブリック IP アドレスを追加しても、各 Azure VM に割り当てられる最大の SNAT ポート数は 64,000 までです。</li>
+<li>負荷分散規則には、既定の送信アクセスによって SNAT を構成するオプションがあります。これを有効化すると、同じバックエンドプールには送信規則が作成できなくなります。</li>
 </ul>
 <p><strong>参考文献</strong></p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#scenario-2-load-balanced-vm-without-a-public-ip-address">Azure の Outbound connections &gt; シナリオ 2:パブリック IP アドレスなしの負荷分散 VM | Microsoft Docs</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/configure-load-balancer-outbound-portal">Azure portal を使用して負荷分散規則とアウトバウンド規則を構成する - Azure Load Balancer | Microsoft Docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections">アウトバウンド接続の送信元ネットワーク アドレス変換 (SNAT) - Azure Load Balancer | Microsoft Learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/outbound-rules">Azure Load Balancer のアウトバウンド規則 | Microsoft Learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/egress-only">送信専用のロード バランサーの構成 - Azure Load Balancer | Microsoft Learn</a></li>
 </ul>
-<h3 id="Azure-既定の-SNAT"><a href="#Azure-既定の-SNAT" class="headerlink" title="Azure 既定の SNAT"></a>Azure 既定の SNAT</h3><p><span style="color: #c00000;"> 本ブログ上部の※追記に記載の通り、2025 年 9 月 30 日以降 Azure 既定の SNAT は廃止されます。対応方法については、上述の [条件にすべて合致した場合の対応] をご参照下さい。</span></p>
+<h3 id="自動アウトバウンド-NAT-が有効な負荷分散規則"><a href="#自動アウトバウンド-NAT-が有効な負荷分散規則" class="headerlink" title="自動アウトバウンド NAT が有効な負荷分散規則"></a>自動アウトバウンド NAT が有効な負荷分散規則</h3><p>パブリック ロードバランサーの負荷分散規則で自動アウトバウンド NAT が有効な場合、バックエンド プールに配置している Azure VM に対して送信接続の機能が提供されます。SNAT アドレスは、負荷分散規則に紐づいたフロントエンド IP 構成 (フロントエンドのパブリック IP アドレス) です。</p>
+<p>Basic SKU のロードバランサーでは、負荷分散規則の自動アウトバウンド NAT は必ず有効です。一方で、Standard SKU のロードバランサーの場合、自動アウトバウンド NAT の ON/OFF を設定するフラグ項目が負荷分散規則に存在します。具体的には、<code>disableOutboundSnat</code> パラメータを false に設定すると自動アウトバウンド NAT が有効となります。</p>
+<p><strong>特徴</strong></p>
+<ul>
+<li>負荷分散規則と合わせて構成する性質上、インバウンドとアウトバウンド両方の接続性を確保できます。</li>
+<li>NAT ゲートウェイや送信規則より古くから存在する送信接続構成の一つです。歴史的な経緯から、現在でもこの構成を利用して SNAT を実施している Azure VM は少なくありません。</li>
+</ul>
+<p><strong>構成方法</strong></p>
+<ul>
+<li>パブリック ロードバランサーを作成する</li>
+<li>バックエンド プールを作成し、対象の Azure VM を配置する</li>
+<li>バックエンド プールに負荷分散規則を定義する (Standard SKU の場合、自動アウトバウンド NAT を有効化するオプションを指定する)</li>
+</ul>
+<p><strong>ユースケース</strong></p>
+<ul>
+<li>負荷分散規則と同時に簡易的な送信接続を構成する場合</li>
+</ul>
+<p><strong>注意事項</strong></p>
+<ul>
+<li>Standard SKU の場合、送信規則との併用はできません。つまり、負荷分散規則の自動アウトバウンド NAT を使用しているバックエンド プールには、送信規則を定義することが出来ません。</li>
+<li>SNAT ポートの割り当ては、バックエンド プール内の Azure VM のサイズに応じて、自動で 32 から 1,024 まで変化します。[<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#preallocatedports">参考</a>]</li>
+<li>最大 SNAT ポートが 1,024 であるため、容易にポート枯渇が発生する可能性があります。</li>
+</ul>
+<p><strong>参考文献</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/outbound-rules#preventoutbound">Azure Load Balancer のアウトバウンド規則 | Microsoft Learn</a></li>
+</ul>
+<h3 id="Azure-既定の送信アクセス"><a href="#Azure-既定の送信アクセス" class="headerlink" title="Azure 既定の送信アクセス"></a>Azure 既定の送信アクセス</h3><p><span style="color: #c00000;"> 本記事の冒頭で追記している通り、2025 年 10 月 1 日以降、新規 Azure VM に対して既定の送信アクセスは無効化されます。具体的な内容や対応方法は、追記部分をご参照下さい。</span></p>
 <p><img src="/blog/network/snat-options-for-azure-vm/azure-default-snat.png" alt="azure-default-snat"></p>
-<p>パブリック IP アドレスや外部ロードバランサーにも関連づいていない状態でも、Azure VM は既定で外部接続できるようになっています。特に SNAT の構成をしていないのにも関わらず、外部接続ができることで驚いた経験をした方もいらっしゃるのではないでしょうか。</p>
-<p>特にパブリック IP アドレスをユーザーが確保しているわけではないため、SNAT プールはオンザフライでの提供となります。具体的には、VM がデプロイされている Azure リージョンで使用されるグローバル IP アドレスのうち、未使用なものがランダムに割り当てられます。そのため、VM を再起動するたびに、SNAT に利用される NAT アドレスは変動します。</p>
-<p>なお、各 Azure リージョンで使用されるグローバル IP アドレスは、以下ページからダウンロードできる JSON ファイルに定義されています。</p>
+<p>これまでの送信接続の構成は、明示的にリソースを作成したり、関連付けることで SNAT をプログラミングするものでした。しかし、Azure には送信接続の方法をユーザーが指定していない場合でも、Azure VM がインターネット接続できるようにする仕組みが存在します。これを Azure 既定の送信アクセスと呼びます。</p>
+<p>具体的には、Azure プラットフォーム上で使われていないパブリック IP アドレスを一時的に借りて SNAT を行います。そのため、Azure VM を割り当て解除 &amp; 起動するたびに、SNAT に利用されるパブリック アドレスが変動します。</p>
+<p>なお、割り当てられる可能性のある IP アドレスはある程度絞り込むことができます。なぜなら、Azure リージョンで使用されているパブリック IP アドレスの一覧が、以下のダウンロード サイトから提供されているためです。対象の Azure VM が存在するリージョンを確認し、<code>AzureCloud.&lt;リージョン名&gt;</code> で検索すると候補の IP アドレスを取得できます。</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?id=56519">Download Azure IP Ranges and Service Tags – Public Cloud from Official Microsoft Download Center</a></li>
 </ul>
 <p><strong>特徴</strong></p>
 <ul>
-<li>唯一パブリック IP アドレス リソースを作らずに SNAT が出来るシナリオ。</li>
-<li>未使用な IP アドレスがランダムで割り当てられるため、VM が起動するたびに SNAT アドレスが変動する。</li>
-<li>確保される SNAT ポート数は VM あたり 1024 で固定。</li>
+<li>唯一パブリック IP アドレス リソースを作らずに SNAT が出来る送信接続の構成です。</li>
+<li>NAPT により実現されており、確保される SNAT ポート数は NIC (Azure VM) あたり 1024 で固定されています。</li>
 </ul>
-<p><strong>基本的な構成方法</strong></p>
-<p>以下のいずれかの環境で、VM は「Azure 既定の SNAT」で外部接続されます。</p>
+<p><strong>構成方法</strong></p>
+<p>典型的には、次のような状況で既定の送信アクセスが利用されます。条件の詳細は、判定フローチャートの「既定の送信アクセスの条件を満たしている？」をご覧ください。</p>
 <ul>
-<li>VM を Basic SKU の内部 Azure Load Balancer のバックエンド プールに配置する</li>
-<li>NAT Gateway、パブリック IP アドレス、Azure Load Balancer と関係ないスタンドアロンな VM を構成する</li>
+<li>NAT ゲートウェイ、インスタンス レベルのパブリック IP アドレス、パブリック ロードバランサーの送信規則を使わず、スタンドアロンな Azure VM をデプロイしている。</li>
+<li>Azure VM を Basic SKU の内部ロードバランサーのバックエンド プールに配置している。</li>
 </ul>
 <p><strong>ユースケース</strong></p>
 <ul>
-<li>テスト/開発用 VM で外部送信が必要になる場合 (e.g. ひとまずインターネットに通信できていれば特に問題ない開発マシン)</li>
+<li>テスト/開発用の Azure VM で送信接続が必要になる場合</li>
 </ul>
 <p><strong>注意事項</strong></p>
 <ul>
-<li>パブリック IP アドレスを付与しなくても外部接続できるという利便性がある一方で、予期せず外部送信を許可していますケースもあります。外部接続を許可しない場合、VM を Standard SKU の内部ロードバランサー配下として意図的に「外部接続不可」環境にするか、NSG で外部送信を拒否する対策等を実施してください。</li>
-<li>SNAT プールが固定出来ないため、外部接続の接続先となるサーバーで ACL を実施するのが難しくなります。</li>
-<li>あくまでテスト目的か、インターネットとの接続性だけ得られていれば後は気にしないようなワークロードでのみご利用いただくことを推奨いたします。</li>
+<li>既定の送信アクセスでは最大でも 1024 までしか SNAT ポートが確保されず、SNAT ポート枯渇の問題が顕在化しやすい問題があります。</li>
+<li>また、明示的な SNAT 方法の指定がないことが、セキュリティや管理上の問題となることもあります。</li>
+<li>以上のような背景から、本番環境での利用は推奨されていません。</li>
 </ul>
 <p><strong>参考文献</strong></p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections#scenario-3-standalone-vm-without-a-public-ip-address">Azure の Outbound connections &gt; シナリオ 3:パブリック IP アドレスなしのスタンドアロン VM | Microsoft Docs</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.syuheiuda.com/?p=5074">Azure VM の SNAT の話 – Made in container</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access">Azure での既定の送信アクセス - Azure Virtual Network | Microsoft Learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-connections">アウトバウンド接続の送信元ネットワーク アドレス変換 (SNAT) - Azure Load Balancer | Microsoft Learn</a></li>
 </ul>
-<h2 id="最後に"><a href="#最後に" class="headerlink" title="最後に"></a>最後に</h2><p>記事のボリュームからも推察できる通り、Azure では SNAT のオプションが多く用意されています。</p>
-<p>ただ、自由度が上がる副作用として、どうしてもすべてのシナリオを網羅的に把握することが難しくなっています。外部接続できない時のトラブルシューティングや、他にどんな選択肢があるのかの確認に、ぜひ冒頭で紹介したフローチャートを活用していただければと思います。</p>
-<p>また、SNAT オプションの比較には、機能比較のセクションで示した比較表もご活用ください。当該の比較表は、各 SNAT オプションのすべての側面を映し出しているわけではありませんが、大まかにどのような違いがあるのかを知るには十分の情報を記載してあります。ファーストステップとしては丁度よい情報量だと思いますので、参考にしていただければ幸いです。</p>
+<h2 id="最後に"><a href="#最後に" class="headerlink" title="最後に"></a>最後に</h2><p>今回の記事では、インターネット送信を実現する SNAT の仕組みと、Azure で利用できる SNAT の方式を紹介しました。</p>
+<p>「判定フローチャート」を使うと、対象の Azure VM (NIC) がどの方式の送信接続で構成されているのか簡単に調べられます。送信接続できない時のトラブルシューティングにも、ぜひこのフローチャートを活用していただければと思います。</p>
+<p>また、各送信接続構成の比較には「機能の比較」で示した表もご利用ください。それぞれのオプションのすべての側面を映し出しているわけではありませんが、大まかにどのような違いがあるのかを把握するための参考にしていただければ幸いです。</p>
 <hr>
 
       
@@ -496,7 +540,7 @@
       <ul>
         
           <li>
-            <a href="">Azure VM の外部接続 (SNAT) オプション まとめ</a>
+            <a href="">Azure VM の送信接続 (SNAT) オプション まとめ</a>
           </li>
         
           <li>
