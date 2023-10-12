@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/auzre-load-balancer-snat.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/azure-default-snat.png">
 <meta property="article:published_time" content="2023-09-30T09:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-12T03:44:09.752Z">
+<meta property="article:modified_time" content="2023-10-12T03:51:56.834Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="Public IP Address">
@@ -115,7 +115,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+2b02002d-b3f8-5038-9e94-ead0a2a5c291%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE%E9%80%81%E4%BF%A1%E6%8E%A5%E7%B6%9A+%28SNAT%29+%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3+%E3%81%BE%E3%81%A8%E3%82%81%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fsnat-options-for-azure-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="clnmmyi9z00kv0no6he1i1ri7" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="clnmn8j3a00kv0ols4bss0vza" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -124,7 +124,7 @@
 <p>Azure では、インターネット宛てのアウトバウンド方向の接続 (送信接続) をいくつかの方法で実装できます。選択の幅があることは喜ばしいですが、一方で内容の把握のが難しい側面も否めません。そこで本記事では、Azure VM に使える送信接続の構成をまとめて説明します。また、ある Azure VM がどの構成に該当しているか判定するためのフローチャートや、各構成の特徴についても併せて紹介します。</p>
 <div class="alert is-info"><p class="alert-title">Note</p><p><span style="color: #c00000;">2023 年 9 月、送信接続の構成の一つである<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access">既定の送信アクセス</a>の提供終了がアナウンスされました。</span></p>
 <p>これは、2025 年 9 月 30 日以降に作成された Azure VM は、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。廃止アナウンスに関する補足については、当ブログサイトの以下の記事をご参照の上、技術的な内容については併せて本記事をご確認いただけますと幸いでございます。</p>
-<p><a href="https://jpaztech.github.io/blog/network/default-outbound-access-will-be-retired/">Azure 既定の送信アクセスの動作変更のアナウンスに関する補足 (Tracking ID:3T84-PZZ)</a></p></div>
+<p><a href="https://jpaztech.github.io/blog/network/default-outbound-access-for-vms-will-be-retired/">Azure 既定の送信アクセスの動作変更のアナウンスに関する補足 (Tracking ID:3T84-PZZ)</a></p></div>
 <span id="more"></span>
 
 <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>Azure VM をはじめとする仮想ネットワーク (VNet) のコンピューティング リソースは、必要に応じてインターネット上のサーバーにアクセスします。たとえば、Web ブラウザが TLS/SSL 証明書の失効を検証する場合や、外部の権威 DNS サーバーに再帰問い合わせを実施する場合などです。この接続は、Azure から外部に出ていくように見えることから、アウトバウンド方向の接続あるいは <strong>送信接続</strong> と呼ばれます。</p>
