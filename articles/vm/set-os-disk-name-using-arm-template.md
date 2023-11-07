@@ -58,15 +58,26 @@ ARM テンプレートを使用したカスタム デプロイの画面へ遷移
 
 
 ## 2. OS ディスクの名前を設定する
-ARM テンプレート内の下記箇所を追記して、OS ディスクの名前を編集します。
+ARM テンプレートの `"resources"` 配下にある `"type": "Microsoft.Compute/virtualMachines"` が含まれるリソース
+内の下記箇所を追記して、OS ディスクの名前を編集します。
 編集が完了しましたら、画面下部にある [保存] を選択します。
 
 ```
-"resources": [{
-	"properties": {
-		"storageProfile": {
-			"osDisk": {
-				"name": "ここにご希望の OS ディスクの名前を記入します",
+{
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "properties": {
+        "storageProfile": {
+          "osDisk": {
+            "name": "ここにご希望の OS ディスクの名前を記入します",
+          }
+        }
+      }
+    },
+    ...
+  ]
+}
 ```
 
 > [!WARNING]
