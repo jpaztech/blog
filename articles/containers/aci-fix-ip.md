@@ -3,7 +3,7 @@ title: Azure Container Instances に固定の IP アドレスを割り当てる�
 date: 2023-11-15 12:00:00
 tags:
   - Containers
-  - Azure Container Instances(ACI)
+  - Azure Container Instances (ACI)
 ---
 
 こんにちは。Azure テクニカル サポートチームのシンです。
