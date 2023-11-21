@@ -8,7 +8,9 @@ tags:
 ---
 
 こんにちは、Azure テクニカル サポート チームの富田です。  
-今年も日本マイクロソフト社員がお届けする、[Microsoft Azure Tech Advent Calendar 2023](https://qiita.com/advent-calendar/2023/microsoft-azure-tech) のシリーズ 2、12 月 4 日分の記事として公開させていただきます。
+今年も日本マイクロソフトの社員がお届けする、[Microsoft Azure Tech Advent Calendar 2023](https://qiita.com/advent-calendar/2023/microsoft-azure-tech) の「シリーズ 2」、12 月 4 日分の記事として公開させていただきます。  
+Advent Calendar には他にも多くの Azure に関する有益な記事がございますので、是非ご参照いただけますと幸いです。
+
 本記事ではお問い合わせ頂くことも多い、 Azure VM で可用性ゾーンを未指定の場合にはゾーン番号が何処になるかは分からない点と、サブスクリプション毎にゾーン番号が指し示す物理ゾーンが違う点について解説させていただきます。  
 
 ## 可用性ゾーンを未指定の場合のゾーンについて
