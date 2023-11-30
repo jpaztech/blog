@@ -1,6 +1,6 @@
 ---
 title: 東日本リージョンでの Azure Firewall のゾーン冗長に関するアナウンスの補足 (Tracking ID:7KYK-R8G)
-date: 2023-11-30 14:30:00 
+date: 2023-12-01 14:30:00 
 tags:
   - Network
   - Azure Firewall
@@ -18,19 +18,33 @@ tags:
 現在事象の解消に向けた作業を実施しており、現時点で本制限は 2024 年 12 月に解除される予定となっております。
 
 ### 対応が必要な事項
+**本記事では通知内容をよりわかりやすく整理しております。**
+
 <ol type="a">
- <li>東日本リージョンで新規に可用性ゾーンを持つ Azure Firewall をデプロイする場合：
+ <li>東日本リージョンで新規に可用性ゾーンを持つ Azure Firewall をデプロイしたい場合：
   <ol type="a">
   <li>お客様のサブスクリプション内で、東日本リージョンの物理ゾーン #2 にマッピングされている論理ゾーンの番号を確認してください。次項の「物理ゾーン #2 にマッピングされた論理ゾーンの確認方法」をご覧ください。</li>
   <li>物理ゾーン #2 にマッピングされている論理ゾーンの使用を避けてください。この地域の他のゾーンに  Azure Firewall をデプロイするか、別のリージョン（例：オーストラリア東部）にデプロイしてください。</li>
   </ol>
  </li>
- <li>東日本リージョンで全ての可用性ゾーンにわたって Azure Firewall をデプロイしている場合：
+ <li>東日本リージョンで可用性ゾーンを指定せずに Azure Firewall をデプロイしている場合：
+ <ol type="a">
+  <li>必要な対応はございません。</li>
+ </ol>
+ </li>
+ <li>東日本リージョンで単一の可用性ゾーンを指定して Azure Firewall をデプロイしている場合：
  <ol type="a">
   <li>お客様のサブスクリプション内で、東日本リージョンの物理ゾーン #2にマッピングされている論理ゾーンの番号を確認してください。次項の「物理ゾーン #2 にマッピングされた論理ゾーンの確認方法」をご覧ください。</li>
-  <li>お客様の Azure Firewall が物理ゾーン #2 にのみマッピングされているゾーンでデプロイされている場合、<a href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-faq#-----------------------------:~:text=%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E5%BE%8C%E3%81%AB%E5%8F%AF%E7%94%A8%E6%80%A7%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF%E3%81%A9%E3%81%86%E3%81%99%E3%82%8C%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%3F">stop / startを使用して可用性ゾーンの設定を更新</a>し、他の可用性ゾーンを使用してください。
+  <li>お客様の Azure Firewall が物理ゾーン #2 にマッピングされているゾーンでデプロイされている場合、<a href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-faq#-----------------------------:~:text=%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E5%BE%8C%E3%81%AB%E5%8F%AF%E7%94%A8%E6%80%A7%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF%E3%81%A9%E3%81%86%E3%81%99%E3%82%8C%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%3F">stop / startを使用して可用性ゾーンの設定を更新</a>し、他の可用性ゾーンを使用することが推奨されます。
   </li>
-  <li>その他の場合では、お客様の Azure Firewall は他の可用性ゾーンに依存して引き続き運用されます。ただし、何らかの理由でこのファイアウォールを<a href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-faq#azure-firewall-----------------:~:text=Azure%20Firewall%20%E3%81%AE%E5%81%9C%E6%AD%A2%E3%81%A8%E8%B5%B7%E5%8B%95%E3%81%AE%E6%96%B9%E6%B3%95%E3%82%92%E6%95%99%E3%81%88%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84">停止</a>した場合、物理ゾーン #2 を除いた<a href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-faq#-----------------------------:~:text=%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E5%BE%8C%E3%81%AB%E5%8F%AF%E7%94%A8%E6%80%A7%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF%E3%81%A9%E3%81%86%E3%81%99%E3%82%8C%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%3F">異なる Availability Zones の設定で再起動</a>する必要があります。</li>
+ </ol>
+ </li>
+ <li>東日本リージョンで複数の可用性ゾーンにわたって Azure Firewall をデプロイしている場合：
+ <ol type="a">
+  <li>お客様のサブスクリプション内で、東日本リージョンの物理ゾーン #2にマッピングされている論理ゾーンの番号を確認してください。次項の「物理ゾーン #2 にマッピングされた論理ゾーンの確認方法」をご覧ください。</li>
+  <li>お客様の Azure Firewall が物理ゾーン #2 にマッピングされているゾーンを含んでデプロイされている場合でもそのままご利用いただけます。
+  </li>
+  <li>ただし、何らかの理由でこのファイアウォールを<a href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-faq#azure-firewall-----------------:~:text=Azure%20Firewall%20%E3%81%AE%E5%81%9C%E6%AD%A2%E3%81%A8%E8%B5%B7%E5%8B%95%E3%81%AE%E6%96%B9%E6%B3%95%E3%82%92%E6%95%99%E3%81%88%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84">停止</a>した場合、物理ゾーン #2 を除いた<a href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-faq#-----------------------------:~:text=%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E5%BE%8C%E3%81%AB%E5%8F%AF%E7%94%A8%E6%80%A7%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF%E3%81%A9%E3%81%86%E3%81%99%E3%82%8C%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%3F">異なる Availability Zones の設定で再起動</a>する必要があります。</li>
   </ol>
  </li>
 </ol>
@@ -40,16 +54,6 @@ tags:
 
 本問題に関して、情報のアップデートが行われた際には、速やかに最新の情報をご案内いたします。
 この度は、お客様にご不便をおかけし、大変申し訳ありません。
-
-## 状況別対応内容のまとめ
-通知内容から、Azure Firewall の状況別に必要な対応のまとめは以下の通りとなります。
-
-- 東日本リージョンでこれから新規に Azure Firewall をデプロイしたい場合:
-  - ゾーン冗長なし、もしくは論理ゾーンと物理ゾーンのマッピングを確認し、物理ゾーン #2 以外を指定してデプロイする必要がございます。
-- 既に東日本リージョンで複数のゾーンを指定してデプロイしている場合:
-  - 対応は必要ございません。
-- 既存の東日本リージョンの Azure Firewall が単一のゾーンのみ指定してデプロイしている場合:
-  - 論理ゾーンと物理ゾーンのマッピングを確認し、物理ゾーン #2 に Azure Firewall がデプロイされている場合は[stop / startを使用して可用性ゾーンの設定を更新](https://learn.microsoft.com/ja-jp/azure/firewall/firewall-faq#-----------------------------:~:text=%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E5%BE%8C%E3%81%AB%E5%8F%AF%E7%94%A8%E6%80%A7%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF%E3%81%A9%E3%81%86%E3%81%99%E3%82%8C%E3%81%B0%E3%82%88%E3%81%84%E3%81%A7%E3%81%99%E3%81%8B%3F)する必要がございます。
 
 ## 物理ゾーンと論理ゾーンのマッピングの確認方法
 物理ゾーンと論理ゾーンのマッピングは以下のコマンドで確認が可能です。
@@ -112,6 +116,26 @@ $azfw.Deallocate()
 Set-AzFirewall -AzureFirewall $azfw
 ```
 
+**単一の可用性ゾーンを指定して Azure Firewall と同時に作成された パブリック IP は他の可用性ゾーンでは使用できません。新たに Standard のパブリック IP アドレス リソースを他の可用性ゾーンに対応する形で作成しておく必要があります。**
+
+パブリック IP アドレスの作成についての詳細は以下のドキュメントをご参考ください。
+
+[Azure パブリック IP アドレスを作成、変更、または削除する - Azure Virtual Network | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/virtual-network-public-ip-address)
+
+ Azure PowerShell で全ての可用性ゾーンに対応した パブリック IP アドレスを作成は以下のコマンドで行えます。
+```PowerShell
+$ip = @{
+    Name = '新しい Public IP 名'
+    ResourceGroupName = 'リソースグループ名'
+    Location = 'japaneast'
+    Sku = 'Standard'
+    AllocationMethod = 'Static'
+    IpAddressVersion = 'IPv4'
+    Zone = 1,2,3
+}
+New-AzPublicIpAddress @ip
+```
+
 例として、論理ゾーン 1 が物理ゾーン 2 の場合において、論理ゾーン 2, 3（物理ゾーン 1, 3）を指定して Azure Firewall を Azure PowerShell で開始する方法は以下のコマンドになります。
 
 ```PowerShell
@@ -133,4 +157,21 @@ $azfw.Allocate($vnet, @($pip1,$pip2), $mgmtPip)
 $azFw.Zones=2,3
 $azfw | Set-AzFirewall
 ```
+
+## FAQ
+### Azure Firewall を物理ゾーン #2 のみにデプロイしている場合の影響は何ですか
+Azure Firewall が処理するトラフィック量が増加した際のスケールアウトが失敗する可能性があります。
+
+### SLA に影響ありますか
+今回の通知内容の事象が SLA に影響することはございません。
+SLA については以下のドキュメントの「可用性ゾーン」の項目に記載がございます。
+
+[Azure Firewall Standard の機能](https://learn.microsoft.com/ja-jp/azure/firewall/features#availability-zones)
+
+### 費用の差異はありますか
+今回の事象の発生期間と発生していない期間では、Azure Firewall の費用に対しての違いはございません。
+
+### 稼働率やインスタンス数に対して影響はありますか。
+今回の事象による Azure Firewall 稼働率やインスタンス数への影響はございません。
+
 ****
