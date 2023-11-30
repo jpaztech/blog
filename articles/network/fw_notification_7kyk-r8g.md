@@ -20,6 +20,10 @@ tags:
 ### 対応が必要な事項
 **本記事では通知内容をよりわかりやすく整理しております。**
 
+<style type="text/css">
+    ul { list-style: initial; }
+</style>
+
 <ol type="a">
  <li>東日本リージョンで新規に可用性ゾーンを持つ Azure Firewall をデプロイしたい場合：
   <ol type="a">
