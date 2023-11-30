@@ -20,10 +20,6 @@ tags:
 ### 対応が必要な事項
 **本記事では通知内容をよりわかりやすく整理しております。**
 
-<style type="text/css">
-    ul { list-style: initial; }
-</style>
-
 <ol type="a">
  <li>東日本リージョンで新規に可用性ゾーンを持つ Azure Firewall をデプロイしたい場合：
   <ol type="a">
@@ -52,6 +48,9 @@ tags:
   </ol>
  </li>
 </ol>
+
+以上の条件と必要な対応をまとめたフローチャートは以下の通りになります。
+![](./flow_chart.png)
 
 ### 物理ゾーン #2 にマッピングされた論理ゾーンの確認方法
 物理ゾーンは、Azure サブスクリプションや地域ごとに異なる論理ゾーンにマッピングされています。お客様のAzureサブスクリプションでこの物理ゾーンにマッピングされた論理ゾーンを確認するには、[本ドキュメントの手順](https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview?tabs=azure-cli#physical-and-logical-availability-zones)をご実施ください。（現在、ドキュメントは英語のみとなります。本ブログ記事の「物理ゾーンと論理ゾーンのマッピングの確認方法」にも手順を記載しております。）
