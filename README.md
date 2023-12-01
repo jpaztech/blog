@@ -88,6 +88,7 @@
 - [Application Gateway の証明書関連のトラブルシューティング](./articles/network/appgw-troubleshooting-cert.md)
 - [Application Gateway でサブネットを変更する方法](./articles/network/appgw_change_subnet.md)
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
+- [東日本リージョンでの Azure Firewall のゾーン冗長に関するアナウンスの補足 (Tracking ID:7KYK-R8G)](./articles/network/fw_notification_7kyk-r8g.md)
 
 ## Containers
 
