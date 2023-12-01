@@ -124,7 +124,7 @@ Set-AzFirewall -AzureFirewall $azfw
 
 [Azure パブリック IP アドレスを作成、変更、または削除する - Azure Virtual Network | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/virtual-network-public-ip-address)
 
- Azure PowerShell で全ての可用性ゾーンに対応した パブリック IP アドレスを作成は以下のコマンドで行えます。
+ Azure PowerShell で全ての可用性ゾーンに対応した パブリック IP アドレスを作成するには以下のコマンドで行えます。
 ```PowerShell
 $ip = @{
     Name = '新しい Public IP 名'
