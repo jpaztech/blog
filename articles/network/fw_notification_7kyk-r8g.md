@@ -63,7 +63,7 @@ Azure PowerShell の場合
 ```PowerShell
 $subscriptionId = (Get-AzContext).Subscription.ID
 $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/locations?api-version=2022-12-01"
-$locations = ($response.Content | ConvertFrom-Json).value
+$locations = ($response.Content | ConvertFrom-Json).value | where { $_.Name -eq "japaneast" }; $locations
 ```
 コマンドを実行すると、各リージョンの物理ゾーンと論理ゾーンのマッピング情報が取得できます。このマッピングはサブスクリプションごとに異なります。
 以下は各コマンドごとの取得したマッピング情報の抜粋となります。
