@@ -1,6 +1,6 @@
 ---
 title: Azure Cloud Shell を仮想ネットワークにデプロイする手順のご紹介
-date: 2023-10-26 21:08
+date: 2023-12-12 15:55
 tags:
   - Azure Cloud Shell
   - Token
@@ -262,7 +262,6 @@ Register this system with Red Hat Insights: insights-client --register
 Create an account or view all your systems at https://red.ht/insights-dashboard
 Last login: Tue Sep 12 04:16:23 2023 from XX.XX.XX.XX
 [azureuser@rhel-86-02 ~]$ 
-```PowerShell
 
 
 
