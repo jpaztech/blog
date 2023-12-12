@@ -38,7 +38,7 @@ Azure Files へアクセスした際のログは、Azure Files の診断設定�
 - ログ：取得するログ操作のカテゴリ (StorageRead(読み取り)、StorageWrite(書き込み)、削除(StorageDelete))
 - 宛先の詳細：ログの送信先 ※ここではログの送信先としてストレージ アカウントを選択しています。
 
-![](azureFilesMonitoring/azureFilesMonitoring04.png)
+![](azureFilesMonitoring/azureFilesMonitoring12.png)
 
 これで Azure Files の診断設定が完了です。
 
@@ -78,8 +78,6 @@ Azure Files にて使用可能なプロトコルや認証方法については�
 <参考>
 - Azure Files とは
 https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-introduction
-- ソリューション 4 - REST API ベースのツール (Storage Explorer や Powershell など) を使用する
-https://docs.microsoft.com/ja-jp/azure/storage/files/storage-troubleshoot-windows-file-connection-problems#solution-4---use-rest-api-based-tools-like-storage-explorerpowershell
 - SMB アクセスの Azure Files ID ベース認証オプションの概要
 https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-active-directory-overview
 - ストレージ アカウント アクセス キーを管理する
