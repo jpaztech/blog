@@ -4,20 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり | Japan Azure IaaS Core Support Blog</title>
+  <title>AKSノード上でのOOMKillの挙動と調査方法 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2017 年 9 月 5 日 追記下記の記事の執筆以降も Azure PowerShell は更新されており、現在の最新バージョン (4.3.1) では、スタンドアローンのインストーラーも公開されております。以下のページの「Azure PowerShell 4.3.1 Installer」から、インストーラーをダウンロードして実行すれば、この記事の手順を行わなくても Azure PowerShe">
+  <meta name="description" content="この記事はMicrosoft Azure Tech Advent Calendar 2023 の 17 日目の記事になります。 こんにちは、 Azure テクニカル サポート チームの高田です。AKS(に限らず、Kubernetes全般)を利用する際に難しいことの一つとして、メモリの割り当てや制限の管理があります。ノードやその上のメモリ(を確保するための予算)にも限りがあるので必要十分で済ませよう">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり">
-<meta property="og:url" content="https://jpaztech.github.io/blog/archive/azure-powershell-3-8-0-install/index.html">
+<meta property="og:title" content="AKSノード上でのOOMKillの挙動と調査方法">
+<meta property="og:url" content="https://jpaztech.github.io/blog/containers/aks-oom-202312/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="2017 年 9 月 5 日 追記下記の記事の執筆以降も Azure PowerShell は更新されており、現在の最新バージョン (4.3.1) では、スタンドアローンのインストーラーも公開されております。以下のページの「Azure PowerShell 4.3.1 Installer」から、インストーラーをダウンロードして実行すれば、この記事の手順を行わなくても Azure PowerShe">
+<meta property="og:description" content="この記事はMicrosoft Azure Tech Advent Calendar 2023 の 17 日目の記事になります。 こんにちは、 Azure テクニカル サポート チームの高田です。AKS(に限らず、Kubernetes全般)を利用する際に難しいことの一つとして、メモリの割り当てや制限の管理があります。ノードやその上のメモリ(を確保するための予算)にも限りがあるので必要十分で済ませよう">
 <meta property="og:locale" content="ja_JP">
-<meta property="article:published_time" content="2017-05-02T06:07:49.000Z">
-<meta property="article:modified_time" content="2023-12-17T04:45:28.582Z">
+<meta property="article:published_time" content="2023-12-17T03:00:00.000Z">
+<meta property="article:modified_time" content="2023-12-17T04:45:28.666Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Archive">
-<meta property="article:tag" content="PowerShell">
+<meta property="article:tag" content="Containers">
+<meta property="article:tag" content="Azure Kubernetes Service (AKS)">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
@@ -80,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-archive/azure-powershell-3-8-0-install" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-containers/aks-oom-202312" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -89,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり
+      AKSノード上でのOOMKillの挙動と調査方法
     </h1>
   
 
@@ -97,56 +97,75 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2017-05-02T06:07:49.000Z" itemprop="datePublished">2017-05-02</time>
+  <time datetime="2023-12-17T03:00:00.000Z" itemprop="datePublished">2023-12-17</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+ece1d167-d352-591f-b75e-b306f80d8e20%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+PowerShell+%E6%9C%80%E6%96%B0%E7%89%88%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%89%8B%E9%A0%86+%28v3.8.0+%E7%8F%BE%E5%9C%A8%29+**%E8%BF%BD%E8%A8%98%E3%81%82%E3%82%8A%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fazure-powershell-3-8-0-install%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fazure-powershell-3-8-0-install.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fazure-powershell-3-8-0-install.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+c3b62e20-4168-5f5b-a06e-e279b98d6b80%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAKS%E3%83%8E%E3%83%BC%E3%83%89%E4%B8%8A%E3%81%A7%E3%81%AEOOMKill%E3%81%AE%E6%8C%99%E5%8B%95%E3%81%A8%E8%AA%BF%E6%9F%BB%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fcontainers%2Faks-oom-202312%2F%29%0A*+Content+Source%3A+%5Barticles%2Fcontainers%2Faks-oom-202312.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fcontainers%2Faks-oom-202312.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/azure-powershell-3-8-0-install/" data-id="clq907kx3000h0nl01xdcd66k" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/containers/aks-oom-202312/" data-id="clq907l2j00kl0nl0hl1xhlsu" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p><span style="color:red;">2017 年 9 月 5 日 追記</span><br>下記の記事の執筆以降も Azure PowerShell は更新されており、現在の最新バージョン (4.3.1) では、スタンドアローンのインストーラーも公開されております。以下のページの「Azure PowerShell 4.3.1 Installer」から、インストーラーをダウンロードして実行すれば、この記事の手順を行わなくても Azure PowerShell のインストールは可能です。</p>
-<p><span style="color:red;">Releases - Azure/azure-powershell</span></p>
-<p>ただし、この記事の手順でインストールを実行すると、アップデートがしやすいなどのメリットもありますので、こちらの手順についても、ぜひ参考にしていただければと思います。</p>
-</blockquote>
-<p>こんにちは、Azure テクニカル サポート チームの飯塚です。</p>
-<p>コマンドやスクリプトで Azure の管理ができる、とっても便利な Azure PowerShell ですが、ここ最近のバージョンにおいて、スタンドアローンのインストーラーが提供されなくなったり、WebPI でのインストールができなくなっているなど、インストール方法が少々変わっております。</p>
-<p>2017 年 5 月 2 日時点での最新版である Azure PowerShell 3.8.0 のインストール手順は、以下の公開ドキュメントでご説明しているとおり、PowerShellGet を利用するものです。<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/powershell/azure/install-azurerm-ps">Install and configure Azure PowerShell</a></p>
-<p>しかし、本ドキュメントは現時点で英語版のみの提供であり、また PowerShellGet のインストールなど、一部別のドキュメントの参照が必要な部分もあり、少々わかりにくいのではないかと思います。そこで、本ブログ記事で、あらためて Azure PowerShell のインストール方法をおまとめしました。参考にしていただければと思います。</p>
-<h2 id="■-1-PowerShellGet-のインストール"><a href="#■-1-PowerShellGet-のインストール" class="headerlink" title="■ 1. PowerShellGet のインストール"></a>■ 1. PowerShellGet のインストール</h2><p>Azure PowerShell の最新版のインストールは、PowerShellGet という、PowerShell コマンドで自動的にモジュールをダウンロードする仕組みを利用します。<br>PowerShellGet は、Windows 10 か Windows Server 2016 以降のコンピューターには、PowerShell 5.0 とともに既定でインストールされています。</p>
-<p>お手元のコンピューターで、PowerShellGet が使えるかどうかを確認するには、以下の PowerShell コマンドを実行します。</p>
-<p><strong>コマンド</strong></p>
-<blockquote>
-<p>Get-Module PowerShellGet -list | Select-Object Name,Version,Path</p>
-</blockquote>
-<p><strong>PowerShellGet が使える場合の出力例</strong></p>
-<blockquote>
-<p>Name          Version Path</p>
-<hr>
-<p>PowerShellGet 1.0.0.1 C:\Program Files\WindowsPowerShell\Modules\PowerShellGet\1.0.0.1\PowerShellGet.psd1</p>
-</blockquote>
-<p>コマンドの出力結果に、PowerShellGet のバージョン情報が出力されれば、PowerShellGet が使えますので、そのまま 2. の手順に進んでください。<br>もし表示されない場合 (PowerShellGet が使えない場合、画面になにも出力されないはずです) は、以下のいずれかの手順で PowerShellGet をインストールしてください。</p>
-<h3 id="1-1-PowerShell-5-0-へのアップグレード"><a href="#1-1-PowerShell-5-0-へのアップグレード" class="headerlink" title="1-1. PowerShell 5.0 へのアップグレード"></a>1-1. PowerShell 5.0 へのアップグレード</h3><p>PowerShell 自体を 5.0 にアップグレードする方法です。<br>以下のページから Windows Management Framework 5.0 をダウンロードし、PowerShell 5.0 をインストールします。<br><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?id=50395">Windows Management Framework 5.0</a></p>
-<h3 id="1-2-PowerShellGet-のみのインストール"><a href="#1-2-PowerShellGet-のみのインストール" class="headerlink" title="1-2. PowerShellGet のみのインストール"></a>1-2. PowerShellGet のみのインストール</h3><p>PowerShellGet の機能をインストールするものです。以下のページからモジュールをダウンロードし、インストールします。<br><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?id=51451">PackageManagement PowerShell Modules Preview - March 2016</a></p>
-<h2 id="■-2-Azure-PowerShell-のインストール"><a href="#■-2-Azure-PowerShell-のインストール" class="headerlink" title="■ 2. Azure PowerShell のインストール"></a>■ 2. Azure PowerShell のインストール</h2><p>PowerShellGet が利用できるようなっしたら、実際に Azure PowerShell をインストールします。<br>PowerShell を「管理者として実行」して、以下のコマンドを実行してください。<br>クラシック デプロイ モデルとリソース マネージャー デプロイ モデルで、それぞれインストールするモジュール名が異なりますが、2 つのモジュールは共存可能ですので、両方のコマンドを実行いただいても問題ありません。</p>
-<p><strong>クラシック デプロイ モデルの Azure PowerShell をインストール</strong></p>
-<blockquote>
-<p>Install-Module Azure<br><strong>リソース マネージャー デプロイ モデルの Azure PowerShell のインストール</strong><br>Install-Module AzureRM</p>
-</blockquote>
-<p>コマンドの実行時に、必要なモジュールをインストールするか尋ねられた場合は「Y」を入力して先に進みます。</p>
-<blockquote>
-<p><span style="color:red;">2017 年 9 月 5 日 追記</span><br>最新の Azure PowerShell にバージョンアップする場合は、<span style="color:red;">Update-Module</span> コマンドがご利用いただけます。</p>
-</blockquote>
-<ol start="3">
-<li>Azure PowerShell の利用<br>実際に Azure PowerShell のコマンドレットを利用する場合、最初に、以下のコマンドを実行してモジュールのロードを行ってください。</li>
-</ol>
-<p>クラシック デプロイ モデルの Azure PowerShell をインポート<br>Import-Module Azure<br>リソース マネージャー デプロイ モデルの Azure PowerShell のインポート<br>Import-Module AzureRM<br>補足: 自動的に Import-Module が実行されるようにする方法<br>PowerShell を起動するたびに、Import-Module コマンドを実行するのは面倒かもしれません。そのようなときは、「PowerShell プロファイル」に Import-Module コマンドを記載することで、PowerShell の実行時に、自動的に Import-Module コマンドが実行され、すぐに Azure PowerShell が利用できるようになります。</p>
-<p>PowerShell プロファイルについては、以下の資料を参考にご覧ください。</p>
-<p>Windows PowerShell プロファイル</p>
+        <p>この記事は<a target="_blank" rel="noopener" href="https://qiita.com/advent-calendar/2023/microsoft-azure-tech">Microsoft Azure Tech Advent Calendar 2023</a> の 17 日目の記事になります。</p>
+<p>こんにちは、 Azure テクニカル サポート チームの高田です。<br>AKS(に限らず、Kubernetes全般)を利用する際に難しいことの一つとして、メモリの割り当てや制限の管理があります。<br>ノードやその上のメモリ(を確保するための予算)にも限りがあるので<br>必要十分で済ませようとしたものの、思わぬときにOOMKillでワークロードに<br>影響が発生した、という経験をされた方も多いかと思います。</p>
+<p>この記事では、OOMKillが発生したときにせめて速やかに対処できるよう、<br>OOMKillの際の挙動やこれに基づく原因調査方法について<br>いくつかのトピックを紹介させて頂きます。</p>
+<h2 id="扱うトピック、扱わないトピック"><a href="#扱うトピック、扱わないトピック" class="headerlink" title="扱うトピック、扱わないトピック"></a>扱うトピック、扱わないトピック</h2><p>本記事では、AKSノード上に配置されたPodのメモリ利用に起因してOOMKillが発生した場合の<br>挙動や、原因の調査方法を紹介します。</p>
+<p>そもそもノードのリソース不足でPodがスケジューリングされない(Pendingのままとなる)場合につきましては<br>スコープ外とさせて頂きますのでご了承下さい。</p>
+<h2 id="2種類のメモリ利用制限"><a href="#2種類のメモリ利用制限" class="headerlink" title="2種類のメモリ利用制限"></a>2種類のメモリ利用制限</h2><p>AKSノード上でPodがメモリを確保・利用する際、Pod・コンテナーレベル、<br>ノードレベルの2つの観点にて利用量が制限されます。OOMKillは各レベルで発生し得ます。</p>
+<h3 id="Pod・コンテナーレベルでの制限・OOMKill"><a href="#Pod・コンテナーレベルでの制限・OOMKill" class="headerlink" title="Pod・コンテナーレベルでの制限・OOMKill"></a>Pod・コンテナーレベルでの制限・OOMKill</h3><p>Pod内のコンテナーが確保・利用可能なメモリの上限は、Podのmanifest(YAML)中の<br><code>spec.containers[].resources.limits.memory</code>にて指定できます。<br>コンテナーがこの制限を超えてメモリを確保・利用しようとした場合に、OOMKillが発生します。</p>
+<p>(設定方法や考え方については下記のドキュメント等をご参照下さい)</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/aks/developer-best-practices-resource-management">Azure Kubernetes Service (AKS) でリソースを管理するアプリケーション開発者のベスト プラクティス</a></p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/ja/docs/tasks/configure-pod-container/assign-memory-resource/">コンテナおよびPodへのメモリーリソースの割り当て</a></p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/">コンテナのリソース管理</a></p>
+<h3 id="ノードレベルでの制限・OOMKill"><a href="#ノードレベルでの制限・OOMKill" class="headerlink" title="ノードレベルでの制限・OOMKill"></a>ノードレベルでの制限・OOMKill</h3><p>Podがノードにスケジュールされる際、ノードが提供可能なメモリが<br>Pod・コンテナーに対して十分か否かの判定は、<code>spec.containers[].resources.limits.memory</code><br>(制限)ではなく、<code>spec.containers[].resources.limits.memory</code>(要求)に基づいて<br>行われます。このため、あるノード上にスケジュールされたPod・コンテナーの<br>制限値の合計が、実際にそのノード上で利用可能なメモリ量よりはるかに多い、ということが<br>起こり得ます。</p>
+<p>この場合、まず、 Pod・コンテナーによるメモリ使用量の合計が割り当て可能(Allocatable)な<br>メモリ量を超えた時点で、evict(退去)によるメモリ逼迫の解消が試みられます。<br>ただ、evict(退去)が間に合わず、メモリ使用量が割り当て可能なメモリ量 + eviction-threshold<br>の値を超過した場合に、ノードレベルでのOOMKillが発生します。</p>
+<p>割り当て可能なメモリ量は、ノードに搭載されている(=VMサイズにて提供される)<br>メモリ量から、 kube-reserved, system-reserved, 前述のeviction-thresholdの値を<br>引いた値となっています。</p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/#node-allocatable">Reserve Compute Resources for System Daemons: Node Allocatable</a></p>
+<p>AKS(Kubernetes バージョン1.28以下)の場合、eviction-thresholdは750MiB、kube-reservedは<br>ノードに搭載されているメモリ量に基づき一定の法則にて算出された値の量となります。<br>(system-reservedは定義されていません)</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/aks/concepts-clusters-workloads#memory">Azure Kubernetes Services (AKS) における Kubernetes の中心概念:<br>メモリ</a></p>
+<p>ノードに搭載されているメモリ量、割り当て可能な量は各々、<code>kubectl describe node</code>コマンドの出力中の<br>Capacityの項、Allocatableの項などにて確認できます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node &lt;ノード名&gt;</span><br><span class="line">(略)</span><br><span class="line">Capacity:</span><br><span class="line">  cpu:                2</span><br><span class="line">  ephemeral-storage:  129886128Ki</span><br><span class="line">  hugepages-1Gi:      0</span><br><span class="line">  hugepages-2Mi:      0</span><br><span class="line">  memory:             4007948Ki</span><br><span class="line">  pods:               110</span><br><span class="line">Allocatable:</span><br><span class="line">  cpu:                1900m</span><br><span class="line">  ephemeral-storage:  119703055367</span><br><span class="line">  hugepages-1Gi:      0</span><br><span class="line">  hugepages-2Mi:      0</span><br><span class="line">  memory:             2191372Ki</span><br><span class="line">  pods:               110</span><br><span class="line">(略)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Pod・コンテナーの情報でわかること、わからないこと"><a href="#Pod・コンテナーの情報でわかること、わからないこと" class="headerlink" title="Pod・コンテナーの情報でわかること、わからないこと"></a>Pod・コンテナーの情報でわかること、わからないこと</h2><p>あるコンテナーに関してOOMKillによるコンテナーの再起動が発生した場合、<br>コンテナーの過去の状態としてそのことが記録されます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe pod &lt;Pod名&gt;</span><br><span class="line">(略)</span><br><span class="line">  &lt;コンテナー名&gt;:</span><br><span class="line">    Last State:     Terminated</span><br><span class="line">      Reason:       OOMKilled</span><br><span class="line">      Exit Code:    0</span><br><span class="line">      Started:      Wed, 13 Dec 2023 06:23:20 +0000</span><br><span class="line">      Finished:     Wed, 13 Dec 2023 06:23:21 +0000</span><br></pre></td></tr></table></figure>
+
+<p>ただ、これのみでは、OOMKillが発生した原因<br>(Pod・コンテナーレベルかノードレベルか)はわかりません。<br>また、コンテナー内の子プロセスが大量にメモリを使用していた場合、<br>その子プロセスがOOMkillの対象となることがありますが、<br>このとき他のプロセスが動作を継続していた場合は、<br>そもそもコンテナーの再起動とならず、<code>kubectl describe pod</code>コマンドなどでは<br>確認できません。<br>(このときの挙動については後述します)</p>
+<h2 id="ノードの情報にてわかること、わからないこと"><a href="#ノードの情報にてわかること、わからないこと" class="headerlink" title="ノードの情報にてわかること、わからないこと"></a>ノードの情報にてわかること、わからないこと</h2><p>ノードレベルでメモリの逼迫が発生していた場合、<br>ノードの情報(<code>kubectl describe node</code>)やイベントとして、<br><code>NodeHasInsufficientMemory</code> を確認できます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe node &lt;ノード名&gt;</span><br><span class="line">Events:</span><br><span class="line">  Type     Reason                     Age                   From            Message</span><br><span class="line">  ----     ------                     ----                  ----            -------</span><br><span class="line">  Normal   NodeHasInsufficientMemory  9m33s (x2 over 18m)   kubelet         Node &lt;ノード名&gt; status is now: NodeHasInsufficientMemory</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get events</span><br><span class="line">LAST SEEN   TYPE      REASON                      OBJECT               MESSAGE</span><br><span class="line">(略)</span><br><span class="line">8m21s       Warning   EvictionThresholdMet        node/&lt;ノード名&gt;       Attempting to reclaim memory</span><br><span class="line">10m         Normal    NodeHasInsufficientMemory   node/&lt;ノード名&gt;       Node &lt;ノード名&gt; status is now: NodeHasInsufficientMemory</span><br></pre></td></tr></table></figure>
+<p>これらの情報は、あくまでもこのタイミングでメモリの逼迫が発生していた、ということを示すものであり、<br>同時期にOOMKillが発生していた場合にも、それがPod・コンテナーレベルのものである可能性は<br>否定できません。ただ、いずれにせよメモリの逼迫が発生していたことには違いないので、<br>要求(requests)の見直しや、これとあわせてのノードの増強などを検討すべき、という<br>判断は可能です。</p>
+<h2 id="ノードのログからわかること"><a href="#ノードのログからわかること" class="headerlink" title="ノードのログからわかること"></a>ノードのログからわかること</h2><p>とはいえ、関係者への説明のためなど、確実に原因を特定したい場合もあるかと思います。<br>そのような場合は、ノードのログを見ることでPod・コンテナーレベルか<br>ノードレベルか確認・判断することができます。</p>
+<p>OOMKillはLinuxカーネルの機能により実行されるため、OOMKillが発生した際には<br>ノードのログ(/var/log/syslog, /var/log/kern.log など)にメッセージが出力されます。<br>下記の例のように、OOMKillが発生した際には<code>&lt;プロセス名&gt;　invoked oom-killer</code><br>から始まり、ハードウェア情報、発生時のスタック情報、メモリ利用状況など、<br>様々な情報が出力されます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036951] stress-ng-vm invoked oom-killer: gfp_mask=0xcc0(GFP_KERNEL), order=0, oom_score_adj=1000</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036958] CPU: 1 PID: 716580 Comm: stress-ng-vm Not tainted 5.15.0-1051-azure #59-Ubuntu</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036961] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS 090008  12/07/2018</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036962] Call Trace:</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036964]  &lt;TASK&gt;</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036967]  show_stack+0x52/0x5c</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036973]  dump_stack_lvl+0x38/0x4d</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036978]  dump_stack+0x10/0x16</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036980]  dump_header+0x53/0x228</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036984]  oom_kill_process.cold+0xb/0x10</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036986]  out_of_memory+0x106/0x2e0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036989]  mem_cgroup_out_of_memory+0x13f/0x160</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036992]  try_charge_memcg+0x6cd/0x790</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036995]  charge_memcg+0x45/0xa0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.036997]  __mem_cgroup_charge+0x2d/0x90</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037000]  do_anonymous_page+0x104/0x4c0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037003]  handle_pte_fault+0x21b/0x260</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037006]  __handle_mm_fault+0x409/0x760</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037009]  ? sched_clock+0x9/0x10</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037014]  handle_mm_fault+0xc8/0x2a0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037017]  do_user_addr_fault+0x1bc/0x660</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037020]  exc_page_fault+0x71/0x160</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037024]  asm_exc_page_fault+0x27/0x30</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037027] RIP: 0033:0x55fbbb223b65</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037031] Code: 98 00 41 54 49 89 fa 55 48 89 cd 48 01 fa 53 4c 8b 59 10 4c 39 ca 0f 83 01 01 00 00 31 c9 0f 1f 80 00 00 00 00 89 cf 83 c1 01 &lt;40&gt; 88 3a 48 8b 3d 99 f7 98 00 48 01 fa 4c 39 ca 72 e9 48 89 f0 31</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037033] RSP: 002b:00007ffd1b287520 EFLAGS: 00010206</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037035] RAX: 0000000000000010 RBX: 00007f1d90825000 RCX: 0000000000734f41</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037036] RDX: 00007f1dad562000 RSI: 0000000040000000 RDI: 0000000000734f40</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037038] RBP: 00007f1dd2c1e398 R08: 0000000000000000 R09: 00007f1dd0825000</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037039] R10: 00007f1d90825000 R11: 0000000000000000 R12: 0000000040000000</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037040] R13: 0000000000000000 R14: 00007ffd1b287670 R15: 000055fbbb2224b0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037044]  &lt;/TASK&gt;</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037045] memory: usage 512000kB, limit 512000kB, failcnt 37</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037046] swap: usage 0kB, limit 9007199254740988kB, failcnt 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037047] Memory cgroup stats for /kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod479f327f_a27b_4eda_8523_90bdabcf0a27.slice:</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] anon 484630528</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] file 37752832</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] kernel_stack 65536</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] pagetables 1212416</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] percpu 11752</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] sock 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] shmem 37720064</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] file_mapped 37720064</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] file_dirty 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] file_writeback 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] swapcached 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] anon_thp 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] file_thp 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] shmem_thp 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] inactive_anon 522346496</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] active_anon 4096</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] inactive_file 16384</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] active_file 16384</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] unevictable 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] slab_reclaimable 303008</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] slab_unreclaimable 210008</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] slab 513016</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] workingset_refault_anon 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] workingset_refault_file 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] workingset_activate_anon 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] workingset_activate_file 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] workingset_restore_anon 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037069] workingset_restore_file 0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037071] Tasks state (memory values in pages):</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037072] [  pid  ]   uid  tgid total_vm      rss pgtables_bytes swapents oom_score_adj name</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037073] [ 716518] 65535 716518      243        1    28672        0          -998 pause</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037077] [ 716566]     0 716566    13966    10178   139264        0           975 stress-ng</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037079] [ 716579]     0 716579    13967      424    73728        0          1000 stress-ng-vm</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037082] [ 716580]     0 716580   276111   118439  1015808        0          1000 stress-ng-vm</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037084] oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=cri-containerd-679f9845995b4ae4812789eb3c3d1df88040a1bc3f0c046a05c9aa9b5b5f93be.scope,mems_allowed=0,oom_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod479f327f_a27b_4eda_8523_90bdabcf0a27.slice,task_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod479f327f_a27b_4eda_8523_90bdabcf0a27.slice/cri-containerd-679f9845995b4ae4812789eb3c3d1df88040a1bc3f0c046a05c9aa9b5b5f93be.scope,task=stress-ng-vm,pid=716580,uid=0</span><br><span class="line">Dec 13 07:23:21 aks-ubuntu-26835060-vmss000000 kernel: [36370.037095] Memory cgroup out of memory: Killed process 716580 (stress-ng-vm) total-vm:1104444kB, anon-rss:473048kB, file-rss:644kB, shmem-rss:64kB, UID:0 pgtables:992kB oom_score_adj:1000</span><br></pre></td></tr></table></figure>
+
+<p>このメッセージから、いくつかのことがわかります。</p>
+<h3 id="コンテナーレベル-ノードレベルの判断"><a href="#コンテナーレベル-ノードレベルの判断" class="headerlink" title="コンテナーレベル/ノードレベルの判断"></a>コンテナーレベル/ノードレベルの判断</h3><p><code>spec.containers[].resources.limits.memory</code>にて指定した制限は、<br>memcg(cgroupsのメモリコントローラ)により適用されます。</p>
+<p>cgroupsはLinux上でコンテナーを実現するための主要な機能の一つであり、<br>control group(cgroup)に分類されたプロセス群について、グループごとに<br>メモリやCPU等のリソースの使用量を制限するものです。</p>
+<p><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html#memory">Control Group v2: Memory</a></p>
+<p>メモリ制限(limits)は、Pod・コンテナーに対応するcgroupに関して<br>確保・利用可能なメモリ量の上限が設定され、上限を超過したときに<br>memcgがOOMKillを発生させることで実現されています。</p>
+<p>下記の行からは、<code>oom_memcg</code>として、OOMの発生要因となったcgroupが<br><code>/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod479f327f_a27b_4eda_8523_90bdabcf0a27.slice</code><br>(特定のPodに対応するcgroup)であることがわかります。すなわち、Pod・コンテナーレベルのOOMKillであると判断できます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=cri-containerd-679f9845995b4ae4812789eb3c3d1df88040a1bc3f0c046a05c9aa9b5b5f93be.scope,mems_allowed=0,oom_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod479f327f_a27b_4eda_8523_90bdabcf0a27.slice,task_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod479f327f_a27b_4eda_8523_90bdabcf0a27.slice/cri-containerd-679f9845995b4ae4812789eb3c3d1df88040a1bc3f0c046a05c9aa9b5b5f93be.scope,task=stress-ng-vm,pid=716580,uid=0</span><br></pre></td></tr></table></figure>
+
+<p>一方、ノードレベルの場合は、例えば下記のように、 <code>oom_memcg</code>が<code>/kubepods.slice</code>となっている(個々のPod等に対応する<br>cgroupではなく、その上位のcgroupとなっている)ことから、そのOOMKillがノードレベルのものであると判断できます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=cri-containerd-4d2af8acef61505159dd1fb6e232eacd1b724e1d629f043fcaa47809544f6d92.scope,mems_allowed=0,oom_memcg=/kubepods.slice,task_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-poda9d4b3f1_0189_4f5e_a8ee_94f0a3f53ab0.slice/cri-containerd-4d2af8acef61505159dd1fb6e232eacd1b724e1d629f043fcaa47809544f6d92.scope,task=stress-ng-vm,pid=728241,uid=0</span><br></pre></td></tr></table></figure>
+
+<h3 id="他にわかること"><a href="#他にわかること" class="headerlink" title="他にわかること"></a>他にわかること</h3><p>この他、OOMKillメッセージには発生時のcgroup内のメモリ使用量の内訳、プロセス毎のメモリ使用状況などの情報が含まれます。<br>もし、Pod・コンテナーが意図せず大量のメモリを確保・利用していた場合、これらの情報を参照することで<br>原因の絞り込みに役立つかもしれません。</p>
+<h2 id="子プロセスがOOMKillされたときの挙動"><a href="#子プロセスがOOMKillされたときの挙動" class="headerlink" title="子プロセスがOOMKillされたときの挙動"></a>子プロセスがOOMKillされたときの挙動</h2><h3 id="Kubernetes-1-27-まで"><a href="#Kubernetes-1-27-まで" class="headerlink" title="Kubernetes 1.27 まで"></a>Kubernetes 1.27 まで</h3><p>既に解説した通り、Pod・コンテナーレベルのOOMKillは、Pod・コンテナーに対応するcgroupに関して<br>メモリ使用量が制限値を超過することで発生します。<br>ただ、このとき行われるOOMKillの対象は、あくまでもコンテナー内で(メモリ使用量等の観点で)選ばれた<br>特定のプロセスとなります。従って、例えばコンテナー内で作成された子プロセスの一つが<br>OOMKillにより終了した場合、コンテナー内のプロセスの構成次第では<br>他のプロセスが(場合によってはコンテナーとして不完全なまま)動作を継続する場合があります。</p>
+<p>このとき、コンテナーとしての再起動は発生しないため、<br><code>kubectl describe pod</code>コマンドの結果などからは、そもそもOOMKillが発生したことすらわかりません。</p>
+<p>このような場合にOOMKillの発生を検知するには、ノードのログ等から<br>OOMKillのメッセージの有無を確認する必要があります。<br>(memcgの統計情報を確認する、などの方法もありますが割愛させて頂きます)</p>
+<h3 id="Kubernetes-1-28-以降"><a href="#Kubernetes-1-28-以降" class="headerlink" title="Kubernetes 1.28 以降"></a>Kubernetes 1.28 以降</h3><p>Kubernetes バージョン1.28以降では、cgroups v2のmemcgで採用された<br><code>memory.oom.group</code>という機能を、Pod・コンテナーのcgroupに関して<br>有効化するようになりました。<br>この機能は、cgroup内の任意のプロセスがOOMKillの対象となった場合に<br>同じcgroup内の全プロセスに関してOOMKillを実行する、というものです。<br>すなわち、 Kubernetes バージョンが1.28以降であり、<br>かつ、利用されているcgroupsがv2の場合、<br>任意の子プロセスがOOMKillとなった際に、(<code>restartPolicy</code>がNeverでなければ)<br>確実にコンテナーの再起動が発生するようになります。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kubernetes/kubernetes/issues/117070">[SIG-Node] Cgroups v2 memory.oom.group support (kill all pids in a pod on oom)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kubernetes/kubernetes/pull/117793">use the cgroup aware OOM killer if available</a></p>
+<p>AKS では、Kubernetes バージョン1.25以降のAKSクラスターの<br>Ubuntuノード(Ubuntu 22.04ノード)でcgroups v2が利用されております。<br>Azure Linuxノードの場合はKubernetes バージョン1.28の時点にて<br>まだcgroups v1が利用されますが、バージョン1.29以降では<br>cgroups v2の利用に切り替わる予定です。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Azure/AKS/releases/tag/2023-11-28">AKS Release 2023-11-28</a></p>
+<p>まとめると、Ubuntuノードの場合は Kuberenetes バージョン1.28以降、<br>Azure Linuxノードの場合はバージョン1.29以降にて、<br>Pod・コンテナーのcgroupに対して<code>memory.oom.group</code>が有効化され、<br>OOMKillの発生時にはコンテナー内の全プロセスがOOMKill対象となります。</p>
+<p>なお、<code>memory.oom.group</code>が有効化されているコンテナーに関してOOMKillが発生した場合、<br>下記のように、ログメッセージでもcgroup内の全プロセスがkillされる旨のメッセージが出力されます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dec 13 07:54:24 aks-ubuntu-26253795-vmss000000 kernel: [41725.949137] Tasks in /kubepods.slice/kubepods-burstable.slice/kubepods-burstable-podc9658b52_5194_4250_87f2_ec380cce2915.slice/cri-containerd-6793e00dcd36f430871d321242bbd79c1c186a3fad6615a98a1cc0b24c3e7f8f.scope are going to be killed due to memory.oom.group set</span><br></pre></td></tr></table></figure>
+
+<h2 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h2><p>この記事では、AKSノードにおけるOOOMKillの際の挙動や、これに基づく原因調査方法について紹介しました。<br>OOMKill発生時には、紹介した方法にて原因を確認の上、Pod・コンテナーレベルのOOMKillの場合は<br>制限(limits)の増加、ノードレベルの場合は要求(requests)の増加やノードの増強等を<br>ご検討下さい。<br>また、<code>memory.oom.group</code>未対応の構成では、Kubernetes リソースの情報としては<br>わからない形でOOMKillが発生していた、ということもありますので、<br>プロセスがいつの間にか終了していた、といった場合には<br>OOMKillが発生していた可能性もご確認下さい。</p>
 
       
       
@@ -160,10 +179,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/archive/azure-powershell-3-8-0-install.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/containers/aks-oom-202312.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -171,19 +190,10 @@
     
 <nav id="article-nav">
   
-    <a href="../ssl-intermediate-ca-change/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          SSL 証明書の更新に関するアナウンス
-        
-      </div>
-    </a>
   
-  
-    <a href="../rca34296489/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../vm/UseCloudShellinAzureVirtualNetwork/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">2017 年 3 月 31 日夜間から発生した東日本データセンターの障害についての原因調査報告書 (RCA) の抄訳</div>
+      <div class="article-nav-title">Azure Cloud Shell を仮想ネットワークにデプロイする手順のご紹介</div>
     </a>
   
 </nav>
@@ -202,7 +212,7 @@
       <ul>
         
           <li>
-            <a href="../../containers/aks-oom-202312/">AKSノード上でのOOMKillの挙動と調査方法</a>
+            <a href="">AKSノード上でのOOMKillの挙動と調査方法</a>
           </li>
         
           <li>
@@ -210,7 +220,7 @@
           </li>
         
           <li>
-            <a href="../../containers/aks-vmsscse/">AKS ノードが起動しない場合のトラブルシューティング</a>
+            <a href="../aks-vmsscse/">AKS ノードが起動しない場合のトラブルシューティング</a>
           </li>
         
           <li>
