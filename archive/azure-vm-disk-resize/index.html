@@ -4,28 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>Nested Hyper-V を使った VM の復旧 | Japan Azure IaaS Core Support Blog</title>
+  <title>仮想マシンのディスク サイズを Azure PowerShell から拡張する方法 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの石井です。 Azure で Nested Hyper-V を使ってみました、というポストです。サポートらしく、トラブルシュート用に活用してみます。">
+  <meta name="description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。 こんにちは。Azure サポートの宇田です。今回は Azure 仮想マシンのディスク サイズを変更する方法についてご紹介します。 クラシック (ASM) 環境の場合クラシック環境の場合には、仮想マシンを停止したうえで Azure PowerShell から以下のように実行します。 # 仮想マシン情報を取得します $VmCo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nested Hyper-V を使った VM の復旧">
-<meta property="og:url" content="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/index.html">
+<meta property="og:title" content="仮想マシンのディスク サイズを Azure PowerShell から拡張する方法">
+<meta property="og:url" content="https://jpaztech.github.io/blog/archive/azure-vm-disk-resize/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの石井です。 Azure で Nested Hyper-V を使ってみました、というポストです。サポートらしく、トラブルシュート用に活用してみます。">
+<meta property="og:description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。 こんにちは。Azure サポートの宇田です。今回は Azure 仮想マシンのディスク サイズを変更する方法についてご紹介します。 クラシック (ASM) 環境の場合クラシック環境の場合には、仮想マシンを停止したうえで Azure PowerShell から以下のように実行します。 # 仮想マシン情報を取得します $VmCo">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/nestedhyperv.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/1_marketplace.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/2_marketplace.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/steps.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/bootmenu.png">
-<meta property="article:published_time" content="2017-10-13T08:08:28.000Z">
-<meta property="article:modified_time" content="2023-12-20T04:21:02.093Z">
+<meta property="article:published_time" content="2016-04-18T07:18:51.000Z">
+<meta property="article:modified_time" content="2023-12-20T04:21:02.045Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Archive">
-<meta property="article:tag" content="Windows">
-<meta property="article:tag" content="Noboot">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/nestedhyperv.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -87,7 +79,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-archive/recover_vm_using_nested_hyperv" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-archive/azure-vm-disk-resize" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -96,7 +88,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Nested Hyper-V を使った VM の復旧
+      仮想マシンのディスク サイズを Azure PowerShell から拡張する方法
     </h1>
   
 
@@ -104,102 +96,59 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2017-10-13T08:08:28.000Z" itemprop="datePublished">2017-10-13</time>
+  <time datetime="2016-04-18T07:18:51.000Z" itemprop="datePublished">2016-04-18</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+bcfd4dbf-e16a-5281-9dec-b50f39432622%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BNested+Hyper-V+%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F+VM+%E3%81%AE%E5%BE%A9%E6%97%A7%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Frecover_vm_using_nested_hyperv%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Frecover_vm_using_nested_hyperv.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Frecover_vm_using_nested_hyperv.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+5d589096-015f-5b4b-9b69-c38af1faf5db%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AE%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF+%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92+Azure+PowerShell+%E3%81%8B%E3%82%89%E6%8B%A1%E5%BC%B5%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fazure-vm-disk-resize%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fazure-vm-disk-resize.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fazure-vm-disk-resize.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/" data-id="clqd9nom600320nphc18z6792" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/archive/azure-vm-disk-resize/" data-id="clqd9nolb000m0nph9jte2050" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure テクニカル サポート チームの石井です。</p>
-<p>Azure で Nested Hyper-V を使ってみました、というポストです。サポートらしく、トラブルシュート用に活用してみます。</p>
-<span id="more"></span>
+        <div class="alert is-warning"><p class="alert-title">警告</p><p>本記事は、投稿より時間が経過しており、<strong>一部内容が古い可能性があります。</strong></p></div>
+<p>こんにちは。Azure サポートの宇田です。<br>今回は Azure 仮想マシンのディスク サイズを変更する方法についてご紹介します。</p>
+<h2 id="クラシック-ASM-環境の場合"><a href="#クラシック-ASM-環境の場合" class="headerlink" title="クラシック (ASM) 環境の場合"></a>クラシック (ASM) 環境の場合</h2><p>クラシック環境の場合には、仮想マシンを停止したうえで Azure PowerShell から以下のように実行します。</p>
+<pre># 仮想マシン情報を取得します
+$VmConfig = Get-AzureVM -ServiceName "<クラウド サービス名>" -Name "<仮想マシン名>"
 
-<p>Azure では RDP (Windows)/ SSH (Linux) 接続でのみ VM が管理できます。このため、システム破損が起きた・誤った変更を加えてしまったといったトラブルにおいて、RDP や SSH が何らかの理由で起動に至らない場合、何がおきたのかわからないまま再構築やバックアップからのリストアを余儀なくされるケースがありました。</p>
-<p>原因追求のため、トラブルシュートをしようと思っても、オンプレミスに VHD をダウンロードしてオンプレミスの Hyper-V 環境で VM を立ち上げる必要があったため、そんなハードウェアが自社内に無いという場合に手詰まりとなってしまいます。</p>
-<p>今回は、新機能である Nested Hyper-V を使って、Azure 上の VM からリモート接続できない VM を起動させて、コンソール接続による動作確認やトラブルシュートを行える環境を構築する方法をご紹介します。</p>
-<p>Nested Hyper-V とは、端的にいうと Hyper-V の VM の中にさらに Hyper-V の VM が立ち上げられるという機能です。Windows Server 2016 の新機能として登場し、Windows Server でのコンテナー テクノロジーの活用や、Hyper-V を流用したセキュリティ向上などが見込まれています。</p>
-<p><img src="/blog/archive/recover_vm_using_nested_hyperv/nestedhyperv.png"></p>
-<h2 id="必要なもの"><a href="#必要なもの" class="headerlink" title="必要なもの"></a>必要なもの</h2><h3 id="1-Dv3-DSv3-もしくは-Ev3-ESv3-シリーズ上の-Windows-Server-2016-の-VM"><a href="#1-Dv3-DSv3-もしくは-Ev3-ESv3-シリーズ上の-Windows-Server-2016-の-VM" class="headerlink" title="1. Dv3 (DSv3) もしくは Ev3 (ESv3) シリーズ上の Windows Server 2016 の VM"></a>1. Dv3 (DSv3) もしくは Ev3 (ESv3) シリーズ上の Windows Server 2016 の VM</h3><p>Nested Hyper-V は、仮想化基盤側と VM の両方が Windows Server 2016 であるということが要件となります。基盤側が Windows Server 2016 対応しているのは、現時点で、Dv3 もしくは Ev3 のみですので、いずれかのシリーズを選定して VM を構築する必要があります。</p>
-<p><strong>[2018/1/15追記]</strong> Dv3 シリーズの VM は、2018 年 1 月時点で、<a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/regions/services/">東西日本リージョンで利用可能</a> となりました。同じリージョン内であれば、ストレージ トランザクションの費用をかけずに本手順が行えます。</p>
-<p><img src="/blog/archive/recover_vm_using_nested_hyperv/1_marketplace.png"></p>
-<p>VM の作成ウィザードでは、Dv3 / Ev3 シリーズが作成できるリージョンを選びます。現在ですと、東西日本リージョンでは未リリースなので、アジア圏で使える東南アジア リージョンを選択しています。</p>
-<p>続いて、サイズの選択画面で、D(S)v3, E(S)v3 を選択します。(Premium Storage で高速なディスクを使いたい場合に S がついたものを選択します。)</p>
-<p><img src="/blog/archive/recover_vm_using_nested_hyperv/2_marketplace.png"></p>
-<h3 id="2-大きなデータ-ディスク"><a href="#2-大きなデータ-ディスク" class="headerlink" title="2. 大きなデータ ディスク"></a>2. 大きなデータ ディスク</h3><p>この VM には、トラブルシュートのため、対象となる VHD をそのままコピーできる容量の VHD をあらかじめ接続しておきます。Azure では、1 VHD あたり最大 ４TB (= 4047 GB) までをサポートしています。</p>
-<p>※ Windows Server の <a target="_blank" rel="noopener" href="https://technet.microsoft.com/ja-jp/library/hh831739(v=ws.11).aspx">記憶域スペース</a> を使えば、複数の VHD を束ねた大きなボリューム(ストライピングとも呼びます) を作成できます。その場合、複数の VHD を接続し、[サーバー マネージャー] から記憶域スペースを構成します。</p>
-<h2 id="Hyper-V-機能のセットアップ"><a href="#Hyper-V-機能のセットアップ" class="headerlink" title="Hyper-V 機能のセットアップ"></a>Hyper-V 機能のセットアップ</h2><ol>
-<li>Windows Sever 2016 VM に RDP をすると、 [Server Manager] が開きます。画面左の [Local Server] をクリック後、右上の [Manage] - [Add Roles and Features] を開きます。</li>
-<li>Hyper-V の機能にチェックします。以下の画面ショットのとおり、”Create Virtual Switches” 画面では既定の画面にチェックし、後は既定値のままで OK です。</li>
-<li>機能のセットアップが終わると、Close ボタンが現れますので、Close を押した後にシステム再起動をします。</li>
-</ol>
-<h2 id="データ-ディスクのフォーマット"><a href="#データ-ディスクのフォーマット" class="headerlink" title="データ ディスクのフォーマット"></a>データ ディスクのフォーマット</h2><ol>
-<li>ディスクの管理画面 ([Windows] キー + [R] もしくは “ファイル名を指定して実行” から [diskmgmt.msc]) を開くと、接続してあるデータ ディスクのフォーマットが求められます。</li>
-<li>ポップアップ画面にて、GPT パーティションを選択してください。(2TB以下の場合 MBR でも結構です。)</li>
-<li>ディスクの管理画面から、”Disk 2” の黒帯となっている領域を [右クリック] – [New Simple Volume] を作成し、パーティションを作成します。</li>
-</ol>
-<div class="alert is-warning"><p class="alert-title">警告</p><p>“Perform a quick format” (既定値)  を実施します。</p><p>フルフォーマットをすると、Standard Storage (非管理ディスク) の場合、課金額が増加してしまいます。</p></div>
-<p>上記にて、任意のドライブ レター上にボリュームが作成されます。</p>
-<p>続いて、解析対象になる (起動できないなどの問題がある) VM の VHD ファイルをダウンロードします。</p>
-<h2 id="解析対象の-VM-が管理ディスクを使っている場合"><a href="#解析対象の-VM-が管理ディスクを使っている場合" class="headerlink" title="解析対象の VM が管理ディスクを使っている場合"></a>解析対象の VM が管理ディスクを使っている場合</h2><p>解析対象の VM が管理ディスクを使っている場合、いったんストレージ アカウントにエクスポートしなければなりません。非管理ディスクの環境では、次の “&lt;ストレージ アカウントからの VHD のダウンロード&gt;” に進んでください。</p>
-<blockquote>
-<p>管理ディスク (Managed Disks) のサブスクリプション間やリソース グループ間の移行について<br><a target="_blank" rel="noopener" href="https://blogs.technet.microsoft.com/jpaztech/2017/08/17/export-managed-disks-to-vhd/">https://blogs.technet.microsoft.com/jpaztech/2017/08/17/export-managed-disks-to-vhd/</a></p>
-</blockquote>
-<p>上記の “Azure PowerShell の場合” という見出しのスクリプトにて、ストレージ アカウントに VHD をエクスポートしてください。<br>※ Azure PowerShell は当該の VM から行う場合、別途セットアップしてください。</p>
-<blockquote>
-<p>Azure PowerShell のリリース サイト<br><a target="_blank" rel="noopener" href="https://github.com/Azure/azure-powershell/releases">https://github.com/Azure/azure-powershell/releases</a><br>Installer: link の部分をクリックしてダウンロードしてセットアップします。</p>
-</blockquote>
-<p>VHD のエクスポート後は、以下手順でダウンロードできます。</p>
-<h2 id="ストレージ-アカウントからの-VHD-のダウンロード"><a href="#ストレージ-アカウントからの-VHD-のダウンロード" class="headerlink" title="ストレージ アカウントからの VHD のダウンロード"></a>ストレージ アカウントからの VHD のダウンロード</h2><p>VHD ファイルを Azureからダウンロードするため、当 VM には AzCopy コマンド ツールをインストールします。</p>
-<p>インストーラーは以下です。</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="http://aka.ms/downloadazcopy">http://aka.ms/downloadazcopy</a></p>
-</blockquote>
-<p>手順は下記をご参照ください。</p>
-<blockquote>
-<p>AzCopy on Windows を使ったデータの転送<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy</a></p>
-</blockquote>
-<p>Azcopy で VHD をダウンロードする場合、以下のようなコマンドになります。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AzCopy /Source:https://mystraccount.blob.core.windows.net/vhds/ /Dest:F:\vhds /SourceKey:<span class="string">&quot;キー&quot;</span> /Pattern:<span class="string">&quot;VHD名.vhd&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>※ VHD の URL は “https://ストレージアカウント名.blob.core.windows.net/コンテナー名/VHD名.vhd” という形式になっています。</p>
-<p>また、ストレージ アカウントのキーは Azure Portal の [ストレージ アカウント] から、該当するストレージ アカウント名をクリックし、[アクセス キー] の画面からコピーできます。(key1, key2 とありますがどちらでも結構です。)</p>
-<p>※ F:\ドライブに vhds というフォルダーをあらかじめ作成しています。</p>
-<div class="alert is-warning"><p class="alert-title">警告</p><p>※ 料金についての注意点:</p><p>AzCopy にて、別リージョンにデータを送信する場合、「帯域幅」の料金がかかります。(ダウンロードを Azure Storage アカウントと同じリージョンの VM に上で行うのであれば、当課金が生じません。)</p></div>
-<h2 id="Hyper-V-マネージャーから-VM-を作成する"><a href="#Hyper-V-マネージャーから-VM-を作成する" class="headerlink" title="Hyper-V マネージャーから VM を作成する"></a>Hyper-V マネージャーから VM を作成する</h2><p>Hyper-V の機能をセットアップした VM にて、スタート メニューに、[Administrative Tools] というショートカット アイコンがありますのでそちらから、[Hyper-V Manager] を開いてください。</p>
-<p>以下にステップ バイ ステップで画面ショットを掲載しますが、コツは以下の通りです。</p>
+Update-AzureDisk -DiskName $VmConfig.VM.OSVirtualHardDisk.DiskName -ResizedSizeInGB 1023 -Label "<ディスク ラベル>"
+
+# 1 つ目のデータ ディスクを1023 GB へ拡張します
+Update-AzureDisk -DiskName $VmConfig.VM.DataVirtualHardDisks[0].DiskName -ResizedSizeInGB 1023 -Label "<ディスク ラベル>"
+
+# 2 つ目のデータ ディスクを1023 GB へ拡張します
+Update-AzureDisk -DiskName $VmConfig.VM.DataVirtualHardDisks[1].DiskName -ResizedSizeInGB 1023 -Label "<ディスク ラベル>"</pre>
+
+<h2 id="リソース-マネージャー-ARM-環境で非管理ディスクの場合"><a href="#リソース-マネージャー-ARM-環境で非管理ディスクの場合" class="headerlink" title="リソース マネージャー (ARM) 環境で非管理ディスクの場合"></a>リソース マネージャー (ARM) 環境で非管理ディスクの場合</h2><p>リソース マネージャー環境かつ非管理ディスクを使用している場合、管理ポータルもしくは Azure PowerShell から以下のように実行します。</p>
+<pre># 仮想マシン情報を取得します
+$VmConfig = Get-AzureRmVM -Name "<仮想マシン名>" -ResourceGroupName "<リソース グループ名>"
+
+# OS ディスクを1023 GB へ拡張します
+$VmConfig.StorageProfile.OSDisk.DiskSizeGB = 1023
+
+# 1 つ目のデータ ディスクを1023 GB へ拡張します
+$VmConfig.StorageProfile.DataDisks[0].DiskSizeGB = 1023
+
+# 2 つ目のデータ ディスクを1023 GB へ拡張します
+$VmConfig.StorageProfile.DataDisks[1].DiskSizeGB = 1023
+
+# 最後に変更を適用します
+Update-AzureRmVM -ResourceGroupName "<リソース グループ名>" -VM $VmConfig</pre>
+
+<h2 id="リソース-マネージャー-ARM-環境で、管理ディスクの場合"><a href="#リソース-マネージャー-ARM-環境で、管理ディスクの場合" class="headerlink" title="リソース マネージャー (ARM) 環境で、管理ディスクの場合"></a>リソース マネージャー (ARM) 環境で、管理ディスクの場合</h2><p>リソース マネージャー環境かつ管理ディスクを使用している場合、管理ポータルもしくは Azure PowerShell から以下のように実行します。</p>
+<pre># 管理ディスクを1023 GB へ拡張します
+ New-AzureRmDiskUpdateConfig -DiskSizeGB 1023 | Update-AzureRmDisk -ResourceGroupName "<リソース グループ名>" -DiskName "<ディスク名>"</pre>
+
+<h2 id="サイズ変更時の留意点"><a href="#サイズ変更時の留意点" class="headerlink" title="サイズ変更時の留意点"></a>サイズ変更時の留意点</h2><p>上記のような方法でサイズ変更を頂くにあたり、以下の様な点にご留意を頂ければと思います。</p>
 <ul>
-<li>Specify Generation の箇所で Generation 1 を選択</li>
-<li>VM をインターネット側や VNET に接続したい場合、Configure Networking で NIC を選択。(画面ショットでは接続しない状態としています)</li>
-<li>Connect Virtual Hard Disk 画面では、”Use an existing virtual hard disk” を選択し、ダウンロードした VHD のパスを指定。</li>
-<li>VM 作成ウィザードが完了したら、VM 名をダブルクリックすることで画面に繋げます。この画面はコンソール接続であり、RDP/SSH が動作しない環境でも管理が行えます。</li>
+<li>事前に仮想マシンを停止したうえでサイズ変更をご実施ください<br>(停止していない場合、その旨のエラーが表示されます)</li>
+<li>上記ではあくまでも Azure からみたディスク サイズを拡張しています<br>OS 内で認識されるサイズについては、別途パーティションの拡張をお願いいたします</li>
+<li>拡張したディスクを再拡張することは可能ですが、縮小を行うことはできません<br>(どうしても縮小が必要な場合は、別の小さなディスクへコピーをお願いします)</li>
 </ul>
-<p><img src="/blog/archive/recover_vm_using_nested_hyperv/steps.png"></p>
-<p>以下は、起動中の黒画面でマウスクリックをした上で、F8 キーを連打することで表示されるブートメニューです。(画面はWindows Server 2008 R2 のもの)</p>
-<p>セーフモードや、スタートアップ修復が起動できるので、復旧方法の選択肢となります。</p>
-<p><img src="/blog/archive/recover_vm_using_nested_hyperv/bootmenu.png"></p>
-<p>この画面ですが、当然ながら Azure VM では RDP ができる状態からしか管理ができないため、本来は見ることができないものでした。</p>
-<p>ボリューム ライセンスやMSDN (Visual Studio) サブスクリプションをお持ちのお客様であれば、OS の ISO イメージを別途入手できますので、OS の再セットアップや、Windows Server バックアップでのリカバリーといったことも選択肢となります。</p>
-<p>※ Azure ユーザー向けに Windows OS の ISO イメージの配布は行われていませんので、その点はご了承ください。</p>
-<h2 id="役に立ちそうなシナリオ"><a href="#役に立ちそうなシナリオ" class="headerlink" title="役に立ちそうなシナリオ"></a>役に立ちそうなシナリオ</h2><ul>
-<li><p>Windows Server 標準機能である、Windows Server バックアップツールにより復元することができます。 Azure バックアップと比較して明確なメリットは少ないのですが、Azure バックアップは VHD すべてをバックアップすることに対して、Windows Server バックアップはOS の起動に必要なシステム パーティションのみバックアップできる、ベアメタル バックアップがありますので、バックアップ保存用の VHD 容量節約になります。</p>
-</li>
-<li><p>Windows OS をセーフモードや Active Directory のディレクトリ サービス復元モードで起動できます。</p>
-</li>
-<li><p>Linux VM では、以下のようなシナリオがあります。</p>
-</li>
-<li><p>fstab の構成ミスで起動してこない場合、fstab の修正ができる (シングル ユーザー モードでログインができるケースに限る)</p>
-</li>
-<li><p>ダーティ シャットダウンが行われたため、fsck (ファイル システム チェッカー) 実行をするまで OSが起動しない、という場合に fsck 実行ができる</p>
-</li>
-<li><p>OS を新規セットアップし、カスタム VHD を作成することができます。(旧来、オンプレミスの Hyper-V マシンが無ければ作業ができなかったものです。)</p>
-</li>
-</ul>
-<p>以上、参考になれば幸いです。</p>
+<p><strong>2017/11/14 更新 管理ディスクの場合について、手順を追記しました。</strong></p>
 
       
       
@@ -213,10 +162,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Noboot/" rel="tag">Noboot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/archive/recover_vm_using_nested_hyperv.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/archive/azure-vm-disk-resize.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -224,19 +173,19 @@
     
 <nav id="article-nav">
   
-    <a href="../singlenicvm-to-multinicvm/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="../azure-vm-performance-analysis/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">次の記事</strong>
       <div class="article-nav-title">
         
-          Azure で単数 NIC の仮想マシンを複数 NIC にする
+          Azure VM のパフォーマンス ログを解析するには
         
       </div>
     </a>
   
   
-    <a href="../monitor-io-throttoling-on-win-vm-arm/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../about-168-63-129-16/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">ARMのWindowsでディスクやVMレベルでのIOスロットリングを監視・通知する方法</div>
+      <div class="article-nav-title">IP アドレス 168.63.129.16 について</div>
     </a>
   
 </nav>
