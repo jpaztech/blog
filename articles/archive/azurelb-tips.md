@@ -18,7 +18,7 @@ Azure ロードバランサー利用時に想定した動作ができないと�
 
 また、Azure ロードバランサーを経由した通信のトラブルシューティングについては以下もご参照ください。
 
-[ロードバランサー経由での通信ができない場合のチェックポイント](https://www.syuheiuda.com/?p=4875)
+[ロードバランサー経由での通信ができない場合のチェックポイント](https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting/)
 
 ## Azure ロードバランサー (内部 [プライベートIP] / 外部 [パブリック IP]) 利用時のよくあるお問合せ
 

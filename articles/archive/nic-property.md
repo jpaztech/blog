@@ -44,7 +44,7 @@ Azure で作成された仮想マシンには、必ず 1 個以上の NIC が関
 そういった場合は、以下のブログで紹介されているように、Azure VM (ARM) の NIC 差し替えて対処して下さい。
 
 Azure VM (ARM) の NIC 差し替えについて
-http://blogs.technet.microsoft.com/jpaztech/2016/09/14/azure-vm-arm-nic-change/
+https://jpaztech.github.io/blog/archive/azure-vm-arm-nic-change/
 
 ## 余談
 

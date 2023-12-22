@@ -68,7 +68,7 @@ Azure とオンプレミスの端末間で通信を行うためには、オン�
 また、強制トンネリングを構成された環境では、Windows のライセンス認証で用いられる KMS に影響が生じます。こちらについては以下にて詳しくご紹介しておりますので、併せてご参照ください。
 
 * ExpressRoute 環境でライセンス認証ができない事象について
-https://www.syuheiuda.com/?p=4867
+https://jpaztech.github.io/blog/archive/azure-vm-may-fail-to-activate-over-expressroute/
 
 ### Azure から受け取った経路をオンプレミスへどのように広報するか
 
