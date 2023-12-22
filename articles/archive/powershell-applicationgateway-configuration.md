@@ -69,7 +69,7 @@ tags:
 
 ## ■ 参考 - Azure PowerShell の利用方法
 Azure PowerShell 自体のインストール方法については、以下の記事でご説明していますので、よろしければ、こちらも参考にご覧くださいませ。
-[Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり](https://blogs.technet.microsoft.com/jpaztech/2017/05/02/azure-powershell-3-8-0-install/)
+[Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり](https://jpaztech.github.io/blog/archive/azure-powershell-3-8-0-install/)
 
 Azure PowerShell のインストール後に、実際に Azure の操作を行うためには (Application Gateway にかかわらず)、サインインが必要です。この手順についてのお問い合わせを何件かいただきましたので、以下に手順をご案内いたします。
 

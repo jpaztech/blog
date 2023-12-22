@@ -46,7 +46,7 @@ ExpressRoute では、接続先に応じて 3 種類のピアリング形態が�
 **ExpressRoute の中長期的な予定として、Public Peering は Microsoft Peering へ統合される方針となっております。詳細については以下のアナウンスをご確認ください。**
 
 * ExpressRoute の Public Peering と Microsoft Peering に関するアナウンス
-https://blogs.technet.microsoft.com/jpaztech/2018/03/02/expressroute-announcement-march-2018/
+https://jpaztech.github.io/blog/archive/expressroute-announcement-march-2018/
 
 ## Premium Add-On
 

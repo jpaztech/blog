@@ -64,4 +64,4 @@ https://blogs.msdn.microsoft.com/mast/2016/04/27/vm-stuck-in-updating-when-nsg-r
 また、本件に関連して Azure 上の各種機能で用いられている下記 IP についても制限しないよう、あわせてご注意ください。
 
 * IP アドレス 168.63.129.16 について
-https://www.syuheiuda.com/?p=4828
+https://jpaztech.github.io/blog/archive/about-168-63-129-16/

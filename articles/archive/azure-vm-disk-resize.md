@@ -17,13 +17,13 @@ tags:
 <pre># 仮想マシン情報を取得します
 $VmConfig = Get-AzureVM -ServiceName "<クラウド サービス名>" -Name "<仮想マシン名>"
 
-# OS ディスクを1023 GB へ拡張します
+# OS ディスクを 1023 GB へ拡張します
 Update-AzureDisk -DiskName $VmConfig.VM.OSVirtualHardDisk.DiskName -ResizedSizeInGB 1023 -Label "<ディスク ラベル>"
 
-# 1 つ目のデータ ディスクを1023 GB へ拡張します
+# 1 つ目のデータ ディスクを 1023 GB へ拡張します
 Update-AzureDisk -DiskName $VmConfig.VM.DataVirtualHardDisks[0].DiskName -ResizedSizeInGB 1023 -Label "<ディスク ラベル>"
 
-# 2 つ目のデータ ディスクを1023 GB へ拡張します
+# 2 つ目のデータ ディスクを 1023 GB へ拡張します
 Update-AzureDisk -DiskName $VmConfig.VM.DataVirtualHardDisks[1].DiskName -ResizedSizeInGB 1023 -Label "<ディスク ラベル>"</pre>
 
 ## リソース マネージャー (ARM) 環境で非管理ディスクの場合
@@ -33,13 +33,13 @@ Update-AzureDisk -DiskName $VmConfig.VM.DataVirtualHardDisks[1].DiskName -Resize
 <pre># 仮想マシン情報を取得します
 $VmConfig = Get-AzureRmVM -Name "<仮想マシン名>" -ResourceGroupName "<リソース グループ名>"
 
-# OS ディスクを1023 GB へ拡張します
+# OS ディスクを 1023 GB へ拡張します
 $VmConfig.StorageProfile.OSDisk.DiskSizeGB = 1023
 
-# 1 つ目のデータ ディスクを1023 GB へ拡張します
+# 1 つ目のデータ ディスクを 1023 GB へ拡張します
 $VmConfig.StorageProfile.DataDisks[0].DiskSizeGB = 1023
 
-# 2 つ目のデータ ディスクを1023 GB へ拡張します
+# 2 つ目のデータ ディスクを 1023 GB へ拡張します
 $VmConfig.StorageProfile.DataDisks[1].DiskSizeGB = 1023
 
 # 最後に変更を適用します
