@@ -4,28 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>詳説 Azure ExpressRoute – Part4: ExpressRoute の冗長構成について | Japan Azure IaaS Core Support Blog</title>
+  <title>Artifact Streaming とは？ ACR のイメージを AKS にデプロイして試してみた | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。 こんにちは。Azure サポートの宇田です。今回は、ExpressRoute を複数ご契約いただく場合の留意点や、冗長構成の考慮点についてご説明します。  Part1: ExpressRoute を導入する前に Part2: ExpressRoute のルーティング制御について Part3: ExpressRoute の導">
+  <meta name="description" content="この記事は Microsoft Azure Tech Advent Calendar 2023 の 24 日目の記事になります🎅 こんにちは。Azure テクニカル サポートチームの桐井です。 Ignite 2023 で、ACR&#x2F;AKS 関連の機能としてArtifact Streaming が発表されました。本記事では、Artifact Streaming を使って ACR にあるコンテナー イ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="詳説 Azure ExpressRoute – Part4: ExpressRoute の冗長構成について">
-<meta property="og:url" content="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/index.html">
+<meta property="og:title" content="Artifact Streaming とは？ ACR のイメージを AKS にデプロイして試してみた">
+<meta property="og:url" content="https://jpaztech.github.io/blog/containers/aks-artifact-streaming/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。 こんにちは。Azure サポートの宇田です。今回は、ExpressRoute を複数ご契約いただく場合の留意点や、冗長構成の考慮点についてご説明します。  Part1: ExpressRoute を導入する前に Part2: ExpressRoute のルーティング制御について Part3: ExpressRoute の導">
+<meta property="og:description" content="この記事は Microsoft Azure Tech Advent Calendar 2023 の 24 日目の記事になります🎅 こんにちは。Azure テクニカル サポートチームの桐井です。 Ignite 2023 で、ACR&#x2F;AKS 関連の機能としてArtifact Streaming が発表されました。本記事では、Artifact Streaming を使って ACR にあるコンテナー イ">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR1.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR2.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR3.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR4.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR5.png">
-<meta property="article:published_time" content="2018-11-20T04:15:42.000Z">
-<meta property="article:modified_time" content="2023-12-24T03:22:09.534Z">
+<meta property="article:published_time" content="2023-12-24T03:00:00.000Z">
+<meta property="article:modified_time" content="2023-12-24T03:22:09.582Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Archive">
-<meta property="article:tag" content="Network">
-<meta property="article:tag" content="ExpressRoute">
+<meta property="article:tag" content="Containers">
+<meta property="article:tag" content="Azure Kubernetes Service (AKS)">
+<meta property="article:tag" content="Azure Container Registry (ACR)">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR1.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -87,7 +81,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-archive/expressroute-deep-dive-part4" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-containers/aks-artifact-streaming" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -96,7 +90,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      詳説 Azure ExpressRoute – Part4: ExpressRoute の冗長構成について
+      Artifact Streaming とは？ ACR のイメージを AKS にデプロイして試してみた
     </h1>
   
 
@@ -104,61 +98,121 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2018-11-20T04:15:42.000Z" itemprop="datePublished">2018-11-20</time>
+  <time datetime="2023-12-24T03:00:00.000Z" itemprop="datePublished">2023-12-24</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+c01a18fa-3a0f-5972-906f-1b1174c33f2f%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E8%A9%B3%E8%AA%AC+Azure+ExpressRoute+%E2%80%93+Part4%3A+ExpressRoute+%E3%81%AE%E5%86%97%E9%95%B7%E6%A7%8B%E6%88%90%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fexpressroute-deep-dive-part4%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fexpressroute-deep-dive-part4.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fexpressroute-deep-dive-part4.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+ef90e33b-3320-5498-9dea-29341d03409c%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BArtifact+Streaming+%E3%81%A8%E3%81%AF%EF%BC%9F+ACR+%E3%81%AE%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%82%92+AKS+%E3%81%AB%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%81%97%E3%81%A6%E8%A9%A6%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fcontainers%2Faks-artifact-streaming%2F%29%0A*+Content+Source%3A+%5Barticles%2Fcontainers%2Faks-artifact-streaming.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fcontainers%2Faks-artifact-streaming.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/" data-id="clqixbdfb00200nqt5od50k62" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/containers/aks-artifact-streaming/" data-id="clqixbdki00mp0nqth5vx644x" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <div class="alert is-warning"><p class="alert-title">警告</p><p>本記事は、投稿より時間が経過しており、<strong>一部内容が古い可能性があります。</strong></p></div>
-<p>こんにちは。Azure サポートの宇田です。<br>今回は、ExpressRoute を複数ご契約いただく場合の留意点や、冗長構成の考慮点についてご説明します。</p>
-<ul>
-<li><a href="/blog/archive/expressroute-deep-dive-part1/">Part1: ExpressRoute を導入する前に</a></li>
-<li><a href="/blog/archive/expressroute-deep-dive-part2/">Part2: ExpressRoute のルーティング制御について</a></li>
-<li><a href="/blog/archive/expressroute-deep-dive-part3/">Part3: ExpressRoute の導入手順について</a></li>
-<li>Part4: ExpressRoute の冗長構成について</li>
-<li><a href="/blog/archive/expressroute-deep-dive-part5/">Part5: ExpressRoute の増速やプロバイダー変更について</a></li>
-<li><a href="/blog/network/expressroute-deep-dive-part6/">Part6: ExpressRoute の各種上限値について</a></li>
-</ul>
-<h2 id="単一の-ExpressRoute-回線を契約した場合"><a href="#単一の-ExpressRoute-回線を契約した場合" class="headerlink" title="単一の ExpressRoute 回線を契約した場合"></a>単一の ExpressRoute 回線を契約した場合</h2><p>まず初めに、シンプルに 1 回線だけ契約された場合からご説明します。</p>
-<p>ExpressRoute を東京でご契約いただいた場合、既定 (Premium Add-on なし) の状態で、以下の図のように東日本・西日本リージョンの仮想ネットワークに接続が可能です。</p>
-<p><img src="/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR1.png"></p>
-<h2 id="ExpressRoute-回線を複数契約された場合"><a href="#ExpressRoute-回線を複数契約された場合" class="headerlink" title="ExpressRoute 回線を複数契約された場合"></a>ExpressRoute 回線を複数契約された場合</h2><p>次に、ExpressRoute 回線を東京で 2 回線ご契約される場合を考えてみます。<br>(システム毎に回線を分離したい場合や、キャリア冗長としたい場合など)</p>
-<p>以下のドキュメントに記載がある通り、1 つの仮想ネットワークには最大で 4 つまで ExpressRoute 回線を接続出来ます。<br>(異なる場所の ExpressRoute 回線であれば、最大 16 回線まで接続できます。)</p>
-<ul>
-<li>1 つの仮想ネットワークを複数の ExpressRoute 回線に接続できますか。<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-faqs#can-i-have-one-virtual-network-connected-to-more-than-one-expressroute-circuit">https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-faqs#can-i-have-one-virtual-network-connected-to-more-than-one-expressroute-circuit</a></li>
-</ul>
-<blockquote>
-<p>はい。 1 つの仮想ネットワークを、同じ場所の最大 4 つの ExpressRoute 回線に、または異なるピアリングの場所の最大 16 の ExpressRoute 回線に接続できます。</p>
+        <p>この記事は <a target="_blank" rel="noopener" href="https://qiita.com/advent-calendar/2023/microsoft-azure-tech">Microsoft Azure Tech Advent Calendar 2023</a> の 24 日目の記事になります🎅</p>
+<p>こんにちは。Azure テクニカル サポートチームの桐井です。</p>
+<p><a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/apps-on-azure-blog/aks-welcomes-you-to-ignite-2023/ba-p/3983317">Ignite 2023</a> で、ACR/AKS 関連の機能としてArtifact Streaming が発表されました。<br>本記事では、Artifact Streaming を使って ACR にあるコンテナー イメージを AKS クラスターにデプロイする様子を紹介します。</p>
+<p>Artifact Streaming は 2023/12 現在、プレビュー機能として提供されております。<br>今後のアップデートにより、将来この記事で紹介した内容から変更される可能性があることを何卒ご了承ください！</p>
+<span id="more"></span>
+
+<h2 id="Artifact-Streaming-とは"><a href="#Artifact-Streaming-とは" class="headerlink" title="Artifact Streaming とは"></a>Artifact Streaming とは</h2><blockquote>
+<p>ご参考) Public preview: Artifact streaming support in Azure Kubernetes Service (AKS)<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/updates/public-review-artifact-streaming-support-in-azure-kubernetes-service-aks/">https://azure.microsoft.com/ja-jp/updates/public-review-artifact-streaming-support-in-azure-kubernetes-service-aks/</a></p>
 </blockquote>
-<p>なお、以前はすべて別の場所 (東京・大阪など) でご契約いただいた ExpressRoute  回線が必要でした。そのため、2 回線ともに東京でご契約いただいた場合、1 つの仮想ネットワークに東京の 2 つの ExpressRoute 回線を接続していただくことができませんでした。ただ、現在は制限が緩和され同一の場所で契約された複数の ExpressRoute 回線を接続可能になっていますので、特別な考慮は不要となりました。</p>
-<p><img src="/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR2.png"></p>
-<h2 id="大規模災害時などの疎通性の考え方"><a href="#大規模災害時などの疎通性の考え方" class="headerlink" title="大規模災害時などの疎通性の考え方"></a>大規模災害時などの疎通性の考え方</h2><p>最後に、災害時の DR を考慮する際の留意点についてご説明します。</p>
-<p>まず大前提として、Azure のリージョン (東日本・西日本リージョン) と、ExpressRoute の接続場所 (東京・大阪) は、必ずしも同一のデータセンター内とは限りません。(海外ですと、Azure リージョンが存在しない地域でも ExpressRoute の接続場所が用意されている場合がございます。)</p>
-<ul>
-<li>地理的リージョン内の Azure リージョンと ExpressRoute の場所の対応<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-locations#azure-regions-to-expressroute-locations-within-a-geopolitical-region">https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-locations#azure-regions-to-expressroute-locations-within-a-geopolitical-region</a></li>
-</ul>
-<p>これを踏まえ、大規模災害時などに東京の ExpressRoute 回線経由で西日本リージョンの仮想ネットワークへ接続出来るのかという点ですが、どこが被災したかによって状況が異なりますので、以下にそれぞれご紹介できればと思います。</p>
-<h3 id="Azure-のデータセンターが被災した場合"><a href="#Azure-のデータセンターが被災した場合" class="headerlink" title="Azure のデータセンターが被災した場合"></a>Azure のデータセンターが被災した場合</h3><p>データセンター側が被災したものの、ExpressRoute の接続場所 (MSEE) は無事という場合は、以下の図のように ExpressRoute 経由で西日本リージョンへ接続が可能と想定されます。</p>
-<p><img src="/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR3.png"></p>
-<h3 id="ExpressRoute-の接続場所-MSEE-が被災した場合"><a href="#ExpressRoute-の接続場所-MSEE-が被災した場合" class="headerlink" title="ExpressRoute の接続場所 (MSEE) が被災した場合"></a>ExpressRoute の接続場所 (MSEE) が被災した場合</h3><p>一方で、ExpressRoute の接続場所が被災した場合は、以下の図のように MSEE 経由で西日本リージョンへ通信を行うことができなくなることが想定されます。</p>
-<p><img src="/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR4.png"></p>
-<h3 id="ExpressRoute-回線自体も-DR-対策を検討される場合"><a href="#ExpressRoute-回線自体も-DR-対策を検討される場合" class="headerlink" title="ExpressRoute 回線自体も DR 対策を検討される場合"></a>ExpressRoute 回線自体も DR 対策を検討される場合</h3><p>上記のような大規模災害時を想定し、ExpressRoute 回線の冗長化を検討される場合は、東京・大阪で 1 回線ずつご契約いただき、東日本・西日本リージョンの仮想ネットワークに対してメッシュでの接続をご検討ください。</p>
-<p><img src="/blog/archive/expressroute-deep-dive-part4/ExpressRoute_DR5.png"></p>
-<p>この時、Azure とオンプレミス間は 2 つの経路で接続できる状態になりますが、既定の状態では等コストですので、アクティブ / アクティブな状態となり、両経路とも利用されることになります。</p>
-<p>意図的に一方の経路を優先させたい (通常時は東京側を利用したい) という場合には、Azure からオンプレミスと、オンプレミスから Azure の双方向で、以下のように経路制御をいただければと思います。</p>
-<ul>
-<li><p>Azure -&gt; オンプレミス方向の経路制御<br>Azure としては、プロバイダー様の PE ルーターから広報される BGP の経路情報に基づいてルーティングを行っています。<br>意図的に東京側を優先してオンプレミスへルーティングしたいという場合は、AS Path プリペンドでの経路制御をご検討ください。<br>具体的には、大阪の PE ルーターから広報する経路情報に AS Path を追加して、遠回りの経路と見せかけることで制御できますので、プロバイダー様 (L2 プロバイダー様の場合は、PE ルーターの管理者様) までご相談をいただければと思います。</p>
-</li>
-<li><p>オンプレミス -&gt; Azure 方向の経路制御<br>オンプレミス側で、東京・大阪のどちらの ExpressRoute 回線へルーティングするかは、お客様のネットワーク構成に依存します。<br>Azure 側からは制御できませんので、お手数ですがオンプレミス側のネットワーク管理者様や、プロバイダー様までご相談ください。</p>
-</li>
-</ul>
-<p>以上、ご参考になりましたら幸いです。</p>
+<p>コンテナー イメージは、データの実体を表す複数の<code>レイヤー</code>と、イメージに含まれるレイヤーの情報をまとめた<code>マニフェスト</code>によって構成されています。</p>
+<p>通常、コンテナー化されたアプリケーションを起動するには、コンテナー イメージの Pull (ダウンロードと展開) が必要になります。<br>イメージの Pull では次のような処理が行われます:</p>
+<ol>
+<li>コンテナー レジストリにアクセスし、マニフェストからレイヤーの情報を取得する</li>
+<li>レイヤーのダウンロードが必要か確認する (ローカル キャッシュが利用できるか確認する)</li>
+<li>各レイヤーをダウンロードする</li>
+<li>ダウンロード済みのレイヤーを展開する</li>
+<li>コンテナーを起動する</li>
+</ol>
+<p>このように、コンテナーの起動に至るまでには、イメージを構成するレイヤーのダウンロードと展開の処理が必要となります。<br>そのため、レイヤーのデータ サイズが大きい場合や、レイヤー数が多いコンテナー イメージの場合は、コンテナーが起動するまでに時間を要すことがあります。</p>
+<p>特に、Pod のオートスケールをするシナリオでは、Pod の起動時間がオートスケールの速度に影響を与えます。</p>
+<p>また、クラスター オートスケーラーによってノードが削減され、その後新規ノードが追加された場合には、ノード内のコンテナー イメージのキャッシュが利用できません (AKS ではノードプールの <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/aks/scale-down-mode">スケールダウン モード</a>が <code>Delete</code> の場合)。<br>新規ノードでは、コンテナー イメージのダウンロードと展開が再び必要となってしまうため、Pod の起動完了までに時間を要する要因となってしまいます。</p>
+<p>これらの問題は、Artifact Streaming を利用することで、解決を図ることができます。<br>Artifact Streaming を利用すると、コンテナー イメージ全体のダウンロードと展開を待つことなく、コンテナーを開始できます。</p>
+<h2 id="Artifact-Streaming-を試してみよう"><a href="#Artifact-Streaming-を試してみよう" class="headerlink" title="Artifact Streaming を試してみよう"></a>Artifact Streaming を試してみよう</h2><p>実際に AKS クラスターへコンテナー イメージをデプロイして、Artifact Streaming によってイメージの Pull 時間が変化するかを試してみましょう。</p>
+<p>今回の検証では、コンテナー イメージとして <code>docker.io/jupyter/all-spark-notebook:latest</code> を使用します。<br>AKS にデプロイをする前に、まずは手元の PC でイメージの Pull を試してみます。<br>次のように、多数のレイヤーによって構成されているコンテナー イメージであることがわかります。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker pull docker.io/jupyter/all-spark-notebook:latest</span></span><br><span class="line">latest: Pulling from jupyter/all-spark-notebook</span><br><span class="line">aece8493d397: Pull complete</span><br><span class="line">fd92c719666c: Pull complete</span><br><span class="line">088f11eb1e74: Pull complete</span><br><span class="line">4f4fb700ef54: Pull complete</span><br><span class="line">ef8373d600b0: Pull complete</span><br><span class="line">77e45ee945dc: Pull complete</span><br><span class="line">a30f89a0af6c: Download complete</span><br><span class="line">dc42adc7eb73: Download complete</span><br><span class="line">abaa8376a650: Downloading [==&gt;                                                ]  4.314MB/104.8MB</span><br><span class="line">aa099bb9e49a: Download complete</span><br><span class="line">822c4cbcf6a6: Download complete</span><br><span class="line">d25166dcdc7b: Downloading [====&gt;                                              ]  2.494MB/30.5MB</span><br><span class="line">964fc3e4ff9f: Waiting</span><br><span class="line">2c4c69587ee4: Waiting</span><br><span class="line">de2cdd875fa8: Waiting</span><br><span class="line">75d33599f5f2: Waiting</span><br><span class="line">31973ea82470: Waiting</span><br><span class="line">96ee7e4439c7: Waiting</span><br><span class="line">1f9ad23c07ac: Waiting</span><br><span class="line">d19266e0cb17: Waiting</span><br><span class="line">9a165b6e9dc7: Pulling fs layer</span><br><span class="line">5689442fd4e1: Pulling fs layer</span><br><span class="line">9a6a202f62a6: Waiting</span><br><span class="line">734ea0c3d94e: Waiting</span><br><span class="line">a21a167f7127: Waiting</span><br><span class="line">467e20fcd668: Waiting</span><br><span class="line">7024bb03412a: Waiting</span><br><span class="line">7c128e9d2ddd: Waiting</span><br><span class="line">80782ae10995: Waiting</span><br><span class="line">691924032e73: Waiting</span><br><span class="line">05c5a5d9ae5f: Waiting</span><br><span class="line">15a3d66e1b80: Waiting</span><br><span class="line">688c0dcd61fc: Waiting</span><br><span class="line">ed7d16094f4e: Waiting</span><br></pre></td></tr></table></figure>
+
+<h3 id="Artifact-Streaming-を使用する準備"><a href="#Artifact-Streaming-を使用する準備" class="headerlink" title="Artifact Streaming を使用する準備"></a>Artifact Streaming を使用する準備</h3><p>本記事の手順は、次のドキュメントに記載されている手順に沿っています。<br>ドキュメントをあわせてご参照ください。</p>
+<blockquote>
+<p>Azure Kubernetes Service (AKS) の成果物ストリーミングを使用してイメージのプル時間を短縮する (プレビュー)<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/aks/artifact-streaming">https://learn.microsoft.com/ja-jp/azure/aks/artifact-streaming</a></p>
+</blockquote>
+<p>Artifact Streaming を利用するために、Azure Container Registry (ACR) のリポジトリを設定していきます。</p>
+<p>はじめに、今回利用するコンテナーイメージを ACR にインポートします。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr import -n &#123;ACR_NAME&#125; \</span></span><br><span class="line"><span class="bash">    --<span class="built_in">source</span> docker.io/jupyter/all-spark-notebook:latest \</span></span><br><span class="line"><span class="bash">    -t jupyter/all-spark-notebook:latest</span></span><br></pre></td></tr></table></figure>
+
+<p>イメージのインポートが完了したら、Artifact Streaming を作成します。<br>作成にはしばらく時間がかかります。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr artifact-streaming create -n &#123;ACR_NAME&#125; \</span></span><br><span class="line"><span class="bash">    --image jupyter/all-spark-notebook:latest</span></span><br></pre></td></tr></table></figure>
+
+<p><code>az acr artifact-streaming create</code> コマンドを実行すると、作成の進捗を確認するためのコマンド例が表示されます。<br><code>az acr artifact-streaming operation show</code> コマンドで進捗が確認できます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr artifact-streaming operation show -n &#123;ACR_NAME&#125; \</span></span><br><span class="line"><span class="bash">    --repository jupyter/all-spark-notebook \</span></span><br><span class="line"><span class="bash">    --id d7ea8de0-1810-48a1-b9b8-ed7f667ae1f6</span></span><br><span class="line"></span><br><span class="line">Command group &#x27;acr artifact-streaming&#x27; is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus</span><br><span class="line">&#123;</span><br><span class="line">  &quot;details&quot;: &quot;Conversion ongoing for resource jupyter/all-spark-notebook@sha256:b63bae2d9d34779ac969deeb4834efd838991f77269ca9a76bf6b0d1f8678d29&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;ArtifactStreamingConversion&quot;,</span><br><span class="line">  &quot;progress&quot;: &quot;8%&quot;,</span><br><span class="line">  &quot;resource&quot;: &quot;jupyter/all-spark-notebook@sha256:b63bae2d9d34779ac969deeb4834efd838991f77269ca9a76bf6b0d1f8678d29&quot;,</span><br><span class="line">  &quot;startTime&quot;: &quot;2023-12-07T07:27:12Z&quot;,</span><br><span class="line">  &quot;status&quot;: &quot;Running&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Artifact Streaming の作成が完了したら、レジストリに存在する Artifact Streaming の一覧を確認してみましょう。<br><code>az acr manifest list-referrers</code> コマンドに、レジストリ名とイメージ名を指定して実行します。<br><code>&quot;artifactType&quot;</code> が <code>&quot;application/vnd.azure.artifact.streaming.v1&quot;</code> となっていますね。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr manifest list-referrers -r &#123;ACR_NAME&#125; \</span></span><br><span class="line"><span class="bash">    -n jupyter/all-spark-notebook:latest</span></span><br><span class="line"></span><br><span class="line">Command group &#x27;acr manifest&#x27; is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus</span><br><span class="line">&#123;</span><br><span class="line">  &quot;manifests&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;annotations&quot;: &#123;</span><br><span class="line">        &quot;streaming.format&quot;: &quot;overlaybd&quot;,</span><br><span class="line">        &quot;streaming.platform.arch&quot;: &quot;amd64&quot;,</span><br><span class="line">        &quot;streaming.platform.os&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;streaming.version&quot;: &quot;v1&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;artifactType&quot;: &quot;application/vnd.azure.artifact.streaming.v1&quot;,</span><br><span class="line">      &quot;digest&quot;: &quot;sha256:2cba83dae18f99b6c958e9e34421dadaeee0db1cde4adc0241180de80efd4f34&quot;,</span><br><span class="line">      &quot;mediaType&quot;: &quot;application/vnd.oci.image.manifest.v1+json&quot;,</span><br><span class="line">      &quot;size&quot;: 17266</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>続いて AKS 側の設定をします。<br>Artifact Streaming を利用するには、Artifact Streaming オプションを有効化した AKS ノードプールが必要になります。</p>
+<p><code>az aks nodepool add</code> コマンドに <code>--enable-artifact-streaming</code> オプションを付与して、新しいノードプールを追加します。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az aks nodepool add \</span></span><br><span class="line"><span class="bash">    --resource-group myResourceGroup \</span></span><br><span class="line"><span class="bash">    --cluster-name myAKSCluster \</span></span><br><span class="line"><span class="bash">    --name acrtest \</span></span><br><span class="line"><span class="bash">    --node-count 1 \</span></span><br><span class="line"><span class="bash">    --enable-artifact-streaming</span></span><br></pre></td></tr></table></figure>
+
+<p>ここでは <code>acrtest</code> という名前でノードプールを追加しました。<br><code>kubectl get nodes</code> コマンドでノードの一覧を表示すると、新しいノードが追加されていることが確認できます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get nodes</span></span><br><span class="line">NAME                                STATUS   ROLES   AGE     VERSION</span><br><span class="line">aks-acrtest-29138108-vmss000000     Ready    agent   4h15m   v1.27.3</span><br><span class="line">aks-nodepool2-20356098-vmss00001d   Ready    agent   27h     v1.27.3</span><br></pre></td></tr></table></figure>
+
+<p>これで ACR と AKS の準備は完了です！</p>
+<h3 id="AKS-へのデプロイを試してみる"><a href="#AKS-へのデプロイを試してみる" class="headerlink" title="AKS へのデプロイを試してみる"></a>AKS へのデプロイを試してみる</h3><p>準備したコンテナー イメージを AKS クラスターにデプロイして、Artifact Streaming によってイメージの Pull 時間が短縮されているか確かめてみましょう。</p>
+<p>検証では、Artifact Streaming が無効のノードプールと、有効のノードプールのそれぞれに、同じコンテナー イメージを使用する Deployment をデプロイします。</p>
+<h4 id="Artifact-Streaming-が無効の場合"><a href="#Artifact-Streaming-が無効の場合" class="headerlink" title="Artifact Streaming が無効の場合"></a>Artifact Streaming が無効の場合</h4><p><code>nodeSelector</code> を使用して、Artifact Streaming が無効のノードプールに Pod をデプロイします。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">jupyter</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">jupyter</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">jupyter</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">jupyter</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">nodeSelector:</span></span><br><span class="line">        <span class="attr">&quot;agentpool&quot;:</span> <span class="string">nodepool2</span>  <span class="comment"># Artifact Streaming が無効のノードプール</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">jupyter</span></span><br><span class="line">        <span class="attr">image:</span> &#123;<span class="string">ACR_NAME</span>&#125;<span class="string">.azurecr.io/jupyter/all-spark-notebook:latest</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br></pre></td></tr></table></figure>
+
+<p>YAML マニフェストをクラスターにデプロイします。<br><code>jupyter-79c4469c65-5cfpf</code> Pod が生成されました。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pods -o wide</span></span><br><span class="line">NAME                                          READY   STATUS    RESTARTS   AGE     IP            NODE                                NOMINATED NODE   READINESS GATES</span><br><span class="line">jupyter-79c4469c65-5cfpf                      1/1     Running   0          3m16s   10.244.0.19   aks-nodepool2-20356098-vmss00001i   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>kubectl describe pod</code> コマンドの結果から、Events フィールドのメッセージを確認します。</p>
+<p><code>Pulled</code> イベントでは、<code>Successfully pulled image &quot;&#123;イメージ名&#125;&quot; in 1m25.27926119s</code> のようにメッセージが表示されています。<br>イメージの Pull に 1分25秒 ほど要したようです。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe pod jupyter-79c4469c65-5cfpf</span></span><br><span class="line">Name:             jupyter-79c4469c65-5cfpf</span><br><span class="line">  ...</span><br><span class="line">Node:             aks-nodepool2-20356098-vmss00001i/10.240.0.4</span><br><span class="line">  ...</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason     Age    From               Message</span><br><span class="line">  ----    ------     ----   ----               -------</span><br><span class="line">  Normal  Scheduled  3m25s  default-scheduler  Successfully assigned default/jupyter-79c4469c65-5cfpf to aks-nodepool2-20356098-vmss00001i</span><br><span class="line">  Normal  Pulling    3m25s  kubelet            Pulling image &quot;&#123;ACR_NAME&#125;.azurecr.io/jupyter/all-spark-notebook:latest&quot;</span><br><span class="line">  Normal  Pulled     2m     kubelet            Successfully pulled image &quot;&#123;ACR_NAME&#125;.azurecr.io/jupyter/all-spark-notebook:latest&quot; in 1m25.27926119s (1m25.279277391s including waiting)</span><br><span class="line">  Normal  Created    2m     kubelet            Created container jupyter</span><br><span class="line">  Normal  Started    119s   kubelet            Started container jupyter</span><br></pre></td></tr></table></figure>
+
+<h4 id="Artifact-Streaming-が有効の場合"><a href="#Artifact-Streaming-が有効の場合" class="headerlink" title="Artifact Streaming が有効の場合"></a>Artifact Streaming が有効の場合</h4><p>続いて Artifact Streaming を利用した場合の動作を確認してみましょう。</p>
+<p><code>nodeSelector</code> を使用して、Artifact Streaming が有効のノードプールに Pod をデプロイします。<br>Pod 名やコンテナー名を変更していますが、使用するコンテナー イメージは先ほどと同じ <code>&#123;ACR_NAME&#125;.azurecr.io/jupyter/all-spark-notebook:latest</code> です。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">jupyter-artifact-streaming</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">jupyter-artifact-streaming</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">jupyter-artifact-streaming</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">jupyter-artifact-streaming</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">nodeSelector:</span></span><br><span class="line">        <span class="attr">&quot;agentpool&quot;:</span> <span class="string">acrtest</span>  <span class="comment"># Artifact Streaming が有効のノードプール</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">jupyter</span></span><br><span class="line">        <span class="attr">image:</span> &#123;<span class="string">ACR_NAME</span>&#125;<span class="string">.azurecr.io/jupyter/all-spark-notebook:latest</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br></pre></td></tr></table></figure>
+
+<p>YAML マニフェストをクラスターにデプロイします。<br><code>jupyter-artifact-streaming-5b58c9c797-pxs4l</code> Pod が生成されました。デプロイ先を指定したので、<code>acrtest</code>ノードプールのノードにデプロイされていますね。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get pods -o wide</span></span><br><span class="line">NAME                                          READY   STATUS    RESTARTS   AGE     IP            NODE                                NOMINATED NODE   READINESS GATES</span><br><span class="line">jupyter-79c4469c65-c8hm6                      1/1     Running   0          2m10s   10.244.1.24   aks-nodepool2-20356098-vmss00001d   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">jupyter-artifact-streaming-5b58c9c797-pxs4l   1/1     Running   0          6s      10.244.2.5    aks-acrtest-29138108-vmss000000     &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>kubectl describe pod</code> コマンドの結果から、Events フィールドのメッセージを確認します。</p>
+<p><code>Pulling</code> イベントでは、<code>Streaming enabled for &quot;&#123;イメージ名&#125;&quot;</code> のようにメッセージが表示されており、Artifact Streaming が利用されていることが確認できます。</p>
+<p>また、<code>Pulled</code> イベントでは、<code>Successfully pulled image &quot;&#123;イメージ名&#125;&quot; in 3.442267417s</code> のようにメッセージが表示されています。<br>およそ 3.44 秒ほどでイメージ Pull が完了しました！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl describe pod jupyter-artifact-streaming-5b58c9c797-pxs4l</span></span><br><span class="line">Name:             jupyter-artifact-streaming-5b58c9c797-pxs4l</span><br><span class="line">  ...</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason     Age        From                                                   Message</span><br><span class="line">  ----    ------     ----       ----                                                   -------</span><br><span class="line">  Normal  Pulling    &lt;unknown&gt;  acr-nodemon, kubelet, aks-acrtest-29138108-vmss000000  Streaming enabled for &quot;&#123;ACR_NAME&#125;.azurecr.io/jupyter/all-spark-notebook:latest&quot;, upgraded to streaming artifact with digest &quot;sha256:2cba83dae18f99b6c958e9e34421dadaeee0db1cde4adc0241180de80efd4f34&quot;, container started in 5s</span><br><span class="line">  Normal  Scheduled  19s        default-scheduler                                      Successfully assigned default/jupyter-artifact-streaming-5b58c9c797-pxs4l to aks-acrtest-29138108-vmss000000</span><br><span class="line">  Normal  Pulling    19s        kubelet                                                Pulling image &quot;&#123;ACR_NAME&#125;.azurecr.io/jupyter/all-spark-notebook:latest&quot;</span><br><span class="line">  Normal  Pulled     15s        kubelet                                                Successfully pulled image &quot;&#123;ACR_NAME&#125;.azurecr.io/jupyter/all-spark-notebook:latest&quot; in 3.442267417s (3.442273818s including waiting)</span><br><span class="line">  Normal  Created    14s        kubelet                                                Created container jupyter</span><br><span class="line">  Normal  Started    14s        kubelet                                                Started container jupyter</span><br></pre></td></tr></table></figure>
+
+<p>Artifact Streaming を使わない場合では 1分25秒 ほど要したため、大幅に短縮されていますね！</p>
+<h3 id="Artifact-Streaming-を削除するには？"><a href="#Artifact-Streaming-を削除するには？" class="headerlink" title="Artifact Streaming を削除するには？"></a>Artifact Streaming を削除するには？</h3><p><code>az acr artifact-streaming delete</code> というコマンドは存在しないようです。</p>
+<p>作成した Artifact Streaming を削除したい場合には、リポジトリに存在するイメージ自体を削除します。<br>イメージの削除にともない Artifact Streaming も一緒に削除されます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr repository delete -n &#123;ACR_NAME&#125; --repository jupyter/all-spark-notebook</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="どのようなしくみなのか？"><a href="#どのようなしくみなのか？" class="headerlink" title="どのようなしくみなのか？"></a>どのようなしくみなのか？</h3><p>Artifact Streaming を使うと、なぜイメージ Pull の時間が短縮されるのでしょうか？</p>
+<p>Artifact Streaming では、OverlayBD イメージ フォーマットというオープンソースのソリューションを利用しています。</p>
+<blockquote>
+<p>ご参考) containerd/overlaybd<br><a target="_blank" rel="noopener" href="https://github.com/containerd/overlaybd">https://github.com/containerd/overlaybd</a></p>
+</blockquote>
+<blockquote>
+<p>ご参考) containerd/accelerated-container-image<br><a target="_blank" rel="noopener" href="https://github.com/containerd/accelerated-container-image">https://github.com/containerd/accelerated-container-image</a></p>
+</blockquote>
+<p>OverlayBD は、アリババクラウドのコンテナーイメージ加速技術プロジェクト DADI で開発されました。</p>
+<blockquote>
+<p>DADI: Alibaba Cloud’s Open-Source Accelerated Container Image Technology<br><a target="_blank" rel="noopener" href="https://www.alibabacloud.com/blog/dadi-alibaba-clouds-open-source-accelerated-container-image-technology_597956">https://www.alibabacloud.com/blog/dadi-alibaba-clouds-open-source-accelerated-container-image-technology_597956</a></p>
+</blockquote>
+<p>OverlayBD は、コンテナー イメージのレイヤーを仮想ブロック デバイスとして提供し、オーバーレイ ファイルシステムとしてマウントします。<br>コンテナーは、オーバーレイ ファイルシステムを通してイメージのデータにアクセスをします。<br>コンテナーの起動前にイメージ全体をダウンロードや展開することなく、必要なデータのみをネットワーク経由でオンデマンドに読み込むことができます。</p>
+<p>ネットワーク ドライブに保存されたファイルを、手元のマシンに一度ダウンロードしてから開くのではなく、SMB/CIFS でマウントして直接開く様子に似ていますね。</p>
+<p>Pod がデプロイされたノードにログインし、<code>df</code> コマンドを実行すると、出力結果の中に <code>io.containerd.snapshotter.v1.overlaybd</code> の文字列が含まれていることが確認できます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@aks-acrtest-29138108-vmss000000:/# df -h | grep overlaybd</span><br><span class="line">/dev/sdc        252G  5.6G  234G   3% /var/lib/containerd/io.containerd.snapshotter.v1.overlaybd/snapshots/239/block/mountpoint</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="さいごに"><a href="#さいごに" class="headerlink" title="さいごに"></a>さいごに</h2><p>本記事では、Artifact Streaming の概要と、実際に AKS クラスターへコンテナーをデプロイした様子を紹介しました。<br>サイズの大きいコンテナー イメージを使用する Pod で起動時間を短縮したい場合に、利用を検討してみると良さそうです。</p>
+<p>今回紹介しました Artifact Streaming が、今後の技術選定や AKS をよりご活用いただくうえでのご参考になりましたら幸いです。</p>
+<p>Artifact Streaming は2023年12月現在、パブリック プレビューとして提供されております。ご利用いただきました際にお気づきの点やご要望などがございました際は、お気兼ねなくフィードバックいただけましたら幸いでございます。<br>また、AKS のご利用において、お困りの点やご不明点がありました際は、いつでも Azure サポートまでお気兼ねなくご相談ください。</p>
+<hr>
+<p>最後まで読んでいただきありがとうございました！<br><a target="_blank" rel="noopener" href="https://qiita.com/advent-calendar/2023/microsoft-azure-tech">Microsoft Azure Tech Advent Calendar 2023</a> は明日が最終日となります。是非ご覧くださいー！</p>
+<p>本年は多くのお客様にお世話になりました。ありがとうございました。<br>来年もみなさまにとって素晴らしい年でありますように、心よりお祈り申し上げます。</p>
 
       
       
@@ -172,10 +226,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Container-Registry-ACR/" rel="tag">Azure Container Registry (ACR)</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/archive/expressroute-deep-dive-part4.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/containers/aks-artifact-streaming.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -183,19 +237,10 @@
     
 <nav id="article-nav">
   
-    <a href="../lb_appgw_traffic_different/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          Load Balancer と Application Gateway の通信の違い
-        
-      </div>
-    </a>
   
-  
-    <a href="../azure-load-balancer-ip-fragmentation/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../acr-how-to-build-image-with-firewall/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">Azure Load Balancer で IP フラグメンテーションは未サポート</div>
+      <div class="article-nav-title">ACR の Firewall 機能を有効にした状態で ACR の機能を用いてコンテナー イメージをビルドする方法について</div>
     </a>
   
 </nav>
@@ -214,11 +259,11 @@
       <ul>
         
           <li>
-            <a href="../../containers/aks-artifact-streaming/">Artifact Streaming とは？ ACR のイメージを AKS にデプロイして試してみた</a>
+            <a href="">Artifact Streaming とは？ ACR のイメージを AKS にデプロイして試してみた</a>
           </li>
         
           <li>
-            <a href="../../containers/acr-how-to-build-image-with-firewall/">ACR の Firewall 機能を有効にした状態で ACR の機能を用いてコンテナー イメージをビルドする方法について</a>
+            <a href="../acr-how-to-build-image-with-firewall/">ACR の Firewall 機能を有効にした状態で ACR の機能を用いてコンテナー イメージをビルドする方法について</a>
           </li>
         
           <li>
@@ -226,7 +271,7 @@
           </li>
         
           <li>
-            <a href="../../containers/aks-oom-202312/">AKSノード上でのOOMKillの挙動と調査方法</a>
+            <a href="../aks-oom-202312/">AKSノード上でのOOMKillの挙動と調査方法</a>
           </li>
         
           <li>
