@@ -92,6 +92,11 @@ kubelet や、Ingress Controller などの Kubernetes API を利用する Pod �
 AKS では SSH / VPN トンネルに替わる新しい方式として、段階的に Konnectivity の導入がすすめられています。[Release 2021-10-28](https://github.com/Azure/AKS/releases/tag/2021-10-28) で一部リージョンからロールアウトが開始されましたが、[Release 2021-11-18](https://github.com/Azure/AKS/releases/tag/2021-11-18) 以降、2021 年の残りの期間ではロールアウトが中断となっています。そのため、日本リージョンで利用可能になるのはもう少し先になる見込みです。
 
 > [!TIP]
+> **2023/12/26 追記**
+> 本記事の公開時点では、Konnectivity のロールアウトは完了していませんでしたが、2023/12 現在では各 Azure リージョンへのロールアウトが完了しています。
+> 主要なリージョンのロールアウト状況については、AKS Release Note の[Release 2022-07-03](https://github.com/Azure/AKS/blob/master/CHANGELOG.md#release-2022-07-03) および [Release 2022-06-26](https://github.com/Azure/AKS/blob/master/CHANGELOG.md#release-2022-06-26) をご参照ください。
+
+> [!TIP]
 > 余談: 「コネクティビティ」というと英語の「connectivity」と紛らわしいので「Konnectivity with K」と呼ばれることがあります。
 
 ## トラブルシューティングの事例
