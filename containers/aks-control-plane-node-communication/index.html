@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/aks-control-plane-node-communication02.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/aks-control-plane-node-communication03.png">
 <meta property="article:published_time" content="2021-12-24T03:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-25T02:27:15.687Z">
+<meta property="article:modified_time" content="2023-12-26T02:55:51.120Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Containers">
 <meta property="article:tag" content="Azure Kubernetes Service (AKS)">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+30b8083f-fa46-5b23-902e-6f625417f9a1%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAKS+%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%AB+%E3%83%97%E3%83%AC%E3%83%BC%E3%83%B3%E3%81%A8%E3%83%8E%E3%83%BC%E3%83%89%E9%96%93%E3%81%AE%E9%80%9A%E4%BF%A1%E3%81%AE%E3%81%AF%E3%81%AA%E3%81%97%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fcontainers%2Faks-control-plane-node-communication%2F%29%0A*+Content+Source%3A+%5Barticles%2Fcontainers%2Faks-control-plane-node-communication.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fcontainers%2Faks-control-plane-node-communication.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/" data-id="clqkasmmz00430opaaavda8o2" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/" data-id="clqlr990m00kq0npda43n2ajf" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -150,6 +150,7 @@
 <h3 id="VPN-トンネル-aks-link-Pod"><a href="#VPN-トンネル-aks-link-Pod" class="headerlink" title="VPN トンネル (aks-link-* Pod)"></a>VPN トンネル (aks-link-* Pod)</h3><p><code>aks-link</code> という名前の Pod が存在する場合は、VPN トンネル (OpenVPN) が使用されています。コントロール プレーン側には VPN サーバーが存在します。ノード側の <code>aks-link</code> Pod が VPN クライアントとなっており、コントロール プレーンとノード間で VPN トンネルを開始します。</p>
 <h3 id="Konnectivity-konnectivity-agent-Pod"><a href="#Konnectivity-konnectivity-agent-Pod" class="headerlink" title="Konnectivity (konnectivity-agent-* Pod)"></a>Konnectivity (konnectivity-agent-* Pod)</h3><p><code>konnectivity-agent</code> という名前の Pod が存在する場合には <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/architecture/control-plane-node-communication/#konnectivity-service">Konnectivity service</a> が使用されています。Konnectivity はアップストリームの Kubernetes プロジェクトで<a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/apiserver-network-proxy">開発されている</a> TCP レベルのプロキシーです。コントロール プレーン側では Konnectivity Server が起動し、ノード側では Konnectivity Agent が起動します。</p>
 <p>AKS では SSH / VPN トンネルに替わる新しい方式として、段階的に Konnectivity の導入がすすめられています。<a target="_blank" rel="noopener" href="https://github.com/Azure/AKS/releases/tag/2021-10-28">Release 2021-10-28</a> で一部リージョンからロールアウトが開始されましたが、<a target="_blank" rel="noopener" href="https://github.com/Azure/AKS/releases/tag/2021-11-18">Release 2021-11-18</a> 以降、2021 年の残りの期間ではロールアウトが中断となっています。そのため、日本リージョンで利用可能になるのはもう少し先になる見込みです。</p>
+<div class="alert is-success"><p class="alert-title">ヒント</p><p><strong>2023/12/26 追記</strong></p><p>本記事の公開時点では、Konnectivity のロールアウトは完了していませんでしたが、2023/12 現在では各 Azure リージョンへのロールアウトが完了しています。</p><p>主要なリージョンのロールアウト状況については、AKS Release Note の<a target="_blank" rel="noopener" href="https://github.com/Azure/AKS/blob/master/CHANGELOG.md#release-2022-07-03">Release 2022-07-03</a> および <a target="_blank" rel="noopener" href="https://github.com/Azure/AKS/blob/master/CHANGELOG.md#release-2022-06-26">Release 2022-06-26</a> をご参照ください。</p></div>
 <div class="alert is-success"><p class="alert-title">ヒント</p><p>余談: 「コネクティビティ」というと英語の「connectivity」と紛らわしいので「Konnectivity with K」と呼ばれることがあります。</p></div>
 <h2 id="トラブルシューティングの事例"><a href="#トラブルシューティングの事例" class="headerlink" title="トラブルシューティングの事例"></a>トラブルシューティングの事例</h2><p>コントロール プレーンとノードの通信については、関連するトラブルのご相談を Azure サポートにお寄せいただくことがございます。多く寄せられるご相談としましては、Kubernetes の一部機能が利用できないという事象です。</p>
 <ul>
