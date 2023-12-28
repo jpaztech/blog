@@ -35,7 +35,6 @@ Application Gateway では、SSL ポリシーを選択することで、クラ�
 
 具体的な TLS バージョンの選定は接続先のバックエンド サーバーに依存するため、もし最小 TLS バージョンを 1.2 に指定したい場合は、Application Gateway ではなく、バックエンド サーバー側の TLS 設定に対応して頂く必要があります。 
 
-
 ## Azure Firewall
 Azure Firewall では、TLS バージョンが関わる部分は TLS インスペクションのみとなります。アプリケーション ルール、ネットワーク ルール、及び DNAT ルールで通信を許可する場合は本通知の対象外となります。
 
@@ -48,9 +47,9 @@ TLS インスペクション機能を使用する場合は、[こちらの公開
 
 ## Front Door
 [こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/frontdoor/end-to-end-tls?pivots=front-door-standard-premium#supported-tls-versions)の記載通り、 Front Door ではカスタム ドメインを利用する場合は、最小 TLS バージョンを 1.0 または 1.2 を選択できます。 
-> Azure Front Door では、TLS プロトコルの 3 つのバージョン (TLS バージョン 1.0、1.1、1.2) がサポートされています。 2019 年 9 月以降に作成されたすべての Azure Front Door プロファイルでは、既定の最小バージョンとして TLS 1.2 が使用されますが、下位互換性を確保するために TLS 1.0 と TLS 1.1 も引き続きサポートされています。
+> Azure Front Door では、TLS プロトコルの 3 つのバージョン (TLS バージョン 1.0、1.1、1.2) がサポートされています。 2019 年 9 月以降に作成されたすべての Azure Front Door プロファイルでは、既定の最小バージョンとして TLS 1.2 が使用されますが、下位互換性を確保するために TLS1.0 と TLS1.1 も引き続きサポートされています。
 
-Front Door では 2024 年 10 月 31 日以降にも引き続き TLS1.0 から TLS1.2 まで利用できますが、セキュリティ強化のためには TLS1.2 のご利用を推奨いたします。 
+Front Door では 2024 年 10 月 31 日以降も引き続き TLS1.0 から TLS1.2 まで利用できますが、セキュリティ強化のためには TLS1.2 のご利用を推奨いたします。 
 また、TLS1.3 のサポートに関しましては、2024 年 2 月 12 日より Front Door の全 SKU 及びAzure CDN Standard from Microsoft (classic) に順次サポートする予定です。
 
 ## Bastion
