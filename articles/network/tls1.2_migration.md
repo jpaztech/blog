@@ -39,7 +39,7 @@ Application Gateway では、SSL ポリシーを選択することで、クラ�
 ## Azure Firewall
 Azure Firewall では、TLS バージョンが関わる部分は TLS インスペクションのみとなります。アプリケーション ルール、ネットワーク ルール、及び DNAT ルールで通信を許可する場合は本通知の対象外となります。
 
-TLS インスペクション機能を使用する場合は、[こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/firewall/premium-features#tls-inspection)に記載致しましたように、現状及び 2024 年 10 月 31 日以降にも TLS1.0 及び TLS1.1 は互換性のために引き続き動作できますが、早めに TLS 1.2 に移行するのは強く推奨します。
+TLS インスペクション機能を使用する場合は、[こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/firewall/premium-features#tls-inspection)の記載通り、現状及び 2024 年 10 月 31 日以降にも TLS1.0 及び TLS1.1 は互換性のために引き続き動作する予定ですが、早めに TLS 1.2 に移行することを強く推奨します。
 
 > ヒント
 > TLS 1.0 と 1.1 は非推奨になっていて、サポートされません。 TLS 1.0 と 1.1 のバージョンの TLS/SSL (Secure Sockets Layer) は脆弱であることが確認されています。現在、これらは下位互換性を維持するために使用可能ですが、推奨されていません。 できるだけ早く TLS 1.2 に移行してください。
