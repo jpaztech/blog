@@ -4,20 +4,21 @@
   <meta charset="utf-8">
   
   
-  <title>Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2017 年 9 月 5 日 追記下記の記事の執筆以降も Azure PowerShell は更新されており、現在の最新バージョン (4.3.1) では、スタンドアローンのインストーラーも公開されております。以下のページの「Azure PowerShell 4.3.1 Installer」から、インストーラーをダウンロードして実行すれば、この記事の手順を行わなくても Azure PowerShe">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームです。 本ブログでは、Azure Front Door 及び Microsoft Standard SKU の Azure CDN (以降は AFD と記載致します) において起こりうる接続の問題やお客様で対策可能な内容などについてご案内致します。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり">
-<meta property="og:url" content="https://jpaztech.github.io/blog/archive/azure-powershell-3-8-0-install/index.html">
+<meta property="og:title" content="Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/afd-connection-issue/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="2017 年 9 月 5 日 追記下記の記事の執筆以降も Azure PowerShell は更新されており、現在の最新バージョン (4.3.1) では、スタンドアローンのインストーラーも公開されております。以下のページの「Azure PowerShell 4.3.1 Installer」から、インストーラーをダウンロードして実行すれば、この記事の手順を行わなくても Azure PowerShe">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームです。 本ブログでは、Azure Front Door 及び Microsoft Standard SKU の Azure CDN (以降は AFD と記載致します) において起こりうる接続の問題やお客様で対策可能な内容などについてご案内致します。">
 <meta property="og:locale" content="ja_JP">
-<meta property="article:published_time" content="2017-05-02T06:07:49.000Z">
-<meta property="article:modified_time" content="2023-12-29T12:44:24.117Z">
+<meta property="article:published_time" content="2023-12-29T08:30:00.000Z">
+<meta property="article:modified_time" content="2023-12-29T12:44:24.225Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Archive">
-<meta property="article:tag" content="PowerShell">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="AzureFrontDoor">
+<meta property="article:tag" content="AzureCDN">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
@@ -80,7 +81,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-archive/azure-powershell-3-8-0-install" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-network/afd-connection-issue" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -89,7 +90,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure PowerShell 最新版のインストール手順 (v3.8.0 現在) **追記あり
+      Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題
     </h1>
   
 
@@ -97,56 +98,54 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2017-05-02T06:07:49.000Z" itemprop="datePublished">2017-05-02</time>
+  <time datetime="2023-12-29T08:30:00.000Z" itemprop="datePublished">2023-12-29</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+ece1d167-d352-591f-b75e-b306f80d8e20%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+PowerShell+%E6%9C%80%E6%96%B0%E7%89%88%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%89%8B%E9%A0%86+%28v3.8.0+%E7%8F%BE%E5%9C%A8%29+**%E8%BF%BD%E8%A8%98%E3%81%82%E3%82%8A%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fazure-powershell-3-8-0-install%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fazure-powershell-3-8-0-install.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fazure-powershell-3-8-0-install.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+cc1e9f66-c929-57b4-bb04-69a512fd84a2%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Front+Door+%E5%8F%8A%E3%81%B3+Microsoft+Standard+SKU+%E3%81%AE+Azure+CDN+%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E7%99%BA%E7%94%9F%E3%81%99%E3%82%8B%E6%8E%A5%E7%B6%9A%E3%81%AE%E5%95%8F%E9%A1%8C%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fafd-connection-issue%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fafd-connection-issue.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fafd-connection-issue.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/azure-powershell-3-8-0-install/" data-id="clqqmlopu000k0noae9ko0cql" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/afd-connection-issue/" data-id="clqqmlorj004u0noa1b9n5tit" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p><span style="color:red;">2017 年 9 月 5 日 追記</span><br>下記の記事の執筆以降も Azure PowerShell は更新されており、現在の最新バージョン (4.3.1) では、スタンドアローンのインストーラーも公開されております。以下のページの「Azure PowerShell 4.3.1 Installer」から、インストーラーをダウンロードして実行すれば、この記事の手順を行わなくても Azure PowerShell のインストールは可能です。</p>
-<p><span style="color:red;">Releases - Azure/azure-powershell</span></p>
-<p>ただし、この記事の手順でインストールを実行すると、アップデートがしやすいなどのメリットもありますので、こちらの手順についても、ぜひ参考にしていただければと思います。</p>
-</blockquote>
-<p>こんにちは、Azure テクニカル サポート チームの飯塚です。</p>
-<p>コマンドやスクリプトで Azure の管理ができる、とっても便利な Azure PowerShell ですが、ここ最近のバージョンにおいて、スタンドアローンのインストーラーが提供されなくなったり、WebPI でのインストールができなくなっているなど、インストール方法が少々変わっております。</p>
-<p>2017 年 5 月 2 日時点での最新版である Azure PowerShell 3.8.0 のインストール手順は、以下の公開ドキュメントでご説明しているとおり、PowerShellGet を利用するものです。<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/powershell/azure/install-azurerm-ps">Install and configure Azure PowerShell</a></p>
-<p>しかし、本ドキュメントは現時点で英語版のみの提供であり、また PowerShellGet のインストールなど、一部別のドキュメントの参照が必要な部分もあり、少々わかりにくいのではないかと思います。そこで、本ブログ記事で、あらためて Azure PowerShell のインストール方法をおまとめしました。参考にしていただければと思います。</p>
-<h2 id="■-1-PowerShellGet-のインストール"><a href="#■-1-PowerShellGet-のインストール" class="headerlink" title="■ 1. PowerShellGet のインストール"></a>■ 1. PowerShellGet のインストール</h2><p>Azure PowerShell の最新版のインストールは、PowerShellGet という、PowerShell コマンドで自動的にモジュールをダウンロードする仕組みを利用します。<br>PowerShellGet は、Windows 10 か Windows Server 2016 以降のコンピューターには、PowerShell 5.0 とともに既定でインストールされています。</p>
-<p>お手元のコンピューターで、PowerShellGet が使えるかどうかを確認するには、以下の PowerShell コマンドを実行します。</p>
-<p><strong>コマンド</strong></p>
-<blockquote>
-<p>Get-Module PowerShellGet -list | Select-Object Name,Version,Path</p>
-</blockquote>
-<p><strong>PowerShellGet が使える場合の出力例</strong></p>
-<blockquote>
-<p>Name          Version Path</p>
+        <p>こんにちは。Azure テクニカル サポート チームです。</p>
+<p>本ブログでは、Azure Front Door 及び Microsoft Standard SKU の Azure CDN (以降は AFD と記載致します) において起こりうる接続の問題やお客様で対策可能な内容などについてご案内致します。</p>
+<span id="more"></span>
+
 <hr>
-<p>PowerShellGet 1.0.0.1 C:\Program Files\WindowsPowerShell\Modules\PowerShellGet\1.0.0.1\PowerShellGet.psd1</p>
-</blockquote>
-<p>コマンドの出力結果に、PowerShellGet のバージョン情報が出力されれば、PowerShellGet が使えますので、そのまま 2. の手順に進んでください。<br>もし表示されない場合 (PowerShellGet が使えない場合、画面になにも出力されないはずです) は、以下のいずれかの手順で PowerShellGet をインストールしてください。</p>
-<h3 id="1-1-PowerShell-5-0-へのアップグレード"><a href="#1-1-PowerShell-5-0-へのアップグレード" class="headerlink" title="1-1. PowerShell 5.0 へのアップグレード"></a>1-1. PowerShell 5.0 へのアップグレード</h3><p>PowerShell 自体を 5.0 にアップグレードする方法です。<br>以下のページから Windows Management Framework 5.0 をダウンロードし、PowerShell 5.0 をインストールします。<br><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?id=50395">Windows Management Framework 5.0</a></p>
-<h3 id="1-2-PowerShellGet-のみのインストール"><a href="#1-2-PowerShellGet-のみのインストール" class="headerlink" title="1-2. PowerShellGet のみのインストール"></a>1-2. PowerShellGet のみのインストール</h3><p>PowerShellGet の機能をインストールするものです。以下のページからモジュールをダウンロードし、インストールします。<br><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?id=51451">PackageManagement PowerShell Modules Preview - March 2016</a></p>
-<h2 id="■-2-Azure-PowerShell-のインストール"><a href="#■-2-Azure-PowerShell-のインストール" class="headerlink" title="■ 2. Azure PowerShell のインストール"></a>■ 2. Azure PowerShell のインストール</h2><p>PowerShellGet が利用できるようなっしたら、実際に Azure PowerShell をインストールします。<br>PowerShell を「管理者として実行」して、以下のコマンドを実行してください。<br>クラシック デプロイ モデルとリソース マネージャー デプロイ モデルで、それぞれインストールするモジュール名が異なりますが、2 つのモジュールは共存可能ですので、両方のコマンドを実行いただいても問題ありません。</p>
-<p><strong>クラシック デプロイ モデルの Azure PowerShell をインストール</strong></p>
-<blockquote>
-<p>Install-Module Azure<br><strong>リソース マネージャー デプロイ モデルの Azure PowerShell のインストール</strong><br>Install-Module AzureRM</p>
-</blockquote>
-<p>コマンドの実行時に、必要なモジュールをインストールするか尋ねられた場合は「Y」を入力して先に進みます。</p>
-<blockquote>
-<p><span style="color:red;">2017 年 9 月 5 日 追記</span><br>最新の Azure PowerShell にバージョンアップする場合は、<span style="color:red;">Update-Module</span> コマンドがご利用いただけます。</p>
-</blockquote>
-<ol start="3">
-<li>Azure PowerShell の利用<br>実際に Azure PowerShell のコマンドレットを利用する場合、最初に、以下のコマンドを実行してモジュールのロードを行ってください。</li>
+<h2 id="AFD-で発生しうる接続の問題ついて"><a href="#AFD-で発生しうる接続の問題ついて" class="headerlink" title="AFD で発生しうる接続の問題ついて"></a>AFD で発生しうる接続の問題ついて</h2><p>AFD のプラットフォーム上では、より早くより適切なルートでオリジンへトラフィックをルーティングするために、さまざまな仕組みが用いられています。その仕組みの 1 つとして、AFD のプラットフォーム上にて処理するトラフィックの流量を調整する機能が存在しております。<br>AFD のサービスは世界中のエッジ サーバーに分散配置されており、複数のお客様でエッジ サーバーを共有して利用するマネージド サービスです。お客様のリクエストが、どのエッジ サーバーへルーティングされるかは、AFD によって動的にコントロールされています。<br>また、トラフィックの流量を調整する機能が特定のエッジ サーバーで起動した場合は、そのエッジ サーバーにルーティングされた一部のクライアントに対して RST パケットを送信する動作になります。<br>つまり、お客様の構成した AFD にアクセスを行い、該当のエッジ サーバーにルーティングされてしまった一部のクライアントも RST パケットを受け取る可能性があります。<br>なお、この仕組みによって、断続的に数分から数十分程度の間、クライアントから AFD への接続に影響を及ぼす可能性があります。</p>
+<h2 id="接続の問題を受けるクライアント"><a href="#接続の問題を受けるクライアント" class="headerlink" title="接続の問題を受けるクライアント"></a>接続の問題を受けるクライアント</h2><p>TCP RST パケットを受信したクライアントが TCP レイヤー レベルで接続をリトライしない場合は、トラフィックの流量の調整が機能している間は、クライアントから AFD への接続に影響が発生してしまいます。<br>例えば、アプリケーション システムのフロントとして AFD を使用しており、一般ユーザーが PC 端末やスマートフォンの WEB ブラウザを用いて直接 AFD にアクセスする場合は、一時的に接続エラーになっても、WEB ブラウザにて画面を更新することによって正常に接続できる可能性があります。<br>一方で、API を処理するようなシステムのフロントとして AFD を使用しており、API を送信するクライアント側で TCP レイヤー レベルで再送処理を考慮していない場合は、RST パケットを受信したあとで AFD への TCP レイヤーでの再接続が実行されずに通信が失敗します。他には、Zabbix などの監視システムにおいて curl コマンドを AFD に送信している場合も同様のことが発生する可能性があります。</p>
+<h2 id="リトライ-ロジックの実装"><a href="#リトライ-ロジックの実装" class="headerlink" title="リトライ ロジックの実装"></a>リトライ ロジックの実装</h2><p>一時的な接続の問題をクライアントが処理できるようにするために、AFD に接続を行うクライアント サイドの動作にてリトライ ロジックやサーキット ブレークの実装をご検討ください。これにより、アプリケーション システム上の通信の安定性を向上させることに繋がります。<br>リトライ ロジックやサーキット ブレークの必要性や実装の概要について記載されている公開ドキュメントやブログ (英語) につきましては、下記の URL に記載がございますので、ご参考になれば幸いです。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/architecture/patterns/retry">再試行パターン</a></p>
+<p><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/using-the-retry-pattern-to-make-your-cloud-application-more-resilient/">Using the Retry pattern to make your cloud application more resilient</a></p>
+<h2 id="詳細な調査が必要なケース"><a href="#詳細な調査が必要なケース" class="headerlink" title="詳細な調査が必要なケース"></a>詳細な調査が必要なケース</h2><p>リトライ ロジックやサーキット ブレークを実装しているにもかかわらず、AFD への接続で遅延やタイムアウトなどの問題が、数分程度ではなく長時間にわたって事象が継続している場合は、詳細に調査を行う必要がございますので、サポート窓口までお問い合わせください。<br>なお、お問い合わせをいただく際には、AFD へ接続を実施している通信状況が分かるネットワーク パケットのキャプチャー ファイルとカスタム ドメインを nslookup コマンドなどで名前解決した結果をサポートまで提供いただくことにより、お客様とサポートとの間でのヒアリングをスムーズに進めることができます。<br>お手数をおかけいたしますが、下記の手順を参考にネットワーク パケット キャプチャー ファイルの採取及びカスタム ドメインの名前解決結果にご協力いただけますと幸いです。</p>
+<h4 id="■-ネットワーク-パケット-キャプチャー-ファイルの採取"><a href="#■-ネットワーク-パケット-キャプチャー-ファイルの採取" class="headerlink" title="■ ネットワーク パケット キャプチャー ファイルの採取"></a>■ ネットワーク パケット キャプチャー ファイルの採取</h4><p>【クライアントが Windows OS の場合】</p>
+<ol>
+<li>管理者権限を持つアカウントでコマンド プロンプトを開きます (UAC が有効の場合には、”管理者として実行” します)。</li>
+<li>コマンド プロンプト上で次のコマンドを実行して、ネットワーク パケットのキャプチャを開始します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh trace start capture=yes</span><br></pre></td></tr></table></figure></li>
+<li>お客様のアプリケーションを配信元として設定している AFD に対し、クライアント上で WEB ブラウザや curl コマンドなどを使用して AFD へリクエストを送って接続問題の事象を再現させます。この操作を 5 秒ほどの間隔をあけて 2 ~ 3 度リクエストを送ってください。</li>
+<li>コマンド プロンプト上で次のコマンドを実行して、ネットワーク パケット キャプチャを停止します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh trace stop</span><br></pre></td></tr></table></figure>
+トレース ファイルの収集処理が完了しましたら、コマンド プロンプト上で “ファイルの場所” として表示されている NetTrace.etl ファイル、及び同じフォルダ内の NetTrace.cab の 2 つのファイルを取得します。</li>
 </ol>
-<p>クラシック デプロイ モデルの Azure PowerShell をインポート<br>Import-Module Azure<br>リソース マネージャー デプロイ モデルの Azure PowerShell のインポート<br>Import-Module AzureRM<br>補足: 自動的に Import-Module が実行されるようにする方法<br>PowerShell を起動するたびに、Import-Module コマンドを実行するのは面倒かもしれません。そのようなときは、「PowerShell プロファイル」に Import-Module コマンドを記載することで、PowerShell の実行時に、自動的に Import-Module コマンドが実行され、すぐに Azure PowerShell が利用できるようになります。</p>
-<p>PowerShell プロファイルについては、以下の資料を参考にご覧ください。</p>
-<p>Windows PowerShell プロファイル</p>
+<p>【クライアントが Linux OS の場合】</p>
+<ol>
+<li>sudo 権限を持っているユーザーとしてログインし、次のコマンドを実行し、キャプチャを開始します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tcpdump -s0 -i any -n -w outfile.pcap</span><br></pre></td></tr></table></figure></li>
+<li>お客様のアプリケーションを配信元として設定している AFD に対し、クライアント上で WEB ブラウザや curl コマンドなどを使用して AFD へリクエストを送って接続問題の事象を再現させます。この操作を 5 秒ほどの間隔をあけて 2 ~ 3 度リクエストを送ってください。</li>
+<li>Ctrl + C でパケットキャプチャを停止します。</li>
+<li>コマンドを実行した場所にある outfile.pcap を取得します。</li>
+</ol>
+<h4 id="■-カスタム-ドメインの名前解決結果"><a href="#■-カスタム-ドメインの名前解決結果" class="headerlink" title="■ カスタム ドメインの名前解決結果"></a>■ カスタム ドメインの名前解決結果</h4><p>お手元の端末においてコマンド プロンプトなどを開き、以下のコマンドを実行します。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nslookup &lt;カスタム ドメイン名&gt;</span><br></pre></td></tr></table></figure>
+<p>もしくは</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig &lt;カスタム ドメイン名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>また、お問い合わせをいただいた後に、担当のサポート エンジニアよりヒアリング シートへの記入をお願いする可能性もございます。その際はご協力の程よろしくお願い致します。</p>
+<h2 id="AFD-の接続の問題によって大きなサービス-インパクトが発生するシステムの場合"><a href="#AFD-の接続の問題によって大きなサービス-インパクトが発生するシステムの場合" class="headerlink" title="AFD の接続の問題によって大きなサービス インパクトが発生するシステムの場合"></a>AFD の接続の問題によって大きなサービス インパクトが発生するシステムの場合</h2><p>AFD はマネージド サービスになるため、場合によっては短期間で完全な対策を講じることができない可能性もあります。<br>AFD の接続の問題が長時間にわたって継続することによって、お客様のシステムに大きなサービス インパクトが懸念される場合は、お客様にて影響範囲や時間、発生パターンなどに応じてシステムを継続するための代替構成の導入をご検討をお願いする場合があります。<br>あくまで例としてですが、代替システムの構成例としては、以下のようなパターンがございます。</p>
+<h4 id="パターン-1-AFD-を経由しない構成"><a href="#パターン-1-AFD-を経由しない構成" class="headerlink" title="パターン 1 : AFD を経由しない構成"></a>パターン 1 : AFD を経由しない構成</h4><p>AFD に登録しているカスタム ドメインの名前解決先を AFD のエンドポイントではなく、オリジンのパブリック IP アドレスや FQDN になるように DNS レコードを更新して、AFD を経由せずに直接オリジンにアクセスします。</p>
+<h4 id="パターン-2-Traffic-Manager-と-Application-Gateway-を組み合わせた構成"><a href="#パターン-2-Traffic-Manager-と-Application-Gateway-を組み合わせた構成" class="headerlink" title="パターン 2 : Traffic Manager と Application Gateway を組み合わせた構成"></a>パターン 2 : Traffic Manager と Application Gateway を組み合わせた構成</h4><p>AFD と同じように L7 のリバース プロキシグとして動作するサービスに Application Gateway がありますが、リージョン レベルでの冗長性を確保するために AFD をご利用いただいているお客様も多いかと存じます。<br>複数の Application Gateway を異なるリージョンにデプロイして、Traffic Manager のエンドポイントに Application Gateway パブリック IP アドレスや FQDN を登録し、AFD に登録しているカスタム ドメインの名前解決先を Traffic Manager の FQDN に変更することで、リージョン レベルでの冗長性を確保して継続稼働することが可能になります。<br>Traffic Manager と Application Gateway を組み合わせた構成については、下記の公開ドキュメントに記載がございますので、ご参考になれば幸いです。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/traffic-manager/traffic-manager-load-balancing-azure">Azure で負荷分散サービスを使用する</a></p>
+<h4 id="パターン-3-Edgio-SKU-の-Azure-CDN-の利用"><a href="#パターン-3-Edgio-SKU-の-Azure-CDN-の利用" class="headerlink" title="パターン 3 : Edgio SKU の Azure CDN の利用"></a>パターン 3 : Edgio SKU の Azure CDN の利用</h4><p>Azure Front Door と Microsoft Standard SKU の Azure CDN は同じプラットフォーム上で動作しています。一方で、Edgio SKU の Azure CDN は Edgio 社が管理しているプラットフォーム上で動作しているため、AFD にて接続の問題が発生している間、Edgio SKU の Azure CDN にて同一の原因で接続の問題が発生することはありません。<br>また、AFD で使用しているカスタム ドメインを予め Edgio SKU の Azure CDN に登録いただけますので、予め Edgio SKU の Azure CDN を準備してカスタム ドメインを登録しておくことにより、AFD から Edgio SKU の Azure CDN に切り替えて継続稼働することが可能になります。<br>なお、Edgio SKU の Azure CDN に固定費用はなくデータ転送量による従量課金制になるため、アクセスが発生しない限りは課金されることはございません。</p>
 
       
       
@@ -160,10 +159,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/archive/azure-powershell-3-8-0-install.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/afd-connection-issue.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -171,19 +170,10 @@
     
 <nav id="article-nav">
   
-    <a href="../ssl-intermediate-ca-change/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          SSL 証明書の更新に関するアナウンス
-        
-      </div>
-    </a>
   
-  
-    <a href="../rca34296489/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../vm/get-scheduled-events-from-imds/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">2017 年 3 月 31 日夜間から発生した東日本データセンターの障害についての原因調査報告書 (RCA) の抄訳</div>
+      <div class="article-nav-title">Azure VM の「再起動を必要としないメンテナンス」を事前に検知する方法</div>
     </a>
   
 </nav>
@@ -202,7 +192,7 @@
       <ul>
         
           <li>
-            <a href="../../network/afd-connection-issue/">Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題</a>
+            <a href="">Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題</a>
           </li>
         
           <li>
@@ -210,11 +200,11 @@
           </li>
         
           <li>
-            <a href="../../network/tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
+            <a href="../tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
           </li>
         
           <li>
-            <a href="../../network/azure-service-tag-authority/">サービスタグに必要なアクセス制御 (RBAC) について</a>
+            <a href="../azure-service-tag-authority/">サービスタグに必要なアクセス制御 (RBAC) について</a>
           </li>
         
           <li>
