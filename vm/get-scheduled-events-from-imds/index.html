@@ -4,38 +4,23 @@
   <meta charset="utf-8">
   
   
-  <title>Azure Automation で VM を自動停止する | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure VM の「再起動を必要としないメンテナンス」を事前に検知する方法 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure サポートチームの山口です。今日は、Azure Automation を使用して、サブスクリプション内の Azure VM を自動停止する Runbook の実装方法をご紹介させていただきます。 ■ はじめにこの記事は、４つのセクションで構成されています。  Automation アカウントの作成Azure Automation 機能を使用するのに必須である Automati">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの富田です。今回は表題の通り、Azure VM の再起動を必要としないメンテナンスを事前に検知する方法をご紹介させていただきます。IMDS を用いて Scheduled Events を監視することで、再起動を必要としないメンテナンスを事前に検知することが可能です。    Azure VM のメンテナンスについてAzure VM はお客様に安心し">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure Automation で VM を自動停止する">
-<meta property="og:url" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/index.html">
+<meta property="og:title" content="Azure VM の「再起動を必要としないメンテナンス」を事前に検知する方法">
+<meta property="og:url" content="https://jpaztech.github.io/blog/vm/get-scheduled-events-from-imds/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure サポートチームの山口です。今日は、Azure Automation を使用して、サブスクリプション内の Azure VM を自動停止する Runbook の実装方法をご紹介させていただきます。 ■ はじめにこの記事は、４つのセクションで構成されています。  Automation アカウントの作成Azure Automation 機能を使用するのに必須である Automati">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの富田です。今回は表題の通り、Azure VM の再起動を必要としないメンテナンスを事前に検知する方法をご紹介させていただきます。IMDS を用いて Scheduled Events を監視することで、再起動を必要としないメンテナンスを事前に検知することが可能です。    Azure VM のメンテナンスについてAzure VM はお客様に安心し">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AutomationAccount.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AddAutomationAccount.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AzureModule.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AzureModuleUpdate.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AzureModuleUpdateDone.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AddRunbook.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AddRunbookNew.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/EditRunbook.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/TestRunbook.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/TestRunbookDone.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/PublishRunbook.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/ScheduleRunbook.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/ScheduleRunbookNew.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/ScheduleRunbookNewDone.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/ScheduleRunbookList.png">
-<meta property="article:published_time" content="2017-09-01T02:13:35.000Z">
-<meta property="article:modified_time" content="2023-12-29T05:40:17.871Z">
+<meta property="article:published_time" content="2023-12-29T07:00:00.000Z">
+<meta property="article:modified_time" content="2023-12-29T05:40:18.151Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Archive">
-<meta property="article:tag" content="Azure Automation">
-<meta property="article:tag" content="Sample Script">
+<meta property="article:tag" content="VM">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="HowTo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/AutomationAccount.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -97,7 +82,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-archive/automation-vm-auto-deallocate" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-vm/get-scheduled-events-from-imds" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -106,7 +91,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure Automation で VM を自動停止する
+      Azure VM の「再起動を必要としないメンテナンス」を事前に検知する方法
     </h1>
   
 
@@ -114,121 +99,85 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2017-09-01T02:13:35.000Z" itemprop="datePublished">2017-09-01</time>
+  <time datetime="2023-12-29T07:00:00.000Z" itemprop="datePublished">2023-12-29</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7034318b-1328-5bcf-898d-93531ad08fd9%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Automation+%E3%81%A7+VM+%E3%82%92%E8%87%AA%E5%8B%95%E5%81%9C%E6%AD%A2%E3%81%99%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fautomation-vm-auto-deallocate%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fautomation-vm-auto-deallocate.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fautomation-vm-auto-deallocate.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+a0fee461-5a59-506d-98f6-65a936613c39%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE%E3%80%8C%E5%86%8D%E8%B5%B7%E5%8B%95%E3%82%92%E5%BF%85%E8%A6%81%E3%81%A8%E3%81%97%E3%81%AA%E3%81%84%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%80%8D%E3%82%92%E4%BA%8B%E5%89%8D%E3%81%AB%E6%A4%9C%E7%9F%A5%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fget-scheduled-events-from-imds%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fget-scheduled-events-from-imds.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fget-scheduled-events-from-imds.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/" data-id="clqq7gapg000c0nqugzwchuei" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/get-scheduled-events-from-imds/" data-id="clqq7gas3007x0nquannr6iha" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure サポートチームの山口です。<br>今日は、Azure Automation を使用して、サブスクリプション内の Azure VM を自動停止する Runbook の実装方法をご紹介させていただきます。</p>
-<h2 id="■-はじめに"><a href="#■-はじめに" class="headerlink" title="■ はじめに"></a>■ はじめに</h2><p>この記事は、４つのセクションで構成されています。</p>
-<ol>
-<li><strong>Automation アカウントの作成</strong><br>Azure Automation 機能を使用するのに必須である Automation アカウントを作成する手順を紹介します。<br><br></li>
-<li><strong>Azure モジュールの更新</strong><br>Runbook を実行する環境を構築します。<br>Azure モジュールを最新版に更新していないと、PowerShell 上では正常に動作するスクリプトコードが、Runbook として実行した場合にエラーを返す可能性があります。<br>もしそのような状況に陥っているのであれば、このセクションを見直してみてください。<br><br></li>
-<li><strong>Runbook の作成 / テスト</strong><br>Azure VM を自動停止する PowerShell スクリプトの Runbook を作成して、それが正しく動くかテストします。<br>今回は、動作する PowerShell スクリプトを用意していますので、Azure Automation が簡単に実装できることをぜひ体感してみてください。<br><br></li>
-<li><strong>スケジュールの設定</strong><br>作成した Runbook を定期的に実行するためのスケジュール設定を行います。<br>このスケジュール機能によって、例えば、毎日退社の時間になれば全 VM を自動停止させるような構成が作成できます。</li>
-</ol>
-<h2 id="■-Automation-アカウントの作成"><a href="#■-Automation-アカウントの作成" class="headerlink" title="■ Automation アカウントの作成"></a>■ Automation アカウントの作成</h2><ol>
-<li>ポータルにアクセス<ul>
-<li>まず、Azure Portal (<a target="_blank" rel="noopener" href="https://ms.portal.azure.com/">https://ms.portal.azure.com/</a>) にアクセスし、サブスクリプション管理ロールのメンバー かつ サブスクリプションの共同管理者であるアカウントを使用してログインします。<br><br></li>
-</ul>
-</li>
-<li>Automation アカウントの追加<ul>
-<li>[その他のサービス] から [Automation アカウント] を選択して、[Automation アカウント] ブレードを表示します。<br><br> <img src="/blog/archive/automation-vm-auto-deallocate/AutomationAccount.png"> <br></li>
-<li>[追加] をクリックし、Automation アカウント作成に必要な情報を入力します。実行時に Runbook が Azure へログインするのに必要となる接続資産と証明書資産を作成するために、[Azure 実行アカウントの作成] オプションで [はい] が選択されていることを確認してください。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/AddAutomationAccount.png"><br></li>
-<li>最後に [作成] ボタンをクリックすると、 Automation 実行アカウントとともに Automation アカウントが作成されます。</li>
-</ul>
-</li>
-</ol>
-<p>&lt;参考&gt;</p>
+        <p>こんにちは、Azure テクニカル サポート チームの富田です。<br>今回は表題の通り、Azure VM の再起動を必要としないメンテナンスを事前に検知する方法をご紹介させていただきます。<br>IMDS を用いて Scheduled Events を監視することで、再起動を必要としないメンテナンスを事前に検知することが可能です。  </p>
+<hr>
+<h2 id="Azure-VM-のメンテナンスについて"><a href="#Azure-VM-のメンテナンスについて" class="headerlink" title="Azure VM のメンテナンスについて"></a>Azure VM のメンテナンスについて</h2><p>Azure VM はお客様に安心してご利用いただくためにセキュリティ向上の対応や機能改善等を目的として定期的に Azure 基盤側のメンテナンスを行っております。<br>お客様の VM に影響の発生する可能性のあるメンテナンスとして、大きく以下の 2 種類に分けられます。  </p>
 <ul>
-<li>スタンドアロン Azure Automation アカウントを作成する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/automation/automation-create-standalone-account">https://docs.microsoft.com/ja-jp/azure/automation/automation-create-standalone-account</a></li>
+<li>再起動を<strong>必要とする</strong>メンテナンス</li>
+<li>再起動を必要としないメンテナンス（ライブマイグレーションを含む）</li>
 </ul>
-<h2 id="■-Azure-モジュールのアップデート"><a href="#■-Azure-モジュールのアップデート" class="headerlink" title="■ Azure モジュールのアップデート"></a>■ Azure モジュールのアップデート</h2><p>Runbook で Azure PowerShell モジュールのコマンドレットを使用して Azure リソースを管理する場合、モジュールを最新に保つために 1 か月に 1 回程度この更新プロセスを実行してください。</p>
-<p><strong><span style="color:red;">Azure モジュールを最新版に更新していないと、PowerShell 上では正常に動作するスクリプトコードが、Runbook として実行した場合にエラーを返す可能性があります。</span></strong></p>
+<blockquote>
+<p>■ご参考：Azure での仮想マシンのメンテナンス<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-and-updates">https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-and-updates</a></p>
+</blockquote>
+<p>再起動を<strong>必要とする</strong>メンテナンスについては、以下の通り Azure Portal の [サービスの正常性] で事前に確認が可能です。</p>
+<blockquote>
+<p>■ご参考：計画メンテナンスの通知の処理<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-notifications">https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-notifications</a></p>
+</blockquote>
+<p>再起動を必要としないメンテナンスについては、恐縮ながら Azure Portal での事前の確認をすることや、既定でメールの通知がされるものではございません。<br>そのため、「何とかして事前に再起動を必要としないメンテナンスが発生することを事前に確認することができないか？」というお問い合わせをいただくこともございます。<br>後述の通り、IMDS を用いて Scheduled Events を監視することで再起動を必要としないメンテナンスを事前に確認する事が可能です。  </p>
+<hr>
+<h2 id="IMDS-を用いて-Scheduled-Events-を確認する"><a href="#IMDS-を用いて-Scheduled-Events-を確認する" class="headerlink" title="IMDS を用いて Scheduled Events を確認する"></a>IMDS を用いて Scheduled Events を確認する</h2><p>まずは IMDS について簡単に解説させていただきます。<br>IMDS（Instance Metadata Service）は、現在実行中の VM に関する情報を取得できるものとなっております。<br>実行中の VM 内から IMDS に HTTP アクセスを行うことで、情報を取得することが可能です。<br>なお、同一の可用性セット内の VM もしくは同じ VMSS 内のインスタンスについても合わせて情報を取得できます。</p>
+<blockquote>
+<p>■ご参考：Azure Instance Metadata Service<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/instance-metadata-service">https://learn.microsoft.com/ja-jp/azure/virtual-machines/instance-metadata-service</a></p>
+</blockquote>
+<p>この IMDS のエンドポイントの 1 つとして、Scheduled Events というものがございます。<br>これは VM の近い将来にスケジュールされている VM の再起動やメンテナンスのイベントを確認できるものとなっております。  </p>
+<blockquote>
+<p>■ご参考：Azure Metadata Service: Windows VM のScheduled Events<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/scheduled-events">https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/scheduled-events</a></p>
+</blockquote>
+<blockquote>
+<p>■ご参考：Azure Metadata Service: Linux VM の Scheduled Events<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/scheduled-events">https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/scheduled-events</a></p>
+</blockquote>
+<p>それでは、Scheduled Eventsの確認を実際にやってましょう。<br>以下のコマンドを Azure VM 上のゲスト OS 内にて実行します。  </p>
+<p><strong>Windows</strong> の場合は PowerShell より以下のコマンドで、IMDS の Scheduled Events のエンドポイントに HTTP でアクセスします。  </p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invoke-RestMethod -Headers @&#123;&quot;Metadata&quot;=&quot;true&quot;&#125; -Method GET -Uri &quot;http://169.254.169.254/metadata/scheduledevents?api-version=2020-07-01&quot; | ConvertTo-Json -Depth 64</span><br></pre></td></tr></table></figure>
+
+<p><strong>Linux</strong> の場合は以下の通り Bash で curl コマンドで、IMDS の Scheduled Events のエンドポイントに HTTP でアクセスします。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H Metadata:<span class="literal">true</span> http://169.254.169.254/metadata/scheduledevents?api-version=2020-07-01</span><br></pre></td></tr></table></figure>
+
+<p>実行結果として、以下の例のように直近のスケジュールされたイベントがレスポンスとして確認できます。</p>
+<h3 id="特に何もスケジュールされたイベントが無い場合"><a href="#特に何もスケジュールされたイベントが無い場合" class="headerlink" title="特に何もスケジュールされたイベントが無い場合"></a>特に何もスケジュールされたイベントが無い場合</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;DocumentIncarnation&quot;</span>:  <span class="number">0</span>,</span><br><span class="line">    <span class="attr">&quot;Events&quot;</span>:  [</span><br><span class="line"></span><br><span class="line">               ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="起動を必要としないメンテナンスがスケジュールされている場合"><a href="#起動を必要としないメンテナンスがスケジュールされている場合" class="headerlink" title="起動を必要としないメンテナンスがスケジュールされている場合"></a>起動を必要としないメンテナンスがスケジュールされている場合</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;DocumentIncarnation&quot;</span>:  <span class="number">28</span>,</span><br><span class="line">    <span class="attr">&quot;Events&quot;</span>:  [</span><br><span class="line">                   &#123;</span><br><span class="line">                       <span class="attr">&quot;EventId&quot;</span>:  <span class="string">&quot;E92E64F9-XXXX-XXXX-XXXX-FF3EBA4C0090&quot;</span>,</span><br><span class="line">                       <span class="attr">&quot;EventStatus&quot;</span>:  <span class="string">&quot;Scheduled&quot;</span>, → スケジュールされたイベントがある。★★★</span><br><span class="line">                       <span class="attr">&quot;EventType&quot;</span>:  <span class="string">&quot;Freeze&quot;</span>, → 再起動を伴わないメンテナンスである。★★★</span><br><span class="line">                       <span class="attr">&quot;ResourceType&quot;</span>:  <span class="string">&quot;VirtualMachine&quot;</span>,</span><br><span class="line">                       <span class="attr">&quot;Resources&quot;</span>:  [</span><br><span class="line">                                         <span class="string">&quot;VMName&quot;</span> → 対象の VM 名。★★★</span><br><span class="line">                                     ],</span><br><span class="line">                       <span class="attr">&quot;NotBefore&quot;</span>:  <span class="string">&quot;Mon, 19 Sep 2023 18:00:00 GMT&quot;</span>, → この時刻以降にメンテナンスが実行される。★★★</span><br><span class="line">                       <span class="attr">&quot;Description&quot;</span>:  <span class="string">&quot;This is sample Description&quot;</span>,</span><br><span class="line">                       <span class="attr">&quot;EventSource&quot;</span>:  <span class="string">&quot;Platform&quot;</span>,</span><br><span class="line">                       <span class="attr">&quot;DurationInSeconds&quot;</span>:  <span class="number">2</span> → 想定される影響時間は <span class="number">2</span> 秒である。★★★</span><br><span class="line">                   &#125;</span><br><span class="line">               ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>イベントによって何分前までには通知されるといった NotBefore の時間が違いますが、再起動を必要としないメンテナンスについては、実行される約 15 分前までにはスケジュールが設定されます。<br>つまり 20 分前といった場合はまだスケジュールが設定されていないために、確認が叶わない場合もございます点、ご留意ください。  </p>
+<p>すなわち、定期的に IMDS の Scheduled Events をアクセスすることで、再起動を必要としないメンテナンス実行の約 15 分前には事前にメンテナンスが発生する予定を確認することが可能です。<br>次のセクションではこの Scheduled Events を定期的に確認する方法についてご案内させていただきます。  </p>
+<hr>
+<h2 id="Windows-環境で定期的に-Scheduled-Events-を監視し、再起動を必要としないメンテナンスがあった際にアラート通知を行うサンプル"><a href="#Windows-環境で定期的に-Scheduled-Events-を監視し、再起動を必要としないメンテナンスがあった際にアラート通知を行うサンプル" class="headerlink" title="Windows 環境で定期的に Scheduled Events を監視し、再起動を必要としないメンテナンスがあった際にアラート通知を行うサンプル"></a>Windows 環境で定期的に Scheduled Events を監視し、再起動を必要としないメンテナンスがあった際にアラート通知を行うサンプル</h2><p>Windows 環境においては、以下の通り公開ドキュメントとして、定期的に Scheduled Events を監視し、再起動を必要としないメンテナンスがスケジュールされた際にアラート通知を行うサンプルがございます。  </p>
+<blockquote>
+<p>■ご参考：Azure VM のスケジュールされたイベントを監視する<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/scheduled-event-service">https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/scheduled-event-service</a></p>
+</blockquote>
+<p>具体的な内容は実際のドキュメントをご確認いただきたく存じますが、簡単に内容を解説すると以下の通りとなります。  </p>
 <ul>
-<li>[Automation アカウント] パネルの [モジュール] ブレードを選択します。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/AzureModule.png"><br></li>
-<li>[Azure モジュールの更新] ボタンを押すと確認画面が表示されるので、[はい] を選択してモジュールの更新を開始します。モジュールの更新には数分かかる場合がありますので注意してください。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/AzureModuleUpdate.png"><br></li>
-<li>以下のようなメッセージか、モジュールのVERSIONが上がっていることが確認できたら、モジュールの更新は完了です。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/AzureModuleUpdateDone.png"><br></li>
+<li>同一の可用性セットに VM を 2 つ作成する。</li>
+<li>片方の VM にて SchService.ps1 という定期的な Scheduled Events のアクセスを行うスクリプトを実行する。</li>
+<li>SchService.ps1 は同一の可用性セット内 VM に対する Scheduled Events を検知すると、その内容をイベントログに記録する。</li>
+<li>Azure Monitor の Log Analytics を用いて、その記録されたイベントログを監視する。</li>
+<li>Scheduled Events が記録されたイベントログを発見すると、アラート（メール通知等）を発報する。</li>
 </ul>
-<p>&lt;参考&gt;</p>
-<ul>
-<li>Azure Automation の Azure PowerShell モジュールを更新する方法<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/automation/automation-update-azure-modules">https://docs.microsoft.com/ja-jp/azure/automation/automation-update-azure-modules</a></li>
-</ul>
-<h2 id="■-Runbook-の作成-テスト"><a href="#■-Runbook-の作成-テスト" class="headerlink" title="■ Runbook の作成 / テスト"></a>■ Runbook の作成 / テスト</h2><p>ここからが本記事のメイントピックです。作成したばかりの Automation アカウントに、 Azure VM を自動停止させる Runbook を追加してみましょう。</p>
-<ol>
-<li><p>Runbook の新規作成</p>
-<ul>
-<li>先程作成した Automation アカウントのパネルを開きます。</li>
-<li>ハブから [Runbook] を選択して、[Runbook の追加] ボタンをクリックします。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/AddRunbook.png"><br></li>
-<li>[新しい Runbook を作成します。] を選択します。</li>
-<li>Runbook の [名前] を入力し、[Runbook の種類] は [PowerShell] を選択します。</li>
-<li>[作成] をクリックして Runbook を作成すると、[PowerShell Runbook の編集] が自動で開かれます。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/AddRunbookNew.png"><br></li>
-</ul>
-</li>
-<li><p>Runbook の編集</p>
-<ul>
-<li><p>以下のスクリプトをコピーして、Runbook に貼り付けます。<br><br><strong>概要</strong><br>この Runbook は、Azure にログインして指定された VM を停止させます。<br>停止する VM の範囲は、次の2つの条件で指定できます。</p>
-<ol>
-<li>サブスクリプション<br>SubscriptionNameOrId パラメータを用いて、どのサブスクリプションに対して停止の動作を行うかを指定することができます。</li>
-<li>リソースグループ名と VM 名<br>ResourceGroupName, VMName パラメータによって、サブスクリプションの選択だけでなく、さらに3パターンの適用範囲の制御を行うことができます。<ul>
-<li>サブスクリプション内の、すべての VM</li>
-<li>サブスクリプション内の、特定のリソースグループ内の、すべての VM</li>
-<li>サブスクリプション内の、特定のリソースグループ内の、特定の名前を持つ VM<br><br></li>
-</ul>
-</li>
-</ol>
-<p><strong>パラメータ</strong></p>
-<ul>
-<li>SubscriptionNameOrId : サブスクリプション名、または ID（省略可）</li>
-<li>ResourceGroupName : リソースグループ名（省略可）</li>
-<li>VMName : 仮想マシン名（省略可）<br><br><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Param</span> (</span><br><span class="line">    [<span class="type">Parameter</span>(<span class="type">Mandatory</span>=<span class="variable">$false</span>)]</span><br><span class="line">    [<span class="built_in">String</span>] <span class="variable">$SubscriptionNameOrId</span>,</span><br><span class="line">    [<span class="type">Parameter</span>(<span class="type">Mandatory</span>=<span class="variable">$false</span>)]</span><br><span class="line">    [<span class="built_in">String</span>] <span class="variable">$ResourceGroupName</span>,</span><br><span class="line">    [<span class="type">Parameter</span>(<span class="type">Mandatory</span>=<span class="variable">$false</span>)]</span><br><span class="line">    [<span class="built_in">String</span>] <span class="variable">$VMName</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment"># 自動作成された接続資産（実行アカウント）を利用して Azure にログイン</span></span><br><span class="line">    <span class="variable">$AutomationConnectionName</span> = <span class="string">&quot;AzureRunAsConnection&quot;</span></span><br><span class="line">    <span class="variable">$Connection</span> = <span class="built_in">Get-AutomationConnection</span> <span class="literal">-Name</span> <span class="variable">$AutomationConnectionName</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">Write-Output</span> <span class="string">&quot;# Logging in to Azure.&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">Add-AzureRmAccount</span> `</span><br><span class="line">        <span class="literal">-ServicePrincipal</span> `</span><br><span class="line">        <span class="literal">-TenantId</span> <span class="variable">$Connection</span>.TenantId `</span><br><span class="line">        <span class="literal">-ApplicationId</span> <span class="variable">$Connection</span>.ApplicationId `</span><br><span class="line">        <span class="literal">-CertificateThumbprint</span> <span class="variable">$Connection</span>.CertificateThumbprint</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable">$Connection</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">&quot;Connection <span class="variable">$AutomationConnectionName</span> not found.&quot;</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">Write-Error</span> <span class="literal">-Message</span> <span class="variable">$_</span>.Exception</span><br><span class="line">        <span class="keyword">throw</span> <span class="variable">$_</span>.Exception</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$SubscriptionNameOrId</span>) &#123;</span><br><span class="line">    <span class="variable">$Subscriptions</span> = <span class="built_in">Get-AzureRmSubscription</span> | <span class="built_in">Where</span> &#123;<span class="variable">$_</span>.Name <span class="operator">-Eq</span> <span class="variable">$SubscriptionNameOrId</span> <span class="operator">-Or</span> <span class="variable">$_</span>.Id <span class="operator">-Eq</span> <span class="variable">$SubscriptionNameOrId</span>&#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$Subscriptions</span>.Count <span class="operator">-Eq</span> <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment"># Select-AzureRmSubscription -SubscriptionName $Subscriptions[0].Id &gt;0</span></span><br><span class="line">        <span class="built_in">Get-AzureRmSubscription</span> <span class="literal">-SubscriptionId</span> <span class="variable">$Subscriptions</span>[<span class="number">0</span>].Id | <span class="built_in">Set-AzureRmContext</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$Subscriptions</span>.Count <span class="operator">-Eq</span> <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="string">&quot;No accessible subscription found with name or ID [<span class="variable">$SubscriptionNameOrId</span>]. Check the parameters and ensure user is a co-administrator on the target subscription.&quot;</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="string">&quot;More than one accessible subscriptions found with name or ID [<span class="variable">$SubscriptionNameOrId</span>]. Please ensure your subscription names are unique, or specify the ID instead.&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># リソースグループを指定した場合は、そのリソースグループ内の Azure VM を取得</span></span><br><span class="line"><span class="comment"># 指定しない場合は、全 VM を取得</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$ResourceGroupName</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$VMName</span>) &#123;</span><br><span class="line">        <span class="variable">$VMs</span> = <span class="built_in">Get-AzureRmVM</span> <span class="literal">-Name</span> <span class="variable">$VMName</span> <span class="literal">-ResourceGroupName</span> <span class="variable">$ResourceGroupName</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$VMs</span> = <span class="built_in">Get-AzureRmVM</span> <span class="literal">-ResourceGroupName</span> <span class="variable">$ResourceGroupName</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$VMs</span> = <span class="built_in">Get-AzureRmVM</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$VM</span> <span class="keyword">in</span> <span class="variable">$VMs</span>) &#123;</span><br><span class="line">    <span class="comment"># VM を停止</span></span><br><span class="line">    <span class="variable">$StopRtn</span> = <span class="variable">$VM</span> | <span class="built_in">Stop-AzureRmVM</span> <span class="literal">-Force</span> <span class="literal">-ErrorAction</span> SilentlyContinue</span><br><span class="line">    <span class="comment"># 正常に VM が停止したかの確認＆ステータスの出力</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$StopRtn</span>.Status <span class="operator">-ne</span> <span class="string">&#x27;Succeeded&#x27;</span>) &#123;</span><br><span class="line">        <span class="built_in">Write-Output</span> (<span class="variable">$VM</span>.Name + <span class="string">&quot; failed to stop.&quot;</span>)</span><br><span class="line">        <span class="built_in">Write-Error</span> (<span class="variable">$VM</span>.Name + <span class="string">&quot; failed to stop. Error was:&quot;</span>) <span class="literal">-ErrorAction</span> <span class="keyword">Continue</span></span><br><span class="line">        <span class="built_in">Write-Error</span> (<span class="built_in">ConvertTo-Json</span> <span class="variable">$StopRtn</span>.Error) <span class="literal">-ErrorAction</span> <span class="keyword">Continue</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">Write-Output</span> (<span class="variable">$VM</span>.Name + <span class="string">&quot; has been stopped.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<br></li>
-</ul>
-</li>
-<li><p>[保存] ボタンを押して Runbook を更新したら、同じく [PowerShell Runbook の編集] パネルの [テストウィンドウ] を押して、Runbook をテストしてみましょう。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/EditRunbook.png"></p>
-<br></li>
-</ul>
-</li>
-<li><p>Runbook のテスト</p>
-<ul>
-<li>テストウィンドウを開いたら、必要なパラメータを入力していきます。</li>
-<li>入力し終えたら [開始] を押して、テストを開始します。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/TestRunbook.png"><br></li>
-<li>Runbook の実行が完了するまで待ちます。成功すると、以下のような画面が表示され、指定された VM が停止されています。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/TestRunbookDone.png"><br></li>
-<li>以上で Runbook の実行テストは完了です。</li>
-</ul>
-</li>
-</ol>
-<p><strong><span style="color:red;">この [テスト] ブレードを利用した Runbook のテストは、実行待ちの時間がかかる場合があります。あらかじめ PowerShell 上で正常に動くことが確認できたスクリプトコードが、正しく Runbook 上でも動作するかを確認する環境として、[テスト] ブレードを使用することを推奨します。</span></strong></p>
-<p>&lt;参考&gt;</p>
-<ul>
-<li>Azure Automation での Runbook の作成またはインポート<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/automation/automation-creating-importing-runbook">https://docs.microsoft.com/ja-jp/azure/automation/automation-creating-importing-runbook</a></li>
-</ul>
-<h2 id="■-スケジュールの設定"><a href="#■-スケジュールの設定" class="headerlink" title="■ スケジュールの設定"></a>■ スケジュールの設定</h2><ol>
-<li>Runbook の発行<ul>
-<li>Runbook はスケジュールを設定する前に必ず発行する必要があります。スケジュールを組みたい Runbook の編集パネルを表示し、[発行] ボタンを押します。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/PublishRunbook.png"><br></li>
-<li>発行が終了したら [Runbook の編集] パネルを閉じて、Runbook の [概要] パネルに戻ります。<br><br></li>
-</ul>
-</li>
-<li>スケジュールの作成<ul>
-<li>[スケジュール] を押して、[Runbook のスケジュール設定] 画面を出します。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/ScheduleRunbook.png"><br></li>
-<li>[スケジュールを Runbook にリンクします] → [新しいスケジュールを作成します] を選択し、スケジュールの名前、開始時刻、間隔などを入力してから [作成] ボタンを押します。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/ScheduleRunbookNew.png"><br></li>
-<li>続いて、Runbook の実行時に、Runbook に渡されるパラメータを設定していきます。指定し終えたら、[OK] を押してスケジュールの設定を完了させます。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/ScheduleRunbookNewDone.png"><br></li>
-<li>Runbook のスケジュールが正しく設定できていれば、[スケジュール] ブレードに先程作成したスケジュールが表示されます。<br>この画面が確認できれば、すべての作業は終了です。あとは Runbook が設定されたスケジュール通りに動くか、経過を追ってチェックしてみてください。Runbook の出力結果は、[ジョブ] ブレードで確認することが出来ます。<br><br><img src="/blog/archive/automation-vm-auto-deallocate/ScheduleRunbookList.png"></li>
-</ul>
-</li>
-</ol>
-<h2 id="■-まとめ"><a href="#■-まとめ" class="headerlink" title="■ まとめ"></a>■ まとめ</h2><p>以上が、Azure Automation の世界を体験するための簡単なフローになります。何回か Runbook を作成していると、この一連の操作がいかに簡単なのか、より実感できると思います。今回は Azure VM を停止させるシンプルな Runbook の例を紹介しましたが、より複雑で保守性に優れた Runbook も作成することができます。より詳細な情報が知りたい方は、ぜひ公式ドキュメントもご覧ください。</p>
-<ul>
-<li>Azure Automation<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/services/automation/">https://azure.microsoft.com/ja-jp/services/automation/</a></li>
-<li>Automation のドキュメント<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/automation/">https://docs.microsoft.com/ja-jp/azure/automation/</a></li>
-</ul>
-<p>Azure Automation の魅力をより多くのお客様に使っていただけるために、今後も実用的な Runbook を随時公開して参りますので、是非ご期待ください。</p>
+<p>なお、恐縮ながら再起動を必要としないメンテナンスを疑似的に発生させて “EventType”:”Freeze” の Scheduled Events を発生させることは叶いません。<br>そのため、このサンプルの動作確認としては代替として再起動イベントを検知する形となっております。  </p>
+<p>上記のサンプルによって、同一の可用性セット内の VM で再起動を必要としないメンテナンスがスケジュールされた際に、自動的にメール通知を行うといったことが可能となります。<br>また、SchService.ps1 をご自身で拡張いただくことで、Scheduled Events を検知したら自動的に何かを実行するといったスクリプトにしていただくことも可能です。</p>
+<hr>
+<h2 id="Linux-環境で定期的に-Scheduled-Events-を監視するサンプル"><a href="#Linux-環境で定期的に-Scheduled-Events-を監視するサンプル" class="headerlink" title="Linux 環境で定期的に Scheduled Events を監視するサンプル"></a>Linux 環境で定期的に Scheduled Events を監視するサンプル</h2><p>Linux 環境においては、上記の Windows のようにアラート通知を行うといったサンプルのご用意がございませんが、定期的な Scheduled Events の監視をするサンプルが以下の通りご用意されております。  </p>
+<blockquote>
+<p>■ご参考：Azure Metadata Service: Scheduled Events Samples<br><a target="_blank" rel="noopener" href="https://github.com/Azure-Samples/virtual-machines-scheduled-events-discover-endpoint-for-non-vnet-vm">https://github.com/Azure-Samples/virtual-machines-scheduled-events-discover-endpoint-for-non-vnet-vm</a></p>
+</blockquote>
+<p>勿論、上記サンプル以外にも Scheduled Events へ定期的なアクセスを試みる方法を実行頂いても構いません。  </p>
+<hr>
+<p>以上の通り、Azure VM の再起動を必要としないメンテナンスを事前に検知する方法をご紹介させていただきました。<br>なお、再起動を必要としないメンテナンスを実行するタイミングをコントロールしたいといった場合は、Dedicated Host もしくは分離された仮想マシンをご利用の上、メンテナンス構成を設定いただくことで実現可能でございます。<br>この点については以下の公式ドキュメント等をご参照ください。  </p>
+<blockquote>
+<p>■ご参考：メンテナンス構成による VM の更新の管理<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-configurations">https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-configurations</a></p>
+</blockquote>
+<p>定期的なメンテナンスは安心してお客様に Azure をご利用いただく上で必要不可欠でございます点、ご理解賜りますと幸いでございます。</p>
 
       
       
@@ -242,10 +191,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/archive/automation-vm-auto-deallocate.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/get-scheduled-events-from-imds.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -253,19 +202,10 @@
     
 <nav id="article-nav">
   
-    <a href="../automation-vm-start-deallocate/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          Azure Automation： PowerShell Runbook で Azure VM の起動 / 停止（割り当て解除）
-        
-      </div>
-    </a>
   
-  
-    <a href="../upgrade-backup-container-asm2arm/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../network/tls1.2_migration/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">2017/10/31 に AzureBackup コンテナー (ASM) が、RecoveryServices コンテナー (ARM) にアップグレードされるお知らせ</div>
+      <div class="article-nav-title">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</div>
     </a>
   
 </nav>
@@ -284,7 +224,7 @@
       <ul>
         
           <li>
-            <a href="../../vm/get-scheduled-events-from-imds/">Azure VM の「再起動を必要としないメンテナンス」を事前に検知する方法</a>
+            <a href="">Azure VM の「再起動を必要としないメンテナンス」を事前に検知する方法</a>
           </li>
         
           <li>
