@@ -1,6 +1,6 @@
 ---
 title: Azure VM の「再起動を必要としないメンテナンス」を事前に検知する方法
-date: 2023-12-25 12:00:00
+date: 2023-12-29 16:00:00
 tags:
   - VM
   - Windows
@@ -45,8 +45,8 @@ IMDS（Instance Metadata Service）は、現在実行中の VM に関する情�
 >■ご参考：Azure Instance Metadata Service  
 >https://learn.microsoft.com/ja-jp/azure/virtual-machines/instance-metadata-service
 
-この IMDS のエンドポイントの 1 として、Scheduled Events というものがございます。  
-これは VM の近い将来にスケジュールされているイベントを表示するものとなっております。  
+この IMDS のエンドポイントの 1 つとして、Scheduled Events というものがございます。  
+これは VM の近い将来にスケジュールされている VM の再起動やメンテナンスのイベントを確認できるものとなっております。  
 
 >■ご参考：Azure Metadata Service: Windows VM のScheduled Events  
 >https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/scheduled-events
@@ -54,8 +54,8 @@ IMDS（Instance Metadata Service）は、現在実行中の VM に関する情�
 >■ご参考：Azure Metadata Service: Linux VM の Scheduled Events  
 >https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/scheduled-events
 
-それでは、実際にやってましょう。  
-以下のコマンドは Azure VM 上のゲスト OS 内にて実行します。  
+それでは、Scheduled Eventsの確認を実際にやってましょう。  
+以下のコマンドを Azure VM 上のゲスト OS 内にて実行します。  
 
 
 **Windows** の場合は PowerShell より以下のコマンドで、IMDS の Scheduled Events のエンドポイントに HTTP でアクセスします。  
@@ -72,7 +72,7 @@ curl -H Metadata:true http://169.254.169.254/metadata/scheduledevents?api-versio
 
 実行結果として、以下の例のように直近のスケジュールされたイベントがレスポンスとして確認できます。
 
-- 特に何もスケジュールされたイベントが無い場合
+### 特に何もスケジュールされたイベントが無い場合
 
 ```json
 {
@@ -83,7 +83,7 @@ curl -H Metadata:true http://169.254.169.254/metadata/scheduledevents?api-versio
 }
 ```
 
-- 起動を必要としないメンテナンスがスケジュールされている場合
+### 起動を必要としないメンテナンスがスケジュールされている場合
 
 ```json
 {
@@ -106,29 +106,30 @@ curl -H Metadata:true http://169.254.169.254/metadata/scheduledevents?api-versio
 }
 ```
 
-なお、再起動を必要としないメンテナンスについては、実行される 15 分前までにはスケジュールが設定されます。  
-20 分前といった場合はまだスケジュールが設定されていないために、確認が叶わない場合もございます点、ご留意ください。
+イベントによって何分前までには通知されるといった NotBefore の時間が違いますが、再起動を必要としないメンテナンスについては、実行される約 15 分前までにはスケジュールが設定されます。  
+つまり 20 分前といった場合はまだスケジュールが設定されていないために、確認が叶わない場合もございます点、ご留意ください。  
 
-つまり、定期的に IMDS の Scheduled Events をアクセスすることで、再起動を必要としないメンテナンス実行の 15 分前には事前にメンテナンスが発生する予定を確認することが可能です。  
+すなわち、定期的に IMDS の Scheduled Events をアクセスすることで、再起動を必要としないメンテナンス実行の約 15 分前には事前にメンテナンスが発生する予定を確認することが可能です。  
 次のセクションではこの Scheduled Events を定期的に確認する方法についてご案内させていただきます。  
 
 ---
 ## Windows 環境で定期的に Scheduled Events を監視し、再起動を必要としないメンテナンスがあった際にアラート通知を行うサンプル
 
-Windows 環境においては、以下の通り公開ドキュメントとして、Windows 環境で定期的に Scheduled Events を監視し、再起動を必要としないメンテナンスがあった際にアラート通知を行うサンプルがございます。  
+Windows 環境においては、以下の通り公開ドキュメントとして、定期的に Scheduled Events を監視し、再起動を必要としないメンテナンスがスケジュールされた際にアラート通知を行うサンプルがございます。  
 
 >■ご参考：Azure VM のスケジュールされたイベントを監視する  
 >https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/scheduled-event-service
 
-具体的な内容は実際のドキュメントをご確認いただきたく存じますが、簡単に内容を解説すると以下の通りです。
+具体的な内容は実際のドキュメントをご確認いただきたく存じますが、簡単に内容を解説すると以下の通りとなります。  
 
 - 同一の可用性セットに VM を 2 つ作成する。
 - 片方の VM にて SchService.ps1 という定期的な Scheduled Events のアクセスを行うスクリプトを実行する。
 - SchService.ps1 は同一の可用性セット内 VM に対する Scheduled Events を検知すると、その内容をイベントログに記録する。
-- Azure Monitor の Log Analytics を用いて、記録されたイベントログを監視する。
+- Azure Monitor の Log Analytics を用いて、その記録されたイベントログを監視する。
 - Scheduled Events が記録されたイベントログを発見すると、アラート（メール通知等）を発報する。
 
-なお、恐縮ながら再起動を必要としないメンテナンスを疑似的に発生させて "EventType":"Freeze" の Scheduled Events を発生させることは叶いませんため、このサンプルの動作確認としては代替として再起動イベントを検知する形となっております。
+なお、恐縮ながら再起動を必要としないメンテナンスを疑似的に発生させて "EventType":"Freeze" の Scheduled Events を発生させることは叶いません。  
+そのため、このサンプルの動作確認としては代替として再起動イベントを検知する形となっております。  
 
 上記のサンプルによって、同一の可用性セット内の VM で再起動を必要としないメンテナンスがスケジュールされた際に、自動的にメール通知を行うといったことが可能となります。  
 また、SchService.ps1 をご自身で拡張いただくことで、Scheduled Events を検知したら自動的に何かを実行するといったスクリプトにしていただくことも可能です。
@@ -141,15 +142,15 @@ Linux 環境においては、上記の Windows のようにアラート通知�
 >■ご参考：Azure Metadata Service: Scheduled Events Samples  
 >https://github.com/Azure-Samples/virtual-machines-scheduled-events-discover-endpoint-for-non-vnet-vm
 
-勿論、上記サンプル以外にも Scheduled Events へ定期的なアクセスを試みる方法を実行頂いても構いません。
+勿論、上記サンプル以外にも Scheduled Events へ定期的なアクセスを試みる方法を実行頂いても構いません。  
 
 ---
 
 以上の通り、Azure VM の再起動を必要としないメンテナンスを事前に検知する方法をご紹介させていただきました。  
 なお、再起動を必要としないメンテナンスを実行するタイミングをコントロールしたいといった場合は、Dedicated Host もしくは分離された仮想マシンをご利用の上、メンテナンス構成を設定いただくことで実現可能でございます。  
-この点については以下の公式ドキュメント等をご参照ください。
+この点については以下の公式ドキュメント等をご参照ください。  
 
->■ご参考：メンテナンス構成による VM の更新の管理
+>■ご参考：メンテナンス構成による VM の更新の管理  
 >https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-configurations
 
 定期的なメンテナンスは安心してお客様に Azure をご利用いただく上で必要不可欠でございます点、ご理解賜りますと幸いでございます。
