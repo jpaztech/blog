@@ -1,5 +1,5 @@
 ---
-title: Azure File の診断設定を試す
+title: Azure Files の診断設定を試す
 date: 2021-12-22 10:00:00
 tags:
   - Storage

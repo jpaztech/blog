@@ -159,9 +159,9 @@ Login-AzAccount
 Select-AzSubscription -SubscriptionId <確認したサブスクリプション ID>
 
 4) <b>以下のコマンドを実行し、対象のゲートウェイの構成情報を取得・表示します。</b><br>
-Get-AzVirtualNetworkGateway -Name <ゲートウェイの名前> -ResourceGroupName <ゲートウェイのリソース グループ名>
+Get-AzVirtualNetworkGateway -Name <ゲートウェイの名前> -ResourceGroupName <ゲートウェイのリソース グループ名> | Format-List -Property *
 
-5) <b>出力結果の中から、GatewayDefaultSite という行を探します。サイト名の情報が入っている場合は、この条件に合致します。「null」となっている場合は合致しません。</b>
+5) <b>出力結果の中から、GatewayDefaultSite という行を探します。サイト名の情報が入っている場合は、この条件に合致します。空欄または「null」となっている場合は合致しません。</b>
 
 <br>
 

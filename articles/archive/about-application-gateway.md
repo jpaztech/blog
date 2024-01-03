@@ -171,7 +171,7 @@ Application Gateway は受け取ったリクエストを他のリスナーや外
   以下にも関連情報がございますので、ご確認ください。
 
   Application Gateway における 502 Error について
-  [https://blogs.technet.microsoft.com/jpaztech/2018/03/16/application-gateway-502-error-info/](https://blogs.technet.microsoft.com/jpaztech/2018/03/16/application-gateway-502-error-info/)
+  [https://jpaztech.github.io/blog/archive/application-gateway-502-error-info/](https://jpaztech.github.io/blog/archive/application-gateway-502-error-info/)
 
 - **ラウンドロビンでの負荷分散は可能でしょうか。**
   Application Gateway は既定でラウンドロビンで負荷分散が行われます。

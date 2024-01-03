@@ -24,7 +24,7 @@ ExpressRoute は、オンプレミスと Azure のネットワークをインタ
 
 ※ 以前はこの他に Public Peering と呼ばれる種別もありましたが、現在は Microsoft Peering に統合されています。
 
-* [ExpressRouteのPublicPeeringとMicrosoftPeeringに関するアナウンス](https://jpaztech1.z11.web.core.windows.net/ExpressRoute%E3%81%AEPublicPeering%E3%81%A8MicrosoftPeering%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%A2%E3%83%8A%E3%82%A6%E3%83%B3%E3%82%B9.html)
+* [ExpressRouteのPublicPeeringとMicrosoftPeeringに関するアナウンス](https://jpaztech.github.io/blog/archive/expressroute-announcement-march-2018/)
 
 今回の記事では、**Microsoft Peering** と呼ばれるピアリング種別についてお話します。ExpressRoute 回線で Microsoft Peering を構成すると、オンプレミス拠点から Azure 上のパブリックなサービスに回線経由で接続できます。例えば、BLOB ストレージへのバックアップ通信を ExpressRoute 回線経由とすることが出来ます。
 

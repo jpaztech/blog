@@ -1,6 +1,6 @@
 ---
 title: Microsoft ピアリングを経由するかどうかの確認方法
-date: 2019-11-26 17:30:00
+date: 2023-11-24 16:00:00
 tags:
   - Network
   - ExpressRoute
@@ -25,60 +25,132 @@ Get-AzBgpServiceCommunity
 ~~~
 
 
-**(出力例)**
+**(出力例 1)**
 ~~~
-Name           : Exchange
-Id             : /subscriptions//resourceGroups//providers/Microsoft.Network/bgpServiceCommunities/Exchange
-Type           : Microsoft.Network/bgpServiceCommunities
-BgpCommunities : [
-                   {
-                     "ServiceSupportedRegion": "Global",
-                     "CommunityName": "Exchange",
-                     "CommunityValue": "12076:5010",
-                     "CommunityPrefixes": [
-                       "13.107.6.152/31",
-                       "13.107.18.10/31",
-                       "13.107.128.0/22",
-                       "23.103.160.0/20",
-                       "40.92.0.0/15",
-                       "40.96.0.0/13",
-                       "40.104.0.0/15",
-                       "40.107.0.0/16",
-                       "52.96.0.0/14",
-                       "52.100.0.0/14",
-                       "52.238.78.88/32",
-                       "104.47.0.0/17",
-                       "131.253.33.215/32",
-                       "132.245.0.0/16",
-                       "150.171.32.0/22",
-                       "191.234.140.0/22",
-                       "204.79.197.215/32",
-                       "13.107.128.0/24",
-                       "13.107.129.0/24",
-                       "150.171.32.0/24",
-                       "150.171.34.0/24",
-                       "150.171.35.0/24",
-                       "52.96.38.0/24"
-                     ],
-                     "IsAuthorizedToUse": false,
-                     "ServiceGroup": "O365"
-                   }
-                 ]
+$communities = Get-AzBgpServiceCommunity
+$communities | format-list
 
-Name           : OtherOffice365Services
-Id             : /subscriptions//resourceGroups//providers/Microsoft.Network/bgpServiceCommunities/OtherOffice365Servic
-                 es
-Type           : Microsoft.Network/bgpServiceCommunities
-BgpCommunities : [
-                   {
-                     "ServiceSupportedRegion": "Global",
-                     "CommunityName": "Other Office 365 Services",
-                     "CommunityValue": "12076:5100",
-                     "CommunityPrefixes": [
-                       "13.80.125.22/32",
-                       "13.91.91.243/32",
-                       "13.106.4.128/25",
+Name               : Exchange
+Id                 : /subscriptions//resourceGroups//providers/Microsoft.Network/bgpServiceCommunities/Exchange
+Type               : Microsoft.Network/bgpServiceCommunities
+ServiceName        : Exchange
+BgpCommunities     : {Exchange, Exchange IPv6}
+BgpCommunitiesText : [
+                       {
+                         "ServiceSupportedRegion": "Global",
+                         "CommunityName": "Exchange",
+                         "CommunityValue": "12076:5010",
+                         "CommunityPrefixes": [
+                           "13.107.6.152/31",
+                           "13.107.18.10/31",
+                           "13.107.128.0/22",
+                           "23.103.160.0/20",
+                           "40.92.0.0/15",
+                           "40.96.0.0/13",
+                           "40.104.0.0/15",
+                           "40.107.0.0/16",
+                           "52.96.0.0/14",
+                           "52.100.0.0/14",
+                           "52.238.78.88/32",
+                           "104.47.0.0/17",
+                           "131.253.33.215/32",
+                           "132.245.0.0/16",
+                           "150.171.32.0/22",
+                           "204.79.197.215/32",
+                           "13.107.128.0/24",
+                           "13.107.129.0/24",
+                           "150.171.32.0/24",
+                           "150.171.34.0/24",
+                           "150.171.35.0/24",
+                           "52.96.38.0/24"
+                         ],
+                         "IsAuthorizedToUse": false,
+                         "ServiceGroup": "O365"
+                       },
+                       {
+                         "ServiceSupportedRegion": "Global",
+                         "CommunityName": "Exchange IPv6",
+                         "CommunityValue": "12076:5010",
+                         "CommunityPrefixes": [
+                           "2603:1006::/40",
+                           "2603:1016::/36",
+                           "2603:1026::/36",
+                           "2603:1036::/36",
+                           "2603:1046::/36",
+                           "2603:1056::/36",
+                           "2620:1ec:4::152/128",
+                           "2620:1ec:4::153/128",
+                           "2620:1ec:c::10/128",
+                           "2620:1ec:c::11/128",
+                           "2620:1ec:d::10/128",
+                           "2620:1ec:d::11/128",
+                           "2620:1ec:8f0::/46",
+                           "2620:1ec:900::/46",
+                           "2620:1ec:a92::152/128",
+                           "2620:1ec:a92::153/128",
+                           "2a01:111:f400::/48",
+                           "2a01:111:f403::/48"
+                         ],
+                         "IsAuthorizedToUse": false,
+                         "ServiceGroup": "O365"
+                       }
+                     ]
+
+Name               : OtherOffice365Services
+Id                 : /subscriptions//resourceGroups//providers/Microsoft.Network/bgpServiceCommunities/OtherOffice365Se
+                     rvices
+Type               : Microsoft.Network/bgpServiceCommunities
+ServiceName        : OtherOffice365Services
+BgpCommunities     : {Other Office 365 Services, Other Office 365 Services IPv6}
+BgpCommunitiesText : [
+                       {
+                         "ServiceSupportedRegion": "Global",
+                         "CommunityName": "Other Office 365 Services",
+                         "CommunityValue": "12076:5100",
+                         "CommunityPrefixes": [
+                           "13.107.6.171/32",
+                           "13.107.6.192/32",
+                           "13.107.9.192/32",
+                           "13.107.18.15/32",
+                           "13.107.140.6/32",
                        (... 省略)
+~~~
+
+**(出力例 2)**
+~~~
+$communities = Get-AzBgpServiceCommunity
+$communities.BgpCommunities | where { $_.CommunityName -eq 'Exchange' }
+
+ServiceSupportedRegion : Global
+CommunityName          : Exchange
+CommunityValue         : 12076:5010
+CommunityPrefixes      : {13.107.6.152/31, 13.107.18.10/31, 13.107.128.0/22, 23.103.160.0/20...}
+IsAuthorizedToUse      : False
+ServiceGroup           : O365
+CommunityPrefixesText  : [
+                           "13.107.6.152/31",
+                           "13.107.18.10/31",
+                           "13.107.128.0/22",
+                           "23.103.160.0/20",
+                           "40.92.0.0/15",
+                           "40.96.0.0/13",
+                           "40.104.0.0/15",
+                           "40.107.0.0/16",
+                           "52.96.0.0/14",
+                           "52.100.0.0/14",
+                           "52.238.78.88/32",
+                           "104.47.0.0/17",
+                           "131.253.33.215/32",
+                           "132.245.0.0/16",
+                           "150.171.32.0/22",
+                           "204.79.197.215/32",
+                           "13.107.128.0/24",
+                           "13.107.129.0/24",
+                           "150.171.32.0/24",
+                           "150.171.34.0/24",
+                           "150.171.35.0/24",
+                           "52.96.38.0/24"
+                         ]
 ~~~
 
 ## 宛先が FQDN の場合

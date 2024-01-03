@@ -12,6 +12,10 @@ Azure Storage では、4 つのデータ サービスが提供されており、
 
 本記事では、Azure Storage として提供している 4 つのデータ サービスやストレージ アカウントの概要について説明した上で、レプリケートされたデータがどのように配置されているのかを図を用いてご紹介します。
 
+> [!WARNING]
+> 2023 年 12 月時点において、大きいファイルの共有を有効にした Azure Files も GRS / GZRS オプションがプレビューとして使用できるようになっております。
+> https://learn.microsoft.com/ja-jp/azure/storage/files/geo-redundant-storage-for-large-file-shares
+
 <!-- more -->
 
 ---

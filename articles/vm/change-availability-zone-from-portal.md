@@ -69,9 +69,10 @@ VM の状態が [停止済み (割り当て解除)] になっていることを�
 
 
 必要項目を適宜入力し、[確認および作成] - [作成] をクリックします。
-"記憶域の種類" は、スナップショットを高パフォーマンスのディスクに保存する必要がある場合を除き、 [Standard_HDD] を選択します。
+"ストレージの種類" は、スナップショットを高パフォーマンスのディスクに保存する必要がある場合を除き、 [Standard HDD
+(ローカル冗長ストレージ)] を選択します。
 
-![](./change-availability-zone-from-portal/4.png)
+![](./change-availability-zone-from-portal/13.png)
 
 
 データディスクがある場合、データディスクについても同様にスナップショットを作成します。
@@ -95,7 +96,7 @@ OS ディスクのスナップショットを選択し、[+ ディスクの作�
 可用性ゾーンを希望のゾーン番号に変更します。
 こちらの手順では、元々選択していた "1" から "2" へとゾーンを変更しています。
 
-![](./change-availability-zone-from-portal/8.png)
+![](./change-availability-zone-from-portal/14.png)
 
 
 データ ディスクについても同様にディスクを作成します。
@@ -119,8 +120,9 @@ Azure ポータル上部の検索バーに "ディスク" と入力し、サー�
 データ ディスクは [既存のディスクの接続] より、スナップショットから作成したデータ ディスクを適宜選択します。
 VNET は同様に既存のものから選択出来ますが、NIC は新規に作成されます。
 
-![](./change-availability-zone-from-portal/11.png)
+![](./change-availability-zone-from-portal/15.png)
 
+![](./change-availability-zone-from-portal/16.png)
 
 作成された VM が、指定のゾーン番号で表示されていること(こちらの手順ではゾーン "2" )を確認します。
 

@@ -131,4 +131,4 @@ NIC が単数の時は NIC のパラメータに"プライマリ"という概念
 
 (その他、この記事を見に来た方に役立つかもしれないブログ)
 
-[Azure VM (ARM) の NIC 差し替えについて](https://www.syuheiuda.com/?p=4873)
+[Azure VM (ARM) の NIC 差し替えについて](https://jpaztech.github.io/blog/archive/azure-vm-arm-nic-change/)
