@@ -54,7 +54,7 @@ IMDS（Instance Metadata Service）は、現在実行中の VM に関する情�
 >■ご参考：Azure Metadata Service: Linux VM の Scheduled Events  
 >https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/scheduled-events
 
-それでは、Scheduled Eventsの確認を実際にやってましょう。  
+それでは、Scheduled Events の確認を実際にやってましょう。  
 以下のコマンドを Azure VM 上のゲスト OS 内にて実行します。  
 
 
