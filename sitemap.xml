@@ -205,13 +205,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/network-setting-of-disk-and-snapshot/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/</loc>
     
     <lastmod>2024-01-05</lastmod>
@@ -234,6 +227,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/marketplace-image-smb1/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/network-setting-of-disk-and-snapshot/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -478,14 +478,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
+    <loc>https://jpaztech.github.io/blog/other/azure_technical_support_explained/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/other/azure_technical_support_explained/</loc>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -507,6 +507,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/other/technical_support_engineer_explained/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -548,14 +555,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/tsg-azure-load-balancer-scoping/</loc>
+    <loc>https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/</loc>
+    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -584,13 +591,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/fw_notification_7kyk-r8g/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -786,13 +786,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-maintenance-for-node/</loc>
     
     <lastmod>2024-01-05</lastmod>
@@ -807,6 +800,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-sku-and-snat-options/</loc>
     
     <lastmod>2024-01-05</lastmod>
@@ -815,20 +815,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-lb-probe-failed-after-upgraded-to-k8s-1.24/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-kube-audit/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -856,7 +842,42 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-control-plane-node-communication/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-kube-audit/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/containers/aci-fix-ip/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/unexpected-resource-change/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/upgrade-backup-container-asm2arm/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/vm-outbound-traffic/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -940,21 +961,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/unexpected-resource-change/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/need-azurebox32-ico/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/upgrade-backup-container-asm2arm/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/vm-outbound-traffic/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/nic-property/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -1017,21 +1031,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/need-azurebox32-ico/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/nic-property/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/monitor-io-throttoling-on-win-vm-arm/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting2/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -1059,14 +1066,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/lb_appgw_traffic_different/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/important_information_p2s_cert/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting2/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/lb_appgw_traffic_different/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -1088,13 +1095,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/how-to-use-azure-automation/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/important_information_p2s_cert/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -1199,6 +1199,27 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/azure-datacenter-infrastructure-1/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/azure-lb-pre-warming-and-monitoring/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/azure-load-balancer-ip-fragmentation/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/azure-powershell-3-8-0-install/</loc>
     
     <lastmod>2024-01-05</lastmod>
@@ -1241,6 +1262,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/</loc>
+    
+    <lastmod>2024-01-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/automation-vm-start-deallocate/</loc>
     
     <lastmod>2024-01-05</lastmod>
@@ -1248,21 +1276,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/azure-datacenter-infrastructure-1/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/announcement-about-expressroute-deployment-model/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/azure-lb-pre-warming-and-monitoring/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/azure-load-balancer-ip-fragmentation/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/application-gateway-502-error-info/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -1291,27 +1312,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/announcement-about-expressroute-deployment-model/</loc>
-    
-    <lastmod>2024-01-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/application-gateway-502-error-info/</loc>
     
     <lastmod>2024-01-05</lastmod>
     
@@ -1635,6 +1635,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/tags/Other/</loc>
+    <lastmod>2024-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/tags/Support-Explained/</loc>
+    <lastmod>2024-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/tags/AzureFrontDoor/</loc>
     <lastmod>2024-01-05</lastmod>
     <changefreq>daily</changefreq>
@@ -1776,20 +1790,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/tags/TSG/</loc>
-    <lastmod>2024-01-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/Other/</loc>
-    <lastmod>2024-01-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/Support-Explained/</loc>
     <lastmod>2024-01-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1964,13 +1964,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/tags/SSL/</loc>
-    <lastmod>2024-01-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/tags/IaaS/</loc>
     <lastmod>2024-01-05</lastmod>
     <changefreq>daily</changefreq>
@@ -1979,6 +1972,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/tags/Microsoft-Azure/</loc>
+    <lastmod>2024-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/tags/SSL/</loc>
     <lastmod>2024-01-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
