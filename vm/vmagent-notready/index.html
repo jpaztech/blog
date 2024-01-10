@@ -6,19 +6,24 @@
   
   <title>「仮想マシン エージェントの状態が準備できていません」について | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。  2024&#x2F;01&#x2F;05Windows の場合はどうなの？とご質問をいただきましたので、加筆しました。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「仮想マシン エージェントの状態が準備できていません」について">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/vmagent-notready/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの大野です。 今回は、度々お問合せいただきます、こちらのメッセージについて、想定される原因およびその判断ポイント、対処についてご紹介いたします。  2024&#x2F;01&#x2F;05Windows の場合はどうなの？とご質問をいただきましたので、加筆しました。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready01.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready02.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready05.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready06.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready07.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready08.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready09.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready03.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/vmagent-notready/vmagent-notready04.png">
 <meta property="article:published_time" content="2022-08-18T06:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-09T06:04:11.994Z">
+<meta property="article:modified_time" content="2024-01-10T02:33:19.551Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="VM Agent">
@@ -108,13 +113,16 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+3c5b1af2-2d59-5d0a-927f-b03e9d3e8710%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%80%8C%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3+%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%AE%E7%8A%B6%E6%85%8B%E3%81%8C%E6%BA%96%E5%82%99%E3%81%A7%E3%81%8D%E3%81%A6%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93%E3%80%8D%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fvmagent-notready%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fvmagent-notready.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fvmagent-notready.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/vmagent-notready/" data-id="clr5y5duk00a40orm6npp77ic" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/vmagent-notready/" data-id="clr7621s100mn0noi83k0dbei" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
         <p>こんにちは、Azure テクニカル サポート チームの大野です。</p>
 <p>今回は、度々お問合せいただきます、こちらのメッセージについて、<br>想定される原因およびその判断ポイント、対処についてご紹介いたします。</p>
+<blockquote>
+<p>2024/01/05<br>Windows の場合はどうなの？とご質問をいただきましたので、<br>加筆しました。</p>
+</blockquote>
 <span id="more"></span>
 
 <p>結論からお伝えすると、このメッセージが表示されることが、<br>必ずしも対象仮想マシンへのネットワーク疎通が取れないことを意味するわけではありません。</p>
@@ -156,14 +164,25 @@
 
 <p>しばらくしてから、対象仮想マシンの概要欄を確認すると、エラーになっていることがご確認いただけるかと思います。<br>一方、この状態では特段問題なく、SSH 接続いただけるかと思います。</p>
 <p><img src="/blog/vm/vmagent-notready/vmagent-notready02.png"> </p>
+<p>Windows (Windows Server 2022 Datacenter Azure Edition) でも確認してみましょう。</p>
+<ul>
+<li>[Win] + [R] キーを同時押しし、ファイル名を開きます。</li>
+<li>“services.msc” と入力し、サービス一覧を開きます。</li>
+<li>“Windows Azure Guest Agent” を選択し、サービスを停止します。</li>
+</ul>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready05.png"></p>
+<p>その後しばらくした後、 Azure ポータルでも仮想マシン エージェントの停止が確認されます。</p>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready06.png"></p>
 <h3 id="判断いただくポイント"><a href="#判断いただくポイント" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>このシナリオでは、SSH / RDP 接続が可能なため、<br>まずは対象仮想マシンにアクセスいただき、仮想マシン エージェントのサービスが起動しているか確認いただければと思います。</p>
 <h3 id="想定される対処について"><a href="#想定される対処について" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>仮想マシン エージェントが停止している場合には、手動で起動を実施いたします。</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux-azure-guest-agent#troubleshoot-a-not-ready-status">準備ができていない状態のトラブルシューティング - Azure Linux エージェントのトラブルシューティング</a></li>
+<li>Linux 仮想マシンの場合; <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux-azure-guest-agent#troubleshoot-a-not-ready-status">準備ができていない状態のトラブルシューティング - Azure Linux エージェントのトラブルシューティング</a></li>
+<li>Windows 仮想マシンの場合; <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows-azure-guest-agent#step-3-check-whether-the-guest-agent-services-are-running">手順 3: ゲスト エージェント サービスが実行されているかどうかを確認する - Azure Windows VM エージェントの問題のトラブルシューティング</a></li>
 </ul>
 <p>もし、手動で起動してもエラーとなるようでしたら、仮想マシン エージェントを更新し、<br>再度お試しいただき、起動いただけるか、ご確認ください。</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/update-linux-agent">VM で Azure Linux エージェントを更新する方法</a></li>
+<li>Linux 仮想マシンの場合; <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/update-linux-agent">VM で Azure Linux エージェントを更新する方法</a></li>
+<li>Windows 仮想マシンの場合; <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-windows#manual-installation">手動のインストール - Azure Windows VM エージェントの概要</a></li>
 </ul>
 <h2 id="シナリオ2-Wire-Server-168-63-129-16-への疎通がゲストOS-でブロックされている"><a href="#シナリオ2-Wire-Server-168-63-129-16-への疎通がゲストOS-でブロックされている" class="headerlink" title="シナリオ2 : Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている"></a>シナリオ2 : Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている</h2><p>Wire Server (168.63.129.16) は、仮想マシン内からのみアクセス可能な仮想パブリック IP アドレスになります。<br>仮想マシン エージェントからこの IP アドレスに対して正常性の通知を行っています。</p>
 <p>この IP アドレスへの通信は、ネットワーク セキュリティ グループ (NSG) で制限することはできませんが、<br>ゲスト OS のファイアウォール機能にて制限は可能です。</p>
@@ -176,7 +195,18 @@
 <p>遮断されていることを確認します。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]# curl http://168.63.129.16/?comp=versions</span><br><span class="line">curl: (7) Failed to connect to 168.63.129.16 port 80: Connection timed out</span><br></pre></td></tr></table></figure>
 
-<p>しばらく経つと、こちらの場合も、Azure ポータルから仮想マシン エージェントに問題がある旨ご確認いただけるかと思います。</p>
+<p>しばらく経つと、こちらの場合も、Azure ポータルから仮想マシン エージェントに問題がある旨ご確認いただけるかと思います。<br>Windows 仮想マシンでも下記の手順にて同様の結果となります。</p>
+<ul>
+<li>[Win] + [R] キーを同時押しし、ファイル名を開きます。</li>
+<li>“wf.msc” と入力、Enter を押下し、Windows ファイアウォールの設定を開きます。</li>
+<li>“Outbound Rules” を選択し、右のメニューより “New Rule”を選択します。</li>
+<li>Rule Type は “Custom” にし、Scope にて remote IP address に <code>168.63.129.16</code> を指定し、ブロックします。</li>
+</ul>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready07.png"></p>
+<ul>
+<li>設定後、遮断されていることを確認します。</li>
+</ul>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready08.png"></p>
 <h3 id="判断いただくポイント-1"><a href="#判断いただくポイント-1" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>シナリオ1 と同様に、SSH 接続は引き続き可能なため、<br>対象仮想マシンに SSH 接続いただき、シナリオ1 の点を確認いただければと思います。</p>
 <p>こちらが問題なければ、168.63.129.16 に対してネットワーク疎通が取れているか確認いただくことで、<br>ご判断いただけるかと思います。</p>
 <ul>
@@ -184,6 +214,9 @@
 </ul>
 <p>その他ご判断いただく点といたしましては、仮想マシン エージェントのログ (<code>/var/log/waagent.log</code>) にて、<br>以下のようなログの出力からも Wire Server への疎通に問題があるということをご判断いただけるかと思います。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2022-08-11T07:27:33.509406Z ERROR SendTelemetryHandler ExtHandler Event: name=WALinuxAgent, op=ReportEventErrors, message=DroppedEventsCount: 1</span><br><span class="line">Reasons (first 5 errors): [ProtocolError] [Wireserver Exception] [HttpError] [HTTP Failed] POST http://168.63.129.16/machine -- IOError timed out -- 6 attempts made: Traceback (most recent call last):</span><br></pre></td></tr></table></figure>
+
+<p>Windows 仮想マシン エージェントの場合は、<code>C:\WindowsAzure\Logs\WaAppAgent.log</code> にて Wire Server への疎通に問題がある旨ご確認いただけます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[00000024] 2024-01-06T23:14:38.855Z [WARN]  GetMachineGoalState() failed with exception: System.AggregateException: One or more errors occurred. ---&gt; System.Net.Http.HttpRequestException: An error occurred while sending the request. ---&gt; System.Net.WebException: Unable to connect to the remote server ---&gt; System.Net.Sockets.SocketException: An attempt was made to access a socket in a way forbidden by its access permissions 168.63.129.16:80</span><br><span class="line">   at System.Net.Sockets.Socket.InternalEndConnect(IAsyncResult asyncResult)</span><br><span class="line">   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)</span><br></pre></td></tr></table></figure>
 
 <h3 id="想定される対処について-1"><a href="#想定される対処について-1" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>上記の例では、ゲスト OS 内のファイアウォールの対象ルールを無効化いただくことで、<br>対処いただけますが、一概にこの点だけ確認すればよいというご案内ができないため、<br>適宜どのような制限が設定されているかご確認ください。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel86 ~]<span class="comment"># firewall-cmd --direct --remove-rule ipv4 filter OUTPUT 0 -d  168.63.129.16/32 -j DROP</span></span><br><span class="line">success</span><br><span class="line">[root@rhel86 ~]<span class="comment"># firewall-cmd --direct --get-all-rules</span></span><br><span class="line">[root@rhel86 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
@@ -196,13 +229,21 @@
 <p>その後再度 SSH 接続を試みますが、失敗します。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh azureuser@xx.xxx.xxx.xxx</span><br><span class="line">ssh: connect to host xx.xxx.xxx.xxx port 22: Connection timed out</span><br></pre></td></tr></table></figure>
 
-<p>また、仮想マシン エージェントが準備できていない旨のエラー メッセージが Azure ポータル上でご確認いただけるかと思います。</p>
+<p>また、仮想マシン エージェントが準備できていない旨のエラー メッセージが Azure ポータル上でご確認いただけるかと思います。<br>次に Windows 仮想マシンの場合は以下の手順にてネットワーク アダプターを無効化できます。</p>
+<ul>
+<li>[Win] + [R] キーを同時押しし、ファイル名を開きます。。</li>
+<li>“ncpa.cpl” と入力、Enter を押下し、ネットワーク接続画面を開きます。</li>
+<li>“Ehternet” を選択し右クリック、”Disable” を選択します (シングル NIC 構成を前提とします)。</li>
+<li>それに伴い RDP 接続が失われます。</li>
+</ul>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready09.png"></p>
 <h3 id="判断いただくポイント-2"><a href="#判断いただくポイント-2" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>こちらは対象仮想マシンのブート診断から参照可能なシリアル ログにて、下記のようにログイン プロンプトが表示されているかご確認いただければと思います。<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
 <p><img src="/blog/vm/vmagent-notready/vmagent-notready03.png"> </p>
 <p>上記より、ゲスト OS としては稼働しているものの、ネットワークとして疎通が取れていないということが想定されます (シナリオ4 との切り分け)。</p>
 <h3 id="想定される対処について-2"><a href="#想定される対処について-2" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>ゲスト OS にてネットワークの疎通の問題においても、種々原因が上げられますため、<br>必ずこれを行えば解決するというものではございませんが、以下のネットワーク インターフェースのリセットや、<br>IP アドレスの固定化が設定されていないかご確認いただければと思います。</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/reset-network-interface-azure-linux-vm">Azure Linux VM のネットワーク インターフェイスをリセットする</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/reset-network-interface">Azure Windows VM のネットワーク インターフェイスをリセットする方法</a></li>
 </ul>
 <p> 上記と併せ、下記ドキュメントの “VM に接続できない” より、Linux / Windows それぞれ特化したトラブルシューティング手順をご確認ください。</p>
 <ul>
@@ -210,8 +251,8 @@
 </ul>
 <h2 id="シナリオ4-ゲスト-OS-がハング等により稼働していない"><a href="#シナリオ4-ゲスト-OS-がハング等により稼働していない" class="headerlink" title="シナリオ4 : ゲスト OS がハング等により稼働していない"></a>シナリオ4 : ゲスト OS がハング等により稼働していない</h2><p>ゲスト OS が動作しておらず、結果その上で仮想マシン エージェントが動作していないというシナリオになります。</p>
 <h3 id="判断いただくポイント-3"><a href="#判断いただくポイント-3" class="headerlink" title="判断いただくポイント"></a>判断いただくポイント</h3><p>シナリオ3 と同様、シリアル ログをご確認いただき、ログイン プロンプトが返ってきているかご確認いただき、<br>もしそうなっていないのであれば、ゲスト OS で正常にブートしていない可能性があります<br>(Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。</p>
-<p>下記の例では、存在しないマウントポイントをブート時にマウントしようとしてしまい、<br>Emergency モードで起動している状況になります。</p>
-<p><img src="/blog/vm/vmagent-notready/vmagent-notready04.png"> </p>
+<p>下記の例では、存在しないマウントポイントをブート時にマウントしようとしてしまい、<br>Emergency モードで起動している状況になります (Windows では、ブルースクリーン等)。</p>
+<p><img src="/blog/vm/vmagent-notready/vmagent-notready04.png"></p>
 <h3 id="想定される対処について-3"><a href="#想定される対処について-3" class="headerlink" title="想定される対処について"></a>想定される対処について</h3><p>再起動/再デプロイにより、復旧いただけるかまずはご確認いただくことと、<br>取得済みのバックアップ データから復旧いただくこととなります。</p>
 <p>もし上記施策が当てはまらない場合は、下記仮想マシンのトラブルシューティング ガイドにあります、”VM のデプロイ、アップグレード、移行” の “VM がブートしていない” に、<br>Linux / Windows それぞれ特化したトラブルシューティング手順があるので、ご参考いただければと思います。<br>また、シリアルコンソール機能のご利用が必要となりましたら、同じく下記ドキュメントの “リモート トラブルシューティング ツール” の “シリアル コンソール” を併せてご確認いただければと思います。</p>
 <ul>
