@@ -11,6 +11,10 @@ tags:
 今回は、度々お問合せいただきます、こちらのメッセージについて、
 想定される原因およびその判断ポイント、対処についてご紹介いたします。
 
+>2024/01/05
+>Windows の場合はどうなの？とご質問をいただきましたので、
+>加筆しました。
+
 <!-- more -->
 
 結論からお伝えすると、このメッセージが表示されることが、
@@ -76,6 +80,17 @@ tags:
 
 ![](./vmagent-notready/vmagent-notready02.png) 
 
+Windows (Windows Server 2022 Datacenter Azure Edition) でも確認してみましょう。
+
+* [Win] + [R] キーを同時押しし、ファイル名を開きます。
+* "services.msc" と入力し、サービス一覧を開きます。
+* "Windows Azure Guest Agent" を選択し、サービスを停止します。
+
+![](./vmagent-notready/vmagent-notready05.png)
+
+その後しばらくした後、 Azure ポータルでも仮想マシン エージェントの停止が確認されます。
+
+![](./vmagent-notready/vmagent-notready06.png)
 
 ### 判断いただくポイント
 
@@ -86,12 +101,14 @@ tags:
 
 仮想マシン エージェントが停止している場合には、手動で起動を実施いたします。
 
- - [準備ができていない状態のトラブルシューティング - Azure Linux エージェントのトラブルシューティング](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux-azure-guest-agent#troubleshoot-a-not-ready-status)
+ - Linux 仮想マシンの場合; [準備ができていない状態のトラブルシューティング - Azure Linux エージェントのトラブルシューティング](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux-azure-guest-agent#troubleshoot-a-not-ready-status)
+ - Windows 仮想マシンの場合; [手順 3: ゲスト エージェント サービスが実行されているかどうかを確認する - Azure Windows VM エージェントの問題のトラブルシューティング](https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows-azure-guest-agent#step-3-check-whether-the-guest-agent-services-are-running)
 
 もし、手動で起動してもエラーとなるようでしたら、仮想マシン エージェントを更新し、
 再度お試しいただき、起動いただけるか、ご確認ください。
 
- - [VM で Azure Linux エージェントを更新する方法](https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/update-linux-agent)
+ - Linux 仮想マシンの場合; [VM で Azure Linux エージェントを更新する方法](https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/update-linux-agent)
+ - Windows 仮想マシンの場合; [手動のインストール - Azure Windows VM エージェントの概要](https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-windows#manual-installation)
 
 ## シナリオ2 : Wire Server (168.63.129.16) への疎通がゲストOS でブロックされている
 
@@ -142,6 +159,18 @@ curl: (7) Failed to connect to 168.63.129.16 port 80: Connection timed out
 ```
 
 しばらく経つと、こちらの場合も、Azure ポータルから仮想マシン エージェントに問題がある旨ご確認いただけるかと思います。
+Windows 仮想マシンでも下記の手順にて同様の結果となります。
+
+* [Win] + [R] キーを同時押しし、ファイル名を開きます。
+* "wf.msc" と入力、Enter を押下し、Windows ファイアウォールの設定を開きます。
+* "Outbound Rules" を選択し、右のメニューより "New Rule"を選択します。
+* Rule Type は "Custom" にし、Scope にて remote IP address に ```168.63.129.16``` を指定し、ブロックします。
+
+![](./vmagent-notready/vmagent-notready07.png)
+
+* 設定後、遮断されていることを確認します。
+
+![](./vmagent-notready/vmagent-notready08.png)
 
 ### 判断いただくポイント
 
@@ -159,6 +188,14 @@ curl: (7) Failed to connect to 168.63.129.16 port 80: Connection timed out
 ```sh
 2022-08-11T07:27:33.509406Z ERROR SendTelemetryHandler ExtHandler Event: name=WALinuxAgent, op=ReportEventErrors, message=DroppedEventsCount: 1
 Reasons (first 5 errors): [ProtocolError] [Wireserver Exception] [HttpError] [HTTP Failed] POST http://168.63.129.16/machine -- IOError timed out -- 6 attempts made: Traceback (most recent call last):
+```
+
+Windows 仮想マシン エージェントの場合は、```C:\WindowsAzure\Logs\WaAppAgent.log``` にて Wire Server への疎通に問題がある旨ご確認いただけます。
+
+```
+[00000024] 2024-01-06T23:14:38.855Z [WARN]  GetMachineGoalState() failed with exception: System.AggregateException: One or more errors occurred. ---> System.Net.Http.HttpRequestException: An error occurred while sending the request. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: An attempt was made to access a socket in a way forbidden by its access permissions 168.63.129.16:80
+   at System.Net.Sockets.Socket.InternalEndConnect(IAsyncResult asyncResult)
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
 ```
 
 ### 想定される対処について
@@ -199,6 +236,14 @@ ssh: connect to host xx.xxx.xxx.xxx port 22: Connection timed out
 ```
 
 また、仮想マシン エージェントが準備できていない旨のエラー メッセージが Azure ポータル上でご確認いただけるかと思います。
+次に Windows 仮想マシンの場合は以下の手順にてネットワーク アダプターを無効化できます。
+
+* [Win] + [R] キーを同時押しし、ファイル名を開きます。。
+* "ncpa.cpl" と入力、Enter を押下し、ネットワーク接続画面を開きます。
+* "Ehternet" を選択し右クリック、"Disable" を選択します (シングル NIC 構成を前提とします)。
+* それに伴い RDP 接続が失われます。
+
+![](./vmagent-notready/vmagent-notready09.png)
 
 ### 判断いただくポイント
 
@@ -216,6 +261,7 @@ ssh: connect to host xx.xxx.xxx.xxx port 22: Connection timed out
 IP アドレスの固定化が設定されていないかご確認いただければと思います。
 
  - [Azure Linux VM のネットワーク インターフェイスをリセットする](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/reset-network-interface-azure-linux-vm)
+ - [Azure Windows VM のネットワーク インターフェイスをリセットする方法](https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/reset-network-interface)
 
  上記と併せ、下記ドキュメントの "VM に接続できない" より、Linux / Windows それぞれ特化したトラブルシューティング手順をご確認ください。
 
@@ -225,7 +271,6 @@ IP アドレスの固定化が設定されていないかご確認いただけ�
 
 ゲスト OS が動作しておらず、結果その上で仮想マシン エージェントが動作していないというシナリオになります。
 
-
 ### 判断いただくポイント
 
 シナリオ3 と同様、シリアル ログをご確認いただき、ログイン プロンプトが返ってきているかご確認いただき、
@@ -233,10 +278,9 @@ IP アドレスの固定化が設定されていないかご確認いただけ�
 (Windows の場合には、ブート診断機能で、スクリーンショットにロック画面が表示いただけるかの確認になります)。
 
 下記の例では、存在しないマウントポイントをブート時にマウントしようとしてしまい、
-Emergency モードで起動している状況になります。
+Emergency モードで起動している状況になります (Windows では、ブルースクリーン等)。
 
-![](./vmagent-notready/vmagent-notready04.png) 
-
+![](./vmagent-notready/vmagent-notready04.png)
 
 ### 想定される対処について
 

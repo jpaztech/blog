@@ -211,7 +211,7 @@ ACR ビルドでは、コンテナー イメージの作成に使用していた
 ACR に Dockerfile を配置するにあたり、オープン ソースにて開発がされている ORAS を使用します。
 簡単な使用方法につきましては、下記ドキュメントでも紹介されておりますので、ご参考ください。
 　ご参考情報：Azure コンテナー レジストリを使って OCI 成果物をプッシュおよびプルする
-　https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-oci-artifact
+　https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-oci-artifacts
 
 それでは、ORAS を使って Dockerfile を ACR にプッシュします。
 ```shell
@@ -231,8 +231,8 @@ $ az acr task create -t helloworld --registry blogbuildtest --name helloworldtas
 
 先ほど実行したコマンドにて、今回作成した ACR タスクにはシステム割り当てマネージド ID を利用するよう設定しているため、このシステム割り当てマネージド ID に必要な権限 (ACRPUSH) を割り当てます。
 ```shell
-$ principalID=$(az acr task show --name helloworldtask --registry tasktest --query identity.principalId --output tsv -g blog 
-$ baseregID=$(az acr show --name blogbuildtest --query id --output tsv -g blog )
+$ principalID=$(az acr task show --name helloworldtask --registry tasktest --query identity.principalId --output tsv -g blog)
+$ baseregID=$(az acr show --name blogbuildtest --query id --output tsv -g blog)
 $ az role assignment create --assignee $principalID --scope $baseregID --role acrpush
 ```
 次に、ACR タスク “helloworldtask” に対して  ACR “blogbuildtest” へのアクセスにマネージド ID を利用するよう設定を行います。
