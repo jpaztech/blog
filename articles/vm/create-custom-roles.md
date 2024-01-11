@@ -1,6 +1,6 @@
 --- 
-title: 特定の操作におけるカ Azure スタム ロールの作成について 
-date: 2024-01-19 10:00:00 
+title: 特定の操作における Azure カスタム ロールの作成について 
+date: 2024-01-22 10:00:00 
 tags: 
   - VM 
   - RBAC 
@@ -12,7 +12,7 @@ tags:
 - [1.Azure カスタム ロールについて](./#1azure-%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0-%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6) 
 - [2.カスタム ロールを作成する](./#2%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0-%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B) 
 - [3.補足情報 - ブラウザー トレースにて必要となるリソース プロバイダー操作を把握する](./#3%E8%A3%9C%E8%B6%B3%E6%83%85%E5%A0%B1---%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%83%BC-%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B9%E3%81%AB%E3%81%A6%E5%BF%85%E8%A6%81%E3%81%A8%E3%81%AA%E3%82%8B%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9-%E3%83%97%E3%83%AD%E3%83%90%E3%82%A4%E3%83%80%E3%83%BC%E6%93%8D%E4%BD%9C%E3%82%92%E6%8A%8A%E6%8F%A1%E3%81%99%E3%82%8B) 
-- [4.ご留意点](リンク) 
+- [4.ご留意点](./#4-%E3%81%94%E7%95%99%E6%84%8F%E7%82%B9) 
 
 ## 1.Azure カスタム ロールについて 
 
@@ -21,10 +21,10 @@ Azure には既定で各リソース操作（アクション）の許可をま�
 
 参考）Azure 組み込みロール 
 https://learn.microsoft.com/ja-jp/azure/role-based-access-control/built-in-roles 
-> 抜粋 
+> (抜粋) 
 > Azure ロールベースのアクセス制御 (Azure RBAC) には、ユーザー、グループ、サービス プリンシパル、マネージド ID に割り当てることのできる Azure 組み込みロールがいくつかあります。 ロールの割り当ては、Azure リソースへのアクセスを制御する方法です。 組み込みロールが組織の特定のニーズを満たさない場合は、独自の Azure カスタム ロールを作成することができます。 ロールの割り当て方法については、「Azure ロールを割り当てる手順」を参照してください。 
 
-上記のドキュメントにて各組み込みロールにで、実際にどのアクションが許可されているのかも確認が可能です。 
+上記のドキュメントにて各組み込みロールで、実際にどのアクションが許可されているのかも確認が可能です。 
 
 ただし、リソースへの操作に対して最低限必要となるアクションの組み合わせについては、公開ドキュメントに明記されていないこともございますので、お客様のご要件に合わせてトライ アンド エラーしながら最終的に必要となるアクションを確認し、カスタム ロールを作成いただくこととなります。 
 
@@ -47,12 +47,21 @@ https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provi
 
 ![](./create-custom-roles/02.png)
 
-必要となるアクションについては、既にアクションが許可されたユーザーで実際の操作を行った際に記録されるアクティビティ ログの action 項目をご確認いただくことも有用です。 
+必要となるアクションについては、既に権限のあるユーザーで実際の操作を行った際に記録されるアクティビティ ログの action 項目をご確認いただくことも有用です。 
 
 ![](./create-custom-roles/03.png)
  
 
 ### 手順 2.カスタム ロールを作成します。 
+
+カスタム ロールの作成手順については、以下のブログ記事や公開ドキュメントをご参照ください。 
+
+参考）カスタムロールを作成する手順 
+https://jpaztech.github.io/blog/vm/rbac-vm-start-stop-restart/#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E6%89%8B%E9%A0%86 
+参考）Azure portal を使用して Azure カスタム ロールを作成または更新する
+https://learn.microsoft.com/ja-jp/azure/role-based-access-control/custom-roles-portal
+参考）カスタム ロールの作成手順 
+https://learn.microsoft.com/ja-jp/azure/role-based-access-control/custom-roles 
 
 手順 1 で確認した 'Microsoft.Compute/snapshots/write' アクションのみを許可したカスタム ロールを作成します。 
 
@@ -67,15 +76,6 @@ https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provi
 特定のユーザー testuser01 に当該カスタム ロールを割り当てます。 
 
 ![](./create-custom-roles/07.png)
-
-カスタム ロールの作成手順については、以下のブログ記事や公開ドキュメントをご参照ください。 
-
-参考）カスタムロールを作成する手順 
-https://jpaztech.github.io/blog/vm/rbac-vm-start-stop-restart/#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E6%89%8B%E9%A0%86 
-参考）Azure portal を使用して Azure カスタム ロールを作成または更新する
-https://learn.microsoft.com/ja-jp/azure/role-based-access-control/custom-roles-portal
-参考）カスタム ロールの作成手順 
-https://learn.microsoft.com/ja-jp/azure/role-based-access-control/custom-roles 
 
 ### 手順 3.動作確認をします。 
 
@@ -164,6 +164,7 @@ https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provi
 ![](./create-custom-roles/19.png)
 
 最終的にユーザー testuser01 に対して必要となったアクションは以下となります。 
+
 | アクション | 説明 | 
 | */read | 「閲覧者」ロール | 
 | Microsoft.Compute/snapshots/write | 新しいスナップショットを作成するか、既存のスナップショットを更新します。 |  
@@ -179,7 +180,7 @@ https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provi
 
 ### 手順 1. ブラウザー トレース (HAR トレース、F12 トレース) を取得します。 
 
-既にアクションを持っているユーザーにてスナップショットを作成する際に、ブラウザー トレースを取得します。 
+既に権限を持っているユーザーにてスナップショットを作成する際に、ブラウザー トレースを取得します。 
 
  ![](./create-custom-roles/20.png)
 
@@ -200,7 +201,7 @@ Microsoft.Resources/deployments
 Microsoft.Compute/snapshots 
 Microsoft.Compute/disks 
 
-さらに細かなアクセスアクションまでを把握することは叶いませんが、カスタム ロールを作成いただく際にどのリソース プロバイダー操作が必要となるかを把握することができます。 
+さらに細かなアクションまでを把握することは叶いませんが、カスタム ロールを作成いただく際にどのリソース プロバイダー操作が必要となるかを把握することができます。 
 
 ### 4. ご留意点 
 
