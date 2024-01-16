@@ -61,6 +61,8 @@ Azure が提供している他のリソース監視サービスとの違いを�
 >　　・　ゲスト OS の起動が完了しているか
 >　　・　進行中の定期的なメンテナンスはあるか
 
+>Resource Health 仮想マシンの正常性に関する注釈  
+>[https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-vm-annotation](https://learn.microsoft.com/ja-jp/azure/service-health/resource-health-vm-annotation)
 
 ### ■ サービス正常性アラート
 
