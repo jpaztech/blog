@@ -10,8 +10,9 @@ tags:
 
 <!-- more -->
 
-Azure Firewall の SKU を Premium から Standard にダウングレードすることは可能でございますが、Firewall Policy の ポリシー レベルを Premium から Standard に変更することはできません。
-そのため、Azure Firewall の SKU を変更する前に Firewall Policy を Standard で再作成する必要ございます。
+Azure Firewall のイージー アップグレード/ダウングレード 機能の導入により、Standard と Premiume の SKU アップグレード/ダウングレードが容易に行えるようになりました。
+しかしながら、Premium から Standard へのダウングレードに当たっては、Firewall Policy の ポリシー レベルを Premium から Standard へ変更することができません。
+そのため、Azure Firewall の SKU を変更する前に Firewall Policy を Standard で再作成する必要があります。
 Azure Firewall の SKU を Premium から Standard にダウングレードする手順は以下の通りとなります。
  
 ## Azure Firewall の SKU 変更手順
