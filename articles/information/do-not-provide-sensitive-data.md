@@ -64,9 +64,9 @@ if ($connectTestResult.TcpTestSucceeded) {
 
 ### SAS キーを用いたストレージアカウントの Blob コンテナへのアクセスについてお問い合わせする際の例（SAS キーをマスク）
 
-```http
+`
 https://test-storage-account.blob.core.windows.net/container?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2023-12-29T12:05:45Z&st=2023-12-29T04:05:45Z&spr=https&sig=<●●●ストレージアカウントの SAS キーなのでマスクします●●●>
-```
+`
 
 > [!TIP]
 > Azure ストレージアカウントのアクセスキーについてご懸念がございます場合は、以下の公開ドキュメントの通りローテーションを行うことが可能です。
