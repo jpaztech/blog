@@ -4,8 +4,39 @@ date: 2023-12-28 14:30:00
 tags:
   - Network
 ---
+
 こんにちは、Azure テクニカル サポート チームです。  
-「2024 年 10 月 31 日までに、各種 Azure サービスとの通信に TLS 1.2 を使用していることを確認してください。」（Ensure your resources that interact with Azure services are using TLS 1.2 by 31 October 2024）の通知について、Azure Network 製品の対応状況、及びお客様に推奨なアクションをご紹介致します。 
+「2024 年 10 月 31 日までに、各種 Azure サービスとの通信に TLS 1.2 を使用していることを確認してください。」（Ensure your resources that interact with Azure services are using TLS 1.2 by 31 October 2024）の通知について補足させて頂きます。
+
+メールに記載されておりますとおり、セキュリティとコンプライアンスの観点からレガシー TLS 1.0/1.1 は既知の脆弱性が存在しており、Azure 上のマネージド サービス全般におきまして、2024 年 10 月 31 日以降は TLS 1.2 以上の接続が必須となるよう変更されるものです。
+
+## TLS バージョンとは
+TLS（Transport Layer Security）は、インターネット上でデータを安全に送受信するための暗号化する仕組みとして、主に TLS 1.0, TLS 1.1、TLS 1.2 及び TLS 1.3 バージョンが存在していますが、[RFC 8996](https://datatracker.ietf.org/doc/html/rfc8996) により、セキュリティ脆弱性の原因で、TLS 1.0 及び TLS 1.1 の使用は既に廃止されています。Azure サービスでは、互換性の理由で TLS 1.0 及び TLS 1.1 が引き続き動作できますが、早めに TLS 1.2 以降のバージョンへ移行するのは強く推奨しております。
+
+## TLS 接続時のバージョン選定動作について
+TLS のバージョンはお客様の IaaS 上の仮想マシン OS の設定、ならびにクライアント OS に依存します。こちらの設定確認をし、TLS 1.2 以上を使用できる状態としていただくことで、自動的に TLS の最上位バージョンでの接続を試みることとなります。
+
+### Windows OS の場合
+[こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#supported-versions-of-tls-in-windows)の記載通り、Windows 8/Windows Server 2012 以降では、既に TLS 1.2 をサポートしているため、基本的にご対応頂く必要はありません。 Windows 2008/ Windows 7 などの古い OS でも、プログラム更新すれば TlS 1.2 を使えるようになります。 
+
+また、特定の TLS バージョンを有効化/無効化されたい場合は、[こちらの記事](https://jpwinsup.github.io/blog/2021/12/22/PublicKeyInfrastructure/SSLTLSConnection/tls-registry-settings/)の通りご対応ください。 
+
+参考として、Android など他のクライアント対応状況は[こちら](https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#appendix-a-handshake-simulation)の公開ドキュメントに開示されています。 
+
+### Chrome/Edge などのブラウザの場合
+最新バージョンの各ブラウザでは、基本的に TLS 1.2 以降のバージョンが有効化されているため、ご対応頂く必要はありませんが、
+特定の TLS バージョンを有効化/無効化されたい場合は、各ブラウザ観点でご確認頂く必要がございます。
+Edgeの場合は[こちらの記事](https://learn.microsoft.com/en-us/answers/questions/487582/is-there-a-way-to-emable-tls-1-0-and-or-1-2-on-edg)の通り対応できます。
+
+### それ以外の場合
+上記以外に、Java などプログラミング言語でお客様が開発したアプリケーションで Azure サービスへ接続する場合は、Windows OS の TLS レジストリ設定を参照せず、独自の設定通り接続する場合がありますので、お客様側にアプリケーション観点で TLS の通信バージョンご確認及びご対応頂く必要があります。
+
+### TLS チェッカー ツール
+[こちら](https://clienttest.ssllabs.com:8443/ssltest/viewMyClient.html)のような外部の TLS チェッカー ツールをご活用いただき、想定されるクライアントからアクセスをして TLS バージョンを確認いただくということも有効です。
+
+## Azure Network製品の対応状況及び推奨アクションについて
+以下にて Azure Network 製品の対応状況、及びお客様に推奨なアクションをご紹介致します。 
+もしご確認されたい製品が入っていなく、個別にご確認されたい場合は、各製品に対してサポート リクエストを起票してください。
 
 > [!WARNING]
 > 以下各製品の部分に案内する対処目処はあくまで目途であり、実際には日程が多少前後する可能性があります。予めご了承ください。
@@ -51,6 +82,10 @@ TLS インスペクション機能を使用する場合は、[こちらの公開
 
 Front Door では 2024 年 10 月 31 日以降も引き続き TLS1.0 から TLS1.2 まで利用できますが、セキュリティ強化のためには TLS1.2 のご利用を推奨いたします。 
 また、TLS1.3 のサポートに関しましては、2024 年 2 月 12 日より Front Door の全 SKU 及びAzure CDN Standard from Microsoft (classic) に順次サポートする予定です。
+
+## Private Link Service または Private Endpoint  
+Private Link Service と Private Endpoint のサービスでは、TLS プロトコルは終端しません。
+Private Link Service と Private Endpoint を利用した通信の場合には、クライアントとサーバーの通信上の両端で TLS ネゴシエーションが実施されます。クライアントおよびサーバーとなるサービスの観点でご確認頂く必要があります。 
 
 ## Bastion
 Bastion はお客様側で証明書の管理運用を意識する必要のないサービスとして、[以下の公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/bastion/bastion-overview#key)の記載通り、 TLS 1.2 のみをサポートしておりますので、お客様側の対処が不要です。 
