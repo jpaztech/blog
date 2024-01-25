@@ -18,8 +18,7 @@ TLS のバージョンはお客様の IaaS 上の仮想マシン OS の設定、
 
 ### Windows OS の場合
 [こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#supported-versions-of-tls-in-windows)の記載通り、Windows 8/Windows Server 2012 以降では、既に TLS 1.2 をサポートしているため、基本的にご対応頂く必要はありません。 Windows 2008/ Windows 7 などの古い OS でも、プログラム更新すれば TlS 1.2 を使えるようになります。 
-
-また、特定の TLS バージョンを有効化/無効化されたい場合は、[こちらの記事](https://jpwinsup.github.io/blog/2021/12/22/PublicKeyInfrastructure/SSLTLSConnection/tls-registry-settings/)の通りご対応ください。 
+また、特定の TLS バージョンを有効化/無効化されたい場合は、[こちらの記事](https://jpwinsup.github.io/blog/2021/12/22/PublicKeyInfrastructure/SSLTLSConnection/tls-registry-settings/)の通りご対応ください。
 
 参考として、Android など他のクライアント対応状況は[こちら](https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#appendix-a-handshake-simulation)の公開ドキュメントに開示されています。 
 
