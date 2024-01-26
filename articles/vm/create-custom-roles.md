@@ -9,10 +9,10 @@ tags:
 こんにちは、Azure テクニカル サポート チームの木下です。 
 今回は特定の操作における Azure カスタム ロールの作成手順をご紹介いたします。 
 
-- [1.Azure カスタム ロールについて](./#1azure-%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0-%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6) 
-- [2.カスタム ロールを作成する](./#2%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0-%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B) 
-- [3.補足情報 - ブラウザー トレースにて必要となるリソース プロバイダー操作を把握する](./#3%E8%A3%9C%E8%B6%B3%E6%83%85%E5%A0%B1---%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%83%BC-%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B9%E3%81%AB%E3%81%A6%E5%BF%85%E8%A6%81%E3%81%A8%E3%81%AA%E3%82%8B%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9-%E3%83%97%E3%83%AD%E3%83%90%E3%82%A4%E3%83%80%E3%83%BC%E6%93%8D%E4%BD%9C%E3%82%92%E6%8A%8A%E6%8F%A1%E3%81%99%E3%82%8B) 
-- [4.ご留意点](./#4-%E3%81%94%E7%95%99%E6%84%8F%E7%82%B9) 
+- 1.Azure カスタム ロールについて
+- 2.カスタム ロールを作成する
+- 3.補足情報 - ブラウザー トレースにて必要となるリソース プロバイダー操作を把握する
+- 4.ご留意点
 
 ## 1.Azure カスタム ロールについて 
 
@@ -119,6 +119,7 @@ OS ディスクのスナップショットを取得するため、対象とな�
 https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provider-operations#microsoftresources
 
 | アクション | 説明 | 
+|:-|:-|
 | Microsoft.Resources/deployments/validate/action | デプロイを検証します。 | 
 
 手順 2 で作成したカスタム ロールに 'Microsoft.Resources/deployments/validate/action' アクションを追加します。 
@@ -138,6 +139,7 @@ https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provi
 https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provider-operations#microsoftresources
 
 | アクション | 説明 | 
+|:-|:-|
 | Microsoft.Resources/deployments/write | デプロイを作成または更新します。 | 
 
 手順 2 で作成したカスタム ロールに 'Microsoft.Resources/deployments/write' アクションを追加します。 
@@ -154,6 +156,7 @@ https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provi
 https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provider-operations#microsoftcompute
 
 | アクション | 説明 | 
+|:-|:-|
 | Microsoft.Compute/disks/beginGetAccess/action | BLOB へのアクセス用にディスクの SAS URI を取得します。 | 
 
 手順 2 で作成したカスタム ロールに "Microsoft.Compute/disks/beginGetAccess/action" を追加します。 
@@ -170,6 +173,7 @@ https://learn.microsoft.com/ja-jp/azure/role-based-access-control/resource-provi
 最終的にユーザー testuser01 に対して必要となったアクションは以下となります。 
 
 | アクション | 説明 | 
+|:-|:-|
 | */read | 「閲覧者」ロール | 
 | Microsoft.Compute/snapshots/write | 新しいスナップショットを作成するか、既存のスナップショットを更新します。 |  
 | Microsoft.Resources/deployments/validate/action | デプロイを検証します。 | 
