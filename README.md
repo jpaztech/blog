@@ -90,6 +90,7 @@
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
 - [東日本リージョンでの Azure Firewall のゾーン冗長に関するアナウンスの補足 (Tracking ID:7KYK-R8G)](./articles/network/fw_notification_7kyk-r8g.md)
 - [Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題](./articles/network/afd-connection-issue.md)
+- [Azure Firewall の SKU をダウングレードする方法](./articles/network/fw_sku_downgrade.md)
 
 ## Containers
 
