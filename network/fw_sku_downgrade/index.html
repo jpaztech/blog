@@ -4,26 +4,21 @@
   <meta charset="utf-8">
   
   
-  <title>誤って削除してしまったストレージ アカウントを復旧する | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure Firewall の SKU をダウングレードする方法 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="この記事は Microsoft Azure Tech Advent Calendar 2020 の 20 日目の記事になります。 こんにちは、Azure テクニカル サポート チームの安田です。 今回は誤って削除してしまったストレージ アカウントの復元を行う方法をご案内します。以前までは弊サポート部門にお問い合わせいただき、数営業日かけて復旧するという流れでしたが、最近のアップデートにてお客様にて">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの薄井です。今回は Azure Firewall の SKU を Premium から Standard にダウングレードする方法ついて紹介します。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="誤って削除してしまったストレージ アカウントを復旧する">
-<meta property="og:url" content="https://jpaztech.github.io/blog/storage/storageAccount-Restore/index.html">
+<meta property="og:title" content="Azure Firewall の SKU をダウングレードする方法">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/fw_sku_downgrade/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="この記事は Microsoft Azure Tech Advent Calendar 2020 の 20 日目の記事になります。 こんにちは、Azure テクニカル サポート チームの安田です。 今回は誤って削除してしまったストレージ アカウントの復元を行う方法をご案内します。以前までは弊サポート部門にお問い合わせいただき、数営業日かけて復旧するという流れでしたが、最近のアップデートにてお客様にて">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの薄井です。今回は Azure Firewall の SKU を Premium から Standard にダウングレードする方法ついて紹介します。">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageAccount-Restore/Storage3.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageAccount-Restore/Storage4.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageAccount-Restore/Storage9.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageAccount-Restore/Storage7.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageAccount-Restore/Storage10.png">
-<meta property="article:published_time" content="2020-12-18T21:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-28T06:14:27.681Z">
+<meta property="article:published_time" content="2024-01-24T05:30:00.000Z">
+<meta property="article:modified_time" content="2024-01-28T06:14:27.637Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Storage">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="Azure Firewall">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/storage/storageAccount-Restore/Storage3.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -85,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-storage/storageAccount-Restore" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-network/fw_sku_downgrade" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -94,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      誤って削除してしまったストレージ アカウントを復旧する
+      Azure Firewall の SKU をダウングレードする方法
     </h1>
   
 
@@ -102,77 +97,35 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2020-12-18T21:00:00.000Z" itemprop="datePublished">2020-12-19</time>
+  <time datetime="2024-01-24T05:30:00.000Z" itemprop="datePublished">2024-01-24</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+ecba9d83-9103-5add-b298-88c85f3e47bd%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E8%AA%A4%E3%81%A3%E3%81%A6%E5%89%8A%E9%99%A4%E3%81%97%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E5%BE%A9%E6%97%A7%E3%81%99%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fstorage%2FstorageAccount-Restore%2F%29%0A*+Content+Source%3A+%5Barticles%2Fstorage%2FstorageAccount-Restore.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fstorage%2FstorageAccount-Restore.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+26e75532-c808-55f0-b829-236bcd9de350%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Firewall+%E3%81%AE+SKU+%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Ffw_sku_downgrade%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Ffw_sku_downgrade.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Ffw_sku_downgrade.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/storage/storageAccount-Restore/" data-id="clrx3vsxh006p0npa1qle1qx1" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/fw_sku_downgrade/" data-id="clrx3vsx9005y0npa7v7y5o0h" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>この記事は <a target="_blank" rel="noopener" href="https://qiita.com/advent-calendar/2020/microsoft-azure-tech">Microsoft Azure Tech Advent Calendar 2020</a> の 20 日目の記事になります。</p>
-<p>こんにちは、Azure テクニカル サポート チームの安田です。</p>
-<p>今回は誤って削除してしまったストレージ アカウントの復元を行う方法をご案内します。以前までは弊サポート部門にお問い合わせいただき、数営業日かけて復旧するという流れでしたが、最近のアップデートにてお客様にて迅速に復元を行うことができるようになりました。ただし、本手順を用いても復元が叶わない場合もありますので、予めご了承ください。</p>
+        <p>こんにちは、Azure テクニカル サポート チームの薄井です。<br>今回は Azure Firewall の SKU を Premium から Standard にダウングレードする方法ついて紹介します。</p>
 <span id="more"></span>
 
-<p>また、本手順は現段階ではプレビューの機能となりますので、ポータルの UI 等が変更される可能性があります。こちらも予めご了承ください。</p>
-<blockquote>
-<p>本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
-</blockquote>
-<font color="LightSalmon">
-
-<h2 id="ストレージ-アカウント復元時の注意点について"><a href="#ストレージ-アカウント復元時の注意点について" class="headerlink" title="ストレージ アカウント復元時の注意点について"></a>ストレージ アカウント復元時の注意点について</h2></font>
-
-
-<p>前提として復元を行うには、以下の項目を満たしている必要があります。下記の条件を満たしていない場合には、残念ながら復旧は叶わないこととなりますので、予めご留意ください。</p>
-<ul>
-<li>削除後に、同じ名前の新しいストレージ アカウントが作成されていない</li>
-<li>ストレージ アカウントが過去 14 日以内に削除された</li>
-<li>クラシック ストレージ アカウントではない</li>
-</ul>
-<p>また、リソースグループ毎削除してしまった場合には、予め同名のリソースグループを作成しておく必要あるため、事前に用意ください。</p>
-<font color="LightSalmon">
-
-<h2 id="ストレージ-アカウント復元の手順"><a href="#ストレージ-アカウント復元の手順" class="headerlink" title="ストレージ アカウント復元の手順"></a>ストレージ アカウント復元の手順</h2></font>
-
-<ol>
-<li>Azure ポータルにアクセスし、右上の ? マークから、 “ヘルプとサポート” を選択します。</li>
+<p>Azure Firewall のイージー アップグレード/ダウングレード 機能の導入により、Standard と Premiume の SKU アップグレード/ダウングレードが容易に行えるようになりました。<br>しかしながら、Premium から Standard へのダウングレードに当たっては、Firewall Policy の ポリシー レベルを Premium から Standard へ変更することができません。<br>そのため、Azure Firewall の SKU を変更する前に Firewall Policy を Standard で再作成する必要があります。<br>Azure Firewall の SKU を Premium から Standard にダウングレードする手順は以下の通りとなります。</p>
+<h2 id="Azure-Firewall-の-SKU-変更手順"><a href="#Azure-Firewall-の-SKU-変更手順" class="headerlink" title="Azure Firewall の SKU 変更手順"></a>Azure Firewall の SKU 変更手順</h2><ol>
+<li>Firewall Policy を Standard で作成します。</li>
+<li>対象の Azure Firewall の [概要] をクリックし、Firewall policy の [change] をクリックします。</li>
+<li>1 で作成した Firewall policy をチェックし、下部の [保存] をクリックします。</li>
+<li>対象の Azure Firewall の [概要] をクリックし、上記の [SKU の変更] をクリックします。</li>
+<li>ファイアウォール SKU の Standard をクリックします。</li>
+<li>“ファイアウォール ポリシーを選択してください” の箇所が、3 で保存した Firewall policy であることを確認します。</li>
+<li>下部の [Downgrade] をクリックします。</li>
 </ol>
-<p><img src="/blog/storage/storageAccount-Restore/Storage3.png"></p>
-<ol start="2">
-<li>右側のタブから “新しいサポート リクエスト” を選択し、下記画像のように各項目を選択します。</li>
-</ol>
-<p>#ストレージ アカウントについては表示された任意のものを選択ください。</p>
-<p>#(この選択されたアカウントは利用しませんのでご安心ください。)</p>
-<p>#“概要” の項目を適当に記載した場合、次の画面に正しく遷移しない可能性があるため、</p>
-<p>#下記のように “Recover deleted storage object “ と入力ください。</p>
-<p>記載が完了したら “次へ” を選択し、ソリューションの画面に推移します。</p>
-<p><img src="/blog/storage/storageAccount-Restore/Storage4.png"></p>
-<ol start="3">
-<li>“推奨される解決策” 内の “お客様が管理するストレージ アカウントの復旧” を選択します。</li>
-</ol>
-<p><img src="/blog/storage/storageAccount-Restore/Storage9.png"></p>
-<ol start="4">
-<li>復旧対象のストレージ アカウントを選択し、”回復” を押下します。</li>
-</ol>
-<p><img src="/blog/storage/storageAccount-Restore/Storage7.png"></p>
-<p>暫くすると復元が完了の通知が発生します。</p>
-<p><img src="/blog/storage/storageAccount-Restore/Storage10.png"></p>
-<p>本手順で復旧が完了しない場合、または復旧についてご不明な点がある場合は、お気兼ねなく弊サポート部門へお問い合わせください。</p>
-<font color="LightSalmon">
-
-<h2 id="予期せぬリソースの削除を防ぐために"><a href="#予期せぬリソースの削除を防ぐために" class="headerlink" title="予期せぬリソースの削除を防ぐために"></a>予期せぬリソースの削除を防ぐために</h2></font>
-残念ながら上記方法では復元をお約束することは叶いません。こういった不慮の事故を未然に防ぐため、Azure のリソースには "リソースロック機能"、BLOB ファイルには "Soft Delete 機能" という誤削除防止の機能が用意されています。以前の記事で紹介しているため、詳細については "リソースの誤削除を未然に防ぐ方法について（リソースロック機能のご紹介）" と "BLOB ファイルの誤削除を未然に防ぐ方法について（Soft Delete 機能のご紹介）" の項目をご確認ください。
-
-
-
-<blockquote>
-<p>Azure リソースの意図しない削除について<br><a href="https://jpaztech.github.io/blog/vm/resource-delete/">https://jpaztech.github.io/blog/vm/resource-delete/</a></p>
-</blockquote>
-<p>こちらの情報が、少しでも皆様のご参考となれば幸いでございます。</p>
+<p>なお、Azure Firewall の SKU を Premium から Standard にダウングレードできるのは、Firewall Policy を使用している場合のみとなります。<br>ファイアウォール規則 (クラシック) を使用して Azure Firewall を管理することができないため、この点ご留意いただけますと幸いです。</p>
+<p>また、ダウングレードした際のダウンタイムにつきましては、明確なダウンタイムはご案内することが困難ですが、15 ～ 20 分程度の時間がかかることを確認しております。<br>そのため、ダウングレードする際は、影響がない時間帯で実施いただければと存じます。</p>
+<h2 id="参考情報"><a href="#参考情報" class="headerlink" title="参考情報"></a>参考情報</h2><p>Azure Firewall の SKU 変更ついては以下にも記載がありますのでご一読ください。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/easy-upgrade">Azure Firewall イージー アップグレード/ダウングレード</a></p>
+<hr>
 
       
       
@@ -186,10 +139,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/storage/storageAccount-Restore.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/fw_sku_downgrade.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -197,19 +150,10 @@
     
 <nav id="article-nav">
   
-    <a href="../../containers/aks-aad-pod-identity/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          AAD Pod Identity の使用例 - AKS の Pod にマネージド ID で Azure リソースへのアクセス権を割り当てる
-        
-      </div>
-    </a>
   
-  
-    <a href="../../network/difference-nsg-fw/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../expressroute_MV1F-T9G/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">NSG と Azure Firewall の違い</div>
+      <div class="article-nav-title">ExpressRoute 回線に対するマイクロソフト側エッジルーターにおけるレート制限に関する補足</div>
     </a>
   
 </nav>
@@ -228,11 +172,11 @@
       <ul>
         
           <li>
-            <a href="../../network/fw_sku_downgrade/">Azure Firewall の SKU をダウングレードする方法</a>
+            <a href="">Azure Firewall の SKU をダウングレードする方法</a>
           </li>
         
           <li>
-            <a href="../../network/expressroute_MV1F-T9G/">ExpressRoute 回線に対するマイクロソフト側エッジルーターにおけるレート制限に関する補足</a>
+            <a href="../expressroute_MV1F-T9G/">ExpressRoute 回線に対するマイクロソフト側エッジルーターにおけるレート制限に関する補足</a>
           </li>
         
           <li>
@@ -240,7 +184,7 @@
           </li>
         
           <li>
-            <a href="../../network/afd-connection-issue/">Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題</a>
+            <a href="../afd-connection-issue/">Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題</a>
           </li>
         
           <li>
