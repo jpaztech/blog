@@ -4,35 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>Azure Windows VM で記憶域スペースを拡張する | Japan Azure IaaS Core Support Blog</title>
+  <title>お問い合わせにてパスワード等の機密情報を記載しないようにお願いいたします | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM において記憶域スペースをご構成いただいているお客様や、SQL VM (SQL Server on Windows Server) をご利用いただいているお客様より、ディスクの拡張方法に関してお問い合わせをいただくことが多いので、手順についてご紹介します。">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームです。Azure テクニカル サポート チームではお客様から頂いた情報は厳重に管理をしております。しかしながら、お客様のセキュリティを守るためにも、お問い合わせにてパスワード等の機密情報を記載しないように注意喚起のご案内をさせていただきたく存じます。  お問い合わせにて機密情報を記載しないようにお願いいたします幣 Azure テクニカル サポート">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure Windows VM で記憶域スペースを拡張する">
-<meta property="og:url" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/index.html">
+<meta property="og:title" content="お問い合わせにてパスワード等の機密情報を記載しないようにお願いいたします">
+<meta property="og:url" content="https://jpaztech.github.io/blog/information/do-not-provide-sensitive-data/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの重田です。 Azure Windows VM において記憶域スペースをご構成いただいているお客様や、SQL VM (SQL Server on Windows Server) をご利用いただいているお客様より、ディスクの拡張方法に関してお問い合わせをいただくことが多いので、手順についてご紹介します。">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームです。Azure テクニカル サポート チームではお客様から頂いた情報は厳重に管理をしております。しかしながら、お客様のセキュリティを守るためにも、お問い合わせにてパスワード等の機密情報を記載しないように注意喚起のご案内をさせていただきたく存じます。  お問い合わせにて機密情報を記載しないようにお願いいたします幣 Azure テクニカル サポート">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/19.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/2.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/3.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/4.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/5.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/6.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/8.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/9.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/10.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/11.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/12.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/13.png">
-<meta property="article:published_time" content="2021-02-05T07:30:00.000Z">
-<meta property="article:modified_time" content="2024-01-29T04:39:53.540Z">
+<meta property="article:published_time" content="2024-01-25T03:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-29T04:39:53.380Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="VM">
-<meta property="article:tag" content="Windows">
-<meta property="article:tag" content="Storage Space">
+<meta property="article:tag" content="Information">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/19.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -94,7 +79,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-vm/extend-storage-space-on-azure-windows-vm" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-information/do-not-provide-sensitive-data" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -103,7 +88,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure Windows VM で記憶域スペースを拡張する
+      お問い合わせにてパスワード等の機密情報を記載しないようにお願いいたします
     </h1>
   
 
@@ -111,80 +96,48 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2021-02-05T07:30:00.000Z" itemprop="datePublished">2021-02-05</time>
+  <time datetime="2024-01-25T03:00:00.000Z" itemprop="datePublished">2024-01-25</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+10109863-05a7-5a2a-b98b-3ca2aece721a%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Windows+VM+%E3%81%A7%E8%A8%98%E6%86%B6%E5%9F%9F%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9%E3%82%92%E6%8B%A1%E5%BC%B5%E3%81%99%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fextend-storage-space-on-azure-windows-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fextend-storage-space-on-azure-windows-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fextend-storage-space-on-azure-windows-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+ce243b66-3d83-50ad-a226-eb831636e512%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%AB%E3%81%A6%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E7%AD%89%E3%81%AE%E6%A9%9F%E5%AF%86%E6%83%85%E5%A0%B1%E3%82%92%E8%A8%98%E8%BC%89%E3%81%97%E3%81%AA%E3%81%84%E3%82%88%E3%81%86%E3%81%AB%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Finformation%2Fdo-not-provide-sensitive-data%2F%29%0A*+Content+Source%3A+%5Barticles%2Finformation%2Fdo-not-provide-sensitive-data.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Finformation%2Fdo-not-provide-sensitive-data.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/extend-storage-space-on-azure-windows-vm/" data-id="clryfy1jv00800nsb8cwxcavh" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/information/do-not-provide-sensitive-data/" data-id="clryfy1il004e0nsbbpnl57kd" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは。Azure テクニカル サポート チームの重田です。</p>
-<p>Azure Windows VM において記憶域スペースをご構成いただいているお客様や、SQL VM (SQL Server on Windows Server) をご利用いただいているお客様より、ディスクの拡張方法に関してお問い合わせをいただくことが多いので、手順についてご紹介します。</p>
-<span id="more"></span>
-
-<blockquote>
-<p><strong>ご参考</strong><br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/overview">記憶域スペースの概要</a></p>
-<p>対象サーバー OS:<br>Windows Server 2019、Windows Server 2016、Windows Server 2012 R2、Windows Server 2012</p>
-</blockquote>
+        <p>こんにちは、Azure テクニカル サポート チームです。<br>Azure テクニカル サポート チームではお客様から頂いた情報は厳重に管理をしております。<br>しかしながら、お客様のセキュリティを守るためにも、お問い合わせにてパスワード等の機密情報を記載しないように注意喚起のご案内をさせていただきたく存じます。</p>
 <hr>
-<h2 id="通常の-Windows-VM-に関して"><a href="#通常の-Windows-VM-に関して" class="headerlink" title="通常の Windows VM に関して"></a>通常の Windows VM に関して</h2><h3 id="作業概要"><a href="#作業概要" class="headerlink" title="作業概要"></a>作業概要</h3><p>記憶域スペースを拡張いただく場合には、下記の 2 方法があります。それぞれの方法について、シンプル レイアウトの記憶域スペースを用いた検証結果を踏まえてご紹介します。</p>
-<ol>
-<li>記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する。</li>
-<li>記憶域スペースを再作成する。<br>仮想ディスク上のデータを別ディスクなどに退避いただき、仮想ディスクならびに記憶域プールを削除する。<br>その後、記憶域プールを構成していたディスクを拡張し、再度記憶域プールならびに仮想ディスクを作成する。</li>
-</ol>
-<div class="alert is-info"><p class="alert-title">Note</p><p>記憶域プールは複数のディスクを 1 つの記憶域としてまとめて、まとめられた記憶域から仮想ディスクの領域を切り出します。</p><p>記憶域プール自体に新たに領域を足すことは想定されておりますが、すでに仮想ディスクとして切り出された土台となる領域 (記憶域プールを構成しているディスク) を拡張することは想定されておりません。</p><p>　</p><p>例えば、1TB × 3 本のディスクで記憶域プールを構成している場合、この既に構成している 1 TB を 2 TB にすることで拡張することは想定しておりません。</p><p><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/19.png"></p><p>　</p><p>なお、Azure ディスク リソースは縮小いただくことがご実施いただけません。</p><p>公開情報:  <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/find-unattached-disks">Azure IaaS VM ディスクと Premium マネージド ディスクおよびアンマネージド ディスクについてよく寄せられる質問</a></p></div>
-<h3 id="方法-1-記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する"><a href="#方法-1-記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する" class="headerlink" title="方法 1 : 記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する"></a>方法 1 : 記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する</h3><p>方法 1 では、すでに構成されている記憶域プールにディスクを追加し、仮想ディスクおよびボリュームを拡張する方法をご紹介します。</p>
-<div class="alert is-info"><p class="alert-title">Note</p><p>Windows Server 2012、2012R2 においては、記憶域プールにディスクを追加する場合、「<span style="color:red;">列の数 (NumberOfColumns) × データのコピーの数 (NumberOfDataCopies)</span>」の台数分のディスクを増設する必要があります。</p><p>　</p><p>記憶域プールには、仮想ディスクの 1 データ (ストライプ: ディスクに書き込む 1 トランザクションの単位) が、仮想ディスクを構成する物理ディスクのうち、何本の物理ディスクに分散して書き込まれるかを決定する、Numberofcolumns という値があります。</p><p>仮想ディスクを構成する物理ディスクを追加し、仮想ディスクを拡張する場合、データのコピーの数 (NumberOfDataCopies) を維持するため、NumberOfColumns の数の単位の利用可能なディスクが必要となります。</p><p>　</p><p>公開情報: <a target="_blank" rel="noopener" href="https://blogs.technet.microsoft.com/askcorejp/2017/06/22/numberofcolumns-of-storagespace/">公開情報記憶域スペースの NumberOfColumns と仮想ディスクの拡張について</a></p><p>　</p><p>例:</p><p>はじめに 3 本の物理ディスクの存在する記憶域プール内に作成した仮想ディスクは、NumberOfColumns が 3 で作成されているため、ディスクの拡張のためにも 3 本単位での利用可能な物理ディスクが必要になります。</p><p>　</p><p>以下の PowerShell コマンドレットを実施することで仮想ディスクの現在の NumberOfColumns の値を確認することができます。</p><p>　</p><p><code>Get-VirtualDisk –FriendlyName "<仮想ディスク名>" | FL NumberOfColumns</code></p><p>　</p><p>なお、Windows Server 2016 以降の記憶域スペースにおいては、記憶域プールに割り当てられた領域をリバランス (再配置) するためのコマンド Optimize-StoragePool が用意されています。</p><p>　</p><p><code>Optimize-StoragePool -FriendlyName "<記憶域プール名>"</code></p><p>　</p><p>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/module/storage/optimize-storagepool?view=win10-ps">Optimize-StoragePool</a></p></div>
-<p><strong>1. 既存の VM に新規ディスクを追加します</strong><br>管理ディスクを護衛用の場合は下記の公開情報をご参照いただき、Azure Portal または Azure PowerShell より VM に新規ディスク リソースを追加します。</p>
-<p>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/attach-managed-disk-portal#add-a-data-disk">Azure portal を使用して Windows VM にマネージド データ ディスクを接続する - データ ディスクの追加</a><br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/attach-disk-ps">PowerShell を使用して Windows VM にデータ ディスクを接続する</a></p>
-<p>非管理ディスクをご利用の場合は、下記をご参照ください。</p>
-<p>Azure Portal の場合 :<br>Azure Portal より、[Virtual Machines] - [&lt;対象 VM 名&gt;] を選択し、開いた画面の左メニュー [ディスク] を選択します。開いた画面にて [+ データ ディスクの追加] をクリックします。<br>“アンマネージド ディスクの接続” 画面にて適宜値を設定し、[OK] をクリックします。値設定時に、”ソースの種類” は [新規 (空のディスク)] を選択します。</p>
-<p>Azure PowerShell の場合 :<br>下記公開情報のコマンド例をご参照ください。<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/powershell/module/az.compute/add-azvmdatadisk?view=azps-5.4.0#example-2--add-a-data-disk-to-an-existing-virtual-machine">Add-AzVMDataDisk - Example 2: Add a data disk to an existing virtual machine</a></p>
-<p><strong>2. VM に RDP 接続を行います。</strong></p>
-<p><strong>3. 記憶域プールにディスクを追加します</strong><br>[サーバー マネージャー] より、[ファイル サービスと記憶域サービス] - [ボリューム] - [記憶域プール] を開き、[&lt;対象の記憶域プール&gt;] を選択します。<br>“物理ディスク” の [タスク] - [物理ディスクの追加] をクリックします。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/2.png"></p>
-<p>追加するディスク (追加した新規ディスク) を選択し、[OK] をクリックします。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/3.png"></p>
-<div class="alert is-warning"><p class="alert-title">警告</p><p></p>
+<h2 id="お問い合わせにて機密情報を記載しないようにお願いいたします"><a href="#お問い合わせにて機密情報を記載しないようにお願いいたします" class="headerlink" title="お問い合わせにて機密情報を記載しないようにお願いいたします"></a>お問い合わせにて機密情報を記載しないようにお願いいたします</h2><p>幣 Azure テクニカル サポート チームにお問い合わせをいただく際に、パスワード等の機密情報を記載されてしまっているというケースが発生しております。<br>恐れ入りますが、機密情報はお客様自身で適切に管理いただき、お問い合わせにてお客様の機密情報を記載をしないようにお願い申し上げます。  </p>
+<p>これはお問い合わせ起票時以外にも、以下のようなお問い合わせ最中のやり取りも含めてのお願いとなります点、ご理解頂けますと幸いでございます。  </p>
 <ul>
-<li>Windows Server 2012R2 以前では、仮想ディスク作成時の物理ディスク数単位で物理ディスクを追加します。</li>
-<li>Windows Server 2016 以降では、ディスク追加後に Optimize-StoragePool コマンドを実行します。<blockquote>
-<p>Optimize-StoragePool -FriendlyName “&lt;記憶域プール名&gt;”</p></div>
-</li>
+<li>お問い合わせ起票時の本文内への記載</li>
+<li>お問い合わせ起票時にアップロードいただいたファイル内での記載</li>
+<li>弊社とのメールやり取りでの本文内への記載</li>
+<li>弊社とのメールやり取りでの添付ファイルでの記載</li>
+<li>お問い合わせ後にアップロードいただいたファイル内での記載</li>
+<li>電話での口頭でのやり取り</li>
 </ul>
-</blockquote>
-<p><strong>4. 仮想ディスクを拡張します</strong><br>記憶域プールにディスクを追加後、”仮想ディスク” の [対象仮想ディスク] を右クリックし、[仮想ディスクの拡張] を選択します。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/4.png"></p>
-<p>拡張するサイズを指定し、[OK] をクリックします。以下の例では、拡張可能な最大サイズを選択し、拡張を実施しています。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/5.png"></p>
-<p>仮想ディスクの拡張が完了すると、以下の通り容量が増えます。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/6.png"></p>
-<p><strong>5. 仮想ディスク上のボリュームを拡張します</strong><br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/disk-management/extend-a-basic-volume">ベーシック ボリュームを拡張する</a></p>
-<p>[スタート] を右クリックし、[ディスクの管理] をクリックします。<br>開いた画面にて、仮想ディスク上の対象のボリュームを右クリックし、[ボリュームの拡張] をクリックします。<br>“ボリュームの拡張ウィザード” に沿って進み、拡張したいサイズを指定して [完了] をクリックします。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/8.png"></p>
-<p>ボリュームの拡張が完了すると、以下の通り容量が増えます。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/9.png"></p>
-<h3 id="方法-2-記憶域スペースを再作成する"><a href="#方法-2-記憶域スペースを再作成する" class="headerlink" title="方法 2 : 記憶域スペースを再作成する"></a>方法 2 : 記憶域スペースを再作成する</h3><p><strong>1. 仮想ディスクにあるデータを別領域に退避します</strong><br>拡張したいディスクにて構成している記憶域プール上の全仮想ディスクにあるデータを、仮想ディスク以外の領域 (退避用に新規ディスクを追加する、Azure Storage を利用するなど) にデータを退避 (コピーまたは移動) します。</p>
-<p><strong>2. 仮想ディスクを削除します</strong><br>[サーバー マネージャー] より、[ファイル サービスと記憶域サービス] - [ボリューム] - [記憶域プール] を開きます。<br>[&lt;対象の記憶域プール&gt;] を選択し、”仮想ディスク” の [対象仮想ディスク] を右クリックし、[仮想ディスクのデタッチ] を選択します。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/10.png"></p>
-<p>デタッチが完了すると、仮想ディスク名の横に “!” が表示されます。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/11.png"></p>
-<p>再度 [対象仮想ディスク] を右クリックし、[仮想ディスクの削除] を選択します。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/12.png"></p>
-<p><strong>3. 記憶域プールを削除します</strong><br>[対象記憶域プール] を右クリックし、[記憶域プールの削除] を選択します。<br><img src="/blog/vm/extend-storage-space-on-azure-windows-vm/13.png"></p>
-<p><strong>4. 対象ディスクを拡張します</strong><br>Azure Portal または Azure PowerShell より、対象のディスク リソースを拡張します。</p>
-<p>Azure Portal の場合 :<br>ディスクのサイズ変更を行う際には、VM が停止済み (割り当て解除) の状態である必要があります。</p>
-<ol>
-<li>Azure Portal にアクセスし、[&lt;当該 VM 名&gt;] - [ディスク] をクリックします。</li>
-<li>“OS ディスク” または “データ ディスク” よりサイズを変更したいディスク名をクリックします。</li>
-<li>管理ディスクの場合は [構成] をクリックし、”サイズ” に任意の値を入力します。<br>非管理ディスクの場合は、”サイズ” に任意の値を入力します。</li>
-<li>保存をクリックします。</li>
-</ol>
-<p>Azure PowerShell の場合 :<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/expend-os-disk#resizing-data-disks">データ ディスクのサイズを変更する</a> </p>
-<p><strong>5. VM を起動し、RDP 接続を行います</strong></p>
-<p><strong>6. 記憶域プールを作成します</strong><br>公開情報をご参照の上、記憶域プールを作成します。<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/deploy-standalone-storage-spaces#step-1-create-a-storage-pool">スタンドアロン サーバーに記憶域スペースを展開する - 手順 1: 記憶域プールを作成する</a></p>
-<p><strong>7. 仮想ディスクを作成します</strong><br>公開情報をご参照の上、仮想ディスクを作成します。<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/deploy-standalone-storage-spaces#step-2-create-a-virtual-disk">スタンドアロン サーバーに記憶域スペースを展開する - 手順 2: 仮想ディスクを作成する</a></p>
-<p><strong>8. ボリュームを作成します</strong><br>公開情報をご参照の上、ボリュームを作成します。<br>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/deploy-standalone-storage-spaces#step-3-create-a-volume">スタンドアロン サーバーに記憶域スペースを展開する - 手順 3: ボリュームを作成する</a></p>
+<p>加えて、テキストベースのファイル以外にもスクリーンショットなどの画像についても機密情報が含まれないようにご注意くださいませ。</p>
 <hr>
-<h2 id="余談-SQL-VM-に関して"><a href="#余談-SQL-VM-に関して" class="headerlink" title="(余談) SQL VM に関して"></a>(余談) SQL VM に関して</h2><p>SQL ギャラリー イメージ にて VM を作成いただき構成された記憶域プールについては、Azure ポータルにて一部のストレージ設定を変更することが可能です。詳細は下記の公開情報をご参照ください。</p>
-<p>公開情報: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/azure-sql/virtual-machines/windows/storage-configuration">SQL Server VM のストレージの構成</a></p>
-<br>
+<h2 id="記載してはいけない機密情報の例"><a href="#記載してはいけない機密情報の例" class="headerlink" title="記載してはいけない機密情報の例"></a>記載してはいけない機密情報の例</h2><p>以下の例のような機密情報は、お問い合わせに記載をしないようにお願い申し上げます。  </p>
+<ul>
+<li>OS ユーザー / Azure ユーザー等のパスワード</li>
+<li>Azure ストレージアカウントのアクセスキー</li>
+<li>有効な Azure ストレージアカウントの SAS キー</li>
+<li>秘密鍵</li>
+<li>クレジットカード番号</li>
+</ul>
+<p>もしこれらの情報が含まれる場合は、当該箇所をマスクしていただくようにお願い申し上げます。<br>以下はパスワードや Azure ストレージアカウントのアクセスキーおよび SAS キーについてマスクする一例となります。</p>
+<h3 id="パスワードが入ったコマンドについてお問い合わせする場合"><a href="#パスワードが入ったコマンドについてお問い合わせする場合" class="headerlink" title="パスワードが入ったコマンドについてお問い合わせする場合"></a>パスワードが入ったコマンドについてお問い合わせする場合</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- password P@ssw0rd!</span><br><span class="line">　   ↓</span><br><span class="line">-- password &lt;●●●機密情報のためパスワードはマスクします●●●&gt;</span><br></pre></td></tr></table></figure>
 
-<p>本記事は以上となりますが、いかがでしたでしょうか。<br>本記事が皆様のお役に立てれば幸いです。</p>
+<h3 id="Azure-ポータルから取得した-Azure-Files-への接続スクリプトについてお問い合わせする場合の例（アクセスキーをマスク）"><a href="#Azure-ポータルから取得した-Azure-Files-への接続スクリプトについてお問い合わせする場合の例（アクセスキーをマスク）" class="headerlink" title="Azure ポータルから取得した Azure Files への接続スクリプトについてお問い合わせする場合の例（アクセスキーをマスク）"></a>Azure ポータルから取得した Azure Files への接続スクリプトについてお問い合わせする場合の例（アクセスキーをマスク）</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$connectTestResult</span> = <span class="built_in">Test-NetConnection</span> <span class="literal">-ComputerName</span> <span class="built_in">test-storage</span><span class="literal">-account</span>.file.core.windows.net <span class="literal">-Port</span> <span class="number">445</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$connectTestResult</span>.TcpTestSucceeded) &#123;</span><br><span class="line">    <span class="comment"># 再起動時にドライブが維持されるように、パスワードを保存する</span></span><br><span class="line">    cmd.exe /C <span class="string">&quot;cmdkey /add:`&quot;test-storage-account.file.core.windows.net`&quot; /user:`&quot;localhost\test-storage-account`&quot; /pass:`&quot;&lt;●●●ストレージアカウントのアクセスキーなのでマスクします●●●&gt;`&quot;&quot;</span></span><br><span class="line">    <span class="comment"># ドライブをマウントする</span></span><br><span class="line">    <span class="built_in">New-PSDrive</span> <span class="literal">-Name</span> Z <span class="literal">-PSProvider</span> FileSystem <span class="literal">-Root</span> <span class="string">&quot;\\test-storage-account.file.core.windows.net\test&quot;</span> <span class="literal">-Persist</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">Write-Error</span> <span class="literal">-Message</span> <span class="string">&quot;Unable to reach the Azure storage account via port 445. Check to make sure your organization or ISP is not blocking port 445, or use Azure P2S VPN, Azure S2S VPN, or Express Route to tunnel SMB traffic over a different port.&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SAS-キーを用いたストレージアカウントの-Blob-コンテナへのアクセスについてお問い合わせする際の例（SAS-キーをマスク）"><a href="#SAS-キーを用いたストレージアカウントの-Blob-コンテナへのアクセスについてお問い合わせする際の例（SAS-キーをマスク）" class="headerlink" title="SAS キーを用いたストレージアカウントの Blob コンテナへのアクセスについてお問い合わせする際の例（SAS キーをマスク）"></a>SAS キーを用いたストレージアカウントの Blob コンテナへのアクセスについてお問い合わせする際の例（SAS キーをマスク）</h3><p><code>https://test-storage-account.blob.core.windows.net/container?sv=2022-11-02&amp;ss=bfqt&amp;srt=sco&amp;sp=rwdlacupiytfx&amp;se=2023-12-29T12:05:45Z&amp;st=2023-12-29T04:05:45Z&amp;spr=https&amp;sig=&lt;●●●ストレージアカウントの SAS キーなのでマスクします●●●&gt;</code></p>
+<div class="alert is-success"><p class="alert-title">ヒント</p><p>Azure ストレージアカウントのアクセスキーについてご懸念がございます場合は、以下の公開ドキュメントの通りローテーションを行うことが可能です。</p><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/storage/common/storage-account-keys-manage#manually-rotate-access-keys">https://learn.microsoft.com/ja-jp/azure/storage/common/storage-account-keys-manage#manually-rotate-access-keys</a></p></div>
+<hr>
+<h2 id="機密情報をお問い合わせで記載してしまった場合"><a href="#機密情報をお問い合わせで記載してしまった場合" class="headerlink" title="機密情報をお問い合わせで記載してしまった場合"></a>機密情報をお問い合わせで記載してしまった場合</h2><p>もし、お客様側より上記のような機密情報を記載されてしまった際は、弊社よりお客様へご連絡の上、弊社およびお客様側で当該情報の削除の対応や、場合によっては新規のお問い合わせ発行をお願いさせていただくといったお手間をおかけする可能性があります。<br>そのため、サポート着手までお時間をいただく可能性がございます。<br>迅速なサポートのご提供およびお客様のセキュリティのためにも、機密情報の記載をしないようにご協力をお願い申し上げます。</p>
 
       
       
@@ -198,10 +151,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/extend-storage-space-on-azure-windows-vm.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/information/do-not-provide-sensitive-data.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -209,19 +162,19 @@
     
 <nav id="article-nav">
   
-    <a href="../../containers/aks-maintenance-for-node/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="../../network/azure-peering-service-vs-expressroute/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">次の記事</strong>
       <div class="article-nav-title">
         
-          特定の AKS ノードを再起動または削除したい
+          Azure Peering Service と ExpressRoute の違いについて
         
       </div>
     </a>
   
   
-    <a href="../../storage/storageFirewall-403Error/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../network/fw_sku_downgrade/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</div>
+      <div class="article-nav-title">Azure Firewall の SKU をダウングレードする方法</div>
     </a>
   
 </nav>
@@ -244,7 +197,7 @@
           </li>
         
           <li>
-            <a href="../../information/do-not-provide-sensitive-data/">お問い合わせにてパスワード等の機密情報を記載しないようにお願いいたします</a>
+            <a href="">お問い合わせにてパスワード等の機密情報を記載しないようにお願いいたします</a>
           </li>
         
           <li>
@@ -256,7 +209,7 @@
           </li>
         
           <li>
-            <a href="../rhui-eus/">Azure RHEL VM の 非 EUS/ EUS リポジトリについて</a>
+            <a href="../../vm/rhui-eus/">Azure RHEL VM の 非 EUS/ EUS リポジトリについて</a>
           </li>
         
       </ul>
