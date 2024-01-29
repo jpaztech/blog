@@ -1,6 +1,6 @@
 ---
 title: "Azure Peering Service と ExpressRoute の違いについて"
-date: 2024-01-12 00:00:00
+date: 2024-01-29 10:00:00
 tags:
   - Network
   - ExpressRoute
@@ -12,21 +12,21 @@ tags:
 
 ## Azure Peering Service とはどのようなサービスか
 
-Microsoft Azure Peering Service (MAPS) は、接続プロバイダー (ISP) や Internet Exchange (IX) 経由で Microsoft のネットワーク (AS8075) との高品質な接続性を提供するサービスです。サービス名に "Azure" の名前を冠してはいますが、その接続先は Azure だけではなく、Microsoft 365 や Dynamics 365 等を含んだ Microsoft のグローバル ネットワーク全体になります。
+Microsoft Azure Peering Service (MAPS) は、インターネット サービス プロバイダー (ISP) や Internet Exchange (IX) 経由で Microsoft のグローバル ネットワーク (AS8075) へのルーティングを最適化し信頼性とパフォーマンスを強化するサービスです。サービス名に "Azure" の名前を冠してはいますが、その接続先は Azure だけではなく、パブリック インターネット経由でアクセス可能な Microsoft 365 や Dynamics 365 等を含んだ Microsoft のグローバル ネットワーク全体になります。
 
-また、以下のドキュメントにも記載がありますが、Azure Peering Service は閉域接続 (プライベート接続) サービスではありません。あくまでも ISP や IX 経由で直接 Microsoft のネットワークに接続するサービスであり、他の AS を経由しない分だけホップ数や遅延が小さく抑えられ、通信経路上の影響を受けにくいというのみであり、位置づけとしてはパブリック ネットワーク (≒インターネット) 経由での接続となります。
+また、以下のドキュメントにも記載がありますが、Azure Peering Service は閉域接続 (プライベート接続) サービスではありません。あくまでも ISP や IX 経由で直接 Microsoft のネットワークに接続するサービスですので、他の AS を経由しない分だけホップ数や遅延が小さく抑えられ、通信経路上の影響を受けにくいというのみであり、位置づけとしてはパブリック ネットワーク (≒インターネット) 経由での接続となります。
 
 * [Azure Peering Service の概要](https://learn.microsoft.com/ja-jp/azure/peering-service/about)
 
 ## ExpressRoute の Microsoft Peering と何が違うのか
 
-Azure Peering Service と似たサービスとして、ExpressRoute 回線 (ExpressRoute Circuit) が存在します。両者の違いについてお問い合わせいただく事も多いため、具体的な差異を以下の表でご説明します。
+Azure Peering Service と似たサービスとして、ExpressRoute 回線 (ExpressRoute Circuit) の Microsoft Peering が存在します。両者の違いについてお問い合わせいただく事も多いため、具体的な差異を以下の表でご説明します。
 
 |  | Azure Peering Service | ExpressRoute (Microsoft Peering) |
 | ---- | ---- | ---- |
-| 接続先 | Microsoft のネットワーク全体 | 主に Azure のみ |
+| 接続先 | Microsoft のグローバル ネットワーク | 主に Azure のみ |
 | Microsoft 側の ASN | 8075 | 12076 |
-| 接続形態 | パブリック接続 (≒インターネット) | プライベート接続 |
+| 接続形態 | パブリック接続 (≒インターネット) | プライベート接続 (≒閉域網) |
 | Azure VNet への接続 | 不可 | Private Peering を構成すれば可能 |
 | Microsoft 365 との接続 [(*)](#Microsoft-365-との接続に関して) | 可能 | 一部の承認されたお客様のみ可能 |
 | Azure 上のリソース [(**)](#Microsoft-の関与する範囲について) | テレメトリ機能を利用する場合のみ作成 | ExpressRoute 回線リソースを作成 |
