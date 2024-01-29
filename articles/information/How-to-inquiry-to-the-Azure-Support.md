@@ -20,6 +20,10 @@ tags:
 
 なお、以下に記載しました内容はあくまで 「一般的なお問合せの流れ」 をご紹介していますので、もしこちらに記載がなくお悩みの点がございましたら、一旦お問合せを起票いただくか、既に対応させていただいている件があればそちらの担当サポートエンジニアまで、お気兼ねなくご相談をいただければ幸いです。
 
+> [!IMPORTANT]
+> お問い合わせにてパスワードやストレージアカウントアクセスキー等の機密情報を記載しないようにお願いいたします。詳細は以下の記事をご確認くださいませ。  
+> [https://jpaztech.github.io/blog/information/do-not-provide-sensitive-data/](https://jpaztech.github.io/blog/information/do-not-provide-sensitive-data/)
+
 ---
 
 ## サポート リクエスト (お問い合わせ) の作成
