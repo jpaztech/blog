@@ -1,6 +1,6 @@
 ---
 title: Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)
-date: 2023-12-28 14:30:00 
+date: 2024-01-29 09:10:00 
 tags:
   - Network
 ---
