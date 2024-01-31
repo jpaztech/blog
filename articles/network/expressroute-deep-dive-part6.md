@@ -6,9 +6,6 @@ tags:
   - ExpressRoute
 ---
 
-> [!WARNING]
-> 各種上限値が変更となっている場合があります。本ブログの記載も可能な限り更新するように努めてはおりますが、**公式ドキュメントの最新の情報も併せてご参照ください。**
-
 こんにちは。Azure サポートの宇田です。
 今回は ExpressRoute 回線に関する各種上限値についてご紹介いたします。
 
@@ -18,6 +15,10 @@ tags:
 * [Part4: ExpressRoute の冗長構成について](./archive/expressroute-deep-dive-part4.md)
 * [Part5: ExpressRoute の増速やプロバイダー変更について](./archive/expressroute-deep-dive-part5.md)
 * Part6: ExpressRoute の各種上限値について
+
+> [!NOTE]
+> 以下でご紹介する各種上限値は、制限緩和などにより変更となっている場合があります。
+> 本ブログの記載も可能な限り更新するように努めてはおりますが、**公式ドキュメントの最新の情報も併せてご参照ください。**
 
 ## 1 つの ExpressRoute 回線に対して接続できる VNet の数
 
