@@ -6,6 +6,9 @@ tags:
   - ExpressRoute
 ---
 
+> [!WARNING]
+> 各種上限値が変更となっている場合があります。本ブログの記載も可能な限り更新するように努めてはおりますが、**公式ドキュメントの最新の情報も併せてご参照ください。**
+
 こんにちは。Azure サポートの宇田です。
 今回は ExpressRoute 回線に関する各種上限値についてご紹介いたします。
 
@@ -56,9 +59,9 @@ tags:
 
 Private Peering で ExpressRoute 回線に対して広報できる経路数は、
 
-* ExpressRoute 回線が **Local / Standard** の場合は、**オンプレミス側からは 4000 経路まで**
-* ExpressRoute 回線が **Premium** の場合は、**オンプレミス側からは 10000 経路まで**
-* ExpressRoute 回線の **SKU に関わらず**、**各 VNet (ExpressRoute Gateway) 側からはそれぞれ 200 経路まで**
+* ExpressRoute 回線が **Local / Standard** の場合は、**オンプレミス側からは IPv4: 4000 経路、IPv6: 100 経路まで**
+* ExpressRoute 回線が **Premium** の場合は、**オンプレミス側からは IPv4: 10000 経路、IPv6: 100 経路まで**
+* ExpressRoute 回線の **SKU に関わらず**、**各 VNet (ExpressRoute Gateway) 側からはそれぞれ IPv4: 1000 経路、IPv6: 100 経路まで**
 
 となっています。(参考: [ルート アドバタイズの制限](https://learn.microsoft.com/ja-jp/azure/azure-resource-manager/management/azure-subscription-service-limits#route-advertisement-limits))
 
@@ -71,8 +74,7 @@ Private Peering で ExpressRoute 回線に対して広報できる経路数は�
 
 Microsoft Peering で ExpressRoute 回線に対して広報できる経路数は、
 
-* ExpressRoute 回線の SKU を問わず、**IPv4 が 200 経路**
-* ExpressRoute 回線の SKU を問わず、**IPv6 が 200 経路**
+* ExpressRoute 回線の SKU を問わず、**IPv4: 200 経路、IPv6: 200 経路まで**
 
 となっています。(参考: [ルート アドバタイズの制限](https://learn.microsoft.com/ja-jp/azure/azure-resource-manager/management/azure-subscription-service-limits#route-advertisement-limits))
 
