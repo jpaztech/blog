@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/expressroute-maintenance/expressroute-maintenance1.jpg">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/expressroute-maintenance/expressroute-maintenance2.jpg">
 <meta property="article:published_time" content="2022-01-14T01:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-01T13:16:57.037Z">
+<meta property="article:modified_time" content="2024-02-15T07:22:18.531Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="ExpressRoute">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7d0b3a53-5cfb-5f0d-8fe8-623d294007e7%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BExpressRoute+%E3%81%AE+%E3%82%A8%E3%83%83%E3%82%B8+%E3%83%AB%E3%83%BC%E3%82%BF%E3%83%BC%E3%81%AE%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fexpressroute-maintenance%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fexpressroute-maintenance.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fexpressroute-maintenance.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/expressroute-maintenance/" data-id="cls38qitx005n0oqacv4r7qv4" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/expressroute-maintenance/" data-id="clsmw8dm4005n0nmt73oa58tg" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -155,6 +155,9 @@
 <li><strong>現在利用している ExpressRoute 回線は冗長化されていますか</strong><br>ExpressRoute 回線は、「 1 回線」作成すると、必ず内部的には 2 本の物理的な回線が構成され、2 台の MSEE が利用されます。つまり、シングル構成になっていることは原則ありません。<br>ただし、L2 モデルのプロバイダー (お客様自身で BGP ルーターを構成いただく必要があるプロバイダー) をご利用いただいており、ルーターを片方の回線にしか接続していない、片方の回線しか BGP の Neighbor を確立していないなど、極めて例外的な構成を取っている場合に限っては、今回のメンテナンスにあたって通信影響が生じます。<br>このような構成は、SLA が担保されない、弊社として保証していない特殊な構成であり、プロバイダー様、またはお客様にて意図的に構成されるものです。そのため、ご利用されている ExpressRoute 回線が冗長構成となっているか確認されたい場合は、ご契約されているプロバイダー様、またはお客様側のネットワーク担当者様へご確認ください。</li>
 </ul>
 <ul>
+<li><strong>メンテナンス期間を延期・変更していただくことはできますか</strong><br>前述の通り、ExpressRoute 回線は冗長構成でご利用いただく前提のサービスであり、MSEE に対するメンテナンス作業は片系ずつ実施されますので、通信影響は極めて限定的となります。また、メンテナンス日程の延期や変更は、メンテナンス対象の機器に収容されている全てのお客様に対して日程変更の影響が生じます。そのため、大変恐れ入りますが MSEE に対するメンテナンス作業は、個々のお客様のご事情に応じて延期・変更することはできません。</li>
+</ul>
+<ul>
 <li><strong>仮想ネットワーク ゲートウェイ の SKU とメンテナンスに伴う影響の有無は関係ありますか</strong><br>既にリタイアした Basic 以外の SKU では、メンテナンスに伴う影響の有無には関係ありません。仮想ネットワーク ゲートウェイ は上記の図中の青色の部分ですが、メンテナンス対象である MSEE は黄色の部分です。</li>
 </ul>
 <ul>
@@ -162,6 +165,9 @@
 </ul>
 <ul>
 <li><strong>PE 側で何らかのログが出力される可能性はありますか</strong><br>メンテナンスに伴って BGP セッションが切断された際には、PE 側では BGP セッションの切断を示すログなどが記録されることが想定されます。ルーターの監視を行っている場合は、メンテナンス期間中にこのようなログが記録されることをあらかじめご認識いただけますと幸いです。</li>
+</ul>
+<ul>
+<li><strong>メンテナンス期間中に、ExpressRoute 回線に関連する作業を予定していますが、影響はありますか</strong><br>メンテナンス期間中は、MSEE に対して変更を加えることができません。そのため、お客様側で ExpressRoute 回線に関連した作業を行った場合、エラーとなり失敗することが予想されます。大変恐れ入りますが、メンテナンス期間外の日程にて作業していただけますようお願い申し上げます。</li>
 </ul>
 <p>以上、ExpressRoute の MSEE メンテナンス通知を受け取られた際の影響確認、ならびに同メンテナンスによる影響を回避するにあたってのルーティング設計をご検討いただくにあたり、ご参考にしていただければ幸いです。</p>
 
