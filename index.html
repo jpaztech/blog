@@ -84,6 +84,69 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-network/tls1.2_migration" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <div class="article-inner">
+    <!-- post date -->
+    <div class="article-meta">
+      <a href="network/tls1.2_migration/" class="article-date">
+  <time datetime="2024-02-27T00:10:00.000Z" itemprop="datePublished">2024-02-27</time>
+</a>
+      
+    </div>
+
+    
+    <!-- post title -->
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="network/tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
+    </h1>
+  
+
+      </header>
+    
+
+    <!-- post caption -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure テクニカル サポート チームです。<br>「2024 年 10 月 31 日までに、各種 Azure サービスとの通信に TLS 1.2 を使用していることを確認してください。」（Ensure your resources that interact with Azure services are using TLS 1.2 by 31 October 2024）の通知について補足させて頂きます。</p>
+<p>メールに記載されておりますとおり、セキュリティとコンプライアンスの観点からレガシー TLS 1.0/1.1 は既知の脆弱性が存在しており、Azure 上のマネージド サービス全般におきまして、2024 年 10 月 31 日以降は TLS 1.2 以上の接続が必須となるよう変更されるものです。</p>
+<h2 id="TLS-バージョンとは"><a href="#TLS-バージョンとは" class="headerlink" title="TLS バージョンとは"></a>TLS バージョンとは</h2><p>TLS（Transport Layer Security）は、インターネット上でデータを安全に送受信するための暗号化する仕組みとして、主に TLS 1.0, TLS 1.1、TLS 1.2 及び TLS 1.3 バージョンが存在していますが、<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc8996">RFC 8996</a> により、セキュリティ脆弱性の原因で、TLS 1.0 及び TLS 1.1 の使用は既に廃止されています。Azure サービスでは、互換性の理由で TLS 1.0 及び TLS 1.1 が引き続き動作できますが、早めに TLS 1.2 以降のバージョンへ移行するのは強く推奨しております。</p>
+<h2 id="TLS-接続時のバージョン選定動作について"><a href="#TLS-接続時のバージョン選定動作について" class="headerlink" title="TLS 接続時のバージョン選定動作について"></a>TLS 接続時のバージョン選定動作について</h2><p>TLS のバージョンはお客様の IaaS 上の仮想マシン OS の設定、ならびにクライアント OS に依存します。こちらの設定確認をし、TLS 1.2 以上を使用できる状態としていただくことで、自動的に TLS の最上位バージョンでの接続を試みることとなります。</p>
+<h3 id="Windows-OS-の場合"><a href="#Windows-OS-の場合" class="headerlink" title="Windows OS の場合"></a>Windows OS の場合</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#supported-versions-of-tls-in-windows">こちらの公開ドキュメント</a>の記載通り、Windows 8/Windows Server 2012 以降では、既に TLS 1.2 をサポートしているため、基本的にご対応頂く必要はありません。<br>また、特定の TLS バージョンを有効化/無効化されたい場合は、<a target="_blank" rel="noopener" href="https://jpwinsup.github.io/blog/2021/12/22/PublicKeyInfrastructure/SSLTLSConnection/tls-registry-settings/">こちらの記事</a>の通りご対応ください。</p>
+<p>Windows 2008/ Windows 7 などのレガシー OS でも更新プログラムを適用することで技術的には TLS 1.2 を使えるようになります。ただし、サポートの提供が終了している OS の場合には、TLS 1.2 を利用できるようになる更新プログラムの適用にかかわらず、技術的なご支援を Microsoft サポートからお届けすることはできません。自己責任の範疇でご利用ください。</p>
+<p>参考として、Android など他のクライアント対応状況は<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#appendix-a-handshake-simulation">こちら</a>の公開ドキュメントに開示されています。 </p>
+<h3 id="Chrome-Edge-などのブラウザの場合"><a href="#Chrome-Edge-などのブラウザの場合" class="headerlink" title="Chrome/Edge などのブラウザの場合"></a>Chrome/Edge などのブラウザの場合</h3><p>最新バージョンの各ブラウザでは、基本的に TLS 1.2 以降のバージョンが有効化されているため、ご対応頂く必要はありませんが、<br>特定の TLS バージョンを有効化/無効化されたい場合は、各ブラウザ観点でご確認頂く必要がございます。<br>Edgeの場合は<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/answers/questions/487582/is-there-a-way-to-emable-tls-1-0-and-or-1-2-on-edg">こちらの記事</a>の通り対応できます。</p>
+<h3 id="それ以外の場合"><a href="#それ以外の場合" class="headerlink" title="それ以外の場合"></a>それ以外の場合</h3><p>上記以外に、Java などプログラミング言語でお客様が開発したアプリケーションで Azure サービスへ接続する場合は、Windows OS の TLS レジストリ設定を参照せず、独自の設定通り接続する場合がありますので、お客様側にアプリケーション観点で TLS の通信バージョンご確認及びご対応頂く必要があります。</p>
+<h3 id="TLS-チェッカー-ツール"><a href="#TLS-チェッカー-ツール" class="headerlink" title="TLS チェッカー ツール"></a>TLS チェッカー ツール</h3><p><a target="_blank" rel="noopener" href="https://clienttest.ssllabs.com:8443/ssltest/viewMyClient.html">こちら</a>のような外部の TLS チェッカー ツールをご活用いただき、想定されるクライアントからアクセスをして TLS バージョンを確認いただくということも有効です。</p>
+<h2 id="Azure-Network製品の対応状況及び推奨アクションについて"><a href="#Azure-Network製品の対応状況及び推奨アクションについて" class="headerlink" title="Azure Network製品の対応状況及び推奨アクションについて"></a>Azure Network製品の対応状況及び推奨アクションについて</h2><p>以下にて Azure Network 製品の対応状況、及びお客様に推奨なアクションをご紹介致します。<br>もしご確認されたい製品が入っていなく、個別にご確認されたい場合は、各製品に対してサポート リクエストを起票してください。</p>
+<blockquote>
+<p>[!WARNING]<br>以下各製品の部分に案内する対処目処はあくまで目途であり、実際には日程が多少前後する可能性があります。予めご了承ください。</p>
+</blockquote>
+        
+          <p class="article-more-link">
+            <a href="network/tls1.2_migration/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    <footer class="article-footer">
+      <!--a data-url="https://jpaztech.github.io/blog/network/tls1.2_migration/" data-id="clt3ouatk006h0no3ejy219qd" class="article-share-link">共有</a-->
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-network/appgw-http-response-codes-5xx-server-error" class="article article-type-post" itemscope itemprop="blogPost">
 
   <div class="article-inner">
@@ -122,7 +185,7 @@ Application Gateway からの HTTP 応答の確認方法Application Gateway か�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/appgw-http-response-codes-5xx-server-error/" data-id="clstwsn3800560nnx6h3930my" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/appgw-http-response-codes-5xx-server-error/" data-id="clt3ouat500590no3bzvlcrui" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/500/" rel="tag">500</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Error/" rel="tag">Error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
@@ -171,73 +234,10 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/azure-peering-service-vs-expressroute/" data-id="clstwsn39005b0nnxc597314c" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/azure-peering-service-vs-expressroute/" data-id="clt3ouat7005e0no34tb2gxnd" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Azure-Peering-Service/" rel="tag">Azure Peering Service</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-network/tls1.2_migration" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <div class="article-inner">
-    <!-- post date -->
-    <div class="article-meta">
-      <a href="network/tls1.2_migration/" class="article-date">
-  <time datetime="2024-01-29T00:10:00.000Z" itemprop="datePublished">2024-01-29</time>
-</a>
-      
-    </div>
-
-    
-    <!-- post title -->
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="network/tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
-    </h1>
-  
-
-      </header>
-    
-
-    <!-- post caption -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>こんにちは、Azure テクニカル サポート チームです。<br>「2024 年 10 月 31 日までに、各種 Azure サービスとの通信に TLS 1.2 を使用していることを確認してください。」（Ensure your resources that interact with Azure services are using TLS 1.2 by 31 October 2024）の通知について補足させて頂きます。</p>
-<p>メールに記載されておりますとおり、セキュリティとコンプライアンスの観点からレガシー TLS 1.0/1.1 は既知の脆弱性が存在しており、Azure 上のマネージド サービス全般におきまして、2024 年 10 月 31 日以降は TLS 1.2 以上の接続が必須となるよう変更されるものです。</p>
-<h2 id="TLS-バージョンとは"><a href="#TLS-バージョンとは" class="headerlink" title="TLS バージョンとは"></a>TLS バージョンとは</h2><p>TLS（Transport Layer Security）は、インターネット上でデータを安全に送受信するための暗号化する仕組みとして、主に TLS 1.0, TLS 1.1、TLS 1.2 及び TLS 1.3 バージョンが存在していますが、<a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc8996">RFC 8996</a> により、セキュリティ脆弱性の原因で、TLS 1.0 及び TLS 1.1 の使用は既に廃止されています。Azure サービスでは、互換性の理由で TLS 1.0 及び TLS 1.1 が引き続き動作できますが、早めに TLS 1.2 以降のバージョンへ移行するのは強く推奨しております。</p>
-<h2 id="TLS-接続時のバージョン選定動作について"><a href="#TLS-接続時のバージョン選定動作について" class="headerlink" title="TLS 接続時のバージョン選定動作について"></a>TLS 接続時のバージョン選定動作について</h2><p>TLS のバージョンはお客様の IaaS 上の仮想マシン OS の設定、ならびにクライアント OS に依存します。こちらの設定確認をし、TLS 1.2 以上を使用できる状態としていただくことで、自動的に TLS の最上位バージョンでの接続を試みることとなります。</p>
-<h3 id="Windows-OS-の場合"><a href="#Windows-OS-の場合" class="headerlink" title="Windows OS の場合"></a>Windows OS の場合</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#supported-versions-of-tls-in-windows">こちらの公開ドキュメント</a>の記載通り、Windows 8/Windows Server 2012 以降では、既に TLS 1.2 をサポートしているため、基本的にご対応頂く必要はありません。<br>また、特定の TLS バージョンを有効化/無効化されたい場合は、<a target="_blank" rel="noopener" href="https://jpwinsup.github.io/blog/2021/12/22/PublicKeyInfrastructure/SSLTLSConnection/tls-registry-settings/">こちらの記事</a>の通りご対応ください。</p>
-<p>Windows 2008/ Windows 7 などのレガシー OS でも更新プログラムを適用することで技術的には TLS 1.2 を使えるようになります。ただし、サポートの提供が終了している OS の場合には、TLS 1.2 を利用できるようになる更新プログラムの適用にかかわらず、技術的なご支援を Microsoft サポートからお届けすることはできません。自己責任の範疇でご利用ください。</p>
-<p>参考として、Android など他のクライアント対応状況は<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/security/engineering/solving-tls1-problem#appendix-a-handshake-simulation">こちら</a>の公開ドキュメントに開示されています。 </p>
-<h3 id="Chrome-Edge-などのブラウザの場合"><a href="#Chrome-Edge-などのブラウザの場合" class="headerlink" title="Chrome/Edge などのブラウザの場合"></a>Chrome/Edge などのブラウザの場合</h3><p>最新バージョンの各ブラウザでは、基本的に TLS 1.2 以降のバージョンが有効化されているため、ご対応頂く必要はありませんが、<br>特定の TLS バージョンを有効化/無効化されたい場合は、各ブラウザ観点でご確認頂く必要がございます。<br>Edgeの場合は<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/answers/questions/487582/is-there-a-way-to-emable-tls-1-0-and-or-1-2-on-edg">こちらの記事</a>の通り対応できます。</p>
-<h3 id="それ以外の場合"><a href="#それ以外の場合" class="headerlink" title="それ以外の場合"></a>それ以外の場合</h3><p>上記以外に、Java などプログラミング言語でお客様が開発したアプリケーションで Azure サービスへ接続する場合は、Windows OS の TLS レジストリ設定を参照せず、独自の設定通り接続する場合がありますので、お客様側にアプリケーション観点で TLS の通信バージョンご確認及びご対応頂く必要があります。</p>
-<h3 id="TLS-チェッカー-ツール"><a href="#TLS-チェッカー-ツール" class="headerlink" title="TLS チェッカー ツール"></a>TLS チェッカー ツール</h3><p><a target="_blank" rel="noopener" href="https://clienttest.ssllabs.com:8443/ssltest/viewMyClient.html">こちら</a>のような外部の TLS チェッカー ツールをご活用いただき、想定されるクライアントからアクセスをして TLS バージョンを確認いただくということも有効です。</p>
-<h2 id="Azure-Network製品の対応状況及び推奨アクションについて"><a href="#Azure-Network製品の対応状況及び推奨アクションについて" class="headerlink" title="Azure Network製品の対応状況及び推奨アクションについて"></a>Azure Network製品の対応状況及び推奨アクションについて</h2><p>以下にて Azure Network 製品の対応状況、及びお客様に推奨なアクションをご紹介致します。<br>もしご確認されたい製品が入っていなく、個別にご確認されたい場合は、各製品に対してサポート リクエストを起票してください。</p>
-<blockquote>
-<p>[!WARNING]<br>以下各製品の部分に案内する対処目処はあくまで目途であり、実際には日程が多少前後する可能性があります。予めご了承ください。</p>
-</blockquote>
-        
-          <p class="article-more-link">
-            <a href="network/tls1.2_migration/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-
-    <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/tls1.2_migration/" data-id="clstwsn3l006f0nnx2n7bbykt" class="article-share-link">共有</a-->
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
 
     </footer>
   </div>
@@ -285,7 +285,7 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/" data-id="clstwsn4m009k0nnx67e5fwj8" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/" data-id="clt3ouaui009k0no3eey92dfq" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -338,7 +338,7 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/information/do-not-provide-sensitive-data/" data-id="clstwsn2v004i0nnx4j6pfejm" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/information/do-not-provide-sensitive-data/" data-id="clt3ouasr004i0no3dj0jbcq5" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Information/" rel="tag">Information</a></li></ul>
@@ -388,7 +388,7 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/fw_sku_downgrade/" data-id="clstwsn3i00650nnxamp64x7g" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/fw_sku_downgrade/" data-id="clt3ouath00670no3dxe5cgiw" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
@@ -438,7 +438,7 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/expressroute_MV1F-T9G/" data-id="clstwsn3f005v0nnx37r70q6u" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/expressroute_MV1F-T9G/" data-id="clt3ouatd005y0no3c8f9cup3" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/FAQ/" rel="tag">FAQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
@@ -494,7 +494,7 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/create-custom-roles/" data-id="clstwsn43007z0nnxhi3x1flv" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/create-custom-roles/" data-id="clt3ouatz007z0no39eesd788" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RBAC/" rel="tag">RBAC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -548,7 +548,7 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/rhui-eus/" data-id="clstwsn4o009r0nnx7ny93epo" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/rhui-eus/" data-id="clt3ouaul009r0no310bj6r73" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/EUS/" rel="tag">EUS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Non-EUS/" rel="tag">Non EUS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHEL/" rel="tag">RHEL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHUI/" rel="tag">RHUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -599,7 +599,7 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/afd-connection-issue/" data-id="clstwsn35004x0nnx1qdtfqr3" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/afd-connection-issue/" data-id="clt3ouat3004z0no32ul96rfc" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
@@ -628,15 +628,15 @@ Azure Peering Service とはどのようなサービスかMicrosoft Azure Peerin
       <ul>
         
           <li>
+            <a href="network/tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
+          </li>
+        
+          <li>
             <a href="network/appgw-http-response-codes-5xx-server-error/">Application Gateway からの 500 番台の HTTP 応答について</a>
           </li>
         
           <li>
             <a href="network/azure-peering-service-vs-expressroute/">Azure Peering Service と ExpressRoute の違いについて</a>
-          </li>
-        
-          <li>
-            <a href="network/tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
           </li>
         
           <li>
