@@ -14,7 +14,7 @@
 <meta property="og:description" content="警告本記事は、投稿より時間が経過しており、内容が古い可能性があります。 最新の情報については、以下の公式ドキュメントをご参照ください。 Azure でのアウトバウンド SMTP 接続に関する問題のトラブルシューティング 2018 年 4 月 6 日更新 - CSP　(Cloud Service Provider) に関する記載を後述に記載しました。CSP のお客様は、CSP パートナー様経由でマイ">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2017-11-16T06:38:34.000Z">
-<meta property="article:modified_time" content="2024-02-27T01:27:30.046Z">
+<meta property="article:modified_time" content="2024-02-27T08:27:33.099Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Archive">
 <meta property="article:tag" content="Network">
@@ -105,7 +105,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+6665982e-0eb5-55d8-b6d5-ec608621fd98%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%8B%E3%82%89%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%81%E4%BF%A1%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%A2%E3%83%8A%E3%82%A6%E3%83%B3%E3%82%B9+%282017+%E5%B9%B4+11+%E6%9C%88%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fsmtp-block-announcement-november-2017%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fsmtp-block-announcement-november-2017.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fsmtp-block-announcement-november-2017.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/smtp-block-announcement-november-2017/" data-id="clt3ouasb00390no39p89gsgr" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/archive/smtp-block-announcement-november-2017/" data-id="clt43uia500390ns4eqgzcfdp" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -124,7 +124,7 @@
 <p>Microsoft Azure は、不正なユーザーによる Azure からのスパム メールの送信をストップするとともに、IP アドレスのレピュテーション (メールの送信元としての信頼性) を保ち、正当な利用を行っているお客様に対して影響が及ばないようにする責任を負っています。</p>
 <p>この対策の一環として、2017 年 11 月 15 日以降、Azure VM から外部ドメイン (たとえば outlook.com や gmail.com など) への直接のメール送信は、特定の契約種別のサブスクリプションでのみ許可するよう、動作が変更されます。許可されていない契約種別のサブスクリプションにおいては、Azure VM からの TCP/25 ポートによる外部へのメール送信を Azure プラットフォームがブロックする動作が加わります。</p>
 <p>ただし、この変更は 2017 年 11 月 15 日以降に作成されたサブスクリプションにのみ適用されます。それ以前に作成された既存のサブスクリプションについては、契約種別にかかわらず、動作変更の予定はありません (つまり、既存のサブスクリプションで TCP/25 の出力方向の通信をブロックする予定はありません)。</p>
-<h2 id="推奨されるメール送信の方法"><a href="#推奨されるメール送信の方法" class="headerlink" title="推奨されるメール送信の方法"></a>推奨されるメール送信の方法</h2><p>Azure VM からメールを外部に送信する際は、サブミッションポートを利用した送信 (TCP/587) や、SMTP over SSL (TCP/443) に対応した SMTP リレー サービスをご利用いただくことを、マイクロソフトは推奨しています。これらの送信方法を利用することで、レピュテーションを保つことが可能になり、レピュテーションが下がって、メール プロバイダーが受信をブロックするようなことが起こる可能性を下げることができます。対応したサービスとしては、たとえば Exchange Online Protection や SendGrid などがあります。</p>
+<h2 id="推奨されるメール送信の方法"><a href="#推奨されるメール送信の方法" class="headerlink" title="推奨されるメール送信の方法"></a>推奨されるメール送信の方法</h2><p>Azure VM からメールを外部に送信する際は、587 番ポートなど 25 番ポート以外を使用する認証が必要なメール中継サービスを使用して送信していただくことを、マイクロソフトは推奨しています。このような送信方法を利用することで、不特定多数の SMTP サーバーヘ匿名でメールを送信した場合よりも、ご利用いただいている Azure VM の IP アドレスのレピュテーション (メール送信実績の評価) を保ちやすくなります。それにより、メール受信側でメールをブロックされたり迷惑メール フォルダーに配信されたりする可能性を下げることができます。対応したサービスとしては、たとえば SendGrid などがあります。</p>
 <p>これらのリレー サービスを利用したメール送信は、どの契約種別のサブスクリプションでもブロックされません。また、リレー サービスを使わず、直接外部ドメインにメール送信する動作は契約種別を問わず弊社ではサポートしておりませんので、ご注意ください。</p>
 <p>参考: <a href="/blog/archive/smtp-on-azurevm/">Azure 上にメールサーバー/SMTP サーバーを構築する場合の注意事項</a></p>
 <h2 id="エンタープライズ契約-EA-のお客様"><a href="#エンタープライズ契約-EA-のお客様" class="headerlink" title="エンタープライズ契約 (EA) のお客様"></a>エンタープライズ契約 (EA) のお客様</h2><p>エンタープライズ契約 (EA) のサブスクリプション関しては、今回の変更の影響は受けません。既存のサブスクリプション、およびこれから新規に作成されるサブスクリプションの両方において、Azure VM から外部へのメール送信 (TCP/25) を Azure プラットフォームとしてブロックする動作は行いません。</p>
