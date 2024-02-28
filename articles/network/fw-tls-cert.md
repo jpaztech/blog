@@ -22,7 +22,6 @@ tags:
 
 上記で抜粋した `有効な中間 CA 証明書` に関しまして、Azure Firewall の TLS 検査に必要な中間 CA 証明書の要件は下記のドキュメントの通りとなります。  
 こちらの要件を満たした中間 CA 証明書であれば、どの CA から発行されたものであっても、検証環境 / 運用環境を問わずご使用いただくことが可能です。
-<br>
 
 * 参考: [中間 CA 証明書の要件](https://learn.microsoft.com/ja-jp/azure/firewall/premium-certificates#intermediate-ca-certificate-requirements)
 
