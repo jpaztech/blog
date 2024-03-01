@@ -1,5 +1,5 @@
 ---
-title: "Gateway メンテナンスコントロール昨日について"
+title: "Gateway メンテナンスコントロール機能について"
 date: 2024-03-01 00:00:00
 tags:
   - Network
