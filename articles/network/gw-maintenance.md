@@ -1,6 +1,6 @@
 ---
-title: "Gateway メンテナンスコントロール"
-date: 2020-12-24 00:00:00
+title: "Gateway メンテナンスコントロール昨日について"
+date: 2024-03-01 00:00:00
 tags:
   - Network
   - VPN Gateway
