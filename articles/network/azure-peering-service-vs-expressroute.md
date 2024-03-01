@@ -36,9 +36,9 @@ Azure Peering Service と似たサービスとして、ExpressRoute 回線 (Expr
 
 ### (*) Microsoft 365 との接続に関して
 
-[Azure ExpressRoute for Microsoft 365](https://learn.microsoft.com/ja-jp/microsoft-365/enterprise/azure-expressroute) に以下の記載がある通り、ExpressRoute での Microsoft 365 への接続は承認制となっています。法規制により閉域接続が必須となっているような一部のお客様に限ってのみ承認され、そうした特殊な要件がない場合にはご利用いただけません。Microsoft 365 との安定した接続を確保したい一般のお客様は、Azure Peering Service での接続をご検討ください。(ただし、前述の通り Azure Peering Service は閉域接続のためのサービスではございませんのでご留意ください。)
+[Azure ExpressRoute for Microsoft 365](https://learn.microsoft.com/ja-jp/microsoft-365/enterprise/azure-expressroute) に以下の記載がある通り、ExpressRoute での Microsoft 365 への接続は承認制となっています。法規制により閉域接続が必須となっているような一部のお客様に限ってのみ承認され、そうした特殊な要件がない場合にはご利用いただけません。**Microsoft 365 との安定した接続を確保したい一般のお客様は、Azure Peering Service での接続をご検討ください。**(ただし、前述の通り Azure Peering Service は閉域接続のためのサービスではございませんのでご留意ください。)
 
-> Microsoft 365 の ExpressRoute は、ほとんどの状況でサービスに最適な接続モデルを提供しないため 、お勧めしません 。 そのため、この接続モデルを使用するには Microsoft の承認が必要です。 お客様のすべての要求を確認し、必要なまれなシナリオでのみ、Microsoft 365 の ExpressRoute を承認します。 詳細については 、[ExpressRoute for Microsoft 365 ガイド](https://aka.ms/erguide) を参照してください。また、生産性、ネットワーク、セキュリティ チームに関するドキュメントの包括的なレビューに従って、Microsoft アカウント チームと協力して、必要に応じて例外を送信してください。 Microsoft 365 のルート フィルターを作成しようとしている未承認のサブスクリプションには、 [エラー メッセージが表示](https://support.microsoft.com/kb/3181709)されます。
+> **Microsoft 365 の ExpressRoute は、ほとんどの状況でサービスに最適な接続モデルを提供しないため 、お勧めしません。** そのため、この接続モデルを使用するには Microsoft の承認が必要です。 お客様のすべての要求を確認し、必要なまれなシナリオでのみ、Microsoft 365 の ExpressRoute を承認します。 詳細については 、[ExpressRoute for Microsoft 365 ガイド](https://aka.ms/erguide) を参照してください。また、生産性、ネットワーク、セキュリティ チームに関するドキュメントの包括的なレビューに従って、Microsoft アカウント チームと協力して、必要に応じて例外を送信してください。 Microsoft 365 のルート フィルターを作成しようとしている未承認のサブスクリプションには、 [エラー メッセージが表示](https://support.microsoft.com/kb/3181709)されます。
 
 また、Microsoft 365 は Internet 経由で快適にご利用いただけるよう弊社外の 3rd party の CDN サービス等も利用しているため、ExpressRoute と Azure Peering Service のいずれを利用される場合であっても、弊社外のエンドポイントとの通信に Internet 接続が必要となりますので、十分ご留意ください。
 
