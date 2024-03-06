@@ -90,6 +90,7 @@
 - [Microsoft ピアリングを経由するかどうかの確認方法](./articles/network/judge-via-ms-peering.md)
 - [東日本リージョンでの Azure Firewall のゾーン冗長に関するアナウンスの補足 (Tracking ID:7KYK-R8G)](./articles/network/fw_notification_7kyk-r8g.md)
 - [Azure Front Door 及び Microsoft Standard SKU の Azure CDN において発生する接続の問題](./articles/network/afd-connection-issue.md)
+- [Azure Firewall Premium における TLS 検査用の中間 CA 証明書作成方法の違い](./articles/network/fw-tls-cert.md)
 - [Azure Firewall の SKU をダウングレードする方法](./articles/network/fw_sku_downgrade.md)
 - [プライベート エンドポイントをご利用いただく上でのポイント](./articles/network/pe-introduction.md)
 - [プライベート エンドポイントのよくあるお問い合わせ](./articles/network/pe-troubleshooting.md)
@@ -149,4 +150,3 @@
 - [SSL 証明書の更新に関するアナウンス](./articles/archive/ssl-intermediate-ca-change.md)
 - [Azure で単数 NIC の仮想マシンを複数 NIC にする](./articles/archive/singlenicvm-to-multinicvm.md)
 - [Azure 仮想マシンにおける不要な NIC を削除する方法](./articles/archive/delete-nic.md)
-
