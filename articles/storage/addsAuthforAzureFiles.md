@@ -55,7 +55,7 @@ https://github.com/Azure-Samples/azure-files-samples/releases
 
 2-2. Azure ファイル共有のオンプレ AD DS 認証を有効化するスクリプトを実行します。
 
-□参考：[Join-AzStorageAccountForAuth を実行する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccountforauth)
+□参考：[Join-AzStorageAccount を実行する](https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccount)
 
 ▼スクリプト利用前提条件
 - [AzureFilesActiveDirectoryUtilities.psm1](https://github.com/Azure-Samples/azure-files-samples) モジュールをダウンロードしていること
@@ -63,7 +63,7 @@ https://github.com/Azure-Samples/azure-files-samples/releases
 - ストレージアカウントに対して「所有者」または「共同作成者」の Azure RBAC ロールのいずれかを持つ Azure AD 資格情報でスクリプトを実行すること
 - 対象のストレージアカウントがサポートされているリージョンに配置されていること
 
-Join-AzStorageAccountForAuth スクリプト例 
+Join-AzStorageAccount スクリプト例 
 ```shell
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 
@@ -79,9 +79,10 @@ $StorageAccountName = "<ストレージアカウント名>"
 
 Select-AzSubscription -SubscriptionId $SubscriptionId 
 
-Join-AzStorageAccountForAuth `
+Join-AzStorageAccount `
         -ResourceGroupName $ResourceGroupName `
         -StorageAccountName $StorageAccountName `
+        -SamAccountName $SamAccountName `
         -DomainAccountType "<ComputerAccount/ServiceLogonAccount>" `
         -OrganizationalUnitDistinguishedName "<ストレージアカウント用 OU 名>" `
         -EncryptionType "<AES256/RC4/AES256,RC4>"
