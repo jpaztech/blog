@@ -94,6 +94,7 @@
 - [Azure Firewall の SKU をダウングレードする方法](./articles/network/fw_sku_downgrade.md)
 - [プライベート エンドポイントをご利用いただく上でのポイント](./articles/network/pe-introduction.md)
 - [プライベート エンドポイントのよくあるお問い合わせ](./articles/network/pe-troubleshooting.md)
+- [168.63.129.16 の DNS 機能について](./articles/network/dns-168-63-129-16.md)
 
 ## Containers
 
