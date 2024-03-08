@@ -69,35 +69,39 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 
 .\CopyToPSPath.ps1 
 
+
 Import-Module -Name AzFilesHybrid
 
 Connect-AzAccount
 
+
 $SubscriptionId = "<サブスクリプション ID>"
-$ResourceGroupName = "<リソースグループ名>"
-$StorageAccountName = "<ストレージアカウント名>"
+$ResourceGroupName = "<リソース グループ名>>"
+$StorageAccountName = "<ストレージ アカウント名"
+$SamAccountName = "<SAM アカウント名>"
+$DomainAccountType = "<ComputerAccount|ServiceLogonAccount>"
+$OuDistinguishedName = "<OU 識別名>"
 
 Select-AzSubscription -SubscriptionId $SubscriptionId 
+
 
 Join-AzStorageAccount `
         -ResourceGroupName $ResourceGroupName `
         -StorageAccountName $StorageAccountName `
         -SamAccountName $SamAccountName `
-        -DomainAccountType "<ComputerAccount/ServiceLogonAccount>" `
-        -OrganizationalUnitDistinguishedName "<ストレージアカウント用 OU 名>" `
-        -EncryptionType "<AES256/RC4/AES256,RC4>"
-
-Update-AzStorageAccountAuthForAES256 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName
+        -DomainAccountType $DomainAccountType `
+        -OrganizationalUnitDistinguishedName $OuDistinguishedName
 ```
 実行例
-![](addsAuthforAzureFiles/AzureFiles04.png)
+![](addsAuthforAzureFiles/AzureFiles23.png)
 
 2-3. 機能が有効になったことを確認します。
 
 □参考：[機能が有効になっていることを確認する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#confirm-the-feature-is-enabled)
 
 実行例
-![](addsAuthforAzureFiles/AzureFiles05.png)
+
+![](addsAuthforAzureFiles/AzureFiles24.png)
 
 ### (3)ファイル共有レベルのアクセス権限を付与
 □参考：[共有レベルのアクセス許可](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-assign-permissions#share-level-permissions)
