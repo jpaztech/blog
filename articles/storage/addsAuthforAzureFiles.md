@@ -129,7 +129,7 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 
 ここでは例としてユーザー testuser01 でサインインしています。
 
-![](addsAuthforAzureFiles/AzureFiles11.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles25.png)
 
 ### (6) 手順(4) でコピーしたコマンドを実行
 ![](addsAuthforAzureFiles/AzureFiles09.png)
@@ -149,7 +149,7 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 マウントしたドライブ内のフォルダに対してアクセス権限を設定します。
  - フォルダ testuser01 はユーザー testuser01 にアクセス許可を付与
  - フォルダ testuser03 はユーザー testuser03 にアクセス許可を付与
-![](addsAuthforAzureFiles/AzureFiles19.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles26.png)
 
 アクセス権限の設定が適用されているか確認するため、ユーザー testuser03 でサインインし、認証方法 [Active Directory] のスクリプトにてファイル共有をマウントします。
 ![](addsAuthforAzureFiles/AzureFiles20.png)
@@ -166,7 +166,7 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 次は、上述のドメインに参加している Windows 10 端末にてファイル共有をマウントしアクセスが可能であるか確認します。
 
 ドメイン参加している Windows 10 端末にサインインします。
-![](addsAuthforAzureFiles/AzureFiles12.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles27.png)
 
 Azure ファイル共有マウント用コマンドをコピーし実行します。
 ![](addsAuthforAzureFiles/AzureFiles13.png)
@@ -188,11 +188,11 @@ Azure ファイル共有マウント用コマンドをコピーし実行しま�
 環境
 - ドメイン参加済みサーバー：win2016-adds-server-apts
 
-　　- ドメイン参加済みユーザー : win10client01@contoso.com
+　　- ドメイン参加済みユーザー : win10client01@adfiles.com
 - ドメイン未参加端末：win10-noadds-client-apts
 
 オンプレ AD DS に参加しているドメインサーバー (win2016-adds-server-apts)
-![](addsAuthforAzureFiles/AzureFiles16.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles28.png)
 
 ドメイン参加していない Windows 10 端末 (win10-noadds-client-apts)
 
@@ -201,9 +201,9 @@ Azure ファイル共有マウント用コマンドをコピーし実行しま�
 
 ドメイン参加していない Windows 10 端末 (win10-noadds-client-apts) のエクスプローラーに UNC (\\\\<ストレージアカウント名>.file.core.windows.net\\<ファイル共有名>) を入力すると資格情報入力画面が表示されるため、AD ユーザー資格情報を入力しアクセスを行います。
 
-![](addsAuthforAzureFiles/AzureFiles15.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles29.png)
 
-ここでは、ドメイン参加済みユーザー (win10client01@contoso.com) の AD ユーザー資格情報を利用しています。
+ここでは、ドメイン参加済みユーザー (win10client01@adfiles.com) の AD ユーザー資格情報を利用しています。
 
 ![](addsAuthforAzureFiles/AzureFiles17.png)
 ファイル共有へアクセスができることを確認できました。
