@@ -92,6 +92,10 @@ Join-AzStorageAccount `
         -DomainAccountType $DomainAccountType `
         -OrganizationalUnitDistinguishedName $OuDistinguishedName
 ```
+各パラメータの詳細につきましては、以下公開情報をご確認ください。
+
+□参考：[Join-AzStorageAccount を実行する](https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccount)
+
 実行例
 ![](addsAuthforAzureFiles/AzureFiles23.png)
 
