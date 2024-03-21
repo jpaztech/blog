@@ -4,19 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>予期せず Azure のリソースが消えた・構成が変わった場合の確認方法 | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。 こんにちは、Azure サポートの宇田です。 今回は Azure のアクティビティ ログの確認方法についてご紹介します。 リソースが消えた？構成が変わった？Azure サポートに稀にお問い合わせいただく内容として、以下のようなものがあります。  何もしていないのにリソースが消えている いつの間にか構成が変わっている  こう">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの杜です。 Azure DNS では、仮想ネットワーク内の名前解決結果を上書きできるプライベート DNS ゾーンというサービスをご提供しており、プライベート エンドポイントの名前解決などと併用する場合が多いです。 このブログでは、プライベート DNS ゾーンのベスト プラクティス、及びよく頂いているお問い合わせをご紹介させて頂きます。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="予期せず Azure のリソースが消えた・構成が変わった場合の確認方法">
-<meta property="og:url" content="https://jpaztech.github.io/blog/archive/unexpected-resource-change/index.html">
+<meta property="og:title" content="Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/private-dns-zone-faq/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。 こんにちは、Azure サポートの宇田です。 今回は Azure のアクティビティ ログの確認方法についてご紹介します。 リソースが消えた？構成が変わった？Azure サポートに稀にお問い合わせいただく内容として、以下のようなものがあります。  何もしていないのにリソースが消えている いつの間にか構成が変わっている  こう">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの杜です。 Azure DNS では、仮想ネットワーク内の名前解決結果を上書きできるプライベート DNS ゾーンというサービスをご提供しており、プライベート エンドポイントの名前解決などと併用する場合が多いです。 このブログでは、プライベート DNS ゾーンのベスト プラクティス、及びよく頂いているお問い合わせをご紹介させて頂きます。">
 <meta property="og:locale" content="ja_JP">
-<meta property="article:published_time" content="2018-02-09T04:41:10.000Z">
-<meta property="article:modified_time" content="2024-03-21T02:01:36.581Z">
+<meta property="article:published_time" content="2024-03-21T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-21T02:01:36.665Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="Archive">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="DNS">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
@@ -79,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-archive/unexpected-resource-change" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-network/private-dns-zone-faq" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -88,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      予期せず Azure のリソースが消えた・構成が変わった場合の確認方法
+      Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ
     </h1>
   
 
@@ -96,81 +97,66 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2018-02-09T04:41:10.000Z" itemprop="datePublished">2018-02-09</time>
+  <time datetime="2024-03-21T00:00:00.000Z" itemprop="datePublished">2024-03-21</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+69e939cd-6c35-589b-8b64-c8233cfdf9c0%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E4%BA%88%E6%9C%9F%E3%81%9B%E3%81%9A+Azure+%E3%81%AE%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%8C%E6%B6%88%E3%81%88%E3%81%9F%E3%83%BB%E6%A7%8B%E6%88%90%E3%81%8C%E5%A4%89%E3%82%8F%E3%81%A3%E3%81%9F%E5%A0%B4%E5%90%88%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Funexpected-resource-change%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Funexpected-resource-change.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Funexpected-resource-change.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+069bbd12-8ed9-5730-9fb5-5cb459edf52a%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88+DNS+%E3%82%BE%E3%83%BC%E3%83%B3%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%83%99%E3%82%B9%E3%83%88+%E3%83%97%E3%83%A9%E3%82%AF%E3%83%86%E3%82%A3%E3%82%B9%E5%8F%8A%E3%81%B3%E3%82%88%E3%81%8F%E3%81%82%E3%82%8B%E3%81%8A%E5%95%8F%E5%90%88%E3%81%9B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fprivate-dns-zone-faq%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fprivate-dns-zone-faq.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fprivate-dns-zone-faq.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/unexpected-resource-change/" data-id="clu0l6rgl003o0nqk5zhg9qva" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/private-dns-zone-faq/" data-id="clu0l6rhp006r0nqk406dbl54" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <div class="alert is-warning"><p class="alert-title">警告</p><p>本記事は、投稿より時間が経過しており、<strong>一部内容が古い可能性があります。</strong></p></div>
-<p>こんにちは、Azure サポートの宇田です。</p>
-<p>今回は Azure のアクティビティ ログの確認方法についてご紹介します。</p>
-<h2 id="リソースが消えた？構成が変わった？"><a href="#リソースが消えた？構成が変わった？" class="headerlink" title="リソースが消えた？構成が変わった？"></a>リソースが消えた？構成が変わった？</h2><p>Azure サポートに稀にお問い合わせいただく内容として、以下のようなものがあります。</p>
-<ul>
-<li>何もしていないのにリソースが消えている</li>
-<li>いつの間にか構成が変わっている</li>
+        <p>こんにちは、Azure テクニカル サポート チームの杜です。</p>
+<p>Azure DNS では、仮想ネットワーク内の名前解決結果を上書きできる<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-privatednszone">プライベート DNS ゾーン</a>というサービスをご提供しており、<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/private-link/private-endpoint-overview">プライベート エンドポイント</a>の名前解決などと併用する場合が多いです。</p>
+<p>このブログでは、プライベート DNS ゾーンのベスト プラクティス、及びよく頂いているお問い合わせをご紹介させて頂きます。</p>
+<span id="more"></span>
+
+<hr>
+<h3 id="シナリオ"><a href="#シナリオ" class="headerlink" title="シナリオ"></a>シナリオ</h3><ul>
+<li>仮想ネットワーク上のリソース (VM) がプライベート エンドポイント経由でストレージ アカウントに接続する</li>
+<li>仮想ネットワークでは Azure 既定の DNS (168.63.129.16) を DNS サーバーとして指定している</li>
+<li>プライベート エンドポイント経由でストレージ アカウント<code>storagebloga</code>へアクセスするために、プライベート DNS ゾーン <code>privatelink.blob.core.windows.net</code> をクライアント VM の仮想ネットワークにリンクした</li>
+<li>プライベート DNS ゾーン <code>privatelink.blob.core.windows.net</code> に <code>storagebloga IN A ＜プライベート エンドポイント IP＞</code> のレコードを登録し、プライベート エンドポイントの名前解決が成功している</li>
+<li>ただし、それ以外一部のストレージ アカウントの名前解決を行ったところ、空の結果 (NXDOMAIN) が返されてしまい、接続も失敗している</li>
+<li>すべてストレージ アカウントの名前解決が失敗するわけではなく、問題なく接続できる場合もある</li>
+<li>ストレージ アカウントの他に、AppService や Azure SQL Database など他の Azure PaaS サービスにも類似の事象がある</li>
 </ul>
-<p>こうした事象ですが、Azure が勝手にリソースを操作することは、原則としてあり得ません。<br>(サブスクリプションの無償枠を使い切った場合など、一部の場合を除きます)</p>
-<p>もし万が一こうした事象に遭遇した場合は、以下のような方法で確認ください。</p>
-<h2 id="誰が操作したかをアクティビティ-ログから確認する方法"><a href="#誰が操作したかをアクティビティ-ログから確認する方法" class="headerlink" title="誰が操作したかをアクティビティ ログから確認する方法"></a>誰が操作したかをアクティビティ ログから確認する方法</h2><p>Azure のポータルや PoweShell、CLI 等で行われた各種操作は、アクティビティ ログとして記録されます。</p>
-<p>予期せずリソースが消失したり、構成が変わっている場合は、「いつ」、「誰が」、「どのような変更を」行ったかを確認しましょう。</p>
-<ul>
-<li>Azure アクティビティ ログでサブスクリプション アクティビティを監視する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/monitoring-and-diagnostics/monitoring-overview-activity-logs">https://docs.microsoft.com/ja-jp/azure/monitoring-and-diagnostics/monitoring-overview-activity-logs</a></li>
-</ul>
-<p>上記ドキュメントの通り、ポータル等でも簡易的に確認することが可能ですが、Azure PowerShell を使う事で、詳細が確認できます。</p>
-<pre>PS> Get-AzureRmLog
+<h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>発生原因を理解するために、まず全体的な名前解決フローを説明させて頂きます。</p>
+<p>ストレージ アカウントなどの Azure PaaS サービスでは、プライベート エンドポイントの有効化状況により、名前解決フローが異なります。<br>プライベート エンドポイントが無効化されているリソースでは、名前解決フローが以下となります。<code>privatelink.blob.core.windows.net</code> のドメインを経由しません。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント無効化時の名前解決フロー</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storagebloga.blob.core.windows.net. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storagebloga.blob.core.windows.net. 20 IN CNAME blob.tyo22prdstr07a.store.core.windows.net.</span><br><span class="line">blob.tyo22prdstr07a.store.core.windows.net. 60 IN A 20.150.85.196</span><br></pre></td></tr></table></figure>
+<p>プライベート エンドポイントを有効化すると、<code>storagebloga.blob.core.windows.net</code> の CNAME 先が <code>privatelink.blob.core.windows.net</code> ドメインに変更される動作となります。<br>クライアントが存在する仮想ネットワークがプライベート DNS ゾーンにリンクしていない場合、名前解決結果は変わりません。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント有効化時の名前解決フロー (プライベート DNS ゾーンのリンクなし)</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storagebloga.blob.core.windows.net. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storagebloga.blob.core.windows.net. 60 IN CNAME storagebloga.privatelink.blob.core.windows.net.</span><br><span class="line">storagebloga.privatelink.blob.core.windows.net. 60 IN CNAME blob.tyo22prdstr07a.store.core.windows.net.</span><br><span class="line">blob.tyo22prdstr07a.store.core.windows.net. 17 IN A 20.150.85.196</span><br></pre></td></tr></table></figure>
 
+<p>プライベート エンドポイントへ接続させるには、お客様側にプライベート DNS ゾーン <code>privatelink.blob.core.windows.net</code> に A レコードを作成し、仮想ネットワークにリンクすることで、該当 CNAME 先を上書きして実現できているわけです。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時の名前解決フロー</span><br><span class="line">※10.0.3.4 がプライベート エンドポイントの IP アドレスとなります。</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storagebloga.blob.core.windows.net. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storagebloga.blob.core.windows.net. 60 IN CNAME storagebloga.privatelink.blob.core.windows.net.</span><br><span class="line">storagebloga.privatelink.blob.core.windows.net. 60 IN A 10.0.3.4</span><br></pre></td></tr></table></figure>
 
+<p>プライベート DNS ゾーンをリンクすると、Azure DNS が該当 DNS ゾーン <code>privatelink.blob.core.windows.net</code> の権威サーバーとなります。<br>そのドメインへの名前解決要求を受信する時に、インターネット経由で再帰的問い合わせを行わずに、プライベート DNS ゾーンに登録されているレコードを権威結果として応答するようになります。<br>その場合、プライベート DNS ゾーンに <code>storagebloga</code> 以外のレコードが登録されていないため、以下のように、NXDOMAIN が応答されてしまいます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時に、別のリソース（プライベート エンドポイント有効化）の名前解決フロー</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storageblogbwithpe.blob.core.windows.net. IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storageblogbwithpe.blob.core.windows.net. 60 IN CNAME	storageblogbwithpe.privatelink.blob.core.windows.net.</span><br><span class="line">````</span><br><span class="line"></span><br><span class="line">また、各ストレージ アカウントの構成次第で、プライベート エンドポイントが有効化されていない場合があります。</span><br><span class="line">その場合の名前解決フローでは `privatelink.blob.core.windows.net` のドメインが存在しないため、プライベート DNS ゾーン `privatelink.blob.core.windows.net` をリンクしても影響がありません。</span><br></pre></td></tr></table></figure>
+<p>※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時に、別のリソース（プライベート エンドポイント無効化）の名前解決フロー</p>
+<p>;; QUESTION SECTION:<br>;storageblogcwithoutpe.blob.core.windows.net. IN A</p>
+<p>;; ANSWER SECTION:<br>storageblogcwithoutpe.blob.core.windows.net. 20 IN CNAME blob.tyo22prdstr07a.store.core.windows.net.<br>blob.tyo22prdstr07a.store.core.windows.net. 60 IN A 20.150.85.196</p>
+<pre><code>
+### 回避策
+特定のストレージ アカウントの名前解決のみをプライベート DNS ゾーンで実現し、それ以外の名前解決への影響を回避したい場合は、`privatelink.blob.core.windows.net` ではなく、
+`storagebloga.privatelink.blob.core.windows.net` のプライベート DNS ゾーンを作成し、頂点（APEX）レコード `@ IN A ＜プライベート エンドポイント IP＞` を構成すれば実現できます。
+そうしますと、Azure DNS の権威ドメインが `storagebloga.privatelink.blob.core.windows.net` のみとり、それ以外 `storageblogcwithoutpe.privatelink.blob.core.windows.net` の名前解決要求を受けると、
+インターネット経由で再帰的問い合わせを行い、プライベート DNS ゾーンに影響されなくなります。
 
-Authorization        :
-                       Scope     : /subscriptions/<サブスクリプション ID>/resourceGroups/<リソース グループ名>/providers
-                       /Microsoft.Network/networkSecurityGroups/shudaArmWindowsNsg/securityRules/DenyAll
-                       Action    : Microsoft.Network/networkSecurityGroups/securityRules/delete <== NSG の削除を実行
-                       Role      :
-                       Condition :
-Claims               :
-                       (中略)
-                       ipaddr         : 203.0.113.130 <== クライアント端末の IP アドレス
-                       name           : Shuhei Uda <== ユーザー名
-                       http://schemas.microsoft.com/identity/claims/objectidentifier: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                       onprem_sid     : S-1-5-21-xxxxxxxxxx-xxxxxxxxx-xxxxxxxxx-xxxxxxx <== クライアント端末の SID
-                       (中略)
-HttpRequest          :
-                       ClientId        : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                       Method          : DELETE
-                       Url             :
-                       ClientIpAddress : 203.0.113.130 <== クライアント端末の IP アドレス
-Properties           :
-                       statusCode     : Accepted
-                       serviceRequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-Caller               : xxxxx@microsoft.com <== 実行アカウント
-Description          :
-                       (中略)
-Level                : Informational
-ResourceGroupName    : <リソース グループ名>
-ResourceProviderName : Microsoft.Azure.Management.Monitor.Models.LocalizableString
-ResourceId           : /subscriptions/<サブスクリプション ID>/resourceGroups/<リソース グループ名>/providers/Microsoft.N
-                       etwork/networkSecurityGroups/shudaArmWindowsNsg/securityRules/DenyAll <== 操作したリソースの ID
-ResourceType         :
-OperationId          : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx <== 操作 ID
-                       (中略)
-EventTimestamp       : 2018/02/07 4:41:33 <== 実行時刻 (UTC)
-SubmissionTimestamp  : 2018/02/07 4:41:50
-SubscriptionId       : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx <== サブスクリプション ID
-TenantId             :
-</pre>
+ただし、もし複数のストレージ アカウントが存在する場合は、ストレージ アカウントの名前ごとにプライベート DNS ゾーンを用意する必要がありますので、ご注意ください。
 
-<h2 id="注意事項"><a href="#注意事項" class="headerlink" title="[注意事項]"></a>[注意事項]</h2><p>※ アクティビティ ログは既定では 90 日しか保存されません。長期保存されたい場合は、Azure ストレージやイベントハブに転送する設定が必要です。(先の URL 内の “ログ プロファイルを使用してアクティビティ ログをエクスポートする” の項を参照ください。)</p>
-<p>※ 操作を実行したクライアント端末の IP アドレスは、REST API の呼び出し元が記録されるため、Azure Cloud Shell や Azure Automation を利用した場合など、Azure のデータセンターが所有する IP アドレスとして記録される場合もあります。</p>
-<p>※ アクティビティ ログに記録されるのは、あくまでも Azure のリソースに対する操作のみとなります。Azure ストレージ上のファイルが消えた等の事象については、本手法では確認する事が出来ませんので、ストレージの診断ログなどから確認をいただければと思います。(既定では無効なため、事前に有効化が必要です。)</p>
-<ul>
-<li>Azure ポータルでのストレージ アカウントの監視<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-monitor-storage-account">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-monitor-storage-account</a></li>
-</ul>
+# FAQ
+## プライベート DNS ゾーンのレコードを変更する時に、リンク先の仮想ネットワークの名前解決が影響されるのでしょうか。
+変更対象以外のレコードには影響がなく、該当プライベート DNS ゾーンで一時的に名前解決ができなくなるといった事象は発生しませんので、ご安心ください。
+
+## 東日本リージョンに本番環境を構築しており、プライベート DNS ゾーンをリンクし、仮想ネットワークに仮想マシンなどを運用しています。リージョン レベルの冗長化を取るために、西日本リージョンに同じ構成を取りたいですが、プライベート DNS ゾーンもリージョンごとに作成する必要がありますでしょうか。
+プライベート DNS ゾーンを含め、Azure DNS は 100% の [SLA](https://azure.microsoft.com/ja-jp/updates/azuredns100sla/) でご提供しているため、冗長化の観点ではリージョンごとに作成する必要はありません。
+
+ただし、もし各リージョンの IP アドレス構成が異なり、同じ FQDN に対し、リージョンごとに名前解決結果を分けたい場合は、１つのプライベート DNS ゾーンでは実現できませんので、各リージョンごとにリソース グループを作成し、複数のプライベート DNS ゾーンの構成をご検討ください。
+
+****
+</code></pre>
 
       
       
@@ -184,10 +170,10 @@ TenantId             :
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/archive/unexpected-resource-change.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/private-dns-zone-faq.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -195,19 +181,10 @@ TenantId             :
     
 <nav id="article-nav">
   
-    <a href="../expressroute-deep-dive-part1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          詳説 Azure ExpressRoute – Part1: ExpressRoute を導入する前に
-        
-      </div>
-    </a>
   
-  
-    <a href="../disk11-after20180104/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../dns-168-63-129-16/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">2018 年 1 月 4 日以降で Disk 11 のエラーが発生し MARS Agent バックアップが失敗する (0x8007045D)</div>
+      <div class="article-nav-title">168.63.129.16 の DNS 機能について</div>
     </a>
   
 </nav>
@@ -226,23 +203,23 @@ TenantId             :
       <ul>
         
           <li>
-            <a href="../../network/private-dns-zone-faq/">Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</a>
+            <a href="">Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</a>
           </li>
         
           <li>
-            <a href="../../network/dns-168-63-129-16/">168.63.129.16 の DNS 機能について</a>
+            <a href="../dns-168-63-129-16/">168.63.129.16 の DNS 機能について</a>
           </li>
         
           <li>
-            <a href="../../network/gw-maintenance/">Gateway メンテナンスコントロール機能について</a>
+            <a href="../gw-maintenance/">Gateway メンテナンスコントロール機能について</a>
           </li>
         
           <li>
-            <a href="../../network/tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
+            <a href="../tls1.2_migration/">Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)</a>
           </li>
         
           <li>
-            <a href="../../network/appgw-http-response-codes-5xx-server-error/">Application Gateway からの 500 番台の HTTP 応答について</a>
+            <a href="../appgw-http-response-codes-5xx-server-error/">Application Gateway からの 500 番台の HTTP 応答について</a>
           </li>
         
       </ul>
