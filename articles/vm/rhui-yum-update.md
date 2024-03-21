@@ -8,6 +8,8 @@ tags:
   - RHUI
 ---
 
+※2024 年 3 月 19 日更新: curl コマンドの baseurl を変更しました。
+
 こんにちは！Azure テクニカル サポート チームの高橋です。
 今回はよく、お問い合わせを頂く
 Azure Marketplace から作成した Red Hat Enterprise Linux (RHEL) の仮想マシンにおいて
@@ -28,7 +30,6 @@ Azure Marketplace から 作成した RHEL VM は、規定で Azure RHUI への�
  
 VM から、Azure RHUI にアクセスするためには、下記の IP アドレスに対する送信規則の 443 ポートの通信許可を設定する必要があります。
 Azure RHUI の IP アドレスは下記公開ドキュメントにおまとめしておりますのでご確認ください。
-RHEL 7、RHEL 8 は RHUI 3、RHEL 9 は RHUI 4 が利用されております。
 
 >  □ 参考 : RHUI コンテンツ配信サーバーの IP アドレス
 >    https://learn.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui#the-ips-for-the-rhui-content-delivery-servers
@@ -44,22 +45,25 @@ RHEL 7、RHEL 8 は RHUI 3、RHEL 9 は RHUI 4 が利用されております。
 
 yum / dnf update やパッケージのインストールに失敗する場合、
 Azure RHUI への接続ができていない可能性がございます。
-Azure VM 内から、curl コマンド等を使うことで、Azure RHUI への接続状況を確認することができます。
-下記のコマンドをお試しください。
+ゲスト OS 内で設定されている RHUI リポジトリ情報は、
+/etc/yum.repos.d 配下にある設定ファイルから確認することが可能です。
+リポジトリ設定ファイル内にある baseurl に対して Azure VM 内から、
+curl コマンド等を使うことで、Azure RHUI への接続状況を確認することができます。
+下記のようなコマンドをお試しください。(baseurl は設定ファイルに応じて変更ください)
 
 ```bash
-    # curl -v https://rhui-1.microsoft.com:443
-    # curl -v https://rhui-2.microsoft.com:443
-    # curl -v https://rhui-3.microsoft.com:443
+    # curl -v https://rhui4-1.microsoft.com:443
+    # curl -v https://rhui4-2.microsoft.com:443
+    # curl -v https://rhui4-3.microsoft.com:443
 ```
 
 < 実行結果例 (成功時) >
 ```
-    [root@rheltest ~]# curl -v https://rhui-1.microsoft.com:443
-    * Rebuilt URL to: https://rhui-1.microsoft.com:443/
-    *   Trying 52.187.75.218...
+    [root@rheltest ~]# curl -v https://rhui4-1.microsoft.com:443
+    * Rebuilt URL to: https://rhui4-1.microsoft.com:443/
+    *   Trying 20.24.186.80...
     * TCP_NODELAY set
-    * Connected to rhui-1.microsoft.com (52.187.75.218) port 443 (#0)
+    * Connected to rhui4-1.microsoft.com (20.24.186.80) port 443 (#0)
     * ALPN, offering h2
     * ALPN, offering http/1.1
     * successfully set certificate verify locations:
@@ -67,53 +71,47 @@ Azure VM 内から、curl コマンド等を使うことで、Azure RHUI への�
     CApath: none
     * TLSv1.3 (OUT), TLS handshake, Client hello (1):
     * TLSv1.3 (IN), TLS handshake, Server hello (2):
-    * TLSv1.2 (IN), TLS handshake, Certificate (11):
-    * TLSv1.2 (IN), TLS handshake, Server key exchange (12):
-    * TLSv1.2 (IN), TLS handshake, Server finished (14):
-    * TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
-    * TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
-    * TLSv1.2 (OUT), TLS handshake, Finished (20):
-    * TLSv1.2 (IN), TLS handshake, Finished (20):
-    * SSL connection using TLSv1.2 / ECDHE-RSA-AES256-GCM-SHA384
-    * ALPN, server did not agree to a protocol
+    * TLSv1.3 (IN), TLS handshake, [no content] (0):
+    * TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+    * TLSv1.3 (IN), TLS handshake, [no content] (0):
+    * TLSv1.3 (IN), TLS handshake, Request CERT (13):
+    * TLSv1.3 (IN), TLS handshake, [no content] (0):
+    * TLSv1.3 (IN), TLS handshake, Certificate (11):
+    * TLSv1.3 (IN), TLS handshake, [no content] (0):
+    * TLSv1.3 (IN), TLS handshake, CERT verify (15):
+    * TLSv1.3 (IN), TLS handshake, [no content] (0):
+    * TLSv1.3 (IN), TLS handshake, Finished (20):
+    * TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+    * TLSv1.3 (OUT), TLS handshake, [no content] (0):
+    * TLSv1.3 (OUT), TLS handshake, Certificate (11):
+    * TLSv1.3 (OUT), TLS handshake, [no content] (0):
+    * TLSv1.3 (OUT), TLS handshake, Finished (20):
+    * SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384
+    * ALPN, server accepted to use http/1.1
     * Server certificate:
     *  subject: C=US; ST=WA; L=Redmond; O=Microsoft Corporation; CN=rhui-1.microsoft.com
-    *  start date: Dec  7 11:14:49 2021 GMT
-    *  expire date: Dec  2 11:14:49 2022 GMT
-    *  subjectAltName: host "rhui-1.microsoft.com" matched cert's "rhui-1.microsoft.com"
-    *  issuer: C=US; O=Microsoft Corporation; CN=Microsoft Azure TLS Issuing CA 01
+    *  start date: Oct 15 21:22:06 2023 GMT
+    *  expire date: Jun 27 23:59:59 2024 GMT
+    *  subjectAltName: host "rhui4-1.microsoft.com" matched cert's "rhui4-1.microsoft.com"
+    *  issuer: C=US; O=Microsoft Corporation; CN=Microsoft Azure ECC TLS Issuing CA 02
     *  SSL certificate verify ok.
+    * TLSv1.3 (OUT), TLS app data, [no content] (0):
     > GET / HTTP/1.1
-    > Host: rhui-1.microsoft.com
+    > Host: rhui4-1.microsoft.com
     > User-Agent: curl/7.61.1
     > Accept: */*
-    >
-    < HTTP/1.1 200 OK
-    < Date: Mon, 24 Jan 2022 06:51:00 GMT
-    < Server: Apache/2.4.6 (Red Hat Enterprise Linux)
-    < X-Served-By: southeastasia-cds0
-    < X-Content-Type-Options: nosniff
-    < Last-Modified: Thu, 20 Jun 2019 06:37:48 GMT
-    < ETag: "0-58bbb9592306b"
-    < Accept-Ranges: bytes
-    < Content-Length: 0
-    < Connection: close
-    < Content-Type: text/html
-    <
-    * Closing connection 0
-    * TLSv1.2 (OUT), TLS alert, close notify (256):
 ```
 
 < 実行結果例 (失敗時) > 
 ```
-    [root@rhelvm ~]# curl -v https://rhui-1.microsoft.com:443
-    * Rebuilt URL to: https://rhui-1.microsoft.com:443/
-    *   Trying 52.187.75.218...
+    [root@rhelvm ~]# curl -v https://rhui4-1.microsoft.com:443
+    * Rebuilt URL to: https://rhui4-1.microsoft.com:443/
+    *   Trying 20.24.186.80...
     * TCP_NODELAY set
-    * connect to 52.187.75.218 port 443 failed: Connection timed out
-    * Failed to connect to rhui-1.microsoft.com port 443: Connection timed out
+    * connect to 20.24.186.80 port 443 failed: Connection timed out
+    * Failed to connect to rhui4-1.microsoft.com port 443: Connection timed out
     * Closing connection 0
-    curl: (7) Failed to connect to rhui-1.microsoft.com port 443: Connection timed out
+    curl: (7) Failed to connect to rhui4-1.microsoft.com port 443: Connection timed out
 ```
 
 Azure RHUI への接続確認が失敗する場合には、NSG やプロキシ等のネットワーク設定を確認する必要がございます。
@@ -135,9 +133,10 @@ yum update を実施した際や、パッケージのインストール時には
 
 ```
     [root@rhelvm ~]# yum update
-    Red Hat Enterprise Linux 8 for x86_64 - BaseOS - Extended Update Support from RHUI (RPMs)                                                              0.0  B/s |   0  B     01:30
-    Failed to download metadata for repo 'rhel-8-for-x86_64-baseos-eus-rhui-rpms'
-    Error: Failed to download metadata for repo 'rhel-8-for-x86_64-baseos-eus-rhui-rpms'
+    Red Hat Enterprise Linux 8 for x86_64 - BaseOS from RHUI (RPMs)                                                                                      0.0  B/s |   0  B     02:00
+    Errors during downloading metadata for repository 'rhel-8-for-x86_64-baseos-rhui-rpms':
+    - Curl error (28): Timeout was reached for https://rhui4-1.microsoft.com/pulp/repos/content/dist/rhel8/rhui/8/x86_64/baseos/os/repodata/repomd.xml [Connection timed out after 30000 milliseconds]
+    Error: Failed to download metadata for repo 'rhel-8-for-x86_64-baseos-rhui-rpms': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
 ```
 
 ![](./rhui-yum-update/02.png)
