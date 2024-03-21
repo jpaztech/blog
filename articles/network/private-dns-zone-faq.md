@@ -80,7 +80,7 @@ storagebloga.privatelink.blob.core.windows.net. 60 IN A 10.0.3.4
 
 ;; ANSWER SECTION:
 storageblogbwithpe.blob.core.windows.net. 60 IN CNAME	storageblogbwithpe.privatelink.blob.core.windows.net.
-````
+```
 
 また、各ストレージ アカウントの構成次第で、プライベート エンドポイントが有効化されていない場合があります。
 その場合の名前解決フローでは `privatelink.blob.core.windows.net` のドメインが存在しないため、プライベート DNS ゾーン `privatelink.blob.core.windows.net` をリンクしても影響がありません。
