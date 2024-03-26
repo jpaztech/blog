@@ -32,6 +32,7 @@ Azure DNS では、仮想ネットワーク内の名前解決結果を上書き�
 
 ストレージ アカウントなどの Azure PaaS サービスでは、プライベート エンドポイントの有効化状況により、名前解決フローが異なります。
 プライベート エンドポイントが無効化されているリソースでは、名前解決フローが以下となります。`privatelink.blob.core.windows.net` のドメインを経由しません。
+![](./01.png)
 ```
 ※プライベート エンドポイント無効化時の名前解決フロー
 
@@ -57,6 +58,7 @@ blob.tyo22prdstr07a.store.core.windows.net. 17 IN A 20.150.85.196
 ```
 
 プライベート エンドポイントへ接続させるには、お客様側にプライベート DNS ゾーン `privatelink.blob.core.windows.net` に A レコードを作成し、仮想ネットワークにリンクすることで、該当 CNAME 先を上書きして実現できているわけです。
+![](./02.png)
 ```
 ※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時の名前解決フロー
 ※10.0.3.4 がプライベート エンドポイントの IP アドレスとなります。
@@ -72,6 +74,7 @@ storagebloga.privatelink.blob.core.windows.net. 60 IN A 10.0.3.4
 プライベート DNS ゾーンをリンクすると、Azure DNS が該当 DNS ゾーン `privatelink.blob.core.windows.net` の権威サーバーとなります。
 そのドメインへの名前解決要求を受信する時に、インターネット経由で再帰的問い合わせを行わずに、プライベート DNS ゾーンに登録されているレコードを権威結果として応答するようになります。
 その場合、プライベート DNS ゾーンに `storagebloga` 以外のレコードが登録されていないため、以下のように、NXDOMAIN が応答されてしまいます。
+![](./03.png)
 ```
 ※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時に、別のリソース（プライベート エンドポイント有効化）の名前解決フロー
 
@@ -100,6 +103,7 @@ blob.tyo22prdstr07a.store.core.windows.net. 60 IN A 20.150.85.196
 `storagebloga.privatelink.blob.core.windows.net` のプライベート DNS ゾーンを作成し、頂点（APEX）レコード `@ IN A ＜プライベート エンドポイント IP＞` を構成すれば実現できます。
 そうしますと、Azure DNS の権威ドメインが `storagebloga.privatelink.blob.core.windows.net` のみとり、それ以外 `storageblogcwithoutpe.privatelink.blob.core.windows.net` の名前解決要求を受けると、
 インターネット経由で再帰的問い合わせを行い、プライベート DNS ゾーンに影響されなくなります。
+![](./04.png)
 
 ただし、もし複数のストレージ アカウントが存在する場合は、ストレージ アカウントの名前ごとにプライベート DNS ゾーンを用意する必要がありますので、ご注意ください。
 
