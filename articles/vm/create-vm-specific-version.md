@@ -360,9 +360,9 @@ VM に RDP 接続をして OS ビルドを確認します。今回の例では�
 
 
  
-- [CLI を使用してマーケットプレース購入プランの情報を検索および使用する - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/cli-ps-findimage#code-try-3)
+- [CLI を使用してマーケットプレース購入プランの情報を検索および使用する - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/cli-ps-findimage)
  
-- [PowerShell を使用してマーケットプレース購入プランの情報を検索および使用する - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/cli-ps-findimage#code-try-3)
+- [PowerShell を使用してマーケットプレース購入プランの情報を検索および使用する - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/cli-ps-findimage)
  
 手順は以上となります。
 本記事が皆様のお役に立てれば幸いです。
