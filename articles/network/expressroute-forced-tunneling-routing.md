@@ -1,5 +1,5 @@
 ---
-title: ExpressRoute にデフォルトルートを広報している場合のルーティングに関して
+title: ExpressRoute にデフォルトルートを広報していてオンプレミス以外とも通信したい場合の構成
 date: 2024-03-29 15:00:00
 tags:
   - Network
