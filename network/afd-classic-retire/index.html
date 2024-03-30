@@ -4,40 +4,21 @@
   <meta charset="utf-8">
   
   
-  <title>Azureで仮想マシン名を変更する | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure Front Door (クラシック) のリタイアについて | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azure テクニカル サポート チーム、インターン生の杉野です。 お客様より、リソース管理の都合上、既存の仮想マシンのリソース名を変更したいというお問い合わせをいただくことがあります。 ゲスト OS 内のホスト名は、ゲスト OS 内よりすぐに変更いただくことが可能です。しかしながら、Azure のリソース名である仮想マシン名は Azure Portal 等より変更することは叶わず、変">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの石原です。 本ブログでは、Azure Front Door (クラシック) のリタイアのアナウンスと Azure Front Door Standard 及び Premium への移行方法に関する情報をご案内致します (以降は Azure Front Door を AFD と記載致します)。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azureで仮想マシン名を変更する">
-<meta property="og:url" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/index.html">
+<meta property="og:title" content="Azure Front Door (クラシック) のリタイアについて">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/afd-classic-retire/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azure テクニカル サポート チーム、インターン生の杉野です。 お客様より、リソース管理の都合上、既存の仮想マシンのリソース名を変更したいというお問い合わせをいただくことがあります。 ゲスト OS 内のホスト名は、ゲスト OS 内よりすぐに変更いただくことが可能です。しかしながら、Azure のリソース名である仮想マシン名は Azure Portal 等より変更することは叶わず、変">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの石原です。 本ブログでは、Azure Front Door (クラシック) のリタイアのアナウンスと Azure Front Door Standard 及び Premium への移行方法に関する情報をご案内致します (以降は Azure Front Door を AFD と記載致します)。">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/01.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/05.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/06.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/20.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/08.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/03.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/02.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/09.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/10.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/19.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/12.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/13.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/14.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/15.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/16.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/17.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/18.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/04.png">
-<meta property="article:published_time" content="2022-09-29T00:30:00.000Z">
-<meta property="article:modified_time" content="2024-03-30T01:52:06.948Z">
+<meta property="article:published_time" content="2024-03-29T12:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-30T01:52:06.720Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
-<meta property="article:tag" content="VM">
-<meta property="article:tag" content="HowTo">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="AzureFrontDoor">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/vm/how-to-rename-vm/01.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -99,7 +80,7 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-vm/how-to-rename-vm" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-network/afd-classic-retire" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -108,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azureで仮想マシン名を変更する
+      Azure Front Door (クラシック) のリタイアについて
     </h1>
   
 
@@ -116,135 +97,28 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2022-09-29T00:30:00.000Z" itemprop="datePublished">2022-09-29</time>
+  <time datetime="2024-03-29T12:00:00.000Z" itemprop="datePublished">2024-03-29</time>
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+9665bdd0-c28a-5eea-a9c7-c9cc650fd8f3%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure%E3%81%A7%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E5%90%8D%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fhow-to-rename-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fhow-to-rename-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fhow-to-rename-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+f28cb4d2-809d-56ef-bfa9-2f28266371f1%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Front+Door+%28%E3%82%AF%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%29+%E3%81%AE%E3%83%AA%E3%82%BF%E3%82%A4%E3%82%A2%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fafd-classic-retire%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fafd-classic-retire.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fafd-classic-retire.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/how-to-rename-vm/" data-id="cludft7js008t0nt9bnwg406g" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/afd-classic-retire/" data-id="cludft7if004v0nt91snjgj50" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは。Azure テクニカル サポート チーム、インターン生の杉野です。</p>
-<p>お客様より、リソース管理の都合上、既存の仮想マシンのリソース名を変更したいというお問い合わせをいただくことがあります。</p>
-<p>ゲスト OS 内のホスト名は、ゲスト OS 内よりすぐに変更いただくことが可能です。<br>しかしながら、Azure のリソース名である仮想マシン名は Azure Portal 等より変更することは叶わず、変更実施する場合には仮想マシンの再作成が必要となります。<br>そこで今回は、仮想マシン名を変更する方法およびその注意点についてご紹介いたします。</p>
+        <p>こんにちは。Azure テクニカル サポート チームの石原です。</p>
+<p>本ブログでは、Azure Front Door (クラシック) のリタイアのアナウンスと Azure Front Door Standard 及び Premium への移行方法に関する情報をご案内致します (以降は Azure Front Door を AFD と記載致します)。</p>
 <span id="more"></span>
 
-<h2 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h2><ol>
-<li>仮想マシン名とは</li>
-<li>変更手順</li>
-<li>[おまけ] 仮想マシン名の代わりにタグでも管理できる</li>
-</ol>
 <hr>
-<h2 id="1-仮想マシン名とは"><a href="#1-仮想マシン名とは" class="headerlink" title="1. 仮想マシン名とは"></a>1. 仮想マシン名とは</h2><p>今回変更する “仮想マシン名” とは、Azure のリソースとして表示される名前を指しています。<br>Azure Portal にて仮想マシンを選択し、左メニュー [概要] を選択した画面に表示される “コンピューター名” や、ゲスト OS 内で表示される “コンピューター名”、”ホスト名” とは異なりますのでご注意ください。<br>ただし、Azure Marketplace や一般化されたイメージより、新規に仮想マシンを作成した場合には、仮想マシン名と同名にて “コンピューター名” や “ホスト名” が設定されます。</p>
-<p><img src="/blog/vm/how-to-rename-vm/01.png"></p>
-<p>ゲスト OS 内の “コンピューター名” や “ホスト名” は、管理のためにシステム名などに基づき命名されることが多いかと思います。<br>当該環境の用途が変更となった場合には、管理の観点から新しいシステムに応じて名前を変える必要がありますが、それにより、ゲスト OS 内の名前と Azure リソースとしての仮想マシン名が異なってしまった場合にも管理が複雑となってしまうことが想定されます。</p>
-<hr>
-<h2 id="2-変更手順"><a href="#2-変更手順" class="headerlink" title="2. 変更手順"></a>2. 変更手順</h2><p>冒頭に記載した通り、Azure のリソース名を簡単に変える方法はなく、今回の場合は仮想マシンの再作成が必要となります。<br>再作成手順の概要は以下の通りとなります。</p>
-<ul>
-<li>事前準備: 引き継ぎたい情報を確認する</li>
-<li>手順 1: 仮想マシンを削除する</li>
-<li>手順 2: 仮想マシンを新しい名前で作成する</li>
-</ul>
-<h3 id="事前準備-引き継ぎたい情報を確認する"><a href="#事前準備-引き継ぎたい情報を確認する" class="headerlink" title="事前準備: 引き継ぎたい情報を確認する"></a>事前準備: 引き継ぎたい情報を確認する</h3><p>再作成時には、元の仮想マシンと同様の設定を実施する必要があるかと思いますので、事前に構成を控えておくことをお勧めします。<br>下記に項目の例を紹介しますが、その他必要な設定および構成がある場合は、適宜控えておきましょう。</p>
-<h4 id="仮想マシン-左メニュー-概要"><a href="#仮想マシン-左メニュー-概要" class="headerlink" title="仮想マシン - 左メニュー [概要]"></a>仮想マシン - 左メニュー [概要]</h4><p>[必須項目]</p>
-<ul>
-<li>リソース グループ名</li>
-<li>場所 (リージョン)</li>
-<li>仮想マシンのサイズ</li>
-<li>パブリック IP アドレス (利用している場合)<br>※ IP アドレスが表示されている場合にはクリックし、リソース名を確認します。</li>
-<li>仮想ネットワーク / サブネット名</li>
-</ul>
-<p><img src="/blog/vm/how-to-rename-vm/05.png"></p>
-<p>[設定がある場合]</p>
-<ul>
-<li>可用性とスケーリング (可用性セットまたは可用性ゾーン)</li>
-</ul>
-<p><img src="/blog/vm/how-to-rename-vm/06.png"></p>
-<h4 id="仮想マシン-左メニュー-ネットワーク"><a href="#仮想マシン-左メニュー-ネットワーク" class="headerlink" title="仮想マシン - 左メニュー [ネットワーク]"></a>仮想マシン - 左メニュー [ネットワーク]</h4><div class="alert is-warning"><p class="alert-title">警告</p><p>既存の VNET/ Subnet、NIC をご利用いただく場合、既存の NSG 等との紐づけが実施されたままとなりますので、再設定は不要となります。</p></div>
-<p>[元の NIC を使う場合]</p>
-<ul>
-<li>ネットワーク インターフェイス名 (複数の場合はすべて) を控えます。</li>
-</ul>
-<div class="alert is-info"><p class="alert-title">Note</p><p><strong>NIC は引き継げる ?</strong></p><p>Azure PowerShell や Azure CLI を用いて仮想マシンを作成する場合には既存の NIC を指定することが可能ですが、Azure Portal から仮想マシンを作成いただく場合には指定することは現状叶いません。</p><p>Azure Portal から操作を行いたい場合には、仮想マシン作成後に NIC の付け替えを実施いただく必要があります。</p></div>
-<p>[元の NIC を使わない場合]<br>NSG や負荷分散等の設定は必要に応じて控えておきましょう。</p>
-<p><img src="/blog/vm/how-to-rename-vm/20.png"></p>
-<h4 id="仮想マシン-左メニュー-ディスク"><a href="#仮想マシン-左メニュー-ディスク" class="headerlink" title="仮想マシン - 左メニュー [ディスク]"></a>仮想マシン - 左メニュー [ディスク]</h4><ul>
-<li>OS ディスク名とデータ ディスク名 (複数の場合はすべて) を控えます。</li>
-<li>全ディスクのホスト キャッシュ設定も忘れずに控えておきましょう。</li>
-</ul>
-<p><img src="/blog/vm/how-to-rename-vm/08.png"></p>
-<h4 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h4><p>上記以外にも仮想マシンの再作成時に設定可能な項目は複数あります。必要な項目は控えておきましょう。</p>
-<ul>
-<li>Azure ハイブリッド特典の設定</li>
-<li>近接配置グループ名</li>
-<li>Azure Dedicated Host の使用の有無</li>
-<li>容量予約の使用の有無</li>
-<li>拡張機能名 (複数の場合はすべて)</li>
-<li>VM アプリケーション (複数の場合はすべて)</li>
-<li>自動シャットダウンの設定</li>
-<li>バックアップの設定</li>
-<li>ゲスト OS の更新プログラム</li>
-<li>ゲスト OS 診断の設定</li>
-<li>ブート診断の設定<br>など</li>
-</ul>
-<h3 id="手順-1-仮想マシンを削除する"><a href="#手順-1-仮想マシンを削除する" class="headerlink" title="手順 1: 仮想マシンを削除する"></a>手順 1: 仮想マシンを削除する</h3><div class="alert is-warning"><p class="alert-title">警告</p><p><strong>誤操作に備えて</strong></p><p>予期せぬご状況に備えるためにも、操作前には Azure Backup やディスクのスナップショット (要 OS シャットダウン) をご取得いただくことをお勧めします。</p><p>　</p><p>ご参考) Azure VM バックアップについて</p><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/backup/backup-azure-vms-introduction">https://learn.microsoft.com/ja-jp/azure/backup/backup-azure-vms-introduction</a></p><p>　</p><p>ご参考) 仮想ハード ディスクの Azure スナップショットを作成する</p><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/snapshot-copy-managed-disk?tabs=portal">https://learn.microsoft.com/ja-jp/azure/virtual-machines/snapshot-copy-managed-disk?tabs=portal</a></p></div>
-<p>以下の画面の通り、仮想マシンの [削除] をクリックします。</p>
-<p><img src="/blog/vm/how-to-rename-vm/03.png"></p>
-<p>[削除] をクリックした後に表示される確認画面にて、”強制削除の適用” や 各関連リソースの “VM で削除” のボックスにチェックが入っていないことを確認します。<br>問題がない場合には、削除について理解した文言にチェックを入れ、[削除] をクリックします。</p>
-<p><img src="/blog/vm/how-to-rename-vm/02.png"></p>
-<h3 id="手順-2-仮想マシンを新しい名前で作成する"><a href="#手順-2-仮想マシンを新しい名前で作成する" class="headerlink" title="手順 2: 仮想マシンを新しい名前で作成する"></a>手順 2: 仮想マシンを新しい名前で作成する</h3><p>削除した仮想マシンで使用していた OS ディスクより、控えた内容をもとに仮想マシンを作成します。</p>
-<p>今回は、Azure Portal を使用して仮想マシンを作成し、その後、元の NIC を使用するために NIC の付け替えを実施する手順をご紹介します。</p>
-<div class="alert is-warning"><p class="alert-title">警告</p><p>今回の Azure Portal で仮想マシンを作成する手順の場合、新たな NIC が仮想マシンに接続されるため、MAC アドレスが変更されます。</p><p>Linux 仮想マシンの場合、設定ファイル内に MAC アドレスが含まれる可能性がありますので、ご注意いただけますと幸いです。</p><p>　</p><p>ご参考) ネットワーク インターフェイスの作成、変更、削除</p><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/virtual-network-network-interface?tabs=network-interface-portal">https://learn.microsoft.com/ja-jp/azure/virtual-network/virtual-network-network-interface?tabs=network-interface-portal</a></p><p>抜粋：注意</p>
-<blockquote>
-<p>Azure では、ネットワーク インターフェイスの仮想マシンへのアタッチと、仮想マシンの初回起動の後にのみ、ネットワーク インターフェイスに MAC アドレスが割り当てられます。</p><p>Azure によってネットワーク インターフェイスに割り当てられる MAC アドレスは指定できません。</p><p>MAC アドレスがネットワーク インターフェイスに割り当てられると、そのネットワーク インターフェイスが削除されるか、プライマリ ネットワーク インターフェイスのプライマリ IP 構成に割り当てられたプライベート IP アドレスが変更されるまで、その状態は変わりません。</p><p>IP アドレスと IP 構成の詳細については、IP アドレスの管理に関するページをご覧ください。</p></div>
-</blockquote>
-<h4 id="仮想マシンの作成"><a href="#仮想マシンの作成" class="headerlink" title="仮想マシンの作成"></a>仮想マシンの作成</h4><ol>
-<li><p>削除した仮想マシンで使用していた OS ディスク (控えていた OS ディスク名を参照) を選択します。<br><img src="/blog/vm/how-to-rename-vm/09.png"></p>
-</li>
-<li><p>OS ディスクの [概要] から [VM の作成] を選択します。<br><img src="/blog/vm/how-to-rename-vm/10.png"></p>
-</li>
-<li><p>先ほど控えた内容をもとに、仮想マシンを作成します。<br>以下に例を示しますが、各項目はご自身の環境に合わせて設定してください。</p>
-<ul>
-<li><p><strong>[基本] タブ</strong>：<br><img src="/blog/vm/how-to-rename-vm/19.png"></p>
-<div class="alert is-warning"><p class="alert-title">警告</p><p>可用性オプション (可用性セットまたは可用性ゾーン) につきましては、仮想マシン作成時にのみ設定できる項目になりますので、ご利用いただく場合には忘れずにご設定ください。</p><p>　</p><p>可用性ゾーンをご指定いただく場合、ディスクで指定いただいているゾーンと同じゾーンを指定する必要がありますのでご注意ください。</p></div>
-</li>
-<li><p><strong>[ディスク] タブ</strong>：<br>既存のデータ ディスクを接続する場合は、 [ディスク] タブで [既存のディスクの接続] を選択します。<br>データ ディスクのホストのキャッシュ設定も控えたパラメータに設定します。<br><img src="/blog/vm/how-to-rename-vm/12.png"></p>
-</li>
-<li><p><strong>[ネットワーク] タブ</strong>：<br>既存のネットワーク インターフェースの接続は仮想マシン作成後に行います。そのため、この段階での “NIC ネットワーク セキュリティ グループ” の設定は不要です。<br>※ 既存の VNET/ Subnet、NIC をご利用いただく場合、既存の NSG との紐づけが実施されたままとなりますので、仮想マシン作成時に新たに NSG を設定いただく必要はございません。<br><img src="/blog/vm/how-to-rename-vm/13.png"></p>
-</li>
-<li><p>全ての設定が完了後、 [確認および作成] から[作成] をクリックします。<br><img src="/blog/vm/how-to-rename-vm/14.png"></p>
-</li>
-</ul>
-</li>
-<li><p>作成が完了すると新しく作成した仮想マシンを確認することができます。<br><img src="/blog/vm/how-to-rename-vm/15.png"></p>
-</li>
-</ol>
-<h4 id="NIC-の付け替え"><a href="#NIC-の付け替え" class="headerlink" title="NIC の付け替え"></a>NIC の付け替え</h4><ol>
-<li><p>仮想マシン作成後、既存 NIC を接続するため、仮想マシンを停止 (割り当て解除) します。<br><img src="/blog/vm/how-to-rename-vm/16.png"></p>
-</li>
-<li><p>仮想マシン停止 (割り当て解除) 後、仮想マシンのページから [ネットワーク] - [ネットワーク インターフェイスの接続] を選択し、削除した仮想マシンで使用していた NIC を接続します。<br><img src="/blog/vm/how-to-rename-vm/17.png"></p>
-</li>
-<li><p>既存の NIC の接続完了後も、仮想マシン作成時に作成された NIC がまだプライマリとなっているの状態なので、[ネットワーク インターフェイスのデタッチ] を選択し、分離する必要があります。<br><img src="/blog/vm/how-to-rename-vm/18.png"></p>
-<p>NIC のデタッチを実施後、セカンダリとして接続した既存 NIC は自動的にプライマリとなります。<br>なお、デタッチした NIC については削除されても問題ありません。</p>
-</li>
-<li><p>仮想マシンを起動します。</p>
-</li>
-</ol>
-<hr>
-<h2 id="3-おまけ-仮想マシン名の代わりにタグでも管理できる"><a href="#3-おまけ-仮想マシン名の代わりにタグでも管理できる" class="headerlink" title="3. [おまけ] 仮想マシン名の代わりにタグでも管理できる"></a>3. [おまけ] 仮想マシン名の代わりにタグでも管理できる</h2><p>ここまでの内容の通り、Azure のリソースとしての仮想マシン名を変えるためには再作成が必要となり、構成の確認や再設定等、それなりの時間がかかることがお分かりいただけたかと思います。</p>
-<p>そのため、仮想マシン名にすぐに変更されうる情報 (プロジェクト名や担当者名など) を使うと、後々に運用変更が発生した際に、異なる名前による管理の負荷や変更作業の負荷がかかる可能性があります。</p>
-<p>それでは、どのように管理するのがよいのか。<br>Azure では、リソース管理に用いるタグという機能が用意されています。</p>
-<blockquote>
-<p>ご参考) リソースの名前付けとタグ付けの意思決定ガイド<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/cloud-adoption-framework/decision-guides/resource-tagging/?toc=/azure/azure-resource-manager/management/toc.json">https://learn.microsoft.com/ja-jp/azure/cloud-adoption-framework/decision-guides/resource-tagging/?toc=%2Fazure%2Fazure-resource-manager%2Fmanagement%2Ftoc.json</a></p>
-</blockquote>
-<blockquote>
-<p>ご参考) タグを使用して Azure リソースと整理階層を整理する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/azure-resource-manager/resource-group-using-tags">https://docs.microsoft.com/ja-jp/azure/azure-resource-manager/resource-group-using-tags</a></p>
-</blockquote>
-<p><img src="/blog/vm/how-to-rename-vm/04.png"></p>
-<p>変更されうる細かな情報をタグに記載しておけば、後からの変更も簡単にできます。<br>仮想マシンに付与するタグを変更する場合、仮想マシンの停止は不要であり、変更処理自体もお時間を要さないことが想定されています。(弊社環境での検証時には、数十秒程度で完了しました。)<br>リソースの管理手段として、ご参考となれば幸いです。</p>
+<h2 id="AFD-クラシック-のリタイアについて"><a href="#AFD-クラシック-のリタイアについて" class="headerlink" title="AFD (クラシック) のリタイアについて"></a>AFD (クラシック) のリタイアについて</h2><p>2027 年 3 月 31 日に AFD (クラシック) の提供が終了し、AFD (クラシック) に対するサポートも終了します。<br>提供終了までの間は既存の AFD (クラシック) の設定を変更することは可能ですが、2025 年 4 月 1 日以降は Azure ポータル、Terraform、Azure PowerShell や Azure CLI などを使用して新しい AFD (クラシック) リソースが作成できなくなります。<br>アナウンス内容につきましては、下記の URL に記載がございますので、ご参考になれば幸いです。</p>
+<p><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/updates/azure-front-door-classic-will-be-retired-on-31-march-2027/">Azure Front Door (classic) will be retired on 31 March 2027</a></p>
+<h2 id="AFD-クラシック-のリタイアに関する-FAQ"><a href="#AFD-クラシック-のリタイアに関する-FAQ" class="headerlink" title="AFD (クラシック) のリタイアに関する FAQ"></a>AFD (クラシック) のリタイアに関する FAQ</h2><p>AFD (クラシック) のリタイアに関するよくある質問につきましては、下記の URL に記載がございますので、ご参考になれば幸いです。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/frontdoor/classic-retirement-faq">Azure Front Door (classic) retirement FAQ</a></p>
+<h2 id="AFD-クラシック-から-AFD-Standard-Premium-への移行方法について"><a href="#AFD-クラシック-から-AFD-Standard-Premium-への移行方法について" class="headerlink" title="AFD (クラシック) から AFD Standard/Premium への移行方法について"></a>AFD (クラシック) から AFD Standard/Premium への移行方法について</h2><p>AFD (クラシック) の提供が終了する 2027 年 3 月 31 日までに、事前にお客様にて AFD Standard/Premium へ移行する必要がございます。<br>AFD (クラシック) から AFD Standard/Premium にゼロ ダウンタイムで移行するプロセスや手順に関しましては、下記の URL に記載がございますので、ご参考になれば幸いです。</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/frontdoor/migrate-tier">Azure Front Door (クラシック) から Standard/Premium に移行する</a></p>
 
       
       
@@ -258,10 +132,10 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
 
         
-        <a href="https://github.com/jpaztech/blog/edit/master/articles/vm/how-to-rename-vm.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/afd-classic-retire.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
         
     </footer>
   </div>
@@ -269,19 +143,10 @@
     
 <nav id="article-nav">
   
-    <a href="../unmanaged-disk-retired/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          アンマネージド ディスクを使用している仮想マシンのマネージド ディスクへの移行について
-        
-      </div>
-    </a>
   
-  
-    <a href="../azure-kms-update/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../vm/create-vm-specific-version/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">Azure KMS の IP アドレスが変わります</div>
+      <div class="article-nav-title">VM イメージ バージョンを指定して VM を作成する方法について</div>
     </a>
   
 </nav>
@@ -300,23 +165,23 @@
       <ul>
         
           <li>
-            <a href="../../network/afd-classic-retire/">Azure Front Door (クラシック) のリタイアについて</a>
+            <a href="">Azure Front Door (クラシック) のリタイアについて</a>
           </li>
         
           <li>
-            <a href="../create-vm-specific-version/">VM イメージ バージョンを指定して VM を作成する方法について</a>
+            <a href="../../vm/create-vm-specific-version/">VM イメージ バージョンを指定して VM を作成する方法について</a>
           </li>
         
           <li>
-            <a href="../../network/appgw-kv/">Application Gateway と Key Vault を統合した際によくある問題について</a>
+            <a href="../appgw-kv/">Application Gateway と Key Vault を統合した際によくある問題について</a>
           </li>
         
           <li>
-            <a href="../../network/private-dns-zone-faq/">Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</a>
+            <a href="../private-dns-zone-faq/">Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</a>
           </li>
         
           <li>
-            <a href="../../network/dns-168-63-129-16/">168.63.129.16 の DNS 機能について</a>
+            <a href="../dns-168-63-129-16/">168.63.129.16 の DNS 機能について</a>
           </li>
         
       </ul>
