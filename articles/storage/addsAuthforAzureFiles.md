@@ -55,7 +55,7 @@ https://github.com/Azure-Samples/azure-files-samples/releases
 
 2-2. Azure ファイル共有のオンプレ AD DS 認証を有効化するスクリプトを実行します。
 
-□参考：[Join-AzStorageAccountForAuth を実行する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccountforauth)
+□参考：[Join-AzStorageAccount を実行する](https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccount)
 
 ▼スクリプト利用前提条件
 - [AzureFilesActiveDirectoryUtilities.psm1](https://github.com/Azure-Samples/azure-files-samples) モジュールをダウンロードしていること
@@ -63,40 +63,49 @@ https://github.com/Azure-Samples/azure-files-samples/releases
 - ストレージアカウントに対して「所有者」または「共同作成者」の Azure RBAC ロールのいずれかを持つ Azure AD 資格情報でスクリプトを実行すること
 - 対象のストレージアカウントがサポートされているリージョンに配置されていること
 
-Join-AzStorageAccountForAuth スクリプト例 
+Join-AzStorageAccount スクリプト例 
 ```shell
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 
 .\CopyToPSPath.ps1 
 
+
 Import-Module -Name AzFilesHybrid
 
 Connect-AzAccount
 
+
 $SubscriptionId = "<サブスクリプション ID>"
-$ResourceGroupName = "<リソースグループ名>"
-$StorageAccountName = "<ストレージアカウント名>"
+$ResourceGroupName = "<リソース グループ名>>"
+$StorageAccountName = "<ストレージ アカウント名"
+$SamAccountName = "<SAM アカウント名>"
+$DomainAccountType = "<ComputerAccount|ServiceLogonAccount>"
+$OuDistinguishedName = "<OU 識別名>"
 
 Select-AzSubscription -SubscriptionId $SubscriptionId 
 
-Join-AzStorageAccountForAuth `
+
+Join-AzStorageAccount `
         -ResourceGroupName $ResourceGroupName `
         -StorageAccountName $StorageAccountName `
-        -DomainAccountType "<ComputerAccount/ServiceLogonAccount>" `
-        -OrganizationalUnitDistinguishedName "<ストレージアカウント用 OU 名>" `
-        -EncryptionType "<AES256/RC4/AES256,RC4>"
-
-Update-AzStorageAccountAuthForAES256 -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName
+        -SamAccountName $SamAccountName `
+        -DomainAccountType $DomainAccountType `
+        -OrganizationalUnitDistinguishedName $OuDistinguishedName
 ```
+各パラメータの詳細につきましては、以下公開情報をご確認ください。
+
+□参考：[Join-AzStorageAccount を実行する](https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#run-join-azstorageaccount)
+
 実行例
-![](addsAuthforAzureFiles/AzureFiles04.png)
+![](addsAuthforAzureFiles/AzureFiles23.png)
 
 2-3. 機能が有効になったことを確認します。
 
 □参考：[機能が有効になっていることを確認する](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-enable#confirm-the-feature-is-enabled)
 
 実行例
-![](addsAuthforAzureFiles/AzureFiles05.png)
+
+![](addsAuthforAzureFiles/AzureFiles24.png)
 
 ### (3)ファイル共有レベルのアクセス権限を付与
 □参考：[共有レベルのアクセス許可](https://docs.microsoft.com/ja-jp/azure/storage/files/storage-files-identity-ad-ds-assign-permissions#share-level-permissions)
@@ -124,7 +133,7 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 
 ここでは例としてユーザー testuser01 でサインインしています。
 
-![](addsAuthforAzureFiles/AzureFiles11.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles25.png)
 
 ### (6) 手順(4) でコピーしたコマンドを実行
 ![](addsAuthforAzureFiles/AzureFiles09.png)
@@ -144,7 +153,7 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 マウントしたドライブ内のフォルダに対してアクセス権限を設定します。
  - フォルダ testuser01 はユーザー testuser01 にアクセス許可を付与
  - フォルダ testuser03 はユーザー testuser03 にアクセス許可を付与
-![](addsAuthforAzureFiles/AzureFiles19.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles26.png)
 
 アクセス権限の設定が適用されているか確認するため、ユーザー testuser03 でサインインし、認証方法 [Active Directory] のスクリプトにてファイル共有をマウントします。
 ![](addsAuthforAzureFiles/AzureFiles20.png)
@@ -161,7 +170,7 @@ Azure ファイル共有 [接続] より認証方法 [Active Directory] を選�
 次は、上述のドメインに参加している Windows 10 端末にてファイル共有をマウントしアクセスが可能であるか確認します。
 
 ドメイン参加している Windows 10 端末にサインインします。
-![](addsAuthforAzureFiles/AzureFiles12.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles27.png)
 
 Azure ファイル共有マウント用コマンドをコピーし実行します。
 ![](addsAuthforAzureFiles/AzureFiles13.png)
@@ -183,11 +192,11 @@ Azure ファイル共有マウント用コマンドをコピーし実行しま�
 環境
 - ドメイン参加済みサーバー：win2016-adds-server-apts
 
-　　- ドメイン参加済みユーザー : win10client01@contoso.com
+　　- ドメイン参加済みユーザー : win10client01@adfiles.com
 - ドメイン未参加端末：win10-noadds-client-apts
 
 オンプレ AD DS に参加しているドメインサーバー (win2016-adds-server-apts)
-![](addsAuthforAzureFiles/AzureFiles16.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles28.png)
 
 ドメイン参加していない Windows 10 端末 (win10-noadds-client-apts)
 
@@ -196,9 +205,9 @@ Azure ファイル共有マウント用コマンドをコピーし実行しま�
 
 ドメイン参加していない Windows 10 端末 (win10-noadds-client-apts) のエクスプローラーに UNC (\\\\<ストレージアカウント名>.file.core.windows.net\\<ファイル共有名>) を入力すると資格情報入力画面が表示されるため、AD ユーザー資格情報を入力しアクセスを行います。
 
-![](addsAuthforAzureFiles/AzureFiles15.png)
+![](addsAuthforAzureFiles/addsAuthforAzureFiles29.png)
 
-ここでは、ドメイン参加済みユーザー (win10client01@contoso.com) の AD ユーザー資格情報を利用しています。
+ここでは、ドメイン参加済みユーザー (win10client01@adfiles.com) の AD ユーザー資格情報を利用しています。
 
 ![](addsAuthforAzureFiles/AzureFiles17.png)
 ファイル共有へアクセスができることを確認できました。

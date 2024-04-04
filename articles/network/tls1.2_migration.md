@@ -75,7 +75,7 @@ TLS インスペクション機能を使用する場合は、[こちらの公開
 > ヒント
 > TLS 1.0 と 1.1 は非推奨になっていて、サポートされません。 TLS 1.0 と 1.1 のバージョンの TLS/SSL (Secure Sockets Layer) は脆弱であることが確認されています。現在、これらは下位互換性を維持するために使用可能ですが、推奨されていません。 できるだけ早く TLS 1.2 に移行してください。
 
-また、現状の TLS インスペクション機能では TLS1.3 をサポートしておりませんが、2024 年 3 月頃にサポートする予定です。
+また、現状の TLS インスペクション機能では TLS1.3 をサポートしておりません。
 
 ## Front Door
 [こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/frontdoor/end-to-end-tls?pivots=front-door-standard-premium#supported-tls-versions)の記載通り、 Front Door ではカスタム ドメインを利用する場合は、最小 TLS バージョンを 1.0 または 1.2 を選択できます。 
