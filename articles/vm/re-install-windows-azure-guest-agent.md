@@ -48,7 +48,7 @@ WinGAが正常に動作しなくなった場合に再インストールを行う
 
 1. インストール前に不要ファイルの移動を行います。  
     "C:\WindowsAzure" 内に "OLD" というフォルダを作成します。  
-    "C:\WindowsAzure" 内に "Packages" または "GuestAgent" というフォルダがあった場合は、作成した "OLD" フォルダに移動させてください。
+    "C:\WindowsAzure" 内に "Packages" または "GuestAgent" で始まるフォルダがあった場合は、作成した "OLD" フォルダに移動させてください。
 
 1. 下記リンクより最新のインストーラーをダウンロードします。  
     https://go.microsoft.com/fwlink/?LinkID=394789
