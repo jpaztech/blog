@@ -1,6 +1,6 @@
 ---
 title: VM サイズの選定および変更時の注意点について
-date: 2024-02-08 15:00
+date: 2024-04-17 15:00
 tags:
   - VM
   - HowTo
@@ -15,22 +15,23 @@ Azure テクニカル サポート窓口におきまして、Azure VM のサイ�
 各項目に添付の弊社公開情報と併せまして、少しでもご参考になりましたら幸いに存じます。  
 ## 目次  <!-- omit in toc -->
 
-- [VM サイズの選び方](#vm-%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E9%81%B8%E3%81%B3%E6%96%B9)
-  - [サイズ選定時に一般に考慮すべき項目](./%E3%82%B5%E3%82%A4%E3%82%BA%E9%81%B8%E5%AE%9A%E6%99%82%E3%81%AB%E4%B8%80%E8%88%AC%E3%81%AB%E8%80%83%E6%85%AE%E3%81%99%E3%81%B9%E3%81%8D%E9%A0%85%E7%9B%AE)
-  - [仮想マシン セレクターについて](./%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3-%E3%82%BB%E3%83%AC%E3%82%AF%E3%82%BF%E3%83%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
-- [VM サイズの選択・変更ができない場合のトラブルシューティング](./vm-%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E9%81%B8%E6%8A%9E%E5%A4%89%E6%9B%B4%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0)
-  - [当該リージョン、ゾーンにて変更先のサイズが提供されているか](./%E5%BD%93%E8%A9%B2%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%BE%E3%83%BC%E3%83%B3%E3%81%AB%E3%81%A6%E5%A4%89%E6%9B%B4%E5%85%88%E3%81%AE%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%8C%E6%8F%90%E4%BE%9B%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B)
-  - [ローカル一時ディスクの有無](#ローカル一時ディスクの有無)
-  - [割り当て解除を行うことで VM サイズの選択肢が増える場合](#割り当て解除を行うことで-vm-サイズの選択肢が増える場合)
-  - [可用性セット利用時の注意](#可用性セット利用時の注意)
-- [注意事項](#注意事項)
-  - [クォータの不足による VM サイズの選択不能事例](#クォータの不足による-vm-サイズの選択不能事例)
-  - [仮想マシン サイズの変更により再起動が発生する](#仮想マシン-サイズの変更により再起動が発生する)
-- [おわりに](#おわりに)
+- [VM サイズの選び方](.#VM-%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E9%81%B8%E3%81%B3%E6%96%B9)
+  - [サイズ選定時に一般に考慮すべき項目](.#%E3%82%B5%E3%82%A4%E3%82%BA%E9%81%B8%E5%AE%9A%E6%99%82%E3%81%AB%E4%B8%80%E8%88%AC%E3%81%AB%E8%80%83%E6%85%AE%E3%81%99%E3%81%B9%E3%81%8D%E9%A0%85%E7%9B%AE)
+  - [仮想マシン セレクターについて](.#%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3-%E3%82%BB%E3%83%AC%E3%82%AF%E3%82%BF%E3%83%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+- [VM サイズの選択・変更ができない場合のトラブルシューティング](.#VM-%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E9%81%B8%E6%8A%9E%E3%83%BB%E5%A4%89%E6%9B%B4%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0)
+  - [当該リージョン、ゾーンにて変更先のサイズが提供されているか](.#%E5%BD%93%E8%A9%B2%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%80%81%E3%82%BE%E3%83%BC%E3%83%B3%E3%81%AB%E3%81%A6%E5%A4%89%E6%9B%B4%E5%85%88%E3%81%AE%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%8C%E6%8F%90%E4%BE%9B%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B)
+  - [ローカル一時ディスクの有無](.#%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E4%B8%80%E6%99%82%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%81%AE%E6%9C%89%E7%84%A1)
+  - [割り当て解除を行うことで VM サイズの選択肢が増える場合](.#%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6%E8%A7%A3%E9%99%A4%E3%82%92%E8%A1%8C%E3%81%86%E3%81%93%E3%81%A8%E3%81%A7-VM-%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E9%81%B8%E6%8A%9E%E8%82%A2%E3%81%8C%E5%A2%97%E3%81%88%E3%82%8B%E5%A0%B4%E5%90%88)
+  - [可用性セット利用時の注意](.#%E5%8F%AF%E7%94%A8%E6%80%A7%E3%82%BB%E3%83%83%E3%83%88%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F)
+- [注意事項](.#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85)
+  - [クォータの不足による VM サイズの選択不能事例](.#%E3%82%AF%E3%82%A9%E3%83%BC%E3%82%BF%E3%81%AE%E4%B8%8D%E8%B6%B3%E3%81%AB%E3%82%88%E3%82%8B-VM-%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E9%81%B8%E6%8A%9E%E4%B8%8D%E8%83%BD%E4%BA%8B%E4%BE%8B)
+  - [仮想マシン サイズの変更により再起動が発生する](.#%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3-%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E5%A4%89%E6%9B%B4%E3%81%AB%E3%82%88%E3%82%8A%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%99%E3%82%8B)
+- [おわりに](.#%E3%81%8A%E3%82%8F%E3%82%8A%E3%81%AB)
 
  
-## VM サイズの選び方 
+## VM サイズの選び方
 ### サイズ選定時に一般に考慮すべき項目
+
  
 まず VM サイズを選定いただくにあたり、一般に考慮すべき項目としては下記内容が挙げられるかと存じます。  
 ご要件によりこの他にも必要な要件があるかと存じますため、一例としてご参考になりましたら幸いでございます。  
@@ -56,7 +57,7 @@ Azure におきましては、CPU 対メモリ比のバランスのとれた汎�
  
 ---
 ## VM サイズの選択・変更ができない場合のトラブルシューティング
- 
+
 続いて、VM サイズの変更ができない場合のトラブルシューティングについてご紹介します。
 
 ### 当該リージョン、ゾーンにて変更先のサイズが提供されているか
@@ -65,7 +66,8 @@ GPU 搭載の VM サイズや、提供開始が比較的直近の VM サイズ�
 リージョンおよび可用性ゾーンそれぞれの制限につきましては、下記の手順にてご確認いただくことが可能です。
  
 - 各リージョンでの提供状況  
-下記公開情報内「製品」項目にて「Virtual Machines」を検索いただき、「リージョン」にてご利用予定のリージョンをご選択ください。  
+下記公開情報内「製品」項目にて「Virtual Machines」を検索いただき、「リージョン」にてご利用予定のリージョンをご選択ください。
+
 ご参考：[リージョン別の Azure 製品 | Microsoft Azure](https://azure.microsoft.com/ja-jp/explore/global-infrastructure/products-by-region/?products=virtual-machines)
 
 - 各可用性ゾーンでの提供状況  
@@ -85,7 +87,6 @@ Get-AzComputeResourceSku | where {$_.Locations.Contains("japaneast")};
 出力例について、一部表記が異なりますが概ね同じ内容となるため、統合してご紹介いたします。  
 
 出力例：  
-下記例の場合、Japan East リージョンの Standard_D2s_v5 サイズは、当該サブスクリプションにて、可用性ゾーン 1,2,3 いずれでも利用可能であり、クォータ制限 (後述) がない状況となります。
 
 ```CMD
 ResourceType      Locations    Name                      Zones    Restrictions
@@ -94,13 +95,15 @@ virtualMachines   japaneast    Standard_D2s_v5           1,2,3    None
 ```
 
 
-下記例の場合、Japan East リージョンの Standard_B16as_v2 サイズは、当該サブスクリプションにて、可用性ゾーン 1,2 のみで提供されており、クォータ制限 (後述) がない状況となります。
+下記例の場合、Japan East リージョンの Standard_B16as_v2 サイズは、当該サブスクリプションにて、可用性ゾーン 1,2 で提供されている状況となります。
 
 ```CMD
 ResourceType      Locations    Name                      Zones    Restrictions
 ----------------  -----------  ------------------------  -------  ------------
 virtualMachines   japaneast    Standard_B16as_v2         1,2      None
-``` 
+```
+
+なお、Restrictions として何からの制限が記載されていることもございます。 
 
 ご参考：[Azure CLI を使用してゾーン VM を作成する - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/create-cli-availability-zone#check-vm-sku-availability)  
 ご参考：[Azure PowerShell を使用したゾーン VM の作成 - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/create-powershell-availability-zone#check-vm-sku-availability)  
@@ -113,7 +116,8 @@ virtualMachines   japaneast    Standard_B16as_v2         1,2      None
 ご参考：[FAQ - ローカル一時ディスクを持たない Azure VM のサイズ - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/azure-vms-no-temp-disk)  
 
 ---
-### 割り当て解除を行うことで VM サイズの選択肢が増える場合   
+### 割り当て解除を行うことで VM サイズの選択肢が増える場合
+
 シリーズ違いなど大きく異なる VM サイズへの変更を行う際、割り当て解除を行うことで Azure Portal から確認可能な変更先の VM サイズの種類が増える場合があります。  
 これは仮想マシンが割り当てられる物理ホストごとに利用可能な VM サイズが決まっていることから、この制限を撤廃する割り当て解除を実施することで選択肢が増えるものとなります。  
 リージョン・可用性ゾーンでの提供、および後述のクォータ等に問題がないにもかかわらず変更先の VM サイズが表示されない場合、VM の割り当て解除をご検討ください。  
@@ -127,7 +131,8 @@ virtualMachines   japaneast    Standard_B16as_v2         1,2      None
  
 ---
 ## 注意事項
-### クォータの不足による VM サイズの選択不能事例  
+### クォータの不足による VM サイズの選択不能事例
+
 Azure のサブスクリプションでは各機能に対しクォータに制限があり、VM サイズにも同様にクォータが設定されています。  
 Azure Portal 上で仮想マシンの作成時や変更時に VM サイズの選択を行う際、下記画面例のように「クォータの要求」が表示される場合、当該サブスクリプションにて適切なカテゴリでのクォータの引き上げが必要となります。  
 
@@ -138,18 +143,6 @@ Azure Portal 上で仮想マシンの作成時や変更時に VM サイズの選
 下記公開情報をご参考に、事象に該当する場合はクォータの引き上げについてもご検討いただけますと幸いです。  
 
 ご参考：[VM ファミリの vCPU クォータの増加 - Azure Quotas | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/quotas/per-vm-quota-requests)  
-
-・クォータの制限について、コマンドから確認する方法  
-先にご案内いたしました Azure CLI または Azure PowerShell のコマンド実行結果より、「Restriction」に「None」以外の出力がある場合、クォータの制限が生じている可能性がございます。  
-下記の出力例は、Standard_D3 サイズに対し、サブスクリプション単位で Japan East リージョンへのクォータの制限が生じている例となります。  
-
-```CMD
-az vm list-skus --location japaneast --output table  
-
-ResourceType      Locations    Name                      Zones    Restrictions
-----------------  -----------  ------------------------  -------  ------------
-virtualMachines  japaneast     Standard_D3               3        NotAvailableForSubscription, type: Location, locations: japaneast
-```
 
 ---
 ### 仮想マシン サイズの変更により再起動が発生する  
