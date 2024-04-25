@@ -90,8 +90,8 @@ Generalize（一般化）のチェック ボックスにチェックが入って
 ---
 #### 3-2. Linux VM で一般化を行う方法
 
-- 参考: 手順 1:VM のプロビジョニングを解除する  
-[https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/capture-image#step-1-deprovision-the-vm)
+- 参考: イメージ作成前に VM を一般化し、マシン固有の情報を削除します。 - Linux
+[https://learn.microsoft.com/ja-jp/azure/virtual-machines/generalize#linux](https://learn.microsoft.com/ja-jp/azure/virtual-machines/generalize#linux)
 
 今回はポータルからイメージを作成しますので、[手順 1:VM のプロビジョニングを解除する] が完了したら VM を停止しましょう。
 
