@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/resource-health-alert/sample.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/resource-health-alert/delete.png">
 <meta property="article:published_time" content="2020-01-24T08:30:00.000Z">
-<meta property="article:modified_time" content="2024-05-02T03:22:15.085Z">
+<meta property="article:modified_time" content="2024-05-02T03:29:35.788Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Resource Health">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+d0045db2-ce20-5dbe-b7b5-8b2506ce11c1%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E6%AD%A3%E5%B8%B8%E6%80%A7%EF%BC%88Resource+Health%EF%BC%89%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88%E3%81%AE%E6%A7%8B%E6%88%90%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fresource-health-alert%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fresource-health-alert.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fresource-health-alert.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/resource-health-alert/" data-id="clvook90s00ou0no1akwqf909" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/resource-health-alert/" data-id="clvootop200ou0nn18xnp416v" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -182,7 +182,7 @@
 <p>記載の方法については、「”Unknown” イベントを回避するための Resource Health アラートの調整」/ 「完全な Resource Health アラート テンプレート」の項目にて記載されているロジックを参考ください。</p>
 <h4 id="▼-発生起因の指定について"><a href="#▼-発生起因の指定について" class="headerlink" title="▼ 発生起因の指定について"></a>▼ 発生起因の指定について</h4><p><strong>properties.cause</strong> の項目では、原因となるトリガーの発生起因について、指定することができます。  <strong>PlatformInitiated</strong>  と指定することで、基盤側の障害発生時のみアラート対象とすることができます。一方、<strong>UserInitiated</strong> と指定することで、ユーザー起因の操作（停止 / 再起動 / OS 内再起動 等）でアラートが発報されます。<strong>PlatformInitiated</strong> を指定しない場合には、どちらが原因でもアラートが発報されることとなります。記載手順は、「ユーザーが開始したイベントを回避するためのアラートの調整」の項目を参照ください。</p>
 <p>テンプレートが完了したらドキュメント内の ”Instructions”  の項目に従って Azure PowerShell からデプロイを行います。ProvisioningState が Succeeded であれば、作成が正常に完了しています。（アラートが適用されるまで 5 分程度かかる可能性があります。）</p>
-<h3 id="■-発報されるアラートのサンプル"><a href="#■-発報されるアラートのサンプル" class="headerlink" title="■ 発報されるアラートのサンプル"></a>■ 発報されるアラートのサンプル</h3><p>アラートが発報されると下記画像のようなアラートが <a href="mailto:&#97;&#x7a;&#x75;&#114;&#x65;&#x2d;&#110;&#111;&#x72;&#x65;&#x70;&#x6c;&#x79;&#64;&#x6d;&#105;&#x63;&#114;&#x6f;&#x73;&#x6f;&#102;&#x74;&#x2e;&#x63;&#x6f;&#x6d;">&#97;&#x7a;&#x75;&#114;&#x65;&#x2d;&#110;&#111;&#x72;&#x65;&#x70;&#x6c;&#x79;&#64;&#x6d;&#105;&#x63;&#114;&#x6f;&#x73;&#x6f;&#102;&#x74;&#x2e;&#x63;&#x6f;&#x6d;</a> から届きます。</p>
+<h3 id="■-発報されるアラートのサンプル"><a href="#■-発報されるアラートのサンプル" class="headerlink" title="■ 発報されるアラートのサンプル"></a>■ 発報されるアラートのサンプル</h3><p>アラートが発報されると下記画像のようなアラートが <a href="mailto:&#97;&#x7a;&#x75;&#114;&#101;&#x2d;&#110;&#111;&#114;&#x65;&#112;&#x6c;&#121;&#x40;&#109;&#105;&#x63;&#x72;&#x6f;&#115;&#111;&#102;&#x74;&#x2e;&#x63;&#x6f;&#109;">&#97;&#x7a;&#x75;&#114;&#101;&#x2d;&#110;&#111;&#114;&#x65;&#112;&#x6c;&#121;&#x40;&#109;&#105;&#x63;&#x72;&#x6f;&#115;&#111;&#102;&#x74;&#x2e;&#x63;&#x6f;&#109;</a> から届きます。</p>
 <p><img src="/blog/vm/resource-health-alert/sample.png"></p>
 <p>上記のサンプルでは対象の仮想マシン （”Resource ID”  に記載）が使用可能状態<font color="Lightblue">（青下線部）</font>から使用不可の状態<font color="red">（赤下線部）</font>に変更されたこと。ユーザーの操作<font color="green">（緑下線部）</font>による発生であることが記載されております。（基盤側の問題の場合には、<strong>PlatformInitiated</strong>  となることが想定されます。）</p>
 <h3 id="■-アラートのテストについて"><a href="#■-アラートのテストについて" class="headerlink" title="■ アラートのテストについて"></a>■ アラートのテストについて</h3><p>残念ながら、現段階で意図的に Azure 基盤の障害を再現することはできません。そのため、 <strong>UserInitiated</strong>  をトリガーに加えた上で、仮想マシンを Azure ポータルから停止 / 起動等、一時的に使用不可能の状態を作りアラートが発報されるか確認ください。</p>
