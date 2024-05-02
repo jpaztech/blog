@@ -13,26 +13,26 @@
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
 <meta property="og:description" content="いつもお世話になっております。Azure Networking チームの庄です。 Web アプリケーションは、SQL インジェクションやクロスサイトスクリプティングなど、既知の脆弱性を悪用した攻撃のターゲットになることが多いです。Application Gateway および Azure Front Door を使用しているお客様の Web アプリケーションをそのような攻撃から保護するためには、A">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/exclusion.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/customruleportal.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/disabledrules.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/examplelog.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/details.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/rule.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/exclusion.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/customruleportal.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/disabledrules.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/examplelog.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/details.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/rule.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/selectrule.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/32arg.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/30arg.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/requestarg.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/32arg.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/30arg.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/requestarg.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/exclusionexamples.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/disabledrules.png">
 <meta property="article:published_time" content="2024-05-02T03:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-02T05:43:34.333Z">
+<meta property="article:modified_time" content="2024-05-02T05:48:07.337Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Application Gateway">
 <meta property="article:tag" content="WAF">
 <meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/exclusion.png">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/handle-waf-false-positive/exclusion.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -117,7 +117,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+badf3f99-1ea5-5643-81c4-e251a8ce7fa5%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+WAF++%E3%81%AE%E8%AA%A4%E6%A4%9C%E7%9F%A5%E5%AF%BE%E5%BF%9C%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fhandle-waf-false-positive%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fhandle-waf-false-positive.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fhandle-waf-false-positive.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/handle-waf-false-positive/" data-id="clvotm06m00o50nnsafzo1vzk" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/handle-waf-false-positive/" data-id="clvotruta00oa0nod8uuca8i1" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -128,11 +128,16 @@
 <p>WAF で誤検知 (False Positive) が発生した理由は、WAF の不具合ではなく、ルールに基づく正確な検査の結果、お客様のアプリケーションにとって望ましくなく、ルール違反と判断された通信が検出されたためです。たとえば、Request Body や Header 内に攻撃と判断される文字列が存在すると、WAF によって通信がブロックされます。この結果がお客様のアプリケーションにとって望ましくない場合、その通信が WAF より誤検知されています。この記事では、WAF での誤検知が発生する際に、誤検知を回避するための対処方法につきまして紹介いたします。</p>
 <h2 id="WAF-側の設定"><a href="#WAF-側の設定" class="headerlink" title="WAF 側の設定"></a>WAF 側の設定<br /></h2><p>Azure WAF の設定を使って誤検知を避ける方法には、主に3つの方法があります。</p>
 <h3 id="設定方法１：除外を利用する"><a href="#設定方法１：除外を利用する" class="headerlink" title="設定方法１：除外を利用する"></a>設定方法１：除外を利用する</h3><p>除外は、特定の Header や Request Body 内で誤検知が起こった部分を指定し、これらを誤検知として検出されたルールの評価から外す方法です。この方法は、本記事で紹介した 3 つの中で最も柔軟性が高いと考えられます。除外の設定は、WAF ポリシーの「管理されているルール」のページで見つけることができます。ただし、除外の設定が利用できない場合もあるので、その場合は他の設定方法の利用をご検討いただく必要があります。その具体的な設定方法については本記事他の箇所をご確認ください。</p>
-<p><img src="/blog/network/handle-waf-false-positive/exclusion.png"></p>
-<h3 id="設定方法２：カスタム-ルールを利用する"><a href="#設定方法２：カスタム-ルールを利用する" class="headerlink" title="設定方法２：カスタム ルールを利用する"></a>設定方法２：カスタム ルールを利用する</h3><p>カスタム ルールを使用することで、特定の IP アドレスからの通信や特定のパスへのアクセスを WAF の評価から除外し、通信を管理されたルールから ”Bypass” するルールを作成できます。カスタム ルールは管理されたルールよりも優先され、ここで設定したルールによって通信が許可または拒否されます。カスタム ルールの設定は、WAF ポリシーの「カスタム ルール」ページで行うことができます。</p>
-<p><img src="/blog/network/handle-waf-false-positive/customruleportal.png"></p>
+<img src="./handle-waf-false-positive/exclusion.png" alt="drawing" style="width:600px;"/> 
+  
+### 設定方法２：カスタム ルールを利用する
+カスタム ルールを使用することで、特定の IP アドレスからの通信や特定のパスへのアクセスを WAF の評価から除外し、通信を管理されたルールから ”Bypass” するルールを作成できます。カスタム ルールは管理されたルールよりも優先され、ここで設定したルールによって通信が許可または拒否されます。カスタム ルールの設定は、WAF ポリシーの「カスタム ルール」ページで行うことができます。
+  
+<img src="./handle-waf-false-positive/customruleportal.png" alt="drawing" style="width:600px;"/> 
+
 <h3 id="設定方法３：特定のルールの無効化"><a href="#設定方法３：特定のルールの無効化" class="headerlink" title="設定方法３：特定のルールの無効化"></a>設定方法３：特定のルールの無効化</h3><p>WAF で特定のルールによる誤検知が発生した場合、そのルールを無効にすることも誤検知への対処法の一つです。ルールの無効化は、WAF ポリシーの「管理されているルール」ページで行うことができます。</p>
-<p><img src="/blog/network/handle-waf-false-positive/disabledrules.png"></p>
+<img src="./handle-waf-false-positive/disabledrules.png" alt="drawing" style="width:700px;"/> 
+
 <div class="alert is-info"><p class="alert-title">Note</p><p>これらの方法以外にも、WAF の要求本文の検査を無効にすることが考えられますが、これを行うと WAF が Request Body の検査を行わなくなり、セキュリティ リスクが高まる可能性があります。この無効化を検討する場合は、サーバー側でのセキュリティ対策の実施をお勧めします。</p></div>
 <h2 id="アプリケーション側の対応"><a href="#アプリケーション側の対応" class="headerlink" title="アプリケーション側の対応"></a>アプリケーション側の対応</h2><p>WAF 側の設定だけでは要件を満たさない場合、アプリケーション側での対策が解決策の一つになります。例えば、ユーザー情報をフォームで収集するアプリケーションを開発する際に、フォーム入力で「#」や「%」のような、攻撃に利用される可能性のある文字の使用を制限する設定を追加することで、ユーザーがこれらの文字を含むリクエストを送信することによる誤検知を防ぐことができます。具体的にどのような文字列が管理されたルールに一致するかについては、お客様ご自身で OWASP コミュニティのサイトや Core Rule Set の GitHub ページなどで確認する必要があります。</p>
 <p><a target="_blank" rel="noopener" href="https://owasp.org/www-project-modsecurity-core-rule-set/">OWASP ModSecurity Core Rule Set</a></p>
@@ -140,14 +145,19 @@
 <h1 id="ログ"><a href="#ログ" class="headerlink" title="ログ"></a>ログ</h1><p>誤検知が発生した場合、その原因を理解することが最初のステップです。具体的には、どのルールによって誤検知が起きているのか、そしてその誤検知の原因が何なのかを WAF のログから把握する必要があります。この情報がなければ、誤検知を避けるための適切な対策を講じることができません。WAF のログは、WAF に関連付けられた Application Gateway のログで以下のクエリを実行することで確認できます。</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AzureDiagnostics </span><br><span class="line">| where ResourceProvider == &quot;MICROSOFT.NETWORK&quot; and Category == &quot;ApplicationGatewayFirewallLog&quot;</span><br></pre></td></tr></table></figure>
 <p>このクエリを実行すると、次のような形式のログが出力されます。誤検知を避けるためには、WAF の設定で特定のログフィールドに注意を払う必要があります。該当するフィールドは下の図の赤い枠で示されています。詳しいについては、「WAF ログのフィールド」セクションをご覧ください。</p>
-<p><img src="/blog/network/handle-waf-false-positive/examplelog.png"></p>
+<img src="./handle-waf-false-positive/examplelog.png" alt="drawing" style="width:900px;"/>
+
 <p>上記のクエリ以外にも、以下のドキュメントには様々な WAF ログのクエリ例が記載されています。ご参考いただければと存じます。</p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/log-analytics">Log Analytics を使用して Application Gateway Web アプリケーション ファイアウォール (WAF) のログを調べる</a></p>
 <h2 id="WAF-ログのフィールド"><a href="#WAF-ログのフィールド" class="headerlink" title="WAF ログのフィールド"></a>WAF ログのフィールド</h2><p>誤検知に対応するためには、以下の WAF ログのフィールドを理解する必要があります。</p>
 <h3 id="フィールド１：ruleSetType-amp-ruleSetVersion"><a href="#フィールド１：ruleSetType-amp-ruleSetVersion" class="headerlink" title="フィールド１：ruleSetType &amp; ruleSetVersion"></a>フィールド１：ruleSetType &amp; ruleSetVersion</h3><p>ruleSetType と ruleSetVersion は、特定の通信がどのルールセット内のどのルールに一致しているを表示します。特に WAF ポリシーに複数のバージョンのルールセットが設定されている場合、正しいバージョンのルールセットに対して除外を作成する必要があるので、こちらのフィールドの参照が必要です。</p>
 <h3 id="フィールド２：ruleId"><a href="#フィールド２：ruleId" class="headerlink" title="フィールド２：ruleId"></a>フィールド２：ruleId</h3><p>ruleId は、特定の通信がどのルールに一致しているかを示します。OWASP 3.2 以上の WAF ポリシーを利用する際には、こちらのフィールドの参照して、除外を作成するときに正しいルールを選択する必要があります。</p>
-<h3 id="フィールド３：-details-data"><a href="#フィールド３：-details-data" class="headerlink" title="フィールド３： details_data"></a>フィールド３： details_data</h3><p>ルールにマッチした原因は、WAF ログの details_data で確認できます。通常、以下の形式でマッチした内容を確認できます。<br><img src="/blog/network/handle-waf-false-positive/details.png"></p>
-<h4 id="上図-①-の部分について"><a href="#上図-①-の部分について" class="headerlink" title="上図 ① の部分について"></a>上図 ① の部分について</h4><p>① は、通常、マッチした文字列です。例えば、Request Body に「#」が含まれているためにルールによって検出された場合、①には「#」が表示されます。</p>
+<h3 id="フィールド３：-details-data"><a href="#フィールド３：-details-data" class="headerlink" title="フィールド３： details_data"></a>フィールド３： details_data</h3><p>ルールにマッチした原因は、WAF ログの details_data で確認できます。通常、以下の形式でマッチした内容を確認できます。</p>
+<img src="./handle-waf-false-positive/details.png" alt="drawing" style="width:700px;"/>
+  
+#### 上図 ① の部分について
+① は、通常、マッチした文字列です。例えば、Request Body に「#」が含まれているためにルールによって検出された場合、①には「#」が表示されます。
+
 <h4 id="上図-②-の部分について"><a href="#上図-②-の部分について" class="headerlink" title="上図 ② の部分について"></a>上図 ② の部分について</h4><p>② は、通常、Request Body のどの部分にマッチする文字列が含まれているかを示します。例えば、ある Header 名に「#」が含まれている場合、② には「HeaderName」が表示されます。② に表示されるものはマッチしたルールの種類（OWASP や Bot Manager Rule など）によって異なることがあります。</p>
 <h4 id="上図-③-の部分について"><a href="#上図-③-の部分について" class="headerlink" title="上図 ③ の部分について"></a>上図 ③ の部分について</h4><p> ③ は、② の内容と関連しています。② が要求本文フィールドの名前「xxxName」を示している場合、③ではその具体的な要求本文フィールド名が表示されます。例えば、 Header 名に不正な文字「#」が含まれてWAFによって検出された場合、③ にはその Header 名を表示します。また、「XXX : YYYY」という形式で表示される場合もあります。これは、要求本文フィールド値に不正な文字列が検出された場合のログ表示形式です。</p>
 <div class="alert is-info"><p class="alert-title">Note</p><p>details_data に「Inbound Anomaly Score Exceeded」（受信異常スコア超過）というメッセージが記載されている場合、実際の検出原因は同じ Transaction ID を持つ他のログで確認できます。詳細については、下記の異常スコアのドキュメントを参照していただければ幸いです</p><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules?tabs=drs21#anomaly-scoring">Web Application Firewall の DRS および CRS の規則グループと規則 ｜異常スコアリング</a></p></div>
@@ -179,7 +189,8 @@
 <td>Header 以外は区別します</td>
 </tr>
 </tbody></table>
-<h2 id="設定フィールド：適用対象"><a href="#設定フィールド：適用対象" class="headerlink" title="設定フィールド：適用対象"></a>設定フィールド：適用対象</h2><p><img src="/blog/network/handle-waf-false-positive/rule.png"></p>
+<h2 id="設定フィールド：適用対象"><a href="#設定フィールド：適用対象" class="headerlink" title="設定フィールド：適用対象"></a>設定フィールド：適用対象</h2><img src="./handle-waf-false-positive/rule.png" alt="drawing" style="width:700px;"/>
+
 <p>OWASP 3.2 以降の WAF ポリシーの除外設定では、ログの ruleSetType &amp; ruleSetVersion フィールドに記載された内容に基づいて、適切なルールセット バージョンを選択する必要があります。例えば、誤検知が発生した際に ruleSetType &amp; ruleSetVersion が以下の値を表示している場合、適用対象として OWASP_3.2 を選択する必要があります。</p>
 <table>
 <thead>
@@ -197,11 +208,15 @@
 <h2 id="設定フィールド：ルールの追加"><a href="#設定フィールド：ルールの追加" class="headerlink" title="設定フィールド：ルールの追加"></a>設定フィールド：ルールの追加</h2><p><img src="/blog/network/handle-waf-false-positive/selectrule.png"></p>
 <p>OWASP 3.2 以降の WAF ポリシーを利用する際には、ログに記載された ruleId フィールドに基づき、除外を適用したい特定のルールを選択します。「ルールの追加」ボタンをクリックしてルール検索ページを開き、ログに表示された ruleId フィールドに記載されたルール ID を検索することで、除外を適用する対象となるルールを選び出せます。この操作により、特定のルールに対してのみ除外を適用でき、他のルールにマッチした場合は除外が適用されません。<br>OWASP 3.1 以前の WAF ポリシーの除外設定では、こちらのルールの追加ができません。</p>
 <h2 id="一致変数"><a href="#一致変数" class="headerlink" title="一致変数"></a>一致変数</h2><p>OWASP 3.2 以降の WAF ポリシーでは、以下の一致変数が設定できます。</p>
-<p><img src="/blog/network/handle-waf-false-positive/32arg.png"></p>
+<img src="./handle-waf-false-positive/32arg.png" alt="drawing" style="width:200px;"/>
+
 <p>OWASP 3.1 以前の WAF ポリシーでは、以下の一致変数が設定できます。</p>
-<p><img src="/blog/network/handle-waf-false-positive/30arg.png"></p>
+<img src="./handle-waf-false-positive/30arg.png" alt="drawing" style="width:200px;"/>
+
 <p>一致変数の選択は、details_data 内の ② の値に基づいて行います。</p>
-<p><img src="/blog/network/handle-waf-false-positive/requestarg.png"><br>② の値と一致変数の対応例は以下の通りです。</p>
+<img src="./handle-waf-false-positive/requestarg.png" alt="details_data_2"/>
+② の値と一致変数の対応例は以下の通りです。
+
 <table>
 <thead>
 <tr>
