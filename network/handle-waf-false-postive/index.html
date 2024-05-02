@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-postive/handle-waf-false-positive/exclusionexamples.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-postive/handle-waf-false-positive/disabledrules.png">
 <meta property="article:published_time" content="2024-05-02T03:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-02T03:29:35.460Z">
+<meta property="article:modified_time" content="2024-05-02T03:30:51.616Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Application Gateway">
 <meta property="article:tag" content="WAF">
@@ -113,7 +113,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+ab9f5f3c-d0da-58f3-abb6-e54269bd0fff%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+WAF++%E3%81%AE%E8%AA%A4%E6%A4%9C%E7%9F%A5%E5%AF%BE%E5%BF%9C%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fhandle-waf-false-postive%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fhandle-waf-false-postive.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fhandle-waf-false-postive.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/handle-waf-false-postive/" data-id="clvootoor00o50nn1ee9h1bxa" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/handle-waf-false-postive/" data-id="clvoovb8s00o50npkdjgu5wxf" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -181,7 +181,30 @@
 <p>Log : 防止モードで記録される Action です。カスタムルールの Action (結果の欄) に "トラフィックのみをログに記録する" を指定した場合に、WAF ログの Action フィールドには、Log という値が記録されます。
 
 <h1 id="除外"><a href="#除外" class="headerlink" title="除外"></a>除外</h1><p>除外を作成する際には、ログに検出された内容に基づいて除外を作成します。しかし、利用中の WAF ポリシーのバージョンにより、設定できる除外のパラメーターが異なります。</p>
-<p> 除外 | CRS 3.1 以前 | CRS 3.2 以降<br>| ———— | ———— |———— |<br>| キーと値による要求属性の除外| × | ○ |<br>| ルールごとの除外 | × | ○ |<br>| 要求属性の大小文字区別| 区別しません |  Header 以外は区別します |</p>
+<table>
+<thead>
+<tr>
+<th>除外</th>
+<th>CRS 3.1 以前</th>
+<th>CRS 3.2 以降</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>キーと値による要求属性の除外</td>
+<td>×</td>
+<td>○</td>
+</tr>
+<tr>
+<td>ルールごとの除外</td>
+<td>×</td>
+<td>○</td>
+</tr>
+<tr>
+<td>要求属性の大小文字区別</td>
+<td>区別しません</td>
+<td>Header 以外は区別します</td>
+</tr>
+</tbody></table>
 <h2 id="設定フィールド：適用対象"><a href="#設定フィールド：適用対象" class="headerlink" title="設定フィールド：適用対象"></a>設定フィールド：適用対象</h2><p><img src="handle-waf-false-positive/rule.png"></p>
 <p> OWASP 3.2 以降の WAF ポリシーの除外設定では、ログの ruleSetType & ruleSetVersion フィールドに記載された内容に基づいて、適切なルールセット バージョンを選択する必要があります。例えば、誤検知が発生した際に ruleSetType & ruleSetVersion が以下の値を表示している場合、適用対象として OWASP_3.2 を選択する必要があります。
 
