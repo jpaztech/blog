@@ -19,17 +19,17 @@ tags:
 ### 設定方法１：除外を利用する
 <p>除外は、特定の Header や Request Body 内で誤検知が起こった部分を指定し、これらを誤検知として検出されたルールの評価から外す方法です。この方法は、本記事で紹介した 3 つの中で最も柔軟性が高いと考えられます。除外の設定は、WAF ポリシーの「管理されているルール」のページで見つけることができます。ただし、除外の設定が利用できない場合もあるので、その場合は他の設定方法の利用をご検討いただく必要があります。その具体的な設定方法については本記事他の箇所をご確認ください。
   
-<p><img src="./handle-waf-false-positive/exclusion.png" alt="drawing" style="width:600px;"/> 
-
+![](./handle-waf-false-positive/exclusion.png)
+  
 ### 設定方法２：カスタム ルールを利用する
 <p>カスタム ルールを使用することで、特定の IP アドレスからの通信や特定のパスへのアクセスを WAF の評価から除外し、通信を管理されたルールから ”Bypass” するルールを作成できます。カスタム ルールは管理されたルールよりも優先され、ここで設定したルールによって通信が許可または拒否されます。カスタム ルールの設定は、WAF ポリシーの「カスタム ルール」ページで行うことができます。
   
-<p><img src="./handle-waf-false-positive/customruleportal.png" alt="drawing" style="width:600px;"/> 
+![](./handle-waf-false-positive/customruleportal.png)
 
 ### 設定方法３：特定のルールの無効化
 <p>WAF で特定のルールによる誤検知が発生した場合、そのルールを無効にすることも誤検知への対処法の一つです。ルールの無効化は、WAF ポリシーの「管理されているルール」ページで行うことができます。
 
-<p><img src="./handle-waf-false-positive/disabledrules.png" alt="drawing" style="width:700px;"/> 
+![](./handle-waf-false-positive/disabledrules.png)
 
 > [!NOTE]
 > これらの方法以外にも、WAF の要求本文の検査を無効にすることが考えられますが、これを行うと WAF が Request Body の検査を行わなくなり、セキュリティ リスクが高まる可能性があります。この無効化を検討する場合は、サーバー側でのセキュリティ対策の実施をお勧めします。
@@ -51,8 +51,8 @@ AzureDiagnostics
 ```
 <p>このクエリを実行すると、次のような形式のログが出力されます。誤検知を避けるためには、WAF の設定で特定のログフィールドに注意を払う必要があります。該当するフィールドは下の図の赤い枠で示されています。詳しいについては、「WAF ログのフィールド」セクションをご覧ください。
   
-<p><img src="./handle-waf-false-positive/examplelog.png" alt="drawing" style="width:900px;"/>
-  
+![](./handle-waf-false-positive/examplelog.png)
+
 <p>上記のクエリ以外にも、以下のドキュメントには様々な WAF ログのクエリ例が記載されています。ご参考いただければと存じます。
   
 [Log Analytics を使用して Application Gateway Web アプリケーション ファイアウォール (WAF) のログを調べる](https://learn.microsoft.com/ja-jp/azure/application-gateway/log-analytics)
@@ -68,8 +68,8 @@ AzureDiagnostics
 
 ### フィールド３： details_data
 <p>ルールにマッチした原因は、WAF ログの details_data で確認できます。通常、以下の形式でマッチした内容を確認できます。
-<p><img src="./handle-waf-false-positive/details.png" alt="drawing" style="width:900px;"/>
-
+![](./handle-waf-false-positive/details.png)
+  
 #### 上図 ① の部分について
 ① は、通常、マッチした文字列です。例えば、Request Body に「#」が含まれているためにルールによって検出された場合、①には「#」が表示されます。
 
@@ -105,7 +105,8 @@ AzureDiagnostics
 | 要求属性の大小文字区別| 区別しません |  Header 以外は区別します 
 
 ## 設定フィールド：適用対象
-<p><img src="./handle-waf-false-positive/rule.png" alt="drawing" style="width:700px;"/>
+
+![](./handle-waf-false-positive/rule.png)
 
 <p> OWASP 3.2 以降の WAF ポリシーの除外設定では、ログの ruleSetType & ruleSetVersion フィールドに記載された内容に基づいて、適切なルールセット バージョンを選択する必要があります。例えば、誤検知が発生した際に ruleSetType & ruleSetVersion が以下の値を表示している場合、適用対象として OWASP_3.2 を選択する必要があります。
 
