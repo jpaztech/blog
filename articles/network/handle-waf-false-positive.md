@@ -26,12 +26,12 @@ Azure WAF の設定を使って誤検知を避ける方法には、主に3つの
 ### 設定方法２：カスタム ルールを利用する
 カスタム ルールを使用することで、特定の IP アドレスからの通信や特定のパスへのアクセスを WAF の評価から除外し、通信を管理されたルールから ”Bypass” するルールを作成できます。カスタム ルールは管理されたルールよりも優先され、ここで設定したルールによって通信が許可または拒否されます。カスタム ルールの設定は、WAF ポリシーの「カスタム ルール」ページで行うことができます。
   
-<img src="./handle-waf-false-positive/customruleportal.png" alt="drawing" style="width:600px;"/> 
+<img src="./customruleportal.png" alt="drawing" style="width:600px;"/> 
 
 ### 設定方法３：特定のルールの無効化
 WAF で特定のルールによる誤検知が発生した場合、そのルールを無効にすることも誤検知への対処法の一つです。ルールの無効化は、WAF ポリシーの「管理されているルール」ページで行うことができます。
 
-<img src="./handle-waf-false-positive/disabledrules.png" alt="drawing" style="width:700px;"/> 
+<img src="./disabledrules.png" alt="drawing" style="width:700px;"/> 
 
 > [!NOTE]
 > これらの方法以外にも、WAF の要求本文の検査を無効にすることが考えられますが、これを行うと WAF が Request Body の検査を行わなくなり、セキュリティ リスクが高まる可能性があります。この無効化を検討する場合は、サーバー側でのセキュリティ対策の実施をお勧めします。
@@ -54,7 +54,7 @@ AzureDiagnostics
 ```
 このクエリを実行すると、次のような形式のログが出力されます。誤検知を避けるためには、WAF の設定で特定のログフィールドに注意を払う必要があります。該当するフィールドは下の図の赤い枠で示されています。詳しいについては、「WAF ログのフィールド」セクションをご覧ください。
   
-<img src="./handle-waf-false-positive/examplelog.png" alt="drawing" style="width:900px;"/>
+<img src="./examplelog.png" alt="drawing" style="width:900px;"/>
 
 上記のクエリ以外にも、以下のドキュメントには様々な WAF ログのクエリ例が記載されています。ご参考いただければと存じます。
   
@@ -72,7 +72,7 @@ ruleId は、特定の通信がどのルールに一致しているかを示し�
 ### フィールド３： details_data
 ルールにマッチした原因は、WAF ログの details_data で確認できます。通常、以下の形式でマッチした内容を確認できます。
 
-<img src="./handle-waf-false-positive/details.png" alt="drawing" style="width:700px;"/>
+<img src="./details.png" alt="drawing" style="width:700px;"/>
   
 #### 上図 ① の部分について
 ① は、通常、マッチした文字列です。例えば、Request Body に「#」が含まれているためにルールによって検出された場合、①には「#」が表示されます。
@@ -110,7 +110,7 @@ Log : 防止モードで記録される Action です。カスタムルールの
 
 ## 設定フィールド：適用対象
 
-<img src="./handle-waf-false-positive/rule.png" alt="drawing" style="width:700px;"/>
+<img src="./rule.png" alt="drawing" style="width:700px;"/>
 
 OWASP 3.2 以降の WAF ポリシーの除外設定では、ログの ruleSetType & ruleSetVersion フィールドに記載された内容に基づいて、適切なルールセット バージョンを選択する必要があります。例えば、誤検知が発生した際に ruleSetType & ruleSetVersion が以下の値を表示している場合、適用対象として OWASP_3.2 を選択する必要があります。
 
@@ -129,15 +129,15 @@ OWASP 3.1 以前の WAF ポリシーの除外設定では、こちらのルー�
 ## 一致変数
 OWASP 3.2 以降の WAF ポリシーでは、以下の一致変数が設定できます。
 
-<img src="./handle-waf-false-positive/32arg.png" alt="drawing" style="width:200px;"/>
+<img src="./32arg.png" alt="drawing" style="width:200px;"/>
 
 OWASP 3.1 以前の WAF ポリシーでは、以下の一致変数が設定できます。
 
-<img src="./handle-waf-false-positive/30arg.png" alt="drawing" style="width:200px;"/>
+<img src="./30arg.png" alt="drawing" style="width:200px;"/>
 
 一致変数の選択は、details_data 内の ② の値に基づいて行います。
 
-<img src="./handle-waf-false-positive/requestarg.png" alt="details_data_2"/>
+<img src="./requestarg.png" alt="details_data_2"/>
 ② の値と一致変数の対応例は以下の通りです。
 
 |②の値  |一致変数の選択 |
