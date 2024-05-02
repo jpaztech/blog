@@ -450,20 +450,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/UseCloudShellinAzureVirtualNetwork/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -472,6 +458,20 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/vm/7031-rdagent-restart/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/vm/UseCloudShellinAzureVirtualNetwork/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -520,20 +520,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/storage/addsAuthforAzureFiles/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -549,6 +535,34 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/other/technical_support_engineer_explained/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-how-to-check-maintenance/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpngw-support-policy/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -576,14 +590,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpngw-FAQ1/</loc>
+    <loc>https://jpaztech.github.io/blog/network/pe-troubleshooting/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/vpn-defaultsite-update-2022feb/</loc>
+    <loc>https://jpaztech.github.io/blog/network/private-dns-zone-faq/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -604,20 +618,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/pe-troubleshooting/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/private-dns-zone-faq/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/judge-via-ms-peering/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -626,13 +626,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/pe-difference-se/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/fw_notification_7kyk-r8g/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -674,6 +667,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/fw_notification_7kyk-r8g/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/expressroute-maintenance/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/expressroute_MV1F-T9G/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -695,7 +702,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/expressroute-maintenance/</loc>
+    <loc>https://jpaztech.github.io/blog/network/expressroute-forced-tunneling-routing/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -737,7 +744,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/expressroute-forced-tunneling-routing/</loc>
+    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/cdn-specific-sku/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -779,28 +793,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/cdn-common/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/cdn-specific-sku/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-troubleshooting-cert/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -821,42 +814,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/ExpressRoutePrefixRollout/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/FW-O365/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/afd-classic-retire/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/afd-connection-issue/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/appgw-502error/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/appgw-appservice-redirectissue/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/appgw-configchange/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -905,6 +870,41 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/ExpressRoutePrefixRollout/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/FW-O365/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/afd-classic-retire/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/afd-connection-issue/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/appgw-502error/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/information/Different-subscriptions-research/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -933,13 +933,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-maintenance-for-node/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -948,6 +941,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/containers/aks-memory-troubleshoot/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/containers/aks-load-balancer-source-ranges/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -1003,7 +1003,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
+    <loc>https://jpaztech.github.io/blog/containers/aci-fix-ip/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -1094,13 +1094,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/containers/aci-fix-ip/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/containers/acr-how-to-build-image-with-firewall/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -1108,28 +1101,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/p2s-vpn-proxy-settings/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/powershell-applicationgateway-configuration/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/rca34296489/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/</loc>
+    <loc>https://jpaztech.github.io/blog/containers/aks-aad-pod-identity/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -1178,7 +1150,42 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/p2s-vpn-proxy-settings/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/powershell-applicationgateway-configuration/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/rca34296489/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/recover_vm_using_nested_hyperv/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/monitor-io-throttoling-on-win-vm-arm/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting2/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -1206,20 +1213,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting2/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/important_information_p2s_cert/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -1228,6 +1221,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/lb_appgw_traffic_different/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -1255,13 +1255,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part3/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part4/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -1269,21 +1262,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part1/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part2/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/azurelb-tips/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part3/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -1339,7 +1318,28 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part1/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part2/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/azure-vm-storage-performance/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/azurelb-tips/</loc>
     
     <lastmod>2024-05-02</lastmod>
     
@@ -1416,13 +1416,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
-    
-    <lastmod>2024-05-02</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -1465,6 +1458,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
+    
+    <lastmod>2024-05-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/about-168-63-129-16/</loc>
     
     <lastmod>2024-05-02</lastmod>
@@ -1486,6 +1486,27 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/tags/Containers/</loc>
+    <lastmod>2024-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/tags/Azure-Container-Instances-ACI/</loc>
+    <lastmod>2024-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/tags/Azure-Kubernetes-Service-AKS/</loc>
+    <lastmod>2024-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
   
   <url>
     <loc>https://jpaztech.github.io/blog/tags/Archive/</loc>
@@ -1747,27 +1768,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/tags/Containers/</loc>
-    <lastmod>2024-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/Azure-Container-Instances-ACI/</loc>
-    <lastmod>2024-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/Azure-Kubernetes-Service-AKS/</loc>
-    <lastmod>2024-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/tags/Information/</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>daily</changefreq>
@@ -1776,20 +1776,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/tags/Azure-Portal/</loc>
-    <lastmod>2024-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/Other/</loc>
-    <lastmod>2024-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/Support-Explained/</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1985,6 +1971,20 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/tags/Other/</loc>
+    <lastmod>2024-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/tags/Support-Explained/</loc>
+    <lastmod>2024-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/tags/Storage/</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>daily</changefreq>
@@ -2167,6 +2167,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/tags/SSL/</loc>
+    <lastmod>2024-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/tags/IaaS/</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>daily</changefreq>
@@ -2175,13 +2182,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/tags/Microsoft-Azure/</loc>
-    <lastmod>2024-05-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/tags/SSL/</loc>
     <lastmod>2024-05-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
