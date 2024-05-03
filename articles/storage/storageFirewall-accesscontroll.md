@@ -1,4 +1,4 @@
-![image](https://github.com/aykinoshita/blog/assets/74636331/0feaec40-5a10-4ecb-b589-f9268619a70e)---
+---
 title:  Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御
 date: 2022-05-06 10:30:00
 tags:
