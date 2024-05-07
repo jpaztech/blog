@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/exclusionexamples.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/handle-waf-false-positive/disabledrules.png">
 <meta property="article:published_time" content="2024-05-02T03:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-02T06:57:39.388Z">
+<meta property="article:modified_time" content="2024-05-07T07:20:38.427Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Application Gateway">
 <meta property="article:tag" content="WAF">
@@ -117,7 +117,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+badf3f99-1ea5-5643-81c4-e251a8ce7fa5%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+WAF++%E3%81%AE%E8%AA%A4%E6%A4%9C%E7%9F%A5%E5%AF%BE%E5%BF%9C%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fhandle-waf-false-positive%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fhandle-waf-false-positive.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fhandle-waf-false-positive.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/handle-waf-false-positive/" data-id="clvow99zz00oe0nrx0psj10tp" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/handle-waf-false-positive/" data-id="clvw2a3of00o90nrz12y66ljj" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -153,10 +153,8 @@
 <h3 id="フィールド２：ruleId"><a href="#フィールド２：ruleId" class="headerlink" title="フィールド２：ruleId"></a>フィールド２：ruleId</h3><p>ruleId は、特定の通信がどのルールに一致しているかを示します。OWASP 3.2 以上の WAF ポリシーを利用する際には、こちらのフィールドの参照して、除外を作成するときに正しいルールを選択する必要があります。</p>
 <h3 id="フィールド３：-details-data"><a href="#フィールド３：-details-data" class="headerlink" title="フィールド３： details_data"></a>フィールド３： details_data</h3><p>ルールにマッチした原因は、WAF ログの details_data で確認できます。通常、以下の形式でマッチした内容を確認できます。</p>
 <img src="./details.png" alt="details_data" style="width:700px;"/>
-  
-#### 上図 ① の部分について
-① は、通常、マッチした文字列です。例えば、Request Body に「#」が含まれているためにルールによって検出された場合、①には「#」が表示されます。
 
+<h4 id="上図-①-の部分について"><a href="#上図-①-の部分について" class="headerlink" title="上図 ① の部分について"></a>上図 ① の部分について</h4><p>① は、通常、マッチした文字列です。例えば、Request Body に「#」が含まれているためにルールによって検出された場合、①には「#」が表示されます。</p>
 <h4 id="上図-②-の部分について"><a href="#上図-②-の部分について" class="headerlink" title="上図 ② の部分について"></a>上図 ② の部分について</h4><p>② は、通常、Request Body のどの部分にマッチする文字列が含まれているかを示します。例えば、ある Header 名に「#」が含まれている場合、② には「HeaderName」が表示されます。② に表示されるものはマッチしたルールの種類（OWASP や Bot Manager Rule など）によって異なることがあります。</p>
 <h4 id="上図-③-の部分について"><a href="#上図-③-の部分について" class="headerlink" title="上図 ③ の部分について"></a>上図 ③ の部分について</h4><p> ③ は、② の内容と関連しています。② が要求本文フィールドの名前「xxxName」を示している場合、③ではその具体的な要求本文フィールド名が表示されます。例えば、 Header 名に不正な文字「#」が含まれてWAFによって検出された場合、③ にはその Header 名を表示します。また、「XXX : YYYY」という形式で表示される場合もあります。これは、要求本文フィールド値に不正な文字列が検出された場合のログ表示形式です。</p>
 <div class="alert is-info"><p class="alert-title">Note</p><p>details_data に「Inbound Anomaly Score Exceeded」（受信異常スコア超過）というメッセージが記載されている場合、実際の検出原因は同じ Transaction ID を持つ他のログで確認できます。詳細については、下記の異常スコアのドキュメントを参照していただければ幸いです</p><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules?tabs=drs21#anomaly-scoring">Web Application Firewall の DRS および CRS の規則グループと規則 ｜異常スコアリング</a></p></div>
