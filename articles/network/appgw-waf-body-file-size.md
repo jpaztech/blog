@@ -117,6 +117,7 @@ WAF 側のログでは要求本文の長さ (サイズ)が上限を超過した�
 >![](./appgw-waf-body-file-size/14.png)
 
 Application Gateway V2 の上限に合致した場合は HTTP ステータス コード 403 ではなく 413 となることが確認できました。
+本ブログ記事の内容が皆様のお役に少しでも立てましたら幸いです。
 
 <span id="reference"></span>
 ### <a href="#reference">参考情報</a>
