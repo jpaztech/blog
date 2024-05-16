@@ -13,6 +13,9 @@ tags:
 
 今回は誤って削除してしまったストレージ アカウントの復元を行う方法をご案内します。以前までは弊サポート部門にお問い合わせいただき、数営業日かけて復旧するという流れでしたが、最近のアップデートにてお客様にて迅速に復元を行うことができるようになりました。ただし、本手順を用いても復元が叶わない場合もありますので、予めご了承ください。
 
+■ご参考：削除されたストレージ アカウントを復旧します  
+[https://learn.microsoft.com/ja-jp/azure/storage/common/storage-account-recover](https://learn.microsoft.com/ja-jp/azure/storage/common/storage-account-recover)  
+
 <font color="LightSalmon">
 
 ## ストレージ アカウント復元時の注意点について
