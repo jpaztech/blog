@@ -13,16 +13,16 @@
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの木下です。今回は、Azure VM からストレージ アカウントへアクセスする際の挙動とアクセス元制御ついてご案内します。">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac01.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac02.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac03.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac04.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac05.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac06.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac07.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac08.png">
 <meta property="article:published_time" content="2022-05-06T01:30:00.000Z">
-<meta property="article:modified_time" content="2024-05-07T07:20:38.519Z">
+<meta property="article:modified_time" content="2024-05-16T01:54:09.730Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Storage">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac01.png">
+<meta name="twitter:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac05.png">
   
     <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
   
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+de3c2524-d81a-562a-ab11-018574e4ad18%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%8B%E3%82%89%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%B8%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%99%E3%82%8B%E9%9A%9B%E3%81%AE%E6%8C%99%E5%8B%95%E3%81%A8%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%85%83%E5%88%B6%E5%BE%A1%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fstorage%2FstorageFirewall-accesscontroll%2F%29%0A*+Content+Source%3A+%5Barticles%2Fstorage%2FstorageFirewall-accesscontroll.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fstorage%2FstorageFirewall-accesscontroll.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/" data-id="clvw2a3kk007s0nrzdcrl0h2p" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/" data-id="clw8lkwi7007s0nqjaecne2ih" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -117,96 +117,74 @@
 
 <h2 id="Azure-VM-からストレージ-アカウントへアクセスする際の挙動"><a href="#Azure-VM-からストレージ-アカウントへアクセスする際の挙動" class="headerlink" title="Azure VM からストレージ アカウントへアクセスする際の挙動"></a>Azure VM からストレージ アカウントへアクセスする際の挙動</h2><p>VM からストレージ アカウントへアクセスを行う場合、両者のリージョンが異なる場合と、同じ場合ではアクセス元の IP アドレスが異なる点に、ご注意ください。</p>
 <h3 id="VM-とストレージ-アカウントが同一リージョンに存在する場合"><a href="#VM-とストレージ-アカウントが同一リージョンに存在する場合" class="headerlink" title="VM とストレージ アカウントが同一リージョンに存在する場合"></a>VM とストレージ アカウントが同一リージョンに存在する場合</h3><p><strong>パブリック エンドポイント または サービス エンドポイントを使用</strong></p>
-<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP とならず、Azure 内部で使用しているプライベート IP となります。</p>
+<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP とならず、Azure 内部で使用しているプライベート IP アドレスとなります。</p>
 <h3 id="VM-とストレージ-アカウントが異なるリージョンに存在する場合"><a href="#VM-とストレージ-アカウントが異なるリージョンに存在する場合" class="headerlink" title="VM とストレージ アカウントが異なるリージョンに存在する場合"></a>VM とストレージ アカウントが異なるリージョンに存在する場合</h3><p><strong>パブリック エンドポイントを使用</strong></p>
-<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP となります。</p>
+<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP アドレスとなります。</p>
 <p><strong>サービス エンドポイントを使用</strong></p>
-<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP とならず、Azure 内部で使用しているプライベート IP となります。</p>
-<p>(ご留意)<br>サービス エンドポイントがある仮想ネットワークのリージョンがペア リージョンではない他のリージョンである場合、アクセス元 IP は VM のパブリック IP となります。<br>ただ、現在、プレビュー段階ではありますが、ペア リージョン以外の他のリージョンにある仮想ネットワークからのアクセスにおいてもサービス エンドポイントを利用することが可能となりましました。<br>つまり、サービス エンドポイントを有効化することで、他のリージョンからのアクセスの際にパブリック IP ではなく、Azure 内部で使用しているプライベート IP を利用することができるようになりました。</p>
-<p>参考）すべての地域の Azure リージョン間レプリケーションのペアリング<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/availability-zones/cross-region-replication-azure#azure-cross-region-replication-pairings-for-all-geographies">https://docs.microsoft.com/ja-jp/azure/availability-zones/cross-region-replication-azure#azure-cross-region-replication-pairings-for-all-geographies</a><br>※ペア リージョン例: 東日本リージョンと西日本リージョン</p>
-<p>参考）Azure Storage ファイアウォールおよび仮想ネットワークを構成する &gt; 他のリージョンの仮想ネットワークへのアクセスを有効にする (プレビュー)<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview</a></p>
-<blockquote>
-<p>&lt;抜粋&gt;</p>
-<p>別のリージョンにある仮想ネットワークからのアクセスを有効にするには、仮想ネットワークのサブスクリプションに AllowGlobalTagsForStorage 機能を登録します。 ストレージ サービス エンドポイントを備えた他のリージョンにあるサブネットでは、ストレージ アカウントとの通信にパブリック IP アドレスを使用しなくなりました。 トラフィックはすべてプライベート IP アドレスから送信され、それらのサブネットからのトラフィックを許可する IP ネットワーク ルールはいずれも影響を受けなくなりました。</p>
-</blockquote>
+<p>VM からストレージ アカウントへアクセスすると、アクセス元 IP は VM のパブリック IP とならず、Azure 内部で使用しているプライベート IP アドレスとなります。</p>
 <h3 id="VM-からストレージアカウントへのアクセス検証"><a href="#VM-からストレージアカウントへのアクセス検証" class="headerlink" title="VM からストレージアカウントへのアクセス検証"></a>VM からストレージアカウントへのアクセス検証</h3><p>・VM (東日本) から、ストレージ アカウント (東日本) に対して AzCopy を実施した結果</p>
 <p>[ VM の構成 ]</p>
-<p>パブリック IP : 40.115.XX.XX<br>プライベート IP : 10.1.0.4</p>
-<p>[ ストレージ アカウントの診断ログ] ※1 、※2</p>
-<p>サービス エンドポイント無効、パブリック エンドポイント経由のアクセス</p>
+<p>パブリック IP : 172.207.XX.XX<br>プライベート IP : 10.6.0.4</p>
+<p>[ ストレージ アカウントの診断ログ] ※1<br>サービス エンドポイント無効、パブリック エンドポイント経由のアクセス</p>
 <blockquote>
-<p>1.0;2022-05-01T09:19:01.3225693Z;GetBlobProperties;SASSuccess;200;4;4;sas;;storageaccountname;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50100;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50100;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 09:19:01 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+<p>1.0;2024-05-03T05:04:52.4891056Z;PutBlob;SASSuccess;201;7;4;sas;;aptsstor;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/con/test.txt?sas&quot;;&quot;/aptsstor/con/test.txt&quot;;xxxxxxxxxxxxxxxxx;0;10.6.0.4:50031;2023-08-03;544;0;337;0;0;;&quot;xxxxxxxxx&quot;;&quot;&quot;xxxxxxxxxx;&quot;;Friday">https://storageaccountname.blob.core.windows.net:443/con/test.txt?sas&quot;;&quot;/aptsstor/con/test.txt&quot;;xxxxxxxxxxxxxxxxx;0;10.6.0.4:50031;2023-08-03;544;0;337;0;0;;&quot;xxxxxxxxx&quot;;&quot;&quot;xxxxxxxxxx;&quot;;Friday</a>, 03-May-24 05:04:52 GMT;;”AzCopy/10.23.0 azsdk-go-service.Client/v1.2.0 (go1.19.12; Windows_NT)”;;”xxxxxxxxxxxxxxxxxx”</p>
 </blockquote>
-<p>アクセス元 IP は 10.1.0.4 であることが分かります。</p>
-<p>サービス エンドポイント有効、サービス エンドポイント経由のアクセス</p>
+<p>アクセス元 IP は 10.6.0.4 であることが分かります。</p>
+<p>サービス エンドポイント有効、サービス エンドポイント (Microsoft.Storage) 経由のアクセス</p>
 <blockquote>
-<p>1.0;2022-05-01T10:43:08.5058732Z;PutBlob;SASSuccess;201;12;12;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50636;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container01/test.csv?sas&quot;;&quot;/storageaccountname/container01/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.1.0.4:50636;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 10:43:08 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+<p>1.0;2024-05-03T05:26:22.9853049Z;PutBlob;SASSuccess;201;6;3;sas;;aptsstor;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/con/test2.txt?sas&quot;;&quot;/aptsstor/con/test2.txt&quot;;xxxxxxx;0;10.6.0.4:50231;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxx&quot;;&quot;&quot;xxxxxxxxx;&quot;;Friday">https://storageaccountname.blob.core.windows.net:443/con/test2.txt?sas&quot;;&quot;/aptsstor/con/test2.txt&quot;;xxxxxxx;0;10.6.0.4:50231;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxx&quot;;&quot;&quot;xxxxxxxxx;&quot;;Friday</a>, 03-May-24 05:26:22 GMT;;”AzCopy/10.23.0 azsdk-go-service.Client/v1.2.0 (go1.19.12; Windows_NT)”;;”xxxxxxxx”</p>
 </blockquote>
-<p>アクセス元 IP は 10.1.0.4 であることが分かります。</p>
+<p>アクセス元 IP は 10.6.0.4 であることが分かります。</p>
 <p>・VM (西日本) から、ストレージ アカウント (東日本) に対して AzCopy を実施した結果</p>
 <p>[ VM の構成 ]</p>
-<p>パブリック IP : 20.89.XX.XX<br>プライベート IP : 10.4.0.4</p>
-<p>[ ストレージ アカウントの診断ログ ] ※1 、※2</p>
+<p>パブリック IP : 20.18.XX.XX<br>プライベート IP : 10.0.0.4</p>
+<p>[ ストレージ アカウントの診断ログ ] ※1</p>
 <p>サービス エンドポイント無効、パブリック エンドポイント経由のアクセス</p>
 <blockquote>
-<p>1.0;2022-05-01T09:20:17.4989380Z;GetBlobProperties;SASSuccess;200;3;3;sas;;storageaccountname;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;20.89.XX.XX:49842;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;20.89.XX.XX:49842;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 09:20:17 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+<p>1.0;2024-05-03T05:13:11.4973284Z;PutBlob;SASSuccess;201;12;9;sas;;aptsstor;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/con/test1.txt?sas&quot;;&quot;/aptsstor/con/test1.txt&quot;;xxxxxxxxxxx;0;20.18.xx.xx:50131;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxx&quot;;&quot;&quot;xxxxxxxxxxx;&quot;;Friday">https://storageaccountname.blob.core.windows.net:443/con/test1.txt?sas&quot;;&quot;/aptsstor/con/test1.txt&quot;;xxxxxxxxxxx;0;20.18.xx.xx:50131;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxx&quot;;&quot;&quot;xxxxxxxxxxx;&quot;;Friday</a>, 03-May-24 05:13:11 GMT;;”AzCopy/10.23.0 azsdk-go-service.Client/v1.2.0 (go1.19.12; Windows_NT)”;;”xxxxxxxxxxxx”</p>
 </blockquote>
-<p>アクセス元 IP は 20.89.XX.XX であることが分かります。</p>
-<p>サービス エンドポイント有効、サービス エンドポイント経由のアクセス</p>
+<p>アクセス元 IP は 20.18.XX.XX であることが分かります。</p>
+<p>サービス エンドポイント有効、サービス エンドポイント (Microsoft.Storage) 経由のアクセス</p>
 <blockquote>
-<p>1.0;2022-05-01T10:42:56.2621284Z;PutBlob;SASSuccess;201;11;11;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.4.0.4:50461;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x80x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container02/test.csv?sas&quot;;&quot;/storageaccountname/container02/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.4.0.4:50461;2019-12-12;624;806;337;0;806;;&quot;XXXXXXXXXXXXXXXXXXXXXXXX&quot;;&quot;&quot;0x80x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 10:42:56 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+<p>1.0;2024-05-03T05:26:59.6880782Z;PutBlob;SASSuccess;201;7;4;sas;;aptsstor;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/con/test3.txt?sas&quot;;&quot;/aptsstor/con/test3.txt&quot;;xxxxxxxxxx;0;10.0.0.4:50260;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxx;&quot;;Friday">https://storageaccountname.blob.core.windows.net:443/con/test3.txt?sas&quot;;&quot;/aptsstor/con/test3.txt&quot;;xxxxxxxxxx;0;10.0.0.4:50260;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxx;&quot;;Friday</a>, 03-May-24 05:26:59 GMT;;”AzCopy/10.23.0 azsdk-go-service.Client/v1.2.0 (go1.19.12; Windows_NT)”;;”xxxxxxxxxxxxxx”</p>
 </blockquote>
-<p>アクセス元 IP は 10.4.0.4 であることが分かります。</p>
+<p>アクセス元 IP は 10.0.0.4 であることが分かります。</p>
 <p>・VM (米国中部) から、ストレージ アカウント (東日本) に対して AzCopy を実施した結果</p>
 <p>[ VM の構成 ]</p>
-<p>パブリック IP :  40.122.XX.XX<br>プライベート IP : 10.3.0.4</p>
-<p>[ ストレージ アカウントの診断ログ] ※1 、※2</p>
+<p>パブリック IP :  52.173.XX.XX<br>プライベート IP : 10.0.0.4</p>
+<p>[ ストレージ アカウントの診断ログ] ※1</p>
 <p>サービス エンドポイント無効、パブリック エンドポイント経由のアクセス</p>
 <blockquote>
-<p>1.0;2022-05-01T09:19:12.0009834Z;GetBlobProperties;SASSuccess;200;4;4;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;40.122.XX.XX:50144;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;40.122.XX.XX:50144;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 09:19:11 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+<p>1.0;2024-05-03T05:42:29.5602997Z;PutBlob;SASSuccess;201;8;4;sas;;aptsstor;blob;”<a target="_blank" rel="noopener" href="https://storagaaccountname.blob.core.windows.net/con/test1.txt?sas&quot;;&quot;/aptsstor/con/test1.txt&quot;;xxxxxxxxxxxx;0;52.173.xx.xx:49966;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxxxx&quot;;&quot;&quot;xxxxxx;&quot;;Friday">https://storagaaccountname.blob.core.windows.net:443/con/test1.txt?sas&quot;;&quot;/aptsstor/con/test1.txt&quot;;xxxxxxxxxxxx;0;52.173.xx.xx:49966;2023-08-03;545;0;337;0;0;;&quot;xxxxxxxxxx&quot;;&quot;&quot;xxxxxx;&quot;;Friday</a>, 03-May-24 05:42:29 GMT;;”AzCopy/10.23.0 azsdk-go-service.Client/v1.2.0 (go1.19.12; Windows_NT)”;;”xxxxxxxxxx”</p>
 </blockquote>
-<p>アクセス元 IP は 40.122.XX.XX であることが分かります。</p>
-<p>サービス エンドポイント有効、サービスエ ンドポイント経由のアクセス</p>
+<p>アクセス元 IP は 52.173.XX.X であることが分かります。</p>
+<p>サービス エンドポイント有効、サービスエ ンドポイント(Microsoft.Storage.Global) 経由のアクセス</p>
 <blockquote>
-<p>1.0;2022-05-01T12:10:54.1043116Z;GetBlobProperties;SASSuccess;200;5;5;sas;;akstor001;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.3.0.4:51283;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday">https://storageaccountname.blob.core.windows.net:443/container03/test.csv?sas&quot;;&quot;/storageaccountname/container03/test.csv&quot;;XXXXXXXXXXXXXXXXXXXXXXX;0;10.3.0.4:51283;2019-12-12;413;0;543;0;0;;;&quot;&quot;0x8DXXXXXXXXXXXXX&quot;&quot;;Sunday</a>, 01-May-22 12:10:53 GMT;;”AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)”;;”XXXXXXXXXXXXXXXXXXXXXXXX”</p>
+<p>1.0;2024-05-03T06:08:17.6529951Z;PutBlob;SASSuccess;201;8;5;sas;;aptsstor;blob;”<a target="_blank" rel="noopener" href="https://storageaccountname.blob.core.windows.net/con/test2.txt?sas&quot;;&quot;/aptsstor/con/test2.txt&quot;;xxxxxxxxxxxxx;0;10.0.0.4:50237;2023-08-03;545;0;337;0;0;;&quot;xxxxxxx&quot;;&quot;&quot;xxxxx;&quot;;Friday">https://storageaccountname.blob.core.windows.net:443/con/test2.txt?sas&quot;;&quot;/aptsstor/con/test2.txt&quot;;xxxxxxxxxxxxx;0;10.0.0.4:50237;2023-08-03;545;0;337;0;0;;&quot;xxxxxxx&quot;;&quot;&quot;xxxxx;&quot;;Friday</a>, 03-May-24 06:08:17 GMT;;”AzCopy/10.23.0 azsdk-go-service.Client/v1.2.0 (go1.19.12; Windows_NT)”;;”xxxxxxxxxxxx”</p>
 </blockquote>
-<p>アクセス元 IP は 10.3.0.4 であることが分かります。</p>
-<p>VM のリージョンとストレージ アカウントのリージョンがペア リージョンでない場合、サービス エンドポイントを利用する際は、以下公開ドキュメントの手順を実施する必要があります。</p>
-<p>参考）他のリージョンの仮想ネットワークへのアクセスを有効にする (プレビュー)<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#enabling-access-to-virtual-networks-in-other-regions-preview</a></p>
-<p>※1 ストレージ アカウントの診断ログは、BLOB コンテナーの $logs 配下に格納されます。<br>※2 ストレージ アカウントの診断ログ フォーマット</p>
-<p>参考）Storage分析ログの形式<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-log-format">https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-log-format</a></p>
-<h3 id="Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ"><a href="#Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ" class="headerlink" title="Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ"></a>Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ</h3><p>ストレージ アカウントのアクセス制御について、現段階では、仮想ネットワーク/サブネット単位、もしくは外部からのパブリック IP 単位での制御のみが可能です。<br>そのため、VM とストレージ アカウントが同一リージョンである場合、パブリック エンドポイント、サービス エンドポイントいずれを使用する場合も仮想ネットワーク/サブネット単位での制御までとなります。<br>VM とストレージ アカウントが異なるリージョンにある場合、パブリックエンドポイントを使用する際は、パブリック IP 単位での制御、サービスエンドポイントを使用する際は、仮想ネットワーク/サブネット単位での制御となります。</p>
-<h2 id="ストレージアカウントへのアクセス制御について"><a href="#ストレージアカウントへのアクセス制御について" class="headerlink" title="ストレージアカウントへのアクセス制御について"></a>ストレージアカウントへのアクセス制御について</h2><p>先述の通り、ストレージ アカウントのファイアウォールでは、仮想ネットワーク/サブネット単位、もしくは外部からのパブリック IP 単位での制御のみとなりますが、<br>「ストレージ アカウントへのアクセス制御を VM 単位で行う方法はあるか」というお問い合わせをいただくことがあります。<br>VM 単位でのアクセス元制御を行いたい場合、プレビュー段階の機能とはなりますが、プライベート エンドポイントに対する NSG を利用することで、プライベート エンドポイントの IP アドレスに対して NSG でアクセス制御を行うことが可能となります。</p>
-<p>参考）プライベート エンドポイントのネットワーク ポリシーを管理する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy">https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy</a></p>
+<p>アクセス元 IP は 10.0.0.4 であることが分かります。</p>
+<p>参考）Azure Storage のリージョン間サービス エンドポイント<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#azure-storage-cross-region-service-endpoints">https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#azure-storage-cross-region-service-endpoints</a></p>
 <blockquote>
-<p>&lt;抜粋&gt;<br>プライベート エンドポイントに対する NSG と UDR のサポートは、一部のリージョンでパブリック プレビュー段階です。 詳細については、「Private Link UDR のサポートのパブリック プレビュー」と「Private Link ネットワーク セキュリティ グループのサポートのパブリック プレビュー」を参照してください。 このプレビュー バージョンはサービス レベル アグリーメントなしで提供されています。運用環境のワークロードに使用することはお勧めできません。 特定の機能はサポート対象ではなく、機能が制限されることがあります。 詳しくは、Microsoft Azure プレビューの追加使用条件に関するページをご覧ください。</p>
+<p>&lt;抜粋&gt;Azure Storage のリージョン間サービス エンドポイントは、2023 年 4 月に一般公開されました。 任意のリージョンの仮想ネットワークとストレージ サービス インスタンスの間で機能します。 リージョン間サービス エンドポイントを使用すると、サブネットでは、別のリージョン内のストレージ アカウントを含めて、ストレージ アカウントとの通信にパブリック IP アドレスを使用しなくなります。 代わりに、サブネットからストレージ アカウントへのすべてのトラフィックで、ソース IP としてプライベート IP アドレスが使用されます。 その結果、IP ネットワーク ルールを使用してそれらのサブネットからのトラフィックを許可するストレージ アカウントは、影響を受けなくなります。<br>～～～<br>ローカルとリージョン間のサービス エンドポイントは、同じサブネット上に共存できません。 既存のサービス エンドポイントをリージョン間サービス エンドポイントに置き換えるには、既存 Microsoft.Storage エンドポイントを削除し、リージョン間エンドポイント (Microsoft.Storage.Global) として再作成します。</p>
 </blockquote>
-<h3 id="VM-単位でのストレージアカウントへのアクセス制御検証"><a href="#VM-単位でのストレージアカウントへのアクセス制御検証" class="headerlink" title="VM 単位でのストレージアカウントへのアクセス制御検証"></a>VM 単位でのストレージアカウントへのアクセス制御検証</h3><p>1.ストレージ アカウントに対して、プライベート エンドポイントを構成します。※3<br><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac01.png"></p>
-<p><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac02.png"></p>
-<p>2.プライベート エンドポイントのプレビュー機能 (AllowPrivateEndpointNSG) を有効化します。※4</p>
-<p>プライベート エンドポイントのプレビュー機能の有効化状況の確認</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-AzProviderFeature -ProviderNamespace Microsoft.Network -FeatureName AllowPrivateEndpointNSG</span><br></pre></td></tr></table></figure>
-
-<p>プライベート エンドポイントのプレビュー機能の有効化</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Register-AzProviderFeature -FeatureName AllowPrivateEndpointNSG -ProviderNamespace Microsoft.Network</span><br></pre></td></tr></table></figure>
-
-<p>本機能の有効化には少しお時間を要しますが、RegistrationState が Registered となれば有効化完了です。</p>
-<p>3.対象の仮想ネットワーク/サブネットに対してプライベート エンドポイントの NSG を有効にします。※5</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">SubnetName = <span class="string">&quot;default&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash">VnetName = <span class="string">&quot;myVNet&quot;</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash">RGName = <span class="string">&quot;myResourceGroup&quot;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash">virtualNetwork= Get-AzVirtualNetwork -Name <span class="variable">$VnetName</span> -ResourceGroupName <span class="variable">$RGName</span></span></span><br><span class="line"><span class="meta">($</span><span class="bash">virtualNetwork | Select -ExpandProperty subnets | Where-Object  &#123;<span class="variable">$_</span>.Name -eq <span class="variable">$SubnetName</span>&#125;).PrivateEndpointNetworkPolicies = <span class="string">&quot;Enabled&quot;</span></span>  </span><br><span class="line"><span class="meta">$</span><span class="bash">virtualNetwork | Set-AzVirtualNetwork</span></span><br></pre></td></tr></table></figure>
-
-<p>4.NSG を設定します。</p>
+<p>※1 ストレージ アカウントの診断ログは、対象のストレージ アカウント &gt; [監視] &gt; [診断設定] よりご設定ください。</p>
+<p>参考）Azure Blob Storage 監視データのリファレンス<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/storage/blobs/monitor-blob-storage-reference">https://learn.microsoft.com/ja-jp/azure/storage/blobs/monitor-blob-storage-reference</a><br>参考）Azure Files 監視データのリファレンス<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference#resource-logs">https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference#resource-logs</a></p>
+<h3 id="Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ"><a href="#Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ" class="headerlink" title="Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ"></a>Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ</h3><p>ストレージ アカウントのアクセス制御について、仮想ネットワーク/サブネット単位、もしくは外部からのパブリック IP アドレス単位での制御のみが可能です。<br>そのため、VM とストレージ アカウントが同一リージョンである場合、パブリック エンドポイント、サービス エンドポイントいずれを使用する場合も仮想ネットワーク/サブネット単位での制御までとなります。<br>VM とストレージ アカウントが異なるリージョンにある場合、パブリック エンドポイントを使用する際は、パブリック IP アドレス単位での制御、サービスエンドポイントを使用する際は、仮想ネットワーク/サブネット単位での制御となります。</p>
+<h2 id="ストレージアカウントへのアクセス制御について"><a href="#ストレージアカウントへのアクセス制御について" class="headerlink" title="ストレージアカウントへのアクセス制御について"></a>ストレージアカウントへのアクセス制御について</h2><p>先述の通り、ストレージ アカウントのファイアウォールでは、仮想ネットワーク/サブネット単位、もしくは外部からのパブリック IP 単位での制御のみとなりますが、<br>「ストレージ アカウントへのアクセス制御を VM 単位で行う方法はあるか」というお問い合わせをいただくことがあります。<br>VM 単位でのアクセス元制御を行いたい場合、プライベート エンドポイントに対するネットワーク ポリシーを利用することで、プライベート エンドポイントの IP アドレスに対して NSG でアクセス制御を行うことが可能となります。</p>
+<p>参考）プライベート エンドポイントのネットワーク ポリシーを管理する<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal">https://learn.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal</a></p>
+<h3 id="VM-単位でのストレージアカウントへのアクセス制御検証"><a href="#VM-単位でのストレージアカウントへのアクセス制御検証" class="headerlink" title="VM 単位でのストレージアカウントへのアクセス制御検証"></a>VM 単位でのストレージアカウントへのアクセス制御検証</h3><p>1.ストレージ アカウントに対して、プライベート エンドポイントを構成します。<br><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac05.png"></p>
+<p>参考）チュートリアル:Azure プライベート エンドポイントを使用してストレージ アカウントに接続する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/private-link/tutorial-private-endpoint-storage-portal">https://docs.microsoft.com/ja-jp/azure/private-link/tutorial-private-endpoint-storage-portal</a><br>参考）Azure Storage のプライベート エンドポイントを使用する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-private-endpoints">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-private-endpoints</a></p>
+<p>2.対象の仮想ネットワーク/サブネットに対してプライベート エンドポイントのネットワーク ポリシーを有効にします。<br><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac06.png"></p>
+<p>参考）プライベート エンドポイントのネットワーク ポリシーを管理する<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal">https://learn.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal</a></p>
+<p>3.NSG を設定します。</p>
 <p>ソース IP アドレス/CIDR 範囲：アクセス元 VM のプライベート IP を登録</p>
 <p>宛先 IP アドレス/CIDR 範囲：ストレージ アカウントのプライベート エンドポイントが構成されている仮想ネットワークのアドレス空間から割り振られたプライベート IP を登録</p>
-<p><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac03.png"></p>
-<p>5.アクセス拒否した端末よりストレージアカウント内コンテナ―へアクセスします。</p>
-<p>NSG にてアクセス拒否した VM からストレージアカウント内コンテナ―へアクセスできないことを確認します。<br><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac04.png"></p>
-<p>上記のようにプライベート エンドポイントに対する NSG を利用することで VM 単位でのアクセス元制御を実現することは可能です。<br>ただし、公開ドキュメントに記載の通り、プライベート エンドポイントに対する NSG のサポートは現時点でプレビュー段階となり、商用環境での運用が正式にサポートされるものではございません。公開ドキュメント上の情報は予告なく変更される可能性がありますので、あらかじめご了承の上、ご利用をご検討くださいませ。</p>
-<p>参考）<br>※3<br>チュートリアル:Azure プライベート エンドポイントを使用してストレージ アカウントに接続する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/private-link/tutorial-private-endpoint-storage-portal">https://docs.microsoft.com/ja-jp/azure/private-link/tutorial-private-endpoint-storage-portal</a><br>Azure Storage のプライベート エンドポイントを使用する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-private-endpoints">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-private-endpoints</a></p>
-<p>※4<br>Public preview of Private Link Network Security Group Support<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/updates/public-preview-of-private-link-network-security-group-support/">https://azure.microsoft.com/ja-jp/updates/public-preview-of-private-link-network-security-group-support/</a></p>
-<p>※5<br>プライベート エンドポイントのネットワーク ポリシーを管理する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy#azure-powershell">https://docs.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy#azure-powershell</a></p>
+<p><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac07.png"></p>
+<p>4.アクセス拒否した端末よりストレージアカウント内コンテナ―へアクセスします。</p>
+<p>NSG にてアクセス拒否した VM からストレージアカウント内コンテナ―へアクセスできないことを確認します。<br><img src="/blog/storage/storageFirewall-accesscontroll/storageFW-ac08.png"></p>
+<p>上記のようにプライベート エンドポイントに対するネットワーク ポリシーを利用することで VM 単位でのアクセス元制御を実現することが可能です。</p>
 <hr>
 <p>本稿は以上となりますが、いかがでしたでしょうか。 本稿が皆様のお役に立てれば幸いです。</p>
-<p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
 
       
       
