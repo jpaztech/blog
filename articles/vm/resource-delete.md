@@ -6,6 +6,12 @@ tags:
   - Troubleshooting
 ---
 
+> [!WARNING]
+> 本記事は、投稿より時間が経過しており、一部内容が古い可能性がございます。  
+> また、ストレージアカウントの復旧については以下の新しい情報をご参照いただけますと幸いです。  
+> [https://jpaztech.github.io/blog/storage/storageAccount-Restore/](https://jpaztech.github.io/blog/storage/storageAccount-Restore/)  
+> [https://learn.microsoft.com/ja-jp/azure/storage/common/storage-account-recover](https://learn.microsoft.com/ja-jp/azure/storage/common/storage-account-recover)  
+
 こんにちは、Azure テクニカル サポート チームの安田です。
 
 今回は意図せずリソースやリソースグループを消してしまった際のトラブルシューティングおよび、誤削除が発生しないような運用についてご案内させていただきます。
