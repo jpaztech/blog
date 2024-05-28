@@ -29,3 +29,7 @@ https://learn.microsoft.com/ja-jp/azure/virtual-machines/availability
 
 ■ご参考：近接配置グループ  
 https://learn.microsoft.com/ja-jp/azure/virtual-machines/co-location
+
+> [!NOTE]
+> 1 つの可用性セットは 1 つの近接配置グループにしか属することができません。  
+> 他方、近接配置グループとしては、複数の可用性セットを含んだ近接配置グループを作成することができます。
