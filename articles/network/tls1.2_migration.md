@@ -98,4 +98,7 @@ Bastion はお客様側で証明書の管理運用を意識する必要のない
 ## Load Balancer
 [こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/load-balancer/load-balancer-faqs#azure-load-balancer---tls-ssl---------------)記載通り、Azure Load Balancer では、TLS 接続を終端せずにバックエンド サーバーへ転送する動作となりますので、本通知の対象外となります。 
 
+## Virtual Network
+Virtual Network が仮想化の IP アドレス空間を提供するサービスとして、TLS 通信を終端することはありませんので、本通知の対象外となります。
+もし仮想ネットワーク上に稼働する他の Azure リソースの対処方法をご確認されたい場合は、各リソース観点でご確認頂く必要があります。
 ****
