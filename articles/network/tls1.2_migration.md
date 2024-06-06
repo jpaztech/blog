@@ -1,6 +1,6 @@
 ---
 title: Azure Network 製品について TLS 1.2 以降に移行するアナウンスの補足 (Tracking ID:7_8G-D8Z)
-date: 2024-02-27 09:10:00 
+date: 2024-06-06 15:00:00 
 tags:
   - Network
 ---
@@ -96,7 +96,7 @@ Bastion はお客様側で証明書の管理運用を意識する必要のない
 [こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/traffic-manager/traffic-manager-how-it-works#how-clients-connect-using-traffic-manager)の説明通り、TrafficManager は DNS レベルで動作するため、Traffic Manager 自身がクライアントからのリクエストを処理することはなく、クライアントは直接エンドポイントに接続します。このため、クライアント - Traffic Manager 間で TLS が使用されることはありませんので、Traffic Manager 側の対処が不要となります。
 
 一方で、Traffic Manager はエンドポイントの監視方法として HTTPS を提供しているため、HTTPS で正常性プローブを送信するように構成した場合、Traffic Manager - エンドポイント間では TLS が使用されます。
-（Tracking ID: VSKS-DSG の通知は、この Traffic Manager - エンドポイント間の正常性プローブの通信において TLS 1.0/1.1 のサポートが終了することをご案内しております。）
+（Tracking ID: VSKS-DSG の通知は、この Traffic Manager - エンドポイント間の正常性プローブの通信において、TLS 1.0/1.1 のサポートが 2024 年 6 月 30 日より終了することをご案内しております。）
 
 TLS はクライアント (Traffic Manager) およびサーバー (エンドポイント) 間で使用可能な TLS バージョンのネゴシエイトを行います。エンドポイント側で TLS 1.0/1.1 が無効化されている限り Traffic Manager がTLS 1.0/1.1 でエンドポイントに接続することはありません。したがいまして、正常性プローブのプロトコルとして HTTPS を選択されている場合は、エンドポイントが TLS 1.2 以上で正常性プローブを受け取れるように構成いただく必要がございますが、具体的なエンドポイント側の TLS 設定状況、及び TLS 1.0/1.1 の無効化方法に関しましては、お客様に各サーバー (エンドポイント) 観点でご確認頂く必要があります。
 
