@@ -72,12 +72,12 @@ WinGA が正常に動作しなくなった場合に再インストールを行�
     もし、インストールに失敗するといったことなどがございましたら、以下の手順でインストールを行い、必要に応じて出力された "C:\VMAgentMSI\msiexec.log" の内容を参照してください。  
 
     ダウンロードしたインストーラーを "C:\VMAgentMSI" に配置し、下記コマンドでインストールを実行します。  
-    \<Version\>はインストーラーのファイル名のバージョンに合わせて書き換えて実行してください。  
+    \<インストーラーファイル名\> はインストーラーのファイル名に合わせて書き換えて実行してください。  
     
     ```CMD
-    msiexec.exe /i c:\VMAgentMSI\WindowsAzureVmAgent.2.7.<version>.fre.msi /quiet /L*v c:\VMAgentMSI\msiexec.log
+    msiexec.exe /i c:\VMAgentMSI\<インストーラーファイル名> /quiet /L*v c:\VMAgentMSI\msiexec.log
     ```
 
 1. これにてWinGAの再インストールは完了となります。  
     
-    なお、サービスが起動するまでに1,2分程度かかる場合がございます。  
+    なお、サービスが起動するまでに 1,2 分程度かかる場合がございます。  
