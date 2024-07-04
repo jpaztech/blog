@@ -1,7 +1,7 @@
---- 
-title: Application Gateway 書き換え規則の事例集
+---
+title: Application Gateway 書き換え規則の事例集 
 date: 2024-07-04 07:00:00 
-tags: 
+tags:
   - Network
   - Application Gateway
 ---
