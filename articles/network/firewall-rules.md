@@ -161,16 +161,6 @@ Azure Firewall は既定でホワイトリスト形式ですが、優先度が�
 | 100 | Deny-SSH | TCP | 10.0.0.0/8 | 1.2.3.4/32 | 22 | Deny |
 | 200 | Allow-ALL | TCP | Any | Any | * | Allow |
 
-***ただし、拒否ルールを作成する際は TCP の戻りのパケット (SYN/ACK) を拒否しないように考慮する必要があります。***
-以下のドキュメントにも記載がありますが、TCP の戻りのパケット (SYN/ACK) を拒否するようなルールがある場合、SYN パケットが許可された後も、SYN/ACK パケットが Azure Firewall で拒否されてしまい通信を確立することができません。
-診断ログにも出力されない動作であることを確認しているため、注意が必要です。
-
-https://docs.microsoft.com/ja-jp/azure/firewall/rule-processing#three-way-handshake-behavior
-
->ステートフル サービスとして、Azure Firewall では、送信元から送信先への許可されたトラフィックに対する TCP 3 方向ハンドシェイクを行います。 たとえば、VNet-A から VNet-B などです。
->VNet-A から VNet-B への許可規則を作成しても、VNet-B から VNet-A への新たに開始される接続が許可されるわけではありません。
->そのため、VNet-B から VNet-A への明示的な拒否規則を作成する必要はありません。 この拒否規則を作成すると、VNet-A から VNet-B への最初の許可規則の 3 方向ハンドシェイクを中断することになります。
-
 ## 参考情報
 
 Azure Firewall の概要や機能については以下にも記載がありますのでご一読ください。
