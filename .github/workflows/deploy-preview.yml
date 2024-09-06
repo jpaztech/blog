@@ -23,4 +23,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         azure-storage-connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-        preview-base-url: "https://jpaztechblogstorage.z11.web.core.windows.net/"
+        preview-base-url: "https://jpaztechblogpreview.z11.web.core.windows.net/"
