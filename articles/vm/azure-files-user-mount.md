@@ -1,6 +1,6 @@
 ---
-title: Azure Files はユーザー毎のマウントが必要です 
-date: 2023-8-16 17:30:00
+title: Azure Files をマウントするユーザーとアクセスについて
+date: 2024-9-10 17:30:00
 tags:
   - Windows
   - Azure Files
@@ -14,7 +14,8 @@ tags:
 
 <!-- more -->
 
-他方、Windows Server 2019 / Windows 10 以降の OS では、New-SmbGlobalMapping コマンドを利用し Azure Files をマッピングいただくことで、 全てのユーザーでのアクセスが可能かつ、Windows ユーザーがログインしていない状態でも Azure Files へのアクセスが可能となります。 
+なお、Windows Server 2019 / Windows 10 以降の OS では、New-SmbGlobalMapping コマンドを利用し Azure Files をマッピングいただくことで、 全てのユーザーでのアクセスが可能かつ、Windows ユーザーがログインしていない状態でも Azure Files へのアクセスが可能となります。  
+しかしながら、このような状態がお客様のセキュリティ要件上問題ないものであるかご確認をいただきますようお願いいたします。
 
 ---サンプル手順--- 
 
@@ -40,11 +41,11 @@ New-SmbGlobalMapping -RemotePath \\＜ストレージアカウント名＞.file.
 
 ---手順ここまで--- 
 
-■ご参考：Azure Files とは 
+■ご参考：Azure Files とは  
 https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-introduction
 
-■ご参考： New-SmbGlobalMapping 
+■ご参考： New-SmbGlobalMapping  
 https://learn.microsoft.com/en-us/powershell/module/smbshare/new-smbglobalmapping　 
 
- 上記の内容がお客様のお役に立てますと幸いでございます。 
+上記の内容がお客様のお役に立てますと幸いでございます。 
 
