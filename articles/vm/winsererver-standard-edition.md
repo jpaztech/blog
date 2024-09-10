@@ -1,6 +1,6 @@
 ---
 title: Azure VM での Windows Server Standard Edition 利用について
-date: 2024-08-19 12:00:00
+date: 2024-09-10 17:31:00
 tags:
   - VM
   - Windows
