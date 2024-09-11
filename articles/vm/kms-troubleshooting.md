@@ -104,13 +104,20 @@ https://learn.microsoft.com/ja-jp/windows-server/get-started/kms-client-activati
 
 Windows 8 / Windows Server 2012 以降の OS の場合のライセンス認証の影響について記載させていただきます。  
 上記期間内にライセンス認証が成功しない場合は、通知モード（ライセンス認証切れ状態）となります。  
-この際の影響は以下のようなものとなり VM への接続不可や使用不可になるといった影響はございません。  
-しかしながら、ライセンス認証が切れる前にライセンス認証が成功となるようご対応をお願いいたします。  
+この際の影響は以下のようなものとなります。  
 
 1. 画面の右下にライセンス認証が必要であることを示すウォーターマーク（透かし文字） が表示されます。
 1. 壁紙の右下に OS の情報を示す文字が表示されます。（Windows 8 / Windows Server 2012 及び 2012 R2 のみ）
 1. パーソナル設定内の項目は設定変更不可となります。
 1. 自身が KMS ホストの場合、KMS クライアントの認証が行えません。
+
+Azure VM の場合以下に記載の影響もございます。  
+
+■ご参考：Azure Windows 仮想マシンのアクティブ化に関する FAQ
+https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-virtual-machine-activation-faq
+
+> **Windows マシンがアクティブ化されていない場合、メモリは 2 GB に制限されますか?**   
+> はい。使用可能なすべてのメモリにアクセスするには、Windows マシンをアクティブにする必要があります。
 
 ---
 ## トラブルシューティング方法
