@@ -6,6 +6,12 @@ tags:
   - HowTo
 ---
 
+> [!WARNING]
+> 当手順について新規に記事が作成されましたので、今後はこちらをご参照いただけますと幸いです。
+>  
+> ■ご参考：設定変更不可の項目を VM 再作成により再設定する手順  
+> [https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/](https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/)
+
 こんにちは。Azure テクニカル サポート チーム、インターン生の杉野です。
 
 お客様より、リソース管理の都合上、既存の仮想マシンのリソース名を変更したいというお問い合わせをいただくことがあります。
