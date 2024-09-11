@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/kms-troubleshooting/2023-08-03-11-26-51.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/kms-troubleshooting/2023-08-07-09-13-40.png">
 <meta property="article:published_time" content="2023-08-17T08:30:00.000Z">
-<meta property="article:modified_time" content="2024-09-11T02:42:09.354Z">
+<meta property="article:modified_time" content="2024-09-11T05:36:40.370Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -123,7 +123,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+c9b17ead-22f3-57a4-a917-bb3403317f86%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Windows+VM+%E3%81%AE+KMS+%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9%E8%AA%8D%E8%A8%BC%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fkms-troubleshooting%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fkms-troubleshooting.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fkms-troubleshooting.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/kms-troubleshooting/" data-id="cm0x994mz00r10oo4er9qdw42" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/kms-troubleshooting/" data-id="cm0xfhkji00r10nkw4970ccod" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -192,13 +192,18 @@
 <p>また、ライセンス認証は毎回必ず成功する必要はなく、一度認証されれば 180 日の有効期限が付与されます。<br>認証に成功する度に有効期限が再び 180 日からカウントされます。  </p>
 <p>つまり、正常な状況であれば定期的なライセンス認証によって、180 日の有効期限が毎回更新されるという形となります。</p>
 <hr>
-<h3 id="ライセンス認証切れの影響"><a href="#ライセンス認証切れの影響" class="headerlink" title="ライセンス認証切れの影響"></a>ライセンス認証切れの影響</h3><p>Windows 8 / Windows Server 2012 以降の OS の場合のライセンス認証の影響について記載させていただきます。<br>上記期間内にライセンス認証が成功しない場合は、通知モード（ライセンス認証切れ状態）となります。<br>この際の影響は以下のようなものとなり VM への接続不可や使用不可になるといった影響はございません。<br>しかしながら、ライセンス認証が切れる前にライセンス認証が成功となるようご対応をお願いいたします。  </p>
+<h3 id="ライセンス認証切れの影響"><a href="#ライセンス認証切れの影響" class="headerlink" title="ライセンス認証切れの影響"></a>ライセンス認証切れの影響</h3><p>Windows 8 / Windows Server 2012 以降の OS の場合のライセンス認証の影響について記載させていただきます。<br>上記期間内にライセンス認証が成功しない場合は、通知モード（ライセンス認証切れ状態）となります。<br>この際の影響は以下のようなものとなります。  </p>
 <ol>
 <li>画面の右下にライセンス認証が必要であることを示すウォーターマーク（透かし文字） が表示されます。</li>
 <li>壁紙の右下に OS の情報を示す文字が表示されます。（Windows 8 / Windows Server 2012 及び 2012 R2 のみ）</li>
 <li>パーソナル設定内の項目は設定変更不可となります。</li>
 <li>自身が KMS ホストの場合、KMS クライアントの認証が行えません。</li>
 </ol>
+<p>Azure VM の場合以下に記載の影響もございます。  </p>
+<p>■ご参考：Azure Windows 仮想マシンのアクティブ化に関する FAQ<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-virtual-machine-activation-faq">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-virtual-machine-activation-faq</a></p>
+<blockquote>
+<p><strong>Windows マシンがアクティブ化されていない場合、メモリは 2 GB に制限されますか?</strong><br>はい。使用可能なすべてのメモリにアクセスするには、Windows マシンをアクティブにする必要があります。</p>
+</blockquote>
 <hr>
 <h2 id="トラブルシューティング方法"><a href="#トラブルシューティング方法" class="headerlink" title="トラブルシューティング方法"></a>トラブルシューティング方法</h2><p>ライセンス有効期限が近づくと、以下のようなライセンス認証を促すメッセージなどが表示されることがございます。  </p>
 <p><img src="/blog/vm/kms-troubleshooting/2023-08-02-11-38-39.png" alt="Windows のライセンスの有効期限がもうすぐ切れます [設定] で Windows のライセンス認証を行う必要があります"></p>
