@@ -1,6 +1,6 @@
 ---
 title: Application Gateway の証明書関連のトラブルシューティング
-date: 2024-09-20 12:30:00
+date: 2020-05-11 12:30:00
 tags:
   - Network
   - Application Gateway
