@@ -1,12 +1,15 @@
 ---
 title: Application Gateway の証明書関連のトラブルシューティング
-date: 2020-05-11 12:30:00
+date: 2024-09-11 12:30:00
 tags:
   - Network
   - Application Gateway
   - Certificate
   - SSL
 ---
+<span style="color:red;">2024/9/20 追記 Azure Portal からリスナー用の TLS 証明書の管理が可能になっていますので、記事を更新しました。</span>
+
+
 こんにちは、Azure テクニカル サポート チームの檜山です。
 
 今回は Application Gateway の証明書まわりについてよくお問い合わせをいただくものをご紹介させていただきます。
@@ -27,7 +30,7 @@ End to End の TLS にはせずに、クライアントと Application Gateway �
 
 <span id="application-gateway-error"></span>
 ## <a href="#application-gateway-error">Application Gateway へアクセスした際の証明書エラー</a>
-FQDN を使用して Application Gateway のフロントエンド IP アドレスにアクセスした際に証明書のエラーが出る場合、リスナーの証明書に問題がある可能性があります。ブラウザ/ OS により動作が変わる場合があるので、念のため、複数のブラウザ/ OS にてご確認いただくことをお勧めいたします。
+FQDN を使用して Application Gateway のフロントエンド IP アドレスにアクセスした際に証明書のエラーが出る場合、リスナーの証明書に問題がある可能性があります。ブラウザ / OS により動作が変わる場合があるので、念のため、複数のブラウザ / OS にてご確認いただくことをお勧めいたします。
 
 #### 出力例
 
@@ -53,7 +56,7 @@ how to fix it, please visit the web page mentioned above.
 
 *  証明書の CN (Common Name) と URL で指定した FQDN があってない
 *  証明書の有効期限が切れている
-*  自己証明書を使用しており、ルート証明書とのチェーンの検証で失敗している
+*  自己署名証明書を使用しており、ルート証明書とのチェーンの検証で失敗している
 *  リスナーに登録した証明書に中間証明書が含まれていない
 
 4 点目の中間証明書についてですが、リスナーに登録した証明書に中間証明書が含まれていない場合、証明書の検証に失敗し、エラーになる場合があることを確認しております。(クライアントやブラウザによって動作が異なりますが、特に Linux 系のクライアントにて失敗することを確認済)
@@ -76,7 +79,7 @@ Ensure that you add the correct root certificate to whitelist the backend
 (バックエンドによって使用されるサーバー証明書のルート証明書が、アプリケーション ゲートウェイに追加されている信頼されたルート証明書と一致しません。バックエンドをホワイトリストに登録するために適切なルート証明書を追加していることを確認してください。)
 ```
 
-以下は SNI が不一致している場合の例。
+以下は SNI が不一致になっている場合の例。
 ![SNI-Error](./appgw-troubleshooting-cert/SNI-error.png)
 
 
@@ -88,7 +91,7 @@ The Common Name (CN) of the backend certificate does not match the host header o
 原因としては以下が考えられます。
 *  証明書の CN (Common Name) と 正常性プローブの SNI が一致していない
 *  証明書の有効期限が切れている
-*  自己証明書を使用しており、ルート証明書とのチェーンの検証で失敗している
+*  自己署名証明書を使用しており、ルート証明書とのチェーンの検証で失敗している
 *  証明書に中間証明書が含まれていない
 
 バックエンド側にバインドされている証明書の構成が正しいかどうかについても、下記に記載の openssl コマンドにて証明書の状態を確認することが可能ですので、念のためご確認いただくことをお勧めいたします。
@@ -98,7 +101,7 @@ The Common Name (CN) of the backend certificate does not match the host header o
 ## <a href="#openssl-command">openssl コマンドによる確認方法</a>
 
 openssl はオープンソースのソフトウェアで Linux 系の OS で利用することができます。
-Windows OS (Windows 10) の場合でも Windows Subsystem for Linux (WSL) を導入することで利用可能となります。
+Windows OS (Windows 11) の場合でも Windows Subsystem for Linux (WSL) を導入することで利用可能となります。
 
 以下のコマンドを実行し、実行結果の CN が正しいか、エラーが表示されていないかを等を確認します。
 ```
@@ -144,11 +147,11 @@ AppService 証明書を Powershell で Export した場合は中間証明書が�
 
 AppService 証明書を Azure Portal, Azure CLI でエクスポートした場合、中間証明書は含まれた状態となりますので問題ありませんが、証明書のパスワードを明示的に設定する必要があります。その場合も以下の手順を実施することでパスワードを設定できますのでご利用ください。
 
-- [App Service 証明書を管理する (証明書をエクスポートします。)](https://docs.microsoft.com/ja-jp/azure/app-service/configure-ssl-certificate#export-certificate)
+- [App Service 証明書を管理する (証明書をエクスポートします。)](https://learn.microsoft.com/ja-jp/azure/app-service/configure-ssl-certificate#export-certificate)
 
 他の証明書においても PFX 形式の証明書に中間証明書が含まれていない場合、Windows 端末にて以下の手順を実施することで中間証明書を含む形で PFX 形式の証明書を構成可能ですので、お試しください。
 
-※ 以下は Windows 10 の手順ですので、OS によっては少し手順が異なる場合がございます。
+※ 以下は Windows 11 の手順ですので、OS によっては少し手順が異なる場合がございます。
 
 【証明書のインポート & エクスポート】
 
@@ -198,12 +201,16 @@ openssl pkcs12 -info -in <ファイルのパス/xxxxx.pfx>
 公開情報として利用可能な証明書の情報はありません。
 公開情報の要件を満たす証明書であれば利用可能です。
 
-- [TLS 終了でサポートされる証明書](https://docs.microsoft.com/ja-jp/azure/application-gateway/ssl-overview#certificates-supported-for-tls-termination)
-- [Application Gateway の制限](https://docs.microsoft.com/ja-jp/azure/azure-resource-manager/management/azure-subscription-service-limits#application-gateway-limits)
+- [TLS 終了でサポートされる証明書](https://learn.microsoft.com/ja-jp/azure/application-gateway/ssl-overview#certificates-supported-for-tls-termination)
+- [Application Gateway の制限](https://learn.microsoft.com/ja-jp/azure/azure-resource-manager/management/azure-subscription-service-limits#application-gateway-limits)
 
 #### - ポータルから証明書を削除する方法はありますか？
 
-現状、ポータルから証明書を削除する方法は提供されておりません。以下の Powershell or Azure CLI のコマンドにて削除可能ですので、ご確認ください。使用中の証明書は削除できませんので、証明書が利用されていないことを事前にご確認ください。
+以下の公開情報に記載の手順で証明書を削除することが可能です。
+
+- [SSL 証明書の削除](https://learn.microsoft.com/ja-jp/azure/application-gateway/ssl-certificate-management#deletion-of-an-ssl-certificate)  
+  
+Powershell or Azure CLI をご利用の場合は以下のコマンドにて削除可能ですので、ご確認ください。使用中の証明書は削除できませんので、証明書が利用されていないことを事前にご確認ください。
 また、HTTP 設定用の証明書削除手順は V1, V2 SKU でコマンドが異なりますので、ご留意ください。
 
 * 証明書削除 (リスナー用)
@@ -300,9 +307,9 @@ openssl pkcs12 -export -in <ファイル名>.pem -out <ファイル名>.pfx
 
 Application Gateway のトラブルシューティングについては以下にも情報がございますので、ご参照ください。
 
-- [Application Gateway での無効なゲートウェイによるエラーのトラブルシューティング](./application-gateway-troubleshooting-502)
-- [Application Gateway のバックエンドの正常性に関する問題のトラブルシューティング](https://docs.microsoft.com/ja-jp/azure/application-gateway/application-gateway-backend-health-troubleshooting)
+- [Application Gateway での無効なゲートウェイによるエラーのトラブルシューティング](https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-troubleshooting-502)
+- [Application Gateway のバックエンドの正常性に関する問題のトラブルシューティング](https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-backend-health-troubleshooting)
 
 証明書の要件については以下にも記載がありますので、ご参照ください。
 
-- [Application Gateway での TLS 終了とエンド ツー エンド TLS の概要](https://docs.microsoft.com/ja-jp/azure/application-gateway/ssl-overview)
+- [Application Gateway での TLS 終端とエンド ツー エンド TLS の概要](https://learn.microsoft.com/ja-jp/azure/application-gateway/ssl-overview)
