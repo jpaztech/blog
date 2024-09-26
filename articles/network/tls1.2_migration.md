@@ -45,27 +45,25 @@ Edgeの場合は[こちらの記事](https://learn.microsoft.com/en-us/answers/q
 <!-- more -->
 
 ##  Application Gateway 
+以下の URL にて、2025 年 8 月 31 日に TLS バージョン 1.0 および 1.1 のサポートが終了することが案内されました。こちらの URL 先のページでは英文で記載されておりますので、本ブログでは日本語にて内容をご案内いたします。  
+
+[Retirement: Azure Application Gateway support for TLS 1.0 and TLS 1.1 will end by 31 August 2025 (microsoft.com)](https://azure.microsoft.com/en-us/updates/v2/Azure-Application-Gateway-support-for-TLS-10-and-TLS-11-will-end-by-31-August-2025)  
+  
+つきましては、2025 年 8 月 31 日までに以下の作業をご実施いただきますようお願いいたします。  
+
 ### クライアントから Application Gateway への接続について
-Application Gateway では、SSL ポリシーを選択することで、クライアントが Application Gateway へ接続する際の最小 TLS バージョン（1.0 から 1.3 まで）を設定できます。 
-
-現時点では、Application Gateway は2024 年 10 月 31 日以降にも引き続き TLS1.0 から TLS1.3 をサポートしており、TLS1.2 以下のバージョンをサポートしなくなる予定はございません。 
-
-ただし、[こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-configure-ssl-policy-powershell)の記載通り、セキュリティ強化のためには TLS1.2 のご利用を推奨いたします。 
-> 注意
->Application Gateway でのセキュリティを強化するために、TLS プロトコルの最小バージョンとして TLS 1.2 を使用することをお勧めします。
-
+~~現時点では、Application Gateway は2024 年 10 月 31 日以降にも引き続き TLS1.0 から TLS1.3 をサポートしており、TLS1.2 以下のバージョンをサポートしなくなる予定はございません。~~   
+以下の設定方法を参考に Application Gateway の TLS ポリシーにて、定義済みの AppGwSslPolicy20220101S、AppGwSslPolicy20220101、または最小プロトコル バージョンが TLS 1.2 のカスタムポリシーに更新することをお勧めします（CustomV2 ポリシーは、デフォルトで最小プロトコルバージョンが 1.2 になっています）。  
+  
 #### 最小TLS バージョンの設定方法 
 下図の通り、Azure ポータル → 対象 Application Gateway → 「リスナー」のタブにて、 「選択した SSL ポリシー」の「変更」ボタンをクリックし、「 SSL ポリシーの変更」より設定できます。 
-![](./appgw_tls_setting.png)
+![](./tls1.2_migration/appgw_tls_setting.png)
 
 また、Application Gateway SKU v2 の場合は、[こちらの手順通り](https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-configure-listener-specific-ssl-policy)、リスナー毎に異なる TLS バージョンを設定することも可能です。 
 
 ### Application Gateway からバックエンド サーバーへの接続について
-[こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-ssl-policy-overview#limitations)の記載通り、Application Gateway がバックエンド サーバーへ通信する際に TLS 1.0, 1.1, 1.2 をサポートしております。 
-
->バックエンド サーバーへの接続は、常に最小でプロトコル TLS v1.0、最大で TLS v1.2 までです。 そのため、バックエンド サーバーとのセキュリティで保護された接続を確立するには、TLS バージョン 1.0、1.1、1.2 のみがサポートされます。
-
-具体的な TLS バージョンの選定は接続先のバックエンド サーバーに依存するため、もし最小 TLS バージョンを 1.2 に指定したい場合は、Application Gateway ではなく、バックエンド サーバー側の TLS 設定に対応して頂く必要があります。 
+2025 年 8 月 31 日以降、バックエンドサーバーへの接続は常に最小プロトコル TLS のバージョンは 1.2 となり、最大プロトコル TLS バージョンは 1.3 となります。バックエンド接続の TLS バージョンについて、Application Gateway 側で何かを設定する必要はありません。  
+バックエンドのサーバーがこれらの更新されたプロトコル TLS バージョン （TLS 1.2 または 1.3）に対応していることをお客様にて確認し、必要に応じて 2025 年 8 月 31 日までに Application Gateway のバックエンドに指定しているサーバー側で最小プロトコル TLS バージョンが 1.2 以上となるよう、ご対応いただけますようお願いいたします。  
 
 ## Azure Firewall
 Azure Firewall では、TLS バージョンが関わる部分は TLS インスペクションのみとなります。アプリケーション ルール、ネットワーク ルール、及び DNAT ルールで通信を許可する場合は本通知の対象外となります。
@@ -78,10 +76,18 @@ TLS インスペクション機能を使用する場合は、[こちらの公開
 また、現状の TLS インスペクション機能では TLS1.3 をサポートしておりません。
 
 ## Front Door
-[こちらの公開ドキュメント](https://learn.microsoft.com/ja-jp/azure/frontdoor/end-to-end-tls?pivots=front-door-standard-premium#supported-tls-versions)の記載通り、 Front Door ではカスタム ドメインを利用する場合は、最小 TLS バージョンを 1.0 または 1.2 を選択できます。 
-> Azure Front Door では、TLS プロトコルの 4 つのバージョン (TLS バージョン 1.0、1.1、1.2、1.3) がサポートされています。 2019 年 9 月以降に作成されたすべての Azure Front Door プロファイルでは、TLS 1.3 が有効になっている既定の最小値として TLS 1.2 が使用されますが、TLS 1.0 と TLS 1.1 は下位互換性のために引き続きサポートされています。
+以下の URL にて、2024 年 12 月 1 日に TLS バージョン 1.0 および 1.1 のサポートが終了することが案内されました。こちらの URL 先のページでは英文で記載されておりますので、本ブログでは日本語にて内容をご案内いたします。  
+  
+[Retirement: Azure Front Door support for TLS 1.0 and TLS 1.1 will end by 1 Dec 2024 (microsoft.com)](https://azure.microsoft.com/ja-jp/updates/v2/Azure-FrontDoor-support-for-TLS-10-and-TLS-11-will-end-by-1-Dec-2024)  
+  
+Azure Front Door でカスタム ドメインを利用する場合は、**2024 年 12 月 1 日以降に最小 TLS バージョン 1.0 および 1.1 のサポートは終了**するため、**最小 TLS バージョンを 1.2 以上に変更**いただく必要がございます。  
+各 SKU における最小 TLS バージョンの更新方法は以下の通りです。  
+  
 
-Front Door では 2024 年 10 月 31 日以降も引き続き TLS 1.0 から TLS 1.3 まで利用できますが、セキュリティ強化のためには TLS 1.2 以上のご利用を推奨いたします。 
+- Azure Front Door を使用している場合は、「[カスタム ドメインに対して HTTPS を構成する - Azure Front Door | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/frontdoor/standard-premium/how-to-configure-https-custom-domain?tabs=powershell)」を使用して TLS 1.2 以上に設定します。
+- Azure Front Door クラシックを使用している場合は、「[Front Door (クラシック) カスタム ドメインで HTTPS を構成する - Azure Front Door | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/frontdoor/front-door-custom-domain-https)」を使用して TLS 1.2 に設定します。
+- Microsoft CDN を使用している場合は、「[チュートリアル:Azure CDN カスタム ドメインで HTTPS を構成する | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/cdn/cdn-custom-ssl?tabs=option-1-default-enable-https-with-a-cdn-managed-certificate)」を参照してください。Microsoft Learn
+」を使用して TLS 1.2 に設定します。
 
 ## Private Link Service または Private Endpoint  
 Private Link Service と Private Endpoint のサービスでは、TLS プロトコルは終端しません。
