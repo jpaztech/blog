@@ -80,7 +80,7 @@ TLS インスペクション機能を使用する場合は、[こちらの公開
   
 [Retirement: Azure Front Door support for TLS 1.0 and TLS 1.1 will end by 1 Dec 2024 (microsoft.com)](https://azure.microsoft.com/ja-jp/updates/v2/Azure-FrontDoor-support-for-TLS-10-and-TLS-11-will-end-by-1-Dec-2024)  
   
-Azure Front Door でカスタム ドメインを利用する場合は、**2024 年 12 月 1 日以降に最小 TLS バージョンを 1.0 および 1.1 のサポートは終了**するため、**最小 TLS バージョンを 1.2 以上に変更**いただく必要がございます。  
+Azure Front Door でカスタム ドメインを利用する場合は、**2024 年 12 月 1 日以降に最小 TLS バージョン 1.0 および 1.1 のサポートは終了**するため、**最小 TLS バージョンを 1.2 以上に変更**いただく必要がございます。  
 各 SKU における最小 TLS バージョンの更新方法は以下の通りです。  
   
 
