@@ -109,7 +109,7 @@ BgpCommunities : [
 
 * [Azure ExpressRoute: 回線とピアリング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-circuit-peerings#expressroute-peering)
 * [よくあるご質問 (FAQ) - Azure ExpressRoute | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/expressroute/expressroute-faqs#microsoft-peering)
-* [詳説 Azure ExpressRoute - Part1: ExpressRoute を導入する前に | Microsoft Docs](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/expressroute-deep-dive-part1)
+* [詳説 Azure ExpressRoute - Part1: ExpressRoute を導入する前に | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/archive/expressroute-deep-dive-part1/)
 
 
 ## 導入手順
