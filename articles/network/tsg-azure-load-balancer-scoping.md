@@ -19,8 +19,8 @@ Azure Load Balancer (ALB) はワークロードを複数の Azure VM / VMSS に�
 - 例えば TCP の負荷分散規則であれば `nc`、`telnet`、`PsPing`、`Test-NetConnection` 等で TCP コネクションが確立出来るかみれば十分です。
 - L4 の接続性が確認できない場合は、Azure Load Balancer の構成状況に問題があります。次の公式ドキュメントやブログ記事等を参考に原因箇所を特定してください。
   - [Azure Load Balancer のトラブルシューティング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-troubleshoot)
-  - [ロードバランサー経由での通信ができない場合のチェックポイント | Microsoft Docs](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/loadbalancer-troubleshooting)
-  - [Azure ロードバランサー利用時の注意点 | Microsoft Docs](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/azurelb-tips)
+  - [ロードバランサー経由での通信ができない場合のチェックポイント | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting/)
+  - [Azure ロードバランサー利用時の注意点 | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/archive/azurelb-tips/)
 
 ## はじめに
 
@@ -137,8 +137,8 @@ PS C:\server> netsh trace stop
 上記の切り分けで L4 の疎通性が得られない場合、Azure Load Balancer の構成状況に問題があります。次に紹介するブログ記事や公式ドキュメントを参考に、原因箇所の特定をご実施ください。
 
 - [Azure Load Balancer のトラブルシューティング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-troubleshoot)
-- [ロードバランサー経由での通信ができない場合のチェックポイント | Microsoft Docs](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/loadbalancer-troubleshooting)
-- [Azure ロードバランサー利用時の注意点 | Microsoft Docs](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/azurelb-tips)
+- [ロードバランサー経由での通信ができない場合のチェックポイント | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting/)
+- [Azure ロードバランサー利用時の注意点 | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/archive/azurelb-tips/)
 
 一方で、Azure Load Balancer に問題がなければ、多くの状況でサーバーで動作しているアプリケーションがエラー原因です。正確に言えば、OS のネットワーク スタック以上のレイヤーで、構成が間違っているか予期しない問題が起きている可能性があります。
 
