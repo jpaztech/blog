@@ -133,19 +133,19 @@ Azure ではこの調査に役立つ多くのディスクに関するメトリ�
 
 |確認できる内容|メトリック名|
 |:-|:-|
-|VM レベルの MBps の残バーストクレジット量（キャッシュ有効であるディスク）|VM Cached Used Burst BPS Credits Percentage|
-|VM レベルの IOPS の残バーストクレジット量（キャッシュ有効であるディスク）|VM Cached Used Burst IO Credits Percentage|
-|VM レベルの MBps の残バーストクレジット量（キャッシュ**無効**なディスク）|VM Uncached Used Burst BPS Credits Percentage|
-|VM レベルの IOPS の残バーストクレジット量（キャッシュ**無効**なディスク）|VM Uncached Used Burst IO Credits Percentage|
+|VM レベルの MBps の使用済みバーストクレジット量（キャッシュ有効であるディスク）|VM Cached Used Burst BPS Credits Percentage|
+|VM レベルの IOPS の使用済みバーストクレジット量（キャッシュ有効であるディスク）|VM Cached Used Burst IO Credits Percentage|
+|VM レベルの MBps の使用済みバーストクレジット量（キャッシュ**無効**なディスク）|VM Uncached Used Burst BPS Credits Percentage|
+|VM レベルの IOPS の使用済みバーストクレジット量（キャッシュ**無効**なディスク）|VM Uncached Used Burst IO Credits Percentage|
  
 ### ディスクレベルのディスクバーストのクレジットの残りがどれくらいか確認する
 
 |確認できる内容|メトリック名|
 |:-|:-|
-|ディスクレベルの MBps の残バーストクレジット量（OS ディスク）|OS Disk Used Burst BPS Credits Percentage|
-|ディスクレベルの IOPS の残バーストクレジット量（OS ディスク）|OS Disk Used Burst IO Credits Percentage|
-|ディスクレベルの MBps の残バーストクレジット量（データディスク）|Data Disk Used Burst BPS Credits Percentage|
-|ディスクレベルの IOPS の残バーストクレジット量（データディスク）|Data Disk Used Burst IO Credits Percentage|
+|ディスクレベルの MBps の使用済みバーストクレジット量（OS ディスク）|OS Disk Used Burst BPS Credits Percentage|
+|ディスクレベルの IOPS の使用済みバーストクレジット量（OS ディスク）|OS Disk Used Burst IO Credits Percentage|
+|ディスクレベルの MBps の使用済みバーストクレジット量（データディスク）|Data Disk Used Burst BPS Credits Percentage|
+|ディスクレベルの IOPS の使用済みバーストクレジット量（データディスク）|Data Disk Used Burst IO Credits Percentage|
 
 ### ディスクレベルのベースパフォーマンスに対して何 % のパフォーマンスが記録されたか確認する
 
