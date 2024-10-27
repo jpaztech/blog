@@ -1,6 +1,6 @@
 ---
 title: Firewall のパブリック IP と NAT ゲートウェイ併用構成の比較
-date: 2023-04-16 14:30:00 
+date: 2024-10-25 14:30:00 
 tags:
   - Network
   - Azure Firewall
