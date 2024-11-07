@@ -1,10 +1,18 @@
 ---
-title: Azure KMS の IP アドレスが変わります
+title: Azure KMS の IP アドレスが変わります（2022 年完了済み）
 date: 2022-9-20 11:00:00
 tags:
   - VM
   - Windows
 ---
+
+> [!WARNING]
+> こちら既に 2022 年に KMS の IP アドレス変更は完了しております。  
+> Azure VM の KMS 認証についてトラブルシューティング等が必要な場合は以下のブログ記事を参照いただけますと幸いです。
+>  
+> ■ご参考：Azure Windows VM の KMS ライセンス認証トラブルシューティングについて  
+> [https://jpaztech.github.io/blog/vm/kms-troubleshooting/](https://jpaztech.github.io/blog/vm/kms-troubleshooting/)
+
 
 こんにちは。Azure テクニカル サポート チームの鳥越です。
 
