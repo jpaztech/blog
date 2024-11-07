@@ -117,10 +117,10 @@ Azure では 2018 年からメモリ保持メンテナンスを使用してお�
 <iframe width="560" height="315" src="https://www.youtube.com/embed/t3Vo37V9oU8?start=4149" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 > [!WARNING]
-> 2024 年 11 月時点は、以下の VM サイズでライブマイグレーションが未対応となります。（最新情報は公式ドキュメントをご確認くださいませ。）  
+> 2024 年 11 月時点は、以下の VM サイズでライブマイグレーションが未対応となります。（最新情報は公式ドキュメントをご確認くださいませ。）
+> このようなまれなケースでは、より影響の大きな (ホストの再起動や、VM の再展開などを伴う) メンテナンスを行う必要があるため、お客様には事前に通知し、それぞれのワークロードに適したタイミングでメンテナンスを実行できるようにしています。
 >> G、L、N、H シリーズを除く、サービスとしてのインフラストラクチャ (IaaS) VM はすべて、ライブ マイグレーションに対応しています。 ライブ マイグレーションは、M シリーズ SKU の大部分で利用できます。  
 >> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-and-updates#live-migration](https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-and-updates#live-migration)
-> このようなまれなケースでは、より影響の大きな (ホストの再起動や、VM の再展開などを伴う) メンテナンスを行う必要があるため、お客様には事前に通知し、それぞれのワークロードに適したタイミングでメンテナンスを実行できるようにしています。
 
 ### ■ メモリ保持メンテナンスについて
 
@@ -165,10 +165,9 @@ Azureをご利用いただく上で必要となるこれらのメンテナンス
 
 > [!NOTE]
 > SLA ダウンタイムは分単位で計算されます。月間での合計 SLA がお客様の VM の稼働時間に対して 99.9 % (単一インスタンス / Premium SSD または Ultra ディスクの場合) を下回る場合に返金となります。
-> 　
->> 月間稼働率 (%) = (月内時間 (分) - ダウンタイム) / 月内時間 (分) x 100  
 > 最新の情報は最新の SLA のドキュメントをご参照くださいませ。  
 > [https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services?lang=18](https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services?lang=18)
+>> 月間稼働率 (%) = (月内時間 (分) - ダウンタイム) / 月内時間 (分) x 100  
 ---
 
 ## ■ おわりに
