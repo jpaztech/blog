@@ -1,9 +1,8 @@
 ---
 title: Azure File Sync のログ採取について
-date: 2024-09-25 12:00:00
+date: 2024-11-07 12:00:00
 tags:
   - Storage
-disableDisclaimer: false
 ---
 
 こんにちは、Azure テクニカル サポート チームの富田です。 
