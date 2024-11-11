@@ -7,6 +7,11 @@ tags:
   - ARM
 ---
 
+> [!WARNING]
+> 本記事は、投稿より時間が経過しており、**一部内容が古い可能性があります。**  
+> Azure VM の移行に関しては、以下の新しい記事を参照いただけますと幸いです。  
+> [https://jpaztech.github.io/blog/vm/vm-copy-move-scenario/](https://jpaztech.github.io/blog/vm/vm-copy-move-scenario/)
+
 こんにちは。Azureサポートチームの小久保です。
 本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方法をご紹介します。
 今回、ご紹介する環境は、Azure リソース マネージャー (以下、ARM) 環境から ARM 環境への移行となっております。
