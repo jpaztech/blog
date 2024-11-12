@@ -8,8 +8,9 @@ tags:
 ---
 こんにちは、Azure Networking サポート チームの間島です。
 
-今回は、数万ユーザーが Azure Firewall を経由して通信を行うような大規模なシステムを運用されているお客様より、特にお問い合わせいただくことが多い Azure Firewall のキャパシティに関する問題およびその原因 / 対策についてご紹介させていただきます。
-なお、お客様が Azure Firewall の設計や運用の検討を行う際に、Azure Firewall のパフォーマンス観点で考慮すべき点につきましては、下のリンク先がご参考になるかと思いますので、まず最初にご一読いただければと思います。
+今回は、多くの通信が Azure Firewall を経由するような大規模なシステム (例 : 万単位のユーザー数での Azure Virtual Desktop 利用など) を運用されているお客様より、特にお問い合わせいただくことが多い Azure Firewall のキャパシティに関する問題およびその原因 / 対策についてご紹介いたします。
+
+なお、大規模なシステムにて Azure Firewall の利用を検討する際にパフォーマンス観点で考慮すべき事項につきましては、下のリンク先がお客様のご参考になるかと思いますので、まず最初にご一読いただき、弊社の担当営業にもご連絡 / ご相談ください。
 > [!IMPORTANT]
 >Azure Firewall のパフォーマンスに関するベスト プラクティス
 >https://learn.microsoft.com/ja-jp/azure/firewall/firewall-best-practices
@@ -70,7 +71,7 @@ Azure Firewall は、平均スループットまたは CPU 消費量が 60% に�
 >AZFW 待機時間プローブ
 >https://learn.microsoft.com/ja-jp/azure/firewall/monitor-firewall-reference#azfw-latency-probe
 
-### Azure Firewall の負荷が高いにも関わらずスケールアウトしない (インスタンス数が枯渇している) 
+### Azure Firewall の負荷が高いにも関わらずスケールアウトしない (インスタンスが枯渇している) 
 #### - 問題
 AVD の利用ユーザーが増加したことにより、Azure Firewall のパフォーマンス系のメトリックからはインスタンス数が不足していると推測されるが、インスタンスがスケールアウトせず、AVD を利用する全ユーザーに影響が生じた。
 #### - 原因
