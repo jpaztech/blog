@@ -85,6 +85,13 @@ az network bastion rdp --name <Bastion リソース名> --resource-group <Bastio
 ## FAQ
 その他、接続不可以外によくお問い合わせいただく内容についても以下にまとめてみましたので、参考になりましたら幸いです。
 
+### Bastion で Windows Server に対する同時 RDP 接続数について
+Bastion 経由で Windows Server に対する RDP の同時接続数は、現在 2 接続となっています。
+サポート担当で動作を確認する限り、現在の Bastion における RDP 接続時の動作として、Windows Server に管理モードで RDP 接続をしています。
+Windows Server の管理モードでの RDP 接続は、最大同時接続数が 2 となっており、この同時接続数を増やすことは出来ません。
+なお、Bastion は複数の同時 RDP 接続が可能な RDS セッション ホストや Azure Virtual Desktop への RDP 接続には利用できません。
+参考- [Azure Bastion に関する FAQ](https://learn.microsoft.com/ja-jp/azure/bastion/bastion-faq)
+
 ### Bastion インスタンスあたりのセッション数上限に達した際に検知したい
 インスタンスあたりの同時接続数上限に達した際、それを検知してインスタンスをスケーリングさせたいというお問い合わせをいただく事がございます。
 ご期待に沿えず恐れ入りますが、直接的にインスタンスあたりのセッション数の上限を検知する方法はありません。
