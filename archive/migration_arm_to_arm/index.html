@@ -6,12 +6,12 @@
   
   <title>ARM 環境から ARM 環境への仮想マシンの移行方法 | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azureサポートチームの小久保です。本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方法をご紹介します。今回、ご紹介する環境は、Azure リソース マネージャー (以下、ARM) 環境から ARM 環境への移行となっております。 ご参考Azure サービス マネージャー (以下、ASM) 環境から ASM 環境への移行の場合は以下をご確認ください。クラシ">
+  <meta name="description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。Azure VM の移行に関しては、以下の新しい記事を参照いただけますと幸いです。https:&#x2F;&#x2F;jpaztech.github.io&#x2F;blog&#x2F;vm&#x2F;vm-copy-move-scenario&#x2F; こんにちは。Azureサポートチームの小久保です。本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ARM 環境から ARM 環境への仮想マシンの移行方法">
 <meta property="og:url" content="https://jpaztech.github.io/blog/archive/migration_arm_to_arm/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azureサポートチームの小久保です。本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方法をご紹介します。今回、ご紹介する環境は、Azure リソース マネージャー (以下、ARM) 環境から ARM 環境への移行となっております。 ご参考Azure サービス マネージャー (以下、ASM) 環境から ASM 環境への移行の場合は以下をご確認ください。クラシ">
+<meta property="og:description" content="警告本記事は、投稿より時間が経過しており、一部内容が古い可能性があります。Azure VM の移行に関しては、以下の新しい記事を参照いただけますと幸いです。https:&#x2F;&#x2F;jpaztech.github.io&#x2F;blog&#x2F;vm&#x2F;vm-copy-move-scenario&#x2F; こんにちは。Azureサポートチームの小久保です。本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/archive/migration_arm_to_arm/Constitution3.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/archive/migration_arm_to_arm/stopvm.png">
@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/archive/migration_arm_to_arm/VHD_URL2.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/archive/migration_arm_to_arm/accesskeynew.png">
 <meta property="article:published_time" content="2016-11-07T09:42:09.000Z">
-<meta property="article:modified_time" content="2024-11-19T06:40:25.576Z">
+<meta property="article:modified_time" content="2024-11-19T06:43:17.727Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Archive">
 <meta property="article:tag" content="Migration">
@@ -113,12 +113,13 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+a53f3ccd-db96-53fc-9550-ccfea23808af%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BARM+%E7%92%B0%E5%A2%83%E3%81%8B%E3%82%89+ARM+%E7%92%B0%E5%A2%83%E3%81%B8%E3%81%AE%E4%BB%AE%E6%83%B3%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AE%E7%A7%BB%E8%A1%8C%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Farchive%2Fmigration_arm_to_arm%2F%29%0A*+Content+Source%3A+%5Barticles%2Farchive%2Fmigration_arm_to_arm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Farchive%2Fmigration_arm_to_arm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/archive/migration_arm_to_arm/" data-id="cm3o35bnt002q0nne34b7epgl" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/archive/migration_arm_to_arm/" data-id="cm3o390j5002k0nqt2gqv1608" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは。Azureサポートチームの小久保です。<br>本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方法をご紹介します。<br>今回、ご紹介する環境は、Azure リソース マネージャー (以下、ARM) 環境から ARM 環境への移行となっております。</p>
+        <div class="alert is-warning"><p class="alert-title">警告</p><p>本記事は、投稿より時間が経過しており、<strong>一部内容が古い可能性があります。</strong></p><p>Azure VM の移行に関しては、以下の新しい記事を参照いただけますと幸いです。</p><p><a href="https://jpaztech.github.io/blog/vm/vm-copy-move-scenario/">https://jpaztech.github.io/blog/vm/vm-copy-move-scenario/</a></p></div>
+<p>こんにちは。Azureサポートチームの小久保です。<br>本日は、別のサブスクリプションの環境に仮想ネットワーク、仮想マシンを移行する方法をご紹介します。<br>今回、ご紹介する環境は、Azure リソース マネージャー (以下、ARM) 環境から ARM 環境への移行となっております。</p>
 <h2 id="ご参考"><a href="#ご参考" class="headerlink" title="ご参考"></a>ご参考</h2><p>Azure サービス マネージャー (以下、ASM) 環境から ASM 環境への移行の場合は以下をご確認ください。<br><a target="_blank" rel="noopener" href="http://blogs.technet.microsoft.com/jpaztech/2016/07/11/migration_classic_to_classic/">クラシック環境からクラシック環境への仮想マシンの移行方法</a></p>
 <h2 id="利用する場面"><a href="#利用する場面" class="headerlink" title="利用する場面"></a>利用する場面</h2><ul>
 <li>開発用のサブスクリプションで作成した仮想マシンを本番環境用のサブスクリプションへ移行したい。</li>
