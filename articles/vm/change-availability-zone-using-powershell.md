@@ -21,7 +21,11 @@ Azure VM では、一部リージョンのみとはなりますが可用性ゾ�
 
 しかし、運用をしている中で可用性ゾーンへ組み入れる必要が発生したり、逆に、可用性ゾーンに組み入れられていると一部機能が対応しないため、可用性ゾーンから外したいというご要望が出てくることがあるかと思います。
 
-本稿では、こうしたご要望にお応えするために、可用性ゾーンへ含まれない VM を可用性ゾーンに組み入れる、可用性ゾーンに含まれる VM を可用性ゾーンから外す方法について、Azure PowerShell のサンプルを用いてそれぞれご案内いたします。
+本稿では、こうしたご要望にお応えするために、可用性ゾーンへ含まれない VM を可用性ゾーンに組み入れる、可用性ゾーンに含まれる VM を可用性ゾーンから外す方法について、Azure PowerShell のサンプルを用いてそれぞれご案内いたします。  
+
+> [!TIP]
+> Azure ポータルで VM の可用性ゾーンに関する変更を行いたい場合は以下の記事をご参照くださいませ。  
+> [https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/](https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/)
 
 ## ■ 本手順を利用する前提条件
 
@@ -62,7 +66,7 @@ New-AzSnapshot -Snapshot $snapshot -SnapshotName $snapshotName -ResourceGroupNam
 
 次に、上記で取得したスナップショットをもとに VM を作成します。
 
-パブリック IP アドレスは、通常可用性ゾーンに含まれない VM では Basic SKU が利用されますが、可用性ゾーンでパブリック IP アドレスを利用する場合には Standard SKU かつ静的な割り当てが必要となりますのでご注意ください。
+可用性ゾーンでパブリック IP アドレスを利用する場合には Standard SKU かつ静的な割り当てが必要となりますのでご注意ください。
 
 - パブリック IP アドレス
   [https://docs.microsoft.com/ja-jp/azure/virtual-network/public-ip-addresses](https://docs.microsoft.com/ja-jp/azure/virtual-network/public-ip-addresses)
@@ -132,8 +136,6 @@ New-AzSnapshot -Snapshot $snapshot -SnapshotName $snapshotName -ResourceGroupNam
 
 次に、上記で取得したスナップショットをもとに VM を作成します。
 
-パブリック IP アドレスは、通常可用性ゾーンに含まれない VM とするため、Basic SKU としています。
-
 ```PowerShell
 $ResourceGroup = "AZ" # リソースグループ名
 $Location = "japaneast"　# リージョン名
@@ -164,7 +166,7 @@ $VirtualMachine = New-AzVMConfig -VMName $virtualMachineName -VMSize $virtualMac
 $VirtualMachine = Set-AzVMOSDisk -VM $VirtualMachine -ManagedDiskId $disk.Id -CreateOption Attach -Windows
 
 # public IP および NIC を作成
-$publicIp = New-AzPublicIpAddress -Name ($vmName+'NonAZ_ip') -ResourceGroupName $ResourceGroup -Location $snapshot.Location -AllocationMethod Dynamic -Sku Basic
+$publicIp = New-AzPublicIpAddress -Name ($vmName+'NonAZ_ip') -ResourceGroupName $ResourceGroup -Location $snapshot.Location -AllocationMethod Static -Sku Standard
 $nic = New-AzNetworkInterface -Name ($vmName+'NonAZ_nic') -ResourceGroupName $ResourceGroup -Location $snapshot.Location -SubnetId $subnet -PublicIpAddressId $publicIp.Id 
 $VirtualMachine = Add-AzVMNetworkInterface -VM $VirtualMachine -Id $nic.Id
 
