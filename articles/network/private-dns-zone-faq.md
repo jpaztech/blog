@@ -1,6 +1,6 @@
 ---
 title: Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ
-date: 2024-03-26 11:00:00 
+date: 2024-11-27 17:30:00 
 tags:
   - Network
   - DNS
@@ -13,6 +13,8 @@ Azure DNS では、仮想ネットワーク内の名前解決結果を上書き�
 
 このブログでは、プライベート DNS ゾーンのベスト プラクティス、及びよく頂いているお問い合わせをご紹介させて頂きます。
 
+> [!NOTE] プライベート DNS ゾーンのプレビュー機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを [パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback) が実装されたため、本ブログの「回避策」に追記しました。
+
 <!-- more -->
 
 ---
@@ -23,7 +25,7 @@ Azure DNS では、仮想ネットワーク内の名前解決結果を上書き�
 - 仮想ネットワークでは Azure 既定の DNS (168.63.129.16) を DNS サーバーとして指定している
 - プライベート エンドポイント経由でストレージ アカウント`storagebloga`へアクセスするために、プライベート DNS ゾーン `privatelink.blob.core.windows.net` をクライアント VM の仮想ネットワークにリンクした
 - プライベート DNS ゾーン `privatelink.blob.core.windows.net` に `storagebloga IN A ＜プライベート エンドポイント IP＞` のレコードを登録し、プライベート エンドポイントの名前解決が成功している
-- ただし、それ以外一部のストレージ アカウントの名前解決を行ったところ、空の結果 (NXDOMAIN) が返されてしまい、接続も失敗している
+- ただし、それ以外の一部ストレージ アカウントの名前解決を行ったところ、空の結果 (NXDOMAIN) が返されてしまい、接続も失敗している
 - すべてストレージ アカウントの名前解決が失敗するわけではなく、問題なく接続できる場合もある
 - ストレージ アカウントの他に、AppService や Azure SQL Database など他の Azure PaaS サービスにも類似の事象がある
 
@@ -32,7 +34,7 @@ Azure DNS では、仮想ネットワーク内の名前解決結果を上書き�
 
 ストレージ アカウントなどの Azure PaaS サービスでは、プライベート エンドポイントの有効化状況により、名前解決フローが異なります。
 プライベート エンドポイントが無効化されているリソースでは、名前解決フローが以下となります。`privatelink.blob.core.windows.net` のドメインを経由しません。
-![](./01.png)
+![](./private-dns-zone-faq/01.png)
 ```
 ※プライベート エンドポイント無効化時の名前解決フロー
 
@@ -57,8 +59,8 @@ storagebloga.privatelink.blob.core.windows.net. 60 IN CNAME blob.tyo22prdstr07a.
 blob.tyo22prdstr07a.store.core.windows.net. 17 IN A 20.150.85.196
 ```
 
-プライベート エンドポイントへ接続させるには、お客様側にプライベート DNS ゾーン `privatelink.blob.core.windows.net` に A レコードを作成し、仮想ネットワークにリンクすることで、該当 CNAME 先を上書きして実現できているわけです。
-![](./02.png)
+プライベート エンドポイントへ接続させるには、お客様側にプライベート DNS ゾーン `privatelink.blob.core.windows.net` に A レコードを作成し、仮想ネットワークにリンクすることで、該当 CNAME 先を上書きして意図した名前解決が実現できています。
+![](./private-dns-zone-faq/02.png)
 ```
 ※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時の名前解決フロー
 ※10.0.3.4 がプライベート エンドポイントの IP アドレスとなります。
@@ -72,9 +74,9 @@ storagebloga.privatelink.blob.core.windows.net. 60 IN A 10.0.3.4
 ```
 
 プライベート DNS ゾーンをリンクすると、Azure DNS が該当 DNS ゾーン `privatelink.blob.core.windows.net` の権威サーバーとなります。
-そのドメインへの名前解決要求を受信する時に、インターネット経由で再帰的問い合わせを行わずに、プライベート DNS ゾーンに登録されているレコードを権威結果として応答するようになります。
+そのドメインへの名前解決要求を受信した時に、インターネット経由で再帰的問い合わせを行わずに、プライベート DNS ゾーンに登録されているレコードを権威結果として応答するようになります。
 その場合、プライベート DNS ゾーンに `storagebloga` 以外のレコードが登録されていないため、以下のように、NXDOMAIN が応答されてしまいます。
-![](./03.png)
+![](./private-dns-zone-faq/03.png)
 ```
 ※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時に、別のリソース（プライベート エンドポイント有効化）の名前解決フロー
 
@@ -99,13 +101,24 @@ blob.tyo22prdstr07a.store.core.windows.net. 60 IN A 20.150.85.196
 ```
 
 ### 回避策
+> [!NOTE] プライベート DNS ゾーンのプレビュー機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを [パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback) が実装されたことで、回避策が追加されました。
+
+#### 回避策 1
+プレビュー提供中の[パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback)を有効化することで、上述したシナリオを回避します。
+プライベート DNS ゾーンのパブリック DNS にフォールバックする機能は、プライベート エンドポイントを対象とした priavatelink サブドメインを対象に動作します。
+この機能は、プライベート DNS ゾーンを仮想ネットワークとリンクする時に選択が可能です。また、既存の privatelink サブドメインのプライベート DNS ゾーンにおいても、リンク設定を変更することで有効化可能です。
+
+この機能の動作としては、プライベート DNS ゾーンが自ゾーンに存在しないレコードを確認した際に NXDOMAIN を応答しますが、この機能が有効化されていると、Azure の DNS はパブリック DNS に DNS クエリを再試行します。この動作により上述したシナリオが回避できます。
+![](./private-dns-zone-faq/04-1.png)
+
+#### 回避策 2
 特定のストレージ アカウントの名前解決のみをプライベート DNS ゾーンで実現し、それ以外の名前解決への影響を回避したい場合は、`privatelink.blob.core.windows.net` ではなく、
 `storagebloga.privatelink.blob.core.windows.net` のプライベート DNS ゾーンを作成し、頂点（APEX）レコード `@ IN A ＜プライベート エンドポイント IP＞` を構成すれば実現できます。
-そうしますと、Azure DNS の権威ドメインが `storagebloga.privatelink.blob.core.windows.net` のみとり、それ以外 `storageblogcwithoutpe.privatelink.blob.core.windows.net` の名前解決要求を受けると、
+そうしますと、Azure DNS の権威ドメインが `storagebloga.privatelink.blob.core.windows.net` のみとなり、それ以外 `storageblogcwithpe.privatelink.blob.core.windows.net` の名前解決要求を受けると、
 インターネット経由で再帰的問い合わせを行い、プライベート DNS ゾーンに影響されなくなります。
-![](./04.png)
+![](./private-dns-zone-faq/04.png)
 
-ただし、もし複数のストレージ アカウントが存在する場合は、ストレージ アカウントの名前ごとにプライベート DNS ゾーンを用意する必要がありますので、ご注意ください。
+この回避策 2 を選択した場合、対象となる複数のストレージ アカウントが存在する場合は、ストレージ アカウントの名前ごとにプライベート DNS ゾーンを用意する必要がありますので、ご注意ください。
 
 # FAQ
 ## プライベート DNS ゾーンのレコードを変更する時に、リンク先の仮想ネットワークの名前解決が影響されるのでしょうか。
