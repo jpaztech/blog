@@ -7,7 +7,7 @@ tags:
 
 
 こんにちは、Azure テクニカル サポート チームの富田です。  
-今年も日本マイクロソフトの社員がお届けする、 [Microsoft Azure Tech Advent Calendar 2024](https://qiita.com/advent-calendar/2024/microsoft-azure-tech）が始まりました！  
+今年も日本マイクロソフトの社員がお届けする、 [Microsoft Azure Tech Advent Calendar 2024](https://qiita.com/advent-calendar/2024/microsoft-azure-tech) が始まりました！  
 本記事は 2 日目の記事となります。 
 
 Advent Calendar には他にも多くの Azure に関する有益な記事が公開されますので、是非ご参照くださいませ！   
