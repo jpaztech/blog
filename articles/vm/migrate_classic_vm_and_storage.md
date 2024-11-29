@@ -8,6 +8,9 @@ tags:
   - Migration
 ---
 
+> [!WARNING]
+> クラシック VM は既に廃止となっておりますので、本記事はアーカイブとなります。
+
 こんにちは。Azure テクニカル サポート チームの鳥越です。
 2014年に Azure Resource Manager モデルがリリースされており、リタイアがアナウンスされた 2020 年 7 月時点ですでに 90% が Azure Resource Manager モデルで利用されておりました。
 
