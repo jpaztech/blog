@@ -18,7 +18,7 @@ VHD の準備方法については以下となります。
 ■ご参考：Azure にアップロードする Windows VHD または VHDX を準備する
 [https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/prepare-for-upload-vhd-image](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/prepare-for-upload-vhd-image)
 
-なお、Standard Edition を利用したとしても、Windows Server VM にかかる料金に差異はありません。上位エディションの Datacenter Edition (Azure Edition を含む) がマーケット プレイスより利用可能ですので、特別な事情がない限り、これらの利用をご検討いただけますと幸いです。
+なお、Standard Edition を利用したとしても Datacenter Edition を利用したとしても、Windows Server VM にかかる料金に差異はありません。上位エディションの Datacenter Edition (Azure Edition を含む) がマーケット プレイスより利用可能ですので、特別な事情がない限り、これらの利用をご検討いただけますと幸いです。
 
 Windows Server エディションごとの機能の比較は以下のドキュメントを参考にしてください。
 
