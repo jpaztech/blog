@@ -10,15 +10,15 @@ tags:
 本ブログ記事では、Azure VM での Windows Server Standard Edition の利用についてご案内いたします。
 
 <!-- more -->
-Azure マーケットプレイスでは、上位エディションである Datacenter Edition / Datacenter: Azure Edition が同じ利用料金で提供されておりますため、Standard Edition のご提供がございません。
-
-もし Standard Edition の利用をされたいといった場合は、オンプレミス環境から既に所有している Standard Editionを持ち込むことは可能ではございます。
-この場合は、以下のように VHD の準備が必要となります。
+Azure マーケット プレイスでは、Windows Server の Datacenter Edition (Azure Edition を含む) の提供はありますが、Standard Edition の提供はありません。
+ 
+もし Standard Edition の利用をされたいといった場合は、オンプレミス環境から既に所有している Standard Edition の VHD やイメージをお持ちいただくことでご利用いただくことが可能となります。
+VHD の準備方法については以下となります。
 
 ■ご参考：Azure にアップロードする Windows VHD または VHDX を準備する
 [https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/prepare-for-upload-vhd-image](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/prepare-for-upload-vhd-image)
 
-上記の通り、Standard Edition を利用したとしても、料金の差異は無く、上位エディションの Datacenter Edition / Datacenter: Azure Editionがマーケットプレイスより、ご利用可能ですので、こちらの利用をご検討いただけますと幸いです。
+なお、Standard Edition を利用したとしても、Windows Server VM にかかる料金に差異はありません。上位エディションの Datacenter Edition (Azure Edition を含む) がマーケット プレイスより利用可能ですので、特別な事情がない限り、これらの利用をご検討いただけますと幸いです。
 
 Windows Server エディションごとの機能の比較は以下のドキュメントを参考にしてください。
 
