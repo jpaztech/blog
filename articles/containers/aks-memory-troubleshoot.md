@@ -99,7 +99,7 @@ Events:              <none>
 
 これを解消するには、メモリ割り当てに余裕のあるノードを確保するか、あるいは、Podのメモリ要求を既存のノードで賄える程度まで小さくする必要があります。
 
-前者に関しては、不要なPodの削除による割り当ての開放、または、[ノードプールのスケーリング](https://learn.microsoft.com/ja-jp/azure/aks/use-multiple-node-pools#scale-a-node-pool-manually)、[ノードプールの追加](https://learn.microsoft.com/ja-jp/azure/aks/use-multiple-node-pools#add-a-node-pool)、[ノードのVMサイズの変更](https://learn.microsoft.com/ja-jp/azure/aks/resize-node-pool)、等によるノードの増強、といった方法があります。
+前者に関しては、不要なPodの削除による割り当ての開放、または、[ノードプールのスケーリング](https://learn.microsoft.com/ja-jp/azure/aks/manage-node-pools#scale-a-node-pool-manually)、[ノードプールの追加](https://learn.microsoft.com/ja-jp/azure/aks/use-multiple-node-pools#add-a-node-pool)、[ノードのVMサイズの変更](https://learn.microsoft.com/ja-jp/azure/aks/resize-node-pool)、等によるノードの増強、といった方法があります。
 
 後者に関しては、Pod のメモリ要求の値、すなわち、Podのマニフェストの`spec.containers[].resources.requests.memory`の値を減らすこととなります。
 
