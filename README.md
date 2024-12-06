@@ -80,8 +80,6 @@
 - [ExpressRoute の Monthly Prefix Updates に関して](./articles/network/ExpressRoutePrefixRollout.md)
 - [Bastion のサブネットに 適用する NSG の設定例](./articles/network/bastion-nsg.md/)
 - [証明書の失効に関するアドバイザリ PVKM-5T8 の補足情報](./articles/network/20200716-net.md)
-- [Azure CDN の各 SKU の特徴、トラブルシューティングの紹介](./articles/network/cdn-specific-sku.md)
-- [Azure CDN の特徴やよくあるお問い合わせ、トラブル シューティングの紹介](./articles/network/cdn-common.md)
 - [Azure Load Balancer のトラブルシューティング: スコーピング編](./articles/network/tsg-azure-load-balancer-scoping.md)
 - [Azure VM の外部接続 (SNAT) オプション まとめ](./articles/network/snat-options-for-azure-vm.md)
 - [Microsoft Peering 導入時の注意事項](./articles/network/considerations-of-microsoft-peering.md)
