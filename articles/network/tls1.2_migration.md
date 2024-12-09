@@ -84,8 +84,7 @@ Azure Front Door でカスタム ドメインを利用する場合は、**2025 �
 
 - Azure Front Door を使用している場合は、「[カスタム ドメインに対して HTTPS を構成する - Azure Front Door | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/frontdoor/standard-premium/how-to-configure-https-custom-domain?tabs=powershell)」を使用して TLS 1.2 以上に設定します。
 - Azure Front Door クラシックを使用している場合は、「[Front Door (クラシック) カスタム ドメインで HTTPS を構成する - Azure Front Door | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/frontdoor/front-door-custom-domain-https)」を使用して TLS 1.2 に設定します。
-- Microsoft CDN を使用している場合は、「[チュートリアル:Azure CDN カスタム ドメインで HTTPS を構成する | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/cdn/cdn-custom-ssl?tabs=option-1-default-enable-https-with-a-cdn-managed-certificate)」を参照してください。Microsoft Learn
-」を使用して TLS 1.2 に設定します。
+- Microsoft CDN を使用している場合は、「[チュートリアル:Azure CDN カスタム ドメインで HTTPS を構成する | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/cdn/cdn-custom-ssl?tabs=option-1-default-enable-https-with-a-cdn-managed-certificate)」を使用して TLS 1.2 に設定します。
 
 ## Private Link Service または Private Endpoint  
 Private Link Service と Private Endpoint のサービスでは、TLS プロトコルは終端しません。
