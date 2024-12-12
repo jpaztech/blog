@@ -15,7 +15,7 @@ Azure CDN の Edgio Standard SKU 及び Premium SKU について、2025 年 1 �
 Azure CDN の Edgio Standard SKU 及び Premium SKU は、Edgio 社 (旧 Verizon 社) の CDN プラットフォームでサービスを提供していましたが、2024 年 9 月 9 日に Edgio 社が米連邦破産法第 11 条の適用を申請したことから、Azure CDN の Edgio Standard SKU 及び Premium SKU を継続してご提供できなくなりました。
 最新の状況として、Edigo 社から 2025 年 1 月 15 日以降に CDN サービス提供を終了する旨が通達されたことで、お客様には 2025 年 1 月 15 日までにいずれかの CDN サービスを移行していただく旨を、Edgio Standard SKU 及び Premium SKU をご利用いただいているお客様に通知しました。
 
-Edgio Standard SKU 及び Premium SKU から Azure サービスを移行先として選択される場合、Front Door Standard SKU を推奨しています。Front Door Standard SKU への移行は、通信影響を軽微にする手順含めて、[Azure CDN from Edgio から Azure Front Door に移行する](https://learn.microsoft.com/ja-jp/azure/frontdoor/migrate-cdn-to-front-door)でご案内しています。
+Edgio Standard SKU 及び Premium SKU から Azure サービスを移行先として選択される場合、Front Door Standard SKU を推奨しています。Front Door Standard SKU への移行は、通信影響を軽微にする手順含めて、[[Azure CDN from Edgio から Azure Front Door に移行する]](https://learn.microsoft.com/ja-jp/azure/frontdoor/migrate-cdn-to-front-door)でご案内しています。
 
 このブログでは、Edgio Standard SKU 及び Premium SKU から、暫定対応として Azure CDN の Microsoft クラシック SKU に移行されたい場合において、制約・制限事項と手順についてご案内します。
 
