@@ -94,6 +94,7 @@
 - [プライベート エンドポイントのよくあるお問い合わせ](./articles/network/pe-troubleshooting.md)
 - [168.63.129.16 の DNS 機能について](./articles/network/dns-168-63-129-16.md)
 - [Application Gateway と Key Vault を統合した際によくある問題について](./articles/network/appgw-kv.md)
+- [Azure CDN from Edgio の提供終了に関するアナウンスの補足説明](./articles/network/EdgioMigration.md)
 
 ## Containers
 
