@@ -10,7 +10,7 @@ tags:
 こんにちは、Azure テクニカル サポート チームの薄井です。
 今回は Bastion のサブネットに関連付けることのできる NSG についてご紹介します。
 
-よく Bastion のサブネットへのアクセスに制限をかけたいといったお問い合わせをいただきます。Bastion のサブネットに適用する NSG の設定については[公式ドキュメント](https://docs.microsoft.com/ja-jp/azure/bastion/bastion-nsg)に、NSG の既定の規則をそのまま利用した場合の説明がございます。
+よく Bastion のサブネットへのアクセスに制限をかけたいといったお問い合わせをいただきます。Bastion のサブネットに適用する NSG の設定については[公式ドキュメント](https://learn.microsoft.com/ja-jp/azure/bastion/bastion-nsg)に、NSG の既定の規則をそのまま利用した場合の説明がございます。
 本記事では、既定の規則を全て拒否した場合の設定例を画像とともにご紹介いたします。
 
 <!-- more -->
@@ -50,6 +50,6 @@ Bastion から Linux の VM に接続をする場合には SSH（TCP ポート 2
 Bastion のサブネットに関連づける NSG について関連する情報が以下のページにあります。
 併せてご参考いただければと思います。
 
-- [NSG アクセスと Azure Bastion を使用する](https://docs.microsoft.com/ja-jp/azure/bastion/bastion-nsg)
+- [NSG アクセスと Azure Bastion を使用する](https://learn.microsoft.com/ja-jp/azure/bastion/bastion-nsg)
 
 ---
