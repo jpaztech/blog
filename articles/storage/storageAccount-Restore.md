@@ -37,39 +37,11 @@ tags:
 ## ストレージ アカウント復元の手順
 </font>
 
-1. Azure ポータルにアクセスし、右上の ? マークから、 "ヘルプとサポート" を選択します。
+以下のドキュメントの手順にて復旧を試みることが可能となっております。  
 
-
-![](storageAccount-Restore/Storage3.png)
-
-
-2. 右側のタブから "新しいサポート リクエスト" を選択し、下記画像のように各項目を選択します。
-
-\#ストレージ アカウントについては表示された任意のものを選択ください。
-
-\#(この選択されたアカウントは利用しませんのでご安心ください。)
-
-\#"概要" の項目を適当に記載した場合、次の画面に正しく遷移しない可能性があるため、
-
-\#下記のように "Recover deleted storage object " と入力ください。
-
-記載が完了したら "次へ" を選択し、ソリューションの画面に推移します。
-
-![](storageAccount-Restore/Storage4.png)
-
-3. "推奨される解決策" 内の "お客様が管理するストレージ アカウントの復旧" を選択します。
-
-
-![](storageAccount-Restore/Storage9.png)
-
-4. 復旧対象のストレージ アカウントを選択し、"回復" を押下します。
-
-![](storageAccount-Restore/Storage7.png)
-
-暫くすると復元が完了の通知が発生します。
-
-![](storageAccount-Restore/Storage10.png)
-
+■ご参考：削除されたアカウントを Azure portal から復旧する  
+https://learn.microsoft.com/ja-jp/azure/storage/common/storage-account-recover#recover-a-deleted-account-from-the-azure-portal  
+  
 本手順で復旧が完了しない場合、または復旧についてご不明な点がある場合は、お気兼ねなく弊サポート部門へお問い合わせください。
 
 
