@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの薄井です。今回は Firewall のパブリック IP と NAT ゲートウェイ併用構成の比較について紹介します。">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2024-10-25T05:30:00.000Z">
-<meta property="article:modified_time" content="2024-12-26T01:32:28.235Z">
+<meta property="article:modified_time" content="2024-12-27T01:09:17.939Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="Public IP Address">
@@ -105,7 +105,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+7c81329b-24ed-5df1-940f-5a5d7726d1f5%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BFirewall+%E3%81%AE%E3%83%91%E3%83%96%E3%83%AA%E3%83%83%E3%82%AF+IP+%E3%81%A8+NAT+%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4%E4%BD%B5%E7%94%A8%E6%A7%8B%E6%88%90%E3%81%AE%E6%AF%94%E8%BC%83%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Ffw-snat%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Ffw-snat.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Ffw-snat.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/fw-snat/" data-id="cm54nftms006p0np906fd8cqd" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/fw-snat/" data-id="cm5621vdp006m0ns4ac6i9ep1" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -113,13 +113,10 @@
         <p>こんにちは、Azure テクニカル サポート チームの薄井です。<br>今回は Firewall のパブリック IP と NAT ゲートウェイ併用構成の比較について紹介します。</p>
 <span id="more"></span>
 
-<div class="alert is-info"><p class="alert-title">Note</p><p> この記事は当初 Azure Firewall のパブリック IP の使われ方がランダムではなかったため、実際のパブリック IP の使われ方を説明しておりました。</p><p>しかしながら、2024 年 10 月時点ではパブリック IP がランダムに使用される動作に変更されたため、内容を Azure Firewall のパブリック IP と NAT ゲートウェイ併用構成の比較に変更いたしました。</p></div>
-<h2 id="Azure-Firewall-のパブリック-IP-による-SNAT-について"><a href="#Azure-Firewall-のパブリック-IP-による-SNAT-について" class="headerlink" title="Azure Firewall のパブリック IP による SNAT について"></a>Azure Firewall のパブリック IP による SNAT について</h2><p>Azure Firewall を経由してインターネット宛に通信するときは、関連付けられているパブリック IP へ送信元のアドレス変換（SNAT）が行われます。パブリック IP が 1 つしかない時はそのパブリック IP のアドレスしか使用されませんが、複数のパブリック IP アドレスが Azure Firewall に関連付けられている場合の動作は、以下のドキュメントの記載の通りランダムに選択されます。</p>
+<div class="alert is-info"><p class="alert-title">Note</p><p> この記事は当初 Azure Firewall のパブリック IP の使われ方がランダムではないため、実際のパブリック IP の使われ方を説明しておりましたが、内容を Azure Firewall のパブリック IP と NAT ゲートウェイ併用構成の比較に変更いたしました。</p></div>
+<h2 id="Azure-Firewall-のパブリック-IP-による-SNAT-について"><a href="#Azure-Firewall-のパブリック-IP-による-SNAT-について" class="headerlink" title="Azure Firewall のパブリック IP による SNAT について"></a>Azure Firewall のパブリック IP による SNAT について</h2><p>Azure Firewall を経由してインターネット宛に通信するときは、関連付けられているパブリック IP へ送信元のアドレス変換（SNAT）が行われます。パブリック IP が 1 つしかない時はそのパブリック IP のアドレスしか使用されませんが、複数のパブリック IP アドレスが Azure Firewall に関連付けられている場合の動作は、以下のドキュメントに記載がございます。</p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/deploy-multi-public-ip-powershell">Azure PowerShell を使用して複数のパブリック IP アドレスを使用する Azure Firewall をデプロイする</a></p>
-<blockquote>
-<p>SNAT -送信 SNAT 接続に追加のポートを使用できるので、SNAT ポートが不足する可能性が低減されます。 Azure Firewall では、接続に使用する送信元パブリック IP アドレスがランダムに選択されます。 ネットワークにダウンストリーム フィルターがある場合、ファイアウォールに関連付けられているすべてのパブリック IP アドレスを許可する必要があります。 この構成を簡略化するには、パブリック IP アドレス プレフィックスを使用することを検討してください。</p>
-</blockquote>
-<h2 id="NAT-ゲートウェイ-による-SNAT-について"><a href="#NAT-ゲートウェイ-による-SNAT-について" class="headerlink" title="NAT ゲートウェイ による SNAT について"></a>NAT ゲートウェイ による SNAT について</h2><p>Azure Firewall Subnet に NAT ゲートウェイを関連付けることにより、Azure Firewall のパブリック IP ではなく、NAT ゲートウェイで SNAT を行うことができるようになります。<br>注意点として、NAT ゲートウェイはゾーン冗長をサポートしていないため、利用する場合は Azure Firewall をゾーン冗長しないようにデプロイする必要があります。<br>Azure Firewall と NAT ゲートウェイを組み合わせて使用する方法については以下のドキュメントをご参照ください。</p>
+<h2 id="NAT-ゲートウェイ-による-SNAT-について"><a href="#NAT-ゲートウェイ-による-SNAT-について" class="headerlink" title="NAT ゲートウェイ による SNAT について"></a>NAT ゲートウェイ による SNAT について</h2><p>Azure Firewall Subnet に NAT ゲートウェイを関連付けることにより、Azure Firewall のパブリック IP ではなく、NAT ゲートウェイで SNAT を行うことができるようになります。NAT ゲートウェイによる SNAT では関連付けられているパブリック IP がランダムかつほぼ均等に使用されます。<br>注意点として、NAT ゲートウェイはゾーン冗長をサポートしていないため、利用する場合は Azure Firewall をゾーン冗長しないようにデプロイする必要があります。<br>Azure Firewall と NAT ゲートウェイを組み合わせて使用する方法については以下のドキュメントをご参照ください。</p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/integrate-with-nat-gateway">Azure Virtual Network NAT を使用した SNAT ポートのスケーリング | Microsoft Learn</a></p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-network/nat-gateway/tutorial-hub-spoke-nat-firewall">チュートリアル： ハブ アンド スポーク ネットワークで NAT ゲートウェイと Azure Firewall を統合する - Azure Virtual Network NAT | Microsoft Learn</a></p>
 <h2 id="Azure-Firewall-と-NAT-Gateway-の比較表"><a href="#Azure-Firewall-と-NAT-Gateway-の比較表" class="headerlink" title="Azure Firewall と NAT Gateway の比較表"></a>Azure Firewall と NAT Gateway の比較表</h2><p>以下の表は Azure Firewall のパブリック IP による SNAT と NAT Gateway の機能比較表です。</p>
@@ -143,7 +140,7 @@
 </tr>
 <tr>
 <td align="left">パブリック IP が使用される順番</td>
-<td align="center">ランダム</td>
+<td align="center">基本的にプライマリから使用され、ポートが枯渇すると次が使用される</td>
 <td align="center">ランダムかつほぼ均等に使用される</td>
 </tr>
 <tr>
