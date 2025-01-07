@@ -1,6 +1,8 @@
 ---
 title: 403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない
 date: 2025-01-07 15:00:00
+
+
 tags:
   - Storage
 ---
@@ -16,24 +18,32 @@ tags:
 
 アクセスを行うツールによって表示が異なりますが、いくつかスクリーンショットを交えてエラー表示の例を記載させていただきます。    
 どれも 403 エラーや Access is denied として表示され、アクセス拒否となっていることが分かります。  
+---
 
 ### Azure ポータルでストレージ アカウントの Blob コンテナー内の表示、およびストレージブラウザーで Blob や Azure Files にアクセスした際
 ![This request is not authorized to perform this operation.](storageFirewall-403Error/Storage01.png)
+---
 
 ### Azure ポータルで Azure Files（ファイル共有）にアクセスした際
 ![このマシンからはアクセスできないようです。このストレージ アカウントは VNet にあります。](storageFirewall-403Error/Storage02.png)
+---
 
 ### Azure Storage Explorer で Blob コンテナーにアクセスした際
 ![This request is not authorized to perform this operation.](storageFirewall-403Error/Storage03.png)
+---
 
 ### Azure Storage Explorer で Azure Files（ファイル共有）にアクセスした際
 ![Unable to retrieve child resources](storageFirewall-403Error/Storage90.png)
+---
 
 ### AzCopy コマンドにてファイルコピー時した際
 ![INFO: Authentication failed, it is either not correct, or expired, or does not have the correct permission / RESPONSE 403: 403 This request is not authorized to perform this operation. / ERROR CODE: AuthorizationFailure](storageFirewall-403Error/Storage04.png)
+---
 
 ### Azure Files（ファイル共有）を New-PSDrive コマンドでマウントした際
 ![New-PSDrive : Access is denied](storageFirewall-403Error/Storage05.png)
+---
+
 
 これらのエラーの場合は、以下の原因によりアクセス拒否となっている可能性がございます。  
 
@@ -66,9 +76,9 @@ https://learn.microsoft.com/ja-jp/azure/storage/common/authorize-data-access
 
 意図せず 403 エラーでアクセス拒否となった場合、ファイアウォールによってブロックされていないかといった点を切り分けるために、一時的にファイアウォールを無効化するのが容易な手段となります。  
 ファイアウォールが元から無効であったり、ファイアウォールを無効化しても 403 エラーのアクセス拒否が継続する場合は、データ認可の問題などファイアウォールとは別の原因があると判断できます。  
-
+以下の手順で Azure ポータルからストレージアカウントのファイアウォールを無効化することが可能でございます。
 以下の手順でファイアウォールを無効化することが可能でございます。
-
+1. 対象のストレージアカウントの画面にて「ネットワーク」をクリックします。
 1. 対象のストレージアカウント「ネットワーク」をクリックします。
 2. 「ファイアウォールと仮想ネットワーク」より「すべてのネットワーク」を選択し「保存」します。
 
@@ -94,7 +104,7 @@ Azure ポータルにて以下の手順で、特定のパブリック IP アド�
 
 パブリック IP アドレスを指定しても上手く接続できない場合は、以下の注意点についてご確認くださいませ。
 
-- [接続元クライアントが Azure VM の場合は、同一リージョンのストレージ アカウントへの接続時にプライベート IP アドレスで接続するため](https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/)、このようなパブリック IP アドレスでの接続許可が叶いません。後述の VNET 単位の接続許可の設定をご検討ください。
+- クライアント IP アドレスとして表示されるのは、Azure ポータルに接続している IP アドレスです。プロキシ使用時にエンドポイントへの接続をバイパスしている際などは、その点を考慮する必要がございます。
 - クライアント IP アドレスとして表示されるのは、Azure ポータルに接続している IP アドレスです。プロキシ使用時などは、その点を考慮する必要がございます。
 - Express Route をご利用されており、Microsoft Peering または Public Peering を用いて Azure ストレージに接続する構成の場合、Azure ストレージに側の接続元の IP アドレスはオンプレミスのプライベート IP アドレスではなく、Microsoft Peering または Public Peering で構成したパブリック IP アドレスとなります。そのため、Express Route 経由後のパブリック IP アドレスを追加していただく必要があることをあらかじめご留意ください。
 
