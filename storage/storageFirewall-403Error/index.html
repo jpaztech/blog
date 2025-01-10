@@ -6,33 +6,27 @@
   
   <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの木下です。 今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 403 エラーが発生した場合の対処法をストレージファイアウォール観点でエラー事例とともにご紹介いたします。">
+  <meta name="description" content="こんにちは、Azure テクニカル サポート チームの木下・富田です。   今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事例とともにご紹介いたします。403 エラーは認証エラーですので、ネットワークとしては疎通ができている状態ですが、認証によってアクセスが拒否されている状況となり">
 <meta property="og:type" content="article">
 <meta property="og:title" content="403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない">
 <meta property="og:url" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの木下です。 今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 403 エラーが発生した場合の対処法をストレージファイアウォール観点でエラー事例とともにご紹介いたします。">
+<meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの木下・富田です。   今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事例とともにご紹介いたします。403 エラーは認証エラーですので、ネットワークとしては疎通ができている状態ですが、認証によってアクセスが拒否されている状況となり">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage01.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage02.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage03.png">
+<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage90.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage04.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage05.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage06.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage10.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage16.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage17.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage07.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage18.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage08.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage09.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage11.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage12.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage13.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage14.png">
-<meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/Storage15.png">
-<meta property="article:published_time" content="2021-01-29T08:30:00.000Z">
-<meta property="article:modified_time" content="2025-01-10T01:06:48.376Z">
+<meta property="article:published_time" content="2025-01-07T06:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-10T02:21:24.950Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Storage">
 <meta name="twitter:card" content="summary">
@@ -115,94 +109,86 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2021-01-29T08:30:00.000Z" itemprop="datePublished">2021-01-29</time>
+  <time datetime="2025-01-07T06:00:00.000Z" itemprop="datePublished">2025-01-07</time>
 </a>
         
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+408affc8-3bbd-5502-80c1-0cc4dfd60024%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5B403+%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97+Azure+%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E5%86%85%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fstorage%2FstorageFirewall-403Error%2F%29%0A*+Content+Source%3A+%5Barticles%2Fstorage%2FstorageFirewall-403Error.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fstorage%2FstorageFirewall-403Error.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/" data-id="cm5q24kl300870nnx55tbddie" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-403Error/" data-id="cm5q4sjg800870nqp02ur5jnm" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure テクニカル サポート チームの木下です。</p>
-<p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 403 エラーが発生した<br>場合の対処法をストレージファイアウォール観点でエラー事例とともにご紹介いたします。</p>
-<span id="more"></span>
-
-<p>まずは 403 エラー発生時の事例を 5 つご紹介いたします。</p>
-<p><strong>事例1)</strong><br>Azure ストレージ アカウント &gt; ファイル共有 画面でのアクセスエラー<br><img src="/blog/storage/storageFirewall-403Error/Storage01.png"></p>
-<p><strong>事例2)</strong><br>Azure ストレージ アカウント &gt; Storage Explorer (プレビュー) 画面でのアクセスエラー<br><img src="/blog/storage/storageFirewall-403Error/Storage02.png"></p>
-<p><strong>事例3)</strong><br>Azure Storage Explorer ツール画面でのアクセスエラー<br><img src="/blog/storage/storageFirewall-403Error/Storage03.png"></p>
-<p><strong>事例4)</strong><br>AzCopy コマンドにてオンプレミス / Azure VM から Azure Storage Blob コンテナーへのファイルコピー時のエラー<br><img src="/blog/storage/storageFirewall-403Error/Storage04.png"></p>
-<p><strong>事例5)</strong><br>オンプレミス / Azure VM からファイル共有をマウントした時のアクセスエラー<br><img src="/blog/storage/storageFirewall-403Error/Storage05.png"></p>
-<p>事例1-5 のエラーの場合、ストレージファイアウォールが有効化されており設定に不備不足が<br>ある可能性が考えられます。原因がストレージファイアウォールであるか切り分けるため、<br>ストレージファイアウォールを一度無効にしエラーが解消されるかを確認します。</p>
-<font color="LightSalmon">
-
-<h2 id="■ストレージファイアウォール無効化の手順"><a href="#■ストレージファイアウォール無効化の手順" class="headerlink" title="■ストレージファイアウォール無効化の手順"></a>■ストレージファイアウォール無効化の手順</h2></font>
-
+        <p>こんにちは、Azure テクニカル サポート チームの木下・富田です。  </p>
+<p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事例とともにご紹介いたします。<br>403 エラーは認証エラーですので、ネットワークとしては疎通ができている状態ですが、認証によってアクセスが拒否されている状況となります。<br>本記事ではまず、ストレージ アカウント自体に備わっているファイアウォール（ネットワーク設定）の観点でトラブルシューティングのご紹介をさせていただきます。</p>
+<hr>
+<h2 id="ストレージ-アカウント内のコンテンツ表示における-403-エラーの表示例"><a href="#ストレージ-アカウント内のコンテンツ表示における-403-エラーの表示例" class="headerlink" title="ストレージ アカウント内のコンテンツ表示における 403 エラーの表示例"></a>ストレージ アカウント内のコンテンツ表示における 403 エラーの表示例</h2><p>アクセスを行うツールによって表示が異なりますが、いくつかスクリーンショットを交えてエラー表示の例を記載させていただきます。<br>どれも 403 エラーや Access is denied として表示され、アクセス拒否となっていることが分かります。  </p>
+<h3 id="Azure-ポータルでストレージ-アカウントの-Blob-コンテナー内の表示、およびストレージブラウザーで-Blob-や-Azure-Files-にアクセスした際"><a href="#Azure-ポータルでストレージ-アカウントの-Blob-コンテナー内の表示、およびストレージブラウザーで-Blob-や-Azure-Files-にアクセスした際" class="headerlink" title="Azure ポータルでストレージ アカウントの Blob コンテナー内の表示、およびストレージブラウザーで Blob や Azure Files にアクセスした際"></a>Azure ポータルでストレージ アカウントの Blob コンテナー内の表示、およびストレージブラウザーで Blob や Azure Files にアクセスした際</h3><p><img src="/blog/storage/storageFirewall-403Error/Storage01.png" alt="This request is not authorized to perform this operation."></p>
+<h3 id="Azure-ポータルで-Azure-Files（ファイル共有）にアクセスした際"><a href="#Azure-ポータルで-Azure-Files（ファイル共有）にアクセスした際" class="headerlink" title="Azure ポータルで Azure Files（ファイル共有）にアクセスした際"></a>Azure ポータルで Azure Files（ファイル共有）にアクセスした際</h3><p><img src="/blog/storage/storageFirewall-403Error/Storage02.png" alt="このマシンからはアクセスできないようです。このストレージ アカウントは VNet にあります。"></p>
+<h3 id="Azure-Storage-Explorer-で-Blob-コンテナーにアクセスした際"><a href="#Azure-Storage-Explorer-で-Blob-コンテナーにアクセスした際" class="headerlink" title="Azure Storage Explorer で Blob コンテナーにアクセスした際"></a>Azure Storage Explorer で Blob コンテナーにアクセスした際</h3><p><img src="/blog/storage/storageFirewall-403Error/Storage03.png" alt="This request is not authorized to perform this operation."></p>
+<h3 id="Azure-Storage-Explorer-で-Azure-Files（ファイル共有）にアクセスした際"><a href="#Azure-Storage-Explorer-で-Azure-Files（ファイル共有）にアクセスした際" class="headerlink" title="Azure Storage Explorer で Azure Files（ファイル共有）にアクセスした際"></a>Azure Storage Explorer で Azure Files（ファイル共有）にアクセスした際</h3><p><img src="/blog/storage/storageFirewall-403Error/Storage90.png" alt="Unable to retrieve child resources"></p>
+<h3 id="AzCopy-コマンドにてファイルコピー時した際"><a href="#AzCopy-コマンドにてファイルコピー時した際" class="headerlink" title="AzCopy コマンドにてファイルコピー時した際"></a>AzCopy コマンドにてファイルコピー時した際</h3><p><img src="/blog/storage/storageFirewall-403Error/Storage04.png" alt="INFO: Authentication failed, it is either not correct, or expired, or does not have the correct permission / RESPONSE 403: 403 This request is not authorized to perform this operation. / ERROR CODE: AuthorizationFailure"></p>
+<h3 id="Azure-Files（ファイル共有）を-New-PSDrive-コマンドでマウントした際"><a href="#Azure-Files（ファイル共有）を-New-PSDrive-コマンドでマウントした際" class="headerlink" title="Azure Files（ファイル共有）を New-PSDrive コマンドでマウントした際"></a>Azure Files（ファイル共有）を New-PSDrive コマンドでマウントした際</h3><p><img src="/blog/storage/storageFirewall-403Error/Storage05.png" alt="New-PSDrive : Access is denied"></p>
+<p>これらのエラーの場合は、以下の原因によりアクセス拒否となっている可能性がございます。  </p>
+<ul>
+<li>ストレージ アカウント自体に備わっているファイアウォール（ネットワーク設定）によりアクセス拒否されている</li>
+<li>データ操作の認可がされていない</li>
+</ul>
+<p>まずは、それぞれのアクセス制御の機能について解説させていただきます。</p>
+<hr>
+<h2 id="ストレージ-アカウントのファイアウォール（ネットワーク設定）とデータへの認可について"><a href="#ストレージ-アカウントのファイアウォール（ネットワーク設定）とデータへの認可について" class="headerlink" title="ストレージ アカウントのファイアウォール（ネットワーク設定）とデータへの認可について"></a>ストレージ アカウントのファイアウォール（ネットワーク設定）とデータへの認可について</h2><p>ストレージ アカウントには、特定の VNET や特定のグローバル IP アドレスからのアクセスのみを許可するといった、ファイアウォール機能が備わっております。<br>こちらのファイアウォールを有効としている場合、許可されていないクライアントからの接続では上記のような 403 エラーでアクセス拒否が発生します。  </p>
+<p>■ご参考：Azure Storage ファイアウォールおよび仮想ネットワークを構成する<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security">https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security</a>  </p>
+<p>また、ファイアウォールで許可されたクライアントからのアクセスであっても、アクセス先のデータに対して適切な認可がされていない場合は、同様に 403 エラーのアクセス拒否が発生します。  </p>
+<p>■ご参考：Azure Storage 内のデータへのアクセスを承認する<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/storage/common/authorize-data-access">https://learn.microsoft.com/ja-jp/azure/storage/common/authorize-data-access</a>  </p>
+<p>今回、本ブログ記事ではストレージ アカウントのファイアウォールの観点でのトラブルシューティングをご紹介させていただきます。  </p>
+<hr>
+<h2 id="ストレージ-アカウントのファイアウォールを一時的に無効化してみる"><a href="#ストレージ-アカウントのファイアウォールを一時的に無効化してみる" class="headerlink" title="ストレージ アカウントのファイアウォールを一時的に無効化してみる"></a>ストレージ アカウントのファイアウォールを一時的に無効化してみる</h2><div class="alert is-warning"><p class="alert-title">警告</p><p>一時的に全てのネットワークからの接続が許可されますので、この点についてご留意くださいませ。</p></div>
+<p>意図せず 403 エラーでアクセス拒否となった場合、ファイアウォールによってブロックされていないかといった点を切り分けるために、一時的にファイアウォールを無効化するのが容易な手段となります。<br>ファイアウォールが元から無効であったり、ファイアウォールを無効化しても 403 エラーのアクセス拒否が継続する場合は、データ認可の問題などファイアウォールとは別の原因があると判断できます。  </p>
+<p>以下の手順で Azure ポータルよりファイアウォールを無効化することが可能でございます。</p>
 <ol>
-<li>対象のストレージアカウント「ネットワーク」をクリックします。</li>
+<li>対象のストレージアカウントの画面で「ネットワーク」をクリックします。</li>
 <li>「ファイアウォールと仮想ネットワーク」より「すべてのネットワーク」を選択し「保存」します。</li>
 </ol>
 <p><img src="/blog/storage/storageFirewall-403Error/Storage06.png"></p>
-<p>「すべてのネットワーク」が選択されている場合、ストレージファイアウォールの設定は<b>無効</b>状態となります。</p>
-<blockquote>
-<p>参考 )<br>□Azure Storage ファイアウォールおよび仮想ネットワークを構成する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security#azure-portal">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-network-security#azure-portal</a></p>
-</blockquote>
-<p>「すべてのネットワーク」が選択されている状態に変更が完了したら、事例1-5 の状態が解消されるか確認してください。<br>事例1-5 の状態が解消されていれば、ストレージファイアウォールの設定に問題があると判断できます。</p>
-<p>もし、このままストレージファイアウォールを無効としても運用上差し支えなければ無効の状態でご利用ください。<br>アクセス元を制限したい場合は、以下に沿ってファイアウォール有効化の設定をご確認ください。</p>
-<font color="LightSalmon">
-
-<h2 id="■ストレージファイアウォール有効化の手順"><a href="#■ストレージファイアウォール有効化の手順" class="headerlink" title="■ストレージファイアウォール有効化の手順"></a>■ストレージファイアウォール有効化の手順</h2></font>
-
-<h3 id="1-インターネットまたはオンプレミスのネットワークからのアクセスを許可する"><a href="#1-インターネットまたはオンプレミスのネットワークからのアクセスを許可する" class="headerlink" title="(1) インターネットまたはオンプレミスのネットワークからのアクセスを許可する"></a>(1) インターネットまたはオンプレミスのネットワークからのアクセスを許可する</h3><p>事例1-3 と 事例4-5 (※オンプレミス からの実施の場合のみ) はいずれもインターネットまたはオンプレミスからの<br>アクセスになりますが、ストレージファイアウォール側でアクセス元のパブリック IP アドレスが許可されていないことにより<br>エラーが出ている状態になります。そのため、アクセス元のクライアント端末のグローバル IP アドレスを追加してください。</p>
+<p>「すべてのネットワーク」が選択されている場合、ストレージファイアウォールの設定は無効状態となります。</p>
+<p>「すべてのネットワーク」が選択されている状態に変更が完了したら、403 エラーのアクセス拒否が解消されるか確認してください。（少し反映までに時間がかかることもございます。）<br>403 エラーのアクセス拒否が解消されていれば、ストレージファイアウォールの設定に問題があると判断できます。  </p>
+<p>もし、このままストレージファイアウォールを無効としても運用上差し支えなければ無効の状態でご利用ください。<br>アクセス元を制限したい場合は、以下に沿ってファイアウォール有効化の設定をご確認ください。  </p>
+<hr>
+<h2 id="特定のパブリック-IP-アドレス（グローバル-IP-アドレス）からの接続を許可するようにファイアウォールを設定する"><a href="#特定のパブリック-IP-アドレス（グローバル-IP-アドレス）からの接続を許可するようにファイアウォールを設定する" class="headerlink" title="特定のパブリック IP アドレス（グローバル IP アドレス）からの接続を許可するようにファイアウォールを設定する"></a>特定のパブリック IP アドレス（グローバル IP アドレス）からの接続を許可するようにファイアウォールを設定する</h2><p>Azure ポータルにて以下の手順で、特定のパブリック IP アドレス（グローバル IP アドレス）からの接続を許可するようにファイアウォールを設定することが可能です。  </p>
 <ol>
-<li>対象のストレージアカウント「ネットワーク」をクリックします。</li>
+<li>対象のストレージアカウントの画面で「ネットワーク」をクリックします。</li>
 <li>「ファイアウォールと仮想ネットワーク」のクライアント端末の IP アドレスを追加し「保存」します。</li>
 </ol>
 <p><img src="/blog/storage/storageFirewall-403Error/Storage10.png"></p>
-<blockquote>
-<p>注意)<br>Express Route をご利用されており、Microsoft Peering または Public Peering を用いて Azure ストレージに接続する構成の場合、<br>Azure ストレージに側の接続元の IP アドレスはオンプレミスのプライベート IP アドレスではなく、Microsoft Peering または<br>Public Peering で構成したパブリック IP アドレスとなります。そのため、Express Route 経由後のパブリック IP アドレスを追加<br>していただく必要があることをあらかじめご留意ください。</p>
-</blockquote>
-<p>アクセス許可を行いたいアクセス元の IP アドレスが分からない状態の場合、Azure ストレージの<br>診断ログを取得し、403 エラーを検知しているログより IP アドレスを特定します。</p>
-<h4 id="・Azure-ストレージの診断ログの設定およびアクセス元-IP-アドレスの特定"><a href="#・Azure-ストレージの診断ログの設定およびアクセス元-IP-アドレスの特定" class="headerlink" title="・Azure ストレージの診断ログの設定およびアクセス元 IP アドレスの特定"></a>・Azure ストレージの診断ログの設定およびアクセス元 IP アドレスの特定</h4><ol>
-<li>Azure ポータル ( <a target="_blank" rel="noopener" href="https://portal.azure.com/">https://portal.azure.com/</a> ) にログインし、ストレージアカウントを選択します。</li>
-<li>「監視 (クラシック)」内 「診断設定 (クラシック)」を選択します。</li>
-<li>「BLOBのプロパティ」を選択します。</li>
-<li>状態を「オン」にし、「ログ記録」にて、「読み取り」「書き込み」「削除」のすべてにチェックを入れ「保存」します。<br><img src="/blog/storage/storageFirewall-403Error/Storage16.png"></li>
-</ol>
-<p><img src="/blog/storage/storageFirewall-403Error/Storage17.png"></p>
-<blockquote>
-<p>注意 )<br>上記設定を有効化いただくと、BLOB サービスに対するリクエストごとの診断ログが<br>ストレージ内に保持され、その BLOB ファイルに応じた料金が発生いたします。</p>
-<p>また Azure Files は診断ログの記録は現在サポートされておりませんのでご了承ください。<br>□ログの構成<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-monitor-storage-account#configure-logging">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-monitor-storage-account#configure-logging</a></p>
-</blockquote>
-<p>対象ストレージアカウントのコンテナー内に $logs が作成されるため、取得されたログよりアクセスに失敗した時刻を<br>対象に 403 エラーが記録されているログを探し、該当のログ内にある IP アドレスを特定します。<br>※診断ログに表記される時刻は UTC となりますのでご留意ください。</p>
-<p>下記ログは、192.100.0.102 からのアクセスが失敗した例となります。<br>ストレージファイアウォールにて 192.100.0.102 を許可しアクセスが可能となるかご確認ください。<br>例)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.0;202Y-MM-DDTHH:MM:SS.ZZZZZZZ;PutBlob;OAuthIpAuthorizationError;403;XX;XX;bearer;XXXXXXXXX;XXXXXXXXX;blob;</span><br><span class="line">&quot;https://XXXXXXXXX.blob.core.windows.net:443/XXXXXXXXX/XXXXXXXXX.txt?timeout=901&quot;;&quot;/&quot;;XXXXXXXXXXXXXXXXXX;0;</span><br><span class="line">192.100.0.102:4362;202Y-MM-DD;XXXX;0;XXX;XXX;XX;;;;;;&quot;AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)&quot;;;&quot;XXXXXXXXXXXXXXXXXX&quot;</span><br><span class="line"></span><br><span class="line">※ OAuthIpAuthorizationError : ID 認証を使用してアクセスした際のステータスメッセージ</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.0;202Y-MM-DDTHH:MM:SS.ZZZZZZZ;PutBlob;SASIpAuthorizationError;403;X;X;sas;;XXXXXXXXX;blob;</span><br><span class="line">&quot;https://XXXXXXXXX.blob.core.windows.net:443/XXXXXXXXX/XXXXXXXXX.txt?XXXXXXXXX;timeout=901&quot;;&quot;/&quot;;XXXXXXXXX;0;</span><br><span class="line">192.100.0.102:4362;202Y-MM-DD;XXXX;0;XXX;XXX;XX;;;;;;&quot;AzCopy/10.6.0 Azure-Storage/0.10 (go1.13; Windows_NT)&quot;;;&quot;XXXXXXXXXXXXXXXXXX&quot;</span><br><span class="line"></span><br><span class="line">※ SASIpAuthorizationError : SAS を使用してアクセスした際のステータスメッセージ</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>参考 )<br>□ストレージ アカウントの監視の設定<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/storage/common/storage-monitor-storage-account#configure-monitoring-for-a-storage-account">https://docs.microsoft.com/ja-jp/azure/storage/common/storage-monitor-storage-account#configure-monitoring-for-a-storage-account</a><br>□バージョン 1.0 のサンプル ログ エントリ<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-log-format#sample-log-entries-for-version-10">https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-log-format#sample-log-entries-for-version-10</a><br>□ログに記録される要求ステータス メッセージ<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-logged-operations-and-status-messages#logged-request-status-messages">https://docs.microsoft.com/ja-jp/rest/api/storageservices/storage-analytics-logged-operations-and-status-messages#logged-request-status-messages</a></p>
-</blockquote>
-<h3 id="2-特定の仮想ネットワークおよびサブネットからのアクセスを許可する"><a href="#2-特定の仮想ネットワークおよびサブネットからのアクセスを許可する" class="headerlink" title="(2) 特定の仮想ネットワークおよびサブネットからのアクセスを許可する"></a>(2) 特定の仮想ネットワークおよびサブネットからのアクセスを許可する</h3><p>事例4-5 (※ Azure VM からの実施の場合のみ) はいずれもストレージファイアウォール側で Azure VM が<br>所属している仮想ネットワークからのアクセスが許可されていないことによりにエラーが発生している状態です。<br>そのため、対象の Azure VM が所属している仮想ネットワークおよびサブネットを追加する必要があります。</p>
+<p>パブリック IP アドレスを指定しても上手く接続できない場合は、以下の注意点についてご確認くださいませ。</p>
+<ul>
+<li><a href="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/">接続元クライアントが Azure VM の場合は、同一リージョンのストレージ アカウントへの接続時にプライベート IP アドレスで接続するため</a>、このようなパブリック IP アドレスでの接続許可が叶いません。後述の VNET 単位の接続許可の設定をご検討ください。</li>
+<li>クライアント IP アドレスとして表示されるのは、Azure ポータルに接続している IP アドレスです。プロキシ使用時にエンドポイントをバイパスしている際などは、Azure ポータルにアクセスしている IP アドレスとストレージ アカウントにアクセスしている IP アドレスが異なることがございます。</li>
+<li>Express Route をご利用されており、Microsoft Peering または Public Peering を用いて Azure ストレージに接続する構成の場合、Azure ストレージに側の接続元の IP アドレスはオンプレミスのプライベート IP アドレスではなく、Microsoft Peering または Public Peering で構成したパブリック IP アドレスとなります。そのため、Express Route 経由後のパブリック IP アドレスを追加していただく必要があることをあらかじめご留意ください。</li>
+</ul>
+<p>アクセス許可を行いたいアクセス元の IP アドレスが分からない状態の場合、下記の通り Azure ストレージの診断設定でログを取得し、403 エラーを検知しているログより接続元クライアントの IP アドレスを特定することも可能です。  </p>
+<hr>
+<h2 id="ストレージ-アカウントの診断設定およびアクセス元-IP-アドレスの特定"><a href="#ストレージ-アカウントの診断設定およびアクセス元-IP-アドレスの特定" class="headerlink" title="ストレージ アカウントの診断設定およびアクセス元 IP アドレスの特定"></a>ストレージ アカウントの診断設定およびアクセス元 IP アドレスの特定</h2><p>ストレージ アカウントの診断設定を有効にすることで、ストレージにアクセスしたクライアント IP アドレスをログとして記録することが可能です。  </p>
+<p>■ご参考：Azure Monitor の診断設定を作成する<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/azure-monitor/essentials/create-diagnostic-settings">https://learn.microsoft.com/ja-jp/azure/azure-monitor/essentials/create-diagnostic-settings</a>  </p>
+<p>具体的な診断設定によるログ採取の手順例としては、Azure Files（ファイル共有）での手順について、以下の弊社ブログ記事で解説しております。  </p>
+<p>■ご参考：Azure Files の診断設定を試す<br><a href="https://jpaztech.github.io/blog/storage/azureFilesMonitoring">https://jpaztech.github.io/blog/storage/azureFilesMonitoring</a>  </p>
+<p>上記は、Azure Files（ファイル共有）での例とはなっておりますが、診断設定を有効にする種類として file ではなく blob を設定すれば、同様に Blob ストレージについてもアクセスログを採取することが可能です。<br>採取されたログ内に callerIpAddress として、実際のアクセス元となるクライアントの IP アドレスが記録されますので、これによりアクセス元 IP アドレスの特定が可能でございます。  </p>
+<hr>
+<h2 id="特定の仮想ネットワーク（VNET）およびサブネットからのアクセスを許可する"><a href="#特定の仮想ネットワーク（VNET）およびサブネットからのアクセスを許可する" class="headerlink" title="特定の仮想ネットワーク（VNET）およびサブネットからのアクセスを許可する"></a>特定の仮想ネットワーク（VNET）およびサブネットからのアクセスを許可する</h2><p>ストレージ アカウントのファイアウォールでは、特定のパブリック IP アドレスからのアクセス許可でだけではなく、特定の VNET 上のサブネットからのアクセスを許可する設定をすることが可能です。<br>以下が Azure ポータルでその設定をする手順となります。</p>
 <ol>
-<li>対象のストレージアカウント「ネットワーク」をクリックします。</li>
+<li>対象のストレージアカウントの画面で「ネットワーク」をクリックします。</li>
 <li>「ファイアウォールと仮想ネットワーク」の「仮想ネットワーク」に許可する仮想ネットワークおよびサブネットを追加します。</li>
 </ol>
 <p><img src="/blog/storage/storageFirewall-403Error/Storage07.png"></p>
-<p>　#すでに利用したい仮想ネットワークがある場合は「既存の仮想ネットワークを追加する」から追加します。<br>　 仮想ネットワークが未作成の場合は「新しい仮想ネットワークを追加する」より作成追加してください。</p>
-<p>　#異なるサブスクリプションの仮想ネットワークを追加する場合は、「サブスクリプション」項目のプルダウンより<br>　 対象のサブスクリプション内の仮想ネットワークおよびサブネットを選択し有効化します。<br>　 (有効化が完了するまで最大 15 分かかる場合があります) 有効化が完了したら「追加」をクリックします。<br><img src="/blog/storage/storageFirewall-403Error/Storage18.png"><br>　<br>3. 追加した仮想ネットワークおよびサブネットが表示されエンドポイントの状態が有効となっていることを確認し「保存」します。</p>
+<p>すでに利用したい仮想ネットワークがある場合は「既存の仮想ネットワークを追加する」から追加します。<br>仮想ネットワークが未作成の場合は「新しい仮想ネットワークを追加する」より作成追加してください。  </p>
+<p>異なるサブスクリプションの仮想ネットワークを追加する場合は、「サブスクリプション」項目のプルダウンより、対象のサブスクリプション内の仮想ネットワークおよびサブネットを選択し有効化します。<br>(有効化が完了するまで最大 15 分かかる場合がございます。有効化が完了したら「追加」をクリックします。  </p>
+<p><img src="/blog/storage/storageFirewall-403Error/Storage18.png"><br>　<br>3. 追加した仮想ネットワークおよびサブネットが表示されエンドポイントの状態が有効となっていることを確認し「保存」します。</p>
 <p><img src="/blog/storage/storageFirewall-403Error/Storage08.png"></p>
-<p>仮想ネットワークおよびサブネットの追加が完了しましたら、許可したアクセス元よりアクセスし、<br>事例4-5  (※ Azure VM からの実施の場合のみ) の状態が解消されるかご確認ください。<br>解消されない場合は追加した仮想ネットワークやサブネットの範囲が正しいかご確認をお願いします。</p>
-<blockquote>
-<p>注意)<br>ストレージファイアウォール設定で「すべてのネットワーク」と「選択されたネットワーク」の切り替えを行う場合や<br>登録しているサブネットが仮想ネットワーク上で一度削除され、新たに同名でサブネットが作成された場合などにより<br>古い情報が残存した状態となりエンドポイントの状態が「見つかりません」というようなエラーが表示されることがあります。</p>
-<p>その場合は、一度ストレージファイアウォール「仮想ネットワーク」項目からエラーが表示されているサブネットを削除し、<br>上述の手順で仮想ネットワークおよびサブネットの追加をお試しいただきますようお願いいたします。</p>
-</blockquote>
+<div class="alert is-warning"><p class="alert-title">警告</p><p>ストレージファイアウォール設定で「すべてのネットワーク」と「選択されたネットワーク」の切り替えを行う場合や、登録しているサブネットが仮想ネットワーク上で一度削除され、新たに同名でサブネットが作成された場合などにより、古い情報が残存した状態となりエンドポイントの状態が「見つかりません」というようなエラーが表示されることがあります。</p><p>その場合は、一度ストレージファイアウォール「仮想ネットワーク」項目からエラーが表示されているサブネットを削除し、上述の手順で仮想ネットワークおよびサブネットの追加をお試しいただきますようお願いいたします。</p></div>
 <p><img src="/blog/storage/storageFirewall-403Error/Storage09.png"></p>
-<p>ストレージファイアウォール設定を有効化し、許可したいアクセス元の追加が完了しますと、<br>各々エラーが解消し Azure ストレージ内コンテンツへのアクセスが可能となります。</p>
-<p><strong>事例1)</strong><br><img src="/blog/storage/storageFirewall-403Error/Storage11.png"><br><strong>事例2)</strong><br><img src="/blog/storage/storageFirewall-403Error/Storage12.png"><br><strong>事例3)</strong><br><img src="/blog/storage/storageFirewall-403Error/Storage13.png"><br><strong>事例4)</strong><br><img src="/blog/storage/storageFirewall-403Error/Storage14.png"><br><strong>事例5)</strong><br><img src="/blog/storage/storageFirewall-403Error/Storage15.png"></p>
-<p>本手順でエラーが解消しない場合、ストレージファイアウォール以外の設定に問題がある可能性もございます。<br>ストレージ内コンテンツへのアクセス権限は不足していないか等含めご確認くださいませ。</p>
+<hr>
+<h2 id="さいごに"><a href="#さいごに" class="headerlink" title="さいごに"></a>さいごに</h2><p>ストレージ アカウントのファイアウォールにより許可されたクライアントから、正しく認可されたデータへアクセスがされた場合は、403 エラーのアクセス拒否は発生せず正常にアクセス可能になるものと存じます。<br>403 エラーのアクセス拒否が改善せずお困りの場合は、実施されたトラブルシューティングの内容を添えて弊社 Azure 技術サポート窓口までお問い合わせいただければ、トラブルシューティングのご支援をさせていただくことも可能でございます。  </p>
 <p>本稿が皆様のお役に立ちましたら幸いでございます。</p>
 
       
@@ -228,19 +214,19 @@
     
 <nav id="article-nav">
   
-    <a href="../../vm/extend-storage-space-on-azure-windows-vm/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="../../network/vwan_transit/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">次の記事</strong>
       <div class="article-nav-title">
         
-          Azure Windows VM で記憶域スペースを拡張する
+          Virtual WAN の相互接続性について
         
       </div>
     </a>
   
   
-    <a href="../../network/vpngw-FAQ1/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../network/vwan_intro/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">VPN Gateway よくあるお問合せ - FAQ</div>
+      <div class="article-nav-title">VirtualWAN 活用について</div>
     </a>
   
 </nav>
@@ -267,15 +253,15 @@
           </li>
         
           <li>
+            <a href="">403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</a>
+          </li>
+        
+          <li>
             <a href="../../network/vwan_intro/">VirtualWAN 活用について</a>
           </li>
         
           <li>
             <a href="../../network/EdgioMigration/">Azure CDN from Edgio の提供終了に関するアナウンスの補足説明</a>
-          </li>
-        
-          <li>
-            <a href="../../vm/vm-size-accelerated-networking/">高速ネットワーク未対応・対応済・必須の VM サイズについて</a>
           </li>
         
       </ul>
@@ -298,7 +284,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">アーカイブ</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/01/">2025 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/12/">2024 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/11/">2024 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/10/">2024 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/09/">2024 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/08/">2024 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/07/">2024 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/05/">2024 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/04/">2024 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/03/">2024 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/02/">2024 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/01/">2024 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/12/">2023 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/11/">2023 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/10/">2023 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/09/">2023 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/08/">2023 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/07/">2023 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/05/">2023 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/04/">2023 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/03/">2023 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/02/">2023 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/01/">2023 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/12/">2022 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/10/">2022 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/09/">2022 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/08/">2022 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/01/">2022 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/01/">2021 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/02/">2019 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/01/">2019 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/12/">2018 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/09/">2018 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/04/">2018 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/02/">2018 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/11/">2017 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/04/">2017 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/02/">2017 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/12/">2016 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/08/">2016 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/06/">2016 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/05/">2016 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/04/">2016 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/02/">2016 / 02</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/01/">2025 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/12/">2024 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/11/">2024 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/10/">2024 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/09/">2024 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/08/">2024 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/07/">2024 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/05/">2024 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/04/">2024 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/03/">2024 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/02/">2024 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/01/">2024 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/12/">2023 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/11/">2023 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/10/">2023 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/09/">2023 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/08/">2023 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/07/">2023 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/05/">2023 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/04/">2023 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/03/">2023 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/02/">2023 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/01/">2023 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/12/">2022 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/10/">2022 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/09/">2022 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/08/">2022 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/01/">2022 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/02/">2019 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/01/">2019 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/12/">2018 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/09/">2018 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/04/">2018 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/02/">2018 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/11/">2017 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/04/">2017 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/02/">2017 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/12/">2016 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/08/">2016 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/06/">2016 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/05/">2016 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/04/">2016 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/02/">2016 / 02</a></li></ul>
     </div>
   </div>
 
