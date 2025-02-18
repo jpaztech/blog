@@ -31,8 +31,8 @@ Azure VM では VM サイズとして vCPU 数をお客様に選んでいただ�
 では、8 vCPU の VM サイズを選んだ として、「4 物理コア / 8 論理スレッド」なのか、「8 物理コア / 8 論理スレッド」なのかという点が気になりますね。  
 
 1 つの物理コアを 2 論理スレッドとして扱う技術として、  
- - Intel ハイパースレッディング テクノロジ
- - AMD 同時実行マルチスレッド技術
+ - Intel ハイパースレッディング テクノロジー（HTT）
+ - AMD 同時実行マルチスレッド技術（SMT）
 
 といった技術がございます。  
  ※ 以下「ハイパースレッド / マルチスレッド化」と記載させていたせていただきます。  
@@ -43,36 +43,26 @@ Azure VM では VM サイズとして vCPU 数をお客様に選んでいただ�
 
 となります。  
 
-どの VM サイズがハイパースレッド / マルチスレッド化されているのかといった点は、  
-以下の Azure コンピューティング ユニット (ACU) のドキュメントより確認可能です。  
-「vCPU: コア」の表記が「2:1\*\*\*」「2:1\*\*\*\*」になっているものは、  
-ハイパースレッド / マルチスレッド化されており、1 つの物理コアを 2 論理スレッドとして扱われております。  
+どの VM サイズがハイパースレッド / マルチスレッド化されているのかといった点は、Azure CLI もしくは Azure PowerShell コマンドより確認が可能でございます。  
 
-> ■ご参考：Azure コンピューティング ユニット (ACU)  
-> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/acu](https://learn.microsoft.com/ja-jp/azure/virtual-machines/acu)
 
-> ーーーーーー抜粋ーーーーーー  
-> *** ハイパースレッド化されており、入れ子になった仮想化を実行できます。  
-> ****AMD 同時実行マルチスレッド技術  
-> ーーーーーーーーーーーーーー  
+```SHELL
+# Azure CLI で東日本の VM サイズに対し、vCPUsPerCore を一覧で表示
+az vm list-skus --location japaneast --query "[?resourceType == 'virtualMachines'].{Name:name, vCPUsPerCore:capabilities[?name == 'vCPUsPerCore'].value | [0]}" --output table
+```
 
-なお、ACU に表記のない VM サイズにつきましては、各 VM サイズにおけるドキュメント等にハイパースレッド / マルチスレッド化されているかという旨が記載されておりますので、それらをご確認いただけますと幸いです。  
+```CMD
+# Azure PowerShell で東日本の VM サイズに対し、vCPUsPerCore を一覧で表示
+Get-AzComputeResourceSku | Where-Object { $_.Locations -contains "japaneast" -and $_.ResourceType -eq "virtualMachines" } | Select-Object Name, @{Name='vCPUsPerCore'; Expression={ ($_.Capabilities | Where-Object { $_.Name -eq "vCPUsPerCore" }).Value }}
+```
 
-> ■ ハイパースレッド化が有効である場合の表記の例（Dv5 および Dsv5 シリーズ）  
-> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv5-dsv5-series](https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv5-dsv5-series)  
+上記の結果として、VM サイズ毎に 1 つの物理コアに対していくつの vCPU が割り当たっているかという値が vCPUsPerCore として確認可能です。  
+すなわち、この結果より以下のようなことが確認できます。
 
-> ーーーーーー抜粋ーーーーーー  
-> Dv5 および Dsv5 シリーズの仮想マシンは、**ハイパースレッド構成の**第 3 世代 Intel® Xeon® Platinum 8370C (Ice Lake) プロセッサ上で実行されます。  
-> ーーーーーーーーーーーーーー
+ - 「vCPUsPerCore = 2」の表示の場合、ハイパースレッド / マルチスレッド化されている VM サイズである
+ - 「vCPUsPerCore = 1」の表示の場合、ハイパースレッド / マルチスレッド化されて**いない**  VM サイズである
 
-> ■ マルチスレッド化が有効である場合の表記の例（Dasv5 および Dadsv5 シリーズ）  
-> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv5-dsv5-series](https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv5-dsv5-series)  
-
-> ーーーーーー抜粋ーーーーーー  
-> Dasv5 シリーズおよび Dadsv5 シリーズは、AMD の第 3 世代 EPYCTM 7763v プロセッサを、最大 256 MB の L3 キャッシュを備えた**マルチスレッド構成で**利用し、汎用ワークロードを実行するための顧客オプションを増やします。  
-> ーーーーーーーーーーーーーー
-
-また、恐縮ながら物理ホスト サーバー 1 台に搭載された合計物理コア数やソケット数はお客様に公開が叶いません点ご理解賜りますと幸いでございます。  
+なお、恐縮ながら物理ホスト サーバー 1 台に搭載された合計物理コア数やソケット数はお客様に公開が叶いません点ご理解賜りますと幸いでございます。  
 
 > [!NOTE]
 > ソフトウェアについてはパブリック クラウド環境の場合はオンプレミスの物理サーバーと違ったライセンス ルールがある場合がございます。  
@@ -87,8 +77,7 @@ Azure VM では VM サイズとして vCPU 数をお客様に選んでいただ�
 
 ということがあるかと存じます。  
 
-このようなご要望にお応えするため、Standard_E32d_v5 サイズ（32 vCPU / 256 GB）から、vCPU の数のみを減らした、  
-Standard_E32-8ds_v5 サイズ（8 vCPU / 256 GB）というサイズのご用意がございます。  
+このようなご要望にお応えするため、Standard_E32d_v5 サイズ（32 vCPU / 256 GB）から、vCPU の数のみを減らした、Standard_E32-8ds_v5 サイズ（8 vCPU / 256 GB）というサイズのご用意がございます。  
 このように vCPU 数のみを元の VM サイズから減らしているものを **「制約付き vCPU 対応の VM サイズ」** と定義しております。  
 
 制約付き vCPU 対応の VM サイズには以下のような特徴がございます。  
@@ -110,13 +99,13 @@ Standard_E32-8ds_v5 サイズ（8 vCPU / 256 GB）というサイズのご用意
 ## CPU の種類について
 
 同じ VM サイズでも物理ホスト サーバーに搭載された CPU の種類が異なるため、VM の実行される CPU の種類が変わるといったことがございます。  
-例えば、以下のように Dv4 および Dsv4 シリーズは、ブログ執筆の 2023 年 4 月時点では、以下 2 種類の CPU でご提供をさせていただいております。  
+例えば、以下のように Dv4 および Dsv4 シリーズは、2025 年 2 月時点では、以下 3 種類の CPU でご提供をさせていただいております。  
 
 > ■ご参考：Dv4 および Dsv4 シリーズ  
 > [https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv4-dsv4-series](https://learn.microsoft.com/ja-jp/azure/virtual-machines/dv4-dsv4-series)
 
 > ーーーーーー抜粋ーーーーーー  
-> Dv4 および Dsv4 シリーズは、ハイパースレッド構成の第 3 世代 Intel® Xeon® Platinum 8370C (Ice Lake) プロセッサまたは Intel® Xeon® Platinum 8272CL (Cascade Lake) プロセッサ上で実行されます。  
+> Dv4 および Dsv4 シリーズは、ハイパースレッド構成の Intel® Xeon® Platinum 8473C (Sapphire Rapids)、Intel® Xeon® Platinum 8370C (Ice Lake)、または Intel® Xeon® Platinum 8272CL (Cascade Lake) プロセッサ上で実行されます。  
 > ーーーーーーーーーーーーーー
 
 そのため、ご利用者様から見ると、  
@@ -144,7 +133,7 @@ Azure Dedicated Host をご利用いただく場合に限り、CPU の種類を�
 Azure Dedicated Host は物理ホストサーバー 1 台丸ごとをお客様に占有いただくサービスとなります。  
 物理ホストサーバーを選ぶ際に SKU として、VM ファミリと特定のハードウェア仕様の組み合わせを選択することとなり、この際にハードウェアに搭載される CPU の種類を選択することが可能です。  
 
-例えば、Dsv4 シリーズを搭載できる Azure Dedicated Host SKU として、ブログ執筆の 2023 年 4 月時点では、以下の 2 種類があることが確認できます。  
+例えば、Dsv4 シリーズを搭載できる Azure Dedicated Host SKU として、2025 年 2 月時点では、以下の 2 種類があることが確認できます。  
 　
  - Dsv4_Type1：Intel® Xeon® Platinum 8272CL (Cascade Lake)
  - Dsv4_Type2：Intel® Xeon® Platinum 8370C (Ice Lake) 
@@ -176,16 +165,9 @@ Azure Dedicated Host の概要や価格等については、以下の記事を�
 しかしながら、ターボブースト機能によって実際に CPU クロックが向上している際も、お客様のゲスト OS からは CPU クロックは固定で表示されることがございます。  
 これは、物理ホストサーバー側にて制御が行われ、ゲスト OS は HW レジスタを直接参照できないことがあるためとなります。  
 
-そのため恐れ入りますが、ターボブースト機能によってどの程度クロックが向上しているかについては、恐縮ながら確認が叶いません点ご理解賜りますと幸いです。  
-なお、ターボブースト機能は、あくまで余裕がある際にベースクロックよりパフォーマンスを向上させるものでございますので、ターボブースト機能が動作していない場合に性能が低下するものではなく、通常よりも性能が向上するといった機能でございます。  
-
-> ■ご参考：Azure コンピューティング ユニット (ACU)  
-> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/acu](https://learn.microsoft.com/ja-jp/azure/virtual-machines/acu)
-
-> ーーーーーー抜粋ーーーーーー  
-> *ACU は、Intel® Turbo テクノロジを使用して CPU 周波数を上げ、パフォーマンスを向上させます。 パフォーマンス向上の量は、VM のサイズ、ワークロードのほか、同じホストで実行されている他のワークロードによって変動する場合があります。  
-> **ACU は、AMD® Boost テクノロジを使用して CPU 周波数を上げ、パフォーマンスを向上させます。 パフォーマンス向上の量は、VM のサイズ、ワークロードのほか、同じホストで実行されている他のワークロードによって変動する場合があります。  
-> ーーーーーーーーーーーーーー  
+そのため恐れ入りますが、ターボブースト機能によってどの程度クロックが向上しているかについては、恐縮ながら確認が叶いません場合がある点ご理解賜りますと幸いです。  
+なお、ターボブースト機能は、あくまで余裕がある際にベースクロックよりパフォーマンスを向上させるものでございます。  
+ターボブースト機能が動作していない場合に性能が低下するものではなく、動作している際に通常よりも性能が向上するといった機能でございます。  
 
 ---
 
