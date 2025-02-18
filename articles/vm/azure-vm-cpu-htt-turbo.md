@@ -46,13 +46,15 @@ Azure VM では VM サイズとして vCPU 数をお客様に選んでいただ�
 どの VM サイズがハイパースレッド / マルチスレッド化されているのかといった点は、Azure CLI もしくは Azure PowerShell コマンドより確認が可能でございます。  
 
 
+### Azure CLI で東日本の VM サイズに対し、vCPUsPerCore を一覧で表示する例
+
 ```SHELL
-# Azure CLI で東日本の VM サイズに対し、vCPUsPerCore を一覧で表示
 az vm list-skus --location japaneast --query "[?resourceType == 'virtualMachines'].{Name:name, vCPUsPerCore:capabilities[?name == 'vCPUsPerCore'].value | [0]}" --output table
 ```
 
+### Azure PowerShell で東日本の VM サイズに対し、vCPUsPerCore を一覧で表示する例
+
 ```CMD
-# Azure PowerShell で東日本の VM サイズに対し、vCPUsPerCore を一覧で表示
 Get-AzComputeResourceSku | Where-Object { $_.Locations -contains "japaneast" -and $_.ResourceType -eq "virtualMachines" } | Select-Object Name, @{Name='vCPUsPerCore'; Expression={ ($_.Capabilities | Where-Object { $_.Name -eq "vCPUsPerCore" }).Value }}
 ```
 
