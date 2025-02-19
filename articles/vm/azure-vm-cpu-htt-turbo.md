@@ -59,12 +59,22 @@ Get-AzComputeResourceSku | Where-Object { $_.Locations -contains "japaneast" -an
 ```
 
 上記の結果として、VM サイズ毎に 1 つの物理コアに対していくつの vCPU が割り当たっているかという値が vCPUsPerCore として確認可能です。  
+実行結果の例を一部抜粋で以下に記載します。
+
+```CMD
+Name                      vCPUsPerCore
+----                      ------------
+Standard_A8_v2            1
+Standard_B12ms            1
+Standard_B16als_v2        2
+Standard_B16as_v2         2
+```
+
 すなわち、この結果より以下のようなことが確認できます。
 
  - 「vCPUsPerCore = 2」の表示の場合、ハイパースレッド / マルチスレッド化されている VM サイズである
  - 「vCPUsPerCore = 1」の表示の場合、ハイパースレッド / マルチスレッド化されて**いない**  VM サイズである
 
-なお、恐縮ながら物理ホスト サーバー 1 台に搭載された合計物理コア数やソケット数はお客様に公開が叶いません点ご理解賜りますと幸いでございます。  
 
 > [!NOTE]
 > ソフトウェアについてはパブリック クラウド環境の場合はオンプレミスの物理サーバーと違ったライセンス ルールがある場合がございます。  
@@ -117,16 +127,7 @@ Get-AzComputeResourceSku | Where-Object { $_.Locations -contains "japaneast" -an
  ということが発生します。  
 
 また、「特定の CPU の種類を選んで使いたい。」といったご要望も頂くことがございます。
-恐縮ながら、後述の Azure Dedicated Host を利用する場合の除き、特定の CPU の種類を選んでご使用いただくことは叶いません.。 
-
-なお、異なる CPU の種類で実行された場合も大きな性能差が出ないよう、目安として以下の ACU の範囲内での性能差となるように設計されております。  
-
-> ■ご参考：Azure コンピューティング ユニット (ACU)  
-> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/acu](https://learn.microsoft.com/ja-jp/azure/virtual-machines/acu)
-
-> [!NOTE]
-> VM を割り当て解除および再デプロイしない場合は、原則 CPU の種類が変更されませんが、  
-> 予期せぬ物理ホストサーバーの不具合等で、別の CPU の種類の物理ホストサーバーに VM が移動される場合がございます。  
+恐縮ながら、後述の Azure Dedicated Host を利用する場合の除き、特定の CPU の種類を選んでご使用いただくことは叶いません。 
 
 ---
 ## Azure Dedicated Host で CPU の種類を選ぶ
