@@ -43,25 +43,25 @@ NSG フロー ログと VNet フロー ログの違いについて完結にお�
 |VNet フロー ログではサポートされず、<br>NSG フロー ログではサポートされるシナリオ  | なし | - |
 
 ## [FAQ]
-Q. 既存の NSG フロー ログのデータは削除されますか<br>
-A. いいえ。既存の NSG フロー ログのデータは削除されません (ただしストレージ アカウントのリテンション期間に準じます)。移行前のログ (NSG フロー ログ) は保存先のストレージ アカウント内の [insights-logs-networksecuritygroupflowevent] というパスに保存され、
+Q1. 既存の NSG フロー ログのデータは削除されますか<br>
+A1. いいえ。既存の NSG フロー ログのデータは削除されません (ただしストレージ アカウントのリテンション期間に準じます)。移行前のログ (NSG フロー ログ) は保存先のストレージ アカウント内の [insights-logs-networksecuritygroupflowevent] というパスに保存され、
 移行後のログ (VNet フロー ログ)は [insights-logs-flowlogflowevent] というパスに保存されます。
 また、トラフィック分析を有効化にしている場合、NSG フロー ログは [AzureNetworkAnalytics_CL] テーブル、VNet フロー ログは [NTANetAnalytics] テーブルを Log Analytics ワークスペースのクエリで確認が可能です。
 
-Q. NSG フロー ログから VNet フロー ログへ移行スクリプトを利用して移行した場合、既存の環境において通信影響やパフォーマンス影響はありますか<br>
-A. いいえ。NSG フロー ログから VNet フロー ログへの移行に伴う通信影響ございません。
+Q2. NSG フロー ログから VNet フロー ログへ移行スクリプトを利用して移行した場合、既存の環境において通信影響やパフォーマンス影響はありますか<br>
+A2. いいえ。NSG フロー ログから VNet フロー ログへの移行に伴う通信影響ございません。
 
-Q. NSG フロー ログでトラフィック分析を有効化し、Log Analytics で独自のクエリを利用し分析を行っていましたが、VNet フロー ログでも同じクエリで分析することは可能ですか<br>
-A. いいえ。NSG フロー ログと VNet フローログでは、トラフィック分析のスキーマが異なるため NSG フロー ログで利用していたクエリを使い回すことはできません。VNet フロー ログのスキーマを参考の上、VNet フロー ログ用のクエリを作成いただく必要があります。
+Q3. NSG フロー ログでトラフィック分析を有効化し、Log Analytics で独自のクエリを利用し分析を行っていましたが、VNet フロー ログでも同じクエリで分析することは可能ですか<br>
+A3. いいえ。NSG フロー ログと VNet フローログでは、トラフィック分析のスキーマが異なるため NSG フロー ログで利用していたクエリを使い回すことはできません。VNet フロー ログのスキーマを参考の上、VNet フロー ログ用のクエリを作成いただく必要があります。
 
 (参考)<br>
 [トラフィック分析スキーマ - Network Watcher | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/network-watcher/traffic-analytics-schema?tabs=vnet#traffic-analytics-schema)
 
-Q. NSG フロー ログから VNet フロー ログへ移行スクリプトを利用する場合の PowerShell のバージョンに指定はありますか<br>
-A. Powershell 7 以降での動作を想定しております。 Powershell 7よりも前のバージョンでスクリプトを実行した場合、スクリプトの実行に失敗することが想定されます。Powershell のバージョンは $PSVersionTable を実行いただくことで確認可能です。
+Q4. NSG フロー ログから VNet フロー ログへ移行スクリプトを利用する場合の PowerShell のバージョンに指定はありますか<br>
+A4. Powershell 7 以降での動作を想定しております。 Powershell 7よりも前のバージョンでスクリプトを実行した場合、スクリプトの実行に失敗することが想定されます。Powershell のバージョンは $PSVersionTable を実行いただくことで確認可能です。
 
-Q. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に選択できる、"Proceed with migration with aggregation" (集計あり) と "Proceed with migration without aggregation" (集計なし) の違いはなんですか<br>
-A. "Proceed with migration with aggregation" は、同じ VNet 内の NIC/Subnet に関連付けられている NSG の NSG フロー ログを 1 つの VNet フロー ログにまとめて、移行する方法です。例えば、VNetA 内に Subnet-1、NIC1 があり、それぞれに NSG が関連付けられており、NSG フロー ログを設定している場合 (NSG フロー ログが 2 つ設定されている) は、VNetA をターゲットとした VNet フロー ログが 1 つ作成されます。
+Q5. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に選択できる、"Proceed with migration with aggregation" (集計あり) と "Proceed with migration without aggregation" (集計なし) の違いはなんですか<br>
+A5. "Proceed with migration with aggregation" は、同じ VNet 内の NIC/Subnet に関連付けられている NSG の NSG フロー ログを 1 つの VNet フロー ログにまとめて、移行する方法です。例えば、VNetA 内に Subnet-1、NIC1 があり、それぞれに NSG が関連付けられており、NSG フロー ログを設定している場合 (NSG フロー ログが 2 つ設定されている) は、VNetA をターゲットとした VNet フロー ログが 1 つ作成されます。
 一方で、"Proceed with migration without aggregation" は、同じ VNet 内の Subnet/NIC の NSG の NSG フロー ログを VNet フロー ログと 1:1 対応する形で移行する方法です。例えば、 VNetA 内に Subnet-1、NIC1 があり、それぞれに NSG が関連付けられており、NSG フロー ログを設定している場合 (NSG フロー ログが 2 つ設定されている) は、Subnet と NIC をターゲットとした VNet フロー ログが 1 つずつ作成されます。(現在有効化されている NSG フロー ログの数だけ VNet フロー ログが作成されます。)
 
 [移行スクリプトを実行する - Network Watcher | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/network-watcher/nsg-flow-logs-migrate#run-migration-script)
@@ -69,14 +69,14 @@ A. "Proceed with migration with aggregation" は、同じ VNet 内の NIC/Subnet
 > フロー ログを移行するネットワーク セキュリティ グループが同じ仮想ネットワーク内の 3 つのネットワーク インターフェイスに関連付けられている場合は、集計ありの移行を選択して 1 つの仮想ネットワーク フロー ログ リソースを仮想ネットワークに適用することができます。 <br>
 > また、集計なしの移行を選択し、3 つの仮想ネットワーク フロー ログ (ネットワーク インターフェイスごとに 1 つの仮想ネットワーク フロー ログ リソース) を持つこともできます。
 
-Q. 移行の種類、"Proceed with migration with aggregation" (集計あり) と "Proceed with migration without aggregation" (集計なし) の選び方が分かりません<br>
-A. フロー ログの保存先をサブネットや NIC ごとに別のストレージ アカウントにしたい場合や、ログの対象を特定のサブネットや NIC のみに限定したい場合は、"Proceed with migration without aggregation" (集計なし) を選択し移行いただく必要があります。
+Q6. 移行の種類、"Proceed with migration with aggregation" (集計あり) と "Proceed with migration without aggregation" (集計なし) の選び方が分かりません<br>
+A6. フロー ログの保存先をサブネットや NIC ごとに別のストレージ アカウントにしたい場合や、ログの対象を特定のサブネットや NIC のみに限定したい場合は、"Proceed with migration without aggregation" (集計なし) を選択し移行いただく必要があります。
 
-Q. NSG フロー ログを有効化しており、トラフィック分析も有効化していますが、VNet フロー ログ移行後はトラフィック分析を無効化したいと考えています。移行スクリプトのオプションでトラフィック分析を無効化することはできますか<br>
-A. いいえ。移行スクリプトでは、既存の NSG フロー ログの設定を引き継ぐ形で VNet フロー ログが作成されます。トラフィック分析を無効化したい場合、移行前にトラフィック分析を無効化いただく、もしくは移行後にトラフィック分析を無効化いただく必要があります。
+Q7. NSG フロー ログを有効化しており、トラフィック分析も有効化していますが、VNet フロー ログ移行後はトラフィック分析を無効化したいと考えています。移行スクリプトのオプションでトラフィック分析を無効化することはできますか<br>
+A7. いいえ。移行スクリプトでは、既存の NSG フロー ログの設定を引き継ぐ形で VNet フロー ログが作成されます。トラフィック分析を無効化したい場合、移行前にトラフィック分析を無効化いただく、もしくは移行後にトラフィック分析を無効化いただく必要があります。
 
-Q. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に VNet フロー ログの名称は指定できますか<br>
-A. いいえ、移行スクリプトを用いた移行では VNet フロー ログの名称が自動的に指定されるため明示的に名称を指定することはできません。明示的に名称を指定したい場合、VNet フロー ログを新規で作成いただく必要があります。<br>
+Q8. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に VNet フロー ログの名称は指定できますか<br>
+A8. いいえ、移行スクリプトを用いた移行では VNet フロー ログの名称が自動的に指定されるため明示的に名称を指定することはできません。明示的に名称を指定したい場合、VNet フロー ログを新規で作成いただく必要があります。<br>
 自動的に指定される名称は、移行の種類 ("Proceed with migration with aggregation"/"Proceed with migration without aggregation") によって命名規則が異なります。<br>
 "Proceed with migration with aggregation" の場合、<Subnet や NIC が属する VNet 名> "-" <リソースグループ名> "-" + <flowlog> の命名規則で VNet フロー ログが作成されます。<br>
 "Proceed with migration without aggregation" の場合、<NIC 名/ Subnet 名> "-" <リソースグループ名> "-" + <flowlog> の命名規則で VNet フロー ログが作成されます。
