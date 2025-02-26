@@ -40,8 +40,7 @@ tags:
 
 ## [FAQ]
 Q1. 既存の NSG フロー ログのデータは削除されますか<br>
-A1. いいえ。既存の NSG フロー ログのデータは削除されません (ただしストレージ アカウントのリテンション期間に準じます)。移行前のログ (NSG フロー ログ) は保存先のストレージ アカウント内の [insights-logs-networksecuritygroupflowevent] というパスに保存され、
-移行後のログ (VNet フロー ログ)は [insights-logs-flowlogflowevent] というパスに保存されます。
+A1. いいえ。既存の NSG フロー ログのデータは削除されません (ただしストレージ アカウントのリテンション期間に準じます)。移行前のログ (NSG フロー ログ) は保存先のストレージ アカウント内の [insights-logs-networksecuritygroupflowevent] というパスに保存され、移行後のログ (VNet フロー ログ)は [insights-logs-flowlogflowevent] というパスに保存されます。
 また、トラフィック分析を有効化にしている場合、NSG フロー ログは [AzureNetworkAnalytics_CL] テーブル、VNet フロー ログは [NTANetAnalytics] テーブルを Log Analytics ワークスペースのクエリで確認が可能です。
 
 Q2. NSG フロー ログから VNet フロー ログへ移行スクリプトを利用して移行した場合、既存の環境において通信影響やパフォーマンス影響はありますか<br>
