@@ -78,5 +78,5 @@ A7. いいえ。移行スクリプトでは、既存の NSG フロー ログの�
 Q8. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に VNet フロー ログの名称は指定できますか<br>
 A8. いいえ、移行スクリプトを用いた移行では VNet フロー ログの名称が自動的に指定されるため明示的に名称を指定することはできません。明示的に名称を指定したい場合、VNet フロー ログを新規で作成いただく必要があります。
 自動的に指定される名称は、移行の種類 ("Proceed with migration with aggregation"/"Proceed with migration without aggregation") によって命名規則が異なります。<br>
-"Proceed with migration with aggregation" の場合、<Subnet や NIC が属する VNet 名> "-" <リソースグループ名> "-" + <flowlog> の命名規則で VNet フロー ログが作成されます。<br>
-"Proceed with migration without aggregation" の場合、<NIC 名/ Subnet 名> "-" <リソースグループ名> "-" + <flowlog> の命名規則で VNet フロー ログが作成されます。
+"Proceed with migration with aggregation" の場合、<Subnet や NIC が属する VNet 名> "-" <リソースグループ名> "-" flowlog の命名規則で VNet フロー ログが作成されます。<br>
+"Proceed with migration without aggregation" の場合、<NIC 名/ Subnet 名> "-" <リソースグループ名> "-" flowlog の命名規則で VNet フロー ログが作成されます。
