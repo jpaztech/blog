@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームです。 2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet フロー ログへ移行いただくことを推奨する内容がアナウンスされました。(Tracking ID:4NBJ-DQ0)アナウンスされてから半年ほど">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2025-02-26T00:00:00.000Z">
-<meta property="article:modified_time" content="2025-02-26T00:01:34.503Z">
+<meta property="article:modified_time" content="2025-02-26T00:11:24.712Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="Network Watcher">
@@ -105,7 +105,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+91e9a862-ac74-5a72-9702-c64b09355668%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BNSG+%E3%83%95%E3%83%AD%E3%83%BC%E3%83%AD%E3%82%B0+%E3%81%8B%E3%82%89+VNet+%E3%83%95%E3%83%AD%E3%83%BC%E3%83%AD%E3%82%B0+%E3%81%B8%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%82%88%E3%81%8F%E3%81%82%E3%82%8B%E8%B3%AA%E5%95%8F%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fmigration-from-NSG-Flowlog-to-Vnet-Flowlog%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fmigration-from-NSG-Flowlog-to-Vnet-Flowlog.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fmigration-from-NSG-Flowlog-to-Vnet-Flowlog.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/migration-from-NSG-Flowlog-to-Vnet-Flowlog/" data-id="cm7l5hpxj006y0nmd4un4hm7b" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/migration-from-NSG-Flowlog-to-Vnet-Flowlog/" data-id="cm7l5ue5500710nodd65rg4to" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -174,7 +174,7 @@
 </blockquote>
 <p>Q6. 移行の種類、”Proceed with migration with aggregation” (集計あり) と “Proceed with migration without aggregation” (集計なし) の選び方が分かりません<br><br>A6. フロー ログの保存先をサブネットや NIC ごとに別のストレージ アカウントにしたい場合や、ログの対象を特定のサブネットや NIC のみに限定したい場合は、”Proceed with migration without aggregation” (集計なし) を選択し移行いただく必要があります。</p>
 <p>Q7. NSG フロー ログを有効化しており、トラフィック分析も有効化していますが、VNet フロー ログ移行後はトラフィック分析を無効化したいと考えています。移行スクリプトのオプションでトラフィック分析を無効化することはできますか<br><br>A7. いいえ。移行スクリプトでは、既存の NSG フロー ログの設定を引き継ぐ形で VNet フロー ログが作成されます。トラフィック分析を無効化したい場合、移行前にトラフィック分析を無効化いただく、もしくは移行後にトラフィック分析を無効化いただく必要があります。</p>
-<p>Q8. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に VNet フロー ログの名称は指定できますか<br><br>A8. いいえ、移行スクリプトを用いた移行では VNet フロー ログの名称が自動的に指定されるため明示的に名称を指定することはできません。明示的に名称を指定したい場合、VNet フロー ログを新規で作成いただく必要があります。<br>自動的に指定される名称は、移行の種類 (“Proceed with migration with aggregation”/“Proceed with migration without aggregation”) によって命名規則が異なります。<br><br>“Proceed with migration with aggregation” の場合、&lt;Subnet や NIC が属する VNet 名&gt; “-“ &lt;リソースグループ名&gt; “-“ + <flowlog> の命名規則で VNet フロー ログが作成されます。<br><br>“Proceed with migration without aggregation” の場合、&lt;NIC 名/ Subnet 名&gt; “-“ &lt;リソースグループ名&gt; “-“ + <flowlog> の命名規則で VNet フロー ログが作成されます。</p>
+<p>Q8. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に VNet フロー ログの名称は指定できますか<br><br>A8. いいえ、移行スクリプトを用いた移行では VNet フロー ログの名称が自動的に指定されるため明示的に名称を指定することはできません。明示的に名称を指定したい場合、VNet フロー ログを新規で作成いただく必要があります。<br>自動的に指定される名称は、移行の種類 (“Proceed with migration with aggregation”/“Proceed with migration without aggregation”) によって命名規則が異なります。<br><br>“Proceed with migration with aggregation” の場合、&lt;Subnet や NIC が属する VNet 名&gt; “-“ &lt;リソースグループ名&gt; “-“ flowlog の命名規則で VNet フロー ログが作成されます。<br><br>“Proceed with migration without aggregation” の場合、&lt;NIC 名/ Subnet 名&gt; “-“ &lt;リソースグループ名&gt; “-“ flowlog の命名規則で VNet フロー ログが作成されます。</p>
 
       
       
