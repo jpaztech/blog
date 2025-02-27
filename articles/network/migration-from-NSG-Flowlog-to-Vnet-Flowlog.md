@@ -75,3 +75,6 @@ A8. いいえ、移行スクリプトを用いた移行では VNet フロー ロ
 自動的に指定される名称は、移行の種類 ("Proceed with migration with aggregation"/"Proceed with migration without aggregation") によって命名規則が異なります。<br>
 "Proceed with migration with aggregation" の場合、<Subnet や NIC が属する VNet 名> "-" <リソースグループ名> "-" flowlog の命名規則で VNet フロー ログが作成されます。<br>
 "Proceed with migration without aggregation" の場合、<NIC 名/ Subnet 名> "-" <リソースグループ名> "-" flowlog の命名規則で VNet フロー ログが作成されます。
+
+Q9. 2025 年 6 月 30 日以降に既存の NSG フローログの設定変更はできますか<br>
+A9. はい。2025/6/30 以降、新規の NSG フローログは作成不可となりますが、既存の NSG フローログの設定変更は可能です。
