@@ -13,17 +13,14 @@ tags:
 
 Azure Kubernetes Service (AKS) についてよく寄せられる質問でも下記の通り、サポートされない操作と記載があります。
 
-  >[すべての VM を停止したり、その割り当てを解除したりできますか?](https://docs.microsoft.com/ja-jp/azure/aks/faq#can-i-stop-or-de-allocate-all-my-vms) より引用
+  >[すべての VM を停止したり、その割り当てを解除したりできますか?](https://learn.microsoft.com/ja-jp/azure/aks/faq#-----vm--------------------------) より引用
   >
-  >これは、直接 AKS のリソースの操作を行うことにより、AKS として管理している情報と不整合 (例えば、仮想マシ
-  >ンを直接削除したが、AKS のノードとしてまだ残っている状態、等) が起きる恐れがあるため、このような記載が
-  >されています。
+  >いいえ。これはサポートされている構成ではありません。 代わりに、クラスターを停止してください。
 
 これは、Azure のリソースを直接操作した場合に、AKS (Kubernetes) から見たときに情報の整合性が取れなくなるためになります。
 ただ、特定のノードがおかしい等により再起動や削除されたいといったご要望があるかと思いますので、以下、実行例を交えて手順について纏めてみました。
 
 なお、ノードの不調については、Azure 基盤の自動修復をはじめ、AKS の自動修復により改善されることがあります。
-この話はまた別の機会にでも。
 
 ## 特定のノードを再起動
 
@@ -46,7 +43,7 @@ aks-nodepool1-40771167-vmss000001   Ready    agent   24h   v1.18.10
 aks-nodepool1-40771167-vmss000002   Ready    agent   24h   v1.18.10
 
 # 対象ノードからワークロードを退避し、スケジュールから除外 (drain)
-$ kubectl drain <ノード名> --ignore-daemonsets --delete-local-data --force
+$ kubectl drain <ノード名> --ignore-daemonsets --delete-emptydir-data --force
 
 # 対象ノードが "SchedulingDisabled" になっていることを確認
 $ kubectl get nodes
@@ -146,6 +143,9 @@ az vmss delete-instances -g MC_labvmssaks_labvmssaks_japaneast -n aks-nodepool1-
 ```shell
 $ az aks scale -g labasaks -n labasaks --node-count 3
 ```
+
+■ご参考：既存のノード プール内の特定の VM を削除する  
+https://learn.microsoft.com/ja-jp/azure/aks/delete-node-pool?tabs=azure-cli#remove-specific-vms-in-an-existing-node-pool
 
 ## PodDisruptionBudget による可用性の向上
 
