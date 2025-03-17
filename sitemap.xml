@@ -114,14 +114,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-create-activity-log/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/vm-copy-move-scenario/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/vm-copy-move-scenario/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/vm-create-activity-log/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -142,14 +142,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/unmanaged-disk-retired/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/sla-singlevm-availability/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/sla-singlevm-availability/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/unmanaged-disk-retired/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -345,14 +345,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/get-scheduled-events-from-imds/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/get-scheduled-events-from-imds/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/how-to-change-os-disk-name/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -422,6 +422,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/vm/change-availability-zone-using-powershell/</loc>
+    
+    <lastmod>2025-03-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/vm/classic-vhd-to-arm-vm/</loc>
     
     <lastmod>2025-03-17</lastmod>
@@ -429,7 +436,7 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/change-availability-zone-using-powershell/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/availability_options_with_ppg/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -471,13 +478,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/availability_options_with_ppg/</loc>
-    
-    <lastmod>2025-03-17</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/vm/UseCloudShellinAzureVirtualNetwork/</loc>
     
     <lastmod>2025-03-17</lastmod>
@@ -485,14 +485,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/7031-rdagent-restart/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/vm/7031-rdagent-restart/</loc>
+    <loc>https://jpaztech.github.io/blog/vm/20211013-rca-azure-vm/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -653,13 +653,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/network/private-dns-zone-faq/</loc>
-    
-    <lastmod>2025-03-17</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/network/pe-troubleshooting/</loc>
     
     <lastmod>2025-03-17</lastmod>
@@ -667,7 +660,21 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/private-dns-zone-faq/</loc>
+    
+    <lastmod>2025-03-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/pe-introduction/</loc>
+    
+    <lastmod>2025-03-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/network/pe-difference-se/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -689,13 +696,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/mscdn-classic-retire/</loc>
-    
-    <lastmod>2025-03-17</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/pe-difference-se/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -744,6 +744,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/forcetunneling-azure-to-onpre-configuration/</loc>
+    
+    <lastmod>2025-03-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/expressroute_MV1F-T9G/</loc>
     
     <lastmod>2025-03-17</lastmod>
@@ -752,13 +759,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/firewall-rules/</loc>
-    
-    <lastmod>2025-03-17</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/forcetunneling-azure-to-onpre-configuration/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -905,6 +905,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/network/afd-classic-retire/</loc>
+    
+    <lastmod>2025-03-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/network/afd-connection-issue/</loc>
     
     <lastmod>2025-03-17</lastmod>
@@ -927,13 +934,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/network/FW-O365/</loc>
-    
-    <lastmod>2025-03-17</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/network/afd-classic-retire/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -1395,6 +1395,13 @@
   </url>
   
   <url>
+    <loc>https://jpaztech.github.io/blog/archive/backup-morethan-1tb-disk/</loc>
+    
+    <lastmod>2025-03-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jpaztech.github.io/blog/archive/change-expressroute-public-peering/</loc>
     
     <lastmod>2025-03-17</lastmod>
@@ -1410,13 +1417,6 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/disk11-after20180104/</loc>
-    
-    <lastmod>2025-03-17</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jpaztech.github.io/blog/archive/backup-morethan-1tb-disk/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -1507,14 +1507,14 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/automation-vm-auto-deallocate/</loc>
+    <loc>https://jpaztech.github.io/blog/archive/automation-runbook-webhook/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
@@ -1535,13 +1535,6 @@
   </url>
   
   <url>
-    <loc>https://jpaztech.github.io/blog/archive/announcement-about-expressroute-deployment-model/</loc>
-    
-    <lastmod>2025-03-17</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://jpaztech.github.io/blog/archive/application-gateway-502-error-info/</loc>
     
     <lastmod>2025-03-17</lastmod>
@@ -1550,6 +1543,13 @@
   
   <url>
     <loc>https://jpaztech.github.io/blog/archive/application-gateway-waf-vulnerability-detection/</loc>
+    
+    <lastmod>2025-03-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jpaztech.github.io/blog/archive/announcement-about-expressroute-deployment-model/</loc>
     
     <lastmod>2025-03-17</lastmod>
     
