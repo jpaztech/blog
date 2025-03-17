@@ -6,6 +6,10 @@ tags:
   - Azure Kubernetes Service (AKS)
 ---
 
+> [!WARNING]
+> 本記事は、AKS の Kubernetes バージョン 1.24 が出た際の古い記事となります。  
+> アーカイブとして本記事は残させていただきます。
+
 こんにちは。Azure テクニカル サポートチームの小沢です。 
 
 AKS の Kubernetes バージョンを 1.24 へアップグレードをした際に、Azure Load Balancer の正常性プローブがTCPプロ―ブから HTTP/HTTPS プローブに変更されることがあります。 
