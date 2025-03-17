@@ -15,10 +15,6 @@ Azure Windows VM において記憶域スペースをご構成いただいてい
 
 > **ご参考**
 > 公開情報: [記憶域スペースの概要](https://docs.microsoft.com/ja-jp/windows-server/storage/storage-spaces/overview)
->
-> 対象サーバー OS:
-> Windows Server 2019、Windows Server 2016、Windows Server 2012 R2、Windows Server 2012
-
 
 ---
 
@@ -39,8 +35,8 @@ Azure Windows VM において記憶域スペースをご構成いただいてい
 > 例えば、1TB × 3 本のディスクで記憶域プールを構成している場合、この既に構成している 1 TB を 2 TB にすることで拡張することは想定しておりません。
 > ![](./extend-storage-space-on-azure-windows-vm/19.png)
 >　
-> なお、Azure ディスク リソースは縮小いただくことがご実施いただけません。
-> 公開情報:  [Azure IaaS VM ディスクと Premium マネージド ディスクおよびアンマネージド ディスクについてよく寄せられる質問](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/find-unattached-disks)
+> なお、Azure ディスク リソースは縮小いただくことがご実施いただけません。  
+> 公開情報:  [マネージド ディスクを縮小またはダウンサイズできますか?](https://learn.microsoft.com/ja-jp/azure/virtual-machines/faq-for-disks?tabs=azure-portal#----------------------------)
 
 ### 方法 1 : 記憶域プールに新規のディスクを追加し、仮想ディスクおよびボリュームを拡張する
 
@@ -71,7 +67,7 @@ Azure Windows VM において記憶域スペースをご構成いただいてい
 **1. 既存の VM に新規ディスクを追加します**
 管理ディスクを護衛用の場合は下記の公開情報をご参照いただき、Azure Portal または Azure PowerShell より VM に新規ディスク リソースを追加します。
 
-公開情報: [Azure portal を使用して Windows VM にマネージド データ ディスクを接続する - データ ディスクの追加](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/attach-managed-disk-portal#add-a-data-disk)
+公開情報: [Azure portal を使用して Windows VM にマネージド データ ディスクを接続する - データ ディスクの追加](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/attach-managed-disk-portal#add-a-data-disk)  
 公開情報: [PowerShell を使用して Windows VM にデータ ディスクを接続する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/attach-disk-ps)
 
 
@@ -156,7 +152,7 @@ Azure Portal の場合 :
 4. 保存をクリックします。
 
 Azure PowerShell の場合 :
-公開情報: [データ ディスクのサイズを変更する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/expend-os-disk#resizing-data-disks) 
+公開情報: [PowerShell を使用してマネージド ディスクのサイズを変更する](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/expand-disks#resize-a-managed-disk-by-using-powershell) 
 
 **5. VM を起動し、RDP 接続を行います**
 
@@ -177,11 +173,8 @@ Azure PowerShell の場合 :
 
 ## (余談) SQL VM に関して
 SQL ギャラリー イメージ にて VM を作成いただき構成された記憶域プールについては、Azure ポータルにて一部のストレージ設定を変更することが可能です。詳細は下記の公開情報をご参照ください。
-
-公開情報: [SQL Server VM のストレージの構成](https://docs.microsoft.com/ja-jp/azure/azure-sql/virtual-machines/windows/storage-configuration)
-
-
-<br>
-
+  
+公開情報: [SQL Server VM のストレージの構成](https://docs.microsoft.com/ja-jp/azure/azure-sql/virtual-machines/windows/storage-configuration)  
+  
 本記事は以上となりますが、いかがでしたでしょうか。
 本記事が皆様のお役に立てれば幸いです。
