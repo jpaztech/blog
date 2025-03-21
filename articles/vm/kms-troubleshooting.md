@@ -111,13 +111,14 @@ Windows 8 / Windows Server 2012 以降の OS の場合のライセンス認証�
 1. パーソナル設定内の項目は設定変更不可となります。
 1. 自身が KMS ホストの場合、KMS クライアントの認証が行えません。
 
-Azure VM の場合以下に記載の影響もございます。  
+すなわち、 VM への接続不可や使用不可になるといった影響はございません。  
+しかしながら、ライセンス認証が切れる前にライセンス認証が成功となるようご対応をお願いいたします。  
 
-■ご参考：Azure Windows 仮想マシンのアクティブ化に関する FAQ
-https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-virtual-machine-activation-faq
+なお、[Tokens.dat ファイルの破損](./#Tokens-dat-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E7%A0%B4%E6%90%8D) によってライセンス認証ができない場合は、利用可能なメモリが 2 GB になる事象も合わせて発生することがございます。  
+詳細は以下のブログ記事を参照いただけますと幸いです。  
 
-> **Windows マシンがアクティブ化されていない場合、メモリは 2 GB に制限されますか?**   
-> はい。使用可能なすべてのメモリにアクセスするには、Windows マシンをアクティブにする必要があります。
+■ご参考：ハードウェア予約済みメモリが増えて使用可能なメモリ容量が 2GB になる事象について  
+https://jpwinsup.github.io/blog/2023/12/25/Performance/SystemResource/2GBIssueWithHardwareReserviedMemory/
 
 ---
 ## トラブルシューティング方法
