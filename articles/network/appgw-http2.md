@@ -27,14 +27,14 @@ HTTP/1.1 の後継として、2015 年に正式な仕様として承認されま
 
 
 現在、Edge や Chrome など現在主要なブラウザーでは、HTTP/2 over TLS (h2) のみが HTTP/2 として使用できます。
-<img src="./appgw_http2/chrome check.png" alt="HAR1" style="width:800px;"/> 
+<img src="./network/appgw_http2/chrome check.png" alt="HAR1" style="width:800px;"/> 
 
 例えば、www.microsoft.com のサイトは HTTP/2 に対応していますが、 www.microsoft.com に HTTPS ではなく HTTP で接続する場合、
 ブラウザーが HTTP/2 over TCP (h2c) をサポートしていないため、HTTP/2 は使用されず、HTTP/1.1 で接続を確立します。
 (以下のスクリーンショットの例ではその後 HTTPS の URL にリダイレクトされ、HTTP/2 over TLS (h2)で接続しています。)
 
-<img src="./appgw_http2/httpyahoo.png" alt="HAR2" style="width:800px;"/> 
-<img src="./appgw_http2/yahoo.png" alt="HAR3" style="width:800px;"/> 
+<img src="./network/appgw_http2/httpyahoo.png" alt="HAR2" style="width:800px;"/> 
+<img src="./network/appgw_http2/yahoo.png" alt="HAR3" style="width:800px;"/> 
 
 なお、ブラウザからのアクセスではなく、curl コマンドなどの他の HTTP クライアントから HTTP リクエストを送信する際には、HTTP/2 over TCP (h2c) を利用して HTTP/2 通信が行われる可能性があります。この状況では、Application Gateway が接続先となる際に、v1 と v2 で動作が異なります。v1 の場合、HTTP/2 通信はダウングレードされて、v2 の場合は HTTP ステータスコード 403 が応答されます。詳細の動作つきましては、以下のセクションをご参照ください。
 
