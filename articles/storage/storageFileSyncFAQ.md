@@ -1,5 +1,5 @@
 ---
-title: Azure File Sync よくあるお問合せ - FAQ
+title: Azure File Sync のファイルの同期周期および同期の一時停止に関して
 date: 2021-03-18 17:30:00
 tags:
   - Storage
@@ -70,8 +70,10 @@ Invoke-AzStorageSyncChangeDetection
  -CloudEndpointName "クラウドエンドポイント名" 
  -DirectoryPath "ディレクトリパス名"
 ```
-サーバーエンドポイントへ反映されたことを確認します。
+サーバーエンドポイントへ反映されたことを確認します。  
 ![](storageFileSyncFAQ/Storage06.png)
+
+なお、クラウドエンドポイント名は Get-AzStorageSyncCloudEndpoint コマンドで確認可能となります。  
 
 ><ご参考>
 >□Invoke-AzStorageSyncChangeDetection
