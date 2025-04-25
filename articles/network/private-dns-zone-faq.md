@@ -13,7 +13,7 @@ Azure DNS では、仮想ネットワーク内の名前解決結果を上書き�
 
 このブログでは、プライベート DNS ゾーンのベスト プラクティス、及びよく頂いているお問い合わせをご紹介させて頂きます。
 
-> [!NOTE] プライベート DNS ゾーンのプレビュー機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを [パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback) が実装されたため、本ブログの「回避策」に追記しました。
+> [!NOTE] プライベート DNS ゾーンの機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを [パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback) が実装されたため、本ブログの「回避策」に追記しました。
 
 <!-- more -->
 
@@ -101,10 +101,10 @@ blob.tyo22prdstr07a.store.core.windows.net. 60 IN A 20.150.85.196
 ```
 
 ### 回避策
-> [!NOTE] プライベート DNS ゾーンのプレビュー機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを [パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback) が実装されたことで、回避策が追加されました。
+> [!NOTE] プライベート DNS ゾーンの機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを [パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback) が実装されたことで、回避策が追加されました。
 
 #### 回避策 1
-プレビュー提供中の[パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback)を有効化することで、上述したシナリオを回避します。
+追加機能の[パブリック DNS にフォールバックする機能 (resolution policy)](https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback)を有効化することで、上述したシナリオを回避します。
 プライベート DNS ゾーンのパブリック DNS にフォールバックする機能は、プライベート エンドポイントを対象とした priavatelink サブドメインを対象に動作します。
 この機能は、プライベート DNS ゾーンを仮想ネットワークとリンクする時に選択が可能です。また、既存の privatelink サブドメインのプライベート DNS ゾーンにおいても、リンク設定を変更することで有効化可能です。
 
