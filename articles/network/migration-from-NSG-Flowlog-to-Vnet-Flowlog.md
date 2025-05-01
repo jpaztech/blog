@@ -58,6 +58,8 @@ A4. Powershell 7 以降での動作を想定しております。 Powershell 7�
 Q5. 移行スクリプト (MigrationFromNsgToAzureFlowLogging.ps1) を実行した際に選択できる、"Proceed with migration with aggregation" (集計あり) と "Proceed with migration without aggregation" (集計なし) の違いはなんですか<br>
 A5. "Proceed with migration with aggregation" は、同じ VNet 内の NIC/Subnet に関連付けられている NSG の NSG フロー ログを 1 つの VNet フロー ログにまとめて、移行する方法です。例えば、VNetA 内に Subnet-1、NIC1 があり、それぞれに NSG が関連付けられており、NSG フロー ログを設定している場合 (NSG フロー ログが 2 つ設定されている) は、VNetA をターゲットとした VNet フロー ログが 1 つ作成されます。
 一方で、"Proceed with migration without aggregation" は、同じ VNet 内の Subnet/NIC の NSG の NSG フロー ログを VNet フロー ログと 1:1 対応する形で移行する方法です。例えば、 VNetA 内に Subnet-1、NIC1 があり、それぞれに NSG が関連付けられており、NSG フロー ログを設定している場合 (NSG フロー ログが 2 つ設定されている) は、Subnet と NIC をターゲットとした VNet フロー ログが 1 つずつ作成されます。(現在有効化されている NSG フロー ログの数だけ VNet フロー ログが作成されます。)
+なお、移行元に複数の NSG フローログが構成されている環境において "Proceed with migration with aggregation" で移行する場合、NSG フローログごとの設定値 (i.e. 出力先のストレージアカウントやリテンション期間、Traffic Analytics の有無、FlowLog Version)が異なると 1 つの VNet フローログにまとめられない動作になりますことをご留意ください。
+仮に異なる設定値を持った状態で "Proceed with migration with aggregation" を選択した場合、同じ設定を持った NSG フローログは VNet フローログにまとめられ、異なる設定を持った NSG フローログは "Proceed with migration without aggregation" と同様に 1:1 対応する形で移行される動作となります。
 
 [移行スクリプトを実行する - Network Watcher | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/network-watcher/nsg-flow-logs-migrate#run-migration-script)
 
