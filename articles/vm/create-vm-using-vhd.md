@@ -49,22 +49,22 @@ ASM 環境 \(クラシック VM\) や非管理ディスクをご利用の場合�
 
 ![](create-vm-using-vhd/2-3.jpg)
 
-4. \[Blob SAS URL\] をテキスト エディタ等にコピーします。
+4. \[Blob SAS token\] をテキスト エディタ等にコピーします。
 
 ![](create-vm-using-vhd/2-4.jpg)
 
-5. コピーした \[Blob SAS URL\] を以下の通り編集します。
+5. コピーした \[Blob SAS token\] を以下の通り編集します。
    ※ VHD ファイル名は適宜設定してください。
-   **<span style="color:red;">※ ここで作成した SAS URL は 後の手順 \[4\] - 3 にて、コピー先の URL として使います。</span>**
+   **<span style="color:red;">※ ここで作成した URL は 後の手順 \[4\] - 3 にて、コピー先の URL として使います。</span>**
 
 編集前: 
-**https://<ストレージ アカウント名>.blob.core.windows.net/vhds?<'SAS URL'>**
+**https://<ストレージ アカウント名>.blob.core.windows.net/vhds?<'SAS token'>**
 
 例:
 > https://xxxxxxxx.blob.core.windows.net/vhds?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=xxxxxxxxxx
 
 編集後: 
-**https://<ストレージ アカウント名>.blob.core.windows.net/vhds/<コピー後の VHD ファイル名>?<'SAS URL'>**
+**https://<ストレージ アカウント名>.blob.core.windows.net/vhds/<コピー後の VHD ファイル名>?<'SAS token'>**
 
 例:
 > https://xxxxxxxx.blob.core.windows.net/vhds/<span color="red">osdisk.vhd</span>?sp=rw&st=2021-xx-xxTxx:xx:xxZ&se=2021-xx-xxTxx:xx:xxZ&spr=https&sv=2020-02-10&sr=c&sig=xxxxxxxxxx
@@ -191,6 +191,7 @@ VM の長期にわたる停止が難しい場合には、取得いただいた�
    - "OS の種類" は OS ディスクの場合にのみ、複製元 VM と同様のものを選択します。
      - Windows の場合には \[Windows\] を、Linuxの場合、\[Linux\] を選択します。
      - データ ディスクの場合は \[None\] を選択します。
+   - "VM generation" は OS ディスクの場合にのみ、複製元 VM と同様のものを選択します。**起動不可を回避するために元と同じ世代をご選択ください。**
 
 ![](create-vm-using-vhd/5-2.jpg)
 
