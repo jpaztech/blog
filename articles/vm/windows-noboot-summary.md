@@ -1,5 +1,6 @@
 ---
 title: Azure 上の Windows OS が起動しない場合の情報まとめ
+date: 2021-5-14 18:00:00
 tags:
   - VM
   - Windows
