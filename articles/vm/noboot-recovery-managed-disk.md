@@ -57,7 +57,7 @@ Azure Portal より  VM を停止できるようであれば、停止してか�
 3. [確認および作成] - [作成] をクリックします。
 
 > 管理ディスク (Managed Disks) スナップショットより VM をデプロイする
-> [https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/deployvmfromsnapshot](https://docs.microsoft.com/ja-jp/archive/blogs/jpaztech/deployvmfromsnapshot)
+> [https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/troubleshoot-recovery-disks-portal-windows#create-a-disk-from-the-snapshot](https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/troubleshoot-recovery-disks-portal-windows#create-a-disk-from-the-snapshot)
 > 「2. スナップショットより "ディスク" リソースを作成する」をご確認ください。
  
 ### 3. 復旧作業用 VM に、修復用 OS ディスクを接続します
