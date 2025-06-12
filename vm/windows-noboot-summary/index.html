@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版) | Japan Azure IaaS Core Support Blog</title>
+  <title>Azure 上の Windows OS が起動しない場合の情報まとめ | Japan Azure IaaS Core Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの重田です。今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。 更新元の記事：Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの重田です。今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)">
+<meta property="og:title" content="Azure 上の Windows OS が起動しない場合の情報まとめ">
 <meta property="og:url" content="https://jpaztech.github.io/blog/vm/windows-noboot-summary/index.html">
 <meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
-<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの重田です。今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。 更新元の記事：Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの重田です。今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2021-05-14T09:00:00.000Z">
-<meta property="article:modified_time" content="2025-06-12T01:22:24.361Z">
+<meta property="article:modified_time" content="2025-06-12T01:43:14.721Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -90,7 +90,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Azure 上の Windows OS が起動しない場合の情報まとめ (2021 年 5 月 14 日更新版)
+      Azure 上の Windows OS が起動しない場合の情報まとめ
     </h1>
   
 
@@ -102,15 +102,14 @@
 </a>
         
         
-        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+6ae15f34-41ad-5baa-88b7-78575ed88086%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E4%B8%8A%E3%81%AE+Windows+OS+%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E6%83%85%E5%A0%B1%E3%81%BE%E3%81%A8%E3%82%81+%282021+%E5%B9%B4+5+%E6%9C%88+14+%E6%97%A5%E6%9B%B4%E6%96%B0%E7%89%88%29%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fwindows-noboot-summary%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fwindows-noboot-summary.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fwindows-noboot-summary.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+6ae15f34-41ad-5baa-88b7-78575ed88086%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+%E4%B8%8A%E3%81%AE+Windows+OS+%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E6%83%85%E5%A0%B1%E3%81%BE%E3%81%A8%E3%82%81%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fwindows-noboot-summary%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fwindows-noboot-summary.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fwindows-noboot-summary.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/windows-noboot-summary/" data-id="cmbsp1zit00sq0nnneznf73do" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/windows-noboot-summary/" data-id="cmbspsrxv00cb0np74poac2r8" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
       
         <p>こんにちは。Azure テクニカル サポート チームの重田です。<br>今回は、当サポートチームの旧ブログでご紹介しておりました Windows OS が起動しない (noboot) 場合の情報について、情報を更新した上で改めてご紹介いたします。</p>
-<p><del>更新元の記事：Azure 上の Windows OS が起動しない場合の情報まとめ (2018 年 8 月 27 日版)</del></p>
 <span id="more"></span>
 
 <p>この Windows OS が起動しなくなる事象については、状況把握や復旧手段に関してご支援させていただいている際のポイントを、弊社 Windows サポートチームのブログからご紹介しています。</p>
@@ -123,9 +122,6 @@
 <p>なお、上記 Windows OS 観点のブログに記載されている [3] - [6] を Azure 環境上でお試しいただく方法については、下記の別記事で紹介しています。</p>
 <blockquote>
 <p><strong>管理ディスクの場合：</strong><br>【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/</a></p>
-</blockquote>
-<blockquote>
-<p><strong>非管理ディスクの場合：</strong><br>【非管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</a></p>
 </blockquote>
 <p>本記事では、Windows OS が起動しなくなる事象に関する Azure 観点での状況把握や復旧方法に関する Tips のまとめをご紹介します。</p>
 <hr>
@@ -148,11 +144,11 @@
 </blockquote>
 <h4 id="スナップショット"><a href="#スナップショット" class="headerlink" title="スナップショット"></a>スナップショット</h4><p>Azure Backup を使用できない場合は、ディスク リソースのスナップショットを取得し、有事の際にはそのスナップショットからディスクを復元する方法もあります。<br>スナップショットの取得に関する詳細な手順に関しましては、下記の公開情報をご確認ください。<br>なお、ディスクのスナップショットは、Azure Backup と異なり VM の稼働状態で取るとデータに不整合が発生する場合があります。<br>スナップショットを作成する前に VM を停止することをお勧めします。</p>
 <blockquote>
-<p>ポータルまたは PowerShell を使用してスナップショットを作成する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk</a><br>※ 管理ディスク用の手順になります。</p>
+<p>ポータルまたは PowerShell を使用してスナップショットを作成する<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk">https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/snapshot-copy-managed-disk</a></p>
 </blockquote>
 <h4 id="OS-ディスクのスワップ"><a href="#OS-ディスクのスワップ" class="headerlink" title="OS ディスクのスワップ"></a>OS ディスクのスワップ</h4><p>ディスクを復元した際には、事象が発生した VM の OS ディスクと入れ替えることが可能です。<br>詳細な手順は下記をご確認ください。</p>
 <blockquote>
-<p>VM の OS ディスクをスワップする<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-failed-vms-os-disk-with-the-repaired-disk">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-failed-vms-os-disk-with-the-repaired-disk</a><br>※ 管理ディスク用の手順になります。</p>
+<p>VM の OS ディスクをスワップする<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-failed-vms-os-disk-with-the-repaired-disk">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows#swap-the-failed-vms-os-disk-with-the-repaired-disk</a></p>
 </blockquote>
 <h3 id="■-復旧用の-VM-を使って対応する"><a href="#■-復旧用の-VM-を使って対応する" class="headerlink" title="■ 復旧用の VM を使って対応する"></a>■ 復旧用の VM を使って対応する</h3><p>起動ができない VM の OS ディスクを、他の正常な VM にデータ ディスクとして接続することで、当該 OS ディスクに対する操作が可能となります。</p>
 <p>順序が前後しますが、”<a target="_blank" rel="noopener" href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/">OS が起動しなくなる問題が発生した場合の対処方法について – 対処方法</a>“ 内で紹介している “[3] SFC (System File Checker)、[4] regback を用いたレジストリ復旧、[5] 更新プログラムのアンインストール、[6] ファイルシステムの破損チェック” は、この方法で実施することができます。</p>
@@ -160,20 +156,18 @@
 <blockquote>
 <p>【管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-managed-disk/</a></p>
 </blockquote>
-<blockquote>
-<p>【非管理ディスク編】復旧 VM を使った Windows VM の Noboot 復旧手順<br><a href="https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/">https://jpaztech.github.io/blog/vm/noboot-recovery-unmanaged-disk/</a></p>
-</blockquote>
 <p>なお、公開情報としては下記がございますのでご確認ください。</p>
 <blockquote>
 <p>Azure Portal から OS ディスクを復旧 VM にアタッチして Windows VM のトラブルシューティングを行う<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows">https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/troubleshoot-recovery-disks-portal-windows</a></p>
+</blockquote>
+<blockquote>
+<p>Azure 仮想マシンのブート エラーのトラブルシューティング<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-error-troubleshoot">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-error-troubleshoot</a></p>
 </blockquote>
 <h3 id="■-Windows-の回復コンソールを使用する"><a href="#■-Windows-の回復コンソールを使用する" class="headerlink" title="■ Windows の回復コンソールを使用する"></a>■ Windows の回復コンソールを使用する</h3><p>“<a target="_blank" rel="noopener" href="https://jpwinsup.github.io/blog/2021/05/07/Performance/NoBoot/NoBoot-Solution/">OS が起動しなくなる問題が発生した場合の対処方法について – 対処方法</a>“ 内で紹介している、”[1] スタートアップ修復、[2] Boot 構成情報の修正” を実施する場合、Windows の回復コンソールの立ち上げが必要となります。<br>回復コンソールは、Azure 上からは直接操作ができませんので、Nested Hyper-V をご利用いただくか、VHD ファイルをオンプレミス環境にダウンロードし Hyper-V 環境を構築することで行います。</p>
 <p>オンプレミス環境に Hyper-V 環境が無い場合、Azure での Nested Hyper-V 用 VM を一時的に作成するということが便利です。<br>具体的な手順に関しては、下記ブログをご確認ください。</p>
 <blockquote>
 <p>Nested Hyper-V を使った VM の復旧<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/archive/blogs/jpaztech/recover_vm_using_nested_hyperv">https://docs.microsoft.com/en-us/archive/blogs/jpaztech/recover_vm_using_nested_hyperv</a></p>
 </blockquote>
-<!-- 後で更新する -->
-
 <p>なお、オンプレミス環境で回復コンソールの立ち上げを実施する場合に関しても、オンプレミス環境で行う “Hyper-V 構築 → VHD のダウンロード → VM の起動” といった手順は、Nested Hyper-V を使った手順とほぼ同様となりますので、ご参考となれば幸いです。</p>
 <hr>
 <h2 id="TIPS-3-バックアップ取得に関する-Tips"><a href="#TIPS-3-バックアップ取得に関する-Tips" class="headerlink" title="TIPS #3 バックアップ取得に関する Tips"></a>TIPS #3 バックアップ取得に関する Tips</h2><p>上述の通り、Windows OS としての対処をご実施いただいても、事象が 100％ 復旧するという保証はなく、最も確実な復旧方法はバックアップから復旧させる方法になります。<br>バックアップからのリストアであれば、復旧までの時間がある程度予測できることも利点と言えます。<br>復旧をより確実なものとするために、以下のような点についても心がけてください。</p>
@@ -186,26 +180,10 @@
 <p>その場合には、「正常な状態の VM を停止し、OS ディスクのスナップショットを作成しておく」ことをお勧めします。</p>
 <p>上述の通り、データに不整合がある状態になることを防ぐため、スナップショットを作成する前に VM を停止することをお勧めします。<br>スナップショット作成のために、VM を停止 / 開始させることで、開始後に OS が正しく起動することを確かめることもできます。<br>(ゲスト OS のシャットダウンを実施してから VM の停止をご実施いただくとより安全です。)<br>(OS 起動が確約されるのであれば、前のバージョンのスナップショットは削除しても問題ないので、1 世代分のスナップショットを保持すればよいということになります。)</p>
 <p>Windows OS にアプリケーションを追加したり、Windows Update を適用する、といったシステム変更に際してディスクのスナップショットを作成しておくと安心です。</p>
-<h4 id="追加コストの話"><a href="#追加コストの話" class="headerlink" title="追加コストの話"></a>追加コストの話</h4><p>スナップショットの課金形態や考え方は、非管理ディスクと管理ディスクで若干異なります。<br>追加でコストが発生する部分となりますので、適切に理解をするため下記の通りご紹介します。</p>
-<h4 id="非管理ディスクのスナップショット"><a href="#非管理ディスクのスナップショット" class="headerlink" title="非管理ディスクのスナップショット"></a>非管理ディスクのスナップショット</h4><p>非管理ディスクのスナップショットは、もとのディスク (VHD ファイル) のコピーではなく、その時点の差分データです。<br>そのため、VHD ファイルを誤って削除してしまうと、スナップショットも削除されてしまうのでご注意ください。<br>ただし課金の面では、差分の容量分のみが課金されます。</p>
-<p>例:</p>
-<ol>
-<li>元々の使用量が 30 GB のVHDでスナップショットを作成する。<br>この時点ではスナップショットぶんの課金ゼロであり、30 GB の VHD の容量分のみの課金となる。</li>
-<li>VHD ファイル上に 1 GB の変更が加わる。<br>この時点で以前のスナップショットとの差分で生じた 1 GB が加算された 31 GB ぶんの課金が発生する。</li>
-</ol>
-<p>上記の詳細については、下記公開情報をご確認ください。</p>
+<p>スナップショットのコストについては、公式ドキュメントをご参照いただけますと幸いです。</p>
 <blockquote>
-<p>Blob スナップショットの課金方法について<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/rest/api/storageservices/understanding-how-snapshots-accrue-charges">https://docs.microsoft.com/ja-jp/rest/api/storageservices/understanding-how-snapshots-accrue-charges</a></p>
+<p>スナップショット（Azure Disk Storage の課金について）<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/disks-understand-billing#snapshots">https://learn.microsoft.com/ja-jp/azure/virtual-machines/disks-understand-billing#snapshots</a></p>
 </blockquote>
-<blockquote>
-<p>Managed Disks の価格<br><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/pricing/details/managed-disks/">https://azure.microsoft.com/ja-jp/pricing/details/managed-disks/</a></p>
-<blockquote>
-<p>&lt;抜粋 (2021/5/14) &gt;<br>Premium SSD Managed Disks の完全なスナップショットとイメージを Standard ストレージに格納できます。<br>ローカル冗長 (LRS) とゾーン冗長 (ZRS) スナップショットのいずれかのオプションをお選びいただけます。<br>Standard LRS と Standard ZRS どちらのオプションでも、これらのスナップショットとイメージはディスクの使用量に応じて月々 ¥5.600/GB で課金されます。<br>たとえば、プロビジョニングされた容量が 64 GB のマネージド ディスクのスナップショットを作成し、実際に使用したデータ サイズが 10 GB だった場合、スナップショットは、使用したデータ サイズである 10 GB に対してのみ課金されます。<br>Premium SSD マネージド ディスク ストレージに保存することを選択した場合、1 か月あたり ¥17.024/GB で課金されます。</p>
-</blockquote>
-</blockquote>
-<h4 id="管理ディスクのスナップショット"><a href="#管理ディスクのスナップショット" class="headerlink" title="管理ディスクのスナップショット"></a>管理ディスクのスナップショット</h4><p>管理ディスクのスナップショットは、もとのディスク (VHD ファイル) の完全な複製です。<br>そのため、スナップショットを作成した元のディスクを削除してもスナップショットは削除されず、スナップショットからディスクの作成 (復元) を実施することが可能です。<br>課金の面では、スナップショット元のデータのコピーのため、実使用量分のデータが課金対象になります。</p>
-<p>管理ディスクは、P10 (Premium, 128GiB) や S10 (Standard, 128GiB) といった決まったサイズごとに課金枠が決まっていますが、スナップショットはその中の実容量をベースに課金されます。<br>つまり、128 GiB の VHD 中、10 GiB しか使われていなかったら、10 GiB 分のみがスナップショットの課金額となります。</p>
-<p>なお、Premium ストレージのスナップショットを Standard ストレージに取る、ということも可能です。<br>例えば、P10 の管理ディスクとそのスナップショット (Standard ストレージ) に取得する場合、[もとのディスクの料金 (P10)] と、[Standard スナップショットの容量別課金 × 使用している実容量 GiB] の課金が発生することとなります。</p>
 <h3 id="■-参考資料"><a href="#■-参考資料" class="headerlink" title="■ 参考資料"></a>■ 参考資料</h3><p>バックアップと高可用性、DR との違い、といった点も理解しておくことが重要です。<br>高可用性環境なら、VM 1 台の OS が起動しなかった場合にも復旧のための時間的猶予が生まれます。</p>
 <p>下記ブログのアーカイブにて、Azure において様々に存在するダウンタイムを避けるサービスについて紹介しておりますので、ご参考情報としてご参照下さい。</p>
 <blockquote>
