@@ -227,8 +227,8 @@ Azure ではこの調査に役立つ多くのディスクに関するメトリ�
 > ■ご参考：仮想マシンのサイズの変更
 > [https://learn.microsoft.com/ja-jp/azure/virtual-machines/resize-vm](https://learn.microsoft.com/ja-jp/azure/virtual-machines/resize-vm)
 
-> ■ご参考：マネージド ディスクをある特定のディスクの種類から別のものに切り替える
-> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/convert-disk-storage#switch-managed-disks-from-one-disk-type-to-another](https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows/convert-disk-storage#switch-managed-disks-from-one-disk-type-to-another)
+> ■ご参考：Azure マネージド ディスクのディスクの種類を変換する  
+> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/disks-convert-types](https://learn.microsoft.com/ja-jp/azure/virtual-machines/disks-convert-types)
  
 VM サイズ / ディスクサイズ変更には VM 停止が必要となります点、ご留意くださいませ。
  
