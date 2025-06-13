@@ -8,8 +8,6 @@ tags:
   - RHUI
 ---
 
-※2024 年 3 月 19 日更新: curl コマンドの baseurl を変更しました。
-
 こんにちは！Azure テクニカル サポート チームの高橋です。
 今回はよく、お問い合わせを頂く
 Azure Marketplace から作成した Red Hat Enterprise Linux (RHEL) の仮想マシンにおいて
@@ -53,8 +51,6 @@ curl コマンド等を使うことで、Azure RHUI への接続状況を確認�
 
 ```bash
     # curl -v https://rhui4-1.microsoft.com:443
-    # curl -v https://rhui4-2.microsoft.com:443
-    # curl -v https://rhui4-3.microsoft.com:443
 ```
 
 < 実行結果例 (成功時) >
@@ -220,7 +216,7 @@ Azure RHUI に接続できない問題が発生することがあります。
 クライアント証明書を更新頂くことで、Azure RHUI へのアクセスができるようになることが想定されます。
 
 ```bash
-sudo yum update -y --disablerepo='*' --enablerepo='*microsoft*'
+sudo yum update -y --disablerepo='*' --enablerepo='*microsoft-azure*'
 ```
 
 ※本コマンドは、rhui の rpm のみを更新するコマンドとなります。
