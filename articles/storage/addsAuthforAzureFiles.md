@@ -6,7 +6,7 @@ tags:
 ---
 こんにちは、Azure テクニカル サポート チームの木下です。
 
-Azure ファイル共有をマウントする場合、認証方法にはストレージ アカウント キーを使用した認証方法と ID ベース (Active Directory Domain Services / Microsoft Entra ID)の認証方法があります。
+Azure ファイル共有をマウントする場合、認証方法にはストレージ アカウント キーを使用した認証方法と ID ベース (Active Directory Domain Services / Microsoft Entra ID) の認証方法があります。
 その中でも今回はお問い合わせのよくある、オンプレ AD DS (Active Directory Domain Services) 認証によるファイル共有のマウント方法とアクセスについてご紹介いたします。
 <!-- more -->
 
@@ -52,7 +52,7 @@ https://github.com/Azure-Samples/azure-files-samples/releases
 ▼スクリプト利用前提条件
 - [AzureFilesActiveDirectoryUtilities.psm1](https://github.com/Azure-Samples/azure-files-samples) モジュールをダウンロードしていること
 - 対象となる AD にサービス ログオン アカウントまたはコンピューター アカウントを作成するための権限を持つ AD 認証情報を用いて AD にドメイン参加している端末にモジュールをインストールして実行すること
-- ストレージアカウントに対して「所有者」または「共同作成者」の Azure RBAC ロールのいずれかを持つ Azure AD 資格情報でスクリプトを実行すること
+- ストレージアカウントに対して「所有者」または「共同作成者」の Azure RBAC ロールのいずれかを持つ Entra ID 資格情報でスクリプトを実行すること
 - 対象のストレージアカウントがサポートされているリージョンに配置されていること
 
 Join-AzStorageAccount スクリプト例 
