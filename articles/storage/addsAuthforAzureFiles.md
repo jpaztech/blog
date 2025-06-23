@@ -6,7 +6,7 @@ tags:
 ---
 こんにちは、Azure テクニカル サポート チームの木下です。
 
-Azure ファイル共有をマウントする場合、認証方法にはストレージ アカウント キーを使用した認証方法と ID ベース (Active Directory Domain Services / Azure Active Directory Domain Services)の認証方法があります。
+Azure ファイル共有をマウントする場合、認証方法にはストレージ アカウント キーを使用した認証方法と ID ベース (Active Directory Domain Services / Microsoft Entra ID) の認証方法があります。
 その中でも今回はお問い合わせのよくある、オンプレ AD DS (Active Directory Domain Services) 認証によるファイル共有のマウント方法とアクセスについてご紹介いたします。
 <!-- more -->
 
@@ -14,14 +14,6 @@ Azure ファイル共有をマウントする場合、認証方法にはスト�
 
 ## 前提条件
 Azure ファイル共有のオンプレ AD DS 認証をご使用いただく場合、以下の前提条件を満たしている必要があります。
-
-**・Azure AD Connect**  
-
-オンプレ AD は [Azure AD Connect](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/how-to-connect-install-roadmap) を使って Azure AD と同期している必要があります。
-
-以下は Azure AD Connect により オンプレ AD と Azure AD が同期した状態の一例となります。
-
-![](addsAuthforAzureFiles/AzureFiles01.png)
 
 **・ドメイン参加**  
 
@@ -60,7 +52,7 @@ https://github.com/Azure-Samples/azure-files-samples/releases
 ▼スクリプト利用前提条件
 - [AzureFilesActiveDirectoryUtilities.psm1](https://github.com/Azure-Samples/azure-files-samples) モジュールをダウンロードしていること
 - 対象となる AD にサービス ログオン アカウントまたはコンピューター アカウントを作成するための権限を持つ AD 認証情報を用いて AD にドメイン参加している端末にモジュールをインストールして実行すること
-- ストレージアカウントに対して「所有者」または「共同作成者」の Azure RBAC ロールのいずれかを持つ Azure AD 資格情報でスクリプトを実行すること
+- ストレージアカウントに対して「所有者」または「共同作成者」の Azure RBAC ロールのいずれかを持つ Entra ID 資格情報でスクリプトを実行すること
 - 対象のストレージアカウントがサポートされているリージョンに配置されていること
 
 Join-AzStorageAccount スクリプト例 
@@ -185,7 +177,7 @@ Azure ファイル共有マウント用コマンドをコピーし実行しま�
 ><一部抜粋>
 >
 >オンプレミス マシンまたは Azure VM をオンプレミスの AD DS にドメイン参加させます。 ドメインに参加させる方法については、「コンピューターをドメインに参加させる」を参照してください。
->マシンが AD DS にドメイン参加していない場合でも、マシンで AD ドメイン コントローラーが認識されていれば、認証に AD 資格情報を利用することはできます。
+>マシンがドメイン参加していない場合でも、マシンからオンプレミスの AD ドメイン コントローラーへのネットワーク接続が妨げられず、ユーザーが明示的な資格情報を提供している場合は、認証に AD DS を使用できます。 詳細については、「ドメイン参加していない VM または別の AD ドメインに参加している VM からファイル共有をマウントする」を参照してください。
 
 ドメイン参加していない Windows 10 端末から、ドメイン参加済みアカウントの AD ユーザー資格情報を利用してファイル共有へアクセスしてみます。
 
