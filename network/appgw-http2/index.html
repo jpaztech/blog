@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-http2/appgw_http2/httpyahoo.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/appgw-http2/appgw_http2/yahoo.png">
 <meta property="article:published_time" content="2025-03-21T03:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-01T02:47:25.118Z">
+<meta property="article:modified_time" content="2025-07-04T04:16:53.142Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Application Gateway">
 <meta property="article:tag" content="Network">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+27b72e20-a768-52d8-acb1-c3898180ee58%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+%E3%81%AE+HTTP2+%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fappgw-http2%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fappgw-http2.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fappgw-http2.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/appgw-http2/" data-id="cmcjxgibh005g0nlfelxn9ml7" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/appgw-http2/" data-id="cmcoaz3ne005g0nrl9yl9hmfn" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -128,7 +128,7 @@
 <img src="./appgw_http2/yahoo.png" alt="HAR3" style="width:800px;"/> 
 
 <p>なお、ブラウザからのアクセスではなく、curl コマンドなどの他の HTTP クライアントから HTTP リクエストを送信する際には、HTTP/2 over TCP (h2c) を利用して HTTP/2 通信が行われる可能性があります。この状況では、Application Gateway が接続先となる際に、v1 と v2 で動作が異なります。v1 の場合、HTTP/2 通信はダウングレードされて、v2 の場合は HTTP ステータスコード 403 が応答されます。詳細の動作つきましては、以下のセクションをご参照ください。</p>
-<h1 id="Application-Gateway-のサポートに"><a href="#Application-Gateway-のサポートに" class="headerlink" title="Application Gateway のサポートに"></a>Application Gateway のサポートに</h1><p>Application Gateway はリバース プロキシとして動作するため、フロントエンド接続（クライアント - Application Gateway）とバックエンド接続（Application Gateway - バックエンド サーバー）の二つの接続が発生します。現在、バックエンド接続における HTTP/2 はサポートされておりません。</p>
+<h1 id="Application-Gateway-の-HTTP2-サポートについて"><a href="#Application-Gateway-の-HTTP2-サポートについて" class="headerlink" title="Application Gateway の HTTP2 サポートについて"></a>Application Gateway の HTTP2 サポートについて</h1><p>Application Gateway はリバース プロキシとして動作するため、フロントエンド接続（クライアント - Application Gateway）とバックエンド接続（Application Gateway - バックエンド サーバー）の二つの接続が発生します。現在、バックエンド接続における HTTP/2 はサポートされておりません。</p>
 <p>フロントエンド接続における HTTP/2 のサポート状況については、リスナーで利用しているプロトコルによって異なります。詳細は以下のテーブルをご参照いただけますと幸いです。</p>
 <table>
 <thead>
