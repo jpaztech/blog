@@ -1,4 +1,11 @@
-# Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について
+---
+title: Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について
+date: 2025-07-14 16:00:00 
+tags:
+  - Network
+  - AzureFrontDoor
+  - AzureCDN
+---
 
 こんにちは。Azure テクニカル サポート チームの藤原です。
 
@@ -69,7 +76,3 @@ AFD クラシック リソースの **Front Door デザイナー** を開き、"
 
 - [Azure Front Door (classic) will be retired on 31 March 2027](https://azure.microsoft.com/en-us/updates?id=azure-front-door-classic-will-be-retired-on-31-march-2027)
 - [Retirement: Azure CDN Standard from Microsoft (classic) will be retired on September 30th, 2027](https://azure.microsoft.com/en-us/updates?id=Azure-CDN-Standard-from-Microsoft-classic-will-be-retired-on-30-September-2027)
-
----
-
-> ※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。
