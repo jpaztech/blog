@@ -48,7 +48,7 @@ AFD クラシック リソースの **Front Door デザイナー** を開き、"
 
 画面の右ペインに表示された **[証明書の管理の種類]** で「**管理されているフロント ドア**」が選択されている場合は、**マネージド証明書を利用しています**。
 
-![](./afd-classic-azure-cdn-managed-cert-provisoning/how-to-check-your-managed-cert.png)
+![](./afd-classic-azure-cdn-managed-cert-provisioning/how-to-check-your-managed-cert.png)
 
 <p align="center">マネージド証明書の確認方法</p>
 ---
