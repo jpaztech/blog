@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの石原です。 本ブログでは、Azure Front Door 及び Microsoft Standard SKU の Azure CDN (以降は AFD と記載致します) において起こりうる接続の問題やお客様で対策可能な内容などについてご案内致します。">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2023-12-29T08:30:00.000Z">
-<meta property="article:modified_time" content="2025-07-14T10:38:51.852Z">
+<meta property="article:modified_time" content="2025-07-16T08:09:22.135Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="AzureFrontDoor">
@@ -104,7 +104,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+cc1e9f66-c929-57b4-bb04-69a512fd84a2%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Front+Door+%E5%8F%8A%E3%81%B3+Microsoft+Standard+SKU+%E3%81%AE+Azure+CDN+%E3%81%AB%E3%81%8A%E3%81%84%E3%81%A6%E7%99%BA%E7%94%9F%E3%81%99%E3%82%8B%E6%8E%A5%E7%B6%9A%E3%81%AE%E5%95%8F%E9%A1%8C%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fafd-connection-issue%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fafd-connection-issue.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fafd-connection-issue.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/afd-connection-issue/" data-id="cmd2z0ura00530nmpfj7p15is" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/afd-connection-issue/" data-id="cmd5okaj300530nqs78stf5ks" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -146,7 +146,6 @@
 <h4 id="パターン-2-Traffic-Manager-と-Application-Gateway-を組み合わせた構成"><a href="#パターン-2-Traffic-Manager-と-Application-Gateway-を組み合わせた構成" class="headerlink" title="パターン 2 : Traffic Manager と Application Gateway を組み合わせた構成"></a>パターン 2 : Traffic Manager と Application Gateway を組み合わせた構成</h4><p>AFD と同じように L7 のリバース プロキシとして動作するサービスに Application Gateway がありますが、リージョン レベルでの冗長性を確保するために AFD をご利用いただいているお客様も多いかと存じます。<br>複数の Application Gateway を異なるリージョンにデプロイして、Traffic Manager のエンドポイントに Application Gateway パブリック IP アドレスや FQDN を登録し、AFD に登録しているカスタム ドメインの名前解決先を Traffic Manager の FQDN に変更することで、リージョン レベルでの冗長性を確保して継続稼働することが可能になります。<br>Traffic Manager と Application Gateway を組み合わせた構成については、下記の公開ドキュメントに記載がございますので、ご参考になれば幸いです。</p>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/traffic-manager/traffic-manager-load-balancing-azure">Azure で負荷分散サービスを使用する</a></p>
 <div class="alert is-info"><p class="alert-title">Note</p><p>なお AFD とは異なり、Application Gateway ではバックエンドから取得したコンテンツをキャッシュしたり、コンテンツを圧縮してクライアントに配信することはできませんので、その点をご理解いただいたうえで、Application Gateway の使用をご検討ください。</p></div>
-<h4 id="パターン-3-Edgio-SKU-の-Azure-CDN-の利用"><a href="#パターン-3-Edgio-SKU-の-Azure-CDN-の利用" class="headerlink" title="パターン 3 : Edgio SKU の Azure CDN の利用"></a>パターン 3 : Edgio SKU の Azure CDN の利用</h4><p>Azure Front Door と Microsoft Standard SKU の Azure CDN は同じプラットフォーム上で動作しています。一方で、Edgio SKU の Azure CDN は Edgio 社が管理しているプラットフォーム上で動作しているため、AFD にて接続の問題が発生している間、Edgio SKU の Azure CDN にて同一の原因で接続の問題が発生することはありません。<br>また、AFD で使用しているカスタム ドメインを予め Edgio SKU の Azure CDN に登録いただけますので、予め Edgio SKU の Azure CDN を準備してカスタム ドメインを登録しておくことにより、AFD から Edgio SKU の Azure CDN に切り替えて継続稼働することが可能になります。<br>なお、Edgio SKU の Azure CDN に固定費用はなくデータ転送量による従量課金制になるため、アクセスが発生しない限りは課金されることはございません。</p>
 
       
       
