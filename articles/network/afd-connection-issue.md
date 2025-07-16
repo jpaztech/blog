@@ -104,8 +104,3 @@ Traffic Manager と Application Gateway を組み合わせた構成について�
 > [!NOTE]
 > なお AFD とは異なり、Application Gateway ではバックエンドから取得したコンテンツをキャッシュしたり、コンテンツを圧縮してクライアントに配信することはできませんので、その点をご理解いただいたうえで、Application Gateway の使用をご検討ください。
 >
-
-#### パターン 3 : Edgio SKU の Azure CDN の利用
-Azure Front Door と Microsoft Standard SKU の Azure CDN は同じプラットフォーム上で動作しています。一方で、Edgio SKU の Azure CDN は Edgio 社が管理しているプラットフォーム上で動作しているため、AFD にて接続の問題が発生している間、Edgio SKU の Azure CDN にて同一の原因で接続の問題が発生することはありません。
-また、AFD で使用しているカスタム ドメインを予め Edgio SKU の Azure CDN に登録いただけますので、予め Edgio SKU の Azure CDN を準備してカスタム ドメインを登録しておくことにより、AFD から Edgio SKU の Azure CDN に切り替えて継続稼働することが可能になります。
-なお、Edgio SKU の Azure CDN に固定費用はなくデータ転送量による従量課金制になるため、アクセスが発生しない限りは課金されることはございません。
