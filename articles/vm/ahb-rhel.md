@@ -1,6 +1,6 @@
 ---
 title: Azure Hybrid Benefit (AHB) for RHEL VM に関する解説
-date: 2026-06-23 09:00:00
+date: 2025-06-23 09:00:00
 tags:
   - VM
   - RHEL
