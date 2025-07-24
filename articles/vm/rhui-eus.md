@@ -101,21 +101,42 @@ EUS リポジトリに接続されていることが確認できます。
 ### ■ 非 EUS から EUS リポジトリに切り替える方法
 EUS リポジトリへ接続するためには以下の手順でコマンドを実行ください。
 
-1. EUS 以外のリポジトリを無効にする
+1. RHEL メジャー バージョンを変数に保存 (RHEL 8.x の場合 8、RHEL 9.x の場合 9)
 ```bash
-    # dnf --disablerepo='*' remove 'rhui-azure-rhel8' -y
+    # major_version=$(rpm -q --queryformat '%{RELEASE}' rpm | grep -o "[0-9]*\(_[0-9]*\)\?\$" | cut -d "_" -f 1)
+    # echo $major_version
 ```
 
-2. EUS リポジトリを追加する2 EUS リポジトリを追加する
+2. 非 EUS リポジトリの無効 (クライアントパッケージの削除)
 ```bash
-    # dnf --config='https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel8-eus.config' install rhui-azure-rhel8-eus -y
+    # dnf --disablerepo='*' remove "rhui-azure-rhel${major_version}"
 ```
 
-3. releaseverを固定する
+3. 非 EUS リポジトリ用の config ファイルを作成
+```bash
+    # cat <<EOF > rhel${major_version}-eus.config
+    [rhui-microsoft-azure-rhel${major_version}]
+    name=Microsoft Azure RPMs for Red Hat Enterprise Linux ${major_version} (rhel${major_version}-eus)
+    baseurl=https://rhui4-1.microsoft.com/pulp/repos/unprotected/microsoft-azure-rhel${major_version}-eus
+    enabled=1
+    gpgcheck=1
+    sslverify=1
+    gpgkey=/etc/pki/rpm-gpg/RPM-GPG-KEY-microsoft-azure-release
+    EOF
+```
+
+4. EUS リポジトリの追加
+```bash
+    # dnf --config rhel${major_version}-eus.config install rhui-azure-rhel${major_version}-eus
+```
+
+5. releaseverを固定する
 EUS が提供されているバージョンを指定する必要があります。 (RHEL 8 の場合、8.1、8.2、8.4、8.6、8.8 のいずれかである必要があります)
 ```bash
     # sh -c 'echo 8.x > /etc/dnf/vars/releasever'
 ```
+
+3 の手順で作成した config ファイルはリポジトリの追加後に削除いただいて問題ございません。
 
 EUS が提供されているバージョンは以下 Red Hat 社の公開情報からご確認ください。
 > □ 参考 : Red Hat Enterprise Linux (RHEL) Extended Update Support (EUS) の概要 
@@ -162,15 +183,36 @@ httpd の場合、2.4.37-56 まで取得できることとなります。
     # rm -f /etc/dnf/vars/releasever
 ```
 
-2. EUS リポジトリを無効にする
+2. RHEL メジャー バージョンを変数に保存 (RHEL 8.x の場合 8、RHEL 9.x の場合 9)
 ```bash
-    # dnf --disablerepo='*' remove 'rhui-azure-rhel8-eus' -y
+    # major_version=$(rpm -q --queryformat '%{RELEASE}' rpm | grep -o "[0-9]*\(_[0-9]*\)\?\$" | cut -d "_" -f 1)
+    # echo $major_version
 ```
 
-3. 非 EUS リポジトリを追加する
+3. EUS リポジトリを無効にする
 ```bash
-    # dnf --config='https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel8.config' install rhui-azure-rhel8 -y
+    # dnf --disablerepo='*' remove "rhui-azure-rhel${major_version}-eus"
 ```
+
+4. EUS リポジトリ用の config ファイルを作成
+```bash
+    # cat <<EOF > rhel${major_version}.config
+    [rhui-microsoft-azure-rhel${major_version}]
+    name=Microsoft Azure RPMs for Red Hat Enterprise Linux ${major_version}
+    baseurl=https://rhui4-1.microsoft.com/pulp/repos/unprotected/microsoft-azure-rhel${major_version}
+    enabled=1
+    gpgcheck=1
+    sslverify=1
+    gpgkey=/etc/pki/rpm-gpg/RPM-GPG-KEY-microsoft-azure-release
+    EOF
+```
+
+5. 非 EUS リポジトリの追加
+```bash
+    # dnf --config rhel${major_version}.config install rhui-azure-rhel${major_version}
+```
+
+4 の手順で作成した config ファイルはリポジトリの追加後に削除いただいて問題ございません。
 
 以下例では、RHEL 8.4 の VM を 非 EUS リポジトリに接続するよう変更しています。
 ![](./rhui-eus/08.png)
@@ -186,10 +228,10 @@ dnf update を実施後の結果は以下のようになります。
 詳細な手順については、以下の公開ドキュメントにもお纏めしております。
 
 > □ 参考 : RHEL Server を EUS リポジトリに切り替えます。
-> https://learn.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui?tabs=rhel8#switch-a-rhel-server-to-eus-repositories
+> https://learn.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui#switch-a-rhel-server-to-eus-repositories
 
 > □ 参考 : RHEL Server を EUS 以外のリポジトリに切り替えます。
-> https://learn.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui?tabs=rhel8#switch-a-rhel-server-to-non-eus-repositories
+> https://learn.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui#switch-a-rhel-server-to-non-eus-repositories
 
 マイナーバージョンが想定通りアップグレードできない場合や、
 脆弱性対応などで、ご要望のパッケージバージョンが表示されない際には、
