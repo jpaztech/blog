@@ -14,8 +14,8 @@
 <meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの藤原です。 本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングの通知についてご案内いたします。 これ以降、Azure Front Door (クラシック) は AFD クラシック、Azure CDN">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/afd-classic-azure-cdn-managed-cert-provisioning/how-to-check-your-managed-cert.png">
-<meta property="article:published_time" content="2025-07-16T08:30:00.000Z">
-<meta property="article:modified_time" content="2025-07-31T09:06:46.830Z">
+<meta property="article:published_time" content="2025-07-31T08:30:00.000Z">
+<meta property="article:modified_time" content="2025-07-31T09:31:58.638Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="AzureFrontDoor">
@@ -100,13 +100,13 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2025-07-16T08:30:00.000Z" itemprop="datePublished">2025-07-16</time>
+  <time datetime="2025-07-31T08:30:00.000Z" itemprop="datePublished">2025-07-31</time>
 </a>
         
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+90e35044-d3c5-5b15-aeb7-86738fa38fab%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Front+Door+%28%E3%82%AF%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%29+%E3%81%A8+Azure+CDN+from+Standard+%28Microsoft+CDN+%E3%82%AF%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%29+%E3%81%AE%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%81%AE%E3%83%97%E3%83%AD%E3%83%93%E3%82%B8%E3%83%A7%E3%83%8B%E3%83%B3%E3%82%B0%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E9%80%9A%E7%9F%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fafd-classic-azure-cdn-managed-cert-provisioning%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fafd-classic-azure-cdn-managed-cert-provisioning.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fafd-classic-azure-cdn-managed-cert-provisioning.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/afd-classic-azure-cdn-managed-cert-provisioning/" data-id="cmdr67wb300510np4hx4b6lli" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/afd-classic-azure-cdn-managed-cert-provisioning/" data-id="cmdr74bgd00510nnsgyrve8cm" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -120,9 +120,9 @@
 <p>これを受けて 2025 年 8 月 15 日以降、AFD クラシックと Azure CDN クラシックにおいて、既存のプロファイルにおいてカスタムドメインを追加することと、既存カスタムドメインの証明書を BYOC からマネージド証明書に切り替えることができなくなります。</p>
 <hr>
 <h2 id="マネージド証明書のご利用期限について"><a href="#マネージド証明書のご利用期限について" class="headerlink" title="マネージド証明書のご利用期限について"></a>マネージド証明書のご利用期限について</h2><p>本通知では、既存のカスタムドメインで使用されているマネージド証明書が自動更新されることもお知らせしています。</p>
-<p>~~自動更新された後のマネージド証明書の有効期間は <strong>12 ヶ月</strong> であり、<strong>2026 年 7 月 1 日まで</strong> はご利用いただけます。</p>
-<p><strong>2026 年 7 月 1 日以降はマネージド証明書の有効期限が切れます</strong> ので、それまでに <strong>BYOC への切り替え</strong> をお願いいたします。~~</p>
-<p>本通知では、自動更新された後のマネージド証明書が 2026 年 7 月 1 日までご利用可能とご案内していましたが、<strong>2026 年 4 月 14 日まで</strong> ご利用可能に変更されました。<br>このため、<strong>2026 年 4 月 14 日中までに BYOC への切り替え</strong> をお願いいたします。</p>
+<p><del>自動更新された後のマネージド証明書の有効期間は <strong>12 ヶ月</strong> であり、<strong>2026 年 7 月 1 日まで</strong> はご利用いただけます。</del></p>
+<p><del><strong>2026 年 7 月 1 日以降はマネージド証明書の有効期限が切れます</strong> ので、それまでに <strong>BYOC への切り替え</strong> をお願いいたします。</del></p>
+<p>本通知では、自動更新された後のマネージド証明書が 2026 年 7 月 1 日までご利用可能とご案内していましたが、<strong>2026 年 4 月 14 日まで</strong> ご利用可能に変更されました。このため、<strong>2026 年 4 月 14 日中までに BYOC への切り替え</strong> をお願いいたします。</p>
 <p>マネージド証明書から BYOC への切り替え方法については以下のドキュメントをご参照ください。</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/frontdoor/front-door-custom-domain-https?tabs=powershell">Azure Front Door (クラシック) カスタム ドメインで HTTPS を構成します</a></li>
