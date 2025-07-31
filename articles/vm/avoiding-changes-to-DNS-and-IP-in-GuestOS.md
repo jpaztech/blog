@@ -17,9 +17,9 @@ Azure VM のゲスト OS 内から DNS サーバーの設定や ゲスト OS 自
   
 >ご参考) [DNS サーバーの指定 ](https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-networks-name-resolution-for-vms-and-role-instances#specify-dns-servers)
 >ーーーーーーーーー抜粋ーーーーーーーーー
->DNS サーバーの IP などのネットワーク接続プロパティは、VM 内で直接編集しないでください。 
->これは、仮想ネットワーク アダプターを交換したときのサービス回復時にネットワーク接続プロパティが消去される可能性があるためです。 
->これは、Windows VM と Linux VM の両方に適用されます。 
+>DNS サーバー IP などのネットワーク接続プロパティは、仮想マシン内で直接編集しないでください。
+>直接編集すると、仮想ネットワーク アダプターが交換された場合のサービス回復時に変更内容が失われることがあります。
+>この注意は、Windows と Linux の両方の仮想マシンに適用されます。
 >ーーーーーーーーーーーーーーーーーーーー
  
 >ご参考) [Azure ネットワーク インターフェイスの IP アドレスの追加、変更、削除](https://docs.microsoft.com/ja-jp/azure/virtual-network/virtual-network-network-interface-addresses#private)
