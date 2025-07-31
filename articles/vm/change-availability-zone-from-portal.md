@@ -8,6 +8,12 @@ tags:
   - HowTo
 ---
 
+> [!WARNING]
+> 当手順について新規に記事が作成されましたので、今後はこちらをご参照いただけますと幸いです。
+>  
+> ■ご参考：設定変更不可の項目を VM 再作成により再設定する手順  
+> [https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/](https://jpaztech.github.io/blog/vm/recreate-vm-to-change-settings/)
+
 こんにちは、Azure テクニカル サポート チームの松岡です。
 
 VM における可用性ゾーンの利用有無は、VM を新規作成する場合にのみ設定することができますが、運用をしている中で VM を可用性ゾーンへ組み入れる必要が発生したり、逆に、可用性ゾーンに組み入れられていると一部機能が対応しないため、可用性ゾーンから外したいという状況もあるかと思います。
