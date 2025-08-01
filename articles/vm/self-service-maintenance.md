@@ -201,7 +201,7 @@ VM 再起動を伴うメンテナンスについては原則として、事前�
 ■ご参考：メンテナンスを開始する（Azure CLI）  
 [https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-notifications-cli#start-maintenance](https://learn.microsoft.com/ja-jp/azure/virtual-machines/maintenance-notifications-cli#start-maintenance)
 
-ポータルから実行する例として、先述のサービス正常性の計画メンテナンスの対象 VM 確認画面より、「先行メンテナンスの管理」ボタンを推すことでメンテナンス開始画面に遷移することができます。  
+ポータルから実行する例として、先述のサービス正常性の計画メンテナンスの対象 VM 確認画面より、「先行メンテナンスの管理」ボタンを押すことでメンテナンス開始画面に遷移することができます。  
 
 ![](./self-service-maintenance/newUI3.png)
 
