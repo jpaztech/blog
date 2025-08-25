@@ -100,6 +100,9 @@ https://learn.microsoft.com/ja-jp/rest/api/resources/subscriptions/list-location
 ---
 ## サブスクリプション間の論理ゾーンのマッピングを REST API で確認する
 
+> [!TIP]
+> こちらは Azure CLI の「az account list-locations」コマンドでも確認が可能でございます。
+
 別のサブスクリプションとの論理ゾーン同士のマッピングについても後述の通り REST API にて確認が可能です。  
 すなわち、「contoso 社サブスクリプション」の論理ゾーン 1 番は「hogehoge 社サブスクリプション」の論理ゾーン 2 番と同じである、との点について確認が可能です。  
 
