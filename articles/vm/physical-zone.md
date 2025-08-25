@@ -62,6 +62,9 @@ Azure ポータル等で表示・指定できるゾーン番号のことを「�
 ---
 ## 論理ゾーンと物理ゾーンのマッピングを REST API で確認する
 
+> [!TIP]
+> こちらは Azure CLI の「az account list-locations」コマンドでも確認が可能でございます。
+
 論理ゾーン番号と実際の物理ゾーンのマッピングについては以下の REST API を用いて確認する事が可能です。  
 
 ■ご参考：Subscriptions - List Locations  
