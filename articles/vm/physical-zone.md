@@ -62,6 +62,9 @@ Azure ポータル等で表示・指定できるゾーン番号のことを「�
 ---
 ## 論理ゾーンと物理ゾーンのマッピングを REST API で確認する
 
+> [!TIP]
+> こちらは Azure CLI の「az account list-locations」コマンドでも確認が可能でございます。
+
 論理ゾーン番号と実際の物理ゾーンのマッピングについては以下の REST API を用いて確認する事が可能です。  
 
 ■ご参考：Subscriptions - List Locations  
@@ -99,9 +102,6 @@ https://learn.microsoft.com/ja-jp/rest/api/resources/subscriptions/list-location
 
 ---
 ## サブスクリプション間の論理ゾーンのマッピングを REST API で確認する
-
-> [!TIP]
-> こちらは Azure CLI の「az account list-locations」コマンドでも確認が可能でございます。
 
 別のサブスクリプションとの論理ゾーン同士のマッピングについても後述の通り REST API にて確認が可能です。  
 すなわち、「contoso 社サブスクリプション」の論理ゾーン 1 番は「hogehoge 社サブスクリプション」の論理ゾーン 2 番と同じである、との点について確認が可能です。  
