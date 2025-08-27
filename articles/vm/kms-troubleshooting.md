@@ -32,6 +32,8 @@ Azure Windows VM から Azure の KMS サーバーに対して適切な経路で
   - [強制トンネリング環境（オンプレミス等を経由し直接通信となっていない）](./#%E5%BC%B7%E5%88%B6%E3%83%88%E3%83%B3%E3%83%8D%E3%83%AA%E3%83%B3%E3%82%B0%E7%92%B0%E5%A2%83%EF%BC%88%E3%82%AA%E3%83%B3%E3%83%97%E3%83%AC%E3%83%9F%E3%82%B9%E7%AD%89%E3%82%92%E7%B5%8C%E7%94%B1%E3%81%97%E7%9B%B4%E6%8E%A5%E9%80%9A%E4%BF%A1%E3%81%A8%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%EF%BC%89)
   - [Standard SKU の Azure Load Balancer 配下の VM で外部接続ができない](./#Standard-SKU-%E3%81%AE-Azure-Load-Balancer-%E9%85%8D%E4%B8%8B%E3%81%AE-VM-%E3%81%A7%E5%A4%96%E9%83%A8%E6%8E%A5%E7%B6%9A%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84)
   - [Tokens.dat ファイルの破損](./#Tokens-dat-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E7%A0%B4%E6%90%8D)
+  - [インターネットへの通信に明示的な送信接続が必要な環境である](./#%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88%E3%81%B8%E3%81%AE%E9%80%9A%E4%BF%A1%E3%81%AB%E6%98%8E%E7%A4%BA%E7%9A%84%E3%81%AA%E9%80%81%E4%BF%A1%E6%8E%A5%E7%B6%9A%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%AA%E7%92%B0%E5%A2%83%E3%81%A7%E3%81%82%E3%82%8B)
+  - [Windows Server 2025/2022 Datacenter Azure Edition でライセンス認証には成功しているのに「ライセンス認証を行ってください」が引き続き表示される](./#Windows-Server-2025-2022-Datacenter-Azure-Edition-%E3%81%A7%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9%E8%AA%8D%E8%A8%BC%E3%81%AB%E3%81%AF%E6%88%90%E5%8A%9F%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E3%81%AE%E3%81%AB%E3%80%8C%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9%E8%AA%8D%E8%A8%BC%E3%82%92%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%8D%E3%81%8C%E5%BC%95%E3%81%8D%E7%B6%9A%E3%81%8D%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B)
   
 - [さいごに（その他の要因等について）](./#%E3%81%95%E3%81%84%E3%81%94%E3%81%AB%EF%BC%88%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E8%A6%81%E5%9B%A0%E7%AD%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%EF%BC%89)
 
@@ -55,13 +57,17 @@ Azure 上で稼働する Windows VM は従量課金制となっており、原�
 ---
 ### KMS ライセンス認証に必要な設定および通信要件
 
-Azure VM から KMS サーバーへの通信は、**TCP 宛先ポート 1688** で以下のドメインに対して行われます。
+Azure VM から KMS サーバーへの通信は、**TCP 宛先ポート 1688** で以下のドメインに対して送信方向として行われます。
 
 > **kms.core.windows.net** もしくは **azkms.core.windows.net**
 
 このドメインは以下の IP アドレスのいずれかに名前解決されます。
 
-> **20.118.99.224, 40.83.235.53, 23.102.135.246**
+> **20.118.99.224, 40.83.235.53**
+
+> [!TIP]
+> 以前は 23.102.135.246 という IP アドレスも使用されておりましたが、下記ドキュメントに記載の通り現在は使用されておりません。  
+> [https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-activation-stopped-working#timeline](https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-activation-stopped-working#timeline)
 
 なお、KMS ライセンスサーバー自体は Azure 上にご用意をしておりますが、上記の通りグローバル IP アドレスで名前解決されますので、VM からは Internet 方向としてルーティングされる必要がございます。  
 
@@ -304,7 +310,7 @@ UDR を用いて KMS サーバーへのライセンス認証の通信につい�
 | 項目 | 通信要件 |
 | -- | -- |
 | ドメイン | kms.core.windows.net および azkms.core.windows.net |
-| IP アドレス | 20.118.99.224, 40.83.235.53, 23.102.135.246 |
+| IP アドレス | 20.118.99.224, 40.83.235.53 |
 | ポート | 1688 |
 | プロトコル | TCP |
 
@@ -328,7 +334,7 @@ https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/custom-rou
 - 解決方法：UDR を用いてファイアウォールを経由しないルーティングを行う
 
 Azure 上の VNET に属する Subnet 単位で UDR（User Defined Route）を用いて、特定 IP アドレスへの通信のルーティングを変更することが可能です。  
-すなわち、KMS サーバー（20.118.99.224, 40.83.235.53, 23.102.135.246）への通信のみ、直接通信とするために Next Hop を Internet にします。
+すなわち、KMS サーバー（20.118.99.224, 40.83.235.53）への通信のみ、直接通信とするために Next Hop を Internet にします。
 
 ![](./kms-troubleshooting/2023-08-07-09-13-02.png)
 
@@ -349,7 +355,6 @@ Azure 上の VNET に属する Subnet 単位で UDR（User Defined Route）を�
 | --- |
 | 20.118.99.224/32 |
 | 40.83.235.53/32 |
-| 23.102.135.246/32 |
 
 ![](./kms-troubleshooting/2023-08-03-11-26-51.png)
 
@@ -380,6 +385,37 @@ https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/
 ■ご参考：Tokens.dat ファイルの再構築
 https://learn.microsoft.com/ja-jp/windows-server/get-started/activation-rebuild-tokens-dat-file
 
+---
+### インターネットへの通信に明示的な送信接続が必要な環境である
+
+VNET にてプライベートサブネットを構成している場合、明示的な送信接続を使用しないとインターネットへの通信ができませんので、KMS のライセンス認証も失敗いたします。  
+  
+■ご参考：プライベート サブネットの概要  
+https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access#private-subnets-overview  
+  
+また、2025 年 10 月 1 日以降に作成された新しい Azure VM は、Azure 既定の送信アクセス (既定の SNAT) を利用してインターネット宛へのアウトバウンド通信ができなくなります。  
+そのため、KMS ライセンス認証を行うには、インターネット宛へのアウトバウンド接続を行うための明示的な送信接続の設定が必要となるものと存じます。  
+  
+■ご参考：Retirement: Default outbound access for VMs in Azure will be retired— transition to a new method of internet access  
+https://azure.microsoft.com/ja-jp/updates?id=default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access  
+  
+■ご参考：Azure 既定の送信アクセスの動作変更のアナウンスに関する補足 (Tracking ID:3T84-PZZ)  
+https://jpaztech.github.io/blog/network/default-outbound-access-for-vms-will-be-retired/  
+  
+このようなインターネットへの通信に明示的な送信接続が必要な環境である場合は、以下の弊社ブログ記事をご参照いただき、インターネットへの送信接続を構成いただけますと幸いです。  
+  
+■ご参考：Azure VM の送信接続 (SNAT) オプション まとめ  
+https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/  
+  
+---
+### Windows Server 2025/2022 Datacenter Azure Edition でライセンス認証には成功しているのに「ライセンス認証を行ってください」が引き続き表示される
+
+先述の手動のライセンス認証などで KMS ライセンス認証は成功しているにもかかわらず、「ライセンス認証を行ってください」という表示が引き続き表示されてしまうという事象が、Windows Server 2025/2022 Datacenter Azure Edition にて発生することがございます。  
+この際は、以下の公式ドキュメントをご参照いただきトラブルシューティングをお試しくださいませ。  
+  
+■ご参考：Windows のアクティブ化基準値が引き続き表示される  
+https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/activation-watermark-appears  
+  
 ---
 ## さいごに（その他の要因等について）
 
