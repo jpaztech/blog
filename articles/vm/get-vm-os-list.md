@@ -1,6 +1,6 @@
 ---
 title: Azure VM で実行されているゲスト OS のバージョンを一覧表示する
-date: 2025-8-25 17:30:00
+date: 2025-8-27 12:00:00
 tags:
   - VM
   - Windows
@@ -33,7 +33,7 @@ VM 作成時のイメージの情報が、モデル ビューとして Storage P
 
 ### Instance View
 
-実行中の VM についての情報を取得できるものとなります。現在実行中ののゲスト OS のバージョン情報をリアルタイムに取得できます。  
+実行中の VM についての情報を取得できるものとなります。現在実行中のゲスト OS のバージョン情報をリアルタイムに取得できます。  
 ゲスト OS のバージョン情報を取得するには、ご利用には以下の点についてご留意ください。  
 
 - VM が起動している必要がある。
@@ -41,7 +41,7 @@ VM 作成時のイメージの情報が、モデル ビューとして Storage P
 
 ■ご参考：Azure Windows VM エージェントの概要  
 https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-windows
-
+  
 ■ご参考：Azure Linux VM エージェントの概要  
 https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux
 
@@ -51,14 +51,14 @@ https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux
 Azure ポータルでは以下ように、VM の概要画面や一覧画面で情報が表示されますが、リアルタイムに現在実行中のゲスト OS 情報を一覧表示するといったことが叶いませんものとなります。  
 
 ![VM の概要画面](./get-vm-os-list/vminfo.png)
-
+  
 ![VM の一覧画面](./get-vm-os-list/vmlist.png)
 
 ---
 ## Instance View から実行中の VM のゲスト OS バージョンを一覧取得するコマンド
 
 上記の点を鑑みますと、Azure PowerShell もしくは Azure CLI を用いて、Instance View から実行中のゲスト OS のバージョン情報を取得することが推奨されます。  
-サブスクリプション内の VM すべてについて、それぞれサンプルのコマンドをご用意させていただきましたので、紹介させていただきます。  
+サブスクリプション内の VM すべてについて、それぞれサンプルのコマンドをご用意させていただきましたので、ご紹介させていただきます。  
 
 ゲスト OS バージョンの取得には、VM が起動しており、VM エージェントが正常稼働している必要がございます。  
 また、スクリプトを実行するユーザーが VM の情報を読み取れる権限が必要となります。  
@@ -137,4 +137,5 @@ az vm list --query "[].{VM:id}" -o tsv | xargs -n 1 az vm get-instance-view --qu
 - 以下のコマンドについて、○○の情報を表示するように改修してください。
 
 生成された回答は必ず正しいとは限りませんので、検証等をいただく必要がございますが、Microsoft Copilot といった AI を用いて色々なことができる便利な時代になりました。  
+
 これらの情報が皆様のお役に立てれば幸いでございます。
