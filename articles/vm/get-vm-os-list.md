@@ -48,14 +48,16 @@ https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux
 ---
 ## Azure ポータルでの表示
 
-Azure ポータルでは以下ように、VM の概要画面や一覧画面で情報が表示されますが、リアルタイムに現在実行中のゲスト OS 情報を一覧表示するといったことが叶いませんものとなります。  
+Azure ポータルでは以下ように、VM の概要画面 / VM のオペレーティングシステムの画面 / VM 一覧画面で情報が表示されますが、リアルタイムに現在実行中のゲスト OS 情報を一覧表示するといったことが叶いませんものとなります。  
 
 ![VM の概要画面](./get-vm-os-list/vminfo.png)
+
+![VM のオペレーティングシステムの画面](./get-vm-os-list/osinfo.png)
   
 ![VM の一覧画面](./get-vm-os-list/vmlist.png)
 
 ---
-## Instance View から実行中の VM のゲスト OS バージョンを一覧取得するコ
+## Instance View から実行中の VM のゲスト OS バージョンを一覧取得する例
 
 上記の点を鑑みますと、Azure PowerShell / Azure CLI / Azure Resource Graph を用いて、Instance View から実行中のゲスト OS のバージョン情報を取得することが推奨されます。  
 それぞれサンプルをご用意させていただきましたので、ご紹介させていただきます。  
