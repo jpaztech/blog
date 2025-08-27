@@ -10,7 +10,7 @@ tags:
 
 こんにちは、Azure テクニカル サポート チームの富田です。  
 Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。  
-実行中の VM の Instance View を取得するコマンドを使うことで確認可能ですので、この点について解説させていただきます。  
+実行中の VM の Instance View を取得するコマンドもしくは Azure Resource Graph を使うことで確認可能ですので、この点について解説させていただきます。  
 
 > [!TIP]
 > 本件とは直接関連するものではございませんが、VM 作成時に Azure マーケットプレイスにてご希望のイメージバージョンが見つからないといったお問い合わせをいただくことがございます。  
@@ -55,17 +55,17 @@ Azure ポータルでは以下ように、VM の概要画面や一覧画面で�
 ![VM の一覧画面](./get-vm-os-list/vmlist.png)
 
 ---
-## Instance View から実行中の VM のゲスト OS バージョンを一覧取得するコマンド
+## Instance View から実行中の VM のゲスト OS バージョンを一覧取得するコ
 
-上記の点を鑑みますと、Azure PowerShell もしくは Azure CLI を用いて、Instance View から実行中のゲスト OS のバージョン情報を取得することが推奨されます。  
-サブスクリプション内の VM すべてについて、それぞれサンプルのコマンドをご用意させていただきましたので、ご紹介させていただきます。  
+上記の点を鑑みますと、Azure PowerShell / Azure CLI / Azure Resource Graph を用いて、Instance View から実行中のゲスト OS のバージョン情報を取得することが推奨されます。  
+それぞれサンプルをご用意させていただきましたので、ご紹介させていただきます。  
 
 ゲスト OS バージョンの取得には、VM が起動しており、VM エージェントが正常稼働している必要がございます。  
 また、スクリプトを実行するユーザーが VM の情報を読み取れる権限が必要となります。  
 
 ### PowerShell 環境での Azure PowerShell コマンドの例
 
-表形式で出力する Azure PowerShell コマンドの例となります。
+サブスクリプション内の VM すべてについて、表形式で出力する Azure PowerShell コマンドの例となります。
 
 ```PowerShell
 Get-AzVM -Status |  Select-Object -Property ResourceGroupName, Name, PowerState, OsName, OsVersion | Format-Table -AutoSize
@@ -90,7 +90,7 @@ WINBI             winbiVM       VM running     Windows Server 2022 Datacenter   
 
 ### Bash 環境での Azure CLI コマンドの例
 
-JSON 形式で出力する Azure CLI コマンドの例となります。  
+サブスクリプション内の VM すべてについて、JSON 形式で出力する Azure CLI コマンドの例となります。  
 Azure CLI の場合、各 VM 毎に Instance View 取得のコマンドを実行するため VM 台数が多い場合はお時間がかかります点、ご留意ください。
 
 ```Bash
@@ -127,15 +127,34 @@ az vm list --query "[].{VM:id}" -o tsv | xargs -n 1 az vm get-instance-view --qu
 }
 ```
 
+### Azure Resource Graph クエリの例
+
+Azure ポータル上の Azure Resource Graph エクスプローラーを用いて、以下のクエリを実行します。  
+
+```KQL
+resources
+|where type == "microsoft.compute/virtualmachines"
+|project subscriptionId, resourceGroup, name, 
+         powerState = properties.extended.instanceView.powerState.displayStatus, 
+         osName = properties.extended.instanceView.osName, 
+         osVersion = properties.extended.instanceView.osVersion
+```
+
+■ご参考：クイック スタート: Azure portal を使用して Resource Graph クエリを実行する  
+https://learn.microsoft.com/ja-jp/azure/governance/resource-graph/first-query-portal  
+  
+実行結果の例としては、以下のような表示となります。CSV で結果のエクスポートも可能です。
+
+![](./get-vm-os-list/arg.png)
+
 ---
 ## さいごに
 
-上記コマンドの詳細な解説や、コマンドをご要件に合わせて改修したい場合、Microsoft Copilot を利用することもおすすめです。  
+上記コマンドやクエリの詳細な解説が必要な場合や、コマンドをご要件に合わせて改修したい場合、Microsoft Copilot を利用することもおすすめです。  
 私自身もよく、以下のようなプロンプトを使用して活用しております。  
 
 - 以下のコマンドは何をしているのか解説してください。
 - 以下のコマンドについて、○○の情報を表示するように改修してください。
 
 生成された回答は必ず正しいとは限りませんので、検証等をいただく必要がございますが、Microsoft Copilot といった AI を用いて色々なことができる便利な時代になりました。  
-
 これらの情報が皆様のお役に立てれば幸いでございます。
