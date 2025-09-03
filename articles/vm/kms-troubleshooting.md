@@ -411,6 +411,10 @@ https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/
 ### Windows Server 2025/2022 Datacenter Azure Edition でライセンス認証には成功しているのに「ライセンス認証を行ってください」が引き続き表示される
 
 先述の手動のライセンス認証などで KMS ライセンス認証は成功しているにもかかわらず、「ライセンス認証を行ってください」という表示が引き続き表示されてしまうという事象が、Windows Server 2025/2022 Datacenter Azure Edition にて発生することがございます。  
+また、以下のようなポップアップが表示されることがございます。  
+
+![Windows Server 2022 Datacenter Azure Edition VM は、Azure またはサポートされている Azure Stack ハイパーバイザーで実行されていないか、サポートされているAzure Stackで Azure の特典を有効にしていないため、非アクティブ化されました。Azure 特典を有効にするには、[Windows Admin Center] > [Azure 特典を有効にする] でクラスター設定に移動します。 詳細情報: https://aka.ms/IMDSAttest](./kms-troubleshooting/aeinactive.png)
+
 この際は、以下の公式ドキュメントをご参照いただきトラブルシューティングをお試しくださいませ。  
   
 ■ご参考：Windows のアクティブ化基準値が引き続き表示される  
