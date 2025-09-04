@@ -23,7 +23,7 @@ Azure サポートにおいて、お問い合わせは大きく 2 種類に区�
   Azure サポートでは、文書化されたベストプラクティスへのアクセス、実装や構成に関する一般的な製品ドキュメントの提供のご案内の範囲で対応させていただくという対応範囲となります。
   なお、障害対応の延長として、(すでに解消済み・過去に発生の) 問題が発生したことについての原因を知りたいというご要望もアドバイザリに該当します。
 
-詳しくは、[Azure における有償 Azure テクニカル サポートの対応範囲]((https://jpaztech.github.io/blog/other/azure_technical_support_explained/) ) をご参照ください。
+詳しくは、[Azure における有償 Azure テクニカル サポートの対応範囲](https://jpaztech.github.io/blog/other/azure_technical_support_explained/) をご参照ください。
 
 ## サポート契約について
 
@@ -81,3 +81,4 @@ Azure 利用におけるお客様のご契約規模や想定される利用人�
 
 
 ご案内は以上となります。
+
