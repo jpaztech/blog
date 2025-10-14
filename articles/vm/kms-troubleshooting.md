@@ -207,9 +207,6 @@ KMS ライセンス認証が失敗している原因として、名前解決が�
 - DNS での名前解決の確認
 
 ```powershell
-# 古い情報での名前解決を抑止するため DNS キャッシュをクリア
-ipconfig /flushdns
-
 # KMS サーバーの名前解決が可能か確認する
 nslookup kms.core.windows.net
 nslookup azkms.core.windows.net
