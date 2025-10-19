@@ -1,6 +1,6 @@
 ---
 title: Azure Firewall のキャパシティに関する問題およびその原因 / 対策について
-date: 2024-11-xx 17:30:00
+date: 2024-11-15 17:30:00
 tags:
   - Network
   - Azure Firewall
@@ -87,3 +87,4 @@ Azure Firewall は最大 20 インスタンスまでスケールアウトする�
 >https://learn.microsoft.com/ja-jp/azure/firewall/monitor-firewall-reference
 
 当ブログが、お客様よりお問い合わせをいただくことが多い Azure Firewall のキャパシティ問題に関して、お客様にて設計や運用を行う際の手助けになりましたら、幸いです。
+
