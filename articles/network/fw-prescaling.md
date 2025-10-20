@@ -56,7 +56,7 @@ Azure Firewall の自動スケーリング機能の公開情報は [Azure Firewa
 - Azure Firewall メトリックに新たに追加された [Observed capacity Units] メトリックを参照し、適切な最小インスタンス数、最大インスタンス数を設定してください。このメトリックを参照する際は、[集計] を "平均" にしてください。
 　![Observed capacity Units メトリック例](./fw-prescaling/fw-observed-capacity-units-metric.png)
 
-- プレスケーリング機能をご利用頂くと、通常の料金に追加し、以下の課金も発生します。
+- プレスケーリング機能をご利用頂くと、**通常の料金に追加**し、以下の課金も発生します。
   | SKU | 容量ユニット (1 インスタンス) あたりの価格 |
   |:----:|:---:|
   | Azure Firewall Standard | 容量ユニット時間あたり $0.07 |
@@ -72,6 +72,7 @@ Azure Firewall の自動スケーリング機能の公開情報は [Azure Firewa
 以上、Azure Firewall プレスケーリング機能をご利用される際のご参考になれば幸いです。
 
 ---
+
 
 
 
