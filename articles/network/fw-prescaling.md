@@ -11,15 +11,14 @@ tags:
 こんにちは、Azure テクニカル サポート チームの園部です。
 
 今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。
-
 <!-- more -->
 
 ## Azure Firewall の自動スケーリング機能の動作、課題
-プレスケーリング機能の紹介の前に、Azure Firewall に元々備わっている自動スケーリング機能の動作と課題について紹介します。<br>
+プレスケーリング機能の紹介の前に、Azure Firewall に元々備わっている自動スケーリング機能の動作と課題について紹介します。
 
 Azure Firewall には、内部コンポーネントとして、トラフィックのルール評価、処理などを行っている内部インスタンスが存在しています。
 Azure Firewall Standard, Premium の内部インスタンス数は、自動スケーリング機能により変化し、既定では最小で 2 インスタンス、最大で 20 インスタンスが動作します。※Azure Firewall Basic は 2 インスタンス固定で、自動スケーリング機能は備わっていません。
-この自動スケーリング機能では、平均スループットや CPU 使用率やコネクション数に応じて自動的にスケールアウト/スケールインを行います。
+この自動スケーリング機能では、平均スループットや CPU 使用率、コネクション数に応じて自動的にスケールアウト/スケールインを行います。
 Azure Firewall の自動スケーリング機能の公開情報は [Azure Firewall のパフォーマンス](https://learn.microsoft.com/ja-jp/azure/firewall/firewall-performance) を参照してください。
 
 しかし、この自動スケーリング機能には以下のような課題があります。
@@ -61,11 +60,12 @@ Azure Firewall の自動スケーリング機能の公開情報は [Azure Firewa
   また、計算に用いられるインスタンス数についてですが、10 インスタンスとしてカウントされるのではなく、既定で動作する 2 インスタンスを差し引いた 8 インスタンスとしてカウントされている点にご注意ください。<br>
   
 その他、既述の公開情報内でも [制限事項](https://learn.microsoft.com/ja-jp/azure/firewall/prescaling#limitations) や [既知の問題](https://learn.microsoft.com/ja-jp/azure/firewall/prescaling#known-issues) として注意点等の記載がございますので、併せてご参照ください。
-<br><br>
+<br>
 
 以上、Azure Firewall プレスケーリング機能をご利用される際のご参考になれば幸いです。
 
 ---
+
 
 
 
