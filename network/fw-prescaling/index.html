@@ -15,7 +15,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/fw-prescaling/fw-observed-capacity-units-metric.png">
 <meta property="article:published_time" content="2025-10-20T03:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-20T05:52:21.493Z">
+<meta property="article:modified_time" content="2025-10-20T05:58:49.715Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="Azure Firewall">
@@ -108,7 +108,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+2523e666-af40-58d6-a643-1f89909effd6%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Firewall+%E3%81%AE%E3%83%97%E3%83%AC%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0%E6%A9%9F%E8%83%BD+%28%E4%BA%8B%E5%89%8D%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0%E6%A9%9F%E8%83%BD%29+%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Ffw-prescaling%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Ffw-prescaling.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Ffw-prescaling.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/fw-prescaling/" data-id="cmgypxw3m006q0no7gwp42cya" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/fw-prescaling/" data-id="cmgyq67h2006q0nno0nog2hyr" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -118,19 +118,14 @@
 <span id="more"></span>
 
 <h2 id="Azure-Firewall-の自動スケーリング機能の動作、課題"><a href="#Azure-Firewall-の自動スケーリング機能の動作、課題" class="headerlink" title="Azure Firewall の自動スケーリング機能の動作、課題"></a>Azure Firewall の自動スケーリング機能の動作、課題</h2><p>プレスケーリング機能の紹介の前に、Azure Firewall に元々備わっている自動スケーリング機能の動作と課題について紹介します。<br></p>
-<p>Azure Firewall には、内部コンポーネントとして、トラフィックのルール評価、処理などを行っている内部インスタンスが存在しています。<br><br>Azure Firewall Standard, Premium の内部インスタンス数は、自動スケーリング機能により変化し、既定では最小で 2 インスタンス、最大で 20 インスタンスが動作します。※Azure Firewall Basic は 2 インスタンス固定で、自動スケーリング機能は備わっていません。<br><br>この自動スケーリング機能では、平均スループットや CPU 使用率やコネクション数に応じて自動的にスケールアウト/スケールインを行います。<br><br>Azure Firewall の自動スケーリング機能の公開情報は <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-performance">Azure Firewall のパフォーマンス</a> を参照してください。</p>
+<p>Azure Firewall には、内部コンポーネントとして、トラフィックのルール評価、処理などを行っている内部インスタンスが存在しています。<br>Azure Firewall Standard, Premium の内部インスタンス数は、自動スケーリング機能により変化し、既定では最小で 2 インスタンス、最大で 20 インスタンスが動作します。※Azure Firewall Basic は 2 インスタンス固定で、自動スケーリング機能は備わっていません。<br>この自動スケーリング機能では、平均スループットや CPU 使用率やコネクション数に応じて自動的にスケールアウト/スケールインを行います。<br>Azure Firewall の自動スケーリング機能の公開情報は <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/firewall-performance">Azure Firewall のパフォーマンス</a> を参照してください。</p>
 <p>しかし、この自動スケーリング機能には以下のような課題があります。</p>
-<p>・スケールアウト時の課題<br><br>スケールアウトには通常 5-7 分程度要します。その為、突然のトラフィックの急増にスケールアウトが追い付かず、いくつかのリクエストで遅延、正常に接続が行えない、といった事象が発生する可能性があります。</p>
-<p>・スケールイン時の課題<br><br>長期コネクションが残存しているインスタンスでスケールインが発生すると、当該インスタンスが削除される際に、予期しない接続断が発生する可能性があります。</p>
-<br>
-
+<p>・スケールアウト時の課題<br>スケールアウトには通常 5-7 分程度要します。その為、突然のトラフィックの急増にスケールアウトが追い付かず、いくつかのリクエストで遅延、正常に接続が行えない、といった事象が発生する可能性があります。</p>
+<p>・スケールイン時の課題<br>長期コネクションが残存しているインスタンスでスケールインが発生すると、当該インスタンスが削除される際に、予期しない接続断が発生する可能性があります。</p>
 <h2 id="Azure-Firewall-のプレスケーリング機能の動作、メリット"><a href="#Azure-Firewall-のプレスケーリング機能の動作、メリット" class="headerlink" title="Azure Firewall のプレスケーリング機能の動作、メリット"></a>Azure Firewall のプレスケーリング機能の動作、メリット</h2><p>今回 GA されたプレスケーリング機能では、Azure Firewall リソース個々に、最小インスタンス数と、自動スケーリングによる最大インスタンス数をご指定頂くことが可能となります。</p>
-<p>例えば、最小インスタンス数を 5, 最大インスタンス数を 20 とすると、平常時は 5 インスタンスで動作し、スループットの増加やインスタンスの CPU 使用率等に合わせて最大 20 インスタンスまでスケールアウトします。</p>
-<p>また最小インスタンス数と最大インスタンス数を同じ値にすることで、インスタンス数を常にその値に固定することが可能となり、自動スケーリングが行われなくなります。</p>
+<p>例えば、最小インスタンス数を 5, 最大インスタンス数を 20 とすると、平常時は 5 インスタンスで動作し、スループットの増加やインスタンスの CPU 使用率等に合わせて最大 20 インスタンスまでスケールアウトします。<br>また最小インスタンス数と最大インスタンス数を同じ値にすることで、インスタンス数を常にその値に固定することが可能となり、自動スケーリングが行われなくなります。</p>
 <p>このプレスケーリング機能の公開情報は <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/prescaling">Azure Firewall の事前スケーリング</a> を参照してください。</p>
-<p>プレスケーリング機能により、上述の自動スケーリング機能における課題を低減頂くことが可能となります。<br><br>例えば、一時的なイベント等により Azure Firewall を経由するトラフィック量が急増することを把握されているような場合、事前に、最小値を既定の 2 以上に設定しておくことでスケールアウト時の課題を回避できます。<br>またスケールインによる予期しない接続断を発生させたくない環境の場合、最小インスタンス数と最大インスタンス数を同じ値にしておくことで、スケールインを防ぐことが可能です。</p>
-<br>
-
+<p>プレスケーリング機能により、上述の自動スケーリング機能における課題を低減頂くことが可能となります。<br>例えば、一時的なイベント等により Azure Firewall を経由するトラフィック量が急増することを把握されているような場合、事前に、最小値を既定の 2 以上に設定しておくことでスケールアウト時の課題を回避できます。<br>またスケールインによる予期しない接続断を発生させたくない環境の場合、最小インスタンス数と最大インスタンス数を同じ値にしておくことで、スケールインを防ぐことが可能です。</p>
 <h2 id="プレスケーリング機能を利用する際の注意点"><a href="#プレスケーリング機能を利用する際の注意点" class="headerlink" title="プレスケーリング機能を利用する際の注意点"></a>プレスケーリング機能を利用する際の注意点</h2><p>プレスケーリング機能をご利用される際は以下の点に特にご留意ください。</p>
 <ul>
 <li><p>Azure Firewall メトリックに新たに追加された [Observed capacity Units] メトリックを参照し、適切な最小インスタンス数、最大インスタンス数を設定してください。このメトリックを参照する際は、[集計] を “平均” にしてください。<br>　<img src="/blog/network/fw-prescaling/fw-observed-capacity-units-metric.png" alt="Observed capacity Units メトリック例"></p>
@@ -152,10 +147,10 @@
 <td align="center">容量ユニット時間あたり $0.11</td>
 </tr>
 </tbody></table>
-<p>例えば Azure Firewall Standard において、プレスケーリング機能により最小インスタンス数を 10、最大インスタンス数を 30 として 100 時間稼働させた場合、$0.07 * 8 (instances) * 100 (hours) = $56 が追加費用として発生することになります。<br><br>なお、プレスケーリング機能を使用した状態であっても、オートスケールによるインスタンス増加分に対しては費用追加はありません。例えば、オートスケールによりインスタンス数が最小値の 10 から最大値の 30 に増加し、その状態で 100 時間動作したとしても、追加費用は最小インスタンス数で指定した 10 インスタンスを基準に計算され、$56 のままです。<br><br>また、計算に用いられるインスタンス数についてですが、10 インスタンスとしてカウントされるのではなく、既定で動作する 2 インスタンスを差し引いた 8 インスタンスとしてカウントされている点にご注意ください。<br><br></p>
+<p>例えば Azure Firewall Standard において、プレスケーリング機能により最小インスタンス数を 10、最大インスタンス数を 30 として 100 時間稼働させた場合、$0.07 * 8 (instances) * 100 (hours) = $56 が追加費用として発生することになります。<br>なお、プレスケーリング機能を使用した状態であっても、オートスケールによるインスタンス増加分に対しては費用追加はありません。例えば、オートスケールによりインスタンス数が最小値の 10 から最大値の 30 に増加し、その状態で 100 時間動作したとしても、追加費用は最小インスタンス数で指定した 10 インスタンスを基準に計算され、$56 のままです。<br>また、計算に用いられるインスタンス数についてですが、10 インスタンスとしてカウントされるのではなく、既定で動作する 2 インスタンスを差し引いた 8 インスタンスとしてカウントされている点にご注意ください。<br></p>
 </li>
 </ul>
-<p>その他、既述の公開情報内でも <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/prescaling#limitations">制限事項</a> や <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/prescaling#known-issues">既知の問題</a> として注意点等の記載がございますので、併せてご参照ください。<br><br><br><br></p>
+<p>その他、既述の公開情報内でも <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/prescaling#limitations">制限事項</a> や <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/firewall/prescaling#known-issues">既知の問題</a> として注意点等の記載がございますので、併せてご参照ください。<br><br><br></p>
 <p>以上、Azure Firewall プレスケーリング機能をご利用される際のご参考になれば幸いです。</p>
 <hr>
 
