@@ -1,5 +1,5 @@
 ---
-title: Azure Firewall のプレスケーリング機能について
+title: Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について
 date: 2025-10-20 12:00:00 
 tags:
   - Network
@@ -10,7 +10,7 @@ tags:
 ---
 こんにちは、Azure テクニカル サポート チームの園部です。
 
-今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能について紹介します。
+今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。
 
 <!-- more -->
 
@@ -72,6 +72,7 @@ Azure Firewall の自動スケーリング機能の公開情報は [Azure Firewa
 以上、Azure Firewall プレスケーリング機能をご利用される際のご参考になれば幸いです。
 
 ---
+
 
 
 
