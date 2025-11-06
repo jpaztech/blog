@@ -101,7 +101,7 @@ virtualMachines   japaneast    Standard_B16as_v2         1,2      None
 
 ---
 ### ローカル一時ディスクの有無  
-ローカル一時ディスクの有無が異なるサイズへ変更する場合、VM の再作成が必要となります。  
+ローカル一時ディスクの有無が異なるサイズへ変更する場合、Windows VM では VM の再作成が必要となります。  
 ゲスト OS 上での事前作業等が必要となりますので、詳細な手順につきましては下記の公式ドキュメントをご参照ください。  
 
 ご参考：[FAQ - ローカル一時ディスクを持たない Azure VM のサイズ - Azure Virtual Machines | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/virtual-machines/azure-vms-no-temp-disk)  
