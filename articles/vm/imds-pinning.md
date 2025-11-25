@@ -1,5 +1,5 @@
 ---
-title: Action required: Update certificates for Azure Instance Metadata Service の通知の補足
+title: Action required：Update certificates for Azure Instance Metadata Service の通知の補足
 date: 2025-11-25 17:30:00
 tags:
   - VM
