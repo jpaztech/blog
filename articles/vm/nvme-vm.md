@@ -99,6 +99,7 @@ standardEav6Family               Standard_E2as_v6          2     NVMe
 
 > [!TIP]
 > ご希望の VM サイズがどのゾーンで提供されているか確認をしたい場合は、以下のブログ記事をご参照ください。  
+>   
 > ■ご参考：当該リージョン、ゾーンにて変更先のサイズが提供されているか  
 > https://jpaztech.github.io/blog/vm/vm-size-change/#%E5%BD%93%E8%A9%B2%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%80%81%E3%82%BE%E3%83%BC%E3%83%B3%E3%81%AB%E3%81%A6%E5%A4%89%E6%9B%B4%E5%85%88%E3%81%AE%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%8C%E6%8F%90%E4%BE%9B%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B
 
@@ -136,7 +137,7 @@ https://learn.microsoft.com/ja-jp/azure/virtual-machines/nvme-overview#mark-as-n
 ## SCSI 必須サイズと NVMe 必須サイズ間の VM サイズ変更について
 
 以下の通り、同じディスクコントローラーを必須とする VM サイズ間での VM サイズ変更は簡単に可能でございます。  
-他方、現在と異なるディスクコントローラーを必須とするサイズへ変更する場合は変換等の対応が必要です。  
+他方、現在と異なるディスクコントローラーを必須とするサイズへ変更する場合はディスクコントローラー変換といった対応が必要となります。  
 
 | 現在の VM サイズ | 変更先の VM サイズ | 変更可否について |
 | --- | --- | --- |
@@ -242,7 +243,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azure/SAP-on-Azure-Scr
 > 上記のスクリプト実行にあたっての免責事項等について以下をご参照ください。  
 > https://github.com/Azure/SAP-on-Azure-Scripts-and-Utilities/blob/main/LICENSE  
 
-> [!TIPS]
+> [!WARNING]
 > 上記変換手順により OS 起動等に問題が発生するケースも稀にございますので、可能であれば新規構築での NVMe 必須サイズ VM 作成をご検討いただけますと幸いです。
 
 ---
@@ -257,7 +258,7 @@ Azure-NVMe-Conversion.ps1 の全てのパラメータのオプション一覧お
 | -VMName | 変換元の VM 名を指定します。 |
 | -NewControllerType | NVMe 必須サイズに変換する場合は、**NVMe** を指定します。SCSI 必須サイズにする場合は、**SCSI** を指定します。 |
 | -VMSize | 変換先の VM サイズを指定します。 |
-| -FixOperatingSystemSettings | 変換にあたり、ゲスト OS 内の設定を RunCommands を用いて自動的に変更します。 |
+| -FixOperatingSystemSettings | ディスクコントローラー変換にあたり、ゲスト OS 内の設定を RunCommands を用いて自動的に変更します。 |
 
 ---
 
@@ -285,9 +286,11 @@ MVMe 対応にマークされていないイメージから NVMe 必須サイズ
 
 > [!NOTE]
 > NVMe 必須サイズは以下の通り、Azure マーケットプレースおよび Azure Compute Gallery からのみ作成可能であり、Azure Compute Gallery を使用しないレガシマネージドイメージからは作成が叶いません点ご留意ください。  
+>   
 > ■ご参考：NVMe 対応のマーク  
 > https://learn.microsoft.com/ja-jp/azure/virtual-machines/nvme-overview#mark-as-nvme-capable  
-> "NVMe インターフェイスが有効な VM は、NVMe とマークされたイメージ (マーケットプレースで入手可能。または社内の Azure Compute Gallery で共有されます) を使用して**のみ**作成できます。"
+>   
+> 抜粋："NVMe インターフェイスが有効な VM は、NVMe とマークされたイメージ (マーケットプレースで入手可能。または社内の Azure Compute Gallery で共有されます) を使用して**のみ**作成できます。"
 
 NVMe 必須サイズ対応のカスタムイメージを用意する例について紹介させていただきます。  
 
