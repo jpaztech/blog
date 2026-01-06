@@ -124,9 +124,7 @@ Azure Container Instance Service 8fe7fd25-33fe-4f89-ade3-0e705fcf4370 34fbe509-d
 
 [https://azure.microsoft.com/resources/templates/cloud-shell-vnet-storage/](https://azure.microsoft.com/resources/templates/cloud-shell-vnet-storage/)
 
-上記リンクへアクセスしたら表示される画面において “Deploy to Azure” のリンクを選択してください。
-
-![手順⑥](UseCloudShellinAzureVirtualNetwork/step6-1.jpg)
+上記リンクへアクセスしたら表示される画面において “Deploy to Azure” のリンクを選択してください。  
 
 表示されたテンプレートの各項目に必要な情報を入力して、”確認と作成”を 選択してください。
 
@@ -150,13 +148,12 @@ Azure ポータル画面上部のメニューより Cloud Shell のアイコン�
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-2.jpg)
 
-なお、既に既定の設定で Cloud Shell をご利用されており、上記の画面が表示されない場合には、以下のように Cloud Shell 画面より、メニューバーの歯車アイコンから “ユーザー設定のリセット” を選択して設定を初期化させてください。
+なお、既に既定の設定で Cloud Shell をご利用されており、上記の画面が表示されない場合には、以下のように Cloud Shell 画面より、メニューバーの歯車アイコンから “ユーザー設定のリセット” を選択して設定を初期化させてください。  
+初期化いただくことで、上述の初期画面が表示されます。 
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-3.jpg)
 
-再度 Cloud Shell を起動することで、上述の “ストレージアカウントがマウントされていません” とCloud Shell 端末を新規に作成される画面が表示されますので、“詳細設定の表示” を選択してください。
-
-“詳細設定の表示” より以下のように必要な項目を入力して、”ストレージの作成” を選択してください。
+初期画面にてPowerShell もしくは Bash どちらかを選択頂いた後、以下のように必要な項目を入力していただくことで、仮想ネットワークに Cloud Shell がデプロイできます。  
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-4.jpg)
 
