@@ -77,55 +77,9 @@ IP アドレス タブにて、ご希望の IP アドレス レンジをご指�
 ![手順②](UseCloudShellinAzureVirtualNetwork/step2-2.jpg)
 
 #### 手順③リソースプロバイダーの登録
-Azure Cloud Shell はコンテナーを使用して実行されるため、ご利用のサブスクリプションにおいて、”Microsoft.ContainerInstances” リソースプロバイダーを登録する必要があります。 
-当該リソースプロバイダーは自動的に登録されている場合がございますので、まずは Azure PowerShell より以下のコマンドを使用して、リソースプロバイダーの登録状況を確認してください。
+以下のドキュメントの「1.リソース プロバイダーを登録する」のセクションに沿って、必要なリソースプロバイダーの登録をお願いいたします。
 
-```PowerShell
-Set-AzContext -Subscription <サブスクリプション名>
-Get-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance |
-    Select-Object ResourceTypes, RegistrationState
-```
-
-登録がされていない場合は、以下の出力例のように各 RegistrationState  がNotRegistered と表示されます。
-
-```PowerShell
-PS C:\Users\shoheioda> Get-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance | select ResourceTypes,RegistrationState
- 
-ResourceTypes                                     RegistrationState
--------------                                     -----------------
-{containerGroups}                                 NotRegistered
-{serviceAssociationLinks}                         NotRegistered
-{locations}                                       NotRegistered
-{locations/capabilities}                          NotRegistered
-{locations/usages}                                NotRegistered
-{locations/operations}                            NotRegistered
-{locations/operationresults}                      NotRegistered
-{operations}                                      NotRegistered
-{locations/cachedImages}                          NotRegistered
-{locations/validateDeleteVirtualNetworkOrSubnets} NotRegistered
-{locations/deleteVirtualNetworkOrSubnets}         NotRegistered
-```
-
-登録を行うには、以下のコマンドを実行してください。
-
-```PowerShell
-PS C:\Users\shoheioda> Get-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance | select ResourceTypes,RegistrationState
- 
-ResourceTypes                                     RegistrationState
--------------                                     -----------------
-{containerGroups}                                 Registered
-{serviceAssociationLinks}                         Registered
-{locations}                                       Registered
-{locations/capabilities}                          Registered
-{locations/usages}                                Registered
-{locations/operations}                            Registered
-{locations/operationresults}                      Registered
-{operations}                                      Registered
-{locations/cachedImages}                          Registered
-{locations/validateDeleteVirtualNetworkOrSubnets} Registered
-{locations/deleteVirtualNetworkOrSubnets}         Registered
-```
-
+> ・ご参考: [1.リソース プロバイダーを登録する](https://learn.microsoft.com/ja-jp/azure/cloud-shell/vnet/deployment#1-register-resource-providers)
 
 #### 手順④ Azure Container Instance ID を確認する
 後続の手順において必要となるサービスプリンシパル “Azure Container Instance” に割り当てられた Azure Container Instance ID を、Azure PowerShell より以下のコマンドを実行して確認してください。
