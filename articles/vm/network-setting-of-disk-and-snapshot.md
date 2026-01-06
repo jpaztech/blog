@@ -57,8 +57,8 @@ tags:
 
 上記、エクスポートを例として記載しましたが以下のマネージドディスクに対する VHD インポートについても同じようにネットワークの制限の設定か可能です。
 
->■ご参考：お使いの VHD をアップロードする  
->https://learn.microsoft.com/ja-jp/azure/virtual-machines/managed-disks-overview#upload-your-vhd
+>■ご参考：VHD または VHDX をアップロードする
+>https://learn.microsoft.com/ja-jp/azure/virtual-machines/managed-disks-overview#upload-your-vhd-or-vhdx
 
 ---
 
