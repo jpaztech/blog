@@ -105,7 +105,8 @@ Azure Container Instance Service 8fe7fd25-33fe-4f89-ade3-0e705fcf4370 34fbe509-d
 
 ![手順⑤](UseCloudShellinAzureVirtualNetwork/step5-1.jpg)
 
-表示されたテンプレートの各項目に必要な情報を入力して、”確認と作成”を 選択してください。
+表示されたテンプレートの各項目に必要な情報を入力して、”確認と作成”を 選択してください。  
+下記スクリーンショットに加えて Nsg Name の項目が追加されているものと存じますが、新規作成される NSG の名前ですので任意の名前で問題ございません。
 
 ![手順⑤](UseCloudShellinAzureVirtualNetwork/step5-2.jpg)
 
@@ -145,7 +146,7 @@ Azure ポータル画面上部のメニューより Cloud Shell のアイコン�
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-1.jpg)
 
-初期時点では、以下のように “ストレージアカウントがマウントされていません” とCloud Shell 端末を新規に作成される画面が表示されますので、ここでリンク “詳細設定の表示” を選択してください。
+初期時点では、以下のような画面が表示されますので、PowerShell もしくは Bash どちらかを選択ください。
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-2.jpg)
 
