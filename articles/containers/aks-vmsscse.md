@@ -590,8 +590,8 @@ VMSS インスタンスの拡張機能は、インスタンスを"再イメー�
 ノード初期化を妨げる要因を取り除いたあとは、VMSS インスタンスの再イメージ化を行い、クラスターにノードが追加されることをご確認ください。
 再イメージ化の方法は、次の URL のドキュメントをご参照ください。
 
-> ご参考) 既存の VM の "再イメージ化"
-> https://learn.microsoft.com/ja-jp/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-upgrade-policy#exceptions-to-upgrade-policies
+> ご参考) 仮想マシンを再イメージ化する
+> https://learn.microsoft.com/ja-jp/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-reimage-virtual-machine
 
 すでに存在する VMSS インスタンスはそのままの状態で、新規ノードが作成可能であるかを確認したいという場合には、ノードプールのスケール操作によって、ノードの追加をすることをご検討ください。
 ノードプールのスケール方法は、次の URL のドキュメントをご参照ください。
