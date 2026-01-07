@@ -165,10 +165,15 @@ https://learn.microsoft.com/ja-jp/azure/virtual-machines/nvme-overview#mark-as-n
 ## ディスクコントローラーを変更し NVMe 必須サイズへ変更する方法、および SCSI 必須サイズに戻す方法
 
 > [!WARNING]
-> 起動不可等の予期せぬ状況に備えて、必ずバックアップ取得を行った上で実施および検証をお願いいたします。  
-> もし、予期せず起動不可となってしまった場合には、バックアップからのリストアをご検討ください。
+> 恐縮ながら現時点において、既存の Windows VM を SCSI 必須サイズから MVNe 必須サイズに変更することを明確にサポートしている手順のご用意がございません。  
+> そのため、原則としては新規に Azure マーケットプレイスなどから NVMe 必須サイズの Windows VM を新規に構築いただくことをご検討ください。  
+> 下記の Azure-NVMe-Conversion.ps1 にて Windows VM を NVMe 必須サイズに変更する操作自体は可能と存じますが、変更後にゲスト OS 起動不可の問題等が発生した場合は別途新規 VM 構築の方針をとっていただけますと幸いです。  
 
-以下の Azure NVMe Utilities に含まれる Azure-NVMe-Conversion.ps1 という PowerShell スクリプトをご利用いただくことで、Windows / Linux VM を NVMe 必須サイズへ変更および、SCSI 必須サイズに戻すことが可能です。  
+> [!WARNING]
+> Azure-NVMe-Conversion.ps1 を利用の際は、ゲスト OS 起動不可等の予期せぬ状況に備えて、必ずバックアップ取得を行った上で検証や実施をお願いいたします。
+> もし、予期せず起動不可となってしまった場合には、サイズを戻すことやバックアップからのリストアをご検討ください。
+
+以下の Azure NVMe Utilities に含まれる Azure-NVMe-Conversion.ps1 という PowerShell スクリプトをご利用いただくことで、Azure VM を NVMe 必須サイズへ変更および、SCSI 必須サイズに戻すことが可能です。  
 このスクリプトでは Azure VM のディスクコントローラーの変更も行われます。
 
 ■ご参考：Azure NVMe Utilities  
@@ -206,6 +211,7 @@ Connect-AzAccount
 現在接続しているサブスクリプションを確認し、必要に応じて対象サブスクリプションに切り替えます。  
 
 ```PowerShell
+# dummy
 # 現在接続しているサブスクリプションの確認
 Get-AzContext
 
@@ -242,9 +248,6 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azure/SAP-on-Azure-Scr
 > [!IMPORTANT]
 > 上記のスクリプト実行にあたっての免責事項等について以下をご参照ください。  
 > https://github.com/Azure/SAP-on-Azure-Scripts-and-Utilities/blob/main/LICENSE  
-
-> [!WARNING]
-> 上記変換手順により OS 起動等に問題が発生するケースも稀にございますので、可能であれば新規構築での NVMe 必須サイズ VM 作成をご検討いただけますと幸いです。
 
 ---
 
@@ -337,3 +340,4 @@ Azure ポータルの場合、対象の VM の画面から [キャプチャ] -> 
 上記の情報は記事執筆時点のものとなり、公開情報や機能等は日々更新されていきますので、必要に応じて公開情報等の最新情報もご参照いただけますと幸いでございます。  
 
 これらの内容が皆様のお役に立てますと幸いです。  
+
