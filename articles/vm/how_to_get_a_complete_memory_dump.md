@@ -128,18 +128,7 @@ PagingFiles は下記の形式で記載します。
 > タイプ : REG_EXPAND_SZ
 > 既定値 : %SystemRoot%\MEMORY.DMP
 
-### 3. NMI から STOP エラーを発生させるように設定する
-
-下記のレジストリの値を設定してください。NMICrashDump がない場合には、新規に作成してください。
-
-> キー　 : HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl
-> 値　　 : NMICrashDump
-> タイプ : REG_DWORD
-> 設定値 : 1
-
-![](./how_to_get_a_complete_memory_dump/03.png)
-
-### 4. VM を再起動する
+### 3. VM を再起動する
 
 Azure Portal から VM を再起動させます。
 
@@ -209,3 +198,4 @@ Windows OS にてブルー スクリーンが発生し、再起動時にダン�
 
 以上となりますが、いかがでしたでしょうか。
 本記事が皆様のお役に立てれば幸いです。
+
