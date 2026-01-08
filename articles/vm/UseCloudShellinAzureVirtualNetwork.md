@@ -77,55 +77,9 @@ IP アドレス タブにて、ご希望の IP アドレス レンジをご指�
 ![手順②](UseCloudShellinAzureVirtualNetwork/step2-2.jpg)
 
 #### 手順③リソースプロバイダーの登録
-Azure Cloud Shell はコンテナーを使用して実行されるため、ご利用のサブスクリプションにおいて、”Microsoft.ContainerInstances” リソースプロバイダーを登録する必要があります。 
-当該リソースプロバイダーは自動的に登録されている場合がございますので、まずは Azure PowerShell より以下のコマンドを使用して、リソースプロバイダーの登録状況を確認してください。
+以下のドキュメントの「1.リソース プロバイダーを登録する」のセクションに沿って、必要なリソースプロバイダーの登録をお願いいたします。
 
-```PowerShell
-Set-AzContext -Subscription <サブスクリプション名>
-Get-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance |
-    Select-Object ResourceTypes, RegistrationState
-```
-
-登録がされていない場合は、以下の出力例のように各 RegistrationState  がNotRegistered と表示されます。
-
-```PowerShell
-PS C:\Users\shoheioda> Get-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance | select ResourceTypes,RegistrationState
- 
-ResourceTypes                                     RegistrationState
--------------                                     -----------------
-{containerGroups}                                 NotRegistered
-{serviceAssociationLinks}                         NotRegistered
-{locations}                                       NotRegistered
-{locations/capabilities}                          NotRegistered
-{locations/usages}                                NotRegistered
-{locations/operations}                            NotRegistered
-{locations/operationresults}                      NotRegistered
-{operations}                                      NotRegistered
-{locations/cachedImages}                          NotRegistered
-{locations/validateDeleteVirtualNetworkOrSubnets} NotRegistered
-{locations/deleteVirtualNetworkOrSubnets}         NotRegistered
-```
-
-登録を行うには、以下のコマンドを実行してください。
-
-```PowerShell
-PS C:\Users\shoheioda> Get-AzResourceProvider -ProviderNamespace Microsoft.ContainerInstance | select ResourceTypes,RegistrationState
- 
-ResourceTypes                                     RegistrationState
--------------                                     -----------------
-{containerGroups}                                 Registered
-{serviceAssociationLinks}                         Registered
-{locations}                                       Registered
-{locations/capabilities}                          Registered
-{locations/usages}                                Registered
-{locations/operations}                            Registered
-{locations/operationresults}                      Registered
-{operations}                                      Registered
-{locations/cachedImages}                          Registered
-{locations/validateDeleteVirtualNetworkOrSubnets} Registered
-{locations/deleteVirtualNetworkOrSubnets}         Registered
-```
-
+> ・ご参考: [1.リソース プロバイダーを登録する](https://learn.microsoft.com/ja-jp/azure/cloud-shell/vnet/deployment#1-register-resource-providers)
 
 #### 手順④ Azure Container Instance ID を確認する
 後続の手順において必要となるサービスプリンシパル “Azure Container Instance” に割り当てられた Azure Container Instance ID を、Azure PowerShell より以下のコマンドを実行して確認してください。
@@ -151,7 +105,8 @@ Azure Container Instance Service 8fe7fd25-33fe-4f89-ade3-0e705fcf4370 34fbe509-d
 
 ![手順⑤](UseCloudShellinAzureVirtualNetwork/step5-1.jpg)
 
-表示されたテンプレートの各項目に必要な情報を入力して、”確認と作成”を 選択してください。
+表示されたテンプレートの各項目に必要な情報を入力して、”確認と作成”を 選択してください。  
+下記スクリーンショットに加えて Nsg Name の項目が追加されているものと存じますが、新規作成される NSG の名前ですので任意の名前で問題ございません。
 
 ![手順⑤](UseCloudShellinAzureVirtualNetwork/step5-2.jpg)
 
@@ -169,9 +124,7 @@ Azure Container Instance Service 8fe7fd25-33fe-4f89-ade3-0e705fcf4370 34fbe509-d
 
 [https://azure.microsoft.com/resources/templates/cloud-shell-vnet-storage/](https://azure.microsoft.com/resources/templates/cloud-shell-vnet-storage/)
 
-上記リンクへアクセスしたら表示される画面において “Deploy to Azure” のリンクを選択してください。
-
-![手順⑥](UseCloudShellinAzureVirtualNetwork/step6-1.jpg)
+上記リンクへアクセスしたら表示される画面において “Deploy to Azure” のリンクを選択してください。  
 
 表示されたテンプレートの各項目に必要な情報を入力して、”確認と作成”を 選択してください。
 
@@ -191,17 +144,16 @@ Azure ポータル画面上部のメニューより Cloud Shell のアイコン�
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-1.jpg)
 
-初期時点では、以下のように “ストレージアカウントがマウントされていません” とCloud Shell 端末を新規に作成される画面が表示されますので、ここでリンク “詳細設定の表示” を選択してください。
+初期時点では、以下のような画面が表示されますので、PowerShell もしくは Bash どちらかを選択ください。
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-2.jpg)
 
-なお、既に既定の設定で Cloud Shell をご利用されており、上記の画面が表示されない場合には、以下のように Cloud Shell 画面より、メニューバーの歯車アイコンから “ユーザー設定のリセット” を選択して設定を初期化させてください。
+なお、既に既定の設定で Cloud Shell をご利用されており、上記の画面が表示されない場合には、以下のように Cloud Shell 画面より、メニューバーの歯車アイコンから “ユーザー設定のリセット” を選択して設定を初期化させてください。  
+初期化いただくことで、上述の初期画面が表示されます。 
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-3.jpg)
 
-再度 Cloud Shell を起動することで、上述の “ストレージアカウントがマウントされていません” とCloud Shell 端末を新規に作成される画面が表示されますので、“詳細設定の表示” を選択してください。
-
-“詳細設定の表示” より以下のように必要な項目を入力して、”ストレージの作成” を選択してください。
+初期画面にてPowerShell もしくは Bash どちらかを選択頂いた後、以下のように必要な項目を入力していただくことで、仮想ネットワークに Cloud Shell がデプロイできます。  
 
 ![手順⑦](UseCloudShellinAzureVirtualNetwork/step7-4.jpg)
 
