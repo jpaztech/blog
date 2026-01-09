@@ -44,6 +44,7 @@ https://learn.microsoft.com/ja-jp/azure/virtual-machines/sizes/retirement/retire
 今回のリタイア予定の VM サイズの一覧は Azure CLI で以下のコマンドで確認可能です。
 
 ```Bash
+# dummy
 # D, Ds, Dv2, Dsv2, Ls シリーズの VM サイズ一覧を表示
 az vm list-skus -r virtualMachines \
   --query "[?family=='standardDFamily' || family=='standardDSFamily' || family=='standardDv2Family' || family=='standardDSv2Family' || family=='standardDv2PromoFamily' || family=='standardDSv2PromoFamily' || family=='standardLSFamily'].name" \
@@ -405,4 +406,5 @@ VM が起動中の場合は移行可能な VM サイズであっても対象と�
 ---
 
 これらの情報が皆様のお役に立てますと幸いでございます。
+
 
