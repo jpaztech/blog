@@ -165,7 +165,7 @@ https://learn.microsoft.com/ja-jp/azure/virtual-machines/nvme-overview#mark-as-n
 ## ディスクコントローラーを変更し NVMe 必須サイズへ変更する方法、および SCSI 必須サイズに戻す方法
 
 > [!WARNING]
-> 恐縮ながら現時点において、**既存の Windows VM** については SCSI 必須サイズから MVNe 必須サイズに変更することを明確にサポートしている手順のご用意がございません。  
+> 恐縮ながら現時点において、**既存の Windows VM** については SCSI 必須サイズから NVMe 必須サイズに変更することを明確にサポートしている手順のご用意がございません。  
 > そのため、原則としては新規に Azure マーケットプレイスなどから NVMe 必須サイズの Windows VM を新規に構築いただくことをご検討ください。  
 > 下記の Azure-NVMe-Conversion.ps1 にて Windows VM を NVMe 必須サイズに変更する操作自体は可能と存じますが、変更後にゲスト OS 起動不可の問題等が発生した場合は別途新規 VM 構築の方針をとっていただけますと幸いです。  
 > v5 サイズといった SCSI ディスクコントローラーを採用する VM サイズ内でのサイズ変更もご検討いただけますと幸いでございます。  
@@ -194,7 +194,7 @@ Azure Cloud Shell 上の PowerShell をご利用いただくことも可能で�
 https://learn.microsoft.com/ja-jp/powershell/azure/install-azure-powershell  
 
 2:  
-PowerSehll 上にて、署名されていない PowerShell スクリプトを許可する設定を行うため、以下のコマンドを実行します。  
+PowerShell 上にて、署名されていない PowerShell スクリプトを許可する設定を行うため、以下のコマンドを実行します。  
 Cloud Shell 環境や、既にスクリプト実行が可能な環境の場合はスキップ可能と存じます。  
 
 ```PowerShell
@@ -341,6 +341,3 @@ Azure ポータルの場合、対象の VM の画面から [キャプチャ] -> 
 上記の情報は記事執筆時点のものとなり、公開情報や機能等は日々更新されていきますので、必要に応じて公開情報等の最新情報もご参照いただけますと幸いでございます。  
 
 これらの内容が皆様のお役に立てますと幸いです。  
-
-
-
