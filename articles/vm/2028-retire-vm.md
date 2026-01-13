@@ -336,7 +336,7 @@ Resources
 ## リタイア対象の VM を移行する（VM サイズ変更を行う）
 
 リタイア対象の VM および VMSS については、リタイア予定日までに移行をお願いいたします。  
-以降についてはガイドの公式ドキュメントもご用意されておりますので、必要に応じてご参照いただけますと幸いです。  
+移行についてはガイドの公式ドキュメントもご用意されておりますので、必要に応じてご参照いただけますと幸いです。  
 
 ■ご参考：汎用サイズ移行ガイド  
 https://learn.microsoft.com/ja-jp/azure/virtual-machines/migration/sizes/d-ds-dv2-dsv2-ls-series-migration-guide  
