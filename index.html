@@ -112,9 +112,17 @@
     <!-- post caption -->
     <div class="article-entry" itemprop="articleBody">
       
-        こんにちは、Azure テクニカル サポート チームの富田です。2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されております。本件について多くお問い合わせもいただいておりますため、本ブログ記事にて解説をさせていただきます。  
-■ご参考：Retirement: D, Ds, Dv2, Dsv2, and Ls Series Virtual Machines to Be Retired on May 1, 2028https://azure.microsoft.com/en-us/updates?id=485569  
-■ご参考：Retirement: The F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, and B...
+        こんにちは、Azure テクニカル サポート チームの富田です。2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されております。本件について多くお問い合わせもいただいておりますため、以下の点本ブログ記事にて解説をさせていただきます。  
+
+VM サイズがリタイアするとどうなるか
+今回のリタイアのスケジュールについて
+今回のリタイア対象の VM サイズについて
+Azure Resource Graph クエリを使って今回のリタイア対象 VM と VMSS を見つける
+リタイア対象の VM を移行する（VM サイズ変更を行う）
+移行先として推奨されるサイズとサイズ変更に注意が必要な点
+
+
+■ご参考：Retirement: D, Ds, Dv2, D...
         <p class="article-readmore">
           <a href="vm/2028-retire-vm/">Read more</a>
         </p>
@@ -122,7 +130,7 @@
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/2028-retire-vm/" data-id="cmkc6bgv500qz0npfhgwucarn" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/2028-retire-vm/" data-id="cmkc9dnct00r00nn55t45hzvw" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -180,7 +188,7 @@ NVMe ディスクコントローラータイプの必須の VM サイズとは�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/nvme-vm/" data-id="cmkc6bgva00ra0npfcrfbdts3" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/nvme-vm/" data-id="cmkc9dncy00ra0nn5d79lh769" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -231,7 +239,7 @@ NVMe ディスクコントローラータイプの必須の VM サイズとは�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/imds-pinning/" data-id="cmkc6bgrb00ae0npfdxnqd2vk" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/imds-pinning/" data-id="cmkc9dn9000ae0nn56a5hdnkx" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -282,7 +290,7 @@ NVMe ディスクコントローラータイプの必須の VM サイズとは�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/fw-prescaling/" data-id="cmkc6bgq2006r0npf85jjbfvc" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/fw-prescaling/" data-id="cmkc9dn7q006t0nn5112i6mqr" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Prescaling/" rel="tag">Prescaling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/auto-scaling/" rel="tag">auto scaling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/instance/" rel="tag">instance</a></li></ul>
@@ -333,7 +341,7 @@ NVMe ディスクコントローラータイプの必須の VM サイズとは�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/information/advisory-inquiries-in-the-Azure-Support/" data-id="cmkc6bgpc004i0npfdckkb5y5" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/information/advisory-inquiries-in-the-Azure-Support/" data-id="cmkc9dn6z004i0nn53xewh177" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Information/" rel="tag">Information</a></li></ul>
@@ -382,7 +390,7 @@ NVMe ディスクコントローラータイプの必須の VM サイズとは�
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/get-vm-os-list/" data-id="cmkc6bgr800a40npf5fllcqwo" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/get-vm-os-list/" data-id="cmkc9dn8x00a40nn59gzxclt1" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/HowTo/" rel="tag">HowTo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Windows/" rel="tag">Windows</a></li></ul>
@@ -435,7 +443,7 @@ CNAME ベースのドメインコントロール検証が廃止されます本..
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/afd-classic-azure-cdn-managed-cert-provisioning/" data-id="cmkc6bgpi00510npf4cerewl4" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/afd-classic-azure-cdn-managed-cert-provisioning/" data-id="cmkc9dn7800540nn5470u101f" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
@@ -486,7 +494,7 @@ CNAME ベースのドメインコントロール検証が廃止されます本..
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/vm/ahb-rhel/" data-id="cmkc6bgqu008y0npf77hx4z36" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/vm/ahb-rhel/" data-id="cmkc9dn8h008y0nn58yvbewaq" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/AHB/" rel="tag">AHB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/EUS/" rel="tag">EUS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHEL/" rel="tag">RHEL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/RHUI/" rel="tag">RHUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/VM/" rel="tag">VM</a></li></ul>
@@ -537,7 +545,7 @@ HTTP/2（Hypertext Transfer Protocol version 2）は、ウェブ ページのデ
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/appgw-http2/" data-id="cmkc6bgpp005j0npf0sga5w8c" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/appgw-http2/" data-id="cmkc9dn7c005l0nn518ds4jv1" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li></ul>
@@ -587,7 +595,7 @@ HTTP/2（Hypertext Transfer Protocol version 2）は、ウェブ ページのデ
     </div>
 
     <footer class="article-footer">
-      <!--a data-url="https://jpaztech.github.io/blog/network/migration-from-NSG-Flowlog-to-Vnet-Flowlog/" data-id="cmkc6bgq700780npf3gwuemjx" class="article-share-link">共有</a-->
+      <!--a data-url="https://jpaztech.github.io/blog/network/migration-from-NSG-Flowlog-to-Vnet-Flowlog/" data-id="cmkc9dn7v007b0nn53av06q8u" class="article-share-link">共有</a-->
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/NSG-Flow-Log/" rel="tag">NSG Flow Log</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Network-Watcher/" rel="tag">Network Watcher</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="tags/Vnet-Flow-Log/" rel="tag">Vnet Flow Log</a></li></ul>
