@@ -15,8 +15,8 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpaztech.github.io/blog/containers/acr-how-to-build-image-with-firewall/vm_information.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/containers/acr-how-to-build-image-with-firewall/acr_information.png">
-<meta property="article:published_time" content="2023-12-22T03:00:00.000Z">
-<meta property="article:modified_time" content="2026-01-13T07:16:37.027Z">
+<meta property="article:published_time" content="2026-01-14T03:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-14T02:18:48.842Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Containers">
 <meta property="article:tag" content="Azure Container Registry (ACR)">
@@ -100,13 +100,13 @@
       <div class="article-share">
         Last Update: 
         <a href="" class="article-date-single">
-  <time datetime="2023-12-22T03:00:00.000Z" itemprop="datePublished">2023-12-22</time>
+  <time datetime="2026-01-14T03:00:00.000Z" itemprop="datePublished">2026-01-14</time>
 </a>
         
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+10f48573-d071-5f20-8373-e98615022b28%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BACR+%E3%81%AE+Firewall+%E6%A9%9F%E8%83%BD%E3%82%92%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%97%E3%81%9F%E7%8A%B6%E6%85%8B%E3%81%A7+ACR+%E3%81%AE%E6%A9%9F%E8%83%BD%E3%82%92%E7%94%A8%E3%81%84%E3%81%A6%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%BC+%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%82%92%E3%83%93%E3%83%AB%E3%83%89%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fcontainers%2Facr-how-to-build-image-with-firewall%2F%29%0A*+Content+Source%3A+%5Barticles%2Fcontainers%2Facr-how-to-build-image-with-firewall.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fcontainers%2Facr-how-to-build-image-with-firewall.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/containers/acr-how-to-build-image-with-firewall/" data-id="cmkc9dncc00pt0nn53k1odmxy" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/containers/acr-how-to-build-image-with-firewall/" data-id="cmkde6jid00pt0nn3drsh3ota" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -122,7 +122,7 @@
 </li>
 <li><p>「選択されたネットワーク」<br>ACR の Firewall 機能を用いて、IP アドレス ベースでのアクセス制限を設けることが可能となります。<br>なお、ここで許可可能な IP アドレスの形式は CIDR 形式となっているため、IP アドレス レンジを許可することなども可能となります。</p>
 <div class="alert is-warning"><p class="alert-title">警告</p><p>許可可能な IP 規則は最大 100 個までとなります。</br></p><p>　ご参考情報：パブリック IP ネットワーク ルールを構成する </br></p><p>　<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-access-selected-networks">https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-access-selected-networks</a> </br></p></div>
-<div class="alert is-warning"><p class="alert-title">警告</p><p>この設定を入れることによって、Azure Portal からリポジトリの情報を参照できなくなる 場合があります。</br></p><p>これは、Azure Portal を用いて ACR へアクセスしているクライアント端末の IP アドレスが許可されていないためとなります。</br></p><p>そのため、Azure Portal より ACR 内の情報を参照する必要がある場合には、クライアント端末のパブリック IP アドレスを許可してください。</p></div>
+<div class="alert is-warning"><p class="alert-title">警告</p><p>この設定を入れることによって、Azure Portal からリポジトリの情報を参照できなくなる場合があります。</br></p><p>これは、Azure Portal を用いて ACR へアクセスしているクライアント端末の IP アドレスが許可されていないためとなります。</br></p><p>そのため、Azure Portal より ACR 内の情報を参照する必要がある場合には、クライアント端末のパブリック IP アドレスを許可してください。</p></div>
 </li>
 <li><p>「無効」<br>名前の通りパブリック IP アドレス経由でのアクセスを全て防ぐことが可能となります。<br>この設定だけでは、ACR にアクセス可能な端末が存在しなくなるため、あわせてプライベート エンドポイントを経由したアクセスを可能なように構成いただく必要があります。<br>下記ドキュメントに設定方法がまとまっておりますので、あわせてご参照ください。<br>　ご参考情報：Azure Private Link を使用して Azure Container Registry にプライベートで接続する<br>　<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-private-link">https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-private-link</a></p>
 </li>
@@ -152,22 +152,29 @@
 <li><p>ACR のエージェントが利用するパブリック IP アドレスを許可する<br>ACR のエージェントが利用するパブリック IP アドレスを「選択されたネットワーク」の IP 規則に追加する方法が挙げられます。<br>Azure では、下記サイトにて  Azure の各サービスが利用する IP アドレスを公開しているため、こちらの AzureContainerRegistry.<region> の IP アドレスを追加いただくことで事象が改善することが想定されます。<br>　ご参考情報：Download Azure IP Ranges and Service Tags – Public Cloud from Official Microsoft Download Center<br>　<a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/confirmation.aspx?id=56519">https://www.microsoft.com/en-us/download/confirmation.aspx?id=56519</a></p>
 <div class="alert is-warning"><p class="alert-title">警告</p><p>ACR 含め Azure が利用するパブリック IP アドレスは動的なものであり、今後変更される可能性があります。</p><p>そのため、定期的もしくはアクセスが失敗するようになりましたら、最新の ACR のパブリック IP アドレスをご確認・更新いただく必要があります。</p></div>
 </li>
-<li><p>ACR タスクを利用する<br>ACR の Firewall 機能では、「信頼されたサービス」のアクセスについては別途 IP 規則を追加いただくことなく、アクセスを許可することが可能となります。<br>そして、この 「信頼されたサービス」に、下記ドキュメントに記載の通り ACR タスクが登録されています。<br>　ご参考情報：信頼できるサービス<br>　<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/container-registry/allow-access-trusted-services#trusted-services">https://learn.microsoft.com/ja-jp/azure/container-registry/allow-access-trusted-services#trusted-services</a> </p>
-<p>ACR タスクは、ACR ビルドの制御等を行うことができ、ACR ビルド同様にコンテナー イメージの作成を行うことが可能となります。<br>そのため、ACR ビルドの代替方法として ACR タスクをご利用いただくことで ACR の Firewall 機能でパブリック アクセスを防いだまま ACR の機能によってコンテナー イメージを作成することが可能となります。<br>次のセクションにて ACR タスクを使ったコンテナー イメージの作成方法について紹介します。</p>
+<li><p>ACR タスクを利用する<br>ACR タスクは、ACR ビルドの制御等を行うことができ、ACR ビルド同様にコンテナー イメージの作成を行うことが可能となります。<br>ACR タスクは、下記ドキュメントに記載の通り、ネットワーク バイパス ポリシーを使用することが可能となります。<br>ネットワーク バイパス ポリシーを使用することで、Firewall 機能を有効にした状態で、ACR のエージェントからの通信を許可することが可能となります。<br>　ご参考情報：タスクのネットワーク バイパス ポリシーを管理する<br>　<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/container-registry/manage-network-bypass-policy-for-tasks#enabling-and-disabling-the-network-rule-bypass-policy-setting">https://learn.microsoft.com/ja-jp/azure/container-registry/manage-network-bypass-policy-for-tasks#enabling-and-disabling-the-network-rule-bypass-policy-setting</a></p>
+<p>そのため、ACR ビルドの代替方法として ACR タスクをご利用いただくことで ACR の Firewall 機能でパブリック アクセスを防いだまま ACR の機能によってコンテナー イメージを作成することが可能となります。<br>次のセクションにて ACR タスクを使ったコンテナー イメージの作成方法について紹介します。</p>
 </li>
 </ol>
 <h2 id="ACR-タスクのご紹介"><a href="#ACR-タスクのご紹介" class="headerlink" title="ACR タスクのご紹介"></a>ACR タスクのご紹介</h2><p>上述の通り、ACR タスクでは、ACR ビルドと同様に ACR の機能を使ってコンテナー イメージを作成することが可能となります。<br>それでは、早速 ACR タスクを使って Firewall 機能を有効化した ACR に対してコンテナー イメージの作成、プッシュをしてみます。</p>
-<p>なお、おおまかな手順につきましては、下記ドキュメントにて記載されています。<br>こちらを参考に実施してみます。<br>　ご参考情報：例:ACR タスク<br>　<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/container-registry/allow-access-trusted-services#example-acr-tasks">https://learn.microsoft.com/ja-jp/azure/container-registry/allow-access-trusted-services#example-acr-tasks</a></p>
 <p>ACR タスクを作成する前に事前準備が必要となります。</p>
-<p>ACR ビルドでは、コンテナー イメージの作成に使用していた Dockerfile を az acr build コマンドを実行したクライアント端末に存在していましたが、ACR タスクでは ACR のエージェントにてアクセスが可能な場所に配置する必要があります。<br>ここでは、Dockerfile を ACR 上に配置し、ACR 上に配置した Dockerfile を ACR タスクより使用してコンテナー イメージを作成してみます。</p>
+<p>まず、該当の ACR に対してネットワーク バイパス ポリシーが有効となっているかを確認します。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">az resource show \</span><br><span class="line">--namespace Microsoft.ContainerRegistry \</span><br><span class="line">--resource-type registries \</span><br><span class="line">--name blogbuildtest \</span><br><span class="line">--resource-group blog \</span><br><span class="line">--api-version 2025-05-01-preview \</span><br><span class="line">--query properties.networkRuleBypassAllowedForTasks</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
+<p>false の値が返ってきたため、この ACR ではネットワーク バイパス ポリシーが無効になっています。<br>有効にするために、以下のコマンドを実行してみます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">az resource update \</span><br><span class="line">--namespace Microsoft.ContainerRegistry \</span><br><span class="line">--resource-type registries \</span><br><span class="line">--name blogbuildtest \</span><br><span class="line">--resource-group blog \</span><br><span class="line">--api-version 2025-05-01-preview \</span><br><span class="line">--set properties.networkRuleBypassAllowedForTasks=true</span><br></pre></td></tr></table></figure>
+<p>その後、改めて有効となっているかを確認してみます。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">az resource show \</span><br><span class="line">--namespace Microsoft.ContainerRegistry \</span><br><span class="line">--resource-type registries \</span><br><span class="line">--name blogbuildtest \</span><br><span class="line">--resource-group blog \</span><br><span class="line">--api-version 2025-05-01-preview \</span><br><span class="line">--query properties.networkRuleBypassAllowedForTasks</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+<p>値が true に変更されました。これによって有効化されたことを確認できました。</p>
+<p>次に、ACR ビルドでは、コンテナー イメージの作成に使用していた Dockerfile を az acr build コマンドを実行したクライアント端末に存在していましたが、ACR タスクでは ACR のエージェントにてアクセスが可能な場所に配置する必要があります。<br>ここでは、Dockerfile を ACR 上に配置し、ACR 上に配置した Dockerfile を ACR タスクより使用してコンテナー イメージを作成してみます。</p>
 <p>ACR に Dockerfile を配置するにあたり、オープン ソースにて開発がされている ORAS を使用します。<br>簡単な使用方法につきましては、下記ドキュメントでも紹介されておりますので、ご参考ください。<br>　ご参考情報：Azure コンテナー レジストリを使って OCI 成果物をプッシュおよびプルする<br>　<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-oci-artifacts">https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-oci-artifacts</a></p>
 <p>それでは、ORAS を使って Dockerfile を ACR にプッシュします。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> oras push blogbuildtest.azurecr.io/hello-world.dockerfile:1.0 Dockerfile</span></span><br></pre></td></tr></table></figure>
 <p>今回は hello-world.dockerfile というリポジトリとしてプッシュしました。<br>では、この hello-world.dockerfile を用いるよう ACR タスクを作成してみます。<br>コマンドは下記のような形式となります。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr task create -t &lt;イメージ名&gt; --registry &lt;ACR 名&gt; --name &lt;タスク名&gt; --context oci://&lt;ACR 名&gt;.azurecr.io/&lt;Dockerfile の OCI アーティファクト名&gt;:&lt;Tag&gt;  --file &lt;Dockerfile名&gt; --assign-identity &lt;[system] | マネージド ID のリソース ID&gt; -g &lt;リソース グループ名&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr task create -t &lt;イメージ名&gt; --registry &lt;ACR 名&gt; --name &lt;タスク名&gt; --context oci://&lt;ACR 名&gt;.azurecr.io/&lt;Dockerfile の OCI アーティファクト名&gt;:&lt;Tag&gt;  --file &lt;Dockerfile名&gt; --assign-identity [system] -g &lt;リソース グループ名&gt;</span></span><br></pre></td></tr></table></figure>
 <p>今回の環境では、下記のコマンドとなります。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> az acr task create -t helloworld --registry blogbuildtest --name helloworldtask  --context oci://blogbuildtest.azurecr.io/hello-world.dockerfile:1.0  --file hello-world.dockerfile --assign-identity [system]</span></span><br></pre></td></tr></table></figure>
-<p>なお、「信頼されたサービス」を利用してアクセスを行う場合には、ACR タスクにマネージド ID を利用する必要があります。</p>
+<p>なお、ネットワーク バイパス ポリシーを使用してアクセスを行う場合には、ACR タスクにシステム割り当てマネージド ID を利用する必要があります。</p>
+<div class="alert is-warning"><p class="alert-title">警告</p><p>現在ユーザー割り当てマネージド ID を利用する ACR タスクはプレビューで提供されております。</br></p><p>　ご参考情報：パブリック IP ネットワーク ルールを構成する </br></p><p>　<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-access-selected-networks">https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-access-selected-networks</a> </br></p><p>しかしながら、ネットワーク バイパス ポリシーを使用してアクセスするためには、システム割り当てマネージド ID を利用する必要があります。</p></div>
 <p>先ほど実行したコマンドにて、今回作成した ACR タスクにはシステム割り当てマネージド ID を利用するよう設定しているため、このシステム割り当てマネージド ID に必要な権限 (ACRPUSH) を割り当てます。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> principalID=$(az acr task show --name helloworldtask --registry tasktest --query identity.principalId --output tsv -g blog)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> baseregID=$(az acr show --name blogbuildtest --query id --output tsv -g blog)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> az role assignment create --assignee <span class="variable">$principalID</span> --scope <span class="variable">$baseregID</span> --role acrpush</span></span><br></pre></td></tr></table></figure>
 <p>次に、ACR タスク “helloworldtask” に対して  ACR “blogbuildtest” へのアクセスにマネージド ID を利用するよう設定を行います。</p>
@@ -202,19 +209,10 @@
     
 <nav id="article-nav">
   
-    <a href="../aks-artifact-streaming/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">次の記事</strong>
-      <div class="article-nav-title">
-        
-          Artifact Streaming とは？ ACR のイメージを AKS にデプロイして試してみた
-        
-      </div>
-    </a>
   
-  
-    <a href="../../vm/network-setting-of-disk-and-snapshot/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../vm/2028-retire-vm/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">マネージドディスクとスナップショットのネットワーク設定について</div>
+      <div class="article-nav-title">2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</div>
     </a>
   
 </nav>
@@ -233,6 +231,10 @@
       <ul>
         
           <li>
+            <a href="">ACR の Firewall 機能を有効にした状態で ACR の機能を用いてコンテナー イメージをビルドする方法について</a>
+          </li>
+        
+          <li>
             <a href="../../vm/2028-retire-vm/">2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</a>
           </li>
         
@@ -246,10 +248,6 @@
         
           <li>
             <a href="../../network/fw-prescaling/">Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</a>
-          </li>
-        
-          <li>
-            <a href="../../information/advisory-inquiries-in-the-Azure-Support/">Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</a>
           </li>
         
       </ul>
