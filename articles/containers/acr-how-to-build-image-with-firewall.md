@@ -1,6 +1,6 @@
 ---
 title: ACR の Firewall 機能を有効にした状態で ACR の機能を用いてコンテナー イメージをビルドする方法について 
-date: 2023-12-22 12:00
+date: 2026-01-14 12:00
 tags:
   - Containers
   - Azure Container Registry (ACR)
@@ -32,7 +32,7 @@ ACR では、お客様のコンテナー イメージなど OCI アーティフ�
   >　https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-access-selected-networks </br>
 
   > [!WARNING] 
-  > この設定を入れることによって、Azure Portal からリポジトリの情報を参照できなくなる 場合があります。</br>
+  > この設定を入れることによって、Azure Portal からリポジトリの情報を参照できなくなる場合があります。</br>
   > これは、Azure Portal を用いて ACR へアクセスしているクライアント端末の IP アドレスが許可されていないためとなります。</br>
   > そのため、Azure Portal より ACR 内の情報を参照する必要がある場合には、クライアント端末のパブリック IP アドレスを許可してください。
 
@@ -185,12 +185,12 @@ Run failed
    そのため、定期的もしくはアクセスが失敗するようになりましたら、最新の ACR のパブリック IP アドレスをご確認・更新いただく必要があります。
 
 3. ACR タスクを利用する
-   ACR の Firewall 機能では、「信頼されたサービス」のアクセスについては別途 IP 規則を追加いただくことなく、アクセスを許可することが可能となります。
-   そして、この 「信頼されたサービス」に、下記ドキュメントに記載の通り ACR タスクが登録されています。
-   　ご参考情報：信頼できるサービス
-   　https://learn.microsoft.com/ja-jp/azure/container-registry/allow-access-trusted-services#trusted-services 
-
    ACR タスクは、ACR ビルドの制御等を行うことができ、ACR ビルド同様にコンテナー イメージの作成を行うことが可能となります。
+   ACR タスクは、下記ドキュメントに記載の通り、ネットワーク バイパス ポリシーを使用することが可能となります。
+   ネットワーク バイパス ポリシーを使用することで、Firewall 機能を有効にした状態で、ACR のエージェントからの通信を許可することが可能となります。
+   　ご参考情報：タスクのネットワーク バイパス ポリシーを管理する
+   　https://learn.microsoft.com/ja-jp/azure/container-registry/manage-network-bypass-policy-for-tasks#enabling-and-disabling-the-network-rule-bypass-policy-setting
+
    そのため、ACR ビルドの代替方法として ACR タスクをご利用いただくことで ACR の Firewall 機能でパブリック アクセスを防いだまま ACR の機能によってコンテナー イメージを作成することが可能となります。
    次のセクションにて ACR タスクを使ったコンテナー イメージの作成方法について紹介します。
 
@@ -198,14 +198,44 @@ Run failed
 上述の通り、ACR タスクでは、ACR ビルドと同様に ACR の機能を使ってコンテナー イメージを作成することが可能となります。
 それでは、早速 ACR タスクを使って Firewall 機能を有効化した ACR に対してコンテナー イメージの作成、プッシュをしてみます。
 
-なお、おおまかな手順につきましては、下記ドキュメントにて記載されています。
-こちらを参考に実施してみます。
-　ご参考情報：例:ACR タスク
-　https://learn.microsoft.com/ja-jp/azure/container-registry/allow-access-trusted-services#example-acr-tasks
-
 ACR タスクを作成する前に事前準備が必要となります。
 
-ACR ビルドでは、コンテナー イメージの作成に使用していた Dockerfile を az acr build コマンドを実行したクライアント端末に存在していましたが、ACR タスクでは ACR のエージェントにてアクセスが可能な場所に配置する必要があります。
+まず、該当の ACR に対してネットワーク バイパス ポリシーが有効となっているかを確認します。
+```shell
+az resource show \
+--namespace Microsoft.ContainerRegistry \
+--resource-type registries \
+--name blogbuildtest \
+--resource-group blog \
+--api-version 2025-05-01-preview \
+--query properties.networkRuleBypassAllowedForTasks
+false
+```
+false の値が返ってきたため、この ACR ではネットワーク バイパス ポリシーが無効になっています。
+有効にするために、以下のコマンドを実行してみます。
+```shell
+az resource update \
+--namespace Microsoft.ContainerRegistry \
+--resource-type registries \
+--name blogbuildtest \
+--resource-group blog \
+--api-version 2025-05-01-preview \
+--set properties.networkRuleBypassAllowedForTasks=true
+```
+その後、改めて有効となっているかを確認してみます。
+```shell
+az resource show \
+--namespace Microsoft.ContainerRegistry \
+--resource-type registries \
+--name blogbuildtest \
+--resource-group blog \
+--api-version 2025-05-01-preview \
+--query properties.networkRuleBypassAllowedForTasks
+true
+```
+値が true に変更されました。これによって有効化されたことを確認できました。
+
+次に、ACR ビルドでは、コンテナー イメージの作成に使用していた Dockerfile を az acr build コマンドを実行したクライアント端末に存在していましたが、ACR タスクでは ACR のエージェントにてアクセスが可能な場所に配置する必要があります。
 ここでは、Dockerfile を ACR 上に配置し、ACR 上に配置した Dockerfile を ACR タスクより使用してコンテナー イメージを作成してみます。
 
 ACR に Dockerfile を配置するにあたり、オープン ソースにて開発がされている ORAS を使用します。
@@ -221,13 +251,20 @@ $ oras push blogbuildtest.azurecr.io/hello-world.dockerfile:1.0 Dockerfile
 では、この hello-world.dockerfile を用いるよう ACR タスクを作成してみます。
 コマンドは下記のような形式となります。
 ```shell
-$ az acr task create -t <イメージ名> --registry <ACR 名> --name <タスク名> --context oci://<ACR 名>.azurecr.io/<Dockerfile の OCI アーティファクト名>:<Tag>  --file <Dockerfile名> --assign-identity <[system] | マネージド ID のリソース ID> -g <リソース グループ名>
+$ az acr task create -t <イメージ名> --registry <ACR 名> --name <タスク名> --context oci://<ACR 名>.azurecr.io/<Dockerfile の OCI アーティファクト名>:<Tag>  --file <Dockerfile名> --assign-identity [system] -g <リソース グループ名>
 ```
 今回の環境では、下記のコマンドとなります。
 ```shell
 $ az acr task create -t helloworld --registry blogbuildtest --name helloworldtask  --context oci://blogbuildtest.azurecr.io/hello-world.dockerfile:1.0  --file hello-world.dockerfile --assign-identity [system]
 ```
-なお、「信頼されたサービス」を利用してアクセスを行う場合には、ACR タスクにマネージド ID を利用する必要があります。
+なお、ネットワーク バイパス ポリシーを使用してアクセスを行う場合には、ACR タスクにシステム割り当てマネージド ID を利用する必要があります。
+
+  > [!WARNING] 
+  > 現在ユーザー割り当てマネージド ID を利用する ACR タスクはプレビューで提供されております。</br>
+  >　ご参考情報：パブリック IP ネットワーク ルールを構成する </br>
+  >　https://learn.microsoft.com/ja-jp/azure/container-registry/container-registry-access-selected-networks </br>
+  > しかしながら、ネットワーク バイパス ポリシーを使用してアクセスするためには、システム割り当てマネージド ID を利用する必要があります。
+
 
 先ほど実行したコマンドにて、今回作成した ACR タスクにはシステム割り当てマネージド ID を利用するよう設定しているため、このシステム割り当てマネージド ID に必要な権限 (ACRPUSH) を割り当てます。
 ```shell
