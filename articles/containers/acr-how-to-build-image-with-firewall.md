@@ -1,6 +1,7 @@
 ---
 title: ACR の Firewall 機能を有効にした状態で ACR の機能を用いてコンテナー イメージをビルドする方法について 
-date: 2026-01-14 12:00
+date: 2023-12-22 12:00
+updated: 2026-01-14 12:00
 tags:
   - Containers
   - Azure Container Registry (ACR)
