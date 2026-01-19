@@ -1,6 +1,7 @@
 ---
 title: AKS コントロール プレーンとノード間の通信のはなし
 date: 2021-12-24 12:00:00
+updated: 2026-01-19 12:00:00
 tags:
   - Containers
   - Azure Kubernetes Service (AKS)
@@ -110,9 +111,8 @@ AKS では SSH / VPN トンネルに替わる新しい方式として、段階�
 
 Pod の作成/削除といったリソース操作は成功するものの、上記に挙げましたように kubectl の一部コマンドが使えないという症状がある場合は、何らかの要因でコントロール プレーンとノード間の通信が成功していないことが考えられます。
 
-> ご参考) Azure Kubernetes Service (AKS) についてよく寄せられる質問
-> [「kubectl logs を使用してログを取得できません。または、API サーバーに接続できません。 "Error from server: error dialing backend: dial tcp…" (サーバーからのエラー: バックエンドへのダイヤルでのエラー: tcp にダイヤル...) と表示されます。 どうすればよいですか。」](https://docs.microsoft.com/ja-jp/azure/aks/troubleshooting#i-cant-get-logs-by-using-kubectl-logs-or-i-cant-connect-to-the-api-server-im-getting-error-from-server-error-dialing-backend-dial-tcp-what-should-i-do)
-> https://docs.microsoft.com/ja-jp/azure/aks/troubleshooting#i-cant-get-logs-by-using-kubectl-logs-or-i-cant-connect-to-the-api-server-im-getting-error-from-server-error-dialing-backend-dial-tcp-what-should-i-do
+> ご参考) トンネル接続の問題
+> https://learn.microsoft.com/ja-jp/troubleshoot/azure/azure-kubernetes/connectivity/tunnel-connectivity-issues
 
 この事象が発生しました場合は以下の観点をご確認ください。
 
@@ -122,9 +122,9 @@ API サーバーへの通信が NSG や Azure Firewall によってブロック�
 
 下記 AKS ドキュメントに、クラスターの動作に必要なエンドポイントとポート番号の一覧がございます。ご利用の環境に応じて、通信が必要な FQDN / ポート番号の許可がされているかをご確認ください。
 
-> ご参考) Azure Kubernetes Service (AKS) でクラスター ノードに対するエグレス トラフィックを制御する
-> [AKS クラスターに必要な送信ネットワーク規則と FQDN](https://docs.microsoft.com/ja-jp/azure/aks/limit-egress-traffic#required-outbound-network-rules-and-fqdns-for-aks-clusters)
-> https://docs.microsoft.com/ja-jp/azure/aks/limit-egress-traffic#required-outbound-network-rules-and-fqdns-for-aks-clusters
+> ご参考) Azure Kubernetes Service (AKS) クラスターの送信ネットワークと FQDN 規則
+> [AKS クラスターに必要な送信ネットワーク規則と FQDN](https://learn.microsoft.com/ja-jp/azure/aks/outbound-rules-control-egress#required-outbound-network-rules-and-fqdns-for-aks-clusters)
+> https://learn.microsoft.com/ja-jp/azure/aks/outbound-rules-control-egress#required-outbound-network-rules-and-fqdns-for-aks-clusters
 
 ### (観点 2) kube-system ネームスペースのシステム Pod が正常動作しているか
 
@@ -133,8 +133,8 @@ kube-system ネームスペース内のシステム Pod が正常に動作して
 本記事で紹介をいたしました `tunnelfront` や `aks-link` といったシステム Pod が Running ステータスで動作をしているか、また、Pod のログに何らかのエラー メッセージが出力されていないかをご確認ください。詳細につきましては下記の AKS トリアージ ガイドをご参照ください。
 
 > ご参考) AKS トリアージのプラクティス - ノードとポッドの正常性を調べる
-> [2 - コントロール プレーンとワーカー ノードの接続を確認する](https://docs.microsoft.com/ja-jp/azure/architecture/operator-guides/aks/aks-triage-node-health#2--verify-the-control-plane-and-worker-node-connectivity)
-> https://docs.microsoft.com/ja-jp/azure/architecture/operator-guides/aks/aks-triage-node-health#2--verify-the-control-plane-and-worker-node-connectivity
+> [2 - コントロール プレーンとワーカー ノードの接続を確認する](https://learn.microsoft.com/ja-jp/azure/architecture/operator-guides/aks/aks-triage-node-health#step-2-verify-the-control-plane-and-worker-node-connectivity)
+> https://learn.microsoft.com/ja-jp/azure/architecture/operator-guides/aks/aks-triage-node-health#step-2-verify-the-control-plane-and-worker-node-connectivity
 
 API サーバーとの通信に問題がある場合、`kubectl logs` が成功せず、Pod のログ確認ができないことが想定されます。[Container Insights](https://docs.microsoft.com/ja-jp/azure/azure-monitor/containers/container-insights-overview) が有効なクラスターでは、クラスター内の監視エージェント (omsagent) によって収集されたログが、Log Analytics ワークスペースから取得出来る場合がございます。kubectl コマンドでのログ取得が成功しない場合は、[クエリーを使用した Log Analytics からのログ取得](https://docs.microsoft.com/ja-jp/azure/azure-monitor/containers/container-insights-log-query)をお試しください。
 
