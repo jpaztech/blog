@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/disk-metrics/disk-metric-lun.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/vm/disk-metrics/disk-metric-filter.png">
 <meta property="article:published_time" content="2023-05-10T08:30:00.000Z">
-<meta property="article:modified_time" content="2026-01-19T05:52:23.211Z">
+<meta property="article:modified_time" content="2026-01-20T01:46:47.462Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="VM">
 <meta property="article:tag" content="Windows">
@@ -113,7 +113,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+c9c308a1-4d46-5c18-b610-dad6ef94884b%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E7%8A%B6%E6%B3%81%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Fdisk-metrics%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Fdisk-metrics.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Fdisk-metrics.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/disk-metrics/" data-id="cmkkr0g1200r70nnuh0owfims" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/disk-metrics/" data-id="cmklxofrl00r70npf7ipigt95" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -134,11 +134,11 @@
 <p><img src="/blog/vm/disk-metrics/bisk-base.png"></p>
 <p>上記の例では Standard_D2s_v5 の VM サイズに P20 のデータディスクのサイズを組み合わせています。</p>
 <ul>
-<li>Standard_D2s_v5 の VM サイズでの上限：85 MBps / 3750 IOSP</li>
+<li>Standard_D2s_v5 の VM サイズでの上限：85 MBps / 3750 IOPS</li>
 <li>P20 のディスクサイズでの上限：150 MBps / 2300 IOPS</li>
 </ul>
 <p>という設定がございます。<br>先に解説した通り低い値の方（赤字）が適用されますので、実際に想定される速度の上限値としては「85 MBps / 2300 IOPS」となります。</p>
-<p>なお、この「Standard_D2s_v5 の VM サイズでの上限：85 MBps / 3750 IOSP」という VM の上限値については、ディスク 1 つごとでは無く、ホストキャッシュ無効な全てのデータディスク全体で共有されます。<br>すなわち、複数のホストキャッシュ無効なデータディスク合算で 85 MBps / 3750 IOSP が上限となります。 </p>
+<p>なお、この「Standard_D2s_v5 の VM サイズでの上限：85 MBps / 3750 IOPS」という VM の上限値については、ディスク 1 つごとでは無く、ホストキャッシュ無効な全てのデータディスク全体で共有されます。<br>すなわち、複数のホストキャッシュ無効なデータディスク合算で 85 MBps / 3750 IOPS が上限となります。 </p>
 <p>ホストキャッシュの有効なディスク・無効なディスクで上限値が別に設定されている VM サイズもございます。<br>各 VM サイズおよびディスクサイズにおけるディスクアクセスの上限値は、公式ドキュメントをご確認くださいませ。  </p>
 <blockquote>
 <p>■ご参考：Azure の仮想マシンのサイズ<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/sizes">https://learn.microsoft.com/ja-jp/azure/virtual-machines/sizes</a></p>
@@ -167,7 +167,7 @@
 </ul>
 <p>では、ホストキャッシュは無しとして、バーストが発生した際の例を見てみましょう。</p>
 <p><img src="/blog/vm/disk-metrics/disk-burst.png"></p>
-<p>上記は、Standard_D2s_v5 の VM サイズに P20 のデータディスクのサイズを組み合わせて、VM レベルのバースト・ディスクレベルのバースト両方が働いた場合の例です。<br>一時的に「170 MBps / 3500 IPOS」までバースト可能なことが分かりましたね。</p>
+<p>上記は、Standard_D2s_v5 の VM サイズに P20 のデータディスクのサイズを組み合わせて、VM レベルのバースト・ディスクレベルのバースト両方が働いた場合の例です。<br>一時的に「170 MBps / 3500 IOPS」までバースト可能なことが分かりましたね。</p>
 <hr>
 <h2 id="2-1-ディスクに関するメトリックでパフォーマンスを確認する方法"><a href="#2-1-ディスクに関するメトリックでパフォーマンスを確認する方法" class="headerlink" title="2-1.ディスクに関するメトリックでパフォーマンスを確認する方法"></a>2-1.ディスクに関するメトリックでパフォーマンスを確認する方法</h2><p>Azure では、ディスクアクセスに関してどの程度のパフォーマンスが出ているかといったことを記録しており、メトリックとして確認を行うことが可能です。<br>パフォーマンスが上限で頭打ちしている場合は、スペックアップが必要である可能性があるといったことを確認することができます。</p>
 <p>パフォーマンスが上限で頭打ちしていないにも関わらず、期待したパフォーマンスを得られていない場合は、<br>OS やアプリケーションが適切なディスクアクセスを発生させていない可能性がございます。<br>ディスクパフォーマンスの詳細については以下の記事もご参照くださいませ。  </p>
