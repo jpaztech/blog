@@ -29,8 +29,8 @@ Azure VM のいくつかの設定項目は、VM 作成後は変更いただく�
 > [!TIP]
 > 可用性ゾーンの追加や変更の場合は、他の方法として以下のドキュメントの手順もご用意されましたため、参考として記載させていただきます。  
 >  
-> ■ご参考：Virtual Machines と Virtual Machine Scale Sets を可用性ゾーンのサポートに移行する  
-> https://learn.microsoft.com/ja-jp/azure/reliability/migrate-vm  
+> ■ご参考：可用性ゾーンのサポートを設定する
+> https://learn.microsoft.com/ja-jp/azure/reliability/reliability-virtual-machines#configure-availability-zone-support
 >   
 > ■ご参考：Azure 仮想マシンを可用性ゾーンに移動する  
 > https://learn.microsoft.com/ja-jp/azure/site-recovery/move-azure-vms-avset-azone  
@@ -184,7 +184,7 @@ VM に接続されている NIC の画面より、IP 構成メニューからプ
 VM 再作成時にお好みの設定に変更が可能となっております。  
 
  a. Azure ポータルより削除した VM で使用していた OS ディスク (控えていた OS ディスク名を参照) の画面を開きます。  
- なお、ゾーンに関する設定変更を行う場合は **「2.スナップショットからゾーン設定を変更したディスク作成（可用性ゾーンの設定変更のシナリオの場合のみ実施）」** の手順で作成したディスクをかわりに選択します。
+ なお、ゾーンに関する設定変更を行う場合は **「2.スナップショットからゾーン設定を変更したディスク作成（可用性ゾーンの設定変更のシナリオの場合のみ実施）」** の手順で作成したディスクを代わりに選択します。
 
  b. [VM の作成] をクリックします。 
 
