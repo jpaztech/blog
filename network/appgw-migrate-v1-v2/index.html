@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ | Japan Azure IaaS Core Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは。Azure テクニカル サポート チームの加藤です。 本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ">
+<meta property="og:url" content="https://jpaztech.github.io/blog/network/appgw-migrate-v1-v2/index.html">
+<meta property="og:site_name" content="Japan Azure IaaS Core Support Blog">
+<meta property="og:description" content="こんにちは。Azure テクニカル サポート チームの加藤です。 本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2026-02-13T03:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-12T03:21:28.096Z">
+<meta property="article:author" content="Japan Azure IaaS Core Support Team">
+<meta property="article:tag" content="Application Gateway">
+<meta property="article:tag" content="Network">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure IaaS Core Support Blog" type="application/atom+xml">
+  
+
+  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="../../css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="site-header-logo"></div>
+  <div id="site-header-blog-wrapper"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <div id="ms-logo"></div>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+        <a class="main-nav-link" target="_blank" rel="noopener" href="https://cssjpn.github.io/">サポート情報</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.bing.com/search" method="get" accept-charset="UTF-8" name="bing-search" onsubmit="var f=this;if(f['q'].value){var searchUrl =  'https://www.bing.com/search?q=' +  encodeURIComponent(f['q'].value + ' site:' + f['sitesearch'].value) ;window.open(searchUrl, 'blank') };return false;" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" id="nav-search-btn" class="search-form-submit"></button><input type="hidden" name="sitesearch" value="https://jpaztech.github.io/blog"></form>
+      </div>
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure IaaS Core Support Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="../../index.html" id="subtitle">日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-network/appgw-migrate-v1-v2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header-single">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ
+    </h1>
+  
+
+      </header>
+      <div class="article-share">
+        Last Update: 
+        <a href="" class="article-date-single">
+  <time datetime="2026-02-13T03:00:00.000Z" itemprop="datePublished">2026-02-13</time>
+</a>
+        
+        
+        <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+b4247518-0676-5b22-baad-4659df568f39%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BApplication+Gateway+V1+SKU+%E3%81%8B%E3%82%89+V2+SKU+%E3%81%B8%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%88%E3%81%8F%E3%81%82%E3%82%8B%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fappgw-migrate-v1-v2%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fappgw-migrate-v1-v2.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fappgw-migrate-v1-v2.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
+        
+        <a data-url="https://jpaztech.github.io/blog/network/appgw-migrate-v1-v2/" data-id="cmliw6tg100ql0nsbhxbca91d" class="article-share-link">共有</a>
+      </div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは。Azure テクニカル サポート チームの加藤です。</p>
+<p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>
+<span id="more"></span>
+
+
+<p>なお、<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/v1-retirement">Application Gateway V1 につきましては、2026 年 4 月 28 日にリタイアすることが決まっております</a>。この日以降、ご利用の Application Gateway V1のリソースはすべて停止される見込みとなります。<br>つきましては、期日までに計画的に Application Gateway V2 への移行をご実施いただけますよう、何卒お早めにご検討をいただけますと幸いでございます。</p>
+<p>Application Gateway V2 への移行のガイドは<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/migrate-v1-v2">こちら</a>をご参照ください。</p>
+<br>
+
+<h2 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h2><ul>
+<li><p><a href="#%E7%A7%BB%E8%A1%8C%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%88%E3%81%8F%E3%81%82%E3%82%8B%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B">移行スクリプトに関するよくあるお問い合わせ</a></p>
+<ul>
+<li><a href="#mq1">移行スクリプトを使用してプライベートのフロントエンド IP のみを構成する Application Gateway V2 に移行可能か</a></li>
+<li><a href="#mq2">移行スクリプトを実行中にサブネット delegation エラーが表示される</a></li>
+<li><a href="#mq3">プライベート Application Gateway 利用時に PublicIpResourceId は不要か</a></li>
+<li><a href="#mq4">拡張複製スクリプトと従来スクリプトの違い</a></li>
+<li><a href="#mq5">V1 と V2 の証明書設定の違いについて</a></li>
+<li><a href="#mq6">移行時の WAF 構成について</a></li>
+<li><a href="#mq7">作成される WAF ポリシーの CRS バージョンとアップグレード可否</a></li>
+<li><a href="#mq8">バックエンドサーバーを V1/V2 両方に関連付けても問題ないか</a></li>
+<li><a href="#mq9">移行スクリプト実行中に V1 の設定変更が可能か</a></li>
+<li><a href="#mq10">移行スクリプト実行中にバックエンドサーバーを変更してよいか</a></li>
+<li><a href="#mq11">移行スクリプト実行中の通信影響について</a></li>
+</ul>
+</li>
+<li><p><a href="#%E3%83%88%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%88%E3%81%8F%E3%81%82%E3%82%8B%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B">トラフィックの移行に関するよくあるお問い合わせ</a></p>
+<ul>
+<li><a href="#tq1">DNS 切り替え後に完全に V2 へ切り替わるまでの時間</a></li>
+<li><a href="#tq2">V1 と V2 の並行稼働は可能か</a></li>
+<li><a href="#tq3">移行後に V2 を経由していることを確認する方法</a></li>
+</ul>
+</li>
+<li><p><a href="#v1-%E3%81%A8-v2-%E3%81%AE%E4%BB%95%E6%A7%98%E5%B7%AE%E5%88%86%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%82%88%E3%81%8F%E3%81%82%E3%82%8B%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B">V1 と V2 の仕様差分に関するよくあるお問い合わせ</a></p>
+<ul>
+<li><a href="#sq1">V1 と V2 の機能差分について</a></li>
+<li><a href="#sq2">NSG/UDR など通信要件の違いについて</a></li>
+<li><a href="#sq3">V2 の推奨サブネットサイズについて</a></li>
+<li><a href="#sq4">停止時の課金の違い</a></li>
+</ul>
+</li>
+<li><p><a href="#%E3%81%9D%E3%81%AE%E4%BB%96">その他</a></p>
+<ul>
+<li><a href="#oq1">V1 と同じプライベート IP を V2 で利用できるか</a></li>
+<li><a href="#oq2">V1 から V2 への料金比較方法</a></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h2 id="移行スクリプトに関するよくあるお問い合わせ"><a href="#移行スクリプトに関するよくあるお問い合わせ" class="headerlink" title="移行スクリプトに関するよくあるお問い合わせ"></a>移行スクリプトに関するよくあるお問い合わせ</h2><p><a id="mq1"></a></p>
+<h3 id="移行スクリプトを使用してプライベートのフロントエンド-IP-のみを構成する-Application-Gateway-V2-に移行することは可能ですか？"><a href="#移行スクリプトを使用してプライベートのフロントエンド-IP-のみを構成する-Application-Gateway-V2-に移行することは可能ですか？" class="headerlink" title="移行スクリプトを使用してプライベートのフロントエンド IP のみを構成する Application Gateway V2 に移行することは可能ですか？"></a>移行スクリプトを使用してプライベートのフロントエンド IP のみを構成する Application Gateway V2 に移行することは可能ですか？</h3><p>A. はい、可能です。<br>Application Gateway V2 のフロントエンド IP アドレスをプライベートのみとする構成は<br>プライベート Application Gateway と呼ばれ、事前に以下の作業を行うことでご利用いただけます。</p>
+<ul>
+<li><p>事前にサブスクリプションに対してプレビュー機能で  EnableApplicationGatewayNetworkIsolation を有効化する。</p>
+</li>
+<li><p>事前にプライベート Application Gateway (V2) をデプロイするサブネットに Microsoft.Network/applicationGateways の委任設定を追加する。</p>
+</li>
+</ul>
+<p>詳細は<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-private-deployment?tabs=portal">こちら</a>の公開技術情報をご確認ください。<br> ※ EnableApplicationGatewayNetworkIsolation 機能はお客様に任意で登録いただく機能のため、サブスクリプションの [プレビュー機能] のページに配置されておりますが、プライベート デプロイ機能自体はすでに GA (General Availability)  済みの機能です。</p>
+<hr>
+<p><a id="mq2"></a></p>
+<h3 id="移行スクリプトを実行中に「-Application-Gateway-deployments-must-have-subnet-delegation-configured-to-Microsoft-Network-applicationGateways」というエラーが表示されました。どうすればいいですか？"><a href="#移行スクリプトを実行中に「-Application-Gateway-deployments-must-have-subnet-delegation-configured-to-Microsoft-Network-applicationGateways」というエラーが表示されました。どうすればいいですか？" class="headerlink" title="移行スクリプトを実行中に「 Application Gateway deployments must have subnet delegation configured to Microsoft.Network/applicationGateways」というエラーが表示されました。どうすればいいですか？"></a>移行スクリプトを実行中に「 Application Gateway deployments must have subnet delegation configured to Microsoft.Network/applicationGateways」というエラーが表示されました。どうすればいいですか？</h3><p>A.<br>サブスクリプションに対して EnableApplicationGatewayNetworkIsolation 機能を有効化した状態で V2 を作成する場合、フロントエンド IP アドレスがパブリック IP のみ関連づいているか、プライベート IP のみ関連づいているかを問わず、移行先のサブネットで「Microsoft.Network/applicationGateways」へのサブネット委任の設定が必要となります。<br><br>そのため、移行スクリプト実行前に V2 を作成予定のサブネットに対してサブネットの委任の設定をすることで回避できます。なお、移行元の V1 のサブネットではサブネット委任の設定は必要ございません。</p>
+<hr>
+<p><a id="mq3"></a></p>
+<h3 id="プライベート-Application-Gateway-を利用する場合、「拡張複製スクリプト」（AzureAppGWClone-ps1）のパラメーターにある-PublicIpResourceId-は記載不要でしょうか？"><a href="#プライベート-Application-Gateway-を利用する場合、「拡張複製スクリプト」（AzureAppGWClone-ps1）のパラメーターにある-PublicIpResourceId-は記載不要でしょうか？" class="headerlink" title="プライベート Application Gateway を利用する場合、「拡張複製スクリプト」（AzureAppGWClone.ps1）のパラメーターにある PublicIpResourceId は記載不要でしょうか？"></a>プライベート Application Gateway を利用する場合、「拡張複製スクリプト」（AzureAppGWClone.ps1）のパラメーターにある PublicIpResourceId は記載不要でしょうか？</h3><p>A.<br>はい、「拡張複製スクリプト」のパラメーター「PublicIpResourceId」については、省略可能なパラメーターであり、プライベート Application Gatewayとしてご利用いただく場合、このパラメーターは不要です。</p>
+<hr>
+<p><a id="mq4"></a></p>
+<h3 id="「拡張複製スクリプト」（AzureAppGWClone-ps1）と「従来の複製スクリプト」（AzureAppGWMigration-ps1）の違いは何でしょうか？"><a href="#「拡張複製スクリプト」（AzureAppGWClone-ps1）と「従来の複製スクリプト」（AzureAppGWMigration-ps1）の違いは何でしょうか？" class="headerlink" title="「拡張複製スクリプト」（AzureAppGWClone.ps1）と「従来の複製スクリプト」（AzureAppGWMigration.ps1）の違いは何でしょうか？"></a>「拡張複製スクリプト」（AzureAppGWClone.ps1）と「従来の複製スクリプト」（AzureAppGWMigration.ps1）の違いは何でしょうか？</h3><p>A.<br>拡張複製スクリプトでは以下の対応が可能となりました。</p>
+<ul>
+<li>パブリック IP アドレスの取り扱い：<br>プライベート Application Gateway 環境の移行にあたりパブリック IP アドレスを一時的に付与する必要がなくなりました。<br>（従来の複製スクリプトでは作成時に一時的にパブリック IP アドレスを付与、作成後に手動で削除する必要がありました）<p></li>
+<li>HTTPS リスナーで利用する TLS 証明書の取り扱い：<br>従来の複製スクリプトで必須であった TLS 証明書の手動指定が不要となりました。拡張複製スクリプトでは既存の V1 環境にアップロードされている TLS 証明書が自動で V2 環境に反映される動作になりました。<p></li>
+<li>HTTP 設定で利用するバックエンド接続用の信頼されたルート証明書の取り扱い：<br>Application Gateway とバックエンド サーバー間を HTTPS で通信し、かつ自己署名証明書のように、既知の証明書認証局から発行されていないサーバー証明書をバックエンド側で利用している場合、V2 では HTTP 設定の箇所でルート証明書をアップロードする必要があり、従来の移行スクリプト実行時に明示的に指定する必要がありました。<br>先日 Application Gateway V2 とバックエンド サーバー間を HTTPS で通信する構成において、<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/configuration-http-settings?tabs=backendhttpsettings#backend-https-validation-settings">証明書の検証をスキップさせる機能</a>が登場しました。拡張複製スクリプトではこの機能に対応しているため、バックエンド用の証明書を手動指定する必要がなくなりました。</li>
+</ul>
+<hr>
+<p><a id="mq5"></a></p>
+<h3 id="「拡張複製スクリプト」（AzureAppGWClone-ps1）を用いて-Application-Gateway-V1-から-V2-へ移行したところ、Application-Gateway-V1-ではバックエンド設定の証明書設定にて認証証明書が設定されていましたが、Application-Gateway-V2-では、該当の設定が見当たりません。V1-V2-で同じ設定となっているのでしょうか？"><a href="#「拡張複製スクリプト」（AzureAppGWClone-ps1）を用いて-Application-Gateway-V1-から-V2-へ移行したところ、Application-Gateway-V1-ではバックエンド設定の証明書設定にて認証証明書が設定されていましたが、Application-Gateway-V2-では、該当の設定が見当たりません。V1-V2-で同じ設定となっているのでしょうか？" class="headerlink" title="「拡張複製スクリプト」（AzureAppGWClone.ps1）を用いて Application Gateway V1 から V2 へ移行したところ、Application Gateway V1 ではバックエンド設定の証明書設定にて認証証明書が設定されていましたが、Application Gateway V2 では、該当の設定が見当たりません。V1/V2 で同じ設定となっているのでしょうか？"></a>「拡張複製スクリプト」（AzureAppGWClone.ps1）を用いて Application Gateway V1 から V2 へ移行したところ、Application Gateway V1 ではバックエンド設定の証明書設定にて認証証明書が設定されていましたが、Application Gateway V2 では、該当の設定が見当たりません。V1/V2 で同じ設定となっているのでしょうか？</h3><p>A.<br>Application Gateway V1 では認証証明書そのものをバックエンド設定に登録する構成であったのに対して、V2 では信頼されたルート証明書を登録する構成に変更になりました。<br>このため、Application Gateway V1 と V2 では以下の通り証明書検証の動作が異なります。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/retirement-faq#how-are-backend-certificate-behaviors-different-between-application-gateway-v1-and-v2-skus-how-should-i-manage-the-migration-with-the-differences-in-behavior-of-backend-certificate-validations-between-v1-and-v2-skus">V1 の提供終了に関する FAQ</a></li>
+</ul>
+<blockquote>
+<p>Application Gateway での証明書検証の動作</p>
+<p>V1 SKU - Application Gateway V1 は認証証明書を使用します。 このメカニズムは、Application Gateway で構成された証明書と、バックエンド サーバーによって提示される証明書との完全一致を実行します。 さらに、V1 では、TLS ハンドシェイク中にサーバー名表示 (SNI) を使用できない場合は、既定またはフォールバック証明書の使用がサポートされます。</p>
+<p>V2 SKU - 既定では、Application Gateway V2 はより包括的な検証を実行します。 完全な証明書チェーンと、バックエンド サーバー証明書のサブジェクト名が検証されます。詳細情報</p>
+</blockquote>
+<p>また、V1 と V2 の証明書検証動作の互換性を維持するため、拡張複製スクリプトを実行した後の Application Gateway V2 では、バックエンド サーバー側の証明書チェーン、有効期限、SNI などの検証が無効化された状態となっています。これは拡張複製スクリプトを用いて Application Gateway を移行した際の想定された動作です。<br>バックエンド サーバーから提示される証明書の検証が必要な場合には、Application Gateway V2 への移行後、改めて、バックエンド設定へルート証明書をアップロードくださいますようお願いいたします。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/migrate-v1-v2#recommendations">Azure Application Gateway と Web Application Firewall を V1 から V2 に移行する</a> <br>※ 「1. 拡張複製スクリプト」の “推奨事項” の箇所をご参照ください。<blockquote>
+<p>・このスクリプトは、複製中に既定でバックエンド TLS 検証を緩和します (証明書チェーン、有効期限、SNI 検証なし)。 より厳密な TLS 検証または認証証明書が必要な場合、お客様は Application Gateway V2 の作成後に更新して、信頼されたルート証明書を追加し、要件に従ってこの機能を有効にすることができます。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<p><a id="mq6"></a></p>
+<h3 id="移行スクリプトを実行して-Application-Gateway-V1-をV2-に移行した場合、WAF-はどのように構成されるでしょうか？"><a href="#移行スクリプトを実行して-Application-Gateway-V1-をV2-に移行した場合、WAF-はどのように構成されるでしょうか？" class="headerlink" title="移行スクリプトを実行して Application Gateway V1 をV2 に移行した場合、WAF はどのように構成されるでしょうか？"></a>移行スクリプトを実行して Application Gateway V1 をV2 に移行した場合、WAF はどのように構成されるでしょうか？</h3><p>A.<br>Application Gateway V2 の WAF 設定には現在以下の ２種類の管理方式があります。</p>
+<ul>
+<li>従来の WAF 構成： WAF ポリシーを利用せず、Application Gateway リソース自体に WAF 設定を保持する方式（V1 はこの方式のみ対応しています。）</li>
+<li>WAF ポリシー構成： 専用リソースとして WAF ポリシーを作成し、Application Gateway に関連付ける方式</li>
+</ul>
+<p>移行スクリプトを実行して Application Gateway V2 を作成した場合、WAF ポリシー構成として作成されます。このとき V1 で設定していた構成を元にした WAF ポリシーが自動で作成され 、Application Gateway に関連付けられます。</p>
+<hr>
+<p><a id="mq7"></a></p>
+<h3 id="「拡張複製スクリプト」（AzureAppGWClone-ps1）を使用した場合、スクリプトで作成された-WAF-ポリシーには既定のルールセット-として-CRS-3-0-が設定されていますがアップグレードする必要はあるでしょうか？"><a href="#「拡張複製スクリプト」（AzureAppGWClone-ps1）を使用した場合、スクリプトで作成された-WAF-ポリシーには既定のルールセット-として-CRS-3-0-が設定されていますがアップグレードする必要はあるでしょうか？" class="headerlink" title="「拡張複製スクリプト」（AzureAppGWClone.ps1）を使用した場合、スクリプトで作成された WAF ポリシーには既定のルールセット として CRS 3.0 が設定されていますがアップグレードする必要はあるでしょうか？"></a>「拡張複製スクリプト」（AzureAppGWClone.ps1）を使用した場合、スクリプトで作成された WAF ポリシーには既定のルールセット として CRS 3.0 が設定されていますがアップグレードする必要はあるでしょうか？</h3><p>A.<br>はい、移行スクリプトを実行して Application Gateway V2 を作成した場合、作成される WAF ポリシーは CRS 3.0 となります。 CRS 3.0 は既に非推奨となっていますので、以下の公式ドキュメントの手順により WAF ポリシーのアップグレードをお願いいたします。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/web-application-firewall/ag/upgrade-ruleset-version">CRS または DRS ルールセットのバージョンをアップグレードする</a></li>
+</ul>
+<p>なお、今回のように古いバージョンから最新のバージョンへルールセットを変更する場合、マネージド ルールの内容も最新のセキュリティ状況に即した内容にアップデートされます。<br><br>そのため、診断ログを有効にしたうえで、まずは「検知モード」でしばらくご利用いただき、お客様にて診断ログをご確認後、誤検知がある場合はルールの無効化等でチューニングをご実施いただいたえで、「防止モード」への変更をされることを推奨いたします。</p>
+<p>WAF のチューニングにつきましては、以下のブログ記事もご参照いただけますと幸いでございます。</p>
+<ul>
+<li><a href="https://jpaztech.github.io/blog/network/handle-waf-false-positive/">Application Gateway WAF の誤検知対応</a></li>
+</ul>
+<hr>
+<p><a id="mq8"></a></p>
+<h3 id="Application-Gateway-V2-を作成した時点で、バックエンドサーバーが-Application-Gateway-V1-および-V2-の両方に関連付けられる構成となりますが、バックエンド-サーバーが複数のバックエンドプールへ関連付けられていても問題はないでしょうか？"><a href="#Application-Gateway-V2-を作成した時点で、バックエンドサーバーが-Application-Gateway-V1-および-V2-の両方に関連付けられる構成となりますが、バックエンド-サーバーが複数のバックエンドプールへ関連付けられていても問題はないでしょうか？" class="headerlink" title="Application Gateway V2 を作成した時点で、バックエンドサーバーが Application Gateway V1 および V2 の両方に関連付けられる構成となりますが、バックエンド サーバーが複数のバックエンドプールへ関連付けられていても問題はないでしょうか？"></a>Application Gateway V2 を作成した時点で、バックエンドサーバーが Application Gateway V1 および V2 の両方に関連付けられる構成となりますが、バックエンド サーバーが複数のバックエンドプールへ関連付けられていても問題はないでしょうか？</h3><p>A.<br>はい、1 つのバックエンド サーバーを、V1 および V2 の両方の Application Gateway のバックエンド プールとして指定することは問題ございません。</p>
+<hr>
+<p><a id="mq9"></a></p>
+<h3 id="移行スクリプト実行中に移行元の-Application-Gateway-V1に対して設定変更や再起動などを行うことは可能でしょうか？"><a href="#移行スクリプト実行中に移行元の-Application-Gateway-V1に対して設定変更や再起動などを行うことは可能でしょうか？" class="headerlink" title="移行スクリプト実行中に移行元の Application Gateway V1に対して設定変更や再起動などを行うことは可能でしょうか？"></a>移行スクリプト実行中に移行元の Application Gateway V1に対して設定変更や再起動などを行うことは可能でしょうか？</h3><p>A.<br>移行スクリプト実行中には、移行元の Application Gateway V1 に対して操作を行うことは推奨されません。公式ドキュメントにも下記の通り記載がございます。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/migrate-v1-v2#caveats">V1 から V2 に移行する - 注意事項</a></li>
+</ul>
+<blockquote>
+<p>移行中は、V1 ゲートウェイまたは関連付けられているリソースに対して他の操作を試みないでください。</p>
+</blockquote>
+<hr>
+<p><a id="mq10"></a></p>
+<h3 id="移行スクリプト実行中に移行元の-Application-Gateway-V1に関連付けされているバックエンド-サーバーに対して設定変更や再起動などを行うことは可能でしょうか？"><a href="#移行スクリプト実行中に移行元の-Application-Gateway-V1に関連付けされているバックエンド-サーバーに対して設定変更や再起動などを行うことは可能でしょうか？" class="headerlink" title="移行スクリプト実行中に移行元の Application Gateway V1に関連付けされているバックエンド サーバーに対して設定変更や再起動などを行うことは可能でしょうか？"></a>移行スクリプト実行中に移行元の Application Gateway V1に関連付けされているバックエンド サーバーに対して設定変更や再起動などを行うことは可能でしょうか？</h3><p>A.<br>移行スクリプト実行中にバックエンド サーバー側の設定変更や再起動を実施しても、移行への影響は想定されませんが、予期せぬ問題を防ぐ意味合いでも、移行スクリプト実行中の操作は控えていただくことをお勧めいたします。</p>
+<hr>
+<p><a id="mq11"></a></p>
+<h3 id="移行スクリプト実行中に通信影響はあるでしょうか？"><a href="#移行スクリプト実行中に通信影響はあるでしょうか？" class="headerlink" title="移行スクリプト実行中に通信影響はあるでしょうか？"></a>移行スクリプト実行中に通信影響はあるでしょうか？</h3><p>A.<br>いいえ。「拡張複製スクリプト」および「従来の複製スクリプト」の実行中に通信影響はございません。また、移行スクリプトを実行中も、移行元の Application Gateway V1 を経由してバックエンド サーバーに通信することが可能ですのでご安心ください。</p>
+<hr>
+<br>
+
+<h2 id="トラフィックの移行に関するよくあるお問い合わせ"><a href="#トラフィックの移行に関するよくあるお問い合わせ" class="headerlink" title="トラフィックの移行に関するよくあるお問い合わせ"></a>トラフィックの移行に関するよくあるお問い合わせ</h2><p><a id="tq1"></a></p>
+<h3 id="DNS-レコードの更新で通信を切り替える場合、DNS-の設定を変更してから-Application-Gateway-V2-経由での通信に完全に切り替わるまでどの程度の時間がかかるでしょうか？"><a href="#DNS-レコードの更新で通信を切り替える場合、DNS-の設定を変更してから-Application-Gateway-V2-経由での通信に完全に切り替わるまでどの程度の時間がかかるでしょうか？" class="headerlink" title="DNS レコードの更新で通信を切り替える場合、DNS の設定を変更してから Application Gateway V2 経由での通信に完全に切り替わるまでどの程度の時間がかかるでしょうか？"></a>DNS レコードの更新で通信を切り替える場合、DNS の設定を変更してから Application Gateway V2 経由での通信に完全に切り替わるまでどの程度の時間がかかるでしょうか？</h3><p>A.<br>切り替わるまでの時間につきましては DNS レコードの TTL に大きく依存いたしますが、明確な目安などはございません。切り替わり時間は TTL 値 ＋ マージンが必要とご理解いただけますようお願いいたします。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/migrate-v1-v2#traffic-migration-recommendations">V1 から V2 に移行する - Traffic Migrationに関する推奨事項</a></li>
+</ul>
+<blockquote>
+<p>Standard V1 または WAF V1 ゲートウェイに (A レコードを使って) 関連付けられているフロントエンド IP アドレスを指すカスタム DNS ゾーン (例: contoso.com)。 Standard_V2 アプリケーション ゲートウェイに関連付けられているフロントエンド IP または DNS ラベルを指すように、DNS レコードを更新できます。 DNS レコードに構成されている TTL によっては、すべてのクライアント トラフィックが新しい V2 ゲートウェイに移行するまでに時間がかかる場合があります。</p>
+</blockquote>
+<p>なお、DNS 切り替えの際、Application Gateway V1・V2 がともに稼働している状態であれば、トラフィック移行中でも継続して Application Gateway からサービスが提供されますので基本的には通信影響はございません。</p>
+<p>ただし、お客様のバックエンド アプリケーションにおいてセッション管理を行っている場合、セッション維持の実装方法によってはトラフィックの移行時に通信影響が発生することがありますので、十分な検証のうえ移行作業を進めていただくことをお勧めします。</p>
+<hr>
+<p><a id="tq2"></a></p>
+<h3 id="トラフィックを移行するまでの間、Application-Gateway-V1-と-V2-のリソースを並行稼働できるでしょうか？"><a href="#トラフィックを移行するまでの間、Application-Gateway-V1-と-V2-のリソースを並行稼働できるでしょうか？" class="headerlink" title="トラフィックを移行するまでの間、Application Gateway V1 と V2 のリソースを並行稼働できるでしょうか？"></a>トラフィックを移行するまでの間、Application Gateway V1 と V2 のリソースを並行稼働できるでしょうか？</h3><p>A.<br>はい、Azure の観点では Application Gateway V1 と V2 のリソースを並行稼働することに問題はございません。トラフィックを移行するまでの間は Application Gateway V1 を経由してバックエンド サーバーに通信が行われます。</p>
+<hr>
+<p><a id="tq3"></a></p>
+<h3 id="トラフィックを移行した後、通信が-Application-Gateway-V2-を経由していることを確認できるでしょうか？"><a href="#トラフィックを移行した後、通信が-Application-Gateway-V2-を経由していることを確認できるでしょうか？" class="headerlink" title="トラフィックを移行した後、通信が Application Gateway V2 を経由していることを確認できるでしょうか？"></a>トラフィックを移行した後、通信が Application Gateway V2 を経由していることを確認できるでしょうか？</h3><p>A.<br>はい、診断ログを有効にした上でアクセス ログをご確認いただくことで、通信が Application Gateway V2 を経由していることを確認できます。<br>なお、Application Gateway V1 で診断ログを有効にしていても、移行スクリプトを実行するだけでは Application Gateway V2 で診断ログは有効になりませんため、個別に設定を追加いただく必要があります。<br>診断ログの設定方法に関しましては、以下の公式ドキュメントを参考にしていただければ幸いです。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-diagnostics#enable-logging-through-the-azure-portal">診断ログ - Azure portal を使用してログを有効にする</a></li>
+</ul>
+<hr>
+<br>
+<a id="specification"></a>
+
+<h2 id="V1-と-V2-の仕様差分に関するよくあるお問い合わせ"><a href="#V1-と-V2-の仕様差分に関するよくあるお問い合わせ" class="headerlink" title="V1 と V2 の仕様差分に関するよくあるお問い合わせ"></a>V1 と V2 の仕様差分に関するよくあるお問い合わせ</h2><p><a id="sq1"></a></p>
+<h3 id="Application-Gateway-V1-と-V2-の機能の差分はありますか？"><a href="#Application-Gateway-V1-と-V2-の機能の差分はありますか？" class="headerlink" title="Application Gateway V1 と V2 の機能の差分はありますか？"></a>Application Gateway V1 と V2 の機能の差分はありますか？</h3><p>A.<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/overview-v2#feature-comparison-between-v1-sku-and-v2-sku">こちら</a>のドキュメントに V1 と V2 で利用できる機能の差異についてまとめられておりますのでご確認ください。</p>
+<hr>
+<p><a id="sq2"></a></p>
+<h3 id="Application-Gateway-V1-と-Application-Gateway-V2-の通信要件-NSG-UDR-の違いはあるでしょうか？"><a href="#Application-Gateway-V1-と-Application-Gateway-V2-の通信要件-NSG-UDR-の違いはあるでしょうか？" class="headerlink" title="Application Gateway V1 と Application Gateway V2 の通信要件(NSG/ UDR) の違いはあるでしょうか？"></a>Application Gateway V1 と Application Gateway V2 の通信要件(NSG/ UDR) の違いはあるでしょうか？</h3><p>A.<br>Application Gateway V1 と Application Gateway V2 では、 Azure 基盤サービスとの通信要件や、NSG/UDR の要件が一部異なります。そのため、NSG や UDR による通信制御を行っている環境では、V2 への移行時に設定の見直しが必要となる場合があります。</p>
+<p>NSG につきまして、 基盤サービス（GatewayManager）との通信で使用されるポート範囲が SKU ごとに異なります。詳細については、以下の公開ドキュメントをご参照ください。 </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/configuration-infrastructure#network-security-groups">Azure Application Gateway インフラストラクチャの構成 - ネットワーク セキュリティ グループ</a></li>
+</ul>
+<blockquote>
+<p>インフラストラクチャ ポート: GatewayManager サービス タグと “任意” の宛先として、ソースからの受信要求を許可します。 宛先ポートの範囲は、SKU によって異なります。これは、バックエンド正常性の状態を通信するために必要です。 これらのポートは、Azure 証明書によって保護 (ロックダウン) されます。 適切な証明書が設定されていない外部エンティティは、そのようなエンドポイントに対する変更を開始できません。</p>
+<p>V2: ポート 65200 から 65535<br>V1: ポート 65503 から 65534</p>
+</blockquote>
+<p>UDR につきまして、 V1 では、エンド ツー エンドの通信経路が維持されることを前提として、Application Gateway サブネットに UDR を設定する構成がサポートされています。<br>一方で V2 では、すべての管理/コントロール プレーン トラフィックが、仮想アプライアンス経由ではなく、インターネットに直接送信されるようにする必要があり、0.0.0.0/0 トラフィックをインターネットに向けるよう設定する必要があります。(お客様でご利用中の個別のアドレス プレフィックス宛のルートを設定いただく分には問題ございません)</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/configuration-infrastructure#supported-user-defined-routes">Azure Application Gateway インフラストラクチャの構成 - サポートされているユーザー定義ルート</a></li>
+</ul>
+<blockquote>
+<p>v1: v1 SKU の場合、UDR は、エンド ツー エンドの要求/応答の通信が変更されなければ、Application Gateway サブネットでサポートされます。 たとえば、パケットの検査のためにファイアウォール アプライアンスを指すように Application Gateway サブネットの UDR を設定できます。 ただし、検査後にパケットが目的の宛先に到達できることを確認する必要があります。 これに失敗すると、不適切な正常性プローブやトラフィック ルーティング動作が発生する場合があります。 これには仮想ネットワークの Azure ExpressRoute や VPN ゲートウェイによってプロパゲートされる学習済みのルートまたは既定の 0.0.0.0/0 ルートが含まれます。</p>
+<p>v2: v2 SKU の場合、サポートされるシナリオとサポートされないシナリオがあります。</p>
+</blockquote>
+<p>なお、プライベート Application Gateway の場合は、NSG と UDR の通信要件が緩和されております。詳細については以下のドキュメントをご確認ください。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/application-gateway-private-deployment?tabs=portal">プライベート アプリケーション ゲートウェイのデプロイ</a></li>
+</ul>
+<hr>
+<p><a id="sq3"></a></p>
+<h3 id="Application-Gateway-V1の最小サブネット-サイズは-26-でしたが-Application-Gateway-V2で推奨のサブネット-サイズはあるでしょうか？"><a href="#Application-Gateway-V1の最小サブネット-サイズは-26-でしたが-Application-Gateway-V2で推奨のサブネット-サイズはあるでしょうか？" class="headerlink" title="Application Gateway V1の最小サブネット サイズは /26 でしたが Application Gateway V2で推奨のサブネット サイズはあるでしょうか？"></a>Application Gateway V1の最小サブネット サイズは /26 でしたが Application Gateway V2で推奨のサブネット サイズはあるでしょうか？</h3><p>A.<br>Application Gateway V2 は、インスタンスを最大 125 までスケール アウトすることが可能です。そのため、最大 131 個の IP アドレス (※) が必要となり、/24 のサブネット サイズを推奨しております。<br>※ 125 のインスタンス IP アドレス + 1 つのプライベート フロントエンド IP 構成 + 5 つの Azure 予約 IP アドレス</p>
+<p>なお、お客様環境のご要件にてインスタンスのスケール アウトが最大 125 まで必要とされない場合、スケール アウトする最大インスタンス数の上限を決めることで、サブネット サイズを調整いただくことは可能ですが、拡張性を考慮して /24 のサブネット サイズでデプロイいただくことを強くお勧めいたします。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/configuration-infrastructure#virtual-network-and-dedicated-subnet">Azure Application Gateway インフラストラクチャの構成 - 仮想ネットワークと専用サブネット</a></li>
+</ul>
+<hr>
+<p><a id="sq4"></a></p>
+<h3 id="Application-Gateway-V1-と-V2-を停止した際に、課金の差異はあるでしょうか？"><a href="#Application-Gateway-V1-と-V2-を停止した際に、課金の差異はあるでしょうか？" class="headerlink" title="Application Gateway V1 と V2 を停止した際に、課金の差異はあるでしょうか？"></a>Application Gateway V1 と V2 を停止した際に、課金の差異はあるでしょうか？</h3><p>A.<br>V2 につきましては、Application Gateway 自体の固定コスト/容量ユニットコスト/データ転送はすべて課金されなくなりますが、パブリック IP アドレスの課金は停止中も発生します。<br>V1 につきましては、関連付けているパブリック IP アドレスを含めすべての課金が停止いたします。</p>
+<hr>
+<br>
+
+<h2 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h2><p><a id="oq1"></a></p>
+<h3 id="Application-Gateway-V2-のフロントエンド-IP-として-Application-Gateway-V1-で利用していたプライベート-IP-アドレスを設定することは可能でしょうか？"><a href="#Application-Gateway-V2-のフロントエンド-IP-として-Application-Gateway-V1-で利用していたプライベート-IP-アドレスを設定することは可能でしょうか？" class="headerlink" title="Application Gateway V2 のフロントエンド IP として Application Gateway V1 で利用していたプライベート IP アドレスを設定することは可能でしょうか？"></a>Application Gateway V2 のフロントエンド IP として Application Gateway V1 で利用していたプライベート IP アドレスを設定することは可能でしょうか？</h3><p>A.<br>Application Gateway V1 と Application Gateway V2 を同じサブネットに共存させることは叶いませんため、Application Gateway V1 を先に削除いただき、Application Gateway V2 を作成する際に Application Gateway V1 で使用していたプライベート IP アドレスを設定することで設定が可能です。</p>
+<hr>
+<p><a id="oq2"></a></p>
+<h3 id="Application-Gateway-V1-から-V2-への移行に向けて、料金差分を確認したいです。大まかな料金を確認したいのですが、どのように計算したらよいでしょうか？"><a href="#Application-Gateway-V1-から-V2-への移行に向けて、料金差分を確認したいです。大まかな料金を確認したいのですが、どのように計算したらよいでしょうか？" class="headerlink" title="Application Gateway V1 から V2 への移行に向けて、料金差分を確認したいです。大まかな料金を確認したいのですが、どのように計算したらよいでしょうか？"></a>Application Gateway V1 から V2 への移行に向けて、料金差分を確認したいです。大まかな料金を確認したいのですが、どのように計算したらよいでしょうか？</h3><p>A.<br>Application Gateway の V1 と V2 では料金体系が大きく異なっております。<br>V1 では、インスタンス数とインスタンスのサイズに基づく固定料金と、処理データ量に応じた従量課金が発生します。</p>
+<p>一方で、V2 では、従来のインスタンス単位ではなく、利用状況に応じて課金される消費ベースのモデルへと切り替わっており、容量ユニット コスト使用状況に応じて料金が変動する仕組みとなっています。詳細については、以下の公開ドキュメントをご参照ください。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/azure/application-gateway/understanding-pricing">Azure Application Gateway と Web Application Firewall の価格について</a></li>
+</ul>
+<p>料金差分を確認される際には、以下の料金計算ツール上で V1 に相当する「Basic V1」と V2 の「Standard v2」をそれぞれ選択し、現在ご利用中のトラフィック量や接続数に合わせて試算いただくことになります。<br>V1 と V2 は料金構造そのものが異なるため、単純にインスタンス数を並べて比較するのではなく、利用量をもとに試算していただくことが必要となります。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/ja-jp/pricing/calculator/?service=application-gateway">料金計算ツール</a></li>
+</ul>
+<hr>
+<br>
+
+<p>以上、Application Gateway V1  SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介しました。移行のご参考になれば幸いです。</p>
+
+      
+      
+        <div class="article-disclaimer">
+        
+          <p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+        
+        </div>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li></ul>
+
+        
+        <a href="https://github.com/jpaztech/blog/edit/master/articles/network/appgw-migrate-v1-v2.md" class="article-github-edit-link" target="_blank" rel="noopener noreferrer">GitHub で編集</a>
+        
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="../../vm/2028-retire-vm/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="">Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/2028-retire-vm/">2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/nvme-vm/">NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</a>
+          </li>
+        
+          <li>
+            <a href="../../vm/imds-pinning/">Action required：Update certificates for Azure Instance Metadata Service の通知の補足</a>
+          </li>
+        
+          <li>
+            <a href="../fw-prescaling/">Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <!-- <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/500/" rel="tag">500</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/502/" rel="tag">502</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AHB/" rel="tag">AHB</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM/" rel="tag">ARM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ARM-Template/" rel="tag">ARM Template</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ASR/" rel="tag">ASR</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Application-Gateway/" rel="tag">Application Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/" rel="tag">Archive</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Set/" rel="tag">Availability Set</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Availability-Zone/" rel="tag">Availability Zone</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Automation/" rel="tag">Azure Automation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Backup/" rel="tag">Azure Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Cloud-Shell/" rel="tag">Azure Cloud Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Container-Instances-ACI/" rel="tag">Azure Container Instances (ACI)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Container-Registry-ACR/" rel="tag">Azure Container Registry (ACR)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Files/" rel="tag">Azure Files</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Firewall/" rel="tag">Azure Firewall</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Kubernetes-Service-AKS/" rel="tag">Azure Kubernetes Service (AKS)</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Load-Balancer/" rel="tag">Azure Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Peering-Service/" rel="tag">Azure Peering Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-Portal/" rel="tag">Azure Portal</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-PowerShell/" rel="tag">Azure PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureCDN/" rel="tag">AzureCDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AzureFrontDoor/" rel="tag">AzureFrontDoor</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Backup-Restore/" rel="tag">Backup / Restore</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Bastion/" rel="tag">Bastion</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Boot/" rel="tag">Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Certificate/" rel="tag">Certificate</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Client-Package/" rel="tag">Client Package</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/" rel="tag">Containers</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Data-Disk/" rel="tag">Data Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Disk/" rel="tag">Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Drive-Letter/" rel="tag">Drive Letter</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/EUS/" rel="tag">EUS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/" rel="tag">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Extended-Validation-Certificates/" rel="tag">Extended Validation Certificates</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/FAQ/" rel="tag">FAQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/HowTo/" rel="tag">HowTo</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IO-Throttling/" rel="tag">IO Throttling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IP-Fragmentation/" rel="tag">IP Fragmentation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/IaaS/" rel="tag">IaaS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/" rel="tag">Information</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/KMS/" rel="tag">KMS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Key-Vault/" rel="tag">Key Vault</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Load-Balancer/" rel="tag">Load Balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MARS-Agent/" rel="tag">MARS Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Maintenance/" rel="tag">Maintenance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Managed-Disk/" rel="tag">Managed Disk</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Memory/" rel="tag">Memory</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Azure/" rel="tag">Microsoft Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Microsoft-Peering/" rel="tag">Microsoft Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Migration/" rel="tag">Migration</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Monitoring-Alert/" rel="tag">Monitoring / Alert</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Multisite/" rel="tag">Multisite</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NAT-Gateway/" rel="tag">NAT Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NIC/" rel="tag">NIC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG/" rel="tag">NSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/NSG-Flow-Log/" rel="tag">NSG Flow Log</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/" rel="tag">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network-Security-Group/" rel="tag">Network Security Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network-Virtual-Appliance/" rel="tag">Network Virtual Appliance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network-Watcher/" rel="tag">Network Watcher</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Noboot/" rel="tag">Noboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Non-EUS/" rel="tag">Non EUS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/OAuth/" rel="tag">OAuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Oparation/" rel="tag">Oparation</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/" rel="tag">Other</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Performance/" rel="tag">Performance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/" rel="tag">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Prescaling/" rel="tag">Prescaling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Private-Endpoint/" rel="tag">Private Endpoint</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PrivateEndpoint/" rel="tag">PrivateEndpoint</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-IP-Address/" rel="tag">Public IP Address</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Public-Peering/" rel="tag">Public Peering</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RBAC/" rel="tag">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RDP/" rel="tag">RDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHEL/" rel="tag">RHEL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RHUI/" rel="tag">RHUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Group/" rel="tag">Resource Group</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Resource-Health/" rel="tag">Resource Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Round-Robin/" rel="tag">Round Robin</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SMTP/" rel="tag">SMTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SNAT/" rel="tag">SNAT</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/SSL/" rel="tag">SSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sample-Script/" rel="tag">Sample Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Service-Endpoint/" rel="tag">Service Endpoint</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Service-Tag/" rel="tag">Service Tag</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/" rel="tag">Storage</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage-Space/" rel="tag">Storage Space</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Support-Explained/" rel="tag">Support Explained</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/TSG/" rel="tag">TSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Troubleshooting/" rel="tag">Troubleshooting</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Update-Upgrade/" rel="tag">Update / Upgrade</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/" rel="tag">VM</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM-Agent/" rel="tag">VM Agent</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VMSS/" rel="tag">VMSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN/" rel="tag">VPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VPN-Gateway/" rel="tag">VPN Gateway</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Virtual-WAN/" rel="tag">Virtual WAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VirtualWAN/" rel="tag">VirtualWAN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Vnet-Flow-Log/" rel="tag">Vnet Flow Log</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/WAF/" rel="tag">WAF</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows/" rel="tag">Windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/auto-scaling/" rel="tag">auto scaling</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/capacity/" rel="tag">capacity</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/instance/" rel="tag">instance</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/maintenance/" rel="tag">maintenance</a></li></ul>  -->
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Archive/">Archive</a><span class="tag-list-count">65</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ARM">ARM</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ASR">ASR</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Application-Gateway">Application Gateway</a><span class="tag-list-count">6</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Automation">Azure Automation</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Azure-Backup">Azure Backup</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Backup-Restore">Backup / Restore</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Boot">Boot</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Client-Package">Client Package</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/DNS">DNS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/ExpressRoute">ExpressRoute</a><span class="tag-list-count">11</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Extended-Validation-Certificates">Extended Validation Certificates</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IO-Throttling">IO Throttling</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Load-Balancer">Load Balancer</a><span class="tag-list-count">7</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/MARS-Agent">MARS Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Managed-Disk">Managed Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/Multisite">Multisite</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Archive/NIC">NIC</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Network/">Network</a><span class="tag-list-count">95</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/500">500</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/502">502</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Application-Gateway">Application Gateway</a><span class="tag-list-count">13</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Archive">Archive</a><span class="tag-list-count">35</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Firewall">Azure Firewall</a><span class="tag-list-count">9</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Load-Balancer">Azure Load Balancer</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Azure-Peering-Service">Azure Peering Service</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureCDN">AzureCDN</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/AzureFrontDoor">AzureFrontDoor</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Bastion">Bastion</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Certificate">Certificate</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/DNS">DNS</a><span class="tag-list-count">5</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Error">Error</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/ExpressRoute">ExpressRoute</a><span class="tag-list-count">22</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/FAQ">FAQ</a><span class="tag-list-count">4</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/IP-Fragmentation">IP Fragmentation</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Key-Vault">Key Vault</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Load-Balancer">Load Balancer</a><span class="tag-list-count">7</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Maintenance">Maintenance</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Network/Microsoft-Peering">Microsoft Peering</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/VM/">VM</a><span class="tag-list-count">75</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/AHB">AHB</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/ARM-Template">ARM Template</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Archive">Archive</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Set">Availability Set</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Availability-Zone">Availability Zone</a><span class="tag-list-count">3</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Azure-PowerShell">Azure PowerShell</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/CPU">CPU</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Data-Disk">Data Disk</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Disk">Disk</a><span class="tag-list-count">7</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Drive-Letter">Drive Letter</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/EUS">EUS</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/HowTo">HowTo</a><span class="tag-list-count">29</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Information">Information</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/KMS">KMS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Linux">Linux</a><span class="tag-list-count">22</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Managed-Disk">Managed Disk</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Memory">Memory</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Monitoring-Alert">Monitoring / Alert</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/VM/Network">Network</a><span class="tag-list-count">2</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Containers/">Containers</a><span class="tag-list-count">15</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Container-Instances-ACI">Azure Container Instances (ACI)</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Container-Registry-ACR">Azure Container Registry (ACR)</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Containers/Azure-Kubernetes-Service-AKS">Azure Kubernetes Service (AKS)</a><span class="tag-list-count">13</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Information/">Information</a><span class="tag-list-count">9</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/Azure-Portal">Azure Portal</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/HowTo">HowTo</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/Linux">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/VM">VM</a><span class="tag-list-count">2</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Information/Windows">Windows</a><span class="tag-list-count">1</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Other/">Other</a><span class="tag-list-count">3</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/IaaS">IaaS</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Microsoft-Azure">Microsoft Azure</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Other/Support-Explained">Support Explained</a><span class="tag-list-count">3</span></li></ul></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Storage/">Storage</a><span class="tag-list-count">9</span><ul><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Storage/HowTo">HowTo</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Storage/Migration">Migration</a><span class="tag-list-count">1</span></li><li class="tag-list-item tag-list-item-child-tag"><a class="tag-list-link tag-list-link-child" href="../../tags/Storage/VM">VM</a><span class="tag-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2026/02/">2026 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2026/01/">2026 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/11/">2025 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/10/">2025 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/09/">2025 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/08/">2025 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/07/">2025 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/06/">2025 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/03/">2025 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/02/">2025 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2025/01/">2025 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/12/">2024 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/11/">2024 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/10/">2024 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/09/">2024 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/08/">2024 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/07/">2024 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/05/">2024 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/04/">2024 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/03/">2024 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/02/">2024 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2024/01/">2024 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/12/">2023 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/11/">2023 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/10/">2023 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/09/">2023 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/08/">2023 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/07/">2023 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/05/">2023 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/04/">2023 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/03/">2023 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/02/">2023 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2023/01/">2023 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/12/">2022 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/10/">2022 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/09/">2022 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/08/">2022 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/05/">2022 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/02/">2022 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2022/01/">2022 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/12/">2021 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/11/">2021 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/10/">2021 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/09/">2021 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/08/">2021 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/07/">2021 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/06/">2021 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/05/">2021 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">2021 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/03/">2021 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/02/">2021 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/12/">2020 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/11/">2020 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/10/">2020 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">2020 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">2020 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/07/">2020 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/06/">2020 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/05/">2020 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">2020 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/03/">2020 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/01/">2020 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/12/">2019 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/09/">2019 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/02/">2019 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/01/">2019 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/12/">2018 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">2018 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">2018 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/09/">2018 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">2018 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">2018 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">2018 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/04/">2018 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">2018 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/02/">2018 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">2018 / 01</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">2017 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/11/">2017 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">2017 / 10</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/09/">2017 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/08/">2017 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/07/">2017 / 07</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/06/">2017 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/05/">2017 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/04/">2017 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/02/">2017 / 02</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/12/">2016 / 12</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/11/">2016 / 11</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/09/">2016 / 09</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/08/">2016 / 08</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/06/">2016 / 06</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/05/">2016 / 05</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/04/">2016 / 04</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/03/">2016 / 03</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2016/02/">2016 / 02</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/500/" style="font-size: 10px;">500</a> <a href="../../tags/502/" style="font-size: 10px;">502</a> <a href="../../tags/AHB/" style="font-size: 10px;">AHB</a> <a href="../../tags/ARM/" style="font-size: 10px;">ARM</a> <a href="../../tags/ARM-Template/" style="font-size: 10.63px;">ARM Template</a> <a href="../../tags/ASR/" style="font-size: 10px;">ASR</a> <a href="../../tags/Application-Gateway/" style="font-size: 16.25px;">Application Gateway</a> <a href="../../tags/Archive/" style="font-size: 18.75px;">Archive</a> <a href="../../tags/Availability-Set/" style="font-size: 10px;">Availability Set</a> <a href="../../tags/Availability-Zone/" style="font-size: 11.25px;">Availability Zone</a> <a href="../../tags/Azure-Automation/" style="font-size: 11.25px;">Azure Automation</a> <a href="../../tags/Azure-Backup/" style="font-size: 10.63px;">Azure Backup</a> <a href="../../tags/Azure-Cloud-Shell/" style="font-size: 10px;">Azure Cloud Shell</a> <a href="../../tags/Azure-Container-Instances-ACI/" style="font-size: 10px;">Azure Container Instances (ACI)</a> <a href="../../tags/Azure-Container-Registry-ACR/" style="font-size: 10.63px;">Azure Container Registry (ACR)</a> <a href="../../tags/Azure-Files/" style="font-size: 10px;">Azure Files</a> <a href="../../tags/Azure-Firewall/" style="font-size: 14.38px;">Azure Firewall</a> <a href="../../tags/Azure-Kubernetes-Service-AKS/" style="font-size: 15px;">Azure Kubernetes Service (AKS)</a> <a href="../../tags/Azure-Load-Balancer/" style="font-size: 11.25px;">Azure Load Balancer</a> <a href="../../tags/Azure-Peering-Service/" style="font-size: 10.63px;">Azure Peering Service</a> <a href="../../tags/Azure-Portal/" style="font-size: 10px;">Azure Portal</a> <a href="../../tags/Azure-PowerShell/" style="font-size: 10px;">Azure PowerShell</a> <a href="../../tags/AzureCDN/" style="font-size: 11.25px;">AzureCDN</a> <a href="../../tags/AzureFrontDoor/" style="font-size: 11.88px;">AzureFrontDoor</a> <a href="../../tags/Backup-Restore/" style="font-size: 10px;">Backup / Restore</a> <a href="../../tags/Bastion/" style="font-size: 10.63px;">Bastion</a> <a href="../../tags/Boot/" style="font-size: 10px;">Boot</a> <a href="../../tags/CPU/" style="font-size: 10px;">CPU</a> <a href="../../tags/Certificate/" style="font-size: 11.25px;">Certificate</a> <a href="../../tags/Client-Package/" style="font-size: 10px;">Client Package</a> <a href="../../tags/Containers/" style="font-size: 15.63px;">Containers</a> <a href="../../tags/DNS/" style="font-size: 13.13px;">DNS</a> <a href="../../tags/Data-Disk/" style="font-size: 10px;">Data Disk</a> <a href="../../tags/Disk/" style="font-size: 13.75px;">Disk</a> <a href="../../tags/Drive-Letter/" style="font-size: 10.63px;">Drive Letter</a> <a href="../../tags/EUS/" style="font-size: 10.63px;">EUS</a> <a href="../../tags/Error/" style="font-size: 10.63px;">Error</a> <a href="../../tags/ExpressRoute/" style="font-size: 16.88px;">ExpressRoute</a> <a href="../../tags/Extended-Validation-Certificates/" style="font-size: 10px;">Extended Validation Certificates</a> <a href="../../tags/FAQ/" style="font-size: 11.88px;">FAQ</a> <a href="../../tags/HowTo/" style="font-size: 17.5px;">HowTo</a> <a href="../../tags/IO-Throttling/" style="font-size: 10px;">IO Throttling</a> <a href="../../tags/IP-Fragmentation/" style="font-size: 10px;">IP Fragmentation</a> <a href="../../tags/IaaS/" style="font-size: 10px;">IaaS</a> <a href="../../tags/Information/" style="font-size: 14.38px;">Information</a> <a href="../../tags/KMS/" style="font-size: 10px;">KMS</a> <a href="../../tags/Key-Vault/" style="font-size: 10px;">Key Vault</a> <a href="../../tags/Linux/" style="font-size: 16.88px;">Linux</a> <a href="../../tags/Load-Balancer/" style="font-size: 13.75px;">Load Balancer</a> <a href="../../tags/MARS-Agent/" style="font-size: 10px;">MARS Agent</a> <a href="../../tags/Maintenance/" style="font-size: 10.63px;">Maintenance</a> <a href="../../tags/Managed-Disk/" style="font-size: 11.25px;">Managed Disk</a> <a href="../../tags/Memory/" style="font-size: 10px;">Memory</a> <a href="../../tags/Microsoft-Azure/" style="font-size: 10px;">Microsoft Azure</a> <a href="../../tags/Microsoft-Peering/" style="font-size: 10.63px;">Microsoft Peering</a> <a href="../../tags/Migration/" style="font-size: 10.63px;">Migration</a> <a href="../../tags/Monitoring-Alert/" style="font-size: 10.63px;">Monitoring / Alert</a> <a href="../../tags/Multisite/" style="font-size: 10px;">Multisite</a> <a href="../../tags/NAT-Gateway/" style="font-size: 11.25px;">NAT Gateway</a> <a href="../../tags/NIC/" style="font-size: 10px;">NIC</a> <a href="../../tags/NSG/" style="font-size: 10.63px;">NSG</a> <a href="../../tags/NSG-Flow-Log/" style="font-size: 10px;">NSG Flow Log</a> <a href="../../tags/Network/" style="font-size: 20px;">Network</a> <a href="../../tags/Network-Security-Group/" style="font-size: 10px;">Network Security Group</a> <a href="../../tags/Network-Virtual-Appliance/" style="font-size: 10px;">Network Virtual Appliance</a> <a href="../../tags/Network-Watcher/" style="font-size: 10px;">Network Watcher</a> <a href="../../tags/Noboot/" style="font-size: 12.5px;">Noboot</a> <a href="../../tags/Non-EUS/" style="font-size: 10px;">Non EUS</a> <a href="../../tags/OAuth/" style="font-size: 10px;">OAuth</a> <a href="../../tags/Oparation/" style="font-size: 10px;">Oparation</a> <a href="../../tags/Other/" style="font-size: 11.25px;">Other</a> <a href="../../tags/Performance/" style="font-size: 10px;">Performance</a> <a href="../../tags/PowerShell/" style="font-size: 11.25px;">PowerShell</a> <a href="../../tags/Prescaling/" style="font-size: 10px;">Prescaling</a> <a href="../../tags/Private-Endpoint/" style="font-size: 10px;">Private Endpoint</a> <a href="../../tags/PrivateEndpoint/" style="font-size: 10.63px;">PrivateEndpoint</a> <a href="../../tags/Public-IP-Address/" style="font-size: 12.5px;">Public IP Address</a> <a href="../../tags/Public-Peering/" style="font-size: 10px;">Public Peering</a> <a href="../../tags/RBAC/" style="font-size: 11.25px;">RBAC</a> <a href="../../tags/RDP/" style="font-size: 10px;">RDP</a> <a href="../../tags/RHEL/" style="font-size: 11.25px;">RHEL</a> <a href="../../tags/RHUI/" style="font-size: 11.25px;">RHUI</a> <a href="../../tags/Resource-Group/" style="font-size: 10px;">Resource Group</a> <a href="../../tags/Resource-Health/" style="font-size: 10px;">Resource Health</a> <a href="../../tags/Round-Robin/" style="font-size: 10px;">Round Robin</a> <a href="../../tags/SMTP/" style="font-size: 10.63px;">SMTP</a> <a href="../../tags/SNAT/" style="font-size: 10.63px;">SNAT</a> <a href="../../tags/SSL/" style="font-size: 10px;">SSL</a> <a href="../../tags/Sample-Script/" style="font-size: 11.88px;">Sample Script</a> <a href="../../tags/Service-Endpoint/" style="font-size: 10px;">Service Endpoint</a> <a href="../../tags/Service-Tag/" style="font-size: 10px;">Service Tag</a> <a href="../../tags/Storage/" style="font-size: 14.38px;">Storage</a> <a href="../../tags/Storage-Space/" style="font-size: 10px;">Storage Space</a> <a href="../../tags/Support-Explained/" style="font-size: 11.25px;">Support Explained</a> <a href="../../tags/TSG/" style="font-size: 10px;">TSG</a> <a href="../../tags/Token/" style="font-size: 10px;">Token</a> <a href="../../tags/Troubleshooting/" style="font-size: 10px;">Troubleshooting</a> <a href="../../tags/Update-Upgrade/" style="font-size: 10.63px;">Update / Upgrade</a> <a href="../../tags/VM/" style="font-size: 19.38px;">VM</a> <a href="../../tags/VM-Agent/" style="font-size: 10.63px;">VM Agent</a> <a href="../../tags/VMSS/" style="font-size: 10px;">VMSS</a> <a href="../../tags/VPN/" style="font-size: 10px;">VPN</a> <a href="../../tags/VPN-Gateway/" style="font-size: 13.13px;">VPN Gateway</a> <a href="../../tags/Virtual-WAN/" style="font-size: 10.63px;">Virtual WAN</a> <a href="../../tags/VirtualWAN/" style="font-size: 10.63px;">VirtualWAN</a> <a href="../../tags/Vnet-Flow-Log/" style="font-size: 10px;">Vnet Flow Log</a> <a href="../../tags/WAF/" style="font-size: 13.13px;">WAF</a> <a href="../../tags/Windows/" style="font-size: 18.13px;">Windows</a> <a href="../../tags/auto-scaling/" style="font-size: 10px;">auto scaling</a> <a href="../../tags/capacity/" style="font-size: 10px;">capacity</a> <a href="../../tags/instance/" style="font-size: 10px;">instance</a> <a href="../../tags/maintenance/" style="font-size: 10px;">maintenance</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Japan Azure IaaS Core Support Team<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
