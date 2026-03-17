@@ -10,7 +10,26 @@
   <rights>All rights reserved 2026, Japan Azure IaaS Core Support Team</rights>
   <subtitle>日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</subtitle>
   <title>Japan Azure IaaS Core Support Blog</title>
-  <updated>2026-03-17T04:37:41.330Z</updated>
+  <updated>2026-03-17T06:20:00.780Z</updated>
+  <entry>
+    <author>
+      <name>Japan Azure IaaS Core Support Team</name>
+    </author>
+    <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
+    <category term="VPN Gateway" scheme="https://jpaztech.github.io/blog/tags/VPN-Gateway/"/>
+    <content>
+      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p><p><video src="./vpngw-basicip-migration/About_the_Basic_Public_IP_Migration.mp4" controls="true"></video></p><span id="more"></span><p>Azure の Public IP アドレス リソースには、Basic および Standard の 2 種類の SKU が用意されています。<BR><br>Azure VPN Gatewayにおいては、環境によって Basic SKU の Public IP アドレスが利用されているケースがあります。<BR><br>Basic SKU の Public IP アドレスは順次サービス終了が予定されているため、Basic SKU から Standard SKU へのマイグレーション作業が必要となります。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/basic-or-standard.png" alt="basic-or-standard-ip"></p><BR><h1 id="1-マイグレーションの対象となるGatewayの条件"><a href="#1-マイグレーションの対象となるGatewayの条件" class="headerlink" title="1. マイグレーションの対象となるGatewayの条件"></a>1. マイグレーションの対象となるGatewayの条件</h1><p>マイグレーションの対象となるGatewayの条件は、下記の表のとおりです。<BR></p><table><thead><tr><th>VPN Gateway SKU</th><th>本マイグレーション作業 要&#x2F;不要</th></tr></thead><tbody><tr><td>Basic SKU</td><td>別の対応が必要<br>※ 商用ワークロードの使用は非推奨</td></tr><tr><td>Standard SKU</td><td><strong>必要</strong></td></tr><tr><td>High Performance SKU</td><td><strong>必要</strong></td></tr><tr><td>VpnGw [1–5] SKU + Basic SKU Public IP</td><td><strong>必要</strong></td></tr><tr><td>VpnGw [1–5] SKU + Standard SKU Public IP</td><td>不要</td></tr><tr><td>VpnGw [1–5] AZ SKU</td><td>不要</td></tr></tbody></table><BR><p>VPN Gatewayの SKU は、Azure ポータルで対象のGateway リソースを選択し、［概要］画面からご確認いただけます。<BR><br>また、Public IP アドレスの SKU については、Public IP アドレスのリンクをクリックし、［概要］画面からご確認いただけます。<BR><br>これらをご確認のうえ、ご利用中のGatewayがマイグレーション対象に該当するかをご確認ください。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/check-sku.png" alt="check-sku"></p><br><h1 id="2-マイグレーションの手順"><a href="#2-マイグレーションの手順" class="headerlink" title="2. マイグレーションの手順"></a>2. マイグレーションの手順</h1><h2 id="2-1-マイグレーションの流れ-検証"><a href="#2-1-マイグレーションの流れ-検証" class="headerlink" title="2-1. マイグレーションの流れ - 検証"></a>2-1. マイグレーションの流れ - 検証</h2><p>実際のマイグレーション作業の流れについてご案内いたします。<BR><br>マイグレーションは、「検証」「準備」「移行」「コミット」の 4 つのステップで進行します。<BR><br>マイグレーション ツール画面を開くには、Azure ポータルで対象の VPN Gateway Gateway リソースを選択し、［構成］→［Migrate to Standard IP］をクリックしてください。<BR><br>移行ツールを開くと、自動的に構成の検証が実行されます。<BR><br>問題がなければ「Succeeded」と表示され、「検証」は完了となります。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/migration-to-standardIP.png" alt="migration-to-standardIP"></p><BR><h2 id="2-2-マイグレーションの流れ-準備"><a href="#2-2-マイグレーションの流れ-準備" class="headerlink" title="2-2. マイグレーションの流れ - 準備"></a>2-2. マイグレーションの流れ - 準備</h2><p>次に［Prepare］をクリックすると、マイグレーションの準備が開始され、移行先の VPN Gatewayが作成されます。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/prepare.png" alt="prepare"></p><p>このステップの完了にはおおよそ 30 分程度かかりますが、本ステップ中に通信影響は発生しません。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/migration-to-standardIP-2.png" alt="migration-to-standardIP-2"></p><p>準備が完了すると、次のステップである［Migrate］および［Abort］が表示されます。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/migrate-abort.png" alt="migrate-abort"></p><BR><p>なお、P2S 接続に “cloudapp.net” で終わる FQDN を使用して VPN Gatewayへ接続されている場合は、準備完了後に [VPN クライアントのダウンロード] を選択し、<BR><br>更新された VPN クライアント プロファイル（ZIP ファイル）をダウンロードしてください。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/vpn-client.png" alt="vpn-client"></p><p>その後、ダウンロードしたプロファイルを使用して再接続を行い、ポイント対サイト（P2S）接続が可能であることを確認してください。<BR><br>*(※ご利用中の VPN Gatewayが対象であるかどうかの確認方法は <a href="https://learn.microsoft.com/ja-jp/azure/vpn-gateway/basic-public-ip-migrate-howto?tabs=portal#check-if-your-gateway-uses-legacy-dns">Gatewayでレガシ DNS が使用されているかどうかを確認する</a> をご参照ください。</p><BR><h2 id="2-3-マイグレーションの流れ-移行"><a href="#2-3-マイグレーションの流れ-移行" class="headerlink" title="2-3. マイグレーションの流れ - 移行"></a>2-3. マイグレーションの流れ - 移行</h2><p>次のステップは「Migration」です。<br>この段階で作業をキャンセルする場合は、［Abort］をクリックしてください。<BR><br>これにより、準備ステップで作成されたリソースが削除され、作業開始前の状態に戻ります。<BR><br>作業を進める場合は、［Migration］をクリックします。<BR><br>本ステップにて、実際の Public IP アドレスの SKU 移行作業が実行され、<span style="color:red;"><strong>最大で約 5 分程度の通信断が発生する可能性があります。</strong></span><BR></p><p><img src="/blog/network/vpngw-basicip-migration/migration.png" alt="migration"></p><p><span style="color:red;"><strong>※移行を行っている途中で VPNGateway の状態が Failed で表示されることがございますが、完了時には Succeeded に変わりますのでご安心ください。</strong></span><BR></p><p><img src="/blog/network/vpngw-basicip-migration/failed.png" alt="failed"></p><p>なお、SKU を変更しても、VPN Gatewayで使用されている Public IP アドレス自体は変更されませんのでご安心ください。<BR><br>移行が完了すると、最後のステップとして［Commit］および［Abort］のボタンが表示されます。<BR><br>ツール上には新しいGatewayでのトラフィック処理状況が表示されますので、トラフィックが正常に流れていることをご確認ください。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/traffic.png" alt="traffic"></p><p><em>（※ P2S 接続のみの環境ではトラフィック処理状況は表示されないため、クライアントから移行後の VPN Gatewayへ P2S 接続が可能か確認してください。）</em> <BR><br>万一、問題が確認された場合は、［Abort］を選択することで作業前の状態に戻すことが可能です。</p><BR><h2 id="2-4-マイグレーションの流れ-コミット"><a href="#2-4-マイグレーションの流れ-コミット" class="headerlink" title="2-4. マイグレーションの流れ - コミット"></a>2-4. マイグレーションの流れ - コミット</h2><p>トラフィックが正常に流れていることを確認できましたら、［Commit］をクリックしてください。<BR><br>なお、［Commit］実行後は切り戻しができませんので、ご注意ください。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/commit.png" alt="commit"></p><p>このステップでは、移行により不要となったリソースのクリーンアップ処理が実行されます。<BR><br>本処理にはおよそ 15 分程度かかります。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/migration-to-standardIP-2.png" alt="migration-to-standardIP-2"></p><p>［Commit］が完了すると、VPN Gatewayで使用されている Public IP アドレスの SKU が Standard に変更され、マイグレーション作業は完了となります。<BR></p><p><img src="/blog/network/vpngw-basicip-migration/finish.png" alt="finish"></p><BR><h1 id="3-まとめ"><a href="#3-まとめ" class="headerlink" title="3. まとめ"></a>3. まとめ</h1><p>VPN Gatewayで Basic SKU の Public IP アドレスを使用している場合のマイグレーション手順についてご紹介しました。<BR><br>本マイグレーション作業は、すべて Azure Portalから実行可能です。<BR><br>公式ドキュメントには、より詳細な情報や補足事項も記載されていますので、作業を実施される前にあわせてご確認ください。<BR><br><a href="https://learn.microsoft.com/ja-jp/azure/vpn-gateway/basic-public-ip-migrate-howto?tabs=portal">Basic SKU パブリック IP アドレスを VPN Gateway 用に Standard SKU に移行する方法</a></p>]]>
+    </content>
+    <id>https://jpaztech.github.io/blog/network/vpngw-basicip-migration/</id>
+    <link href="https://jpaztech.github.io/blog/network/vpngw-basicip-migration/"/>
+    <published>2026-03-17T06:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>
+<p><video src="./vpngw-basicip-migration/About_the_Basic_Public_IP_Migration.mp4" controls="true"></video></p>]]>
+    </summary>
+    <title>[VPNGW] Basic SKU の Public IP アドレスを使用している Azure VPN Gatewayのマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
+    <updated>2026-03-17T06:20:00.780Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Japan Azure IaaS Core Support Team</name>
@@ -27,7 +46,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-03-17T04:37:41.330Z</updated>
+    <updated>2026-03-17T06:20:00.731Z</updated>
   </entry>
   <entry>
     <author>
@@ -46,7 +65,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-03-17T04:37:41.324Z</updated>
+    <updated>2026-03-17T06:20:00.725Z</updated>
   </entry>
   <entry>
     <author>
@@ -63,7 +82,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-03-17T04:37:41.500Z</updated>
+    <updated>2026-03-17T06:20:00.902Z</updated>
   </entry>
   <entry>
     <author>
@@ -85,7 +104,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-03-17T04:37:41.699Z</updated>
+    <updated>2026-03-17T06:20:01.101Z</updated>
   </entry>
   <entry>
     <author>
@@ -102,7 +121,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-03-17T04:37:41.678Z</updated>
+    <updated>2026-03-17T06:20:01.080Z</updated>
   </entry>
   <entry>
     <author>
@@ -124,7 +143,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-03-17T04:37:41.353Z</updated>
+    <updated>2026-03-17T06:20:00.753Z</updated>
   </entry>
   <entry>
     <author>
@@ -142,7 +161,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-03-17T04:37:41.313Z</updated>
+    <updated>2026-03-17T06:20:00.714Z</updated>
   </entry>
   <entry>
     <author>
@@ -162,7 +181,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-03-17T04:37:41.598Z</updated>
+    <updated>2026-03-17T06:20:01.000Z</updated>
   </entry>
   <entry>
     <author>
@@ -182,7 +201,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-03-17T04:37:41.315Z</updated>
+    <updated>2026-03-17T06:20:00.716Z</updated>
   </entry>
   <entry>
     <author>
@@ -205,7 +224,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-03-17T04:37:41.508Z</updated>
+    <updated>2026-03-17T06:20:00.910Z</updated>
   </entry>
   <entry>
     <author>
@@ -223,7 +242,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-03-17T04:37:41.321Z</updated>
+    <updated>2026-03-17T06:20:00.721Z</updated>
   </entry>
   <entry>
     <author>
@@ -244,7 +263,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-03-17T04:37:41.366Z</updated>
+    <updated>2026-03-17T06:20:00.766Z</updated>
   </entry>
   <entry>
     <author>
@@ -262,7 +281,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-03-17T04:37:41.429Z</updated>
+    <updated>2026-03-17T06:20:00.831Z</updated>
   </entry>
   <entry>
     <author>
@@ -280,7 +299,7 @@
 <p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 401 もしくは 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事]]>
     </summary>
     <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</title>
-    <updated>2026-03-17T04:37:41.481Z</updated>
+    <updated>2026-03-17T06:20:00.882Z</updated>
   </entry>
   <entry>
     <author>
@@ -298,7 +317,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の]]>
     </summary>
     <title>Azure 仮想ハブに Azure Firewall を配置する構成について</title>
-    <updated>2026-03-17T04:37:41.425Z</updated>
+    <updated>2026-03-17T06:20:00.827Z</updated>
   </entry>
   <entry>
     <author>
@@ -319,7 +338,7 @@
 <p>VWAN はハブ＆スポーク V]]>
     </summary>
     <title>VirtualWAN 活用について</title>
-    <updated>2026-03-17T04:37:41.427Z</updated>
+    <updated>2026-03-17T06:20:00.829Z</updated>
   </entry>
   <entry>
     <author>
@@ -336,7 +355,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>今年も日本マイクロソフトの社員がお届けする、 <a href="https://qiita.com/advent-calendar/2024/microsoft-azure-tech">Microsof]]>
     </summary>
     <title>高速ネットワーク未対応・対応済・必須の VM サイズについて</title>
-    <updated>2026-03-17T04:37:41.834Z</updated>
+    <updated>2026-03-17T06:20:01.236Z</updated>
   </entry>
   <entry>
     <author>
@@ -359,7 +378,7 @@
 </blockquote>]]>
     </summary>
     <title>Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</title>
-    <updated>2026-03-17T04:37:41.371Z</updated>
+    <updated>2026-03-17T06:20:00.772Z</updated>
   </entry>
   <entry>
     <author>
@@ -379,25 +398,6 @@
 <p>今回は、多くの通信が Azure Firewall を経由するような大規模なシステム (例 : 万単位のユーザー数での Azure Virtual Desktop 利用など) を運用さ]]>
     </summary>
     <title>Azure Firewall のキャパシティに関する問題およびその原因 / 対策について</title>
-    <updated>2026-03-17T04:37:41.315Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Japan Azure IaaS Core Support Team</name>
-    </author>
-    <category term="Other" scheme="https://jpaztech.github.io/blog/tags/Other/"/>
-    <category term="Support Explained" scheme="https://jpaztech.github.io/blog/tags/Support-Explained/"/>
-    <content>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。</p><p>Azure 製品をご利用のお客様に向けて、Azure の有償テクニカル サポートの対応範囲や留意点について、以下の通りご案内いたします。<br>本内容では、課金や請求については言及しておりません。主に、有償のテクニカル サポート契約についての説明のみとなっております。</p><h2 id="サポート-プラン別の対応範囲"><a href="#サポート-プラン別の対応範囲" class="headerlink" title="サポート プラン別の対応範囲"></a>サポート プラン別の対応範囲</h2><h3 id="有償のサポート-プランに加入していない場合"><a href="#有償のサポート-プランに加入していない場合" class="headerlink" title="有償のサポート プランに加入していない場合"></a>有償のサポート プランに加入していない場合</h3><p>※対象プラン：Basic プランを含む無償のサポート プランを指します。</p><blockquote><p>恐れ入りますが、有償テクニカル サポート範囲内の対応はいたしかねます。ただし、コミュニティの専門家や Microsoft のエンジニア、その他のお客様とアイデアを交換できるコミュニティ チャネルである <a href="https://learn.microsoft.com/ja-jp/answers/tags/133/azure">Azure の Q&amp;A</a>で、技術的な質問への回答を得ることができます。 充実した検索ツールにより、さまざまなソースからの回答が得られるため、自己解決のための貴重なリソースとなります。ぜひご活用ください。</p></blockquote><h3 id="有償のサポート-プランをご購入の場合"><a href="#有償のサポート-プランをご購入の場合" class="headerlink" title="有償のサポート プランをご購入の場合"></a>有償のサポート プランをご購入の場合</h3><p>※対象プラン：Developer、Standard、Professional Direct を指します。</p><p>ご参考：<a href="https://azure.microsoft.com/ja-jp/support/plans/">Azure サポート プランの比較</a></p><blockquote><p>原則として、テクニカル サポートの対応範囲は障害対応（Break&#x2F;fix）のみとなります。 ご購入のプランによって、対応する範囲や応答時間が異なります。また、Professional Direct をご購入の場合、プラン内容に合わせて、ProDirect デリバリー マネージャーからのガイダンスが定期的に得られます。</p></blockquote><h3 id="プレミア契約でサポート-プランをご購入の場合"><a href="#プレミア契約でサポート-プランをご購入の場合" class="headerlink" title="プレミア契約でサポート プランをご購入の場合"></a>プレミア契約でサポート プランをご購入の場合</h3><p>※対象プラン：エンタープライズ サポートを個別に購入した場合のサポート プランを指します。</p><blockquote><p>障害対応（Break&#x2F;fix）と Advisory の両方が有償テクニカル サポート範囲内となります。 以下、障害対応（Break&#x2F;fix）と Advisory の定義や対応範囲を詳細に説明いたします。 弊社の提供する有償テクニカル サポートをより活用していただくため、是非とも一度ご確認ください。どうぞよろしくお願いいたします。</p></blockquote><h2 id="障害対応（Break-fix）と-Advisory-の説明"><a href="#障害対応（Break-fix）と-Advisory-の説明" class="headerlink" title="障害対応（Break&#x2F;fix）と Advisory の説明"></a>障害対応（Break&#x2F;fix）と Advisory の説明</h2><h3 id="Azure-サポートにおける障害対応（Break-fix）の定義"><a href="#Azure-サポートにおける障害対応（Break-fix）の定義" class="headerlink" title="Azure サポートにおける障害対応（Break&#x2F;fix）の定義"></a>Azure サポートにおける障害対応（Break&#x2F;fix）の定義</h3><blockquote><p>障害対応の問題とは、Azure サービスの使用中に発生する可能性のある技術的な問題のことです。 障害対応とは、通常の使用中にテクノロジーに問題が発生し、正常に動作するように回復させる必要がある場合に、それをサポートするための作業を指します。</p></blockquote><h3 id="Azure-サポートにおける-Advisory-の定義"><a href="#Azure-サポートにおける-Advisory-の定義" class="headerlink" title="Azure サポートにおける Advisory の定義"></a>Azure サポートにおける Advisory の定義</h3><blockquote><p>Advisory サポートは、方法に関する一般的なご質問に対する支援を目的としています。 主に公開資料ベースやすでに存在しているベストプラクティスの案内となります。</p></blockquote><h3 id="両者の区別"><a href="#両者の区別" class="headerlink" title="両者の区別"></a>両者の区別</h3><blockquote><p>前者は「問題が発生している&#x2F;発生した」ことに対しての支援です。一方、後者は問題が発生していない場合に、公開資料ベースでの一般的なご質問に対する支援です。</p></blockquote><h3 id="サポートをご活用するためのヒント"><a href="#サポートをご活用するためのヒント" class="headerlink" title="サポートをご活用するためのヒント"></a>サポートをご活用するためのヒント</h3><p>(公開資料ベース以外で）Advisory サポートに該当する内容（例） </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">再現頻度が低く、現在は問題が発生していないがログからの原因調査が必要とされる内容 </span><br><span class="line">回避策があるものの、原因究明（RCA）を優先的に実施したいという要望によるサポート側の調査</span><br></pre></td></tr></table></figure><p>Advisory サポートに含まれない内容（例） </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">コードレビュー </span><br><span class="line">設計や設定のレビュー </span><br><span class="line">カスタムコードのサンプルの提供（コーディングの言語やスクリプトの種類に関わらず、公開されているドキュメント内のものを除く） </span><br><span class="line">アーキテクチャに関する詳細なガイダンスやデザイン </span><br><span class="line">公開ドキュメントに記載してない仕様確認 </span><br><span class="line">（既存問題の修正に関わらない）機能のリクエストやフィードバック </span><br><span class="line">公開情報の範疇にないステップバイステップの手順提供やお客様環境に合わせた設計や構築の案内</span><br></pre></td></tr></table></figure><p>上記の内容に関して支援が必要な場合は、Premier サポートのカスタマーエンジニアによる稼働時間ベースのサービスをご検討いただくことをおすすめいたします。 お手数ですが、貴社内の Azure 契約を担当する窓口へ一度ご相談ください。</p><h2 id="お問い合わせの重要度と緊急度について"><a href="#お問い合わせの重要度と緊急度について" class="headerlink" title="お問い合わせの重要度と緊急度について"></a>お問い合わせの重要度と緊急度について</h2><p>Azure のサポートには、重要度が A ~ C に分類されております。</p><p>通常重要度（重要度 B、もしくは C）は、日本時間の営業時間（土日祝日を除く、9:00 ～ 17:30）のみ対応しています。 Standard、Professional Direct、Premier サポートにおいては 24 時間 365 日の緊急対応（重要度 A）が提供されています。</p><p>緊急対応は、運用環境における「障害対応」、つまり正常な状態で稼働していたサービスが正常に機能しなくなった場合の復旧・問題の回避を目的としています。 原因追求や、ハウツー（※）については重要度 B、もしくは C として、通常営業時間内での対応となります。 ※ 原因追求やハウツーは障害対応ではないため、重要度を落としても、ご契約や内容によってお受けできない場合がございます。</p><p>Developer サポートは、開発環境を想定しているため、24 時間 365 日の対応は行えず、重要度 A でも通常時間内での優先対応となります。</p><h2 id="留意点：お問い合わせ1件につき1つの問題を扱います。"><a href="#留意点：お問い合わせ1件につき1つの問題を扱います。" class="headerlink" title="留意点：お問い合わせ1件につき1つの問題を扱います。"></a>留意点：お問い合わせ1件につき1つの問題を扱います。</h2><p>1件あたりを “問題の最小単位” とさせていただく必要があるため、複雑な問題については、切り分けによって複数のインシデントに分割していただくようお願いさせていただく場合があります。 </p><p>このような対応は、お客様により良いサポート体験を提供させていただくためのものでございます。何卒ご理解賜りますようお願い申し上げます。</p><h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><p>よくあるご質問について、以下の通り列挙いたします。ご一読いただけますと幸いです。</p><p><strong>Q.オンプレミスの PC やサーバーに不調が発生した場合、Azure サポートで対応が行えるか</strong><br>オンプレミス、つまり自社や自宅の環境のサポート対応は Azure サポートの対応範囲外となります。エンタープライズ サポートの Unified サポートであれば、マイクロソフトの製品に限って対応が可能です。</p><p><strong>Q.Azure 上における特定製品のライセンスについての問い合わせをしたい</strong><br>マイクロソフト製品のライセンス（Windows Server や SQL Server 等）については、ライセンス リセラーとなるパートナー各社にお問い合わせください。 パートナー ネットワークに加入されている弊社パートナー様の場合、弊社パートナー コールセンターにご相談ください。<br>・<a href="https://partner.microsoft.com/ja-jp/support?stage=1">パートナー コールセンター</a></p><p><strong>Q.Azure 上の Windows Server 仮想マシンにおけるサードパーティ製品について問い合わせが可能か</strong><br>サードパーティ製品のサポートは行っておりませんので、開発元にお問い合わせいただきますようお願いいたします。</p><p><strong>Q.Azure 上の Windows Server 仮想マシンにおける OS 内の設定について、ベストプラクティス・特定機能の設定方法・仕様確認などを行いたい</strong><br>Azure サポートの対応範囲外となりますが、エンタープライズ サポートの Unified サポートであれば対応可能です。</p><p><strong>Q.Office 365 製品の問い合わせが可能か</strong><br>Office 365 の製品についてのサポートは Azure サポート契約ではお受けできないため、Office 365 サポートをご利用いただく必要がございます。 しかしながら、Azure 上に導入いただいた Office 365 製品において、Azure プラットフォーム側の問題が発生している可能性がある場合など、Azure プラットフォームとしての見解が必要な内容については Azure サポートにご相談ください。</p><p><strong>Q.Azure の特定の技術・挙動について仕様確認をしたい</strong><br>仕様の確認に関する調査については、Professional Direct、エンタープライズ サポートの Unified サポートでのAdvisory サービスに含まれます。</p><p><strong>Q.Azure Marketplace におけるサードパーティ製品の質疑応答・トラブルシューティングの依頼は可能か</strong><br>Azure 基盤側の問題、例えば「サードパーティ製として提供されている仮想マシンが、Azure 基盤側の要因で接続できなくなった」といったケースであれば Azure テクニカル サポートにて対応が可能です。 それ以外の、価格、ライセンス、製品固有のご質問・トラブルシュートは提供元にご質問ください。</p><p><strong>Q.Azure 製品やサービスの利用において、パフォーマンスが出ない</strong><br>構築後、正常にパフォーマンスが出ていた状態から一時的に極端に悪化している場合には障害対応の範囲となり、Azure サポートでの対応が可能です。<br>障害対応の範囲外となるパフォーマンスの調査は Azure 観点からであれば Unified や Premier サポートにて承ることができます。<br>一方で、システム全体のパフォーマンスチューニングはカスタマー エンジニアによる稼働時間ベースのサービスにおいてのみ承れます。</p><p><strong>Q.仕様確認したい場合、どうすればいいですか</strong><br>Advisory 範囲として、ドキュメント上に言及されているものからの回答となります。大規模な案件で、非公式な上限値などをお知りになりたい場合、Premier サポートにて承ります。</p>]]>
-    </content>
-    <id>https://jpaztech.github.io/blog/other/azure_technical_support_explained/</id>
-    <link href="https://jpaztech.github.io/blog/other/azure_technical_support_explained/"/>
-    <published>2024-11-08T03:00:00.000Z</published>
-    <summary>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。</p>
-<p>Azure 製品をご利用のお客様に向けて、Azure の有償テクニカル サポートの対応範囲や留意点について、以下の通りご案内いたします。<br>本内容では、課金や請求については言及しておりません。主に]]>
-    </summary>
-    <title>Azure における有償 Azure テクニカル サポートの対応範囲</title>
-    <updated>2026-03-17T04:37:41.432Z</updated>
+    <updated>2026-03-17T06:20:00.715Z</updated>
   </entry>
 </feed>
