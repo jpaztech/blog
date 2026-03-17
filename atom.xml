@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Japan Azure IaaS Core Support Team</rights>
   <subtitle>日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</subtitle>
   <title>Japan Azure IaaS Core Support Blog</title>
-  <updated>2026-03-17T04:14:35.692Z</updated>
+  <updated>2026-03-17T04:15:41.233Z</updated>
   <entry>
     <author>
       <name>Japan Azure IaaS Core Support Team</name>
@@ -27,7 +27,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-03-17T04:14:35.692Z</updated>
+    <updated>2026-03-17T04:15:41.233Z</updated>
   </entry>
   <entry>
     <author>
@@ -46,7 +46,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-03-17T04:14:35.686Z</updated>
+    <updated>2026-03-17T04:15:41.227Z</updated>
   </entry>
   <entry>
     <author>
@@ -63,7 +63,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-03-17T04:14:35.829Z</updated>
+    <updated>2026-03-17T04:15:41.370Z</updated>
   </entry>
   <entry>
     <author>
@@ -85,7 +85,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-03-17T04:14:36.028Z</updated>
+    <updated>2026-03-17T04:15:41.572Z</updated>
   </entry>
   <entry>
     <author>
@@ -102,7 +102,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-03-17T04:14:36.006Z</updated>
+    <updated>2026-03-17T04:15:41.550Z</updated>
   </entry>
   <entry>
     <author>
@@ -124,7 +124,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-03-17T04:14:35.715Z</updated>
+    <updated>2026-03-17T04:15:41.256Z</updated>
   </entry>
   <entry>
     <author>
@@ -142,7 +142,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-03-17T04:14:35.641Z</updated>
+    <updated>2026-03-17T04:15:41.216Z</updated>
   </entry>
   <entry>
     <author>
@@ -162,7 +162,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-03-17T04:14:35.927Z</updated>
+    <updated>2026-03-17T04:15:41.468Z</updated>
   </entry>
   <entry>
     <author>
@@ -182,7 +182,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-03-17T04:14:35.677Z</updated>
+    <updated>2026-03-17T04:15:41.218Z</updated>
   </entry>
   <entry>
     <author>
@@ -205,7 +205,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-03-17T04:14:35.836Z</updated>
+    <updated>2026-03-17T04:15:41.378Z</updated>
   </entry>
   <entry>
     <author>
@@ -223,7 +223,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-03-17T04:14:35.682Z</updated>
+    <updated>2026-03-17T04:15:41.223Z</updated>
   </entry>
   <entry>
     <author>
@@ -244,7 +244,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-03-17T04:14:35.728Z</updated>
+    <updated>2026-03-17T04:15:41.269Z</updated>
   </entry>
   <entry>
     <author>
@@ -262,7 +262,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-03-17T04:14:35.758Z</updated>
+    <updated>2026-03-17T04:15:41.299Z</updated>
   </entry>
   <entry>
     <author>
@@ -280,7 +280,7 @@
 <p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 401 もしくは 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事]]>
     </summary>
     <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</title>
-    <updated>2026-03-17T04:14:35.809Z</updated>
+    <updated>2026-03-17T04:15:41.351Z</updated>
   </entry>
   <entry>
     <author>
@@ -298,7 +298,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の]]>
     </summary>
     <title>Azure 仮想ハブに Azure Firewall を配置する構成について</title>
-    <updated>2026-03-17T04:14:35.754Z</updated>
+    <updated>2026-03-17T04:15:41.295Z</updated>
   </entry>
   <entry>
     <author>
@@ -319,7 +319,7 @@
 <p>VWAN はハブ＆スポーク V]]>
     </summary>
     <title>VirtualWAN 活用について</title>
-    <updated>2026-03-17T04:14:35.755Z</updated>
+    <updated>2026-03-17T04:15:41.297Z</updated>
   </entry>
   <entry>
     <author>
@@ -336,7 +336,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>今年も日本マイクロソフトの社員がお届けする、 <a href="https://qiita.com/advent-calendar/2024/microsoft-azure-tech">Microsof]]>
     </summary>
     <title>高速ネットワーク未対応・対応済・必須の VM サイズについて</title>
-    <updated>2026-03-17T04:14:36.162Z</updated>
+    <updated>2026-03-17T04:15:41.706Z</updated>
   </entry>
   <entry>
     <author>
@@ -359,7 +359,7 @@
 </blockquote>]]>
     </summary>
     <title>Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</title>
-    <updated>2026-03-17T04:14:35.733Z</updated>
+    <updated>2026-03-17T04:15:41.274Z</updated>
   </entry>
   <entry>
     <author>
@@ -379,7 +379,7 @@
 <p>今回は、多くの通信が Azure Firewall を経由するような大規模なシステム (例 : 万単位のユーザー数での Azure Virtual Desktop 利用など) を運用さ]]>
     </summary>
     <title>Azure Firewall のキャパシティに関する問題およびその原因 / 対策について</title>
-    <updated>2026-03-17T04:14:35.642Z</updated>
+    <updated>2026-03-17T04:15:41.218Z</updated>
   </entry>
   <entry>
     <author>
@@ -398,6 +398,6 @@
 <p>Azure 製品をご利用のお客様に向けて、Azure の有償テクニカル サポートの対応範囲や留意点について、以下の通りご案内いたします。<br>本内容では、課金や請求については言及しておりません。主に]]>
     </summary>
     <title>Azure における有償 Azure テクニカル サポートの対応範囲</title>
-    <updated>2026-03-17T04:14:35.761Z</updated>
+    <updated>2026-03-17T04:15:41.302Z</updated>
   </entry>
 </feed>
