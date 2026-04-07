@@ -21,7 +21,7 @@
     <category term="HowTo" scheme="https://jpaztech.github.io/blog/tags/HowTo/"/>
     <category term="Troubleshooting" scheme="https://jpaztech.github.io/blog/tags/Troubleshooting/"/>
     <content>
-      <![CDATA[<p>こんにちは、Azure IaaS サポートの杉野です。<br>Azure VM に関する問い合わせの中でも、「VM に接続できない」、「VM が応答しない」といったトラブルは非常に多く寄せられます。</p><p>特に、Azure ポータル上では VM の状態が「実行中」と表示されているにもかかわらず、SSH や RDP で接続できないケースでは、原因の特定に時間を要することも少なくありません。<br>本記事では、このような事象の切り分けに有効な「ブート診断」について、その概要と設定方法をご紹介します。</p><p>ブート診断を活用することで、ゲスト OS が起動しているかどうかを迅速に確認でき、サポートへお問い合わせいただく前の切り分けをスムーズに進めることが可能となり、復旧までの時間短縮につながるケースが多くございます。</p><p>一方で、現場では「ブート診断を有効化していない」VM が多く、そもそも機能を利用されたことがないお客様も少なくありません。<br>そのため、本記事では、ブート診断の概要と設定方法を解説します。</p><p>本記事でご紹介するブート診断に関しまして、以下の公式ドキュメントも併せてご確認いただけますと幸いでございます。</p><blockquote><p>■ご参考：Azure のブート診断 - Azure Virtual Machines<br><a href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/boot-diagnostics">https://learn.microsoft.com/ja-jp/azure/virtual-machines/boot-diagnostics</a></p></blockquote><blockquote><p>■ご参考：Azure の VM のブート診断 - Virtual Machines<br><a href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics</a></p></blockquote><hr><ul><li><a href="./#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB%EF%BC%9AVM-%E3%81%AB%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E3%81%A8%E3%81%8D%E3%81%AB%E4%BD%95%E3%81%8C%E8%B5%B7%E3%81%8D%E3%81%A6%E3%81%84%E3%82%8B%E3%81%AE%E3%81%8B">はじめに：VM に接続できないときに何が起きているのか</a></li><li><a href="./#%E3%83%96%E3%83%BC%E3%83%88%E8%A8%BA%E6%96%AD%E3%81%A8%E3%81%AF%EF%BC%9F">ブート診断とは？</a></li><li><a href="./#%E3%83%96%E3%83%BC%E3%83%88%E8%A8%BA%E6%96%AD%E3%82%92%E6%9C%89%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95">ブート診断を有効化する方法</a></li><li><a href="./#%E3%80%90%E8%A3%9C%E8%B6%B3-1%E3%80%91%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0-%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8-%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9">【【補足 1】カスタム ストレージ アカウント利用時の注意点</a></li><li><a href="./#%E3%80%90%E8%A3%9C%E8%B6%B3-2%E3%80%91%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89-%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8-%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9">【【補足 2】マネージド ストレージ アカウント利用時の注意点</a></li><li><a href="./#%E3%81%8A%E3%82%8F%E3%82%8A%E3%81%AB">おわりに</a></li></ul><hr><h2 id="はじめに：VM-に接続できないときに何が起きているのか"><a href="#はじめに：VM-に接続できないときに何が起きているのか" class="headerlink" title="はじめに：VM に接続できないときに何が起きているのか"></a>はじめに：VM に接続できないときに何が起きているのか</h2><p>VM に対して SSH や RDP で接続できない場合、その原因は必ずしもネットワーク設定や認証設定とは限りません。<br>ゲスト OS 自体が正常に起動していないケースも多く存在します。</p><p>このような状態では、Azure ポータル上では VM の状態が「実行中」と表示されるため、利用者視点では「VM は起動している」と認識されがちです。</p><p>しかし実際には、ゲスト OS が起動途中でスタックしており、外部からの接続を受け付けられない状態に陥っている場合があります。<br>この状態は、一般に <strong>No boot 状態</strong>と呼ばれます。</p><p>No boot 状態に陥った場合、主に以下のような事象が確認されます。</p><ul><li>SSH 接続ができない &#x2F; RDP 接続ができない</li><li>Azure ポータル上では「実行中」と表示されるが、OS レベルの応答がない</li></ul><p>No boot 状態に至る原因は多岐にわたり、代表的なものとして以下が考えられます。</p><ul><li>OS レベルの問題（ファイル破損、ドライバ不整合、カーネルパニックなど）</li><li>構成上の問題（ディスク構成ミス、ネットワーク設定不備など）</li><li>Azure 側の要因（極稀ですが基盤障害など）</li></ul><p>原因が多岐にわたるため、サポート現場では、まずブート診断のスクリーンショットやシリアル ログを確認し、OS がどこまで起動しているかを把握するところから切り分けを開始します。</p><p>これにより、接続不可の原因が OS 起動以前の問題なのか、それともネットワークや認証設定など別の要因によるものなのかを判断することが可能になります。</p><hr><h2 id="ブート診断とは？"><a href="#ブート診断とは？" class="headerlink" title="ブート診断とは？"></a>ブート診断とは？</h2><p>ブート診断は、Azure VM の起動時に出力されるコンソール情報を <strong>スクリーンショットやログとして取得・保存する機能</strong> です。</p><p>対象 OS：Windows &#x2F; Linux どちらも対応  </p><ul><li>Windows：起動画面（ブートロゴ、修復モードなど）のスクリーンショット</li><li>Linux：コンソールログ（カーネルメッセージ、マウント失敗など）</li></ul><p>これにより、「OS 起動がどこまで進んでいるか」を視覚的・ログベースで確認することが可能となります。</p><p>正常に起動している場合、下記の通り、VM のコンソール上には Windows のログイン画面が表示されます。</p><p><img src="/blog/vm/boot-diagnostics/image001.png"></p><p>一方で、ゲスト OS が正常に起動されていない状態の場合には、起動途中のメッセージやエラー画面のまま停止しているケースが確認されます。</p><p><img src="/blog/vm/boot-diagnostics/image002.png"></p><p>表示される画面やエラー内容は状況により異なりますが、スクリーンショットから原因の絞り込みが可能な場合も多くあります。<br>また、ブート診断の結果から No boot 状態が確認された場合には、No boot 観点での調査へ迅速に移行することが可能となります。</p><p>Noboot 状態のトラブルシューティングに関しましては、下記の弊社ドキュメントやブログにお纏めしておりますので必要に応じてご確認をいただけますと幸いです。</p><blockquote><p>■ご参考：Azure 仮想マシンでのブート エラーのトラブルシューティング<br><a href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-error-troubleshoot">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-error-troubleshoot</a></p></blockquote><blockquote><p>■ご参考：Azure 上の Windows OS が起動しない場合の情報まとめ<br><a href="https://jpaztech.github.io/blog/vm/windows-noboot-summary/">https://jpaztech.github.io/blog/vm/windows-noboot-summary/</a></p></blockquote><p>また、一般的なブート エラーの例については、以下のドキュメントにも整理されておりますので、こちらもご参照いただけますと幸いです。</p><blockquote><p>■ご参考：Azure の VM のブート診断 - Virtual Machines<br><a href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics#common-boot-errors">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics#common-boot-errors</a></p></blockquote><hr><h2 id="ブート診断を有効化する方法"><a href="#ブート診断を有効化する方法" class="headerlink" title="ブート診断を有効化する方法"></a>ブート診断を有効化する方法</h2><p>次に、Azure ポータルからブート診断を有効化する手順についてご説明します。</p><ol><li>ブート診断を有効化する Azure VM のページより、左側 [ヘルプ] – [ブート診断] を選択します。<br>※ ブート診断が設定されていない場合、「この仮想マシンにはブート診断が構成されていません。」と表示されます。</li></ol><p><img src="/blog/vm/boot-diagnostics/image003.png"></p><ol start="2"><li><p>画面上部の [設定] を選択します。</p></li><li><p>[マネージド ストレージ アカウントで有効にする] を選択し、画面下部の [適用] ボタンを押下します。<br>※ お客様管理のストレージ アカウントをご利用されたい場合、[カスタム ストレージアカウント アカウントで有効にする] を選択</p></li></ol><p><img src="/blog/vm/boot-diagnostics/image004.png"></p><p>以上でブート診断の有効化は完了です。</p><div class="alert is-info"><p class="alert-title">Note</p><p>有効化後、データが利用可能になるまでしばらく時間がかかることがあります。</p><p>数分後にページを更新いただき最初のデータが利用可能になるまでお待ちください。</p></div><hr><h2 id="【補足-1】カスタム-ストレージ-アカウント利用時の注意点"><a href="#【補足-1】カスタム-ストレージ-アカウント利用時の注意点" class="headerlink" title="【補足 1】カスタム ストレージ アカウント利用時の注意点"></a>【補足 1】カスタム ストレージ アカウント利用時の注意点</h2><p>ブート診断では、お客様管理のストレージ アカウント (カスタム ストレージアカウント アカウント) を指定し、利用することも可能です。<br>（上記手順 3 にて [カスタム ストレージアカウント アカウントで有効にする] を選択）</p><p>ただし、この場合は以下の点にご注意ください。</p><ul><li>ストレージ アカウントのファイアウォール設定により、ブート診断の画面が表示されないケースがあります</li></ul><p>ブート診断の画面が表示されず、下記のようなメッセージを確認された場合、ストレージ アカウントのネットワーク設定を一度確認することをおすすめします。</p><p><img src="/blog/vm/boot-diagnostics/image005.png"></p><blockquote><p>■ご参考：Azure Storage のファイアウォール規則<br><a href="https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security">https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security</a></p></blockquote><div class="alert is-info"><p class="alert-title">Note</p><p>このようにカスタム ストレージアカウント アカウン トをご利用いただく場合、構成確認が必要な場合がございますため、</p><p>特別な要件がない場合はマネージド ストレージ アカウントの利用を推奨いたします。</p></div><hr><h2 id="【補足-2】マネージド-ストレージ-アカウント利用時の注意点"><a href="#【補足-2】マネージド-ストレージ-アカウント利用時の注意点" class="headerlink" title="【補足 2】マネージド ストレージ アカウント利用時の注意点"></a>【補足 2】マネージド ストレージ アカウント利用時の注意点</h2><p>Azure Blob Storage では、利用形態によってアクセス先の FQDN が異なります。</p><ul><li><p>カスタム ストレージ アカウント</p><p><code>&lt;storage-account&gt;.blob.core.windows.net</code></p></li><li><p>マネージド ストレージ アカウント</p><p><code>&lt;storage-account&gt;.z[00-50].blob.storage.azure.net</code></p></li></ul><p>上記の通り、マネージド ストレージ アカウントでは、通常のストレージ アカウントとは異なる FQDN が使用されます。<br>そのため、Azure ポータルに接続している端末で Firewall やプロキシをご利用の環境において、この FQDN への通信がブロックされている場合、<br>Azure ポータルからブート診断を確認できないことがございます。</p><p>マネージド ストレージ アカウントをご利用される際は、通常のストレージ アカウントとは異なる FQDN が使用される点について、<br>あらかじめご留意いただけますと幸いです。</p><p><img src="/blog/vm/boot-diagnostics/image006.png"></p><hr><h2 id="おわりに"><a href="#おわりに" class="headerlink" title="おわりに"></a>おわりに</h2><p>Azure VM において、「実行中」と表示されているにもかかわらず OS に接続できない場合、ゲスト OS が正常に起動していない No boot 状態である可能性が考えられます。</p><p>このような状況では、ブート診断を活用することで、OS の起動状況を迅速に把握でき、原因切り分けや復旧までの時間を短縮することが可能です。</p><p>特に、サポートへお問い合わせいただく際にも、ブート診断の情報があることで、初動調査をよりスムーズに進めることができます。</p><p>上述しましたようにブート診断の有効化は比較的設定も容易であり、トラブルシューティングにおいて非常に有用な機能ですので、平常時から有効化しておくことをおすすめいたします。</p><p>本記事が、障害発生時の切り分けや迅速な復旧の一助となれば幸いです。</p>]]>
+      <![CDATA[<p>こんにちは、Azure IaaS サポートの杉野です。<br>Azure VM に関する問い合わせの中でも、「VM に接続できない」、「VM が応答しない」といったトラブルは非常に多く寄せられます。</p><p>特に、Azure ポータル上では VM の状態が「実行中」と表示されているにもかかわらず、SSH や RDP で接続できないケースでは、原因の特定に時間を要することも少なくありません。<br>本記事では、このような事象の切り分けに有効な「ブート診断」について、その概要と設定方法をご紹介します。</p><p>ブート診断を活用することで、ゲスト OS が起動しているかどうかを迅速に確認でき、サポートへお問い合わせいただく前の切り分けをスムーズに進めることが可能となり、復旧までの時間短縮につながるケースが多くございます。</p><p>一方で、現場では「ブート診断を有効化していない」VM が多く、そもそも機能を利用されたことがないお客様も少なくありません。<br>そのため、本記事では、ブート診断の概要と設定方法を解説します。</p><p>本記事でご紹介するブート診断に関しまして、以下の公式ドキュメントも併せてご確認いただけますと幸いでございます。</p><blockquote><p>■ご参考：Azure のブート診断 - Azure Virtual Machines<br><a href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/boot-diagnostics">https://learn.microsoft.com/ja-jp/azure/virtual-machines/boot-diagnostics</a></p></blockquote><blockquote><p>■ご参考：Azure の VM のブート診断 - Virtual Machines<br><a href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics</a></p></blockquote><hr><ul><li><a href="./#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB%EF%BC%9AVM-%E3%81%AB%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E3%81%A8%E3%81%8D%E3%81%AB%E4%BD%95%E3%81%8C%E8%B5%B7%E3%81%8D%E3%81%A6%E3%81%84%E3%82%8B%E3%81%AE%E3%81%8B">はじめに：VM に接続できないときに何が起きているのか</a></li><li><a href="./#%E3%83%96%E3%83%BC%E3%83%88%E8%A8%BA%E6%96%AD%E3%81%A8%E3%81%AF%EF%BC%9F">ブート診断とは？</a></li><li><a href="./#%E3%83%96%E3%83%BC%E3%83%88%E8%A8%BA%E6%96%AD%E3%82%92%E6%9C%89%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95">ブート診断を有効化する方法</a></li><li><a href="./#%E3%80%90%E8%A3%9C%E8%B6%B3-1%E3%80%91%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0-%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8-%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9">【補足 1】カスタム ストレージ アカウント利用時の注意点</a></li><li><a href="./#%E3%80%90%E8%A3%9C%E8%B6%B3-2%E3%80%91%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89-%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8-%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E5%88%A9%E7%94%A8%E6%99%82%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9">【補足 2】マネージド ストレージ アカウント利用時の注意点</a></li><li><a href="./#%E3%81%8A%E3%82%8F%E3%82%8A%E3%81%AB">おわりに</a></li></ul><hr><h2 id="はじめに：VM-に接続できないときに何が起きているのか"><a href="#はじめに：VM-に接続できないときに何が起きているのか" class="headerlink" title="はじめに：VM に接続できないときに何が起きているのか"></a>はじめに：VM に接続できないときに何が起きているのか</h2><p>VM に対して SSH や RDP で接続できない場合、その原因は必ずしもネットワーク設定や認証設定とは限りません。<br>ゲスト OS 自体が正常に起動していないケースも多く存在します。</p><p>このような状態では、Azure ポータル上では VM の状態が「実行中」と表示されるため、利用者視点では「VM は起動している」と認識されがちです。</p><p>しかし実際には、ゲスト OS が起動途中でスタックしており、外部からの接続を受け付けられない状態に陥っている場合があります。<br>この状態は、一般に <strong>No boot 状態</strong>と呼ばれます。</p><p>No boot 状態に陥った場合、主に以下のような事象が確認されます。</p><ul><li>SSH 接続ができない &#x2F; RDP 接続ができない</li><li>Azure ポータル上では「実行中」と表示されるが、OS レベルの応答がない</li></ul><p>No boot 状態に至る原因は多岐にわたり、代表的なものとして以下が考えられます。</p><ul><li>OS レベルの問題（ファイル破損、ドライバ不整合、カーネルパニックなど）</li><li>構成上の問題（ディスク構成ミス、ネットワーク設定不備など）</li><li>Azure 側の要因（極稀ですが基盤障害など）</li></ul><p>原因が多岐にわたるため、サポート現場では、まずブート診断のスクリーンショットやシリアル ログを確認し、OS がどこまで起動しているかを把握するところから切り分けを開始します。</p><p>これにより、接続不可の原因が OS 起動以前の問題なのか、それともネットワークや認証設定など別の要因によるものなのかを判断することが可能になります。</p><hr><h2 id="ブート診断とは？"><a href="#ブート診断とは？" class="headerlink" title="ブート診断とは？"></a>ブート診断とは？</h2><p>ブート診断は、Azure VM の起動時に出力されるコンソール情報を <strong>スクリーンショットやログとして取得・保存する機能</strong> です。</p><p>対象 OS：Windows &#x2F; Linux どちらも対応  </p><ul><li>Windows：起動画面（ブートロゴ、修復モードなど）のスクリーンショット</li><li>Linux：コンソールログ（カーネルメッセージ、マウント失敗など）</li></ul><p>これにより、「OS 起動がどこまで進んでいるか」を視覚的・ログベースで確認することが可能となります。</p><p>正常に起動している場合、下記の通り、VM のコンソール上には Windows のログイン画面が表示されます。</p><p><img src="/blog/vm/boot-diagnostics/image001.png"></p><p>一方で、ゲスト OS が正常に起動されていない状態の場合には、起動途中のメッセージやエラー画面のまま停止しているケースが確認されます。</p><p><img src="/blog/vm/boot-diagnostics/image002.png"></p><p>表示される画面やエラー内容は状況により異なりますが、スクリーンショットから原因の絞り込みが可能な場合も多くあります。<br>また、ブート診断の結果から No boot 状態が確認された場合には、No boot 観点での調査へ迅速に移行することが可能となります。</p><p>Noboot 状態のトラブルシューティングに関しましては、下記の弊社ドキュメントやブログにお纏めしておりますので必要に応じてご確認をいただけますと幸いです。</p><blockquote><p>■ご参考：Azure 仮想マシンでのブート エラーのトラブルシューティング<br><a href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-error-troubleshoot">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-error-troubleshoot</a></p></blockquote><blockquote><p>■ご参考：Azure 上の Windows OS が起動しない場合の情報まとめ<br><a href="https://jpaztech.github.io/blog/vm/windows-noboot-summary/">https://jpaztech.github.io/blog/vm/windows-noboot-summary/</a></p></blockquote><p>また、一般的なブート エラーの例については、以下のドキュメントにも整理されておりますので、こちらもご参照いただけますと幸いです。</p><blockquote><p>■ご参考：Azure の VM のブート診断 - Virtual Machines<br><a href="https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics#common-boot-errors">https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/boot-diagnostics#common-boot-errors</a></p></blockquote><hr><h2 id="ブート診断を有効化する方法"><a href="#ブート診断を有効化する方法" class="headerlink" title="ブート診断を有効化する方法"></a>ブート診断を有効化する方法</h2><p>次に、Azure ポータルからブート診断を有効化する手順についてご説明します。</p><ol><li>ブート診断を有効化する Azure VM のページより、左側 [ヘルプ] – [ブート診断] を選択します。<br>※ ブート診断が設定されていない場合、「この仮想マシンにはブート診断が構成されていません。」と表示されます。</li></ol><p><img src="/blog/vm/boot-diagnostics/image003.png"></p><ol start="2"><li><p>画面上部の [設定] を選択します。</p></li><li><p>[マネージド ストレージ アカウントで有効にする] を選択し、画面下部の [適用] ボタンを押下します。<br>※ お客様管理のストレージ アカウントをご利用されたい場合、[カスタム ストレージアカウント アカウントで有効にする] を選択</p></li></ol><p><img src="/blog/vm/boot-diagnostics/image004.png"></p><p>以上でブート診断の有効化は完了です。</p><div class="alert is-info"><p class="alert-title">Note</p><p>有効化後、データが利用可能になるまでしばらく時間がかかることがあります。</p><p>数分後にページを更新いただき最初のデータが利用可能になるまでお待ちください。</p></div><hr><h2 id="【補足-1】カスタム-ストレージ-アカウント利用時の注意点"><a href="#【補足-1】カスタム-ストレージ-アカウント利用時の注意点" class="headerlink" title="【補足 1】カスタム ストレージ アカウント利用時の注意点"></a>【補足 1】カスタム ストレージ アカウント利用時の注意点</h2><p>ブート診断では、お客様管理のストレージ アカウント (カスタム ストレージアカウント アカウント) を指定し、利用することも可能です。<br>（上記手順 3 にて [カスタム ストレージアカウント アカウントで有効にする] を選択）</p><p>ただし、この場合は以下の点にご注意ください。</p><ul><li>ストレージ アカウントのファイアウォール設定により、ブート診断の画面が表示されないケースがあります</li></ul><p>ブート診断の画面が表示されず、下記のようなメッセージを確認された場合、ストレージ アカウントのネットワーク設定を一度確認することをおすすめします。</p><p><img src="/blog/vm/boot-diagnostics/image005.png"></p><blockquote><p>■ご参考：Azure Storage のファイアウォール規則<br><a href="https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security">https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security</a></p></blockquote><div class="alert is-info"><p class="alert-title">Note</p><p>このようにカスタム ストレージアカウント アカウン トをご利用いただく場合、構成確認が必要な場合がございますため、</p><p>特別な要件がない場合はマネージド ストレージ アカウントの利用を推奨いたします。</p></div><hr><h2 id="【補足-2】マネージド-ストレージ-アカウント利用時の注意点"><a href="#【補足-2】マネージド-ストレージ-アカウント利用時の注意点" class="headerlink" title="【補足 2】マネージド ストレージ アカウント利用時の注意点"></a>【補足 2】マネージド ストレージ アカウント利用時の注意点</h2><p>Azure Blob Storage では、利用形態によってアクセス先の FQDN が異なります。</p><ul><li><p>カスタム ストレージ アカウント</p><p><code>&lt;storage-account&gt;.blob.core.windows.net</code></p></li><li><p>マネージド ストレージ アカウント</p><p><code>&lt;storage-account&gt;.z[00-50].blob.storage.azure.net</code></p></li></ul><p>上記の通り、マネージド ストレージ アカウントでは、通常のストレージ アカウントとは異なる FQDN が使用されます。<br>そのため、Azure ポータルに接続している端末で Firewall やプロキシをご利用の環境において、この FQDN への通信がブロックされている場合、<br>Azure ポータルからブート診断を確認できないことがございます。</p><p>マネージド ストレージ アカウントをご利用される際は、通常のストレージ アカウントとは異なる FQDN が使用される点について、<br>あらかじめご留意いただけますと幸いです。</p><p><img src="/blog/vm/boot-diagnostics/image006.png"></p><hr><h2 id="おわりに"><a href="#おわりに" class="headerlink" title="おわりに"></a>おわりに</h2><p>Azure VM において、「実行中」と表示されているにもかかわらず OS に接続できない場合、ゲスト OS が正常に起動していない No boot 状態である可能性が考えられます。</p><p>このような状況では、ブート診断を活用することで、OS の起動状況を迅速に把握でき、原因切り分けや復旧までの時間を短縮することが可能です。</p><p>特に、サポートへお問い合わせいただく際にも、ブート診断の情報があることで、初動調査をよりスムーズに進めることができます。</p><p>上述しましたようにブート診断の有効化は比較的設定も容易であり、トラブルシューティングにおいて非常に有用な機能ですので、平常時から有効化しておくことをおすすめいたします。</p><p>本記事が、障害発生時の切り分けや迅速な復旧の一助となれば幸いです。</p>]]>
     </content>
     <id>https://jpaztech.github.io/blog/vm/boot-diagnostics/</id>
     <link href="https://jpaztech.github.io/blog/vm/boot-diagnostics/"/>
@@ -49,7 +49,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>]]>
     </summary>
     <title>Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
-    <updated>2026-04-07T07:16:24.396Z</updated>
+    <updated>2026-04-07T08:26:42.824Z</updated>
   </entry>
   <entry>
     <author>
@@ -67,7 +67,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-04-07T07:16:24.348Z</updated>
+    <updated>2026-04-07T08:26:42.775Z</updated>
   </entry>
   <entry>
     <author>
@@ -86,7 +86,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-04-07T07:16:24.342Z</updated>
+    <updated>2026-04-07T08:26:42.769Z</updated>
   </entry>
   <entry>
     <author>
@@ -103,7 +103,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-04-07T07:16:24.510Z</updated>
+    <updated>2026-04-07T08:26:42.937Z</updated>
   </entry>
   <entry>
     <author>
@@ -125,7 +125,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-04-07T07:16:24.700Z</updated>
+    <updated>2026-04-07T08:26:43.129Z</updated>
   </entry>
   <entry>
     <author>
@@ -142,7 +142,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-04-07T07:16:24.679Z</updated>
+    <updated>2026-04-07T08:26:43.108Z</updated>
   </entry>
   <entry>
     <author>
@@ -164,7 +164,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-04-07T07:16:24.370Z</updated>
+    <updated>2026-04-07T08:26:42.797Z</updated>
   </entry>
   <entry>
     <author>
@@ -182,7 +182,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-04-07T07:16:24.332Z</updated>
+    <updated>2026-04-07T08:26:42.759Z</updated>
   </entry>
   <entry>
     <author>
@@ -202,7 +202,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-04-07T07:16:24.604Z</updated>
+    <updated>2026-04-07T08:26:43.032Z</updated>
   </entry>
   <entry>
     <author>
@@ -222,7 +222,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-04-07T07:16:24.334Z</updated>
+    <updated>2026-04-07T08:26:42.761Z</updated>
   </entry>
   <entry>
     <author>
@@ -245,7 +245,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-04-07T07:16:24.517Z</updated>
+    <updated>2026-04-07T08:26:42.945Z</updated>
   </entry>
   <entry>
     <author>
@@ -263,7 +263,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-04-07T07:16:24.339Z</updated>
+    <updated>2026-04-07T08:26:42.766Z</updated>
   </entry>
   <entry>
     <author>
@@ -284,7 +284,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-04-07T07:16:24.382Z</updated>
+    <updated>2026-04-07T08:26:42.810Z</updated>
   </entry>
   <entry>
     <author>
@@ -302,7 +302,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-04-07T07:16:24.443Z</updated>
+    <updated>2026-04-07T08:26:42.870Z</updated>
   </entry>
   <entry>
     <author>
@@ -320,7 +320,7 @@
 <p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 401 もしくは 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事]]>
     </summary>
     <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</title>
-    <updated>2026-04-07T07:16:24.491Z</updated>
+    <updated>2026-04-07T08:26:42.919Z</updated>
   </entry>
   <entry>
     <author>
@@ -338,7 +338,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の]]>
     </summary>
     <title>Azure 仮想ハブに Azure Firewall を配置する構成について</title>
-    <updated>2026-04-07T07:16:24.439Z</updated>
+    <updated>2026-04-07T08:26:42.866Z</updated>
   </entry>
   <entry>
     <author>
@@ -359,7 +359,7 @@
 <p>VWAN はハブ＆スポーク V]]>
     </summary>
     <title>VirtualWAN 活用について</title>
-    <updated>2026-04-07T07:16:24.440Z</updated>
+    <updated>2026-04-07T08:26:42.868Z</updated>
   </entry>
   <entry>
     <author>
@@ -376,7 +376,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>今年も日本マイクロソフトの社員がお届けする、 <a href="https://qiita.com/advent-calendar/2024/microsoft-azure-tech">Microsof]]>
     </summary>
     <title>高速ネットワーク未対応・対応済・必須の VM サイズについて</title>
-    <updated>2026-04-07T07:16:24.827Z</updated>
+    <updated>2026-04-07T08:26:43.257Z</updated>
   </entry>
   <entry>
     <author>
@@ -399,6 +399,6 @@
 </blockquote>]]>
     </summary>
     <title>Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</title>
-    <updated>2026-04-07T07:16:24.387Z</updated>
+    <updated>2026-04-07T08:26:42.815Z</updated>
   </entry>
 </feed>
