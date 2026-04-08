@@ -37,6 +37,27 @@
     <author>
       <name>Japan Azure IaaS Core Support Team</name>
     </author>
+    <category term="Archive" scheme="https://jpaztech.github.io/blog/tags/Archive/"/>
+    <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
+    <category term="Load Balancer" scheme="https://jpaztech.github.io/blog/tags/Load-Balancer/"/>
+    <content>
+      <![CDATA[<p>こんにちは、Azure サポートチームの檜山です。</p><p>今回は Azure ロードバランサーの利用にあたり、よくあるお問い合わせで代表的なものについてご紹介させていただきます。</p><p>Azure ロードバランサー利用時に想定した動作ができないといった時に制限事項にあてはまっている場合がございますので、そのような時はご一読いただけますと幸いです。</p><p>また、Azure ロードバランサーを経由した通信のトラブルシューティングについては以下もご参照ください。</p><p><a href="https://jpaztech.github.io/blog/archive/loadbalancer-troubleshooting/">ロードバランサー経由での通信ができない場合のチェックポイント</a></p><h2 id="Azure-ロードバランサー-内部-プライベートIP-外部-パブリック-IP-利用時のよくあるお問合せ"><a href="#Azure-ロードバランサー-内部-プライベートIP-外部-パブリック-IP-利用時のよくあるお問合せ" class="headerlink" title="Azure ロードバランサー (内部 [プライベートIP] &#x2F; 外部 [パブリック IP]) 利用時のよくあるお問合せ"></a>Azure ロードバランサー (内部 [プライベートIP] &#x2F; 外部 [パブリック IP]) 利用時のよくあるお問合せ</h2><p>Azure ロードバランサー利用時のよくあるお問合せとして以下のようなものがあります。</p><ul><li><a href="#%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E3%81%AE%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E3%83%97%E3%83%BC%E3%83%AB%E3%81%AB-VM-%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84">ロードバランサーのバックエンドプールに VM を追加できない</a></li><li><a href="#%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E3%81%AE%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E3%83%97%E3%83%BC%E3%83%AB%E3%81%AB%E8%BF%BD%E5%8A%A0%E3%81%97%E3%81%9F%E3%82%89%E5%A4%96%E9%83%A8%E3%81%B8%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%8F%E3%81%AA%E3%81%A3%E3%81%9F">ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった</a></li><li><a href="#%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89%E3%83%97%E3%83%BC%E3%83%AB%E3%81%AB%E6%89%80%E5%B1%9E%E3%81%97%E3%81%9F-VM-%E3%81%8B%E3%82%89%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E3%81%AE%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%83%89-IP-%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84">バックエンドプールに所属した VM からロードバランサーのフロントエンド IP アドレスにアクセスできない</a></li><li><a href="#Standard-SKU-%E3%81%AE%E5%A4%96%E9%83%A8%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E3%81%A7%E6%AD%A3%E5%B8%B8%E6%80%A7%E3%83%97%E3%83%AD%E3%83%BC%E3%83%96%E3%81%AF%E6%88%90%E5%8A%9F%E3%81%99%E3%82%8B%E3%81%8C%E3%80%81%E8%B2%A0%E8%8D%B7%E5%88%86%E6%95%A3%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84">Standard SKU の外部ロードバランサーで正常性プローブは成功するが、負荷分散ができない</a></li><li><a href="#%E3%83%AD%E3%83%BC%E3%83%89%E3%83%90%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%BC%E3%81%AE%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%83%89-IP-%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AE%E9%80%81%E4%BF%A1%E5%85%83-NAT-SNAT-%E3%81%AB%E3%82%88%E3%82%8B%E5%A4%96%E9%83%A8%E6%8E%A5%E7%B6%9A%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84">ロードバランサーのフロントエンド IP アドレスの送信元 NAT (SNAT) による外部接続ができない</a></li></ul><p>それぞれについて以下に詳細を記載します。</p><h2 id="ロードバランサーのバックエンドプールに-VM-を追加できない"><a href="#ロードバランサーのバックエンドプールに-VM-を追加できない" class="headerlink" title="ロードバランサーのバックエンドプールに VM を追加できない"></a>ロードバランサーのバックエンドプールに VM を追加できない</h2><p>こちらの事象についてよくある原因としては以下があります。</p><ol><li><strong>1 台の VM を複数のロードバランサーに追加しようとしている</strong></li><li><strong>ロードバランサーと VM に付与されているパブリック IP アドレスの SKU が異なる</strong></li></ol><p>1 についてですが、Azure ロードバランサーは 1 台の VM を複数の外部ロードバランサーまたは複数の内部ロードバランサーに追加することができません。</p><p>Azure ロードバランサーに複数のフロントエンド IP アドレスを設定することで回避できる場合がありますので、ご検討ください。</p><p>また、1 台 の VM を 1 つの外部ロードバランサーと 1 つの内部ロードバランサーに所属し、負荷分散することはできます。(LB の SKU は合わせる必要があります)</p><p><img src="/blog/archive/azurelb-tips/OneVmTwoElb.png"><br><img src="/blog/archive/azurelb-tips/OneVMOneIlbOneElb.png"></p><p>2 についてですが、VM のパブリック IP アドレスが Basic SKU であった場合、Standard SKU のロードバランサーのバックエンドには追加することができません (SKU が反対の場合も同様)。</p><p>そのため、そのような構成であった場合、どちらかの SKU を変更し、SKU を合わせる必要があります。</p><p><img src="/blog/archive/azurelb-tips/LbSku.png"></p><h2 id="ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった"><a href="#ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった" class="headerlink" title="ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった"></a>ロードバランサーのバックエンドプールに追加したら外部へ接続できなくなった</h2><p>こちらの事象についてよくある原因としては以下があります。</p><ol><li><strong>Standard SKU の内部ロードバランサーのバックエンドプールに所属している</strong></li></ol><p><img src="/blog/archive/azurelb-tips/IlbSnat.png"></p><p>Standard SKU の内部ロードバランサーの場合、以下のどちらかの設定を行いパブリック IP アドレス経由で外部と通信できるようにする必要があります。</p><ol><li>VM にパブリック IP アドレスを付与する</li><li>VM を外部ロードバランサーにも追加する</li></ol><h2 id="バックエンドプールに所属した-VM-からロードバランサーのフロントエンド-IP-アドレスにアクセスできない"><a href="#バックエンドプールに所属した-VM-からロードバランサーのフロントエンド-IP-アドレスにアクセスできない" class="headerlink" title="バックエンドプールに所属した VM からロードバランサーのフロントエンド IP アドレスにアクセスできない"></a>バックエンドプールに所属した VM からロードバランサーのフロントエンド IP アドレスにアクセスできない</h2><p>こちらの事象についてよくある原因としては以下があります。</p><ol><li><strong>内部ロードバランサーのバックエンドに所属している VM から、その VM が所属しているロードバランサーのフロントエンド IP アドレスにアクセスしている</strong></li></ol><p>内部ロードバランサーの動作として、自分自身がバックエンドプールとして所属するロードバランサーのフロントエンド IP アドレスに接続した際は、送信パケットと受信パケットで不一致が発生し、自ノードへはアクセスできない動作となります。</p><p>このような要件があった場合、Proxy を経由させる等で回避できる場合がございますのでご検討ください。</p><p><img src="/blog/archive/azurelb-tips/BackendToFrontend.png"></p><h2 id="Standard-SKU-の外部ロードバランサーで正常性プローブは成功するが、負荷分散ができない"><a href="#Standard-SKU-の外部ロードバランサーで正常性プローブは成功するが、負荷分散ができない" class="headerlink" title="Standard SKU の外部ロードバランサーで正常性プローブは成功するが、負荷分散ができない"></a>Standard SKU の外部ロードバランサーで正常性プローブは成功するが、負荷分散ができない</h2><p>こちらの事象についてよくある原因としては以下があります。</p><ol><li><strong>NIC またはサブネットに NSG を適用していない</strong></li></ol><p>Standard SKU の外部ロードバランサーでは NSG の受信規則によって、負荷分散用のポートを許可しない限り、トラフィックがホワイトリストとして登録されず負荷分散の通信が許可されません。</p><p><img src="/blog/archive/azurelb-tips/LbWithNsg.png"></p><p>ただし、正常性プローブについては NSG が適用されていなくても成功する動作となります。</p><p>メトリック等で確認した際に正常性プローブは成功しているが、負荷分散がきないといった事象の場合、NSG の受信規則によって、負荷分散用のポートを許可して事象が改善するかをご確認ください。</p><h2 id="ロードバランサーのフロントエンド-IP-アドレスの送信元-NAT-SNAT-による外部接続ができない"><a href="#ロードバランサーのフロントエンド-IP-アドレスの送信元-NAT-SNAT-による外部接続ができない" class="headerlink" title="ロードバランサーのフロントエンド IP アドレスの送信元 NAT (SNAT) による外部接続ができない"></a>ロードバランサーのフロントエンド IP アドレスの送信元 NAT (SNAT) による外部接続ができない</h2><p>こちらの事象についてよくある原因としては以下があります。</p><ol><li><strong>VM が所属するバックエンドプールが負荷分散規則に紐づけられていない</strong></li><li><strong>VM にパブリック IP アドレスが付与されている</strong></li><li><strong>外部ロードバランサーではなく内部ロードバランサーを利用している</strong></li></ol><p>1 についてですが、外部への送信接続時の SNAT はバックエンドプールを負荷分散規則に紐づけていないと利用することができません。</p><p>Standard SKU の場合は、アウトバウンド規則を利用することもできます。</p><ul><li>Load Balancer のアウトバウンド規則</li></ul><p><a href="https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-rules-overview">https://docs.microsoft.com/ja-jp/azure/load-balancer/load-balancer-outbound-rules-overview</a></p><p><img src="/blog/archive/azurelb-tips/LbHasNoRule.png"></p><p>2 についてですが、VM にパブリック IP アドレスが付与されている場合はそのパブリック IP アドレスにて SNAT されるため、ロードバランサーのフロントエンド IP アドレスでは SNAT されません。</p><p><img src="/blog/archive/azurelb-tips/VmHasPip.png"></p><p>3 についてですが、内部ロードバランサーの場合は送信接続時にフロントエンド IP アドレスで SNAT されない動作となります</p><p><img src="/blog/archive/azurelb-tips/IlbDoesntSnat.png"></p><h2 id="ロードバランサーのバックエンド-プールに所属する-VM-で-Live-Migration-が発生し、その後通信に影響が生じる場合がある"><a href="#ロードバランサーのバックエンド-プールに所属する-VM-で-Live-Migration-が発生し、その後通信に影響が生じる場合がある" class="headerlink" title="ロードバランサーのバックエンド プールに所属する VM で Live Migration が発生し、その後通信に影響が生じる場合がある"></a>ロードバランサーのバックエンド プールに所属する VM で Live Migration が発生し、その後通信に影響が生じる場合がある</h2><p>ロードバランサー配下の仮想マシンで Live Migration が発生した際、Live Migration の発生前から確立されていた通信について、その後の接続状態や通信の継続可否に影響が生じる場合があります。</p><p>本挙動は現行のロードバランサーの制約に基づくものでありますが、すべてのアプリケーションが影響を受けるものではありません。</p><p>ただし、Live Migration の前後で同一のセッションを継続して利用し続けるような構成では、通信が正常に継続しない可能性があります。</p><p>以上、参考になれば幸いです。</p>]]>
+    </content>
+    <id>https://jpaztech.github.io/blog/archive/azurelb-tips/</id>
+    <link href="https://jpaztech.github.io/blog/archive/azurelb-tips/"/>
+    <published>2026-04-07T07:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>こんにちは、Azure サポートチームの檜山です。</p>
+<p>今回は Azure ロードバランサーの利用にあたり、よくあるお問い合わせで代表的なものについてご紹介させていただきます。</p>
+<p>Azure ロードバランサー利用時に想定した動作ができないといった時に制]]>
+    </summary>
+    <title>Azure ロードバランサー利用時の注意点</title>
+    <updated>2026-04-08T04:45:33.120Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Japan Azure IaaS Core Support Team</name>
+    </author>
     <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
     <category term="VPN Gateway" scheme="https://jpaztech.github.io/blog/tags/VPN-Gateway/"/>
     <content>
@@ -49,7 +70,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>]]>
     </summary>
     <title>Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
-    <updated>2026-04-07T08:26:42.824Z</updated>
+    <updated>2026-04-08T04:45:33.286Z</updated>
   </entry>
   <entry>
     <author>
@@ -67,7 +88,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-04-07T08:26:42.775Z</updated>
+    <updated>2026-04-08T04:45:33.234Z</updated>
   </entry>
   <entry>
     <author>
@@ -86,7 +107,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-04-07T08:26:42.769Z</updated>
+    <updated>2026-04-08T04:45:33.228Z</updated>
   </entry>
   <entry>
     <author>
@@ -103,7 +124,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-04-07T08:26:42.937Z</updated>
+    <updated>2026-04-08T04:45:33.409Z</updated>
   </entry>
   <entry>
     <author>
@@ -125,7 +146,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-04-07T08:26:43.129Z</updated>
+    <updated>2026-04-08T04:45:33.617Z</updated>
   </entry>
   <entry>
     <author>
@@ -142,7 +163,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-04-07T08:26:43.108Z</updated>
+    <updated>2026-04-08T04:45:33.595Z</updated>
   </entry>
   <entry>
     <author>
@@ -164,7 +185,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-04-07T08:26:42.797Z</updated>
+    <updated>2026-04-08T04:45:33.257Z</updated>
   </entry>
   <entry>
     <author>
@@ -182,7 +203,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-04-07T08:26:42.759Z</updated>
+    <updated>2026-04-08T04:45:33.217Z</updated>
   </entry>
   <entry>
     <author>
@@ -202,7 +223,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-04-07T08:26:43.032Z</updated>
+    <updated>2026-04-08T04:45:33.512Z</updated>
   </entry>
   <entry>
     <author>
@@ -222,7 +243,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-04-07T08:26:42.761Z</updated>
+    <updated>2026-04-08T04:45:33.219Z</updated>
   </entry>
   <entry>
     <author>
@@ -245,7 +266,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-04-07T08:26:42.945Z</updated>
+    <updated>2026-04-08T04:45:33.417Z</updated>
   </entry>
   <entry>
     <author>
@@ -263,7 +284,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-04-07T08:26:42.766Z</updated>
+    <updated>2026-04-08T04:45:33.224Z</updated>
   </entry>
   <entry>
     <author>
@@ -284,7 +305,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-04-07T08:26:42.810Z</updated>
+    <updated>2026-04-08T04:45:33.271Z</updated>
   </entry>
   <entry>
     <author>
@@ -302,7 +323,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-04-07T08:26:42.870Z</updated>
+    <updated>2026-04-08T04:45:33.336Z</updated>
   </entry>
   <entry>
     <author>
@@ -320,7 +341,7 @@
 <p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 401 もしくは 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事]]>
     </summary>
     <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</title>
-    <updated>2026-04-07T08:26:42.919Z</updated>
+    <updated>2026-04-08T04:45:33.389Z</updated>
   </entry>
   <entry>
     <author>
@@ -338,7 +359,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の]]>
     </summary>
     <title>Azure 仮想ハブに Azure Firewall を配置する構成について</title>
-    <updated>2026-04-07T08:26:42.866Z</updated>
+    <updated>2026-04-08T04:45:33.331Z</updated>
   </entry>
   <entry>
     <author>
@@ -359,7 +380,7 @@
 <p>VWAN はハブ＆スポーク V]]>
     </summary>
     <title>VirtualWAN 活用について</title>
-    <updated>2026-04-07T08:26:42.868Z</updated>
+    <updated>2026-04-08T04:45:33.333Z</updated>
   </entry>
   <entry>
     <author>
@@ -376,29 +397,6 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>今年も日本マイクロソフトの社員がお届けする、 <a href="https://qiita.com/advent-calendar/2024/microsoft-azure-tech">Microsof]]>
     </summary>
     <title>高速ネットワーク未対応・対応済・必須の VM サイズについて</title>
-    <updated>2026-04-07T08:26:43.257Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Japan Azure IaaS Core Support Team</name>
-    </author>
-    <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
-    <category term="DNS" scheme="https://jpaztech.github.io/blog/tags/DNS/"/>
-    <content>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの杜です。</p><p>Azure DNS では、仮想ネットワーク内の名前解決結果を上書きできる<a href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-privatednszone">プライベート DNS ゾーン</a>というサービスをご提供しており、<br><a href="https://learn.microsoft.com/ja-jp/azure/private-link/private-endpoint-overview">プライベート エンドポイント</a>の名前解決などと併用する場合が多いです。</p><p>このブログでは、プライベート DNS ゾーンのベスト プラクティス、及びよく頂いているお問い合わせをご紹介させて頂きます。</p><div class="alert is-info"><p class="alert-title">Note</p><p> プライベート DNS ゾーンの機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを <a href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback">パブリック DNS にフォールバックする機能 (resolution policy)</a> が実装されたため、本ブログの「回避策」に追記しました。</p></div><span id="more"></span><hr><h3 id="シナリオ"><a href="#シナリオ" class="headerlink" title="シナリオ"></a>シナリオ</h3><ul><li>仮想ネットワーク上のリソース (VM) がプライベート エンドポイント経由でストレージ アカウントに接続する</li><li>仮想ネットワークでは Azure 既定の DNS (168.63.129.16) を DNS サーバーとして指定している</li><li>プライベート エンドポイント経由でストレージ アカウント<code>storagebloga</code>へアクセスするために、プライベート DNS ゾーン <code>privatelink.blob.core.windows.net</code> をクライアント VM の仮想ネットワークにリンクした</li><li>プライベート DNS ゾーン <code>privatelink.blob.core.windows.net</code> に <code>storagebloga IN A ＜プライベート エンドポイント IP＞</code> のレコードを登録し、プライベート エンドポイントの名前解決が成功している</li><li>ただし、それ以外の一部ストレージ アカウントの名前解決を行ったところ、空の結果 (NXDOMAIN) が返されてしまい、接続も失敗している</li><li>すべてストレージ アカウントの名前解決が失敗するわけではなく、問題なく接続できる場合もある</li><li>ストレージ アカウントの他に、AppService や Azure SQL Database など他の Azure PaaS サービスにも類似の事象がある</li></ul><h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>発生原因を理解するために、まず全体的な名前解決フローを説明させて頂きます。</p><p>ストレージ アカウントなどの Azure PaaS サービスでは、プライベート エンドポイントの有効化状況により、名前解決フローが異なります。<br>プライベート エンドポイントが無効化されているリソースでは、名前解決フローが以下となります。<code>privatelink.blob.core.windows.net</code> のドメインを経由しません。<br><img src="/blog/network/private-dns-zone-faq/01.png"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント無効化時の名前解決フロー</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storagebloga.blob.core.windows.net. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storagebloga.blob.core.windows.net. 20 IN CNAME blob.tyo22prdstr07a.store.core.windows.net.</span><br><span class="line">blob.tyo22prdstr07a.store.core.windows.net. 60 IN A 20.150.85.196</span><br></pre></td></tr></table></figure><p>プライベート エンドポイントを有効化すると、<code>storagebloga.blob.core.windows.net</code> の CNAME 先が <code>privatelink.blob.core.windows.net</code> ドメインに変更される動作となります。<br>クライアントが存在する仮想ネットワークがプライベート DNS ゾーンにリンクしていない場合、名前解決結果は変わりません。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント有効化時の名前解決フロー (プライベート DNS ゾーンのリンクなし)</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storagebloga.blob.core.windows.net. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storagebloga.blob.core.windows.net. 60 IN CNAME storagebloga.privatelink.blob.core.windows.net.</span><br><span class="line">storagebloga.privatelink.blob.core.windows.net. 60 IN CNAME blob.tyo22prdstr07a.store.core.windows.net.</span><br><span class="line">blob.tyo22prdstr07a.store.core.windows.net. 17 IN A 20.150.85.196</span><br></pre></td></tr></table></figure><p>プライベート エンドポイントへ接続させるには、お客様側にプライベート DNS ゾーン <code>privatelink.blob.core.windows.net</code> に A レコードを作成し、仮想ネットワークにリンクすることで、該当 CNAME 先を上書きして意図した名前解決が実現できています。<br><img src="/blog/network/private-dns-zone-faq/02.png"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時の名前解決フロー</span><br><span class="line">※10.0.3.4 がプライベート エンドポイントの IP アドレスとなります。</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storagebloga.blob.core.windows.net. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storagebloga.blob.core.windows.net. 60 IN CNAME storagebloga.privatelink.blob.core.windows.net.</span><br><span class="line">storagebloga.privatelink.blob.core.windows.net. 60 IN A 10.0.3.4</span><br></pre></td></tr></table></figure><p>プライベート DNS ゾーンをリンクすると、Azure DNS が該当 DNS ゾーン <code>privatelink.blob.core.windows.net</code> の権威サーバーとなります。<br>そのドメインへの名前解決要求を受信した時に、インターネット経由で再帰的問い合わせを行わずに、プライベート DNS ゾーンに登録されているレコードを権威結果として応答するようになります。<br>その場合、プライベート DNS ゾーンに <code>storagebloga</code> 以外のレコードが登録されていないため、以下のように、NXDOMAIN が応答されてしまいます。<br><img src="/blog/network/private-dns-zone-faq/03.png"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時に、別のリソース（プライベート エンドポイント有効化）の名前解決フロー</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storageblogbwithpe.blob.core.windows.net. INA</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storageblogbwithpe.blob.core.windows.net. 60 IN CNAMEstorageblogbwithpe.privatelink.blob.core.windows.net.</span><br></pre></td></tr></table></figure><p>また、各ストレージ アカウントの構成次第で、プライベート エンドポイントが有効化されていない場合があります。<br>その場合の名前解決フローでは <code>privatelink.blob.core.windows.net</code> のドメインが存在しないため、プライベート DNS ゾーン <code>privatelink.blob.core.windows.net</code> をリンクしても影響がありません。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">※プライベート エンドポイント有効化、プライベート DNS ゾーン使用時に、別のリソース（プライベート エンドポイント無効化）の名前解決フロー</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;storageblogcwithoutpe.blob.core.windows.net. IN A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">storageblogcwithoutpe.blob.core.windows.net. 20 IN CNAME blob.tyo22prdstr07a.store.core.windows.net.</span><br><span class="line">blob.tyo22prdstr07a.store.core.windows.net. 60 IN A 20.150.85.196</span><br></pre></td></tr></table></figure><h3 id="回避策"><a href="#回避策" class="headerlink" title="回避策"></a>回避策</h3><div class="alert is-info"><p class="alert-title">Note</p><p> プライベート DNS ゾーンの機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを <a href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback">パブリック DNS にフォールバックする機能 (resolution policy)</a> が実装されたことで、回避策が追加されました。</p></div><h4 id="回避策-1"><a href="#回避策-1" class="headerlink" title="回避策 1"></a>回避策 1</h4><p>追加機能の<a href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback">パブリック DNS にフォールバックする機能 (resolution policy)</a>を有効化することで、上述したシナリオを回避します。<br>プライベート DNS ゾーンのパブリック DNS にフォールバックする機能は、プライベート エンドポイントを対象とした priavatelink サブドメインを対象に動作します。<br>この機能は、プライベート DNS ゾーンを仮想ネットワークとリンクする時に選択が可能です。また、既存の privatelink サブドメインのプライベート DNS ゾーンにおいても、リンク設定を変更することで有効化可能です。</p><p>この機能の動作としては、プライベート DNS ゾーンが自ゾーンに存在しないレコードを確認した際に NXDOMAIN を応答しますが、この機能が有効化されていると、Azure の DNS はパブリック DNS に DNS クエリを再試行します。この動作により上述したシナリオが回避できます。<br><img src="/blog/network/private-dns-zone-faq/04-1.png"></p><h4 id="回避策-2"><a href="#回避策-2" class="headerlink" title="回避策 2"></a>回避策 2</h4><p>特定のストレージ アカウントの名前解決のみをプライベート DNS ゾーンで実現し、それ以外の名前解決への影響を回避したい場合は、<code>privatelink.blob.core.windows.net</code> ではなく、<br><code>storagebloga.privatelink.blob.core.windows.net</code> のプライベート DNS ゾーンを作成し、頂点（APEX）レコード <code>@ IN A ＜プライベート エンドポイント IP＞</code> を構成すれば実現できます。<br>そうしますと、Azure DNS の権威ドメインが <code>storagebloga.privatelink.blob.core.windows.net</code> のみとなり、それ以外 <code>storageblogcwithpe.privatelink.blob.core.windows.net</code> の名前解決要求を受けると、<br>インターネット経由で再帰的問い合わせを行い、プライベート DNS ゾーンに影響されなくなります。<br><img src="/blog/network/private-dns-zone-faq/04.png"></p><p>この回避策 2 を選択した場合、対象となる複数のストレージ アカウントが存在する場合は、ストレージ アカウントの名前ごとにプライベート DNS ゾーンを用意する必要がありますので、ご注意ください。</p><h1 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h1><h2 id="プライベート-DNS-ゾーンのレコードを変更する時に、リンク先の仮想ネットワークの名前解決が影響されるのでしょうか。"><a href="#プライベート-DNS-ゾーンのレコードを変更する時に、リンク先の仮想ネットワークの名前解決が影響されるのでしょうか。" class="headerlink" title="プライベート DNS ゾーンのレコードを変更する時に、リンク先の仮想ネットワークの名前解決が影響されるのでしょうか。"></a>プライベート DNS ゾーンのレコードを変更する時に、リンク先の仮想ネットワークの名前解決が影響されるのでしょうか。</h2><p>変更対象以外のレコードには影響がなく、該当プライベート DNS ゾーンで一時的に名前解決ができなくなるといった事象は発生しませんので、ご安心ください。</p><h2 id="東日本リージョンに本番環境を構築しており、プライベート-DNS-ゾーンをリンクし、仮想ネットワークに仮想マシンなどを運用しています。リージョン-レベルの冗長化を取るために、西日本リージョンに同じ構成を取りたいですが、プライベート-DNS-ゾーンもリージョンごとに作成する必要がありますでしょうか。"><a href="#東日本リージョンに本番環境を構築しており、プライベート-DNS-ゾーンをリンクし、仮想ネットワークに仮想マシンなどを運用しています。リージョン-レベルの冗長化を取るために、西日本リージョンに同じ構成を取りたいですが、プライベート-DNS-ゾーンもリージョンごとに作成する必要がありますでしょうか。" class="headerlink" title="東日本リージョンに本番環境を構築しており、プライベート DNS ゾーンをリンクし、仮想ネットワークに仮想マシンなどを運用しています。リージョン レベルの冗長化を取るために、西日本リージョンに同じ構成を取りたいですが、プライベート DNS ゾーンもリージョンごとに作成する必要がありますでしょうか。"></a>東日本リージョンに本番環境を構築しており、プライベート DNS ゾーンをリンクし、仮想ネットワークに仮想マシンなどを運用しています。リージョン レベルの冗長化を取るために、西日本リージョンに同じ構成を取りたいですが、プライベート DNS ゾーンもリージョンごとに作成する必要がありますでしょうか。</h2><p>プライベート DNS ゾーンを含め、Azure DNS は 100% の <a href="https://azure.microsoft.com/ja-jp/updates/azuredns100sla/">SLA</a> でご提供しているため、冗長化の観点ではリージョンごとに作成する必要はありません。</p><p>ただし、もし各リージョンの IP アドレス構成が異なり、同じ FQDN に対し、リージョンごとに名前解決結果を分けたい場合は、１つのプライベート DNS ゾーンでは実現できませんので、各リージョンごとにリソース グループを作成し、複数のプライベート DNS ゾーンの構成をご検討ください。</p><hr>]]>
-    </content>
-    <id>https://jpaztech.github.io/blog/network/private-dns-zone-faq/</id>
-    <link href="https://jpaztech.github.io/blog/network/private-dns-zone-faq/"/>
-    <published>2024-11-27T08:30:00.000Z</published>
-    <summary>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの杜です。</p>
-<p>Azure DNS では、仮想ネットワーク内の名前解決結果を上書きできる<a href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-privatednszone">プライベート DNS ゾーン</a>というサービスをご提供しており、<br><a href="https://learn.microsoft.com/ja-jp/azure/private-link/private-endpoint-overview">プライベート エンドポイント</a>の名前解決などと併用する場合が多いです。</p>
-<p>このブログでは、プライベート DNS ゾーンのベスト プラクティス、及びよく頂いているお問い合わせをご紹介させて頂きます。</p>
-<blockquote>
-<p>[!NOTE] プライベート DNS ゾーンの機能として、privatelink のプライベート DNS ゾーンを対象に、自ゾーンに存在しない DNS レコードを <a href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback">パブリック DNS にフォールバックする機能 (resolution policy)</a> が実装されたため、本ブログの「回避策」に追記しました。</p>
-</blockquote>]]>
-    </summary>
-    <title>Azure プライベート DNS ゾーンに関するベスト プラクティス及びよくあるお問合せ</title>
-    <updated>2026-04-07T08:26:42.815Z</updated>
+    <updated>2026-04-08T04:45:33.757Z</updated>
   </entry>
 </feed>
