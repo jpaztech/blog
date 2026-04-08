@@ -1,6 +1,7 @@
 ---
-title: Azure Windows VM のビルトイン Administrator アカウントの名前変更および削除について
+title: Azure Windows VM のビルトイン Administrator アカウントの名前変更および無効化について
 date: 2022-12-22 00:00:00
+updated: 2026-04-09 12:00:00
 tags:
   - VM
   - Windows
@@ -12,7 +13,9 @@ Azure VM (Windows OS) 作成時には、OS 内で “ビルトイン Administrat
 本記事ではそのユーザー名を OS 上から変更する方法および関連の留意事項についてご案内します。  
 
 > [!TIP]
-> こちらの記事では変更について解説させていただいておりますが、別のアカウントを作成して、VM 作成時のビルトイン Administrator アカウントを削除することも可能です。  
+> こちらの記事では変更について解説させていただいておりますが、別のアカウントを作成して、VM 作成時のビルトイン Administrator アカウントを無効化することも可能です。  
+> なお、ビルトイン Administrator アカウントは以下のドキュメントに記載の通り削除は叶いませんものとなります。  
+> [https://learn.microsoft.com/ja-jp/windows/security/identity-protection/access-control/local-accounts#administrator](https://learn.microsoft.com/ja-jp/windows/security/identity-protection/access-control/local-accounts#administrator)
 
 ---
 
@@ -156,7 +159,7 @@ WMIC useraccount get name,sid
 net user <新しいローカル管理者アカウント名> /active:no
 ```
 
-※ 本手順では無効の方法を案内しておりますが、今後ご利用されない場合は削除していただいても問題ありません。
+※ 本手順では無効の方法を案内しておりますが、今後新しいローカル管理者アカウントをご利用されない場合は削除していただいても問題ありません。
 
 ## 管理者アカウント名の注意事項
 
