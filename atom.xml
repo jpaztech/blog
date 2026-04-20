@@ -10,7 +10,26 @@
   <rights>All rights reserved 2026, Japan Azure IaaS Core Support Team</rights>
   <subtitle>日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</subtitle>
   <title>Japan Azure IaaS Core Support Blog</title>
-  <updated>2026-04-07T08:30:00.000Z</updated>
+  <updated>2026-04-20T03:45:50.411Z</updated>
+  <entry>
+    <author>
+      <name>Japan Azure IaaS Core Support Team</name>
+    </author>
+    <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
+    <category term="DNS" scheme="https://jpaztech.github.io/blog/tags/DNS/"/>
+    <category term="Azure Private DNS" scheme="https://jpaztech.github.io/blog/tags/Azure-Private-DNS/"/>
+    <content>
+      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの箕輪です。<br>プライベート DNS ゾーンは、仮想ネットワーク上で任意のゾーン名やプライベート エンドポイントで利用する privatelink サブドメインの名前解決を提供する DNS サービスで、仮想ネットワーク上に展開されたリソースの名前解決に影響を与えます。<br>その中で、内部 Azure API Management を利用しているシナリオで、プライベート DNS ゾーンの構成によって Azure サービスへの名前解決が意図せず失敗し接続ができない事象が発生し得ます。このブログでは、要因と考えられる対応策についてご紹介します。</p><span id="more"></span><h2 id="このブログで紹介するシナリオ"><a href="#このブログで紹介するシナリオ" class="headerlink" title="このブログで紹介するシナリオ"></a>このブログで紹介するシナリオ</h2><p><a href="https://learn.microsoft.com/ja-jp/azure/api-management/api-management-key-concepts">Azure API Management (APIM)</a> とは、あらゆる環境にわたる API のためのハイブリッドなマルチクラウド管理プラットフォームです。 APIM は Azure ユーザーだけではなく、各 Azure サービスの内部コンポーネントとしても組み合わせて利用されています。</p><p>APIM のエンドポイントは、インターネット上に公開されるパブリック エンドポイントの他、仮想ネットワーク上のリソースとしてプライベート エンドポイントや、外部非公開の API エンドポイントとして <a href="https://learn.microsoft.com/ja-jp/azure/api-management/api-management-using-with-internal-vnet">内部 APIM</a> などが構成できます。この中で内部 APIM を利用する時、APIM の各エンドポイントへの接続はパブリック IP アドレスではなくプライベート IP アドレスで接続する必要があるため、仮想ネットワーク上で名前解決を提供するプライベート DNS ゾーンとの組み合わせにて構成する内容が公開情報に記載されています。</p><p>この内部 APIM の構成時に、プライベート DNS ゾーンとして azure-api.net を指定した構成では、Azure PaaS への接続が失敗する事象が発生する可能性があります。</p><h2 id="発生要因"><a href="#発生要因" class="headerlink" title="発生要因"></a>発生要因</h2><p>Azure の仮想ネットワーク上のリソースに対する名前解決の構成として、Azure 既定の DNS サーバー (168.63.129.16) を参照先として指定する構成が一般的です。この Azure 既定の DNS サーバーは、仮想ネットワークとリンクされたプライベート DNS ゾーンに対して DNS クエリを送信した時に参照する必要があります。仮想ネットワーク上に展開可能なプライベート DNS Resolver の受信エンドポイント宛ての DNS クエリについても、 Azure 既定の DNS サーバー (168.63.129.16) に転送されます。</p><p>次に内部 APIM を利用するためには、内部 APIM の各エンドポイント (FQDN) に対応したプライベート IP アドレスへの接続が必要です。各エンドポイント (FQDN) の名前解決結果を対象のプライベート IP アドレスにするために、DNS 構成としてプライベート DNS ゾーンを構成する旨が、公開情報に記載されています。<br>この時どのようなゾーン名にするかは具体的な記載がありませんが、必要なエンドポイントに共通しているのは azure-api.net となるため、azure-api.net　をゾーン名としてプライベート DNS ゾーンを構成されることが多いと想定しています。</p><p>そして、今回のベストプラクティスにおける意図せず名前解決に失敗する事象の要因として、APIM は各 Azure サービスの内部コンポーネントとして利用される場合があることが挙げられます。例えば Azure OpenAI Service（AOAI）や Azure Data Factory などでは、これまでのお問合せ事例より一部機能で APIM が組み込まれています。<br>具体的には、接続元クライアントからの接続時の FQDN は AOAI のエンドポイントであったとしても、名前解決を実施すると azure-api.net を含んだエイリアスが一連の名前解決に含まれます。この時、プライベート DNS ゾーンに  azure-api.net  を指定していると、本来パブリック DNS サーバーで名前解決されるものが、プライベート DNS ゾーンで名前解決され、対象の DNS レコードが存在しないため名前解決に失敗し、接続影響を及ぼします。<br>なお、その他の Azure サービスについても、一部機能で利用されている場合や、機能実装に伴い APIM が組み込まれる場合があります。</p><h2 id="プライベート-DNS-ゾーン観点での対応方法"><a href="#プライベート-DNS-ゾーン観点での対応方法" class="headerlink" title="プライベート DNS ゾーン観点での対応方法"></a>プライベート DNS ゾーン観点での対応方法</h2><p>このシナリオにおける対応策のポイントは、内部 APIM とプライベート DNS ゾーンを組み合わせる時に、ゾーン名を azure-api.net とした場合に、APIM に関連する意図しない通信影響を及ぼす点です。<br>意図しない通信影響を回避するためのポイントとしては、内部 APIM は機能によって差異はありますが、名前解決が必要なエンドポイントがおおよそ特定できる点です。<br>この動作により、利用されている内部 APIM に対するエンドポイントのみ DNS 構成し、ゾーン名を azure-api.net 以外にすることで意図しない事象を回避することが可能です。<br>内部 APIM のエンドポイント情報は、リソース デプロイ時に指定したリソース名をホスト名とし、各エンドポイントのドメインと組み合わせます。<br>内部 APIM の公開情報 (<a href="https://learn.microsoft.com/ja-jp/azure/api-management/api-management-using-with-internal-vnet#configure-dns-records">DNS レコードを構成する</a>)に倣いリソース名を contosointernalvnet とした場合、一般的な構成ですと下記のエンドポイントが該当します。<br>このエンドポイント名は、Azure Portal で構成した内部 APIM リソースを選択し、[設定 - プロパティ] から確認ができます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">contosointernalvnet.azure-api.net (ゲートウェイ)</span><br><span class="line">contosointernalvnet.developer.azure-api.net (開発者ポータル)</span><br><span class="line">contosointernalvnet.management.azure-api.net　(管理 API)</span><br></pre></td></tr></table></figure><p>プライベート DNS ゾーン観点では、ゾーン名は任意のものを指定可能なことがポイントとして挙げられます。今回のシナリオでは、ゾーン名を azure-api.net にすることで事象が発生するので、上記の内部 APIM のエンドポイントの FQDN 自体をゾーン名に指定し、A レコードを登録することで、他の Azure サービスの azure-api.net を含んた名前解決に影響を与えず、対象の内部 APIM だけ名前解決が可能になります。<br>公開情報のリソース名を基に具体例を挙げると、まず下記 3 つの FQDN をプライベート DNS ゾーンのゾーン名に指定してデプロイします。デプロイされた後、対象ゾーンの頂点ドメインとしてホスト部に @ を指定して、対応するプライベート IP アドレスを A レコードとして登録することで、FQDN に対する名前解決だけプライベート IP アドレスが応答され、それ以外の azure-api.net に対応する名前解決はパブリック DNS に転送することが可能になります。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">contosointernalvnet.azure-api.net</span><br><span class="line">contosointernalvnet.developer.azure-api.net</span><br><span class="line">contosointernalvnet.management.azure-api.net</span><br></pre></td></tr></table></figure><p>なお、プライベート DNS ゾーンには <a href="https://learn.microsoft.com/ja-jp/azure/dns/private-dns-fallback">インターネット フォールバック機能</a> (ゾーン内に対象の DNS レコードがない場合にパブリック DNS に問い合わせる機能) がありますが、この機能は privatelink サブドメインのみ対象とした機能となるため、今回のシナリオの azure-api.net は対象外となります。</p><p>上記、ご参考になれば幸いです。</p><hr>]]>
+    </content>
+    <id>https://jpaztech.github.io/blog/network/private-dns-zone-apim/</id>
+    <link href="https://jpaztech.github.io/blog/network/private-dns-zone-apim/"/>
+    <published>2026-04-20T03:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの箕輪です。<br>プライベート DNS ゾーンは、仮想ネットワーク上で任意のゾーン名やプライベート エンドポイントで利用する privatelink サブドメインの名前解決を提供する DNS サービスで、仮想ネットワーク上に展開されたリソースの名前解決に影響を与えます。<br>その中で、内部 Azure API Management を利用しているシナリオで、プライベート DNS ゾーンの構成によって Azure サービスへの名前解決が意図せず失敗し接続ができない事象が発生し得ます。このブログでは、要因と考えられる対応策についてご紹介します。</p>]]>
+    </summary>
+    <title>プライベート DNS ゾーンと内部 Azure API Management を組み合わせる時のベストプラクティス</title>
+    <updated>2026-04-20T03:45:50.411Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Japan Azure IaaS Core Support Team</name>
@@ -52,7 +71,7 @@
 <p>Azure ロードバランサー利用時に想定した動作ができないといった時に制]]>
     </summary>
     <title>Azure ロードバランサー利用時の注意点</title>
-    <updated>2026-04-11T13:13:57.260Z</updated>
+    <updated>2026-04-20T03:45:50.255Z</updated>
   </entry>
   <entry>
     <author>
@@ -70,7 +89,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>]]>
     </summary>
     <title>Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
-    <updated>2026-04-11T13:13:57.426Z</updated>
+    <updated>2026-04-20T03:45:50.420Z</updated>
   </entry>
   <entry>
     <author>
@@ -88,7 +107,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-04-11T13:13:57.374Z</updated>
+    <updated>2026-04-20T03:45:50.369Z</updated>
   </entry>
   <entry>
     <author>
@@ -107,7 +126,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-04-11T13:13:57.367Z</updated>
+    <updated>2026-04-20T03:45:50.362Z</updated>
   </entry>
   <entry>
     <author>
@@ -124,7 +143,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-04-11T13:13:57.549Z</updated>
+    <updated>2026-04-20T03:45:50.544Z</updated>
   </entry>
   <entry>
     <author>
@@ -146,7 +165,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-04-11T13:13:57.756Z</updated>
+    <updated>2026-04-20T03:45:50.754Z</updated>
   </entry>
   <entry>
     <author>
@@ -163,7 +182,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-04-11T13:13:57.734Z</updated>
+    <updated>2026-04-20T03:45:50.732Z</updated>
   </entry>
   <entry>
     <author>
@@ -185,7 +204,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-04-11T13:13:57.397Z</updated>
+    <updated>2026-04-20T03:45:50.392Z</updated>
   </entry>
   <entry>
     <author>
@@ -203,7 +222,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-04-11T13:13:57.357Z</updated>
+    <updated>2026-04-20T03:45:50.352Z</updated>
   </entry>
   <entry>
     <author>
@@ -223,7 +242,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-04-11T13:13:57.651Z</updated>
+    <updated>2026-04-20T03:45:50.648Z</updated>
   </entry>
   <entry>
     <author>
@@ -243,7 +262,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-04-11T13:13:57.358Z</updated>
+    <updated>2026-04-20T03:45:50.353Z</updated>
   </entry>
   <entry>
     <author>
@@ -266,7 +285,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-04-11T13:13:57.557Z</updated>
+    <updated>2026-04-20T03:45:50.553Z</updated>
   </entry>
   <entry>
     <author>
@@ -284,7 +303,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-04-11T13:13:57.363Z</updated>
+    <updated>2026-04-20T03:45:50.359Z</updated>
   </entry>
   <entry>
     <author>
@@ -305,7 +324,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-04-11T13:13:57.411Z</updated>
+    <updated>2026-04-20T03:45:50.405Z</updated>
   </entry>
   <entry>
     <author>
@@ -323,7 +342,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-04-11T13:13:57.475Z</updated>
+    <updated>2026-04-20T03:45:50.471Z</updated>
   </entry>
   <entry>
     <author>
@@ -341,7 +360,7 @@
 <p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 401 もしくは 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事]]>
     </summary>
     <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</title>
-    <updated>2026-04-11T13:13:57.528Z</updated>
+    <updated>2026-04-20T03:45:50.525Z</updated>
   </entry>
   <entry>
     <author>
@@ -359,7 +378,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の]]>
     </summary>
     <title>Azure 仮想ハブに Azure Firewall を配置する構成について</title>
-    <updated>2026-04-11T13:13:57.471Z</updated>
+    <updated>2026-04-20T03:45:50.467Z</updated>
   </entry>
   <entry>
     <author>
@@ -380,23 +399,6 @@
 <p>VWAN はハブ＆スポーク V]]>
     </summary>
     <title>VirtualWAN 活用について</title>
-    <updated>2026-04-11T13:13:57.473Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Japan Azure IaaS Core Support Team</name>
-    </author>
-    <category term="VM" scheme="https://jpaztech.github.io/blog/tags/VM/"/>
-    <content>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>今年も日本マイクロソフトの社員がお届けする、 <a href="https://qiita.com/advent-calendar/2024/microsoft-azure-tech">Microsoft Azure Tech Advent Calendar 2024</a> が始まりました！<br>本記事は 2 日目の記事となります。 </p><p>Advent Calendar には他にも多くの Azure に関する有益な記事が公開されますので、是非ご参照くださいませ！<br>今回は、お問い合わせいただくことも多い高速ネットワーク未対応・対応済・必須の VM サイズについて解説します。  </p><hr><p>高速ネットワークはその名の通り、Azure VM のネットワークパフォーマンスを向上させるオプションです。<br>具体的なメリットや対応 OS 等の情報は以下の公式ドキュメントをご参照ください。</p><p>■ご参考：高速ネットワークの概要<br><a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/accelerated-networking-overview">https://learn.microsoft.com/ja-jp/azure/virtual-network/accelerated-networking-overview</a>  </p><p>Azure VM はお客様のニーズに応える様々な VM サイズをご用意しています。<br>高速ネットワークについては VM サイズによって、以下の 3 パターンのサポート状況となります。　　</p><ul><li>高速ネットワーク未対応</li><li>高速ネットワーク対応済み</li><li>高速ネットワーク必須</li></ul><p>各 VM サイズが高速ネットワークに対応しているか、必須であるかといった点については、各 VM サイズの公式ドキュメント内の記載をご参照ください。  </p><p>■ご参考：Azure の仮想マシンのサイズ<br><a href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/sizes/overview">https://learn.microsoft.com/ja-jp/azure/virtual-machines/sizes/overview</a>  </p><p>以下にそれぞれ詳細について解説します。  </p><hr><h1 id="高速ネットワーク未対応の-VM-サイズについて"><a href="#高速ネットワーク未対応の-VM-サイズについて" class="headerlink" title="高速ネットワーク未対応の VM サイズについて"></a>高速ネットワーク未対応の VM サイズについて</h1><p>一部の古い VM サイズでは高速ネットワークに対応していないサイズがございます。<br>そのような古い VM サイズをご利用の場合は、是非高速ネットワークに対応している新しい VM サイズへの変更もご検討いただけますと幸いです。  </p><p>■ご参考：仮想マシンのサイズの変更<br><a href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/sizes/resize-vm">https://learn.microsoft.com/ja-jp/azure/virtual-machines/sizes/resize-vm</a>  </p><p>なお、高速ネットワークを有効にした状態の別の VM サイズから、高速ネットワーク未対応の VM サイズに変更をしようとした場合、以下のように互角性が無いといった表示となります。<br>高速ネットワーク未対応の VM サイズに変更する場合は、一旦高速ネットワークに対応を無効にする必要がありますので、その点ご注意ください。  </p><p> <img src="/blog/vm/vm-size-accelerated-networking/1.png"> </p><hr><h1 id="高速ネットワーク対応済みの-VM-サイズについて"><a href="#高速ネットワーク対応済みの-VM-サイズについて" class="headerlink" title="高速ネットワーク対応済みの VM サイズについて"></a>高速ネットワーク対応済みの VM サイズについて</h1><p>記事公開時点で、多くの VM サイズは高速ネットワークに対応済みとなっています。<br>これは、高速ネットワークを無効で使っていただくことも、有効にして使っていただくことも可能な VM サイズです。  </p><hr><h1 id="高速ネットワーク必須の-VM-サイズについて"><a href="#高速ネットワーク必須の-VM-サイズについて" class="headerlink" title="高速ネットワーク必須の VM サイズについて"></a>高速ネットワーク必須の VM サイズについて</h1><p>一部の新しい VM サイズでは、高速ネットワークが「必須」として記載されているものがあります。<br>これは自動的に高速ネットワークが有効となるサイズです。  </p><p>高速ネットワーク必須の VM サイズをご利用の場合、Azure ポータル等で高速ネットワークを無効と設定したとしても、実際は高速ネットワークが有効の状態となります。<br>※Azure ポータル等では「高速ネットワーク：無効」の表示になっていたとしても、実際は有効な状態になっています。  </p><p>すなわち、高速ネットワーク無効の状態の別の VM サイズから、高速ネットワーク必須の VM サイズに変更いただくことも可能です。  </p><hr><h1 id="高速ネットワークと-VM-サイズのまとめ"><a href="#高速ネットワークと-VM-サイズのまとめ" class="headerlink" title="高速ネットワークと VM サイズのまとめ"></a>高速ネットワークと VM サイズのまとめ</h1><p>上記の内容をまとめると、以下のような形となります。  </p><table><thead><tr><th></th><th>高速ネットワークを<span style="color:red;">無効</span>に設定</th><th>高速ネットワークを<span style="color:green;">有効</span>に設定</th></tr></thead><tbody><tr><td>高速ネットワーク未対応の VM サイズ</td><td>高速ネットワークは<span style="color:red;">無効</span>となる</td><td>そもそも設定不可</td></tr><tr><td>高速ネットワーク対応済みの VM サイズ</td><td>高速ネットワークは<span style="color:red;">無効</span>となる</td><td>高速ネットワークは<span style="color:green;">有効</span>となる</td></tr><tr><td>高速ネットワーク必須の VM サイズ</td><td>高速ネットワークは<span style="color:green;">自動的に有効</span>となる</td><td>高速ネットワークは<span style="color:green;">有効</span>となる</td></tr></tbody></table><hr><h1 id="高速ネットワークが有効になっているかゲスト-OS-内から確認を行う"><a href="#高速ネットワークが有効になっているかゲスト-OS-内から確認を行う" class="headerlink" title="高速ネットワークが有効になっているかゲスト OS 内から確認を行う"></a>高速ネットワークが有効になっているかゲスト OS 内から確認を行う</h1><p>高速ネットワークが有効になっているかゲスト OS 内から確認を行う手順について記載させていただきます。<br>詳細は以下のドキュメントをご確認いただきたく存じますが、簡単な確認方法としては Mellanox の NIC が増えている場合は、高速ネットワークが有効になっていると判断できます。  </p><p>■ご参考：高速ネットワークが有効になっていることを確認します。（Windows）<br><a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/create-vm-accelerated-networking-cli?tabs=windows#confirm-that-accelerated-networking-is-enabled">https://learn.microsoft.com/ja-jp/azure/virtual-network/create-vm-accelerated-networking-cli?tabs=windows#confirm-that-accelerated-networking-is-enabled</a>  </p><p>■ご参考：高速ネットワークが有効になっていることを確認します。（Linux）<br><a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/create-vm-accelerated-networking-cli?tabs=linux#confirm-that-accelerated-networking-is-enabled">https://learn.microsoft.com/ja-jp/azure/virtual-network/create-vm-accelerated-networking-cli?tabs=linux#confirm-that-accelerated-networking-is-enabled</a>  </p><p>高速ネットワークが正常に有効になっている Windows の場合はデバイス マネージャーにて以下の例のように、Mellanox の NIC があることが確認できます。<br>なお、Mellanox の名前が ConnectX-4 Lx 以外の場合もあります。  </p><p> <img src="/blog/vm/vm-size-accelerated-networking/2.png"> </p><p>高速ネットワークが正常に有効になっている Linux の場合は、「ip a」コマンドで NIC を表示すると、IP アドレスが付与されていない NIC があることが確認できます。</p><p> <img src="/blog/vm/vm-size-accelerated-networking/3.png"> </p><hr><p>今回の内容は以上となります。<br>上記の記事が皆様のお役に立てますと幸いでございます。  </p>]]>
-    </content>
-    <id>https://jpaztech.github.io/blog/vm/vm-size-accelerated-networking/</id>
-    <link href="https://jpaztech.github.io/blog/vm/vm-size-accelerated-networking/"/>
-    <published>2024-12-02T00:00:00.000Z</published>
-    <summary>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>今年も日本マイクロソフトの社員がお届けする、 <a href="https://qiita.com/advent-calendar/2024/microsoft-azure-tech">Microsof]]>
-    </summary>
-    <title>高速ネットワーク未対応・対応済・必須の VM サイズについて</title>
-    <updated>2026-04-11T13:13:57.895Z</updated>
+    <updated>2026-04-20T03:45:50.469Z</updated>
   </entry>
 </feed>
