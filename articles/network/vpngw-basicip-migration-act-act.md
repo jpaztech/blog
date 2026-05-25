@@ -128,12 +128,12 @@ Migrate の作業後にトラフィックが正常に流れていることを確
  
 コミットが完了しましたら、[プロパティ] の項目の ”最初のパブリック IP アドレス” および ”2 番目のパブリック IP アドレス” のリンクを選択し、
 
-![Commit3](vpngw-basicip-migration-act-act/commit3-3.png)
+![Commit3](vpngw-basicip-migration-act-act/Commit3-3.png)
 
 
 Public IP アドレス の SKU が Standard になっていることをご確認ください。
 
-![Commit4](vpngw-basicip-migration-act-act/commit3-4.png)
+![Commit4](vpngw-basicip-migration-act-act/Commit3-4.png)
 ---
 
 以上、Active / Active 構成の VPN Gateway における Basic SKU Public IP アドレスのマイグレーション手順のご紹介でした。  
