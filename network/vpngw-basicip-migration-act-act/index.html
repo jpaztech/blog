@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/vpngw-basicip-migration-act-act/Commit3-3.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/vpngw-basicip-migration-act-act/Commit3-4.png">
 <meta property="article:published_time" content="2026-05-25T00:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-25T00:30:02.309Z">
+<meta property="article:modified_time" content="2026-05-25T00:34:17.484Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Network">
 <meta property="article:tag" content="VPN Gateway">
@@ -119,7 +119,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+16c99e05-6eb4-5f83-b622-fcca040402b2%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BActive+%2F+Active+%E3%81%A7%E6%A7%8B%E6%88%90%E3%81%95%E3%82%8C%E3%81%9F+VPN+Gateway+%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B+Basic+SKU+%E3%81%AE+Public+IP+%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AE%E3%83%9E%E3%82%A4%E3%82%B0%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fvpngw-basicip-migration-act-act%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fvpngw-basicip-migration-act-act.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fvpngw-basicip-migration-act-act.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/vpngw-basicip-migration-act-act/" data-id="cuidc9aQmsyEH0_AkL1M9YvKR" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/vpngw-basicip-migration-act-act/" data-id="cuidB2p95dD0GMyag6K9ZOEnU" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -149,40 +149,42 @@
 <p>“cloudapp.net” の FQDN を使用している場合は、Prepare（準備）完了後に追加の手順が必要となりますので、事前にご確認をお願いいたします。</p>
 <h2 id="1-Prepare（準備）"><a href="#1-Prepare（準備）" class="headerlink" title="1. Prepare（準備）"></a>1. Prepare（準備）</h2><p>マイグレーション ツール画面を開くには、Azure ポータルで対象の VPN Gateway リソースを選択し、［構成］→［Migrate to Standard IP］をクリックしてください。</p>
 <p>移行ツールを開くと、自動的に構成の検証が実行されます。</p>
-<p>問題がなければ「Succeeded」と表示され、「検証」は完了となります。<br><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-1.png" alt="Prepare1"></p>
+<p>問題がなければ「Succeeded」と表示され、「検証」は完了となります。<br><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-1.png"></p>
 <p>“1. 新しいStandard IP リソースを準備します。” の項目に、事前準備で作成した Standard SKU の Public IP アドレス を選択し [Prepare] をクリックすると、マイグレーションの準備が開始され、移行先の VPN Gateway が作成されます。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-2.png" alt="Prepare2"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-2.png"></p>
 <p>なお、上記作業を実施すると通知で 「移行の準備に失敗しました」 といった下記のような表示がされる場合があります。<br>こちらについては、Azure ポータル上での表示上の事象であり、内部的には失敗していないため、そのまま作業を継続してください。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-3.png" alt="Prepare3"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-3.png"></p>
 <p>[Overview] をクリックしていただき、上部に 「更新中」 と表示されいることを確認し、移行の準備が進行中であることをご確認ください。<br>なお、[Overview] をクリックする際に下記のポップアップが表示されますが、[OK] を選択してください。(移行処理は引き続き行われますのでご安心ください。)</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-4.png" alt="Prepare4"></p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-5.png" alt="Prepare5"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-4.png"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-5.png"></p>
 <p>上記画面の [最新の情報に更新] をクリックして 「更新中」 が消えていることを確認します。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-6.jpg" alt="Prepare6"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-6.jpg"></p>
 <p>「更新中」 が消えたら [構成] から [Migrate to Standard IP] をクリックして移行画面へ移動します。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-7.png" alt="Prepare7"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-7.png"></p>
 <p>準備が完了すると、次のステップである［Migrate］および［Abort］が表示されます。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-8.png" alt="Prepare8"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-8.png"></p>
 <p>なお、P2S 接続に “cloudapp.net” で終わる FQDN を使用して VPN Gatewayへ接続されている場合は、準備完了後に [VPN クライアントのダウンロード] を選択し、更新された VPN クライアント プロファイル（ZIP ファイル）をダウンロードしてください。<br>※ “cloudapp.net” の FQDN を利用されていない場合は、VPN クライアント プロファイル（ZIP ファイル）のダウンロードは不要です。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-9.png" alt="Prepare9"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-9.png"></p>
 <p>その後、ダウンロードしたプロファイルを使用して再接続を行い、ポイント対サイト（P2S）接続が可能であることを確認してください。</p>
 <h2 id="2-Migrate（移行実行）"><a href="#2-Migrate（移行実行）" class="headerlink" title="2.  Migrate（移行実行）"></a>2.  Migrate（移行実行）</h2><p>作業を進める場合は、［Migrate］をクリックします。<br>※この段階で作業をキャンセルする場合は、［Abort］をクリックしていただくことで、準備ステップで作成されたリソースが削除され、作業開始前の状態に戻ります。</p>
 <p>本ステップにて、実際の Public IP アドレスの SKU 移行作業が実行され、最大で約 5 分程度の通信断が発生する可能性があります。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-1.png" alt="Migrate1"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-1.png"></p>
 <p>なお、SKU を変更しても、VPN Gatewayで使用されている Public IP アドレス自体は変更されませんのでご安心ください。</p>
 <p>移行が完了すると、最後のステップとして［Commit］および［Abort］のボタンが表示されます。</p>
 <p>ツール上には新しい Gateway でのトラフィック処理状況が表示されますので、トラフィックが正常に流れていることをご確認ください。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-2.png" alt="Migrate2"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-2.png"></p>
 <h2 id="3-Commit（確定）"><a href="#3-Commit（確定）" class="headerlink" title="3. Commit（確定）"></a>3. Commit（確定）</h2><p>Migrate の作業後にトラフィックが正常に流れていることを確認できましたら、［Commit］をクリックしてください。<br>※ [Commit] を選択せずに、[Abort] を選択いただくことで、切り戻しが可能です。</p>
 <p>なお、［Commit］実行後は切り戻しができませんので、ご注意ください。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-1.png" alt="Commit1"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-1.png"></p>
 <p>このステップでは、移行により不要となったリソースのクリーンアップ処理が実行されます。</p>
 <p>下記のよう 「コミットされた移行」 の通知が出て、「コミットが成功しました。」 と表示されていれば移行作業完了です。</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-2.png" alt="Commit2"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-2.png"></p>
 <p>コミットが完了しましたら、[プロパティ] の項目の ”最初のパブリック IP アドレス” および ”2 番目のパブリック IP アドレス” のリンクを選択し、</p>
-<p><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-3.png" alt="Commit3"></p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-3.png"></p>
 <p>Public IP アドレス の SKU が Standard になっていることをご確認ください。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-4.png" alt="Commit4"></h2><p>以上、Active &#x2F; Active 構成の VPN Gateway における Basic SKU Public IP アドレスのマイグレーション手順のご紹介でした。<br>本記事が少しでも皆様のお役に立てれば幸いです。</p>
+<p><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-4.png"></p>
+<hr>
+<p>以上、Active &#x2F; Active 構成の VPN Gateway における Basic SKU Public IP アドレスのマイグレーション手順のご紹介でした。<br>本記事が少しでも皆様のお役に立てれば幸いです。</p>
 
       
       

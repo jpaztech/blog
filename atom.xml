@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Japan Azure IaaS Core Support Team</rights>
   <subtitle>日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</subtitle>
   <title>Japan Azure IaaS Core Support Blog</title>
-  <updated>2026-05-25T00:30:02.309Z</updated>
+  <updated>2026-05-25T00:34:17.484Z</updated>
   <entry>
     <author>
       <name>Japan Azure IaaS Core Support Team</name>
@@ -18,7 +18,7 @@
     <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
     <category term="VPN Gateway" scheme="https://jpaztech.github.io/blog/tags/VPN-Gateway/"/>
     <content>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。</p><p>先日、Basic SKU の Public IP アドレスを利用している Azure VPN Gateway のマイグレーションについて、当ブログにて公開させていただきました。</p><p><a href="https://jpaztech.github.io/blog/network/vpngw-basicip-migration/">Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</a></p><p>Basic SKU の Public IP アドレスを利用している Azure VPN Gateway のマイグレーションは、以下の 3 つのパターンが存在いたしますので、VPN Gateway の構成をご確認の上、どのパターンのマイグレーションを行う必要があるかご確認ください。</p><p>A. Active &#x2F; Standby 構成<br>B. Active &#x2F; Active 構成 + ポイント対サイト VPN（P2S VPN）構成無し<br>C. Active &#x2F; Active 構成 + ポイント対サイト VPN（P2S VPN）構成有り</p><p>A. Active &#x2F; Standby 構成および B. Active &#x2F; Active 構成 + ポイント対サイト VPN（P2S VPN）構成無しのパターンにつきましては、上述のブログを参照いただくことでマイグレーションが可能でございますが、<br>C. Active &#x2F; Active 構成で、且つポイント対サイト VPN（P2S VPN）が構成された VPN Gateway では、作業時にいくつか考慮する点があるため、手順をご紹介いたします。</p><p>Active &#x2F; Active 構成かつ P2S VPN が設定されている VPN Gateway の Public IP アドレスを Basic から Standard SKU に切り替える手順でも、作業は大きく分けて、以下の 3 つの工程になります。</p><ol><li>Prepare（準備）</li><li>Migrate（移行実行）</li><li>Commit（確定）</li></ol><p>各工程の詳細な手順について以下におまとめいたします。</p><h2 id="事前準備"><a href="#事前準備" class="headerlink" title="事前準備"></a>事前準備</h2><h3 id="Standard-SKU-の-Public-IP-アドレスの作成"><a href="#Standard-SKU-の-Public-IP-アドレスの作成" class="headerlink" title="Standard SKU の Public IP アドレスの作成"></a>Standard SKU の Public IP アドレスの作成</h3><p>Prepare（準備）の手順にて、P2S 接続で利用する Standard SKU の Public IP アドレス を指定します。<br>指定する Public IP アドレス は<mark>必ずゾーン冗長の設定がされていない Public IP アドレス を作成</mark>する必要があります。</p><p>なお、現在、ゾーン冗長構成がされていない Public IP アドレス は Azure ポータル上では作成することができないため、コマンドを用いて作成します。</p><p>下記に、PowerShell のコマンド例を添付いたしますので、移行作業の前に予め Public IP アドレス の準備をお願いします。</p> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-AzPublicIpAddress</span> <span class="literal">-Name</span> &lt;Public IP アドレスのリソース名&gt; <span class="literal">-ResourceGroupName</span> &lt;リソース グループ名&gt; <span class="literal">-Location</span> &lt;VPN Gateway のリージョン&gt; <span class="literal">-Sku</span> Standard <span class="literal">-AllocationMethod</span> <span class="keyword">Static</span></span><br></pre></td></tr></table></figure><h3 id="P2S-接続における-“cloudapp-net”-FQDN-の使用有無の確認"><a href="#P2S-接続における-“cloudapp-net”-FQDN-の使用有無の確認" class="headerlink" title="P2S 接続における “cloudapp.net” FQDN の使用有無の確認"></a>P2S 接続における “cloudapp.net” FQDN の使用有無の確認</h3><p>P2S 接続に “cloudapp.net” で終わる FQDN を使用して VPN Gateway へ接続されているかを事前にご確認ください。<br>確認方法については、下記の公開ドキュメントをご参照ください。</p><ul><li><a href="https://learn.microsoft.com/ja-jp/azure/vpn-gateway/basic-public-ip-migrate-howto?tabs=portal#check-if-your-p2s-configuration-uses-fqdn">P2S 構成で FQDN が使用されているかどうかを確認する - Azure VPN Gateway</a></li></ul><p>“cloudapp.net” の FQDN を使用している場合は、Prepare（準備）完了後に追加の手順が必要となりますので、事前にご確認をお願いいたします。</p><h2 id="1-Prepare（準備）"><a href="#1-Prepare（準備）" class="headerlink" title="1. Prepare（準備）"></a>1. Prepare（準備）</h2><p>マイグレーション ツール画面を開くには、Azure ポータルで対象の VPN Gateway リソースを選択し、［構成］→［Migrate to Standard IP］をクリックしてください。</p><p>移行ツールを開くと、自動的に構成の検証が実行されます。</p><p>問題がなければ「Succeeded」と表示され、「検証」は完了となります。<br><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-1.png" alt="Prepare1"></p><p>“1. 新しいStandard IP リソースを準備します。” の項目に、事前準備で作成した Standard SKU の Public IP アドレス を選択し [Prepare] をクリックすると、マイグレーションの準備が開始され、移行先の VPN Gateway が作成されます。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-2.png" alt="Prepare2"></p><p>なお、上記作業を実施すると通知で 「移行の準備に失敗しました」 といった下記のような表示がされる場合があります。<br>こちらについては、Azure ポータル上での表示上の事象であり、内部的には失敗していないため、そのまま作業を継続してください。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-3.png" alt="Prepare3"></p><p>[Overview] をクリックしていただき、上部に 「更新中」 と表示されいることを確認し、移行の準備が進行中であることをご確認ください。<br>なお、[Overview] をクリックする際に下記のポップアップが表示されますが、[OK] を選択してください。(移行処理は引き続き行われますのでご安心ください。)</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-4.png" alt="Prepare4"></p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-5.png" alt="Prepare5"></p><p>上記画面の [最新の情報に更新] をクリックして 「更新中」 が消えていることを確認します。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-6.jpg" alt="Prepare6"></p><p>「更新中」 が消えたら [構成] から [Migrate to Standard IP] をクリックして移行画面へ移動します。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-7.png" alt="Prepare7"></p><p>準備が完了すると、次のステップである［Migrate］および［Abort］が表示されます。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-8.png" alt="Prepare8"></p><p>なお、P2S 接続に “cloudapp.net” で終わる FQDN を使用して VPN Gatewayへ接続されている場合は、準備完了後に [VPN クライアントのダウンロード] を選択し、更新された VPN クライアント プロファイル（ZIP ファイル）をダウンロードしてください。<br>※ “cloudapp.net” の FQDN を利用されていない場合は、VPN クライアント プロファイル（ZIP ファイル）のダウンロードは不要です。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-9.png" alt="Prepare9"></p><p>その後、ダウンロードしたプロファイルを使用して再接続を行い、ポイント対サイト（P2S）接続が可能であることを確認してください。</p><h2 id="2-Migrate（移行実行）"><a href="#2-Migrate（移行実行）" class="headerlink" title="2.  Migrate（移行実行）"></a>2.  Migrate（移行実行）</h2><p>作業を進める場合は、［Migrate］をクリックします。<br>※この段階で作業をキャンセルする場合は、［Abort］をクリックしていただくことで、準備ステップで作成されたリソースが削除され、作業開始前の状態に戻ります。</p><p>本ステップにて、実際の Public IP アドレスの SKU 移行作業が実行され、最大で約 5 分程度の通信断が発生する可能性があります。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-1.png" alt="Migrate1"></p><p>なお、SKU を変更しても、VPN Gatewayで使用されている Public IP アドレス自体は変更されませんのでご安心ください。</p><p>移行が完了すると、最後のステップとして［Commit］および［Abort］のボタンが表示されます。</p><p>ツール上には新しい Gateway でのトラフィック処理状況が表示されますので、トラフィックが正常に流れていることをご確認ください。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-2.png" alt="Migrate2"></p><h2 id="3-Commit（確定）"><a href="#3-Commit（確定）" class="headerlink" title="3. Commit（確定）"></a>3. Commit（確定）</h2><p>Migrate の作業後にトラフィックが正常に流れていることを確認できましたら、［Commit］をクリックしてください。<br>※ [Commit] を選択せずに、[Abort] を選択いただくことで、切り戻しが可能です。</p><p>なお、［Commit］実行後は切り戻しができませんので、ご注意ください。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-1.png" alt="Commit1"></p><p>このステップでは、移行により不要となったリソースのクリーンアップ処理が実行されます。</p><p>下記のよう 「コミットされた移行」 の通知が出て、「コミットが成功しました。」 と表示されていれば移行作業完了です。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-2.png" alt="Commit2"></p><p>コミットが完了しましたら、[プロパティ] の項目の ”最初のパブリック IP アドレス” および ”2 番目のパブリック IP アドレス” のリンクを選択し、</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-3.png" alt="Commit3"></p><p>Public IP アドレス の SKU が Standard になっていることをご確認ください。</p><h2 id=""><a href="#" class="headerlink" title=""></a><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-4.png" alt="Commit4"></h2><p>以上、Active &#x2F; Active 構成の VPN Gateway における Basic SKU Public IP アドレスのマイグレーション手順のご紹介でした。<br>本記事が少しでも皆様のお役に立てれば幸いです。</p>]]>
+      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。</p><p>先日、Basic SKU の Public IP アドレスを利用している Azure VPN Gateway のマイグレーションについて、当ブログにて公開させていただきました。</p><p><a href="https://jpaztech.github.io/blog/network/vpngw-basicip-migration/">Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</a></p><p>Basic SKU の Public IP アドレスを利用している Azure VPN Gateway のマイグレーションは、以下の 3 つのパターンが存在いたしますので、VPN Gateway の構成をご確認の上、どのパターンのマイグレーションを行う必要があるかご確認ください。</p><p>A. Active &#x2F; Standby 構成<br>B. Active &#x2F; Active 構成 + ポイント対サイト VPN（P2S VPN）構成無し<br>C. Active &#x2F; Active 構成 + ポイント対サイト VPN（P2S VPN）構成有り</p><p>A. Active &#x2F; Standby 構成および B. Active &#x2F; Active 構成 + ポイント対サイト VPN（P2S VPN）構成無しのパターンにつきましては、上述のブログを参照いただくことでマイグレーションが可能でございますが、<br>C. Active &#x2F; Active 構成で、且つポイント対サイト VPN（P2S VPN）が構成された VPN Gateway では、作業時にいくつか考慮する点があるため、手順をご紹介いたします。</p><p>Active &#x2F; Active 構成かつ P2S VPN が設定されている VPN Gateway の Public IP アドレスを Basic から Standard SKU に切り替える手順でも、作業は大きく分けて、以下の 3 つの工程になります。</p><ol><li>Prepare（準備）</li><li>Migrate（移行実行）</li><li>Commit（確定）</li></ol><p>各工程の詳細な手順について以下におまとめいたします。</p><h2 id="事前準備"><a href="#事前準備" class="headerlink" title="事前準備"></a>事前準備</h2><h3 id="Standard-SKU-の-Public-IP-アドレスの作成"><a href="#Standard-SKU-の-Public-IP-アドレスの作成" class="headerlink" title="Standard SKU の Public IP アドレスの作成"></a>Standard SKU の Public IP アドレスの作成</h3><p>Prepare（準備）の手順にて、P2S 接続で利用する Standard SKU の Public IP アドレス を指定します。<br>指定する Public IP アドレス は<mark>必ずゾーン冗長の設定がされていない Public IP アドレス を作成</mark>する必要があります。</p><p>なお、現在、ゾーン冗長構成がされていない Public IP アドレス は Azure ポータル上では作成することができないため、コマンドを用いて作成します。</p><p>下記に、PowerShell のコマンド例を添付いたしますので、移行作業の前に予め Public IP アドレス の準備をお願いします。</p> <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-AzPublicIpAddress</span> <span class="literal">-Name</span> &lt;Public IP アドレスのリソース名&gt; <span class="literal">-ResourceGroupName</span> &lt;リソース グループ名&gt; <span class="literal">-Location</span> &lt;VPN Gateway のリージョン&gt; <span class="literal">-Sku</span> Standard <span class="literal">-AllocationMethod</span> <span class="keyword">Static</span></span><br></pre></td></tr></table></figure><h3 id="P2S-接続における-“cloudapp-net”-FQDN-の使用有無の確認"><a href="#P2S-接続における-“cloudapp-net”-FQDN-の使用有無の確認" class="headerlink" title="P2S 接続における “cloudapp.net” FQDN の使用有無の確認"></a>P2S 接続における “cloudapp.net” FQDN の使用有無の確認</h3><p>P2S 接続に “cloudapp.net” で終わる FQDN を使用して VPN Gateway へ接続されているかを事前にご確認ください。<br>確認方法については、下記の公開ドキュメントをご参照ください。</p><ul><li><a href="https://learn.microsoft.com/ja-jp/azure/vpn-gateway/basic-public-ip-migrate-howto?tabs=portal#check-if-your-p2s-configuration-uses-fqdn">P2S 構成で FQDN が使用されているかどうかを確認する - Azure VPN Gateway</a></li></ul><p>“cloudapp.net” の FQDN を使用している場合は、Prepare（準備）完了後に追加の手順が必要となりますので、事前にご確認をお願いいたします。</p><h2 id="1-Prepare（準備）"><a href="#1-Prepare（準備）" class="headerlink" title="1. Prepare（準備）"></a>1. Prepare（準備）</h2><p>マイグレーション ツール画面を開くには、Azure ポータルで対象の VPN Gateway リソースを選択し、［構成］→［Migrate to Standard IP］をクリックしてください。</p><p>移行ツールを開くと、自動的に構成の検証が実行されます。</p><p>問題がなければ「Succeeded」と表示され、「検証」は完了となります。<br><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-1.png"></p><p>“1. 新しいStandard IP リソースを準備します。” の項目に、事前準備で作成した Standard SKU の Public IP アドレス を選択し [Prepare] をクリックすると、マイグレーションの準備が開始され、移行先の VPN Gateway が作成されます。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-2.png"></p><p>なお、上記作業を実施すると通知で 「移行の準備に失敗しました」 といった下記のような表示がされる場合があります。<br>こちらについては、Azure ポータル上での表示上の事象であり、内部的には失敗していないため、そのまま作業を継続してください。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-3.png"></p><p>[Overview] をクリックしていただき、上部に 「更新中」 と表示されいることを確認し、移行の準備が進行中であることをご確認ください。<br>なお、[Overview] をクリックする際に下記のポップアップが表示されますが、[OK] を選択してください。(移行処理は引き続き行われますのでご安心ください。)</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-4.png"></p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-5.png"></p><p>上記画面の [最新の情報に更新] をクリックして 「更新中」 が消えていることを確認します。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-6.jpg"></p><p>「更新中」 が消えたら [構成] から [Migrate to Standard IP] をクリックして移行画面へ移動します。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-7.png"></p><p>準備が完了すると、次のステップである［Migrate］および［Abort］が表示されます。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-8.png"></p><p>なお、P2S 接続に “cloudapp.net” で終わる FQDN を使用して VPN Gatewayへ接続されている場合は、準備完了後に [VPN クライアントのダウンロード] を選択し、更新された VPN クライアント プロファイル（ZIP ファイル）をダウンロードしてください。<br>※ “cloudapp.net” の FQDN を利用されていない場合は、VPN クライアント プロファイル（ZIP ファイル）のダウンロードは不要です。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/prepare1-9.png"></p><p>その後、ダウンロードしたプロファイルを使用して再接続を行い、ポイント対サイト（P2S）接続が可能であることを確認してください。</p><h2 id="2-Migrate（移行実行）"><a href="#2-Migrate（移行実行）" class="headerlink" title="2.  Migrate（移行実行）"></a>2.  Migrate（移行実行）</h2><p>作業を進める場合は、［Migrate］をクリックします。<br>※この段階で作業をキャンセルする場合は、［Abort］をクリックしていただくことで、準備ステップで作成されたリソースが削除され、作業開始前の状態に戻ります。</p><p>本ステップにて、実際の Public IP アドレスの SKU 移行作業が実行され、最大で約 5 分程度の通信断が発生する可能性があります。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-1.png"></p><p>なお、SKU を変更しても、VPN Gatewayで使用されている Public IP アドレス自体は変更されませんのでご安心ください。</p><p>移行が完了すると、最後のステップとして［Commit］および［Abort］のボタンが表示されます。</p><p>ツール上には新しい Gateway でのトラフィック処理状況が表示されますので、トラフィックが正常に流れていることをご確認ください。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/migrate2-2.png"></p><h2 id="3-Commit（確定）"><a href="#3-Commit（確定）" class="headerlink" title="3. Commit（確定）"></a>3. Commit（確定）</h2><p>Migrate の作業後にトラフィックが正常に流れていることを確認できましたら、［Commit］をクリックしてください。<br>※ [Commit] を選択せずに、[Abort] を選択いただくことで、切り戻しが可能です。</p><p>なお、［Commit］実行後は切り戻しができませんので、ご注意ください。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-1.png"></p><p>このステップでは、移行により不要となったリソースのクリーンアップ処理が実行されます。</p><p>下記のよう 「コミットされた移行」 の通知が出て、「コミットが成功しました。」 と表示されていれば移行作業完了です。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/commit3-2.png"></p><p>コミットが完了しましたら、[プロパティ] の項目の ”最初のパブリック IP アドレス” および ”2 番目のパブリック IP アドレス” のリンクを選択し、</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-3.png"></p><p>Public IP アドレス の SKU が Standard になっていることをご確認ください。</p><p><img src="/blog/network/vpngw-basicip-migration-act-act/Commit3-4.png"></p><hr><p>以上、Active &#x2F; Active 構成の VPN Gateway における Basic SKU Public IP アドレスのマイグレーション手順のご紹介でした。<br>本記事が少しでも皆様のお役に立てれば幸いです。</p>]]>
     </content>
     <id>https://jpaztech.github.io/blog/network/vpngw-basicip-migration-act-act/</id>
     <link href="https://jpaztech.github.io/blog/network/vpngw-basicip-migration-act-act/"/>
@@ -29,7 +29,7 @@
 <p><a h]]>
     </summary>
     <title>Active / Active で構成された VPN Gateway における Basic SKU の Public IP アドレスのマイグレーションについて</title>
-    <updated>2026-05-25T00:30:02.309Z</updated>
+    <updated>2026-05-25T00:34:17.484Z</updated>
   </entry>
   <entry>
     <author>
@@ -48,7 +48,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの箕輪です。<br>プライベート DNS ゾーンは、仮想ネットワーク上で任意のゾーン名やプライベート エンドポイントで利用する privatelink サブドメインの名前解決を提供する DNS サービスで、仮想ネットワーク上に展開されたリソースの名前解決に影響を与えます。<br>その中で、内部 Azure API Management を利用しているシナリオで、プライベート DNS ゾーンの構成によって Azure サービスへの名前解決が意図せず失敗し接続ができない事象が発生し得ます。このブログでは、要因と考えられる対応策についてご紹介します。</p>]]>
     </summary>
     <title>プライベート DNS ゾーンと内部 Azure API Management を組み合わせる時のベストプラクティス</title>
-    <updated>2026-05-25T00:30:02.302Z</updated>
+    <updated>2026-05-25T00:34:17.474Z</updated>
   </entry>
   <entry>
     <author>
@@ -91,7 +91,7 @@
 <p>Azure ロードバランサー利用時に想定した動作ができないといった時に制]]>
     </summary>
     <title>Azure ロードバランサー利用時の注意点</title>
-    <updated>2026-05-25T00:30:02.200Z</updated>
+    <updated>2026-05-25T00:34:17.318Z</updated>
   </entry>
   <entry>
     <author>
@@ -109,7 +109,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>]]>
     </summary>
     <title>Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
-    <updated>2026-05-25T00:30:02.312Z</updated>
+    <updated>2026-05-25T00:34:17.489Z</updated>
   </entry>
   <entry>
     <author>
@@ -127,7 +127,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-05-25T00:30:02.273Z</updated>
+    <updated>2026-05-25T00:34:17.432Z</updated>
   </entry>
   <entry>
     <author>
@@ -146,7 +146,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-05-25T00:30:02.269Z</updated>
+    <updated>2026-05-25T00:34:17.426Z</updated>
   </entry>
   <entry>
     <author>
@@ -163,7 +163,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-05-25T00:30:02.396Z</updated>
+    <updated>2026-05-25T00:34:17.613Z</updated>
   </entry>
   <entry>
     <author>
@@ -185,7 +185,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-05-25T00:30:02.534Z</updated>
+    <updated>2026-05-25T00:34:17.822Z</updated>
   </entry>
   <entry>
     <author>
@@ -202,7 +202,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-05-25T00:30:02.519Z</updated>
+    <updated>2026-05-25T00:34:17.800Z</updated>
   </entry>
   <entry>
     <author>
@@ -224,7 +224,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-05-25T00:30:02.288Z</updated>
+    <updated>2026-05-25T00:34:17.455Z</updated>
   </entry>
   <entry>
     <author>
@@ -242,7 +242,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-05-25T00:30:02.261Z</updated>
+    <updated>2026-05-25T00:34:17.415Z</updated>
   </entry>
   <entry>
     <author>
@@ -262,7 +262,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-05-25T00:30:02.463Z</updated>
+    <updated>2026-05-25T00:34:17.716Z</updated>
   </entry>
   <entry>
     <author>
@@ -282,7 +282,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-05-25T00:30:02.264Z</updated>
+    <updated>2026-05-25T00:34:17.417Z</updated>
   </entry>
   <entry>
     <author>
@@ -305,7 +305,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-05-25T00:30:02.400Z</updated>
+    <updated>2026-05-25T00:34:17.621Z</updated>
   </entry>
   <entry>
     <author>
@@ -323,7 +323,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-05-25T00:30:02.267Z</updated>
+    <updated>2026-05-25T00:34:17.422Z</updated>
   </entry>
   <entry>
     <author>
@@ -344,7 +344,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-05-25T00:30:02.298Z</updated>
+    <updated>2026-05-25T00:34:17.469Z</updated>
   </entry>
   <entry>
     <author>
@@ -362,7 +362,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-05-25T00:30:02.347Z</updated>
+    <updated>2026-05-25T00:34:17.540Z</updated>
   </entry>
   <entry>
     <author>
@@ -380,7 +380,7 @@
 <p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 401 もしくは 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事]]>
     </summary>
     <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</title>
-    <updated>2026-05-25T00:30:02.382Z</updated>
+    <updated>2026-05-25T00:34:17.593Z</updated>
   </entry>
   <entry>
     <author>
@@ -398,6 +398,6 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の]]>
     </summary>
     <title>Azure 仮想ハブに Azure Firewall を配置する構成について</title>
-    <updated>2026-05-25T00:30:02.345Z</updated>
+    <updated>2026-05-25T00:34:17.535Z</updated>
   </entry>
 </feed>
