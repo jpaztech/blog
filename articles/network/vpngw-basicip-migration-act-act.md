@@ -1,4 +1,10 @@
-# Active / Active で構成された VPN Gateway における Basic SKU の Public IP アドレスのマイグレーションについて
+---
+title: "Active / Active で構成された VPN Gateway における Basic SKU の Public IP アドレスのマイグレーションについて"
+date: 2026-05-25 09:00:00
+tags:
+  - Network
+  - VPN Gateway
+---
 
 こんにちは、Azure テクニカル サポート チームです。
 
