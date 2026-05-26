@@ -10,7 +10,23 @@
   <rights>All rights reserved 2026, Japan Azure IaaS Core Support Team</rights>
   <subtitle>日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</subtitle>
   <title>Japan Azure IaaS Core Support Blog</title>
-  <updated>2026-05-25T00:34:17.484Z</updated>
+  <updated>2026-05-26T03:14:19.833Z</updated>
+  <entry>
+    <author>
+      <name>Japan Azure IaaS Core Support Team</name>
+    </author>
+    <content>
+      <![CDATA[<h2 id="title-Tracking-ID-5RWW-K4G-の通知に関するアナウンスの補足date-2026-05-26-12-00-00tags-Network"><a href="#title-Tracking-ID-5RWW-K4G-の通知に関するアナウンスの補足date-2026-05-26-12-00-00tags-Network" class="headerlink" title="title: Tracking ID: 5RWW-K4G の通知に関するアナウンスの補足date: 2026-05-26 12:00:00tags:  - Network"></a>title: Tracking ID: 5RWW-K4G の通知に関するアナウンスの補足<br>date: 2026-05-26 12:00:00<br>tags:<br>  - Network</h2><p>こんにちは、Azure テクニカル サポート チームです。<br>2026 年 05 月 24 日に Intel D および E-v5 シリーズおよび Cobalt 100 D および E-v6 シリーズ VM に対して Microsoft Azure Network Adapter (MANA) ハードウェアとの OS 互換性の確認に関するアナウンスがされました。(Tracking ID: 5RWW-K4G)</p><p>本記事では、通知内容の日本語抄訳に加え、対応が必要なお客様の条件や具体的な手順をわかりやすく整理してご案内いたします。</p><span id="more"></span><h2 id="通知の概要"><a href="#通知の概要" class="headerlink" title="通知の概要"></a>通知の概要</h2><p>一部のお客様には、Azure 仮想マシンにおけるネットワーク基盤の変更 (MANA: Microsoft Azure Network Adapter) に関する通知が送られました。<br>この通知は障害に関する情報ではなく、将来、構成変更および互換性への影響が想定される可能性があることから事前案内をしています。</p><h3 id="対象-VM-シリーズ"><a href="#対象-VM-シリーズ" class="headerlink" title="対象 VM シリーズ"></a>対象 VM シリーズ</h3><table><thead><tr><th>プロセッサ</th><th>VM シリーズ</th></tr></thead><tbody><tr><td>Intel</td><td>Dsv5, Dv5, Ddsv5, Ddv5, Dlsv5, Dldsv5, Esv5, Ev5, Edsv5, Edv5, Ebsv5, Ebdsv5</td></tr><tr><td>Cobalt 100</td><td>Dpsv6, Dpdsv6, Dplsv6, Dpldsv6, Epsv6, Epdsv6</td></tr></tbody></table><h3 id="リージョン展開スケジュール"><a href="#リージョン展開スケジュール" class="headerlink" title="リージョン展開スケジュール"></a>リージョン展開スケジュール</h3><table><thead><tr><th>日付</th><th>リージョン</th></tr></thead><tbody><tr><td>2026 年 05 月 26 日</td><td>West Central US</td></tr><tr><td>2026 年 05 月 27 日</td><td>East Asia</td></tr><tr><td>以降</td><td>追加リージョンは 2026 年 05 月 26 日 (UTC) 以降の Service Health 通知で別途案内予定</td></tr></tbody></table><h2 id="対応が不要なケース"><a href="#対応が不要なケース" class="headerlink" title="対応が不要なケース"></a>対応が不要なケース</h2><p>以下のいずれかに該当する場合、<strong>対応は不要です</strong>。</p><ul><li>上記対象 VM シリーズで<strong>高速ネットワーク (Accelerated Networking) を使用していない</strong>場合</li><li>上記対象 VM シリーズで <strong>Windows OS</strong> を使用している場合</li></ul><h2 id="対応が必要なケース"><a href="#対応が必要なケース" class="headerlink" title="対応が必要なケース"></a>対応が必要なケース</h2><p>上記対象 VM シリーズで<strong>高速ネットワーク (Accelerated Networking) を使用しており</strong>、<strong>NVA (Network Virtual Appliance) ワークロード</strong>を実行している場合は、以下の対応手順を実施してください。</p><p>MANA 対応ハードウェアが各リージョンで有効になった後、新規の VM デプロイや、メンテナンス イベント・お客様の操作による既存 VM の再デプロイの際に、MANA 対応ハードウェアに VM が配置される可能性があります。NVA ワークロードの場合、互換性の確認と対応を行わないと、<strong>ネットワーク パフォーマンスの低下</strong>が発生する可能性があります。</p><h2 id="対応手順"><a href="#対応手順" class="headerlink" title="対応手順"></a>対応手順</h2><h3 id="ステップ-1-対象-VM-の特定"><a href="#ステップ-1-対象-VM-の特定" class="headerlink" title="ステップ 1: 対象 VM の特定"></a>ステップ 1: 対象 VM の特定</h3><p>高速ネットワークを使用しており、NVA ワークロードを実行している以下の VM を特定してください。</p><ul><li>Intel D および E-v5 シリーズ VM</li><li>Cobalt 100 D および E-v6 シリーズ VM</li></ul><h3 id="ステップ-2-Linux-OS-の-MANA-互換性の確認"><a href="#ステップ-2-Linux-OS-の-MANA-互換性の確認" class="headerlink" title="ステップ 2: Linux OS の MANA 互換性の確認"></a>ステップ 2: Linux OS の MANA 互換性の確認</h3><p>以下ドキュメントの「MANA のサポートの状態を確認する」セクションに沿って、使用している Linux OS が MANA 対応であることを確認してください。</p><p><a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/accelerated-networking-mana-linux#check-the-status-of-mana-support">MANA のサポートの状態を確認する</a></p><h3 id="ステップ-3-非互換の場合の対応"><a href="#ステップ-3-非互換の場合の対応" class="headerlink" title="ステップ 3: 非互換の場合の対応"></a>ステップ 3: 非互換の場合の対応</h3><p>OS が MANA 非互換の場合、<strong>MANA 対応の OS または NVA 製品にアップグレード</strong>してください。MANA 対応製品の一覧については、お使いの NVA プロバイダーにお問い合わせください。</p><h3 id="ステップ-4-追加時間が必要な場合の一時的な除外措置"><a href="#ステップ-4-追加時間が必要な場合の一時的な除外措置" class="headerlink" title="ステップ 4: 追加時間が必要な場合の一時的な除外措置"></a>ステップ 4: 追加時間が必要な場合の一時的な除外措置</h3><p>ステップ 3 の対応に追加の時間が必要な場合、サードパーティのパブリッシャーより提供されている NVA については <code>LegacyVMNVA</code> タグを適用して有効化することで、<strong>MANA ハードウェアへの配置から一時的に除外</strong>されます。</p><blockquote><p>[!WARNING]</p><ul><li>この除外措置は <strong>2027 年 05 月 31 日</strong> に期限切れとなります。</li><li>リージョンで MANA 対応ハードウェアが有効になる前にタグを適用していない場合、VM は MANA 対応ハードウェアにデプロイされる可能性があります。</li></ul></blockquote><h3 id="ステップ-5-期限までのアップグレード"><a href="#ステップ-5-期限までのアップグレード" class="headerlink" title="ステップ 5: 期限までのアップグレード"></a>ステップ 5: 期限までのアップグレード</h3><p>リソース タグによる除外措置を行っている場合、<strong>2027 年 05 月 31 日までに</strong> MANA 対応の OS または NVA 製品へのアップグレードを完了してください。この日以降、すべての VM が MANA 対応ハードウェアに配置される可能性があります。</p><h2 id="LegacyVMNVA-タグの適用方法"><a href="#LegacyVMNVA-タグの適用方法" class="headerlink" title="LegacyVMNVA タグの適用方法"></a>LegacyVMNVA タグの適用方法</h2><p>NVA ワークロードを実行している VM に対して <code>LegacyVMNVA</code> タグを適用することで、一時的に MANA ハードウェアへの配置を除外できます。<br><code>LegacyVMNVA</code> タグを任意のスコープに設定する組み込みの Azure ポリシーが用意されておりますので、こちらをご利用ください。</p><p><a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/accelerated-networking-mana-network-virtual-appliance-opt-out#temporary-mana-exception-with-legacyvmnva">一時的な MANA 例外 LegacyVMNVA</a></p><p>手動でリソース タグを設定いただく場合、以下の手順となります。</p><p>Azure CLI の場合</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm update --resource-group <span class="string">&quot;リソースグループ名&quot;</span> --name <span class="string">&quot;VM 名&quot;</span> --<span class="built_in">set</span> tags.LegacyVMNVA=<span class="literal">true</span></span><br></pre></td></tr></table></figure><p>Azure PowerShell の場合</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$vm</span> = <span class="built_in">Get-AzVM</span> <span class="literal">-ResourceGroupName</span> <span class="string">&quot;リソースグループ名&quot;</span> <span class="literal">-Name</span> <span class="string">&quot;VM 名&quot;</span></span><br><span class="line"><span class="variable">$vm</span>.Tags[<span class="string">&quot;LegacyVMNVA&quot;</span>] = <span class="string">&quot;true&quot;</span></span><br><span class="line"><span class="built_in">Update-AzVM</span> <span class="literal">-ResourceGroupName</span> <span class="string">&quot;リソースグループ名&quot;</span> <span class="literal">-VM</span> <span class="variable">$vm</span></span><br></pre></td></tr></table></figure><p>Azure ポータルの場合</p><ol><li>Azure ポータルで対象の VM リソースに移動します。</li><li>左側のメニューから <strong>[タグ]</strong> を選択します。</li><li>名前に <code>LegacyVMNVA</code>、値に <code>true</code> を入力します。</li><li><strong>[保存]</strong> をクリックします。</li></ol><h2 id="対応フローチャート"><a href="#対応フローチャート" class="headerlink" title="対応フローチャート"></a>対応フローチャート</h2><p>以下のフローチャートで、お客様の環境に必要な対応を確認できます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">対象 VM シリーズ (Intel E-v5 / Cobalt 100 D E-v6) を使用している</span><br><span class="line">  │</span><br><span class="line">  ├─ 高速ネットワークを使用していない → 対応不要</span><br><span class="line">  │</span><br><span class="line">  ├─ Windows OS を使用している → 対応不要</span><br><span class="line">  │</span><br><span class="line">  └─ 高速ネットワーク + Linux OS を使用している</span><br><span class="line">      │</span><br><span class="line">      ├─ NVA ワークロードではない → ※ Linux OS が MANA 対応であることを確認の上、必要に応じてカーネルの更新</span><br><span class="line">      └─ NVA ワークロードである</span><br><span class="line">          │</span><br><span class="line">          ├─ OS が MANA 互換 → 対応不要</span><br><span class="line">          │</span><br><span class="line">          └─ OS が MANA 非互換</span><br><span class="line">              │</span><br><span class="line">              ├─ すぐにアップグレード可能 → MANA 対応 OS/NVA にアップグレード</span><br><span class="line">              │</span><br><span class="line">              └─ 時間が必要 → LegacyVMNVA タグを適用 → 2027 年 05 月 31 日までにアップグレード</span><br></pre></td></tr></table></figure><p>※ NVA に該当しない VM については、以下ドキュメントの「MANA のサポートの状態を確認する」セクションに沿って、使用している Linux OS が MANA 対応であることを確認の上、必要に応じてカーネルの更新対応をお願いいたします。</p><p><a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/accelerated-networking-mana-linux#check-the-status-of-mana-support">MANA のサポートの状態を確認する</a></p><h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="MANA-とは何ですか？"><a href="#MANA-とは何ですか？" class="headerlink" title="MANA とは何ですか？"></a>MANA とは何ですか？</h3><p>Microsoft Azure Network Adapter (MANA) は、Azure の新しいネットワーク アダプター ハードウェアです。高速ネットワーク (Accelerated Networking) を使用する VM に対して、強化されたネットワーク パフォーマンスを提供します。</p><h3 id="MANA-非互換の-OS-を使い続けるとどうなりますか？"><a href="#MANA-非互換の-OS-を使い続けるとどうなりますか？" class="headerlink" title="MANA 非互換の OS を使い続けるとどうなりますか？"></a>MANA 非互換の OS を使い続けるとどうなりますか？</h3><p>Intel v5 および Cobalt 100 の VM サイズで MANA 非互換の OS を使い続ける場合、VM は既存の Mellanox ハードウェアおよび新しい MANA 対応ハードウェアの両方で引き続きサポートされますが、<strong>ネットワーク パフォーマンスが低下する可能性</strong>があります。該当の VM サイズが廃止されるまでサポートは継続されます。</p><h3 id="LegacyVMNVA-タグの有効期限はいつですか？"><a href="#LegacyVMNVA-タグの有効期限はいつですか？" class="headerlink" title="LegacyVMNVA タグの有効期限はいつですか？"></a>LegacyVMNVA タグの有効期限はいつですか？</h3><p><strong>2027 年 05 月 31 日</strong>です。この日以降、タグの有無に関わらず、すべての VM が MANA 対応ハードウェアに配置される可能性があります。</p><h3 id="Windows-OS-の場合は対応が必要ですか？"><a href="#Windows-OS-の場合は対応が必要ですか？" class="headerlink" title="Windows OS の場合は対応が必要ですか？"></a>Windows OS の場合は対応が必要ですか？</h3><p>いいえ、Windows OS を使用している場合は対応不要です。</p><h3 id="既存の-VM-にも影響がありますか？"><a href="#既存の-VM-にも影響がありますか？" class="headerlink" title="既存の VM にも影響がありますか？"></a>既存の VM にも影響がありますか？</h3><p>はい。メンテナンス イベントやお客様の操作（再デプロイなど）によって既存の VM が再配置される際に、MANA 対応ハードウェアに配置される可能性があります。</p><hr><p>以上、Microsoft Azure Network Adapter (MANA) ハードウェアとの OS 互換性の確認に関するアナウンスの補足でした。<br>本記事が少しでも皆様のお役に立てれば幸いです。</p>]]>
+    </content>
+    <id>https://jpaztech.github.io/blog/network/notification_supplement_Tracking%20ID_5RWW-K4G/</id>
+    <link href="https://jpaztech.github.io/blog/network/notification_supplement_Tracking%20ID_5RWW-K4G/"/>
+    <published>2026-05-26T03:14:27.213Z</published>
+    <summary>
+      <![CDATA[<h2 id="title-Tracking-ID-5RWW-K4G-の通知に関するアナウンスの補足date-2026-05-26-12-00-00tags-Network"><a href="#title-Tracking-ID-5RWW-K4G-の通知に関するアナウンスの補足date-2026-05-26-12-00-00tags-Network" class="headerlink" title="title: Tracking ID: 5RWW-K4G の通知に関するアナウンスの補足date: 2026-05-26 12:00:00tags:  - Network"></a>title: Tracking ID: 5RWW-K4G の通知に関するアナウンスの補足<br>date: 2026-05-26 12:00:00<br>tags:<br>  - Network</h2><p>こんにちは、Azure テクニカル サポート チームです。<br>2026 年 05 月 24 日に Intel D および E-v5 シリーズおよび Cobalt 100 D および E-v6 シリーズ VM に対して Microsoft Azure Network Adapter (MANA) ハードウェアとの OS 互換性の確認に関するアナウンスがされました。(Tracking ID: 5RWW-K4G)</p>
+<p>本記事では、通知内容の日本語抄訳に加え、対応が必要なお客様の条件や具体的な手順をわかりやすく整理してご案内いたします。</p>]]>
+    </summary>
+    <updated>2026-05-26T03:14:19.833Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Japan Azure IaaS Core Support Team</name>
@@ -29,7 +45,7 @@
 <p><a h]]>
     </summary>
     <title>Active / Active で構成された VPN Gateway における Basic SKU の Public IP アドレスのマイグレーションについて</title>
-    <updated>2026-05-25T00:34:17.484Z</updated>
+    <updated>2026-05-26T03:14:19.846Z</updated>
   </entry>
   <entry>
     <author>
@@ -48,7 +64,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの箕輪です。<br>プライベート DNS ゾーンは、仮想ネットワーク上で任意のゾーン名やプライベート エンドポイントで利用する privatelink サブドメインの名前解決を提供する DNS サービスで、仮想ネットワーク上に展開されたリソースの名前解決に影響を与えます。<br>その中で、内部 Azure API Management を利用しているシナリオで、プライベート DNS ゾーンの構成によって Azure サービスへの名前解決が意図せず失敗し接続ができない事象が発生し得ます。このブログでは、要因と考えられる対応策についてご紹介します。</p>]]>
     </summary>
     <title>プライベート DNS ゾーンと内部 Azure API Management を組み合わせる時のベストプラクティス</title>
-    <updated>2026-05-25T00:34:17.474Z</updated>
+    <updated>2026-05-26T03:14:19.838Z</updated>
   </entry>
   <entry>
     <author>
@@ -91,7 +107,7 @@
 <p>Azure ロードバランサー利用時に想定した動作ができないといった時に制]]>
     </summary>
     <title>Azure ロードバランサー利用時の注意点</title>
-    <updated>2026-05-25T00:34:17.318Z</updated>
+    <updated>2026-05-26T03:14:19.717Z</updated>
   </entry>
   <entry>
     <author>
@@ -109,7 +125,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>]]>
     </summary>
     <title>Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
-    <updated>2026-05-25T00:34:17.489Z</updated>
+    <updated>2026-05-26T03:14:19.849Z</updated>
   </entry>
   <entry>
     <author>
@@ -127,7 +143,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-05-25T00:34:17.432Z</updated>
+    <updated>2026-05-26T03:14:19.805Z</updated>
   </entry>
   <entry>
     <author>
@@ -146,7 +162,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-05-25T00:34:17.426Z</updated>
+    <updated>2026-05-26T03:14:19.800Z</updated>
   </entry>
   <entry>
     <author>
@@ -163,7 +179,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-05-25T00:34:17.613Z</updated>
+    <updated>2026-05-26T03:14:19.947Z</updated>
   </entry>
   <entry>
     <author>
@@ -185,7 +201,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-05-25T00:34:17.822Z</updated>
+    <updated>2026-05-26T03:14:20.108Z</updated>
   </entry>
   <entry>
     <author>
@@ -202,7 +218,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-05-25T00:34:17.800Z</updated>
+    <updated>2026-05-26T03:14:20.091Z</updated>
   </entry>
   <entry>
     <author>
@@ -224,7 +240,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-05-25T00:34:17.455Z</updated>
+    <updated>2026-05-26T03:14:19.823Z</updated>
   </entry>
   <entry>
     <author>
@@ -242,7 +258,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-05-25T00:34:17.415Z</updated>
+    <updated>2026-05-26T03:14:19.792Z</updated>
   </entry>
   <entry>
     <author>
@@ -262,7 +278,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-05-25T00:34:17.716Z</updated>
+    <updated>2026-05-26T03:14:20.026Z</updated>
   </entry>
   <entry>
     <author>
@@ -282,7 +298,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-05-25T00:34:17.417Z</updated>
+    <updated>2026-05-26T03:14:19.794Z</updated>
   </entry>
   <entry>
     <author>
@@ -305,7 +321,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-05-25T00:34:17.621Z</updated>
+    <updated>2026-05-26T03:14:19.952Z</updated>
   </entry>
   <entry>
     <author>
@@ -323,7 +339,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-05-25T00:34:17.422Z</updated>
+    <updated>2026-05-26T03:14:19.798Z</updated>
   </entry>
   <entry>
     <author>
@@ -344,7 +360,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-05-25T00:34:17.469Z</updated>
+    <updated>2026-05-26T03:14:19.833Z</updated>
   </entry>
   <entry>
     <author>
@@ -362,7 +378,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-05-25T00:34:17.540Z</updated>
+    <updated>2026-05-26T03:14:19.889Z</updated>
   </entry>
   <entry>
     <author>
@@ -380,24 +396,6 @@
 <p>今回は Azure ストレージ アカウント内コンテンツへのアクセス時に 401 もしくは 403 エラー（認証エラー）が発生した場合の、対処法をストレージファイアウォール観点でエラー事]]>
     </summary>
     <title>403 エラーが発生し Azure ストレージ アカウント内のコンテンツにアクセスできない</title>
-    <updated>2026-05-25T00:34:17.593Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Japan Azure IaaS Core Support Team</name>
-    </author>
-    <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
-    <category term="Virtual WAN" scheme="https://jpaztech.github.io/blog/tags/Virtual-WAN/"/>
-    <content>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の接続が可能になります。<br>(以下、この仮想ネットワークや各ブランチと仮想ハブとの接続を、「接続」と表記します。)<br>この接続において、仮想ハブ内にデプロイした Azure Firewall を経由させることができますので、ご紹介させていただきます。  </p><p><strong>目次</strong>  </p><ul><li>はじめに - セキュリティ保護付き仮想ハブとは -</li><li>セキュリティ保護付き仮想ハブをご利用いただくメリット</li><li>ルーティング インテントとルーティング ポリシーの構成方法について</li><li>ルーティング インテントとルーティング ポリシーを構成した後の通信確認例 </li><li>最後に</li></ul><h2 id="はじめに-セキュリティ保護付き仮想ハブとは"><a href="#はじめに-セキュリティ保護付き仮想ハブとは" class="headerlink" title="はじめに - セキュリティ保護付き仮想ハブとは -"></a>はじめに - セキュリティ保護付き仮想ハブとは -</h2><p>Virtual WAN においては、上述したとおり複数の接続間で通信が可能となる反面、例えば、  </p><ul><li>ある Vnet は他の Vnet とは接続させたいがブランチとは接続させたくない  </li><li>ある Vnet は他の Vnet とは接続させたくないがブランチとは接続したい</li></ul><p>といった、お互いに接続したい要件と接続させたくない要件が両立する場合など、仮想ハブを介した接続同士で通信制御を行いたい場合は考慮が必要となります。<br>また、各接続からインターネットに接続するにあたり、一度 Azure Firewall を経由させることで、通信のフィルターを行いたい、というご要件もあるかと存じます。  </p><p>上述したようなご要件に対応する方法として、Virtual WAN をご利用いただき、かつ仮想ハブとしてセキュリティ保護付き仮想ハブをご利用いただけます。<br>セキュリティ保護付き仮想ハブとは、ハブとスポークの構成を提供する仮想ハブとしての機能に加え、Azure Firewall の機能、<br>および Azure Firewall や Network Virtual Appliance (NVA) を経由するためのルーティング機能がセットになっている仮想ハブとなります。  </p><h2 id="セキュリティ保護付き仮想ハブを用いた構成例"><a href="#セキュリティ保護付き仮想ハブを用いた構成例" class="headerlink" title="セキュリティ保護付き仮想ハブを用いた構成例"></a>セキュリティ保護付き仮想ハブを用いた構成例</h2><p>ひとつの Virtual WAN に一つのセキュリティ保護付き仮想ハブのみをご利用いただく場合、以下のような接続形態を提供します。<br>なお、複数の仮想ハブをまたがる構成においてご利用いただくことも可能ですが、ここでは一つのセキュリティ保護付き仮想ハブのみをご利用いただいている場合を例にご説明します。  </p><h3 id="構成例-1-プライベートな通信間を-Azure-Firewall-にてフィルター"><a href="#構成例-1-プライベートな通信間を-Azure-Firewall-にてフィルター" class="headerlink" title="構成例 1. プライベートな通信間を Azure Firewall にてフィルター"></a>構成例 1. プライベートな通信間を Azure Firewall にてフィルター</h3><p>以下のような接続形態になります。  </p><blockquote><p>(各接続) - (仮想ハブ内の Azure Firewall) - (各接続)  </p></blockquote><p>■構成例 1 の図<br><img src="/blog/network/vwan-vhub-firewall-overview/diag-p2p-viaAzFw.png"></p><p>具体的には、以下のような各通信が該当します。<br>・仮想ネットワーク間の接続 (V2V)<br>・ブランチ間の接続 (B2B)<br>・ブランチと仮想ネットワーク (B2V)  </p><h3 id="構成例-2-インターネットへの通信を-Azure-Firewall-にてフィルター"><a href="#構成例-2-インターネットへの通信を-Azure-Firewall-にてフィルター" class="headerlink" title="構成例 2. インターネットへの通信を Azure Firewall にてフィルター"></a>構成例 2. インターネットへの通信を Azure Firewall にてフィルター</h3><p>以下のような接続形態になります。  </p><blockquote><p>(各接続) - (仮想ハブ内の Azure Firewall) - (インターネット)  </p></blockquote><p>■構成例 2 の図<br><img src="/blog/network/vwan-vhub-firewall-overview/diag-p2i-viaAzFw.png"></p><p>具体的には、以下の通信が該当します。<br>・仮想ネットワークからインターネットに向けた接続 (V2I)<br>・ブランチからインターネットに向けた通信において Azure Firewall を通したい場合 (B2I) (*ご参考)  </p><blockquote><p>(*ご参考)<br>こちらの構成は、以下弊サポート発行 Blog の項目「1）Virtual WAN を利用する」に記載がございますのでご参考になさってください。<br><a href="https://jpaztech.github.io/blog/network/forcetunneling-azure-to-onpre-configuration/#1%EF%BC%89Virtual-WAN-%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B">オンプレミスからのインターネット宛ての通信を Azure 経由にする方法</a></p></blockquote><h2 id="セキュリティ保護付き仮想ハブをご利用いただくメリット"><a href="#セキュリティ保護付き仮想ハブをご利用いただくメリット" class="headerlink" title="セキュリティ保護付き仮想ハブをご利用いただくメリット"></a>セキュリティ保護付き仮想ハブをご利用いただくメリット</h2><p>上記のような接続形態は、セキュリティ保護付き仮想ハブをご利用いただかない Virtual WAN、または Virtual WAN そのものをご使用いただかなくても、ご要件次第ではありますが実現可能です。<br>では、セキュリティ保護付き仮想ハブをご利用いただくメリットは何か、というと、<br>一つ一つの接続に対してルーティングを独自に設定する必要がない、という点が挙げられます。  </p><p>セキュリティ保護付き仮想ハブをご利用いただく際、ルーティング インテントとルーティング ポリシーを構成いただくことで、ルーティング制御も自動的に行われます。<br>この構成時にご指定いただくのは、仮想ハブがひとつの構成においては  </p><p>・プライベート トラフィックを保護するか (上記 &lt;形態 1&gt; が該当します)<br>・インターネット トラフィックを保護するか (上記 &lt;形態 2&gt; が該当します)  </p><p>のいずれかとなりますが、この際にルーティングをお客様で別途設定いただく必要はなく、ルーティングの制御も含めて自動的に行われます。<br>もし、ルーティング インテントとルーティング ポリシーをご利用いただかない場合、Azure Firewall で保護したい通信はすべてお客様でルーティングの設定をしていただくことになり、構成次第では複雑な制御が必要になり、また接続が増える等の要件変更のたびに設定が必要となります。  </p><h2 id="ルーティング-インテントとルーティング-ポリシーの構成方法について"><a href="#ルーティング-インテントとルーティング-ポリシーの構成方法について" class="headerlink" title="ルーティング インテントとルーティング ポリシーの構成方法について"></a>ルーティング インテントとルーティング ポリシーの構成方法について</h2><p>ルーティング インテントとルーティング ポリシーの構成方法としては二通りの方法があり、Azure portal を介して、Virtual WAN ポータルまたは Azure Firewall Manager を使って構成できます。<br>仮想ハブ内に Azure Firewall をデプロイされている場合、どちらで実施いただいても同等となります。  </p><p>Azure Firewall が仮想ハブにデプロイされている環境において、Virtual WAN ポータルからプライベート トラフィックを構成する際の図例は以下となります。<br>対象の仮想ハブを選択し、[ルーティング] の [ルーティング ポリシー] を選択し、[プライベート トラフィック] で [Azure Firewall]、[ネクスト ホップ リソース] で、当該の Azure Firewall のリソースを選択します。  </p><p>■Virtual WAN ポータルからの構成図例<br><img src="/blog/network/vwan-vhub-firewall-overview/routing-intent-VWANportal.png"></p><p>上記、Virtual WAN ポータルからの構成後に Azure Firewall Manager を確認すると、プライベート トラフィックが Azure Firewall を経由する構成となっていることがわかります。(Send via Azure Firewall)<br>併せて、仮想ハブ間 (Inter-hub) の通信も Azure Firewall を経由することがわかります。  </p><p>■Azure Firewall Manager における表示例<br><img src="/blog/network/vwan-vhub-firewall-overview/routing-intent-AzFwManager.png"></p><h2 id="ルーティング-インテントとルーティング-ポリシーを構成した後の通信確認例"><a href="#ルーティング-インテントとルーティング-ポリシーを構成した後の通信確認例" class="headerlink" title="ルーティング インテントとルーティング ポリシーを構成した後の通信確認例"></a>ルーティング インテントとルーティング ポリシーを構成した後の通信確認例</h2><p>試しに Vnet 間の通信を行ってみると、仮想ハブ内の Azure Firewall を経由していることがわかります。<br>仮想ハブ内の Azure Firewall を経由していることの確認方法は何点か考えられますが、Azure Firewall の診断ログを確認いただけます。<br>ログを確認するには、事前に診断ログを記録するように設定いただく必要はございますが、運用管理上の観点からも推奨となります。  </p><p>■診断ログ確認画面例<br><img src="/blog/network/vwan-vhub-firewall-overview/AzFw-diaglog.png"></p><h2 id="最後に"><a href="#最後に" class="headerlink" title="最後に"></a>最後に</h2><p>今回は、Virtual WAN をご利用いただき Any to Any の接続を実現しつつ、かつ Azure Firewall を経由させて通信のフィルターを実現するにあたってのセキュリティ保護付き仮想ハブの概要、およびルーティング インテントとルーティング ポリシーについてご説明いたしました。<br>今回は概要ご説明のため、比較的簡易な仮想ハブ 1 つの構成についてご説明いたしましたが、さらに複雑な構成を含む、ルーティング インテントとルーティング ポリシーについての詳細は以下公開文書をご確認ください。  </p><p><a href="https://learn.microsoft.com/ja-jp/azure/virtual-wan/how-to-routing-policies">Virtual WAN ハブのルーティング インテントとルーティング ポリシーの構成方法</a></p>]]>
-    </content>
-    <id>https://jpaztech.github.io/blog/network/vwan-vhub-firewall-overview/</id>
-    <link href="https://jpaztech.github.io/blog/network/vwan-vhub-firewall-overview/"/>
-    <published>2025-01-05T15:00:00.000Z</published>
-    <summary>
-      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>Virtual WAN では、仮想ハブと接続されている仮想ネットワーク、および各ブランチ (サイト間  VPN (S2S VPN)、ExpressRoute、およびユーザー VPN (P2S VPN)) 間の]]>
-    </summary>
-    <title>Azure 仮想ハブに Azure Firewall を配置する構成について</title>
-    <updated>2026-05-25T00:34:17.535Z</updated>
+    <updated>2026-05-26T03:14:19.930Z</updated>
   </entry>
 </feed>
