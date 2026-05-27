@@ -31,7 +31,9 @@ tags:
 |---|---|
 | 2026 年 05 月 26 日 | West Central US |
 | 2026 年 05 月 27 日 | East Asia |
-| 以降 | 追加リージョンは 2026 年 05 月 26 日 (UTC) 以降の Service Health 通知で別途案内予定 |
+| 2026 年 05 月 28 日 | Norway West |
+| 2026 年 05 月 29 日 | Spain Central |
+| 以降 | 追加リージョンは順次 Service Health 通知で別途案内予定 |
 
 ## 対応が不要なケース
 
