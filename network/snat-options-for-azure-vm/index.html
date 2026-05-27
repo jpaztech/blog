@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/auzre-load-balancer-snat.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/azure-default-snat.png">
 <meta property="article:published_time" content="2023-09-30T09:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-26T03:33:03.246Z">
+<meta property="article:modified_time" content="2026-05-22T09:00:00.000Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Azure Load Balancer">
 <meta property="article:tag" content="NAT Gateway">
@@ -115,7 +115,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+2b02002d-b3f8-5038-9e94-ead0a2a5c291%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%AE%E9%80%81%E4%BF%A1%E6%8E%A5%E7%B6%9A+%28SNAT%29+%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3+%E3%81%BE%E3%81%A8%E3%82%81%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fnetwork%2Fsnat-options-for-azure-vm%2F%29%0A*+Content+Source%3A+%5Barticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fnetwork%2Fsnat-options-for-azure-vm.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="cuidupfrEX-p4FNscFJWnn_H2" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/" data-id="cuidjsNbsnQAGqqMSQuR0q7bE" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -123,7 +123,9 @@
         <p>Azure Networking テクニカル サポート チームの山口です。</p>
 <p>Azure では、インターネット宛てのアウトバウンド方向の接続 (送信接続) をいくつかの方法で実装できます。選択の幅があることは喜ばしいですが、一方で内容の把握のが難しい側面も否めません。そこで本記事では、Azure VM に使える送信接続の構成をまとめて説明します。また、ある Azure VM がどの構成に該当しているか判定するためのフローチャートや、各構成の特徴についても併せて紹介します。</p>
 <div class="alert is-info"><p class="alert-title">Note</p><p><span style="color: #c00000;">2023 年 9 月、送信接続の構成の一つである<a href="https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access">既定の送信アクセス</a>の提供終了がアナウンスされました。</span></p>
-<p>これは、2025 年 9 月 30 日以降に作成された Azure VM は、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。廃止アナウンスに関する補足については、当ブログサイトの以下の記事をご参照の上、技術的な内容については併せて本記事をご確認いただけますと幸いでございます。</p>
+<p><del>これは、2025 年 9 月 30 日以降に作成された Azure VM は、後述の Azure 既定の SNAT が廃止され、明示的な外部接続ポリシーを設定しない限り、Azure 仮想ネットワークからの外部送信が行えなくなるという内容です。</del></p>
+<p><strong>【2026 年 5 月 更新】</strong> その後、公式ドキュメントにて実装方法および適用日が変更されました。最新の仕様では、<strong>2026 年 3 月 31 日より後にリリースされた API バージョン</strong> を使用して作成された新しい <strong>仮想ネットワーク (VNet)</strong> のサブネットは、<code>defaultOutboundAccess = false</code> (&#x3D; プライベート サブネット) として作成されるため、既定の送信アクセスは利用できなくなります。<strong>既存の仮想ネットワークおよびそのサブネットには変更は適用されません。</strong></p>
+<p>廃止アナウンスに関する補足については、当ブログサイトの以下の記事をご参照の上、技術的な内容については併せて本記事をご確認いただけますと幸いでございます。</p>
 <p><a href="https://jpaztech.github.io/blog/network/default-outbound-access-for-vms-will-be-retired/">Azure 既定の送信アクセスの動作変更のアナウンスに関する補足 (Tracking ID:3T84-PZZ)</a></p></div>
 <span id="more"></span>
 
@@ -155,13 +157,13 @@
 <li>ファイル共有 サーバーとの連携</li>
 </ul>
 <p>枯渇を防止するためには、SNAT ポート数の十分な確保だけでなく、アプリケーションでコネクションを再利用したり不要なコネクションをこまめに切断することが効果的です。</p>
-<h2 id="構成パターンの一覧"><a href="#構成パターンの一覧" class="headerlink" title="構成パターンの一覧"></a>構成パターンの一覧</h2><p>それでは、具体的にどのような構成を取れば、送信接続 (SNAT) が可能になるのでしょうか。2023 年 9 月現在、Azure VM の送信接続に使える構成パターンは次の通りです。</p>
+<h2 id="構成パターンの一覧"><a href="#構成パターンの一覧" class="headerlink" title="構成パターンの一覧"></a>構成パターンの一覧</h2><p>それでは、具体的にどのような構成を取れば、送信接続 (SNAT) が可能になるのでしょうか。<del>2023 年 9 月現在</del> <strong>2026 年 5 月時点</strong>、Azure VM の送信接続に使える構成パターンは次の通りです。</p>
 <ul>
 <li>サブネットに NAT ゲートウェイを関連付ける</li>
 <li>NIC にパブリック IP アドレスを関連付ける</li>
 <li>パブリック ロードバランサーで送信規則を定義する</li>
 <li>パブリック ロードバランサーで自動アウトバウンド NAT が有効な負荷分散規則を定義する</li>
-<li>既定の送信アクセスを利用する ※ 2025 年 9 月で廃止、非推奨</li>
+<li>既定の送信アクセスを利用する ※ <del>2025 年 9 月で廃止、非推奨</del> <strong>2026 年 3 月 31 日より後にリリースされた API バージョンで作成された新規 VNet では既定無効、非推奨</strong></li>
 </ul>
 <h2 id="判定フローチャート"><a href="#判定フローチャート" class="headerlink" title="判定フローチャート"></a>判定フローチャート</h2><p>ここでは、ある Azure VM がどの構成パターンで送信接続を実現しているか判定するためのフローチャートを示します。</p>
 <p>より厳密に言えば、これは NIC に対しての判定チャートです。なぜなら、同一 Azure VM にアタッチされた NIC であっても、NIC ごとに異なる送信接続を構成できるためです。たとえば、異なる二つのサブネットに足を出す Azure VM に対し、片方のサブネットでは NAT ゲートウェイを使った送信接続を、もう一方のサブネットでは Azure Firewall を使った送信接続を構成することが可能です。</p>
@@ -224,6 +226,7 @@
 <ul>
 <li><strong>条件1</strong>: 同一の可用性セット(※) に含まれるすべての NIC が、Standard SKU のパブリック IP アドレス、ロードバランサーのいずれにも関連付けられていない。</li>
 <li><strong>条件2</strong>: フレキシブル オーケストレーション モードで動作する VMSS のインスタンスではない。</li>
+<li><strong>条件3</strong>: 【2026 年 5 月 追記】NIC が配置されているサブネットがプライベート サブネットではない (<code>defaultOutboundAccess</code> プロパティが <code>false</code> に設定されていない)。なお、2026 年 3 月 31 日より後にリリースされた API バージョンで作成された新しい VNet のサブネットは、既定でプライベート サブネットとなります。</li>
 </ul>
 <p>※ 可用性セットを作成していない場合は、「可用性セット」と「Azure VM」を置き替えてください (1台の Azure VM だけが所属する疑似的な可用性セットを考える)。同様に、VMSS のインスタンスの場合は、「可用性セット」と「VMSS」を置き替えてください。</p>
 <p><img src="/blog/network/snat-options-for-azure-vm/default-snat-condition.png" alt="default-snat-condition-1"></p>
@@ -456,7 +459,8 @@
 <ul>
 <li><a href="https://learn.microsoft.com/ja-jp/azure/load-balancer/outbound-rules#preventoutbound">Azure Load Balancer のアウトバウンド規則 | Microsoft Learn</a></li>
 </ul>
-<h3 id="Azure-既定の送信アクセス"><a href="#Azure-既定の送信アクセス" class="headerlink" title="Azure 既定の送信アクセス"></a>Azure 既定の送信アクセス</h3><p><span style="color: #c00000;"> 本記事の冒頭で追記している通り、2025 年 10 月 1 日以降、新規 Azure VM に対して既定の送信アクセスは無効化されます。具体的な内容や対応方法は、追記部分をご参照下さい。</span></p>
+<h3 id="Azure-既定の送信アクセス"><a href="#Azure-既定の送信アクセス" class="headerlink" title="Azure 既定の送信アクセス"></a>Azure 既定の送信アクセス</h3><p><span style="color: #c00000;"> <del>本記事の冒頭で追記している通り、2025 年 10 月 1 日以降、新規 Azure VM に対して既定の送信アクセスは無効化されます。具体的な内容や対応方法は、追記部分をご参照下さい。</del></span></p>
+<p><span style="color: #c00000;"><strong>【2026 年 5 月 更新】</strong> 本記事の冒頭で追記している通り、2026 年 3 月 31 日より後にリリースされた API バージョンで作成された新しい仮想ネットワーク (VNet) では、サブネットが既定でプライベート (<code>defaultOutboundAccess = false</code>) となり、既定の送信アクセスは利用できません。既存の VNet には変更は適用されません。具体的な内容や対応方法は、冒頭の追記部分をご参照下さい。</span></p>
 <p><img src="/blog/network/snat-options-for-azure-vm/azure-default-snat.png" alt="azure-default-snat"></p>
 <p>これまでの送信接続の構成は、明示的にリソースを作成したり、関連付けることで SNAT をプログラミングするものでした。しかし、Azure には送信接続の方法をユーザーが指定していない場合でも、Azure VM がインターネット接続できるようにする仕組みが存在します。これを Azure 既定の送信アクセスと呼びます。</p>
 <p>具体的には、Azure プラットフォーム上で使われていないパブリック IP アドレスを一時的に借りて SNAT を行います。そのため、Azure VM を割り当て解除 &amp; 起動するたびに、SNAT に利用されるパブリック アドレスが変動します。</p>
