@@ -87,26 +87,6 @@ NVA ワークロードを実行している VM に対して `LegacyVMNVA` タグ
 
 [一時的な MANA 例外 LegacyVMNVA](https://learn.microsoft.com/ja-jp/azure/virtual-network/accelerated-networking-mana-network-virtual-appliance-opt-out#temporary-mana-exception-with-legacyvmnva)
 
-手動でリソース タグを設定いただく場合、以下の手順となります。
-
-Azure CLI の場合
-```Bash
-az vm update --resource-group "リソースグループ名" --name "VM 名" --set tags.LegacyVMNVA=true
-```
-
-Azure PowerShell の場合
-```PowerShell
-$vm = Get-AzVM -ResourceGroupName "リソースグループ名" -Name "VM 名"
-$vm.Tags["LegacyVMNVA"] = "true"
-Update-AzVM -ResourceGroupName "リソースグループ名" -VM $vm
-```
-
-Azure ポータルの場合
-
-1. Azure ポータルで対象の VM リソースに移動します。
-2. 左側のメニューから **[タグ]** を選択します。
-3. 名前に `LegacyVMNVA`、値に `true` を入力します。
-4. **[保存]** をクリックします。
 
 ## 対応フローチャート
 
