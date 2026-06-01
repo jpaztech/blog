@@ -1,12 +1,11 @@
 ---
-title: Azure Marketplace の Windows Server 2022 イメージ非推奨化（.NET 6 同梱イメージ）について
+title: Azure Marketplace の Windows Server 2022 旧イメージ非推奨化（.NET 6 同梱イメージ）について
 date: 2026-06-01 17:00:00
 tags:
   - VM
   - VMSS
   - Windows
   - Image
-  - .NET
   - HowTo
 ---
 
