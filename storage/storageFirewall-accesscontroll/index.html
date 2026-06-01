@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac07.png">
 <meta property="og:image" content="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/storageFW-ac08.png">
 <meta property="article:published_time" content="2022-05-06T01:30:00.000Z">
-<meta property="article:modified_time" content="2026-05-28T04:38:46.664Z">
+<meta property="article:modified_time" content="2026-06-01T03:00:00.000Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Storage">
 <meta name="twitter:card" content="summary">
@@ -107,7 +107,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+de3c2524-d81a-562a-ab11-018574e4ad18%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+VM+%E3%81%8B%E3%82%89%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8+%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%B8%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%99%E3%82%8B%E9%9A%9B%E3%81%AE%E6%8C%99%E5%8B%95%E3%81%A8%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%85%83%E5%88%B6%E5%BE%A1%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fstorage%2FstorageFirewall-accesscontroll%2F%29%0A*+Content+Source%3A+%5Barticles%2Fstorage%2FstorageFirewall-accesscontroll.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fstorage%2FstorageFirewall-accesscontroll.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/" data-id="cuidZcnjmM_FtzfDVLKyiT6hF" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/storage/storageFirewall-accesscontroll/" data-id="cuid_GyjJk3xOgIRDbibdn4l5" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -163,12 +163,8 @@
 <p>1.0;2024-05-03T06:08:17.6529951Z;PutBlob;SASSuccess;201;8;5;sas;;aptsstor;blob;”<a href="https://storageaccountname.blob.core.windows.net/con/test2.txt?sas%22;%22/aptsstor/con/test2.txt%22;xxxxxxxxxxxxx;0;10.0.0.4:50237;2023-08-03;545;0;337;0;0;;%22xxxxxxx%22;%22&quot;xxxxx;%22;Friday">https://storageaccountname.blob.core.windows.net:443/con/test2.txt?sas&quot;;&quot;/aptsstor/con/test2.txt&quot;;xxxxxxxxxxxxx;0;10.0.0.4:50237;2023-08-03;545;0;337;0;0;;&quot;xxxxxxx&quot;;&quot;&quot;xxxxx;&quot;;Friday</a>, 03-May-24 06:08:17 GMT;;”AzCopy&#x2F;10.23.0 azsdk-go-service.Client&#x2F;v1.2.0 (go1.19.12; Windows_NT)”;;”xxxxxxxxxxxx”</p>
 </blockquote>
 <p>アクセス元 IP は 10.0.0.4 であることが分かります。</p>
-<p>参考）Azure Storage のリージョン間サービス エンドポイント<br><a href="https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#azure-storage-cross-region-service-endpoints">https://learn.microsoft.com/ja-jp/azure/storage/common/storage-network-security?tabs=azure-powershell#azure-storage-cross-region-service-endpoints</a></p>
-<blockquote>
-<p>&lt;抜粋&gt;Azure Storage のリージョン間サービス エンドポイントは、2023 年 4 月に一般公開されました。 任意のリージョンの仮想ネットワークとストレージ サービス インスタンスの間で機能します。 リージョン間サービス エンドポイントを使用すると、サブネットでは、別のリージョン内のストレージ アカウントを含めて、ストレージ アカウントとの通信にパブリック IP アドレスを使用しなくなります。 代わりに、サブネットからストレージ アカウントへのすべてのトラフィックで、ソース IP としてプライベート IP アドレスが使用されます。 その結果、IP ネットワーク ルールを使用してそれらのサブネットからのトラフィックを許可するストレージ アカウントは、影響を受けなくなります。<br>～～～<br>ローカルとリージョン間のサービス エンドポイントは、同じサブネット上に共存できません。 既存のサービス エンドポイントをリージョン間サービス エンドポイントに置き換えるには、既存 Microsoft.Storage エンドポイントを削除し、リージョン間エンドポイント (Microsoft.Storage.Global) として再作成します。</p>
-</blockquote>
 <p>※1 ストレージ アカウントの診断ログは、対象のストレージ アカウント &gt; [監視] &gt; [診断設定] よりご設定ください。</p>
-<p>参考）Azure Blob Storage 監視データのリファレンス<br><a href="https://learn.microsoft.com/ja-jp/azure/storage/blobs/monitor-blob-storage-reference">https://learn.microsoft.com/ja-jp/azure/storage/blobs/monitor-blob-storage-reference</a><br>参考）Azure Files 監視データのリファレンス<br><a href="https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference#resource-logs">https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference#resource-logs</a></p>
+<p>参考）Azure Blob Storage 監視データのリファレンス<br><a href="https://learn.microsoft.com/ja-jp/azure/storage/blobs/monitor-blob-storage-reference">https://learn.microsoft.com/ja-jp/azure/storage/blobs/monitor-blob-storage-reference</a><br>参考）Azure Files 監視データのリファレンス<br><a href="https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference">https://learn.microsoft.com/ja-jp/azure/storage/files/storage-files-monitoring-reference</a></p>
 <h3 id="Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ"><a href="#Azure-VM-からストレージ-アカウントへアクセスする際の挙動についてのまとめ" class="headerlink" title="Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ"></a>Azure VM からストレージ アカウントへアクセスする際の挙動についてのまとめ</h3><p>ストレージ アカウントのアクセス制御について、仮想ネットワーク&#x2F;サブネット単位、もしくは外部からのパブリック IP アドレス単位での制御のみが可能です。<br>そのため、VM とストレージ アカウントが同一リージョンである場合、パブリック エンドポイント、サービス エンドポイントいずれを使用する場合も仮想ネットワーク&#x2F;サブネット単位での制御までとなります。<br>VM とストレージ アカウントが異なるリージョンにある場合、パブリック エンドポイントを使用する際は、パブリック IP アドレス単位での制御、サービスエンドポイントを使用する際は、仮想ネットワーク&#x2F;サブネット単位での制御となります。</p>
 <h2 id="ストレージアカウントへのアクセス制御について"><a href="#ストレージアカウントへのアクセス制御について" class="headerlink" title="ストレージアカウントへのアクセス制御について"></a>ストレージアカウントへのアクセス制御について</h2><p>先述の通り、ストレージ アカウントのファイアウォールでは、仮想ネットワーク&#x2F;サブネット単位、もしくは外部からのパブリック IP 単位での制御のみとなりますが、<br>「ストレージ アカウントへのアクセス制御を VM 単位で行う方法はあるか」というお問い合わせをいただくことがあります。<br>VM 単位でのアクセス元制御を行いたい場合、プライベート エンドポイントに対するネットワーク ポリシーを利用することで、プライベート エンドポイントの IP アドレスに対して NSG でアクセス制御を行うことが可能となります。</p>
 <p>参考）プライベート エンドポイントのネットワーク ポリシーを管理する<br><a href="https://learn.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal">https://learn.microsoft.com/ja-jp/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal</a></p>
