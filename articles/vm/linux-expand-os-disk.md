@@ -14,15 +14,15 @@ Azure Marketplace のイメージからデプロイしたほとんどの Linux V
 そこで今回は OS ディスクの拡張方法、および、パーティション、ファイルシステムの拡張方法についてご案内します。
 
 なお、データディスクの拡張については下記公式ドキュメントに詳細手順がありますので、こちらを参考にしてください。
- - [Azure CLI を使用して Linux VM の仮想ハード ディスクを拡張する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/expand-disks)
+ - [Azure CLI を使用して Linux VM の仮想ハード ディスクを拡張する](https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/expand-disks)
 
 ### 注意
-作業前には必ず [バックアップ](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/tutorial-backup-vms) を取得しておきましょう。
+作業前には必ず [バックアップ](https://learn.microsoft.com/ja-jp/azure/backup/quick-backup-vm-portal) を取得しておきましょう。
 
 ## Azure ディスクの拡張
 
-[Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest) で `az login` が完了していることを前提とします。
-CLI をインストールしていない場合は、[Azure Cloud Shell の Bash](https://docs.microsoft.com/ja-jp/azure/cloud-shell/quickstart) を使うと便利です。
+[Azure CLI](https://learn.microsoft.com/ja-jp/cli/azure/install-azure-cli) で `az login` が完了していることを前提とします。
+CLI をインストールしていない場合は、[Azure Cloud Shell の Bash](https://learn.microsoft.com/ja-jp/azure/cloud-shell/get-started/classic) を使うと便利です。
 
 1. 環境に合わせて変数を設定します。`myResourceGroup` には VM のリソースグループ名、`myVmName` には VM のリソース名、`myOsDiskSize` には拡張後の OS ディスクサイズを指定しましょう。以下の例では 100GB に拡張します。
    ```bash
@@ -43,6 +43,8 @@ CLI をインストールしていない場合は、[Azure Cloud Shell の Bash]
    ```bash
    az vm update -n $myVmName -g $myResourceGroup --set StorageProfile.OSDisk.DiskSizeGB=$myOsDiskSize
    ```
+   > [!NOTE]
+   > 非管理ディスク (Unmanaged Disk) は既にサポートが終了しています。非管理ディスクをご利用の場合は、[管理ディスクへの移行](https://learn.microsoft.com/ja-jp/azure/virtual-machines/unmanaged-disks-deprecation) を推奨します。
 4. VM を起動します。Azure CLI での操作はここまでとなります。
    ```bash
    az vm start --resource-group $myResourceGroup --name $myVmName
