@@ -14,7 +14,7 @@
 <meta property="og:description" content="こんにちは、Azure テクニカル サポート チームの青山です。 Azure Marketplace のイメージからデプロイしたほとんどの Linux VM は、OS ディスクサイズが 30GB となります。VM の用途次第では、このサイズでは &#x2F; 領域が不足することがあります。そこで今回は OS ディスクの拡張方法、および、パーティション、ファイルシステムの拡張方法についてご案内します。 なお、">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2020-06-19T08:30:00.000Z">
-<meta property="article:modified_time" content="2026-06-01T05:52:31.606Z">
+<meta property="article:modified_time" content="2026-06-03T04:35:48.440Z">
 <meta property="article:author" content="Japan Azure IaaS Core Support Team">
 <meta property="article:tag" content="Disk">
 <meta property="article:tag" content="HowTo">
@@ -105,7 +105,7 @@
         
         <a href="https://github.com/jpaztech/blog/issues/new?title=&body=%0A%0A---%0A%0A%23%23%23%23+Document+Details%0A%0A%E2%9A%A0+*Do+not+edit+this+section.%0A%0A*+ID%3A+c0a4604a-0395-5213-acd3-2c20b783ddd8%0A*+%E5%AF%BE%E8%B1%A1%E8%A8%98%E4%BA%8B%3A+%5BAzure+Linux+VM+%E3%81%AE+OS+%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E6%8B%A1%E5%BC%B5%E6%96%B9%E6%B3%95%5D%28https%3A%2F%2Fjpaztech.github.io%2Fblog%2Fvm%2Flinux-expand-os-disk%2F%29%0A*+Content+Source%3A+%5Barticles%2Fvm%2Flinux-expand-os-disk.md%5D%28https%3A%2F%2Fgithub.com%2Fjpaztech%2Fblog%2Fblob%2Fmaster%2Farticles%2Fvm%2Flinux-expand-os-disk.md%29%0A*+Author%3A+" class="article-github-issue-link" target="_blank" rel="noopener noreferrer">feedback</a>
         
-        <a data-url="https://jpaztech.github.io/blog/vm/linux-expand-os-disk/" data-id="cuidi1WntXLvZqEHcvw9yBKTZ" class="article-share-link">共有</a>
+        <a data-url="https://jpaztech.github.io/blog/vm/linux-expand-os-disk/" data-id="cuid1d5qHGNNbP4oV6uWA9507" class="article-share-link">共有</a>
       </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -114,15 +114,17 @@
 <p>Azure Marketplace のイメージからデプロイしたほとんどの Linux VM は、OS ディスクサイズが 30GB となります。VM の用途次第では、このサイズでは <code>/</code> 領域が不足することがあります。<br>そこで今回は OS ディスクの拡張方法、および、パーティション、ファイルシステムの拡張方法についてご案内します。</p>
 <p>なお、データディスクの拡張については下記公式ドキュメントに詳細手順がありますので、こちらを参考にしてください。</p>
 <ul>
-<li><a href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/expand-disks">Azure CLI を使用して Linux VM の仮想ハード ディスクを拡張する</a></li>
+<li><a href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/expand-disks">Azure CLI を使用して Linux VM の仮想ハード ディスクを拡張する</a></li>
 </ul>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>作業前には必ず <a href="https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/tutorial-backup-vms">バックアップ</a> を取得しておきましょう。</p>
-<h2 id="Azure-ディスクの拡張"><a href="#Azure-ディスクの拡張" class="headerlink" title="Azure ディスクの拡張"></a>Azure ディスクの拡張</h2><p><a href="https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a> で <code>az login</code> が完了していることを前提とします。<br>CLI をインストールしていない場合は、<a href="https://docs.microsoft.com/ja-jp/azure/cloud-shell/quickstart">Azure Cloud Shell の Bash</a> を使うと便利です。</p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>作業前には必ず <a href="https://learn.microsoft.com/ja-jp/azure/backup/quick-backup-vm-portal">バックアップ</a> を取得しておきましょう。</p>
+<h2 id="Azure-ディスクの拡張"><a href="#Azure-ディスクの拡張" class="headerlink" title="Azure ディスクの拡張"></a>Azure ディスクの拡張</h2><p><a href="https://learn.microsoft.com/ja-jp/cli/azure/install-azure-cli">Azure CLI</a> で <code>az login</code> が完了していることを前提とします。<br>CLI をインストールしていない場合は、<a href="https://learn.microsoft.com/ja-jp/azure/cloud-shell/get-started/classic">Azure Cloud Shell の Bash</a> を使うと便利です。</p>
 <ol>
 <li>環境に合わせて変数を設定します。<code>myResourceGroup</code> には VM のリソースグループ名、<code>myVmName</code> には VM のリソース名、<code>myOsDiskSize</code> には拡張後の OS ディスクサイズを指定しましょう。以下の例では 100GB に拡張します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">myResourceGroup=<span class="string">&quot;contosogroup&quot;</span></span><br><span class="line">myVmName=<span class="string">&quot;contosovm&quot;</span></span><br><span class="line">myOsDiskSize=<span class="string">&quot;100&quot;</span></span><br></pre></td></tr></table></figure></li>
 <li>VM 実行中は接続されたディスクのサイズを変更できません。一度 VM を停止(割り当て解除)します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm deallocate --resource-group <span class="variable">$myResourceGroup</span> --name <span class="variable">$myVmName</span></span><br></pre></td></tr></table></figure></li>
 <li>ディスクサイズを変更します。管理ディスクの場合は、<code>az disk update</code> でサイズ変更します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">osdiskid=$(az vm show --resource-group <span class="variable">$myResourceGroup</span> --name <span class="variable">$myVmName</span> --query storageProfile.osDisk.managedDisk.<span class="built_in">id</span> -o tsv)</span><br><span class="line">az disk update --ids <span class="variable">$osdiskid</span> --size-gb <span class="variable">$myOsDiskSize</span></span><br></pre></td></tr></table></figure>
-非管理ディスクの場合は、<code>az vm update</code> でサイズ変更します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm update -n <span class="variable">$myVmName</span> -g <span class="variable">$myResourceGroup</span> --<span class="built_in">set</span> StorageProfile.OSDisk.DiskSizeGB=<span class="variable">$myOsDiskSize</span></span><br></pre></td></tr></table></figure></li>
+非管理ディスクの場合は、<code>az vm update</code> でサイズ変更します。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm update -n <span class="variable">$myVmName</span> -g <span class="variable">$myResourceGroup</span> --<span class="built_in">set</span> StorageProfile.OSDisk.DiskSizeGB=<span class="variable">$myOsDiskSize</span></span><br></pre></td></tr></table></figure>
+<div class="alert is-info"><p class="alert-title">Note</p><p>非管理ディスク (Unmanaged Disk) は既にサポートが終了しています。非管理ディスクをご利用の場合は、<a href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/unmanaged-disks-deprecation">管理ディスクへの移行</a> を推奨します。</p></div>
+</li>
 <li>VM を起動します。Azure CLI での操作はここまでとなります。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">az vm start --resource-group <span class="variable">$myResourceGroup</span> --name <span class="variable">$myVmName</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="ファイルシステムの拡張"><a href="#ファイルシステムの拡張" class="headerlink" title="ファイルシステムの拡張"></a>ファイルシステムの拡張</h2><p>Ubuntu など、cloud-init が予め有効なシステムでは、起動時に拡張が済んでいる場合があります。<br>ここでは、LVM 構成ではない RHEL7.6 でのコマンド例を紹介します。LVM 構成の場合は <a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%8B%A1%E5%BC%B5-LVM">ファイルシステムの拡張 (LVM)</a> を参照してください。</p>
