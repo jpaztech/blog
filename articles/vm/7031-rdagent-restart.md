@@ -79,11 +79,11 @@ Windows Azure ゲスト エージェントのアップデート時には、C:\Wi
 仮想マシン エージェントとは、仮想マシンと Azure 基盤側とのやり取りを管理するプロセスであり、仮想マシンの拡張機能の管理や仮想マシンのステータスの報告などを実施しています。
 Windows 仮想マシンには Windows Azure ゲスト エージェントが、Linux 仮想マシンには Azure Linux エージェント (waagent) があります。
 
-> ご参考) [Windows] Azure 仮想マシン エージェントの概要
-> [https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-windows](https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-windows)
+> ご参考) Azure Windows VM エージェントの概要
+> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-windows](https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-windows)
 
-> ご参考) [Linux] Azure Linux エージェントの理解と使用
-> [https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux](https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux)
+> ご参考) Azure Linux VM エージェントの概要
+> [https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux](https://learn.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux)
 
 ### Windows 仮想マシンの仮想マシン エージェント (Windows Azure ゲスト エージェント)
 
@@ -118,8 +118,8 @@ RdAgent サービスが実行されていない場合、Windows Azure ゲスト 
 
 なお、仮想マシン エージェントが正しく稼働していないように見受けられる場合のトラブルシューティングは、下記公開情報をご確認ください。
 
-> ご参考) Azure ゲスト Windowsのトラブルシューティング
-> [https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows-azure-guest-agent](https://docs.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows-azure-guest-agent)
+> ご参考) Azure Windows VM エージェントの問題のトラブルシューティング
+> [https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-azure-guest-agent](https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/windows/windows-azure-guest-agent)
 
 > ご参考) Windows ゲスト エージェント (WinGA) の再インストール方法
 > [https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/](https://jpaztech.github.io/blog/vm/re-install-windows-azure-guest-agent/)
