@@ -92,7 +92,7 @@ az vm list-skus --location japaneast --all --output table
 | Standard_sizeA | 1,3 | None | ゾーン 1,3 で提供されている。<br>Restrictions は設定されておりません。 |
 | Standard_sizeB | 1,2,3 | NotAvailableForSubscription, type: Zone, locations: japaneast, zones: 1,2 | ゾーン 1,2,3 で提供されている。<br>他方、type: Zone の Restrictions として、明示的にゾーンの 1,2 を指定したデプロイが制限されています。<br>ゾーン 3 を指定、もしくはゾーン未指定であればデプロイは制限されておりません。 |
 | Standard_sizeC | 1,2,3 | NotAvailableForSubscription, type: Zone, locations: japaneast, zones: 1,2,3 | ゾーン 1,2,3 で提供されている。<br>他方、type: Zone の Restrictions として、明示的にゾーンの 1,2,3 を指定したデプロイが制限されています。<br>ゾーン未指定であればデプロイは制限されておりません。 |
-| Standard_sizeD | 1,3 | 'NotAvailableForSubscription, **type: Location, locations: japaneast**', 'NotAvailableForSubscription, type: Zone, locations: japaneast, zones: 1,2,3' | ゾーン 1,3 で提供されている。<br>しかし、type: Location の Restrictions として、当該リージョンでこの VM サイズのデプロイ自体が制限されております。 |
+| Standard_sizeD | 1,3 | 'NotAvailableForSubscription, **type: Location, locations: japaneast**', 'NotAvailableForSubscription, type: Zone, locations: japaneast, zones: 1,2,3' | ゾーン 1,3 で提供されている。<br>他方、type: Zone の Restrictions として、明示的にゾーンの 1,2,3 を指定したデプロイが制限されています。そのうえ、type: Location の Restrictions として、当該リージョンでこの VM サイズのデプロイ自体が制限されておりますので、このリージョンでは VM 作成ができません。 |
 
 #### Azure PowerShell で VM サイズ毎の提供状況を確認する 
 
@@ -109,14 +109,15 @@ Get-AzComputeResourceSku -Location japaneast
 | Standard_sizeA | {1, 3} | 表示なし | ゾーン 1,3 で提供されている。<br>Restrictions は設定されておりません。 |
 | Standard_sizeB | {1, 2, 3} | type: Zone, locations: japaneast, zones: 1, 2 | ゾーン 1,2,3 で提供されている。<br>他方、type: Zone の Restrictions として、明示的にゾーンの 1,2 を指定したデプロイが制限されています。<br>ゾーン 3 を指定、もしくはゾーン未指定であればデプロイは制限されておりません。 |
 | Standard_sizeC | {1, 2, 3} | type: Zone, locations: japaneast, zones: 1, 2, 3 | ゾーン 1,2,3 で提供されている。<br>他方、type: Zone の Restrictions として、明示的にゾーンの 1,2,3 を指定したデプロイが制限されています。<br>ゾーン未指定であればデプロイは制限されておりません。 |
-| Standard_sizeD | {1, 3} | {**type: Location, locations: japaneast**, type: Zone, locations: japaneast, zones: 1, 2, 3} | ゾーン 1,3 で提供されている。<br>しかしながら、type: Location の Restrictions として、当該リージョンでこの VM サイズのデプロイ自体が制限されております。 |
+| Standard_sizeD | {1, 3} | {**type: Location, locations: japaneast**, type: Zone, locations: japaneast, zones: 1, 2, 3} | ゾーン 1,3 で提供されている。<br>他方、type: Zone の Restrictions として、明示的にゾーンの 1,2,3 を指定したデプロイが制限されています。そのうえ、type: Location の Restrictions として、当該リージョンでこの VM サイズのデプロイ自体が制限されておりますので、このリージョンでは VM 作成ができません。 |
 
 Resetrictions がある場合は代替のサイズやゾーンのご利用などをご検討いただけますと幸いです。  
 もし Resetrictions の解除要求を進めたい場合は以下の手順で試みることが可能です。  
 
 ご参考：[制限付き仮想マシン シリーズのゾーン有効化要求 | Microsoft Learn](https://learn.microsoft.com/ja-jp/troubleshoot/azure/general/zonal-enablement-request-for-restricted-vm-series)  
 
-手順 1 を進めて、「サポートリクエストの作成」を選択して進めることで、下記のようなリージョンやゾーンの制限解除の要求を行うことが可能です。
+手順 1 を進めて、「サポートリクエストの作成」を選択して進めることで、下記のようなリージョンやゾーンの制限解除の要求を行うことが可能です。  
+Zone と Location（リージョン）両方の制限がかかっている場合に、両方とも解除されたい際はそれぞれを解除する申請が必要と存じます。  
 
 ![](vm-size-change/sr-form.png)
 
