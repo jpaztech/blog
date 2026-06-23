@@ -31,7 +31,7 @@ tags:
 |機能の違い |NSG フロー ログ |Vnet フロー ログ |
 |---|---|---|
 |フロー ログを取得できる対象範囲 (ターゲット) |Subnet/NIC |VNet/Subnet/NIC |
-|ログ形式 |[ログ形式](https://learn.microsoft.com/ja-jp/azure/network-watcher/vnet-flow-logs-overview#log-format)<br>[サンプル ログ レコード](https://learn.microsoft.com/ja-jp/azure/network-watcher/vnet-flow-logs-overview#sample-log-record) |[ログ形式](https://learn.microsoft.com/ja-jp/azure/network-watcher/nsg-flow-logs-overview#log-format)<br>[サンプル ログ レコード](https://learn.microsoft.com/ja-jp/azure/network-watcher/nsg-flow-logs-overview#sample-log-records)|
+|ログ形式 |[ログ形式](https://learn.microsoft.com/ja-jp/azure/network-watcher/nsg-flow-logs-overview#log-format)<br>[サンプル ログ レコード](https://learn.microsoft.com/ja-jp/azure/network-watcher/nsg-flow-logs-overview#sample-log-records) |[ログ形式](https://learn.microsoft.com/ja-jp/azure/network-watcher/vnet-flow-logs-overview#log-format)<br>[サンプル ログ レコード](https://learn.microsoft.com/ja-jp/azure/network-watcher/vnet-flow-logs-overview#sample-log-record)|
 |トラフィック分析のスキーマ |[トラフィック分析スキーマ](https://learn.microsoft.com/ja-jp/azure/network-watcher/traffic-analytics-schema?tabs=nsg#traffic-analytics-schema) |[トラフィック分析スキーマ](https://learn.microsoft.com/ja-jp/azure/network-watcher/traffic-analytics-schema?tabs=vnet#traffic-analytics-schema) |
 |ストレージ アカウント  |`https//{storageAccountName}@insights-logs-networksecuritygroupflowevent` のパス内に保存 |`https://{storageAccountName}@insights-logs-flowlogflowevent` のパス内に保存 |
 |Log Analytics Workspace  |"AzureNetworkAnalytics_CL" テーブルに保存 |"NTANetAnalytics" テーブルに保存 |
