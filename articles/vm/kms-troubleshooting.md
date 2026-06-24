@@ -386,13 +386,13 @@ https://learn.microsoft.com/ja-jp/windows-server/get-started/activation-rebuild-
 ---
 ### インターネットへの通信に明示的な送信接続が必要な環境である
 
-VNET にてプライベートサブネットを構成している場合、明示的な送信接続を使用しないとインターネットへの通信ができませんので、KMS のライセンス認証も失敗いたします。  
+VNET にてプライベートサブネットが有効な場合、明示的な送信接続を使用しないとインターネットへの通信ができませんので、KMS のライセンス認証も失敗いたします。  
   
 ■ご参考：プライベート サブネットの概要  
 https://learn.microsoft.com/ja-jp/azure/virtual-network/ip-services/default-outbound-access#private-subnets-overview  
   
-また、2025 年 10 月 1 日以降に作成された新しい Azure VM は、Azure 既定の送信アクセス (既定の SNAT) を利用してインターネット宛へのアウトバウンド通信ができなくなります。  
-そのため、KMS ライセンス認証を行うには、インターネット宛へのアウトバウンド接続を行うための明示的な送信接続の設定が必要となるものと存じます。  
+Azure 既定の送信アクセスの動作変更により、新規 VNET でプライベートサブネットが有効になる動作もございます。  
+詳細は以下のドキュメント等をご参照くださいませ。
   
 ■ご参考：Retirement: Default outbound access for VMs in Azure will be retired— transition to a new method of internet access  
 https://azure.microsoft.com/ja-jp/updates?id=default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access  
@@ -400,7 +400,8 @@ https://azure.microsoft.com/ja-jp/updates?id=default-outbound-access-for-vms-in-
 ■ご参考：Azure 既定の送信アクセスの動作変更のアナウンスに関する補足 (Tracking ID:3T84-PZZ)  
 https://jpaztech.github.io/blog/network/default-outbound-access-for-vms-will-be-retired/  
   
-このようなインターネットへの通信に明示的な送信接続が必要な環境である場合は、以下の弊社ブログ記事をご参照いただき、インターネットへの送信接続を構成いただけますと幸いです。  
+このようなインターネットへの通信に明示的な送信接続が必要な環境である場合は、KMS ライセンス認証のためにインターネットへの送信接続を構成いただく必要がございます。  
+構成方法については以下の弊社ブログ記事をご参照いただけますと幸いです。  
   
 ■ご参考：Azure VM の送信接続 (SNAT) オプション まとめ  
 https://jpaztech.github.io/blog/network/snat-options-for-azure-vm/  
