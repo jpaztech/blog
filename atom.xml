@@ -49,7 +49,7 @@
 <p>本記事では、通知内容の日本語抄訳に加え、対応が必要なお客様の条件や具体的な手順をわかりやすく整理してご案内いたします。</p>]]>
     </summary>
     <title>Tracking ID_5RWW-K4G の通知に関するアナウンスの補足</title>
-    <updated>2026-06-24T04:43:57.831Z</updated>
+    <updated>2026-06-24T07:18:53.685Z</updated>
   </entry>
   <entry>
     <author>
@@ -69,7 +69,7 @@
 <p><a h]]>
     </summary>
     <title>Active / Active で構成された VPN Gateway における Basic SKU の Public IP アドレスのマイグレーションについて</title>
-    <updated>2026-06-24T04:43:57.844Z</updated>
+    <updated>2026-06-24T07:18:53.700Z</updated>
   </entry>
   <entry>
     <author>
@@ -88,7 +88,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの箕輪です。<br>プライベート DNS ゾーンは、仮想ネットワーク上で任意のゾーン名やプライベート エンドポイントで利用する privatelink サブドメインの名前解決を提供する DNS サービスで、仮想ネットワーク上に展開されたリソースの名前解決に影響を与えます。<br>その中で、内部 Azure API Management を利用しているシナリオで、プライベート DNS ゾーンの構成によって Azure サービスへの名前解決が意図せず失敗し接続ができない事象が発生し得ます。このブログでは、要因と考えられる対応策についてご紹介します。</p>]]>
     </summary>
     <title>プライベート DNS ゾーンと内部 Azure API Management を組み合わせる時のベストプラクティス</title>
-    <updated>2026-06-24T04:43:57.836Z</updated>
+    <updated>2026-06-24T07:18:53.690Z</updated>
   </entry>
   <entry>
     <author>
@@ -131,7 +131,7 @@
 <p>Azure ロードバランサー利用時に想定した動作ができないといった時に制]]>
     </summary>
     <title>Azure ロードバランサー利用時の注意点</title>
-    <updated>2026-06-24T04:43:57.692Z</updated>
+    <updated>2026-06-24T07:18:53.544Z</updated>
   </entry>
   <entry>
     <author>
@@ -149,7 +149,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>]]>
     </summary>
     <title>Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
-    <updated>2026-06-24T04:43:57.850Z</updated>
+    <updated>2026-06-24T07:18:53.704Z</updated>
   </entry>
   <entry>
     <author>
@@ -167,7 +167,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-06-24T04:43:57.796Z</updated>
+    <updated>2026-06-24T07:18:53.650Z</updated>
   </entry>
   <entry>
     <author>
@@ -186,7 +186,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-06-24T04:43:57.790Z</updated>
+    <updated>2026-06-24T07:18:53.644Z</updated>
   </entry>
   <entry>
     <author>
@@ -203,7 +203,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-06-24T04:43:57.967Z</updated>
+    <updated>2026-06-24T07:18:53.819Z</updated>
   </entry>
   <entry>
     <author>
@@ -225,7 +225,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-06-24T04:43:58.162Z</updated>
+    <updated>2026-06-24T07:18:54.011Z</updated>
   </entry>
   <entry>
     <author>
@@ -242,7 +242,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-06-24T04:43:58.142Z</updated>
+    <updated>2026-06-24T07:18:53.990Z</updated>
   </entry>
   <entry>
     <author>
@@ -264,7 +264,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-06-24T04:43:57.819Z</updated>
+    <updated>2026-06-24T07:18:53.673Z</updated>
   </entry>
   <entry>
     <author>
@@ -282,7 +282,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-06-24T04:43:57.781Z</updated>
+    <updated>2026-06-24T07:18:53.634Z</updated>
   </entry>
   <entry>
     <author>
@@ -302,7 +302,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-06-24T04:43:58.064Z</updated>
+    <updated>2026-06-24T07:18:53.915Z</updated>
   </entry>
   <entry>
     <author>
@@ -322,7 +322,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-06-24T04:43:57.782Z</updated>
+    <updated>2026-06-24T07:18:53.636Z</updated>
   </entry>
   <entry>
     <author>
@@ -345,7 +345,7 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-06-24T04:43:57.975Z</updated>
+    <updated>2026-06-24T07:18:53.827Z</updated>
   </entry>
   <entry>
     <author>
@@ -363,7 +363,7 @@
       <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
     </summary>
     <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-06-24T04:43:57.787Z</updated>
+    <updated>2026-06-24T07:18:53.641Z</updated>
   </entry>
   <entry>
     <author>
@@ -384,7 +384,7 @@
 <p>2027 年 9 月 30 日にネットワーク セキュリティ グループ (NSG) フローログが廃止され、2025 年 6 月 30 日以降新しい NSG フロー ログが作成できなくなるため、VNet]]>
     </summary>
     <title>NSG フローログ から VNet フローログ への移行についてよくある質問</title>
-    <updated>2026-06-24T04:43:57.831Z</updated>
+    <updated>2026-06-24T07:18:53.685Z</updated>
   </entry>
   <entry>
     <author>
@@ -402,6 +402,6 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<br>この記事では、Virtual WAN の仮想ハブに接続した各環境 (VNet&#x2F;ブランチ (サイト間 VPN、ポイント対サイト VPN、ExpressRoute)) における相互接続について紹介いたし]]>
     </summary>
     <title>Virtual WAN の相互接続性について</title>
-    <updated>2026-06-24T04:43:57.899Z</updated>
+    <updated>2026-06-24T07:18:53.751Z</updated>
   </entry>
 </feed>
