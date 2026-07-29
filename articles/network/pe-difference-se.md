@@ -14,6 +14,9 @@ tags:
 <!-- more -->
 
 ## 機能の違いについて
+> [!Note]
+> 現在サービス エンドポイントは、Basic サービス エンドポイント (Basic service endpoint) と Standard サービス エンドポイント (Standard service endpoint) で区分されています。本ブログに記載されたサービス エンドポイントは Basic サービス エンドポイントを対象としています。Standard サービス エンドポイントについては、[こちらの公開情報](https://learn.microsoft.com/ja-jp/azure/private-link/service-endpoint-standard-overview)よりご確認ください。
+
 サービス エンドポイントとプライベートエンドポイントを端的に紹介すると、サービス エンドポイントは「Azure PaaS のパブリック IP アドレスに対する接続を最適化する」機能であり、プライベート エンドポイントは「プライベート IP アドレスで Azure PaaS に接続する」機能です。
 サービス エンドポイントとプライベート エンドポイントの機能差分については下記の通りです。
 
