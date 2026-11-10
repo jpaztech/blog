@@ -10,7 +10,26 @@
   <rights>All rights reserved 2026, Japan Azure IaaS Core Support Team</rights>
   <subtitle>日本マイクロソフトの Azure IaaS テクニカル サポート チームより、情報をお届けします！</subtitle>
   <title>Japan Azure IaaS Core Support Blog</title>
-  <updated>2026-08-27T03:07:46.000Z</updated>
+  <updated>2026-11-10T00:00:00.000Z</updated>
+  <entry>
+    <author>
+      <name>Japan Azure IaaS Core Support Team</name>
+    </author>
+    <category term="VM" scheme="https://jpaztech.github.io/blog/tags/VM/"/>
+    <category term="Windows" scheme="https://jpaztech.github.io/blog/tags/Windows/"/>
+    <content>
+      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田雄大です。</p><p>本記事では、Azure VM での Windows Server 2016 の拡張セキュリティ更新プログラム (Extended Security Updates、以下 ESU) に関する最新情報をこちらで更新させていただきます。</p><span id="more"></span><hr><h2 id="Azure-VM-に対する-Windows-Server-2016-ESU-の適用"><a href="#Azure-VM-に対する-Windows-Server-2016-ESU-の適用" class="headerlink" title="Azure VM に対する Windows Server 2016 ESU の適用"></a>Azure VM に対する Windows Server 2016 ESU の適用</h2><p>Azure VM に対する Windows Server 2016 ESU の適用について、多くのお問い合わせをいただいております。<br>恐縮ながら 2026&#x2F;11&#x2F;10 の時点では、Azure VM での Windows Server 2016 ESU の利用方法 (適用手順など) については、情報が公開されておりません。<br>恐れ入りますが、今後の情報公開をお待ちいただきますようお願いいたします。</p><p><strong>情報が公開され次第、本記事でもその内容を記載・更新させていただきます。お手数ではございますが、最新情報が必要な際は、本記事を定期的にご確認いただけますと幸いです。</strong></p><hr><h2 id="ESU-の料金について"><a href="#ESU-の料金について" class="headerlink" title="ESU の料金について"></a>ESU の料金について</h2><p>公開情報としては、<strong>2026 年 4 月 1 日以降にリリースされる Windows および SQL Server 向け ESU は、Azure 内外で同じ定価となる</strong>ことが案内されております点、参考として記載させていただきます。</p><p>■ご参考：<a href="https://www.microsoft.com/en-us/licensing/news/services-pricing-consistency-update">Update on Pricing for Extended Security Updates for Windows and SQL Server</a></p><blockquote><p>Customers who use Windows and SQL Server Extended Security Updates released on or after April 1, 2026, will see the same pricing whether they purchase in Azure or outside Azure.</p></blockquote><div class="alert is-success"><p class="alert-title">ヒント</p><p>Azure 上の Windows Server 2012 &#x2F; Windows Server 2012 R2 は ESU が無償でしたが、Windows Server 2016 ESU は Azure でも有償となります。</p></div><hr><h2 id="Azure-VM-に対する-Azure-Arc-を利用した-ESU-の適用について"><a href="#Azure-VM-に対する-Azure-Arc-を利用した-ESU-の適用について" class="headerlink" title="Azure VM に対する Azure Arc を利用した ESU の適用について"></a>Azure VM に対する Azure Arc を利用した ESU の適用について</h2><p>以下の公開情報で案内されている、Azure Arc を利用した Windows Server 2016 ESU の適用方法を、Azure VM でも利用できるかというお問い合わせをいただくことがございます。</p><p>■ご参考：<a href="https://learn.microsoft.com/ja-jp/azure/azure-arc/servers/prepare-extended-security-updates">Azure Arc を通じて Windows Server の拡張セキュリティ更新プログラムを配信する準備をする</a></p><p>恐れ入りますが、<strong>Azure Arc 対応サーバーは、Azure で実行されている仮想マシンの管理を有効にするために設計またはサポートされておりません。</strong> 以下の公開情報にも、この制限が記載されております。</p><p>■ご参考：<a href="https://learn.microsoft.com/ja-jp/azure/azure-arc/servers/overview#supported-environments">サポートされる環境 - Azure Arc 対応サーバーの概要</a></p><blockquote><p>Azure Arc 対応サーバーは、Azure で実行されている仮想マシンの管理を有効にするために設計またはサポートされていません。</p></blockquote><p>■ご参考：<a href="https://learn.microsoft.com/ja-jp/azure/azure-arc/servers/prerequisites#supported-environments">サポートされる環境 - 接続された機械エージェントの前提条件</a></p><blockquote><p>Azure、Azure Stack Hub、または Azure Stack Edge でホストされている仮想マシンには Azure Arc をインストールしないでください。</p></blockquote><p>上記のとおり、Azure VM を使用してオンプレミス環境をシミュレートできるのは、テスト目的に限られます。Azure VM での Windows Server 2016 ESU の利用方法については、今後の情報公開をお待ちいただきますようお願いいたします。</p><hr><h2 id="さいごに"><a href="#さいごに" class="headerlink" title="さいごに"></a>さいごに</h2><p>ESU は以下に記載の通り、セキュリティ更新を受け取れる暫定的な措置であり、ESU 以前の標準的なサポートサービスを継続するものではございません。</p><p>■ご参考：<a href="https://learn.microsoft.com/ja-jp/lifecycle/faq/extended-security-updates#------------esu--------------">拡張セキュリティ更新 (ESU) プログラムとは何ですか?</a></p><blockquote><p>これらは、長期的なソリューションとしてではなく、サポートされている新しいプラットフォームに移行する際にセキュリティを維持するための暫定的な措置です。 ESU には、製品の延長サポート終了日から 3 年以内の、緊急* または重要* なセキュリティ更新プログラムが含まれています。<br>ESU プログラムは、製品のライフサイクルを延長せず、元のサポート タイムラインを超えてテクニカル サポートを提供しません。 ESU を使用しているお客様は、セキュリティ更新プログラムに関連しない問題のトラブルシューティング、バグ修正、技術ガイダンスなどの標準的なサポート サービスを受け取りません。</p></blockquote><p>ESU の利用ではなく、OS 自体の更新を行うことについてもご検討いただけますと幸いでございます。</p><p>■ご参考：<a href="https://learn.microsoft.com/ja-jp/azure/virtual-machines/windows-in-place-upgrade">Azure で Windows Server を実行している VM のインプレース アップグレード</a></p><p>本記事の情報が少しでもお客様のお役に立てましたら幸いです。</p>]]>
+    </content>
+    <id>https://jpaztech.github.io/blog/vm/ws2016-esu-on-azure/</id>
+    <link href="https://jpaztech.github.io/blog/vm/ws2016-esu-on-azure/"/>
+    <published>2026-11-10T00:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田雄大です。</p>
+<p>本記事では、Azure VM での Windows Server 2016 の拡張セキュリティ更新プログラム (Extended Security Updates、以下 ESU) に関する最新情報をこちらで更新させていただきます。</p>]]>
+    </summary>
+    <title>Azure VM に対する Windows Server 2016 拡張セキュリティ更新プログラム (Extended Security Updates /ESU）の適用</title>
+    <updated>2026-11-10T00:00:00.000Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Japan Azure IaaS Core Support Team</name>
@@ -49,7 +68,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>Application Gateway v1 は 2026 年 4 月 28 日をもって廃止となりました。</p><p>このため本記事では Applicati]]>
     </summary>
     <title>Application Gateway 設定変更の影響</title>
-    <updated>2026-10-15T07:04:32.266Z</updated>
+    <updated>2026-11-10T01:43:47.139Z</updated>
   </entry>
   <entry>
     <author>
@@ -89,7 +108,7 @@
 <p>本記事では、通知内容の日本語抄訳に加え、対応が必要なお客様の条件や具体的な手順をわかりやすく整理してご案内いたします。</p>]]>
     </summary>
     <title>Tracking ID_5RWW-K4G の通知に関するアナウンスの補足</title>
-    <updated>2026-10-15T07:04:32.300Z</updated>
+    <updated>2026-11-10T01:43:47.186Z</updated>
   </entry>
   <entry>
     <author>
@@ -109,7 +128,7 @@
 <p><a h]]>
     </summary>
     <title>Active / Active で構成された VPN Gateway における Basic SKU の Public IP アドレスのマイグレーションについて</title>
-    <updated>2026-10-15T07:04:32.310Z</updated>
+    <updated>2026-11-10T01:43:47.201Z</updated>
   </entry>
   <entry>
     <author>
@@ -128,7 +147,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの箕輪です。<br>プライベート DNS ゾーンは、仮想ネットワーク上で任意のゾーン名やプライベート エンドポイントで利用する privatelink サブドメインの名前解決を提供する DNS サービスで、仮想ネットワーク上に展開されたリソースの名前解決に影響を与えます。<br>その中で、内部 Azure API Management を利用しているシナリオで、プライベート DNS ゾーンの構成によって Azure サービスへの名前解決が意図せず失敗し接続ができない事象が発生し得ます。このブログでは、要因と考えられる対応策についてご紹介します。</p>]]>
     </summary>
     <title>プライベート DNS ゾーンと内部 Azure API Management を組み合わせる時のベストプラクティス</title>
-    <updated>2026-10-15T07:04:32.304Z</updated>
+    <updated>2026-11-10T01:43:47.192Z</updated>
   </entry>
   <entry>
     <author>
@@ -171,7 +190,7 @@
 <p>Azure ロードバランサー利用時に想定した動作ができないといった時に制]]>
     </summary>
     <title>Azure ロードバランサー利用時の注意点</title>
-    <updated>2026-10-15T07:04:32.195Z</updated>
+    <updated>2026-11-10T01:43:47.042Z</updated>
   </entry>
   <entry>
     <author>
@@ -189,7 +208,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームです。<BR><br>この記事では、Azure VPN Gateway において Basic SKU の Public IP アドレスを使用している場合の標準的なマイグレーション手順と作業時の注意点をご紹介します。<BR><br>また、この記事でご紹介する内容は動画でもご紹介しております。<BR><br>動画では Azure Portal を使用して実際に移行する手順をご確認いただけますので、こちらも併せてご活用ください。<BR></p>]]>
     </summary>
     <title>Basic SKU の Public IP アドレスを使用している Azure VPN Gateway のマイグレーションについて（Basic SKU VPN Gatewayは除く）</title>
-    <updated>2026-10-15T07:04:32.314Z</updated>
+    <updated>2026-11-10T01:43:47.207Z</updated>
   </entry>
   <entry>
     <author>
@@ -207,7 +226,7 @@
       <![CDATA[<div class="alert is-info"><p class="alert-title">Note</p><p>2026 年 3 月現在、本記事で解説している方法は EnableApplicationGatewayNetworkIsolation 機能が有効化された A]]>
     </summary>
     <title>Application Gateway でサブネットを変更する方法</title>
-    <updated>2026-10-15T07:04:32.274Z</updated>
+    <updated>2026-11-10T01:43:47.150Z</updated>
   </entry>
   <entry>
     <author>
@@ -226,7 +245,7 @@
 <p>本記事では、Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせについてご紹介します。</p>]]>
     </summary>
     <title>Application Gateway V1 SKU から V2 SKU への移行に関するよくあるお問い合わせ</title>
-    <updated>2026-10-15T07:04:32.269Z</updated>
+    <updated>2026-11-10T01:43:47.144Z</updated>
   </entry>
   <entry>
     <author>
@@ -243,7 +262,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>2028 年に幾つかの古い VM サイズ（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）のリタイアが予定されて]]>
     </summary>
     <title>2028 年にリタイア予定の Azure VM サイズについて（D, Ds, Dv2, Dsv2, Ls および F, Fs, Fsv2, Lsv2, G, Gs, Av2, Amv2, B シリーズ）</title>
-    <updated>2026-10-15T07:04:32.401Z</updated>
+    <updated>2026-11-10T01:43:47.327Z</updated>
   </entry>
   <entry>
     <author>
@@ -265,7 +284,7 @@
 <]]>
     </summary>
     <title>NVMe ディスクコントローラー必須の Azure VM サイズについて（Dsv5 から Dsv6 サイズへの変更など）</title>
-    <updated>2026-10-15T07:04:32.544Z</updated>
+    <updated>2026-11-10T01:43:47.521Z</updated>
   </entry>
   <entry>
     <author>
@@ -282,7 +301,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>一部のお客様に <strong>TRACKING ID : J_Z9-7QZ</strong> として「Action required: Update certificates for Azure In]]>
     </summary>
     <title>Action required：Update certificates for Azure Instance Metadata Service の通知の補足</title>
-    <updated>2026-10-15T07:04:32.529Z</updated>
+    <updated>2026-11-10T01:43:47.500Z</updated>
   </entry>
   <entry>
     <author>
@@ -304,7 +323,7 @@
 <p>今回は日本時間 2025 年 10月 17 日に GA (General Availability) されたプレスケーリング機能 (事前スケーリング機能) について紹介します。</p>]]>
     </summary>
     <title>Azure Firewall のプレスケーリング機能 (事前スケーリング機能) について</title>
-    <updated>2026-10-15T07:04:32.291Z</updated>
+    <updated>2026-11-10T01:43:47.173Z</updated>
   </entry>
   <entry>
     <author>
@@ -322,7 +341,7 @@
 <p>本記事では、Microsoft Azure サポートにおける、アドバイザリ区分のお問い合わせにおける対応範囲とベストプラクティスについてご説明します。</p>]]>
     </summary>
     <title>Azure サポートにおけるアドバイザリ (ハウツーやベストプラクティス共有) のお問い合わせにつきまして</title>
-    <updated>2026-10-15T07:04:32.262Z</updated>
+    <updated>2026-11-10T01:43:47.134Z</updated>
   </entry>
   <entry>
     <author>
@@ -342,7 +361,7 @@
       <![CDATA[<p>こんにちは、Azure テクニカル サポート チームの富田です。<br>Azure VM で実行されているゲスト OS のバージョンを一覧表示を行いたいとのお問い合わせをいただくことがございます。<br>実行中の VM の Instance View を取得するコマンドもし]]>
     </summary>
     <title>Azure VM で実行されているゲスト OS のバージョンを一覧表示する</title>
-    <updated>2026-10-15T07:04:32.472Z</updated>
+    <updated>2026-11-10T01:43:47.424Z</updated>
   </entry>
   <entry>
     <author>
@@ -362,7 +381,7 @@
 <p>本ブログでは、Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニン]]>
     </summary>
     <title>Azure Front Door (クラシック) と Azure CDN from Standard (Microsoft CDN クラシック) のマネージド証明書のプロビジョニングに関する通知について</title>
-    <updated>2026-10-15T07:04:32.263Z</updated>
+    <updated>2026-11-10T01:43:47.135Z</updated>
   </entry>
   <entry>
     <author>
@@ -385,24 +404,6 @@
 <p>Azure Hybrid Benefit (AHB) を利用することで、Azure 上の Red Hat Enterprise Linux (RHEL) VM のソフトウェア サブスクリプション モデルを簡単に切り替えることができます。<br>この記事では、AHB に関する概要、各種ライセンスタイプの違い、BYOS (サブスクリプション持ち込み) と PAYG (従量課金制) の切り替え手順、切り替え後の確認方法について詳しく解説します。</p>]]>
     </summary>
     <title>Azure Hybrid Benefit (AHB) for RHEL VM に関する解説</title>
-    <updated>2026-10-15T07:04:32.407Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Japan Azure IaaS Core Support Team</name>
-    </author>
-    <category term="Application Gateway" scheme="https://jpaztech.github.io/blog/tags/Application-Gateway/"/>
-    <category term="Network" scheme="https://jpaztech.github.io/blog/tags/Network/"/>
-    <content>
-      <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められているご状況かと思います。</p><p>※ V1 のリタイアについて詳しくは<a href="https://learn.microsoft.com/ja-jp/azure/application-gateway/v1-retirement">こちら</a></p><p>今回のブログでは Application Gateway V1 と V2 で HTTP&#x2F;2 を取り扱う際の動作の違いについてご紹介します。皆様のご参考になりましたら幸いです。</p><p>HTTP&#x2F;2（Hypertext Transfer Protocol version 2）は、ウェブ ページのデータをウェブ サーバーから取得するための新しい通信方法です。<br>HTTP&#x2F;1.1 の後継として、2015 年に正式な仕様として承認されました。HTTP&#x2F;2 には、「h2」と「h2c」の二つの識別子があります。HTTP&#x2F;2 の接続が確立される際にトランスポート層セキュリティ（TLS) が利用されたかどうかによって、HTTP&#x2F;2 通信には「h2」または「h2c」識別子が表示されます。つまり、HTTP&#x2F;2 の識別子を通じて、HTTP&#x2F;2 通信が暗号化されているかどうかを判断することができます。</p><p>・識別子が “h2” となっている場合、それは HTTP&#x2F;2 通信が TLS を使用するプロトコルであることを示しています。</p><p>・識別子が “h2c” となっている場合、HTTP&#x2F;2 通信が TLS を使用しません。この際、クライアントは HTTP&#x2F;2 通信に “Upgrade” ヘッダーと “HTTP2-Settings” ヘッダーを送信します。”Upgrade” ヘッダーの値は「h2c」が設定され、”HTTP2-Settings” ヘッダーの値はトークン（例: AAMAAABkAAQCAAAAAAIAAAAA）が設定されます。</p><p><a href="https://datatracker.ietf.org/doc/html/rfc9113#section-3.1">HTTP&#x2F;2 の関連記事 (英語)</a></p><blockquote><p>The “h2c” string was previously used as a token for use in the HTTP Upgrade mechanism’s Upgrade header field. This usage was never widely deployed and is deprecated by this document. The same applies to the HTTP2-Settings header field, which was used with the upgrade to “h2c”.</p></blockquote><p>現在、Edge や Chrome など現在主要なブラウザーでは、HTTP&#x2F;2 over TLS (h2) のみが HTTP&#x2F;2 として使用できます。<br><img src="./appgw_http2/chrome check.png" alt="HAR1" style="width:800px;"/> </p><p>例えば、<a href="http://www.microsoft.com/">www.microsoft.com</a> のサイトは HTTP&#x2F;2 に対応していますが、 <a href="http://www.microsoft.com/">www.microsoft.com</a> に HTTPS ではなく HTTP で接続する場合、<br>ブラウザーが HTTP&#x2F;2 over TCP (h2c) をサポートしていないため、HTTP&#x2F;2 は使用されず、HTTP&#x2F;1.1 で接続を確立します。<br>(以下のスクリーンショットの例ではその後 HTTPS の URL にリダイレクトされ、HTTP&#x2F;2 over TLS (h2)で接続しています。)</p><img src="./appgw_http2/httpyahoo.png" alt="HAR2" style="width:800px;"/> <img src="./appgw_http2/yahoo.png" alt="HAR3" style="width:800px;"/> <p>なお、ブラウザからのアクセスではなく、curl コマンドなどの他の HTTP クライアントから HTTP リクエストを送信する際には、HTTP&#x2F;2 over TCP (h2c) を利用して HTTP&#x2F;2 通信が行われる可能性があります。この状況では、Application Gateway が接続先となる際に、v1 と v2 で動作が異なります。v1 の場合、HTTP&#x2F;2 通信はダウングレードされて、v2 の場合は HTTP ステータスコード 403 が応答されます。詳細の動作つきましては、以下のセクションをご参照ください。</p><h1 id="Application-Gateway-の-HTTP2-サポートについて"><a href="#Application-Gateway-の-HTTP2-サポートについて" class="headerlink" title="Application Gateway の HTTP2 サポートについて"></a>Application Gateway の HTTP2 サポートについて</h1><p>Application Gateway はリバース プロキシとして動作するため、フロントエンド接続（クライアント - Application Gateway）とバックエンド接続（Application Gateway - バックエンド サーバー）の二つの接続が発生します。現在、バックエンド接続における HTTP&#x2F;2 はサポートされておりません。</p><p>フロントエンド接続における HTTP&#x2F;2 のサポート状況については、リスナーで利用しているプロトコルによって異なります。詳細は以下のテーブルをご参照いただけますと幸いです。</p><table><thead><tr><th>リスナーのプロトコル</th><th>サポート状況</th></tr></thead><tbody><tr><td>HTTPS</td><td>サポート</td></tr><tr><td>HTTP</td><td>非サポート</td></tr></tbody></table><p>一般的なシナリオとして、HTTP&#x2F;2 over TLS (h2) が使用されるため、Application Gateway でも HTTP&#x2F;2 over TLS (h2) のみを考慮しています。そのため、Application Gateway では、HTTPS リスナーでのみ HTTP&#x2F;2 をサポートしています。v1、v2 ともに HTTP リスナーでは HTTP&#x2F;2 の通信をサポートしていませんが、HTTP リスナーに対して実際にクライアントから HTTP&#x2F;2 通信を送信する際には、SKU によって動作が異なります。以下にそれぞれの SKU の動作について紹介します。</p><h3 id="v1-の動作"><a href="#v1-の動作" class="headerlink" title="v1 の動作"></a>v1 の動作</h3><p>v1 の HTTP リスナーに HTTP&#x2F;2 を用いて送信すると、通信がダウングレードされ、Application Gateway は HTTP&#x2F;1.1 でレスポンスを送信します。</p><p>v1 の HTTP リスナーに HTTP&#x2F;2 リクエストを curl コマンドで送信した結果</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root:/# curl -v http://&lt;v1 Appgw の IP&gt; --http2</span><br><span class="line">*   Trying xxxxxx:80...</span><br><span class="line">* Connected to xxxx port 80 (#0)</span><br><span class="line">&gt; GET / HTTP/1.1</span><br><span class="line">&gt; Host: xxxxxx</span><br><span class="line">&gt; User-Agent: curl/7.81.0</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; Connection: Upgrade, HTTP2-Settings</span><br><span class="line">&gt; Upgrade: h2c</span><br><span class="line">&gt; HTTP2-Settings: AAMAAABkAAQCAAAAAAIAAAAA</span><br><span class="line">&gt;</span><br><span class="line">* Mark bundle as not supporting multiuse</span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Date: Wed, 25 Dec 2024 09:09:10 GMT</span><br><span class="line">&lt; Content-Type: text/html</span><br><span class="line">&lt; Content-Length: 7</span><br><span class="line">&lt; Connection: keep-alive</span><br><span class="line">&lt; Server: Microsoft-IIS/10.0</span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="v2-の動作"><a href="#v2-の動作" class="headerlink" title="v2 の動作"></a>v2 の動作</h3><p>v2 の場合は、HTTP リスナーに HTTP&#x2F;2 を送信すると、Application Gateway はクライアントに 403 を応答します。</p><p>v2 の HTTP リスナーに HTTP&#x2F;2 リクエストを curl コマンドで送信した結果</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">root: curl --http2 -v -k http://&lt;v2 Appgw の IP&gt;</span><br><span class="line">*   Trying xxxx:80...</span><br><span class="line">* Connected to xxxx (xxxx) port 80 (#0)</span><br><span class="line">&gt; GET / HTTP/1.1</span><br><span class="line">&gt; Host: xxxx</span><br><span class="line">&gt; User-Agent: curl/7.81.0</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; Connection: Upgrade, HTTP2-Settings</span><br><span class="line">&gt; Upgrade: h2c</span><br><span class="line">&gt; HTTP2-Settings: AAMAAABkAAQCAAAAAAIAAAAA</span><br><span class="line">&gt;</span><br><span class="line">* Mark bundle as not supporting multiuse</span><br><span class="line">&lt; HTTP/1.1 403 Forbidden</span><br><span class="line">&lt; Server: Microsoft-Azure-Application-Gateway/v2</span><br><span class="line">&lt; Date: Wed, 25 Dec 2024 08:51:52 GMT</span><br><span class="line">&lt; Content-Type: text/html</span><br><span class="line">&lt; Content-Length: 179</span><br><span class="line">&lt; Connection: keep-alive</span><br><span class="line">&lt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt;403 Forbidden&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;center&gt;&lt;h1&gt;403 Forbidden&lt;/h1&gt;&lt;/center&gt;</span><br><span class="line">&lt;hr&gt;&lt;center&gt;Microsoft-Azure-Application-Gateway/v2&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">* Connection #0 to host xxxx left intact</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>上記の HTTP リスナーに HTTP&#x2F;2 を送信した通信結果を、Application Gateway で設定可能な診断ログの 1 つであるアクセス ログから対象の通信結果を確認すると、「httpStatus」のプロパティには 403 が記載され、「serverStatus」のプロパティには 403 以外の別のステータスコードが記載されます。こちらは想定されているログの記録結果です。</p><p>また、このブロックは Application Gateway V2 自体のコード レベルでの動作であり、WAF を利用していない場合でも同様に HTTP 403 を返す動作となります。つまり、Application Gateway v2 は WAF の利用の有無にかかわらず HTTP リスナーで受け取った HTTP&#x2F;2 通信をブロックすることが想定された動作となります。</p>]]>
-    </content>
-    <id>https://jpaztech.github.io/blog/network/appgw-http2/</id>
-    <link href="https://jpaztech.github.io/blog/network/appgw-http2/"/>
-    <published>2025-03-21T03:00:00.000Z</published>
-    <summary>
-      <![CDATA[<p>いつもお世話になっております。Azure Networking チームの庄です。<br>Application Gateway V1 のリタイアが 2026 年 4 月 28 日であると発表されてから暫く経ち、V1 をご利用のお客様の中で V2 への移行計画を進められている]]>
-    </summary>
-    <title>Application Gateway の HTTP2 サポート</title>
-    <updated>2026-10-15T07:04:32.267Z</updated>
+    <updated>2026-11-10T01:43:47.336Z</updated>
   </entry>
 </feed>
